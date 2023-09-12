@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.57.1-4c556507-20220928-143422
+# IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
 
 """
 With the Context Based Restrictions API, you can:
@@ -59,7 +59,9 @@ class ContextBasedRestrictionsV1(BaseService):
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -90,7 +92,7 @@ class ContextBasedRestrictionsV1(BaseService):
         excluded: List['Address'] = None,
         x_correlation_id: str = None,
         transaction_id: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create a network zone.
@@ -110,9 +112,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -125,9 +127,14 @@ class ContextBasedRestrictionsV1(BaseService):
             addresses = [convert_model(x) for x in addresses]
         if excluded is not None:
             excluded = [convert_model(x) for x in excluded]
-        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_zone'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_zone',
         )
         headers.update(sdk_headers)
 
@@ -148,7 +155,12 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/zones'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -161,7 +173,7 @@ class ContextBasedRestrictionsV1(BaseService):
         transaction_id: str = None,
         name: str = None,
         sort: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         List network zones.
@@ -174,9 +186,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -189,15 +201,24 @@ class ContextBasedRestrictionsV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ZoneList` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_zones'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_zones',
         )
         headers.update(sdk_headers)
 
-        params = {'account_id': account_id, 'name': name, 'sort': sort}
+        params = {
+            'account_id': account_id,
+            'name': name,
+            'sort': sort,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -205,13 +226,23 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/zones'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def get_zone(
-        self, zone_id: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
+        self,
+        zone_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a network zone.
@@ -224,9 +255,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -235,11 +266,16 @@ class ContextBasedRestrictionsV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Zone` object
         """
 
-        if zone_id is None:
+        if not zone_id:
             raise ValueError('zone_id must be provided')
-        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_zone'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_zone',
         )
         headers.update(sdk_headers)
 
@@ -252,7 +288,11 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(zone_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/zones/{zone_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -269,7 +309,7 @@ class ContextBasedRestrictionsV1(BaseService):
         excluded: List['Address'] = None,
         x_correlation_id: str = None,
         transaction_id: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Replace a network zone.
@@ -294,9 +334,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -305,17 +345,23 @@ class ContextBasedRestrictionsV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Zone` object
         """
 
-        if zone_id is None:
+        if not zone_id:
             raise ValueError('zone_id must be provided')
-        if if_match is None:
+        if not if_match:
             raise ValueError('if_match must be provided')
         if addresses is not None:
             addresses = [convert_model(x) for x in addresses]
         if excluded is not None:
             excluded = [convert_model(x) for x in excluded]
-        headers = {'If-Match': if_match, 'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'If-Match': if_match,
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_zone'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='replace_zone',
         )
         headers.update(sdk_headers)
 
@@ -339,13 +385,23 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(zone_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/zones/{zone_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def delete_zone(
-        self, zone_id: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
+        self,
+        zone_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Delete a network zone.
@@ -358,9 +414,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -369,11 +425,16 @@ class ContextBasedRestrictionsV1(BaseService):
         :rtype: DetailedResponse
         """
 
-        if zone_id is None:
+        if not zone_id:
             raise ValueError('zone_id must be provided')
-        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_zone'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_zone',
         )
         headers.update(sdk_headers)
 
@@ -385,13 +446,22 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(zone_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/zones/{zone_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def list_available_serviceref_targets(
-        self, *, x_correlation_id: str = None, transaction_id: str = None, type: str = None, **kwargs
+        self,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        type: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         List available service reference targets.
@@ -403,9 +473,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -415,7 +485,10 @@ class ContextBasedRestrictionsV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ServiceRefTargetList` object
         """
 
-        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
             service_version='V1',
@@ -423,7 +496,9 @@ class ContextBasedRestrictionsV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        params = {'type': type}
+        params = {
+            'type': type,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -431,7 +506,12 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/zones/serviceref_targets'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -450,7 +530,7 @@ class ContextBasedRestrictionsV1(BaseService):
         enforcement_mode: str = None,
         x_correlation_id: str = None,
         transaction_id: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create a rule.
@@ -476,9 +556,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -493,9 +573,14 @@ class ContextBasedRestrictionsV1(BaseService):
             resources = [convert_model(x) for x in resources]
         if operations is not None:
             operations = convert_model(operations)
-        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_rule'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_rule',
         )
         headers.update(sdk_headers)
 
@@ -516,7 +601,12 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/rules'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -537,7 +627,7 @@ class ContextBasedRestrictionsV1(BaseService):
         zone_id: str = None,
         sort: str = None,
         enforcement_mode: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         List rules.
@@ -550,9 +640,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -577,11 +667,16 @@ class ContextBasedRestrictionsV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `RuleList` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_rules'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_rules',
         )
         headers.update(sdk_headers)
 
@@ -605,13 +700,23 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/rules'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def get_rule(
-        self, rule_id: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
+        self,
+        rule_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a rule.
@@ -624,9 +729,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -635,11 +740,16 @@ class ContextBasedRestrictionsV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
         """
 
-        if rule_id is None:
+        if not rule_id:
             raise ValueError('rule_id must be provided')
-        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_rule'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_rule',
         )
         headers.update(sdk_headers)
 
@@ -652,7 +762,11 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/rules/{rule_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -669,7 +783,7 @@ class ContextBasedRestrictionsV1(BaseService):
         enforcement_mode: str = None,
         x_correlation_id: str = None,
         transaction_id: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Replace a rule.
@@ -699,9 +813,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -710,9 +824,9 @@ class ContextBasedRestrictionsV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
         """
 
-        if rule_id is None:
+        if not rule_id:
             raise ValueError('rule_id must be provided')
-        if if_match is None:
+        if not if_match:
             raise ValueError('if_match must be provided')
         if contexts is not None:
             contexts = [convert_model(x) for x in contexts]
@@ -720,9 +834,15 @@ class ContextBasedRestrictionsV1(BaseService):
             resources = [convert_model(x) for x in resources]
         if operations is not None:
             operations = convert_model(operations)
-        headers = {'If-Match': if_match, 'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'If-Match': if_match,
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_rule'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='replace_rule',
         )
         headers.update(sdk_headers)
 
@@ -746,13 +866,23 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/rules/{rule_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def delete_rule(
-        self, rule_id: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
+        self,
+        rule_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Delete a rule.
@@ -765,9 +895,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -776,11 +906,16 @@ class ContextBasedRestrictionsV1(BaseService):
         :rtype: DetailedResponse
         """
 
-        if rule_id is None:
+        if not rule_id:
             raise ValueError('rule_id must be provided')
-        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_rule'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_rule',
         )
         headers.update(sdk_headers)
 
@@ -792,7 +927,11 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/rules/{rule_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -802,7 +941,12 @@ class ContextBasedRestrictionsV1(BaseService):
     #########################
 
     def get_account_settings(
-        self, account_id: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
+        self,
+        account_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get account settings.
@@ -815,9 +959,9 @@ class ContextBasedRestrictionsV1(BaseService):
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
@@ -826,11 +970,16 @@ class ContextBasedRestrictionsV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_account_settings'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_account_settings',
         )
         headers.update(sdk_headers)
 
@@ -843,7 +992,11 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/account_settings/{account_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -853,33 +1006,43 @@ class ContextBasedRestrictionsV1(BaseService):
     #########################
 
     def list_available_service_operations(
-        self, service_name: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
+        self,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        service_name: str = None,
+        service_group_id: str = None,
+        resource_type: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         List available service operations.
 
         This operation lists all available service operations.
 
-        :param str service_name: The name of the service.
         :param str x_correlation_id: (optional) The supplied or generated value of
                this header is logged for a request and repeated in a response header for
                the corresponding response. The same value is used for downstream requests
                and retries of those requests. If a value of this headers is not supplied
                in a request, the service generates a random (version 4) UUID.
-        :param str transaction_id: (optional) The `Transaction-Id` header behaves
-               as the `X-Correlation-Id` header. It is supported for backward
-               compatibility with other IBM platform services that support the
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
                `Transaction-Id` header only. If both `X-Correlation-Id` and
                `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
                `Transaction-Id`.
+        :param str service_name: (optional) The name of the service.
+        :param str service_group_id: (optional) The id of the service group.
+        :param str resource_type: (optional) The type of resource.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `OperationsList` object
         """
 
-        if service_name is None:
-            raise ValueError('service_name must be provided')
-        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
             service_version='V1',
@@ -887,7 +1050,11 @@ class ContextBasedRestrictionsV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        params = {'service_name': service_name}
+        params = {
+            'service_name': service_name,
+            'service_group_id': service_group_id,
+            'resource_type': resource_type,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -895,7 +1062,12 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/operations'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -945,7 +1117,13 @@ class APIType:
     :attr List[Action] actions: The actions available for the API type.
     """
 
-    def __init__(self, api_type_id: str, display_name: str, description: str, actions: List['Action']) -> None:
+    def __init__(
+        self,
+        api_type_id: str,
+        display_name: str,
+        description: str,
+        actions: List['Action'],
+    ) -> None:
         """
         Initialize a APIType object.
 
@@ -976,7 +1154,7 @@ class APIType:
         else:
             raise ValueError('Required property \'description\' not present in APIType JSON')
         if 'actions' in _dict:
-            args['actions'] = [Action.from_dict(x) for x in _dict.get('actions')]
+            args['actions'] = [Action.from_dict(v) for v in _dict.get('actions')]
         else:
             raise ValueError('Required property \'actions\' not present in APIType JSON')
         return cls(**args)
@@ -996,7 +1174,13 @@ class APIType:
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
         if hasattr(self, 'actions') and self.actions is not None:
-            _dict['actions'] = [x.to_dict() for x in self.actions]
+            actions_list = []
+            for v in self.actions:
+                if isinstance(v, dict):
+                    actions_list.append(v)
+                else:
+                    actions_list.append(v.to_dict())
+            _dict['actions'] = actions_list
         return _dict
 
     def _to_dict(self):
@@ -1193,7 +1377,11 @@ class Action:
     :attr str description: The description of the action.
     """
 
-    def __init__(self, action_id: str, description: str) -> None:
+    def __init__(
+        self,
+        action_id: str,
+        description: str,
+    ) -> None:
         """
         Initialize a Action object.
 
@@ -1257,7 +1445,11 @@ class Address:
     :attr str type: (optional) The type of address.
     """
 
-    def __init__(self, *, type: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        type: str = None,
+    ) -> None:
         """
         Initialize a Address object.
 
@@ -1274,10 +1466,7 @@ class Address:
         disc_class = cls._get_class_by_discriminator(_dict)
         if disc_class != cls:
             return disc_class.from_dict(_dict)
-        msg = (
-            "Cannot convert dictionary into an instance of base class 'Address'. "
-            + "The discriminator value should map to a valid subclass: {1}"
-        ).format(
+        msg = "Cannot convert dictionary into an instance of base class 'Address'. The discriminator value should map to a valid subclass: {1}".format(
             ", ".join(['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef'])
         )
         raise Exception(msg)
@@ -1319,6 +1508,7 @@ class Address:
         SERVICEREF = 'serviceRef'
 
 
+
 class NewRuleOperations:
     """
     The operations this rule applies to.
@@ -1327,7 +1517,10 @@ class NewRuleOperations:
           applies to.
     """
 
-    def __init__(self, api_types: List['NewRuleOperationsApiTypesItem']) -> None:
+    def __init__(
+        self,
+        api_types: List['NewRuleOperationsApiTypesItem'],
+    ) -> None:
         """
         Initialize a NewRuleOperations object.
 
@@ -1341,7 +1534,7 @@ class NewRuleOperations:
         """Initialize a NewRuleOperations object from a json dictionary."""
         args = {}
         if 'api_types' in _dict:
-            args['api_types'] = [NewRuleOperationsApiTypesItem.from_dict(x) for x in _dict.get('api_types')]
+            args['api_types'] = [NewRuleOperationsApiTypesItem.from_dict(v) for v in _dict.get('api_types')]
         else:
             raise ValueError('Required property \'api_types\' not present in NewRuleOperations JSON')
         return cls(**args)
@@ -1355,7 +1548,13 @@ class NewRuleOperations:
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'api_types') and self.api_types is not None:
-            _dict['api_types'] = [x.to_dict() for x in self.api_types]
+            api_types_list = []
+            for v in self.api_types:
+                if isinstance(v, dict):
+                    api_types_list.append(v)
+                else:
+                    api_types_list.append(v.to_dict())
+            _dict['api_types'] = api_types_list
         return _dict
 
     def _to_dict(self):
@@ -1384,7 +1583,10 @@ class NewRuleOperationsApiTypesItem:
     :attr str api_type_id:
     """
 
-    def __init__(self, api_type_id: str) -> None:
+    def __init__(
+        self,
+        api_type_id: str,
+    ) -> None:
         """
         Initialize a NewRuleOperationsApiTypesItem object.
 
@@ -1440,7 +1642,10 @@ class OperationsList:
     :attr List[APIType] api_types: The returned API types.
     """
 
-    def __init__(self, api_types: List['APIType']) -> None:
+    def __init__(
+        self,
+        api_types: List['APIType'],
+    ) -> None:
         """
         Initialize a OperationsList object.
 
@@ -1453,7 +1658,7 @@ class OperationsList:
         """Initialize a OperationsList object from a json dictionary."""
         args = {}
         if 'api_types' in _dict:
-            args['api_types'] = [APIType.from_dict(x) for x in _dict.get('api_types')]
+            args['api_types'] = [APIType.from_dict(v) for v in _dict.get('api_types')]
         else:
             raise ValueError('Required property \'api_types\' not present in OperationsList JSON')
         return cls(**args)
@@ -1467,7 +1672,13 @@ class OperationsList:
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'api_types') and self.api_types is not None:
-            _dict['api_types'] = [x.to_dict() for x in self.api_types]
+            api_types_list = []
+            for v in self.api_types:
+                if isinstance(v, dict):
+                    api_types_list.append(v)
+                else:
+                    api_types_list.append(v.to_dict())
+            _dict['api_types'] = api_types_list
         return _dict
 
     def _to_dict(self):
@@ -1497,7 +1708,12 @@ class Resource:
     :attr List[ResourceTagAttribute] tags: (optional) The optional resource tags.
     """
 
-    def __init__(self, attributes: List['ResourceAttribute'], *, tags: List['ResourceTagAttribute'] = None) -> None:
+    def __init__(
+        self,
+        attributes: List['ResourceAttribute'],
+        *,
+        tags: List['ResourceTagAttribute'] = None,
+    ) -> None:
         """
         Initialize a Resource object.
 
@@ -1513,11 +1729,11 @@ class Resource:
         """Initialize a Resource object from a json dictionary."""
         args = {}
         if 'attributes' in _dict:
-            args['attributes'] = [ResourceAttribute.from_dict(x) for x in _dict.get('attributes')]
+            args['attributes'] = [ResourceAttribute.from_dict(v) for v in _dict.get('attributes')]
         else:
             raise ValueError('Required property \'attributes\' not present in Resource JSON')
         if 'tags' in _dict:
-            args['tags'] = [ResourceTagAttribute.from_dict(x) for x in _dict.get('tags')]
+            args['tags'] = [ResourceTagAttribute.from_dict(v) for v in _dict.get('tags')]
         return cls(**args)
 
     @classmethod
@@ -1529,9 +1745,21 @@ class Resource:
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'attributes') and self.attributes is not None:
-            _dict['attributes'] = [x.to_dict() for x in self.attributes]
+            attributes_list = []
+            for v in self.attributes:
+                if isinstance(v, dict):
+                    attributes_list.append(v)
+                else:
+                    attributes_list.append(v.to_dict())
+            _dict['attributes'] = attributes_list
         if hasattr(self, 'tags') and self.tags is not None:
-            _dict['tags'] = [x.to_dict() for x in self.tags]
+            tags_list = []
+            for v in self.tags:
+                if isinstance(v, dict):
+                    tags_list.append(v)
+                else:
+                    tags_list.append(v.to_dict())
+            _dict['tags'] = tags_list
         return _dict
 
     def _to_dict(self):
@@ -1562,7 +1790,13 @@ class ResourceAttribute:
     :attr str operator: (optional) The attribute operator.
     """
 
-    def __init__(self, name: str, value: str, *, operator: str = None) -> None:
+    def __init__(
+        self,
+        name: str,
+        value: str,
+        *,
+        operator: str = None,
+    ) -> None:
         """
         Initialize a ResourceAttribute object.
 
@@ -1634,7 +1868,13 @@ class ResourceTagAttribute:
     :attr str operator: (optional) The attribute operator.
     """
 
-    def __init__(self, name: str, value: str, *, operator: str = None) -> None:
+    def __init__(
+        self,
+        name: str,
+        value: str,
+        *,
+        operator: str = None,
+    ) -> None:
         """
         Initialize a ResourceTagAttribute object.
 
@@ -1735,7 +1975,7 @@ class Rule:
         last_modified_by_id: str,
         *,
         operations: 'NewRuleOperations' = None,
-        enforcement_mode: str = None
+        enforcement_mode: str = None,
     ) -> None:
         """
         Initialize a Rule object.
@@ -1792,11 +2032,11 @@ class Rule:
         else:
             raise ValueError('Required property \'description\' not present in Rule JSON')
         if 'contexts' in _dict:
-            args['contexts'] = [RuleContext.from_dict(x) for x in _dict.get('contexts')]
+            args['contexts'] = [RuleContext.from_dict(v) for v in _dict.get('contexts')]
         else:
             raise ValueError('Required property \'contexts\' not present in Rule JSON')
         if 'resources' in _dict:
-            args['resources'] = [Resource.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in Rule JSON')
         if 'operations' in _dict:
@@ -1840,11 +2080,26 @@ class Rule:
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
         if hasattr(self, 'contexts') and self.contexts is not None:
-            _dict['contexts'] = [x.to_dict() for x in self.contexts]
+            contexts_list = []
+            for v in self.contexts:
+                if isinstance(v, dict):
+                    contexts_list.append(v)
+                else:
+                    contexts_list.append(v.to_dict())
+            _dict['contexts'] = contexts_list
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         if hasattr(self, 'operations') and self.operations is not None:
-            _dict['operations'] = self.operations.to_dict()
+            if isinstance(self.operations, dict):
+                _dict['operations'] = self.operations
+            else:
+                _dict['operations'] = self.operations.to_dict()
         if hasattr(self, 'enforcement_mode') and self.enforcement_mode is not None:
             _dict['enforcement_mode'] = self.enforcement_mode
         if hasattr(self, 'href') and self.href is not None:
@@ -1890,6 +2145,7 @@ class Rule:
         REPORT = 'report'
 
 
+
 class RuleContext:
     """
     A rule context.
@@ -1897,7 +2153,10 @@ class RuleContext:
     :attr List[RuleContextAttribute] attributes: The attributes.
     """
 
-    def __init__(self, attributes: List['RuleContextAttribute']) -> None:
+    def __init__(
+        self,
+        attributes: List['RuleContextAttribute'],
+    ) -> None:
         """
         Initialize a RuleContext object.
 
@@ -1910,7 +2169,7 @@ class RuleContext:
         """Initialize a RuleContext object from a json dictionary."""
         args = {}
         if 'attributes' in _dict:
-            args['attributes'] = [RuleContextAttribute.from_dict(x) for x in _dict.get('attributes')]
+            args['attributes'] = [RuleContextAttribute.from_dict(v) for v in _dict.get('attributes')]
         else:
             raise ValueError('Required property \'attributes\' not present in RuleContext JSON')
         return cls(**args)
@@ -1924,7 +2183,13 @@ class RuleContext:
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'attributes') and self.attributes is not None:
-            _dict['attributes'] = [x.to_dict() for x in self.attributes]
+            attributes_list = []
+            for v in self.attributes:
+                if isinstance(v, dict):
+                    attributes_list.append(v)
+                else:
+                    attributes_list.append(v.to_dict())
+            _dict['attributes'] = attributes_list
         return _dict
 
     def _to_dict(self):
@@ -1954,7 +2219,11 @@ class RuleContextAttribute:
     :attr str value: The attribute value.
     """
 
-    def __init__(self, name: str, value: str) -> None:
+    def __init__(
+        self,
+        name: str,
+        value: str,
+    ) -> None:
         """
         Initialize a RuleContextAttribute object.
 
@@ -2019,7 +2288,11 @@ class RuleList:
     :attr List[Rule] rules: The returned rules.
     """
 
-    def __init__(self, count: int, rules: List['Rule']) -> None:
+    def __init__(
+        self,
+        count: int,
+        rules: List['Rule'],
+    ) -> None:
         """
         Initialize a RuleList object.
 
@@ -2038,7 +2311,7 @@ class RuleList:
         else:
             raise ValueError('Required property \'count\' not present in RuleList JSON')
         if 'rules' in _dict:
-            args['rules'] = [Rule.from_dict(x) for x in _dict.get('rules')]
+            args['rules'] = [Rule.from_dict(v) for v in _dict.get('rules')]
         else:
             raise ValueError('Required property \'rules\' not present in RuleList JSON')
         return cls(**args)
@@ -2054,7 +2327,13 @@ class RuleList:
         if hasattr(self, 'count') and self.count is not None:
             _dict['count'] = self.count
         if hasattr(self, 'rules') and self.rules is not None:
-            _dict['rules'] = [x.to_dict() for x in self.rules]
+            rules_list = []
+            for v in self.rules:
+                if isinstance(v, dict):
+                    rules_list.append(v)
+                else:
+                    rules_list.append(v.to_dict())
+            _dict['rules'] = rules_list
         return _dict
 
     def _to_dict(self):
@@ -2087,7 +2366,11 @@ class ServiceRefTarget:
     """
 
     def __init__(
-        self, service_name: str, *, service_type: str = None, locations: List['ServiceRefTargetLocationsItem'] = None
+        self,
+        service_name: str,
+        *,
+        service_type: str = None,
+        locations: List['ServiceRefTargetLocationsItem'] = None,
     ) -> None:
         """
         Initialize a ServiceRefTarget object.
@@ -2112,7 +2395,7 @@ class ServiceRefTarget:
         if 'service_type' in _dict:
             args['service_type'] = _dict.get('service_type')
         if 'locations' in _dict:
-            args['locations'] = [ServiceRefTargetLocationsItem.from_dict(x) for x in _dict.get('locations')]
+            args['locations'] = [ServiceRefTargetLocationsItem.from_dict(v) for v in _dict.get('locations')]
         return cls(**args)
 
     @classmethod
@@ -2128,7 +2411,13 @@ class ServiceRefTarget:
         if hasattr(self, 'service_type') and self.service_type is not None:
             _dict['service_type'] = self.service_type
         if hasattr(self, 'locations') and self.locations is not None:
-            _dict['locations'] = [x.to_dict() for x in self.locations]
+            locations_list = []
+            for v in self.locations:
+                if isinstance(v, dict):
+                    locations_list.append(v)
+                else:
+                    locations_list.append(v.to_dict())
+            _dict['locations'] = locations_list
         return _dict
 
     def _to_dict(self):
@@ -2158,7 +2447,11 @@ class ServiceRefTargetList:
     :attr List[ServiceRefTarget] targets: The list of service reference targets.
     """
 
-    def __init__(self, count: int, targets: List['ServiceRefTarget']) -> None:
+    def __init__(
+        self,
+        count: int,
+        targets: List['ServiceRefTarget'],
+    ) -> None:
         """
         Initialize a ServiceRefTargetList object.
 
@@ -2178,7 +2471,7 @@ class ServiceRefTargetList:
         else:
             raise ValueError('Required property \'count\' not present in ServiceRefTargetList JSON')
         if 'targets' in _dict:
-            args['targets'] = [ServiceRefTarget.from_dict(x) for x in _dict.get('targets')]
+            args['targets'] = [ServiceRefTarget.from_dict(v) for v in _dict.get('targets')]
         else:
             raise ValueError('Required property \'targets\' not present in ServiceRefTargetList JSON')
         return cls(**args)
@@ -2194,7 +2487,13 @@ class ServiceRefTargetList:
         if hasattr(self, 'count') and self.count is not None:
             _dict['count'] = self.count
         if hasattr(self, 'targets') and self.targets is not None:
-            _dict['targets'] = [x.to_dict() for x in self.targets]
+            targets_list = []
+            for v in self.targets:
+                if isinstance(v, dict):
+                    targets_list.append(v)
+                else:
+                    targets_list.append(v.to_dict())
+            _dict['targets'] = targets_list
         return _dict
 
     def _to_dict(self):
@@ -2223,7 +2522,10 @@ class ServiceRefTargetLocationsItem:
     :attr str name: The location name.
     """
 
-    def __init__(self, name: str) -> None:
+    def __init__(
+        self,
+        name: str,
+    ) -> None:
         """
         Initialize a ServiceRefTargetLocationsItem object.
 
@@ -2290,7 +2592,7 @@ class ServiceRefValue:
         service_type: str = None,
         service_name: str = None,
         service_instance: str = None,
-        location: str = None
+        location: str = None,
     ) -> None:
         """
         Initialize a ServiceRefValue object.
@@ -2474,11 +2776,11 @@ class Zone:
         else:
             raise ValueError('Required property \'description\' not present in Zone JSON')
         if 'addresses' in _dict:
-            args['addresses'] = [Address.from_dict(x) for x in _dict.get('addresses')]
+            args['addresses'] = [Address.from_dict(v) for v in _dict.get('addresses')]
         else:
             raise ValueError('Required property \'addresses\' not present in Zone JSON')
         if 'excluded' in _dict:
-            args['excluded'] = [Address.from_dict(x) for x in _dict.get('excluded')]
+            args['excluded'] = [Address.from_dict(v) for v in _dict.get('excluded')]
         else:
             raise ValueError('Required property \'excluded\' not present in Zone JSON')
         if 'href' in _dict:
@@ -2526,9 +2828,21 @@ class Zone:
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
         if hasattr(self, 'addresses') and self.addresses is not None:
-            _dict['addresses'] = [x.to_dict() for x in self.addresses]
+            addresses_list = []
+            for v in self.addresses:
+                if isinstance(v, dict):
+                    addresses_list.append(v)
+                else:
+                    addresses_list.append(v.to_dict())
+            _dict['addresses'] = addresses_list
         if hasattr(self, 'excluded') and self.excluded is not None:
-            _dict['excluded'] = [x.to_dict() for x in self.excluded]
+            excluded_list = []
+            for v in self.excluded:
+                if isinstance(v, dict):
+                    excluded_list.append(v)
+                else:
+                    excluded_list.append(v.to_dict())
+            _dict['excluded'] = excluded_list
         if hasattr(self, 'href') and self.href is not None:
             _dict['href'] = self.href
         if hasattr(self, 'created_at') and self.created_at is not None:
@@ -2568,7 +2882,11 @@ class ZoneList:
     :attr List[ZoneSummary] zones: The returned zones.
     """
 
-    def __init__(self, count: int, zones: List['ZoneSummary']) -> None:
+    def __init__(
+        self,
+        count: int,
+        zones: List['ZoneSummary'],
+    ) -> None:
         """
         Initialize a ZoneList object.
 
@@ -2587,7 +2905,7 @@ class ZoneList:
         else:
             raise ValueError('Required property \'count\' not present in ZoneList JSON')
         if 'zones' in _dict:
-            args['zones'] = [ZoneSummary.from_dict(x) for x in _dict.get('zones')]
+            args['zones'] = [ZoneSummary.from_dict(v) for v in _dict.get('zones')]
         else:
             raise ValueError('Required property \'zones\' not present in ZoneList JSON')
         return cls(**args)
@@ -2603,7 +2921,13 @@ class ZoneList:
         if hasattr(self, 'count') and self.count is not None:
             _dict['count'] = self.count
         if hasattr(self, 'zones') and self.zones is not None:
-            _dict['zones'] = [x.to_dict() for x in self.zones]
+            zones_list = []
+            for v in self.zones:
+                if isinstance(v, dict):
+                    zones_list.append(v)
+                else:
+                    zones_list.append(v.to_dict())
+            _dict['zones'] = zones_list
         return _dict
 
     def _to_dict(self):
@@ -2660,7 +2984,7 @@ class ZoneSummary:
         last_modified_at: datetime,
         last_modified_by_id: str,
         *,
-        description: str = None
+        description: str = None,
     ) -> None:
         """
         Initialize a ZoneSummary object.
@@ -2713,7 +3037,7 @@ class ZoneSummary:
         if 'description' in _dict:
             args['description'] = _dict.get('description')
         if 'addresses_preview' in _dict:
-            args['addresses_preview'] = [Address.from_dict(x) for x in _dict.get('addresses_preview')]
+            args['addresses_preview'] = [Address.from_dict(v) for v in _dict.get('addresses_preview')]
         else:
             raise ValueError('Required property \'addresses_preview\' not present in ZoneSummary JSON')
         if 'address_count' in _dict:
@@ -2763,7 +3087,13 @@ class ZoneSummary:
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
         if hasattr(self, 'addresses_preview') and self.addresses_preview is not None:
-            _dict['addresses_preview'] = [x.to_dict() for x in self.addresses_preview]
+            addresses_preview_list = []
+            for v in self.addresses_preview:
+                if isinstance(v, dict):
+                    addresses_preview_list.append(v)
+                else:
+                    addresses_preview_list.append(v.to_dict())
+            _dict['addresses_preview'] = addresses_preview_list
         if hasattr(self, 'address_count') and self.address_count is not None:
             _dict['address_count'] = self.address_count
         if hasattr(self, 'excluded_count') and self.excluded_count is not None:
@@ -2807,7 +3137,11 @@ class AddressIPAddress(Address):
     :attr str value: The IP address.
     """
 
-    def __init__(self, type: str, value: str) -> None:
+    def __init__(
+        self,
+        type: str,
+        value: str,
+    ) -> None:
         """
         Initialize a AddressIPAddress object.
 
@@ -2872,6 +3206,7 @@ class AddressIPAddress(Address):
         IPADDRESS = 'ipAddress'
 
 
+
 class AddressIPAddressRange(Address):
     """
     An IP address range.
@@ -2880,7 +3215,11 @@ class AddressIPAddressRange(Address):
     :attr str value: The ip range in <first-ip>-<last-ip> format.
     """
 
-    def __init__(self, type: str, value: str) -> None:
+    def __init__(
+        self,
+        type: str,
+        value: str,
+    ) -> None:
         """
         Initialize a AddressIPAddressRange object.
 
@@ -2945,6 +3284,7 @@ class AddressIPAddressRange(Address):
         IPRANGE = 'ipRange'
 
 
+
 class AddressServiceRef(Address):
     """
     A service reference.
@@ -2953,7 +3293,11 @@ class AddressServiceRef(Address):
     :attr ServiceRefValue ref: A service reference value.
     """
 
-    def __init__(self, type: str, ref: 'ServiceRefValue') -> None:
+    def __init__(
+        self,
+        type: str,
+        ref: 'ServiceRefValue',
+    ) -> None:
         """
         Initialize a AddressServiceRef object.
 
@@ -2989,7 +3333,10 @@ class AddressServiceRef(Address):
         if hasattr(self, 'type') and self.type is not None:
             _dict['type'] = self.type
         if hasattr(self, 'ref') and self.ref is not None:
-            _dict['ref'] = self.ref.to_dict()
+            if isinstance(self.ref, dict):
+                _dict['ref'] = self.ref
+            else:
+                _dict['ref'] = self.ref.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -3018,6 +3365,7 @@ class AddressServiceRef(Address):
         SERVICEREF = 'serviceRef'
 
 
+
 class AddressSubnet(Address):
     """
     A subnet in CIDR format.
@@ -3026,7 +3374,11 @@ class AddressSubnet(Address):
     :attr str value: The subnet in CIDR format.
     """
 
-    def __init__(self, type: str, value: str) -> None:
+    def __init__(
+        self,
+        type: str,
+        value: str,
+    ) -> None:
         """
         Initialize a AddressSubnet object.
 
@@ -3091,6 +3443,7 @@ class AddressSubnet(Address):
         SUBNET = 'subnet'
 
 
+
 class AddressVPC(Address):
     """
     A single VPC address.
@@ -3099,7 +3452,11 @@ class AddressVPC(Address):
     :attr str value: The VPC CRN.
     """
 
-    def __init__(self, type: str, value: str) -> None:
+    def __init__(
+        self,
+        type: str,
+        value: str,
+    ) -> None:
         """
         Initialize a AddressVPC object.
 
@@ -3162,3 +3519,4 @@ class AddressVPC(Address):
         """
 
         VPC = 'vpc'
+

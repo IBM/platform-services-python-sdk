@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.context_based_restrictions_v1 import *
 
 
-_service = ContextBasedRestrictionsV1(authenticator=NoAuthAuthenticator())
+_service = ContextBasedRestrictionsV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://cbr.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -59,7 +61,8 @@ def preprocess_url(operation_path: str):
     # Otherwise, return a regular expression that matches one or more trailing /.
     if re.fullmatch('.*/+', request_url) is None:
         return request_url
-    return re.compile(request_url.rstrip('/') + '/+')
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
 
 
 ##############################################################################
@@ -109,7 +112,13 @@ class TestCreateZone:
         # Set up mock
         url = preprocess_url('/v1/zones')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a AddressIPAddress model
         address_model = {}
@@ -165,7 +174,13 @@ class TestCreateZone:
         # Set up mock
         url = preprocess_url('/v1/zones')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Invoke method
         response = _service.create_zone()
@@ -197,7 +212,13 @@ class TestListZones:
         # Set up mock
         url = preprocess_url('/v1/zones')
         mock_response = '{"count": 5, "zones": [{"id": "id", "crn": "crn", "name": "name", "description": "description", "addresses_preview": [{"type": "ipAddress", "value": "value"}], "address_count": 13, "excluded_count": 14, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -243,13 +264,22 @@ class TestListZones:
         # Set up mock
         url = preprocess_url('/v1/zones')
         mock_response = '{"count": 5, "zones": [{"id": "id", "crn": "crn", "name": "name", "description": "description", "addresses_preview": [{"type": "ipAddress", "value": "value"}], "address_count": 13, "excluded_count": 14, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.list_zones(account_id, headers={})
+        response = _service.list_zones(
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -276,7 +306,13 @@ class TestListZones:
         # Set up mock
         url = preprocess_url('/v1/zones')
         mock_response = '{"count": 5, "zones": [{"id": "id", "crn": "crn", "name": "name", "description": "description", "addresses_preview": [{"type": "ipAddress", "value": "value"}], "address_count": 13, "excluded_count": 14, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -313,7 +349,13 @@ class TestGetZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         zone_id = 'testString'
@@ -322,7 +364,10 @@ class TestGetZone:
 
         # Invoke method
         response = _service.get_zone(
-            zone_id, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            zone_id,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={},
         )
 
         # Check for correct operation
@@ -346,13 +391,22 @@ class TestGetZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         zone_id = 'testString'
 
         # Invoke method
-        response = _service.get_zone(zone_id, headers={})
+        response = _service.get_zone(
+            zone_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -375,7 +429,13 @@ class TestGetZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         zone_id = 'testString'
@@ -412,7 +472,13 @@ class TestReplaceZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a AddressIPAddress model
         address_model = {}
@@ -472,14 +538,24 @@ class TestReplaceZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         zone_id = 'testString'
         if_match = 'testString'
 
         # Invoke method
-        response = _service.replace_zone(zone_id, if_match, headers={})
+        response = _service.replace_zone(
+            zone_id,
+            if_match,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -502,7 +578,13 @@ class TestReplaceZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         zone_id = 'testString'
@@ -540,7 +622,11 @@ class TestDeleteZone:
         """
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         zone_id = 'testString'
@@ -549,7 +635,10 @@ class TestDeleteZone:
 
         # Invoke method
         response = _service.delete_zone(
-            zone_id, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            zone_id,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={},
         )
 
         # Check for correct operation
@@ -572,13 +661,20 @@ class TestDeleteZone:
         """
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         zone_id = 'testString'
 
         # Invoke method
-        response = _service.delete_zone(zone_id, headers={})
+        response = _service.delete_zone(
+            zone_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -600,7 +696,11 @@ class TestDeleteZone:
         """
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         zone_id = 'testString'
@@ -637,7 +737,13 @@ class TestListAvailableServicerefTargets:
         # Set up mock
         url = preprocess_url('/v1/zones/serviceref_targets')
         mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"name": "name"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         x_correlation_id = 'testString'
@@ -646,7 +752,10 @@ class TestListAvailableServicerefTargets:
 
         # Invoke method
         response = _service.list_available_serviceref_targets(
-            x_correlation_id=x_correlation_id, transaction_id=transaction_id, type=type, headers={}
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            type=type,
+            headers={},
         )
 
         # Check for correct operation
@@ -674,7 +783,13 @@ class TestListAvailableServicerefTargets:
         # Set up mock
         url = preprocess_url('/v1/zones/serviceref_targets')
         mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"name": "name"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Invoke method
         response = _service.list_available_serviceref_targets()
@@ -745,7 +860,13 @@ class TestCreateRule:
         # Set up mock
         url = preprocess_url('/v1/rules')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a RuleContextAttribute model
         rule_context_attribute_model = {}
@@ -830,7 +951,13 @@ class TestCreateRule:
         # Set up mock
         url = preprocess_url('/v1/rules')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Invoke method
         response = _service.create_rule()
@@ -862,7 +989,13 @@ class TestListRules:
         # Set up mock
         url = preprocess_url('/v1/rules')
         mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -932,13 +1065,22 @@ class TestListRules:
         # Set up mock
         url = preprocess_url('/v1/rules')
         mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.list_rules(account_id, headers={})
+        response = _service.list_rules(
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -965,7 +1107,13 @@ class TestListRules:
         # Set up mock
         url = preprocess_url('/v1/rules')
         mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -1002,7 +1150,13 @@ class TestGetRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         rule_id = 'testString'
@@ -1011,7 +1165,10 @@ class TestGetRule:
 
         # Invoke method
         response = _service.get_rule(
-            rule_id, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            rule_id,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={},
         )
 
         # Check for correct operation
@@ -1035,13 +1192,22 @@ class TestGetRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         rule_id = 'testString'
 
         # Invoke method
-        response = _service.get_rule(rule_id, headers={})
+        response = _service.get_rule(
+            rule_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1064,7 +1230,13 @@ class TestGetRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         rule_id = 'testString'
@@ -1101,7 +1273,13 @@ class TestReplaceRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a RuleContextAttribute model
         rule_context_attribute_model = {}
@@ -1190,14 +1368,24 @@ class TestReplaceRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         rule_id = 'testString'
         if_match = 'testString'
 
         # Invoke method
-        response = _service.replace_rule(rule_id, if_match, headers={})
+        response = _service.replace_rule(
+            rule_id,
+            if_match,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1220,7 +1408,13 @@ class TestReplaceRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         rule_id = 'testString'
@@ -1258,7 +1452,11 @@ class TestDeleteRule:
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         rule_id = 'testString'
@@ -1267,7 +1465,10 @@ class TestDeleteRule:
 
         # Invoke method
         response = _service.delete_rule(
-            rule_id, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            rule_id,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={},
         )
 
         # Check for correct operation
@@ -1290,13 +1491,20 @@ class TestDeleteRule:
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         rule_id = 'testString'
 
         # Invoke method
-        response = _service.delete_rule(rule_id, headers={})
+        response = _service.delete_rule(
+            rule_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1318,7 +1526,11 @@ class TestDeleteRule:
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         rule_id = 'testString'
@@ -1394,7 +1606,13 @@ class TestGetAccountSettings:
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
         mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -1403,7 +1621,10 @@ class TestGetAccountSettings:
 
         # Invoke method
         response = _service.get_account_settings(
-            account_id, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            account_id,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={},
         )
 
         # Check for correct operation
@@ -1427,13 +1648,22 @@ class TestGetAccountSettings:
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
         mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.get_account_settings(account_id, headers={})
+        response = _service.get_account_settings(
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1456,7 +1686,13 @@ class TestGetAccountSettings:
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
         mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -1532,16 +1768,29 @@ class TestListAvailableServiceOperations:
         # Set up mock
         url = preprocess_url('/v1/operations')
         mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
-        service_name = 'testString'
         x_correlation_id = 'testString'
         transaction_id = 'testString'
+        service_name = 'testString'
+        service_group_id = 'testString'
+        resource_type = 'testString'
 
         # Invoke method
         response = _service.list_available_service_operations(
-            service_name, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            service_name=service_name,
+            service_group_id=service_group_id,
+            resource_type=resource_type,
+            headers={},
         )
 
         # Check for correct operation
@@ -1551,6 +1800,8 @@ class TestListAvailableServiceOperations:
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'service_name={}'.format(service_name) in query_string
+        assert 'service_group_id={}'.format(service_group_id) in query_string
+        assert 'resource_type={}'.format(resource_type) in query_string
 
     def test_list_available_service_operations_all_params_with_retries(self):
         # Enable retries and run test_list_available_service_operations_all_params.
@@ -1569,10 +1820,16 @@ class TestListAvailableServiceOperations:
         # Set up mock
         url = preprocess_url('/v1/operations')
         mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
-
         # Set up parameter values
         service_name = 'testString'
+
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Invoke method
         response = _service.list_available_service_operations(service_name, headers={})
@@ -1580,10 +1837,6 @@ class TestListAvailableServiceOperations:
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'service_name={}'.format(service_name) in query_string
 
     def test_list_available_service_operations_required_params_with_retries(self):
         # Enable retries and run test_list_available_service_operations_required_params.
@@ -1593,37 +1846,6 @@ class TestListAvailableServiceOperations:
         # Disable retries and run test_list_available_service_operations_required_params.
         _service.disable_retries()
         self.test_list_available_service_operations_required_params()
-
-    @responses.activate
-    def test_list_available_service_operations_value_error(self):
-        """
-        test_list_available_service_operations_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/operations')
-        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
-
-        # Set up parameter values
-        service_name = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "service_name": service_name,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.list_available_service_operations(**req_copy)
-
-    def test_list_available_service_operations_value_error_with_retries(self):
-        # Enable retries and run test_list_available_service_operations_value_error.
-        _service.enable_retries()
-        self.test_list_available_service_operations_value_error()
-
-        # Disable retries and run test_list_available_service_operations_value_error.
-        _service.disable_retries()
-        self.test_list_available_service_operations_value_error()
 
 
 # endregion
@@ -1636,6 +1858,8 @@ class TestListAvailableServiceOperations:
 # Start of Model Tests
 ##############################################################################
 # region
+
+
 class TestModel_APIType:
     """
     Test Class for APIType
@@ -1796,18 +2020,12 @@ class TestModel_NewRuleOperationsApiTypesItem:
         new_rule_operations_api_types_item_model_json['api_type_id'] = 'testString'
 
         # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
-        new_rule_operations_api_types_item_model = NewRuleOperationsApiTypesItem.from_dict(
-            new_rule_operations_api_types_item_model_json
-        )
+        new_rule_operations_api_types_item_model = NewRuleOperationsApiTypesItem.from_dict(new_rule_operations_api_types_item_model_json)
         assert new_rule_operations_api_types_item_model != False
 
         # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
-        new_rule_operations_api_types_item_model_dict = NewRuleOperationsApiTypesItem.from_dict(
-            new_rule_operations_api_types_item_model_json
-        ).__dict__
-        new_rule_operations_api_types_item_model2 = NewRuleOperationsApiTypesItem(
-            **new_rule_operations_api_types_item_model_dict
-        )
+        new_rule_operations_api_types_item_model_dict = NewRuleOperationsApiTypesItem.from_dict(new_rule_operations_api_types_item_model_json).__dict__
+        new_rule_operations_api_types_item_model2 = NewRuleOperationsApiTypesItem(**new_rule_operations_api_types_item_model_dict)
 
         # Verify the model instances are equivalent
         assert new_rule_operations_api_types_item_model == new_rule_operations_api_types_item_model2
@@ -2270,18 +2488,12 @@ class TestModel_ServiceRefTargetLocationsItem:
         service_ref_target_locations_item_model_json['name'] = 'testString'
 
         # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
-        service_ref_target_locations_item_model = ServiceRefTargetLocationsItem.from_dict(
-            service_ref_target_locations_item_model_json
-        )
+        service_ref_target_locations_item_model = ServiceRefTargetLocationsItem.from_dict(service_ref_target_locations_item_model_json)
         assert service_ref_target_locations_item_model != False
 
         # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
-        service_ref_target_locations_item_model_dict = ServiceRefTargetLocationsItem.from_dict(
-            service_ref_target_locations_item_model_json
-        ).__dict__
-        service_ref_target_locations_item_model2 = ServiceRefTargetLocationsItem(
-            **service_ref_target_locations_item_model_dict
-        )
+        service_ref_target_locations_item_model_dict = ServiceRefTargetLocationsItem.from_dict(service_ref_target_locations_item_model_json).__dict__
+        service_ref_target_locations_item_model2 = ServiceRefTargetLocationsItem(**service_ref_target_locations_item_model_dict)
 
         # Verify the model instances are equivalent
         assert service_ref_target_locations_item_model == service_ref_target_locations_item_model2
@@ -2523,9 +2735,7 @@ class TestModel_AddressIPAddressRange:
         assert address_ip_address_range_model != False
 
         # Construct a model instance of AddressIPAddressRange by calling from_dict on the json representation
-        address_ip_address_range_model_dict = AddressIPAddressRange.from_dict(
-            address_ip_address_range_model_json
-        ).__dict__
+        address_ip_address_range_model_dict = AddressIPAddressRange.from_dict(address_ip_address_range_model_json).__dict__
         address_ip_address_range_model2 = AddressIPAddressRange(**address_ip_address_range_model_dict)
 
         # Verify the model instances are equivalent
