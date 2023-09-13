@@ -671,7 +671,7 @@ class TestContextBasedRestrictionsV1:
         response = self.context_based_restrictions_service.list_available_service_operations(
             transaction_id=self.getTransactionID(),
             service_name='iam-access-management',
-            resource_type='iam-access-management.customRole',
+            resource_type='customRole',
         )
 
         assert response.get_status_code() == 200
