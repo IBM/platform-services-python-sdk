@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.70.0-7df966bf-20230419-195904
+# IBM OpenAPI SDK Code Generator Version: 3.78.0-67aec9b7-20230818-174940
 
 """
 The IAM Access Groups API allows for the management of access groups (Create, Read,
@@ -100,9 +100,9 @@ class IamAccessGroupsV2(BaseService):
                IAM ID is specified in iam_id then account_id must match the account of the
                IAM ID. If a user IAM ID is specified in iam_id then then account_id must
                match the account of the Authorization token.
-        :param str name: Assign the specified name to the access group. This field
-               is case-insensitive and has a limit of 100 characters. The group name has
-               to be unique within an account.
+        :param str name: Give the access group a unique name that doesn't conflict
+               with an existing access group in the account. This field is
+               case-insensitive and has a limit of 100 characters.
         :param str description: (optional) Assign an optional description for the
                access group. This field has a limit of 250 characters.
         :param str transaction_id: (optional) An optional transaction ID can be
@@ -348,9 +348,9 @@ class IamAccessGroupsV2(BaseService):
         :param str if_match: The current revision number of the group being
                updated. This can be found in the Create/Get access group response ETag
                header.
-        :param str name: (optional) Assign the specified name to the access group.
-               This field is case-insensitive and has a limit of 100 characters. The group
-               name has to be unique within an account.
+        :param str name: (optional) Give the access group a unique name that
+               doesn't conflict with an existing access group in the account. This field
+               is case-insensitive and has a limit of 100 characters.
         :param str description: (optional) Assign an optional description for the
                access group. This field has a limit of 250 characters.
         :param str transaction_id: (optional) An optional transaction ID can be
@@ -632,9 +632,9 @@ class IamAccessGroupsV2(BaseService):
                Transaction-Id and the value is anything that you choose. If no transaction
                ID is passed in, then a random ID is generated.
         :param str membership_type: (optional) Filters members by membership type.
-               Membership type can be either `static`, `dynamic` or `all`. `static` lists
-               those members explicitly added to the access group, `dynamic` lists those
-               members part of access group via dynamic rules at the moment. `all` lists
+               Filter by `static`, `dynamic` or `all`. `static` lists the members
+               explicitly added to the access group, and `dynamic` lists the members that
+               are part of the access group at that time via dynamic rules. `all` lists
                both static and dynamic members.
         :param int limit: (optional) Return up to this limit of results where limit
                is between 0 and 100.
@@ -995,11 +995,13 @@ class IamAccessGroupsV2(BaseService):
         dynamic rules.](/docs/account?topic=account-rules).
 
         :param str access_group_id: The access group identifier.
-        :param int expiration: The number of hours that the rule lives for.
-        :param str realm_name: The url of the identity provider.
-        :param List[RuleConditions] conditions: A list of conditions the rule must
-               satisfy.
-        :param str name: (optional) The name of the rule.
+        :param int expiration: Session duration in hours. Access group membership
+               is revoked after this time period expires. Users must log back in to
+               refresh their access group membership.
+        :param str realm_name: The URL of the identity provider (IdP).
+        :param List[RuleConditions] conditions: A list of conditions that
+               identities must satisfy to gain access group membership.
+        :param str name: (optional) The name of the dynaimic rule.
         :param str transaction_id: (optional) An optional transaction ID can be
                passed to your request, which can be useful for tracking calls through
                multiple services by using one identifier. The header key must be set to
@@ -1194,11 +1196,13 @@ class IamAccessGroupsV2(BaseService):
         :param str rule_id: The rule to get.
         :param str if_match: The current revision number of the rule being updated.
                This can be found in the Get Rule response ETag header.
-        :param int expiration: The number of hours that the rule lives for.
-        :param str realm_name: The url of the identity provider.
-        :param List[RuleConditions] conditions: A list of conditions the rule must
-               satisfy.
-        :param str name: (optional) The name of the rule.
+        :param int expiration: Session duration in hours. Access group membership
+               is revoked after this time period expires. Users must log back in to
+               refresh their access group membership.
+        :param str realm_name: The URL of the identity provider (IdP).
+        :param List[RuleConditions] conditions: A list of conditions that
+               identities must satisfy to gain access group membership.
+        :param str name: (optional) The name of the dynaimic rule.
         :param str transaction_id: (optional) An optional transaction ID can be
                passed to your request, which can be useful for tracking calls through
                multiple services by using one identifier. The header key must be set to
@@ -1457,10 +1461,1309 @@ class IamAccessGroupsV2(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    #########################
+    # Template operations
+    #########################
+
+    def create_template(
+        self,
+        name: str,
+        account_id: str,
+        *,
+        description: str = None,
+        group: 'AccessGroupRequest' = None,
+        policy_template_references: List['PolicyTemplates'] = None,
+        transaction_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create template.
+
+        Create an access group template. Make sure that the template is generic enough to
+        apply to multiple different child accounts. Before you can assign an access group
+        template to child accounts, you must commit it so that no further changes can be
+        made to the version.
+
+        :param str name: Give the access group template a unique name that doesn't
+               conflict with an existing access group templates in the account.
+        :param str account_id: Enterprise account id in which the template will be
+               created.
+        :param str description: (optional) Assign an optional description for the
+               access group template.
+        :param AccessGroupRequest group: (optional) Access Group Component.
+        :param List[PolicyTemplates] policy_template_references: (optional)
+               Existing policy templates that you can reference to assign access in the
+               Access group input component.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateResponse` object
+        """
+
+        if name is None:
+            raise ValueError('name must be provided')
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        if group is not None:
+            group = convert_model(group)
+        if policy_template_references is not None:
+            policy_template_references = [convert_model(x) for x in policy_template_references]
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='create_template',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'account_id': account_id,
+            'description': description,
+            'group': group,
+            'policy_template_references': policy_template_references,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/group_templates'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_templates(
+        self,
+        account_id: str,
+        *,
+        transaction_id: str = None,
+        limit: int = None,
+        offset: int = None,
+        verbose: bool = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List templates.
+
+        List the access group templates in an enterprise account.
+
+        :param str account_id: Enterprise account ID.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param int limit: (optional) Return up to this limit of results where limit
+               is between 0 and 100.
+        :param int offset: (optional) The offset of the first result item to be
+               returned.
+        :param bool verbose: (optional) If `verbose=true`, IAM resource details are
+               returned. If performance is a concern, leave the `verbose` parameter off so
+               that details are not retrieved.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ListTemplatesResponse` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_templates',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'limit': limit,
+            'offset': offset,
+            'verbose': verbose,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/group_templates'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_template_version(
+        self,
+        template_id: str,
+        *,
+        name: str = None,
+        description: str = None,
+        group: 'AccessGroupRequest' = None,
+        policy_template_references: List['PolicyTemplates'] = None,
+        transaction_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create template version.
+
+        Create a new version of an access group template.
+
+        :param str template_id: ID of the template that you want to create a new
+               version of.
+        :param str name: (optional) This is an optional field. If the field is
+               included it will change the name value for all existing versions of the
+               template..
+        :param str description: (optional) Assign an optional description for the
+               access group template version.
+        :param AccessGroupRequest group: (optional) Access Group Component.
+        :param List[PolicyTemplates] policy_template_references: (optional) The
+               policy templates associated with the template version.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateVersionResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if group is not None:
+            group = convert_model(group)
+        if policy_template_references is not None:
+            policy_template_references = [convert_model(x) for x in policy_template_references]
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='create_template_version',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'description': description,
+            'group': group,
+            'policy_template_references': policy_template_references,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/group_templates/{template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_template_versions(
+        self,
+        template_id: str,
+        *,
+        limit: int = None,
+        offset: int = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List template versions.
+
+        List all the versions of an access group template.
+
+        :param str template_id: ID of the template that you want to list all
+               versions of.
+        :param int limit: (optional) Return up to this limit of results where limit
+               is between 0 and 100.
+        :param int offset: (optional) The offset of the first result item to be
+               returned.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ListTemplateVersionsResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_template_versions',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'limit': limit,
+            'offset': offset,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/group_templates/{template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_template_version(
+        self,
+        template_id: str,
+        version_num: str,
+        *,
+        verbose: bool = None,
+        transaction_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get template version.
+
+        Get a specific version of a template.
+
+        :param str template_id: ID of the template to get a specific version of.
+        :param str version_num: Version number.
+        :param bool verbose: (optional) If `verbose=true`, IAM resource details are
+               returned. If performance is a concern, leave the `verbose` parameter off so
+               that details are not retrieved.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateVersionResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version_num:
+            raise ValueError('version_num must be provided')
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='get_template_version',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'verbose': verbose,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id', 'version_num']
+        path_param_values = self.encode_path_vars(template_id, version_num)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/group_templates/{template_id}/versions/{version_num}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_template_version(
+        self,
+        template_id: str,
+        version_num: str,
+        if_match: str,
+        *,
+        name: str = None,
+        description: str = None,
+        group: 'AccessGroupRequest' = None,
+        policy_template_references: List['PolicyTemplates'] = None,
+        transaction_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update template version.
+
+        Update a template version. You can only update a version that isn't committed.
+        Create a new version if you need to update a committed version.
+
+        :param str template_id: ID of the template.
+        :param str version_num: Version number of the template.
+        :param str if_match: ETag value of the template version document.
+        :param str name: (optional) This is an optional field. If the field is
+               included it will change the name value for all existing versions of the
+               template..
+        :param str description: (optional) Assign an optional description for the
+               access group template version.
+        :param AccessGroupRequest group: (optional) Access Group Component.
+        :param List[PolicyTemplates] policy_template_references: (optional) The
+               policy templates associated with the template version.
+        :param str transaction_id: (optional) transaction id in header.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateVersionResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version_num:
+            raise ValueError('version_num must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if group is not None:
+            group = convert_model(group)
+        if policy_template_references is not None:
+            policy_template_references = [convert_model(x) for x in policy_template_references]
+        headers = {
+            'If-Match': if_match,
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='update_template_version',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'description': description,
+            'group': group,
+            'policy_template_references': policy_template_references,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id', 'version_num']
+        path_param_values = self.encode_path_vars(template_id, version_num)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/group_templates/{template_id}/versions/{version_num}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_template_version(
+        self,
+        template_id: str,
+        version_num: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete template version.
+
+        Delete a template version. You must remove all assignments for a template version
+        before you can delete it.
+
+        :param str template_id: ID of the template to delete.
+        :param str version_num: version number in path.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version_num:
+            raise ValueError('version_num must be provided')
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='delete_template_version',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id', 'version_num']
+        path_param_values = self.encode_path_vars(template_id, version_num)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/group_templates/{template_id}/versions/{version_num}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def commit_template(
+        self,
+        template_id: str,
+        version_num: str,
+        if_match: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Commit a template.
+
+        Commit a template version. You must do this before you can assign a template
+        version to child accounts. After you commit the template version, you can't make
+        any further changes.
+
+        :param str template_id: ID of the template to commit.
+        :param str version_num: version number in path.
+        :param str if_match: ETag value of the template version document.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version_num:
+            raise ValueError('version_num must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        headers = {
+            'If-Match': if_match,
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='commit_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id', 'version_num']
+        path_param_values = self.encode_path_vars(template_id, version_num)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/group_templates/{template_id}/versions/{version_num}/commit'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_latest_template_version(
+        self,
+        template_id: str,
+        *,
+        verbose: bool = None,
+        transaction_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get latest template version.
+
+        Get the latest version of a template.
+
+        :param str template_id: ID of the template to get a specific version of.
+        :param bool verbose: (optional) If `verbose=true`, IAM resource details are
+               returned. If performance is a concern, leave the `verbose` parameter off so
+               that details are not retrieved.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateVersionResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='get_latest_template_version',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'verbose': verbose,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/group_templates/{template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_template(
+        self,
+        template_id: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete template.
+
+        Endpoint to delete a template. All access assigned by that template is deleted
+        from all of the accounts where the template was assigned.
+
+        :param str template_id: template id parameter.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='delete_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/group_templates/{template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Template assignment operations
+    #########################
+
+    def create_assignment(
+        self,
+        template_id: str,
+        template_version: str,
+        target_type: str,
+        target: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create assignment.
+
+        Assign a template version to accounts that have enabled enterprise-managed IAM.
+        You can specify individual accounts, or an entire account group to assign the
+        template to all current and future child accounts of that account group.
+
+        :param str template_id: The unique identifier of the template to be
+               assigned.
+        :param str template_version: The version number of the template to be
+               assigned.
+        :param str target_type: The type of the entity to which the template should
+               be assigned, e.g. 'Account', 'AccountGroup', etc.
+        :param str target: The unique identifier of the entity to which the
+               template should be assigned.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if template_id is None:
+            raise ValueError('template_id must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        if target_type is None:
+            raise ValueError('target_type must be provided')
+        if target is None:
+            raise ValueError('target must be provided')
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='create_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_id': template_id,
+            'template_version': template_version,
+            'target_type': target_type,
+            'target': target,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/group_assignments'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_assignments(
+        self,
+        account_id: str,
+        *,
+        template_id: str = None,
+        template_version: str = None,
+        target: str = None,
+        status: str = None,
+        transaction_id: str = None,
+        limit: int = None,
+        offset: int = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List assignments.
+
+        List template assignments from an enterprise account.
+
+        :param str account_id: Enterprise account ID.
+        :param str template_id: (optional) Filter results by Template Id.
+        :param str template_version: (optional) Filter results by Template Version.
+        :param str target: (optional) Filter results by the assignment target.
+        :param str status: (optional) Filter results by the assignment status.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param int limit: (optional) Return up to this limit of results where limit
+               is between 0 and 100.
+        :param int offset: (optional) The offset of the first result item to be
+               returned.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ListTemplateAssignmentResponse` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_assignments',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'template_id': template_id,
+            'template_version': template_version,
+            'target': target,
+            'status': status,
+            'limit': limit,
+            'offset': offset,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/group_assignments'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_assignment(
+        self,
+        assignment_id: str,
+        *,
+        transaction_id: str = None,
+        verbose: bool = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get assignment.
+
+        Get a specific template assignment.
+
+        :param str assignment_id: Assignment ID.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param bool verbose: (optional) Returns resources access group template
+               assigned, possible values `true` or `false`.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentVerboseResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='get_assignment',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'verbose': verbose,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/group_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_assignment(
+        self,
+        assignment_id: str,
+        if_match: str,
+        template_version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update Assignment.
+
+        Endpoint to update template assignment.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param str if_match: Version of the Assignment to be updated. Specify the
+               version that you retrieved when reading the Assignment. This value helps
+               identifying parallel usage of this API. Pass * to indicate to update any
+               version available. This might result in stale updates.
+        :param str template_version: Template version which shall be applied to the
+               assignment.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentVerboseResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='update_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_version': template_version,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/group_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_assignment(
+        self,
+        assignment_id: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete assignment.
+
+        Delete an access group template assignment.
+
+        :param str assignment_id: assignment id path parameter.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='delete_assignment',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/group_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+class ListAssignmentsEnums:
+    """
+    Enums for list_assignments parameters.
+    """
+
+    class Status(str, Enum):
+        """
+        Filter results by the assignment status.
+        """
+
+        ACCEPTED = 'accepted'
+        IN_PROGRESS = 'in_progress'
+        SUCCEEDED = 'succeeded'
+        FAILED = 'failed'
+
 
 ##############################################################################
 # Models
 ##############################################################################
+
+
+class AccessActionControls:
+    """
+    Control whether or not access group administrators in child accounts can add access
+    policies to the enterprise-managed access group in their account.
+
+    :attr bool add: (optional) Action control for adding access policies to an
+          enterprise-managed access group in a child account. If an access group
+          administrator in a child account adds a policy, they can always update or remove
+          it. Note that if conflicts arise between an update to this control in a new
+          version and polices added to the access group by an administrator in a child
+          account, you must resolve those conflicts in the child account. This prevents
+          breaking access in the child account. For more information, see [Working with
+          versions](https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
+    """
+
+    def __init__(
+        self,
+        *,
+        add: bool = None,
+    ) -> None:
+        """
+        Initialize a AccessActionControls object.
+
+        :param bool add: (optional) Action control for adding access policies to an
+               enterprise-managed access group in a child account. If an access group
+               administrator in a child account adds a policy, they can always update or
+               remove it. Note that if conflicts arise between an update to this control
+               in a new version and polices added to the access group by an administrator
+               in a child account, you must resolve those conflicts in the child account.
+               This prevents breaking access in the child account. For more information,
+               see [Working with
+               versions](https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
+        """
+        self.add = add
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccessActionControls':
+        """Initialize a AccessActionControls object from a json dictionary."""
+        args = {}
+        if 'add' in _dict:
+            args['add'] = _dict.get('add')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccessActionControls object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'add') and self.add is not None:
+            _dict['add'] = self.add
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccessActionControls object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccessActionControls') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccessActionControls') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class AccessGroupRequest:
+    """
+    Access Group Component.
+
+    :attr str name: Give the access group a unique name that doesn't conflict with
+          other templates access group name in the given account. This is shown in child
+          accounts.
+    :attr str description: (optional) Access group description. This is shown in
+          child accounts.
+    :attr Members members: (optional) Array of enterprise users to add to the
+          template. All enterprise users that you add to the template must be invited to
+          the child accounts where the template is assigned.
+    :attr Assertions assertions: (optional) Assertions Input Component.
+    :attr GroupActionControls action_controls: (optional) Access group action
+          controls component.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        *,
+        description: str = None,
+        members: 'Members' = None,
+        assertions: 'Assertions' = None,
+        action_controls: 'GroupActionControls' = None,
+    ) -> None:
+        """
+        Initialize a AccessGroupRequest object.
+
+        :param str name: Give the access group a unique name that doesn't conflict
+               with other templates access group name in the given account. This is shown
+               in child accounts.
+        :param str description: (optional) Access group description. This is shown
+               in child accounts.
+        :param Members members: (optional) Array of enterprise users to add to the
+               template. All enterprise users that you add to the template must be invited
+               to the child accounts where the template is assigned.
+        :param Assertions assertions: (optional) Assertions Input Component.
+        :param GroupActionControls action_controls: (optional) Access group action
+               controls component.
+        """
+        self.name = name
+        self.description = description
+        self.members = members
+        self.assertions = assertions
+        self.action_controls = action_controls
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccessGroupRequest':
+        """Initialize a AccessGroupRequest object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in AccessGroupRequest JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'members' in _dict:
+            args['members'] = Members.from_dict(_dict.get('members'))
+        if 'assertions' in _dict:
+            args['assertions'] = Assertions.from_dict(_dict.get('assertions'))
+        if 'action_controls' in _dict:
+            args['action_controls'] = GroupActionControls.from_dict(_dict.get('action_controls'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccessGroupRequest object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'members') and self.members is not None:
+            if isinstance(self.members, dict):
+                _dict['members'] = self.members
+            else:
+                _dict['members'] = self.members.to_dict()
+        if hasattr(self, 'assertions') and self.assertions is not None:
+            if isinstance(self.assertions, dict):
+                _dict['assertions'] = self.assertions
+            else:
+                _dict['assertions'] = self.assertions.to_dict()
+        if hasattr(self, 'action_controls') and self.action_controls is not None:
+            if isinstance(self.action_controls, dict):
+                _dict['action_controls'] = self.action_controls
+            else:
+                _dict['action_controls'] = self.action_controls.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccessGroupRequest object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccessGroupRequest') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccessGroupRequest') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class AccessGroupResponse:
+    """
+    Access Group Component.
+
+    :attr str name: Give the access group a unique name that doesn't conflict with
+          other templates access group name in the given account. This is shown in child
+          accounts.
+    :attr str description: (optional) Access group description. This is shown in
+          child accounts.
+    :attr Members members: (optional) Array of enterprise users to add to the
+          template. All enterprise users that you add to the template must be invited to
+          the child accounts where the template is assigned.
+    :attr Assertions assertions: (optional) Assertions Input Component.
+    :attr GroupActionControls action_controls: (optional) Access group action
+          controls component.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        *,
+        description: str = None,
+        members: 'Members' = None,
+        assertions: 'Assertions' = None,
+        action_controls: 'GroupActionControls' = None,
+    ) -> None:
+        """
+        Initialize a AccessGroupResponse object.
+
+        :param str name: Give the access group a unique name that doesn't conflict
+               with other templates access group name in the given account. This is shown
+               in child accounts.
+        :param str description: (optional) Access group description. This is shown
+               in child accounts.
+        :param Members members: (optional) Array of enterprise users to add to the
+               template. All enterprise users that you add to the template must be invited
+               to the child accounts where the template is assigned.
+        :param Assertions assertions: (optional) Assertions Input Component.
+        :param GroupActionControls action_controls: (optional) Access group action
+               controls component.
+        """
+        self.name = name
+        self.description = description
+        self.members = members
+        self.assertions = assertions
+        self.action_controls = action_controls
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccessGroupResponse':
+        """Initialize a AccessGroupResponse object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in AccessGroupResponse JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'members' in _dict:
+            args['members'] = Members.from_dict(_dict.get('members'))
+        if 'assertions' in _dict:
+            args['assertions'] = Assertions.from_dict(_dict.get('assertions'))
+        if 'action_controls' in _dict:
+            args['action_controls'] = GroupActionControls.from_dict(_dict.get('action_controls'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccessGroupResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'members') and self.members is not None:
+            if isinstance(self.members, dict):
+                _dict['members'] = self.members
+            else:
+                _dict['members'] = self.members.to_dict()
+        if hasattr(self, 'assertions') and self.assertions is not None:
+            if isinstance(self.assertions, dict):
+                _dict['assertions'] = self.assertions
+            else:
+                _dict['assertions'] = self.assertions.to_dict()
+        if hasattr(self, 'action_controls') and self.action_controls is not None:
+            if isinstance(self.action_controls, dict):
+                _dict['action_controls'] = self.action_controls
+            else:
+                _dict['action_controls'] = self.action_controls.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccessGroupResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccessGroupResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccessGroupResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class AccountSettings:
@@ -1701,8 +3004,8 @@ class AddGroupMembersResponseMembersItem:
     :attr str iam_id: (optional) The IBMid or Service Id of the member.
     :attr str type: (optional) The member type - either `user`, `service` or
           `profile`.
-    :attr datetime created_at: (optional) The timestamp the membership was created
-          at.
+    :attr datetime created_at: (optional) The timestamp of when the membership was
+          created.
     :attr str created_by_id: (optional) The `iam_id` of the entity that created the
           membership.
     :attr int status_code: (optional) The outcome of the operation on this `iam_id`.
@@ -1729,8 +3032,8 @@ class AddGroupMembersResponseMembersItem:
         :param str iam_id: (optional) The IBMid or Service Id of the member.
         :param str type: (optional) The member type - either `user`, `service` or
                `profile`.
-        :param datetime created_at: (optional) The timestamp the membership was
-               created at.
+        :param datetime created_at: (optional) The timestamp of when the membership
+               was created.
         :param str created_by_id: (optional) The `iam_id` of the entity that
                created the membership.
         :param int status_code: (optional) The outcome of the operation on this
@@ -1983,6 +3286,577 @@ class AddMembershipMultipleGroupsResponseGroupsItem:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'AddMembershipMultipleGroupsResponseGroupsItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class Assertions:
+    """
+    Assertions Input Component.
+
+    :attr List[AssertionsRule] rules: (optional) Dynamic rules to automatically add
+          federated users to access groups based on specific identity attributes.
+    :attr AssertionsActionControls action_controls: (optional) Control whether or
+          not access group administrators in child accounts can add, remove, and update
+          dynamic rules for the enterprise-managed access group in their account. The
+          inner level RuleActionControls override these `remove` and `update` action
+          controls.
+    """
+
+    def __init__(
+        self,
+        *,
+        rules: List['AssertionsRule'] = None,
+        action_controls: 'AssertionsActionControls' = None,
+    ) -> None:
+        """
+        Initialize a Assertions object.
+
+        :param List[AssertionsRule] rules: (optional) Dynamic rules to
+               automatically add federated users to access groups based on specific
+               identity attributes.
+        :param AssertionsActionControls action_controls: (optional) Control whether
+               or not access group administrators in child accounts can add, remove, and
+               update dynamic rules for the enterprise-managed access group in their
+               account. The inner level RuleActionControls override these `remove` and
+               `update` action controls.
+        """
+        self.rules = rules
+        self.action_controls = action_controls
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Assertions':
+        """Initialize a Assertions object from a json dictionary."""
+        args = {}
+        if 'rules' in _dict:
+            args['rules'] = [AssertionsRule.from_dict(v) for v in _dict.get('rules')]
+        if 'action_controls' in _dict:
+            args['action_controls'] = AssertionsActionControls.from_dict(_dict.get('action_controls'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Assertions object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'rules') and self.rules is not None:
+            rules_list = []
+            for v in self.rules:
+                if isinstance(v, dict):
+                    rules_list.append(v)
+                else:
+                    rules_list.append(v.to_dict())
+            _dict['rules'] = rules_list
+        if hasattr(self, 'action_controls') and self.action_controls is not None:
+            if isinstance(self.action_controls, dict):
+                _dict['action_controls'] = self.action_controls
+            else:
+                _dict['action_controls'] = self.action_controls.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Assertions object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Assertions') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Assertions') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class AssertionsActionControls:
+    """
+    Control whether or not access group administrators in child accounts can add, remove,
+    and update dynamic rules for the enterprise-managed access group in their account. The
+    inner level RuleActionControls override these `remove` and `update` action controls.
+
+    :attr bool add: (optional) Action control for adding dynamic rules to an
+          enterprise-managed access group. If an access group administrator in a child
+          account adds a dynamic rule, they can always update or remove it. Note that if
+          conflicts arise between an update to this control and rules added or updated by
+          an administrator in the child account, you must resolve those conflicts in the
+          child account. This prevents breaking access that the rules might grant in the
+          child account. For more information, see [Working with versions].
+    :attr bool remove: (optional) Action control for removing enterprise-managed
+          dynamic rules in an enterprise-managed access group. Note that if a rule is
+          removed from an enterprise-managed access group by an administrator in a child
+          account and and you reassign the template, the rule is reinstated.
+    """
+
+    def __init__(
+        self,
+        *,
+        add: bool = None,
+        remove: bool = None,
+    ) -> None:
+        """
+        Initialize a AssertionsActionControls object.
+
+        :param bool add: (optional) Action control for adding dynamic rules to an
+               enterprise-managed access group. If an access group administrator in a
+               child account adds a dynamic rule, they can always update or remove it.
+               Note that if conflicts arise between an update to this control and rules
+               added or updated by an administrator in the child account, you must resolve
+               those conflicts in the child account. This prevents breaking access that
+               the rules might grant in the child account. For more information, see
+               [Working with versions].
+        :param bool remove: (optional) Action control for removing
+               enterprise-managed dynamic rules in an enterprise-managed access group.
+               Note that if a rule is removed from an enterprise-managed access group by
+               an administrator in a child account and and you reassign the template, the
+               rule is reinstated.
+        """
+        self.add = add
+        self.remove = remove
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AssertionsActionControls':
+        """Initialize a AssertionsActionControls object from a json dictionary."""
+        args = {}
+        if 'add' in _dict:
+            args['add'] = _dict.get('add')
+        if 'remove' in _dict:
+            args['remove'] = _dict.get('remove')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AssertionsActionControls object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'add') and self.add is not None:
+            _dict['add'] = self.add
+        if hasattr(self, 'remove') and self.remove is not None:
+            _dict['remove'] = self.remove
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AssertionsActionControls object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AssertionsActionControls') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AssertionsActionControls') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class AssertionsRule:
+    """
+    Rule Input component.
+
+    :attr str name: (optional) Dynamic rule name.
+    :attr int expiration: (optional) Session duration in hours. Access group
+          membership is revoked after this time period expires. Users must log back in to
+          refresh their access group membership.
+    :attr str realm_name: (optional) The identity provider (IdP) URL.
+    :attr List[Conditions] conditions: (optional) Conditions of membership. You can
+          think of this as a key:value pair.
+    :attr RuleActionControls action_controls: (optional) Control whether or not
+          access group administrators in child accounts can update and remove this dynamic
+          rule in the enterprise-managed access group in their account.This overrides
+          outer level AssertionsActionControls.
+    """
+
+    def __init__(
+        self,
+        *,
+        name: str = None,
+        expiration: int = None,
+        realm_name: str = None,
+        conditions: List['Conditions'] = None,
+        action_controls: 'RuleActionControls' = None,
+    ) -> None:
+        """
+        Initialize a AssertionsRule object.
+
+        :param str name: (optional) Dynamic rule name.
+        :param int expiration: (optional) Session duration in hours. Access group
+               membership is revoked after this time period expires. Users must log back
+               in to refresh their access group membership.
+        :param str realm_name: (optional) The identity provider (IdP) URL.
+        :param List[Conditions] conditions: (optional) Conditions of membership.
+               You can think of this as a key:value pair.
+        :param RuleActionControls action_controls: (optional) Control whether or
+               not access group administrators in child accounts can update and remove
+               this dynamic rule in the enterprise-managed access group in their
+               account.This overrides outer level AssertionsActionControls.
+        """
+        self.name = name
+        self.expiration = expiration
+        self.realm_name = realm_name
+        self.conditions = conditions
+        self.action_controls = action_controls
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AssertionsRule':
+        """Initialize a AssertionsRule object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'expiration' in _dict:
+            args['expiration'] = _dict.get('expiration')
+        if 'realm_name' in _dict:
+            args['realm_name'] = _dict.get('realm_name')
+        if 'conditions' in _dict:
+            args['conditions'] = [Conditions.from_dict(v) for v in _dict.get('conditions')]
+        if 'action_controls' in _dict:
+            args['action_controls'] = RuleActionControls.from_dict(_dict.get('action_controls'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AssertionsRule object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'expiration') and self.expiration is not None:
+            _dict['expiration'] = self.expiration
+        if hasattr(self, 'realm_name') and self.realm_name is not None:
+            _dict['realm_name'] = self.realm_name
+        if hasattr(self, 'conditions') and self.conditions is not None:
+            conditions_list = []
+            for v in self.conditions:
+                if isinstance(v, dict):
+                    conditions_list.append(v)
+                else:
+                    conditions_list.append(v.to_dict())
+            _dict['conditions'] = conditions_list
+        if hasattr(self, 'action_controls') and self.action_controls is not None:
+            if isinstance(self.action_controls, dict):
+                _dict['action_controls'] = self.action_controls
+            else:
+                _dict['action_controls'] = self.action_controls.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AssertionsRule object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AssertionsRule') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AssertionsRule') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class AssignmentResourceAccessGroup:
+    """
+    Assignment Resource Access Group.
+
+    :attr AssignmentResourceEntry group: Assignment resource entry.
+    :attr List[AssignmentResourceEntry] members: List of member resources of the
+          group.
+    :attr List[AssignmentResourceEntry] rules: List of rules associated with the
+          group.
+    """
+
+    def __init__(
+        self,
+        group: 'AssignmentResourceEntry',
+        members: List['AssignmentResourceEntry'],
+        rules: List['AssignmentResourceEntry'],
+    ) -> None:
+        """
+        Initialize a AssignmentResourceAccessGroup object.
+
+        :param AssignmentResourceEntry group: Assignment resource entry.
+        :param List[AssignmentResourceEntry] members: List of member resources of
+               the group.
+        :param List[AssignmentResourceEntry] rules: List of rules associated with
+               the group.
+        """
+        self.group = group
+        self.members = members
+        self.rules = rules
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AssignmentResourceAccessGroup':
+        """Initialize a AssignmentResourceAccessGroup object from a json dictionary."""
+        args = {}
+        if 'group' in _dict:
+            args['group'] = AssignmentResourceEntry.from_dict(_dict.get('group'))
+        else:
+            raise ValueError('Required property \'group\' not present in AssignmentResourceAccessGroup JSON')
+        if 'members' in _dict:
+            args['members'] = [AssignmentResourceEntry.from_dict(v) for v in _dict.get('members')]
+        else:
+            raise ValueError('Required property \'members\' not present in AssignmentResourceAccessGroup JSON')
+        if 'rules' in _dict:
+            args['rules'] = [AssignmentResourceEntry.from_dict(v) for v in _dict.get('rules')]
+        else:
+            raise ValueError('Required property \'rules\' not present in AssignmentResourceAccessGroup JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AssignmentResourceAccessGroup object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'group') and self.group is not None:
+            if isinstance(self.group, dict):
+                _dict['group'] = self.group
+            else:
+                _dict['group'] = self.group.to_dict()
+        if hasattr(self, 'members') and self.members is not None:
+            members_list = []
+            for v in self.members:
+                if isinstance(v, dict):
+                    members_list.append(v)
+                else:
+                    members_list.append(v.to_dict())
+            _dict['members'] = members_list
+        if hasattr(self, 'rules') and self.rules is not None:
+            rules_list = []
+            for v in self.rules:
+                if isinstance(v, dict):
+                    rules_list.append(v)
+                else:
+                    rules_list.append(v.to_dict())
+            _dict['rules'] = rules_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AssignmentResourceAccessGroup object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AssignmentResourceAccessGroup') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AssignmentResourceAccessGroup') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class AssignmentResourceEntry:
+    """
+    Assignment resource entry.
+
+    :attr str id: Assignment Resource Entry Id.
+    :attr str name: (optional) Optional name of the resource.
+    :attr str version: (optional) Optional version of the resource.
+    :attr str resource: Resource in assignment resource entry.
+    :attr str error: Error in assignment resource entry.
+    :attr str operation: (optional) Optional operation on the resource.
+    :attr str status: Status of assignment resource entry.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        resource: str,
+        error: str,
+        status: str,
+        *,
+        name: str = None,
+        version: str = None,
+        operation: str = None,
+    ) -> None:
+        """
+        Initialize a AssignmentResourceEntry object.
+
+        :param str id: Assignment Resource Entry Id.
+        :param str resource: Resource in assignment resource entry.
+        :param str error: Error in assignment resource entry.
+        :param str status: Status of assignment resource entry.
+        :param str name: (optional) Optional name of the resource.
+        :param str version: (optional) Optional version of the resource.
+        :param str operation: (optional) Optional operation on the resource.
+        """
+        self.id = id
+        self.name = name
+        self.version = version
+        self.resource = resource
+        self.error = error
+        self.operation = operation
+        self.status = status
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AssignmentResourceEntry':
+        """Initialize a AssignmentResourceEntry object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in AssignmentResourceEntry JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        if 'resource' in _dict:
+            args['resource'] = _dict.get('resource')
+        else:
+            raise ValueError('Required property \'resource\' not present in AssignmentResourceEntry JSON')
+        if 'error' in _dict:
+            args['error'] = _dict.get('error')
+        else:
+            raise ValueError('Required property \'error\' not present in AssignmentResourceEntry JSON')
+        if 'operation' in _dict:
+            args['operation'] = _dict.get('operation')
+        if 'status' in _dict:
+            args['status'] = _dict.get('status')
+        else:
+            raise ValueError('Required property \'status\' not present in AssignmentResourceEntry JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AssignmentResourceEntry object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'resource') and self.resource is not None:
+            _dict['resource'] = self.resource
+        if hasattr(self, 'error') and self.error is not None:
+            _dict['error'] = self.error
+        if hasattr(self, 'operation') and self.operation is not None:
+            _dict['operation'] = self.operation
+        if hasattr(self, 'status') and self.status is not None:
+            _dict['status'] = self.status
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AssignmentResourceEntry object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AssignmentResourceEntry') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AssignmentResourceEntry') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class Conditions:
+    """
+    Condition Input component.
+
+    :attr str claim: (optional) The key in the key:value pair.
+    :attr str operator: (optional) Compares the claim and the value.
+    :attr str value: (optional) The value in the key:value pair.
+    """
+
+    def __init__(
+        self,
+        *,
+        claim: str = None,
+        operator: str = None,
+        value: str = None,
+    ) -> None:
+        """
+        Initialize a Conditions object.
+
+        :param str claim: (optional) The key in the key:value pair.
+        :param str operator: (optional) Compares the claim and the value.
+        :param str value: (optional) The value in the key:value pair.
+        """
+        self.claim = claim
+        self.operator = operator
+        self.value = value
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Conditions':
+        """Initialize a Conditions object from a json dictionary."""
+        args = {}
+        if 'claim' in _dict:
+            args['claim'] = _dict.get('claim')
+        if 'operator' in _dict:
+            args['operator'] = _dict.get('operator')
+        if 'value' in _dict:
+            args['value'] = _dict.get('value')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Conditions object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'claim') and self.claim is not None:
+            _dict['claim'] = self.claim
+        if hasattr(self, 'operator') and self.operator is not None:
+            _dict['operator'] = self.operator
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Conditions object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Conditions') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Conditions') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -2406,11 +4280,12 @@ class Group:
     :attr str name: (optional) The group's name.
     :attr str description: (optional) The group's description - if defined.
     :attr str account_id: (optional) The account id where the group was created.
-    :attr datetime created_at: (optional) The timestamp the group was created at.
+    :attr datetime created_at: (optional) The timestamp of when the group was
+          created.
     :attr str created_by_id: (optional) The `iam_id` of the entity that created the
           group.
-    :attr datetime last_modified_at: (optional) The timestamp the group was last
-          edited at.
+    :attr datetime last_modified_at: (optional) The timestamp of when the group was
+          last edited.
     :attr str last_modified_by_id: (optional) The `iam_id` of the entity that last
           modified the group name or description.
     :attr str href: (optional) A url to the given group resource.
@@ -2526,6 +4401,71 @@ class Group:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'Group') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class GroupActionControls:
+    """
+    Access group action controls component.
+
+    :attr AccessActionControls access: (optional) Control whether or not access
+          group administrators in child accounts can add access policies to the
+          enterprise-managed access group in their account.
+    """
+
+    def __init__(
+        self,
+        *,
+        access: 'AccessActionControls' = None,
+    ) -> None:
+        """
+        Initialize a GroupActionControls object.
+
+        :param AccessActionControls access: (optional) Control whether or not
+               access group administrators in child accounts can add access policies to
+               the enterprise-managed access group in their account.
+        """
+        self.access = access
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'GroupActionControls':
+        """Initialize a GroupActionControls object from a json dictionary."""
+        args = {}
+        if 'access' in _dict:
+            args['access'] = AccessActionControls.from_dict(_dict.get('access'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a GroupActionControls object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'access') and self.access is not None:
+            if isinstance(self.access, dict):
+                _dict['access'] = self.access
+            else:
+                _dict['access'] = self.access.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this GroupActionControls object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'GroupActionControls') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'GroupActionControls') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -2666,6 +4606,200 @@ class GroupMembersList:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'GroupMembersList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class GroupTemplate:
+    """
+    Response output for template.
+
+    :attr str id: The ID of the access group template.
+    :attr str name: The name of the access group template.
+    :attr str description: The description of the access group template.
+    :attr str version: The version of the access group template.
+    :attr bool committed: A boolean indicating whether the access group template is
+          committed. You must commit a template before you can assign it to child
+          accounts.
+    :attr AccessGroupResponse group: Access Group Component.
+    :attr List[PolicyTemplates] policy_template_references: References to policy
+          templates assigned to the access group template.
+    :attr str href: The URL of the access group template resource.
+    :attr datetime created_at: The date and time when the access group template was
+          created.
+    :attr str created_by_id: The ID of the user who created the access group
+          template.
+    :attr datetime last_modified_at: The date and time when the access group
+          template was last modified.
+    :attr str last_modified_by_id: The ID of the user who last modified the access
+          group template.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        name: str,
+        description: str,
+        version: str,
+        committed: bool,
+        group: 'AccessGroupResponse',
+        policy_template_references: List['PolicyTemplates'],
+        href: str,
+        created_at: datetime,
+        created_by_id: str,
+        last_modified_at: datetime,
+        last_modified_by_id: str,
+    ) -> None:
+        """
+        Initialize a GroupTemplate object.
+
+        :param str id: The ID of the access group template.
+        :param str name: The name of the access group template.
+        :param str description: The description of the access group template.
+        :param str version: The version of the access group template.
+        :param bool committed: A boolean indicating whether the access group
+               template is committed. You must commit a template before you can assign it
+               to child accounts.
+        :param AccessGroupResponse group: Access Group Component.
+        :param List[PolicyTemplates] policy_template_references: References to
+               policy templates assigned to the access group template.
+        :param str href: The URL of the access group template resource.
+        :param datetime created_at: The date and time when the access group
+               template was created.
+        :param str created_by_id: The ID of the user who created the access group
+               template.
+        :param datetime last_modified_at: The date and time when the access group
+               template was last modified.
+        :param str last_modified_by_id: The ID of the user who last modified the
+               access group template.
+        """
+        self.id = id
+        self.name = name
+        self.description = description
+        self.version = version
+        self.committed = committed
+        self.group = group
+        self.policy_template_references = policy_template_references
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'GroupTemplate':
+        """Initialize a GroupTemplate object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in GroupTemplate JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in GroupTemplate JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in GroupTemplate JSON')
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        else:
+            raise ValueError('Required property \'version\' not present in GroupTemplate JSON')
+        if 'committed' in _dict:
+            args['committed'] = _dict.get('committed')
+        else:
+            raise ValueError('Required property \'committed\' not present in GroupTemplate JSON')
+        if 'group' in _dict:
+            args['group'] = AccessGroupResponse.from_dict(_dict.get('group'))
+        else:
+            raise ValueError('Required property \'group\' not present in GroupTemplate JSON')
+        if 'policy_template_references' in _dict:
+            args['policy_template_references'] = [
+                PolicyTemplates.from_dict(v) for v in _dict.get('policy_template_references')
+            ]
+        else:
+            raise ValueError('Required property \'policy_template_references\' not present in GroupTemplate JSON')
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        else:
+            raise ValueError('Required property \'href\' not present in GroupTemplate JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in GroupTemplate JSON')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        else:
+            raise ValueError('Required property \'created_by_id\' not present in GroupTemplate JSON')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        else:
+            raise ValueError('Required property \'last_modified_at\' not present in GroupTemplate JSON')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        else:
+            raise ValueError('Required property \'last_modified_by_id\' not present in GroupTemplate JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a GroupTemplate object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'committed') and self.committed is not None:
+            _dict['committed'] = self.committed
+        if hasattr(self, 'group') and self.group is not None:
+            if isinstance(self.group, dict):
+                _dict['group'] = self.group
+            else:
+                _dict['group'] = self.group.to_dict()
+        if hasattr(self, 'policy_template_references') and self.policy_template_references is not None:
+            policy_template_references_list = []
+            for v in self.policy_template_references:
+                if isinstance(v, dict):
+                    policy_template_references_list.append(v)
+                else:
+                    policy_template_references_list.append(v.to_dict())
+            _dict['policy_template_references'] = policy_template_references_list
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this GroupTemplate object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'GroupTemplate') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'GroupTemplate') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -3000,24 +5134,969 @@ class ListGroupMembersResponseMember:
         return not self == other
 
 
+class ListTemplateAssignmentResponse:
+    """
+    Response object containing a list of template assignments.
+
+    :attr int limit: Maximum number of items returned in the response.
+    :attr int offset: Index of the first item returned in the response.
+    :attr int total_count: Total number of items matching the query.
+    :attr HrefStruct first: A link object.
+    :attr HrefStruct last: A link object.
+    :attr List[TemplateAssignmentResponse] assignments: List of template
+          assignments.
+    """
+
+    def __init__(
+        self,
+        limit: int,
+        offset: int,
+        total_count: int,
+        first: 'HrefStruct',
+        last: 'HrefStruct',
+        assignments: List['TemplateAssignmentResponse'],
+    ) -> None:
+        """
+        Initialize a ListTemplateAssignmentResponse object.
+
+        :param int limit: Maximum number of items returned in the response.
+        :param int offset: Index of the first item returned in the response.
+        :param int total_count: Total number of items matching the query.
+        :param HrefStruct first: A link object.
+        :param HrefStruct last: A link object.
+        :param List[TemplateAssignmentResponse] assignments: List of template
+               assignments.
+        """
+        self.limit = limit
+        self.offset = offset
+        self.total_count = total_count
+        self.first = first
+        self.last = last
+        self.assignments = assignments
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ListTemplateAssignmentResponse':
+        """Initialize a ListTemplateAssignmentResponse object from a json dictionary."""
+        args = {}
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        else:
+            raise ValueError('Required property \'limit\' not present in ListTemplateAssignmentResponse JSON')
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        else:
+            raise ValueError('Required property \'offset\' not present in ListTemplateAssignmentResponse JSON')
+        if 'total_count' in _dict:
+            args['total_count'] = _dict.get('total_count')
+        else:
+            raise ValueError('Required property \'total_count\' not present in ListTemplateAssignmentResponse JSON')
+        if 'first' in _dict:
+            args['first'] = HrefStruct.from_dict(_dict.get('first'))
+        else:
+            raise ValueError('Required property \'first\' not present in ListTemplateAssignmentResponse JSON')
+        if 'last' in _dict:
+            args['last'] = HrefStruct.from_dict(_dict.get('last'))
+        else:
+            raise ValueError('Required property \'last\' not present in ListTemplateAssignmentResponse JSON')
+        if 'assignments' in _dict:
+            args['assignments'] = [TemplateAssignmentResponse.from_dict(v) for v in _dict.get('assignments')]
+        else:
+            raise ValueError('Required property \'assignments\' not present in ListTemplateAssignmentResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ListTemplateAssignmentResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'total_count') and self.total_count is not None:
+            _dict['total_count'] = self.total_count
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'last') and self.last is not None:
+            if isinstance(self.last, dict):
+                _dict['last'] = self.last
+            else:
+                _dict['last'] = self.last.to_dict()
+        if hasattr(self, 'assignments') and self.assignments is not None:
+            assignments_list = []
+            for v in self.assignments:
+                if isinstance(v, dict):
+                    assignments_list.append(v)
+                else:
+                    assignments_list.append(v.to_dict())
+            _dict['assignments'] = assignments_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ListTemplateAssignmentResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ListTemplateAssignmentResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ListTemplateAssignmentResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ListTemplateVersionResponse:
+    """
+    Response object for a single access group template version.
+
+    :attr str name: The name of the template.
+    :attr str description: The description of the template.
+    :attr str account_id: The ID of the account associated with the template.
+    :attr str version: The version number of the template.
+    :attr bool committed: A boolean indicating whether the template is committed or
+          not.
+    :attr AccessGroupResponse group: Access Group Component.
+    :attr List[PolicyTemplates] policy_template_references: A list of policy
+          templates associated with the template.
+    :attr str href: The URL to the template resource.
+    :attr str created_at: The date and time the template was created.
+    :attr str created_by_id: The ID of the user who created the template.
+    :attr str last_modified_at: The date and time the template was last modified.
+    :attr str last_modified_by_id: The ID of the user who last modified the
+          template.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        account_id: str,
+        version: str,
+        committed: bool,
+        group: 'AccessGroupResponse',
+        policy_template_references: List['PolicyTemplates'],
+        href: str,
+        created_at: str,
+        created_by_id: str,
+        last_modified_at: str,
+        last_modified_by_id: str,
+    ) -> None:
+        """
+        Initialize a ListTemplateVersionResponse object.
+
+        :param str name: The name of the template.
+        :param str description: The description of the template.
+        :param str account_id: The ID of the account associated with the template.
+        :param str version: The version number of the template.
+        :param bool committed: A boolean indicating whether the template is
+               committed or not.
+        :param AccessGroupResponse group: Access Group Component.
+        :param List[PolicyTemplates] policy_template_references: A list of policy
+               templates associated with the template.
+        :param str href: The URL to the template resource.
+        :param str created_at: The date and time the template was created.
+        :param str created_by_id: The ID of the user who created the template.
+        :param str last_modified_at: The date and time the template was last
+               modified.
+        :param str last_modified_by_id: The ID of the user who last modified the
+               template.
+        """
+        self.name = name
+        self.description = description
+        self.account_id = account_id
+        self.version = version
+        self.committed = committed
+        self.group = group
+        self.policy_template_references = policy_template_references
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ListTemplateVersionResponse':
+        """Initialize a ListTemplateVersionResponse object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in ListTemplateVersionResponse JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in ListTemplateVersionResponse JSON')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in ListTemplateVersionResponse JSON')
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        else:
+            raise ValueError('Required property \'version\' not present in ListTemplateVersionResponse JSON')
+        if 'committed' in _dict:
+            args['committed'] = _dict.get('committed')
+        else:
+            raise ValueError('Required property \'committed\' not present in ListTemplateVersionResponse JSON')
+        if 'group' in _dict:
+            args['group'] = AccessGroupResponse.from_dict(_dict.get('group'))
+        else:
+            raise ValueError('Required property \'group\' not present in ListTemplateVersionResponse JSON')
+        if 'policy_template_references' in _dict:
+            args['policy_template_references'] = [
+                PolicyTemplates.from_dict(v) for v in _dict.get('policy_template_references')
+            ]
+        else:
+            raise ValueError(
+                'Required property \'policy_template_references\' not present in ListTemplateVersionResponse JSON'
+            )
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        else:
+            raise ValueError('Required property \'href\' not present in ListTemplateVersionResponse JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = _dict.get('created_at')
+        else:
+            raise ValueError('Required property \'created_at\' not present in ListTemplateVersionResponse JSON')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        else:
+            raise ValueError('Required property \'created_by_id\' not present in ListTemplateVersionResponse JSON')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = _dict.get('last_modified_at')
+        else:
+            raise ValueError('Required property \'last_modified_at\' not present in ListTemplateVersionResponse JSON')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        else:
+            raise ValueError(
+                'Required property \'last_modified_by_id\' not present in ListTemplateVersionResponse JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ListTemplateVersionResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'committed') and self.committed is not None:
+            _dict['committed'] = self.committed
+        if hasattr(self, 'group') and self.group is not None:
+            if isinstance(self.group, dict):
+                _dict['group'] = self.group
+            else:
+                _dict['group'] = self.group.to_dict()
+        if hasattr(self, 'policy_template_references') and self.policy_template_references is not None:
+            policy_template_references_list = []
+            for v in self.policy_template_references:
+                if isinstance(v, dict):
+                    policy_template_references_list.append(v)
+                else:
+                    policy_template_references_list.append(v.to_dict())
+            _dict['policy_template_references'] = policy_template_references_list
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = self.created_at
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = self.last_modified_at
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ListTemplateVersionResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ListTemplateVersionResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ListTemplateVersionResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ListTemplateVersionsResponse:
+    """
+    Response object for listing template versions.
+
+    :attr int limit: The maximum number of IAM resources to return.
+    :attr int offset: The offset of the first IAM resource in the list.
+    :attr int total_count: The total number of IAM resources in the list.
+    :attr HrefStruct first: A link object.
+    :attr HrefStruct previous: (optional) A link object.
+    :attr HrefStruct next: (optional) A link object.
+    :attr HrefStruct last: A link object.
+    :attr List[ListTemplateVersionResponse] group_template_versions: A list of
+          access group template versions.
+    """
+
+    def __init__(
+        self,
+        limit: int,
+        offset: int,
+        total_count: int,
+        first: 'HrefStruct',
+        last: 'HrefStruct',
+        group_template_versions: List['ListTemplateVersionResponse'],
+        *,
+        previous: 'HrefStruct' = None,
+        next: 'HrefStruct' = None,
+    ) -> None:
+        """
+        Initialize a ListTemplateVersionsResponse object.
+
+        :param int limit: The maximum number of IAM resources to return.
+        :param int offset: The offset of the first IAM resource in the list.
+        :param int total_count: The total number of IAM resources in the list.
+        :param HrefStruct first: A link object.
+        :param HrefStruct last: A link object.
+        :param List[ListTemplateVersionResponse] group_template_versions: A list of
+               access group template versions.
+        :param HrefStruct previous: (optional) A link object.
+        :param HrefStruct next: (optional) A link object.
+        """
+        self.limit = limit
+        self.offset = offset
+        self.total_count = total_count
+        self.first = first
+        self.previous = previous
+        self.next = next
+        self.last = last
+        self.group_template_versions = group_template_versions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ListTemplateVersionsResponse':
+        """Initialize a ListTemplateVersionsResponse object from a json dictionary."""
+        args = {}
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        else:
+            raise ValueError('Required property \'limit\' not present in ListTemplateVersionsResponse JSON')
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        else:
+            raise ValueError('Required property \'offset\' not present in ListTemplateVersionsResponse JSON')
+        if 'total_count' in _dict:
+            args['total_count'] = _dict.get('total_count')
+        else:
+            raise ValueError('Required property \'total_count\' not present in ListTemplateVersionsResponse JSON')
+        if 'first' in _dict:
+            args['first'] = HrefStruct.from_dict(_dict.get('first'))
+        else:
+            raise ValueError('Required property \'first\' not present in ListTemplateVersionsResponse JSON')
+        if 'previous' in _dict:
+            args['previous'] = HrefStruct.from_dict(_dict.get('previous'))
+        if 'next' in _dict:
+            args['next'] = HrefStruct.from_dict(_dict.get('next'))
+        if 'last' in _dict:
+            args['last'] = HrefStruct.from_dict(_dict.get('last'))
+        else:
+            raise ValueError('Required property \'last\' not present in ListTemplateVersionsResponse JSON')
+        if 'group_template_versions' in _dict:
+            args['group_template_versions'] = [
+                ListTemplateVersionResponse.from_dict(v) for v in _dict.get('group_template_versions')
+            ]
+        else:
+            raise ValueError(
+                'Required property \'group_template_versions\' not present in ListTemplateVersionsResponse JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ListTemplateVersionsResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'total_count') and self.total_count is not None:
+            _dict['total_count'] = self.total_count
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'last') and self.last is not None:
+            if isinstance(self.last, dict):
+                _dict['last'] = self.last
+            else:
+                _dict['last'] = self.last.to_dict()
+        if hasattr(self, 'group_template_versions') and self.group_template_versions is not None:
+            group_template_versions_list = []
+            for v in self.group_template_versions:
+                if isinstance(v, dict):
+                    group_template_versions_list.append(v)
+                else:
+                    group_template_versions_list.append(v.to_dict())
+            _dict['group_template_versions'] = group_template_versions_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ListTemplateVersionsResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ListTemplateVersionsResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ListTemplateVersionsResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ListTemplatesResponse:
+    """
+    Response object for listing templates.
+
+    :attr int limit: The maximum number of IAM resources to return.
+    :attr int offset: The offset of the first IAM resource in the list.
+    :attr int total_count: The total number of IAM resources in the list.
+    :attr HrefStruct first: A link object.
+    :attr HrefStruct previous: (optional) A link object.
+    :attr HrefStruct next: (optional) A link object.
+    :attr HrefStruct last: A link object.
+    :attr List[GroupTemplate] group_templates: A list of access group templates.
+    """
+
+    def __init__(
+        self,
+        limit: int,
+        offset: int,
+        total_count: int,
+        first: 'HrefStruct',
+        last: 'HrefStruct',
+        group_templates: List['GroupTemplate'],
+        *,
+        previous: 'HrefStruct' = None,
+        next: 'HrefStruct' = None,
+    ) -> None:
+        """
+        Initialize a ListTemplatesResponse object.
+
+        :param int limit: The maximum number of IAM resources to return.
+        :param int offset: The offset of the first IAM resource in the list.
+        :param int total_count: The total number of IAM resources in the list.
+        :param HrefStruct first: A link object.
+        :param HrefStruct last: A link object.
+        :param List[GroupTemplate] group_templates: A list of access group
+               templates.
+        :param HrefStruct previous: (optional) A link object.
+        :param HrefStruct next: (optional) A link object.
+        """
+        self.limit = limit
+        self.offset = offset
+        self.total_count = total_count
+        self.first = first
+        self.previous = previous
+        self.next = next
+        self.last = last
+        self.group_templates = group_templates
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ListTemplatesResponse':
+        """Initialize a ListTemplatesResponse object from a json dictionary."""
+        args = {}
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        else:
+            raise ValueError('Required property \'limit\' not present in ListTemplatesResponse JSON')
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        else:
+            raise ValueError('Required property \'offset\' not present in ListTemplatesResponse JSON')
+        if 'total_count' in _dict:
+            args['total_count'] = _dict.get('total_count')
+        else:
+            raise ValueError('Required property \'total_count\' not present in ListTemplatesResponse JSON')
+        if 'first' in _dict:
+            args['first'] = HrefStruct.from_dict(_dict.get('first'))
+        else:
+            raise ValueError('Required property \'first\' not present in ListTemplatesResponse JSON')
+        if 'previous' in _dict:
+            args['previous'] = HrefStruct.from_dict(_dict.get('previous'))
+        if 'next' in _dict:
+            args['next'] = HrefStruct.from_dict(_dict.get('next'))
+        if 'last' in _dict:
+            args['last'] = HrefStruct.from_dict(_dict.get('last'))
+        else:
+            raise ValueError('Required property \'last\' not present in ListTemplatesResponse JSON')
+        if 'group_templates' in _dict:
+            args['group_templates'] = [GroupTemplate.from_dict(v) for v in _dict.get('group_templates')]
+        else:
+            raise ValueError('Required property \'group_templates\' not present in ListTemplatesResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ListTemplatesResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'total_count') and self.total_count is not None:
+            _dict['total_count'] = self.total_count
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'last') and self.last is not None:
+            if isinstance(self.last, dict):
+                _dict['last'] = self.last
+            else:
+                _dict['last'] = self.last.to_dict()
+        if hasattr(self, 'group_templates') and self.group_templates is not None:
+            group_templates_list = []
+            for v in self.group_templates:
+                if isinstance(v, dict):
+                    group_templates_list.append(v)
+                else:
+                    group_templates_list.append(v.to_dict())
+            _dict['group_templates'] = group_templates_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ListTemplatesResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ListTemplatesResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ListTemplatesResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class Members:
+    """
+    Array of enterprise users to add to the template. All enterprise users that you add to
+    the template must be invited to the child accounts where the template is assigned.
+
+    :attr List[str] users: (optional) Array of enterprise users to add to the
+          template. All enterprise users that you add to the template must be invited to
+          the child accounts where the template is assigned.
+    :attr List[str] services: (optional) Array of service IDs to add to the
+          template.
+    :attr MembersActionControls action_controls: (optional) Control whether or not
+          access group administrators in child accounts can add and remove members from
+          the enterprise-managed access group in their account.
+    """
+
+    def __init__(
+        self,
+        *,
+        users: List[str] = None,
+        services: List[str] = None,
+        action_controls: 'MembersActionControls' = None,
+    ) -> None:
+        """
+        Initialize a Members object.
+
+        :param List[str] users: (optional) Array of enterprise users to add to the
+               template. All enterprise users that you add to the template must be invited
+               to the child accounts where the template is assigned.
+        :param List[str] services: (optional) Array of service IDs to add to the
+               template.
+        :param MembersActionControls action_controls: (optional) Control whether or
+               not access group administrators in child accounts can add and remove
+               members from the enterprise-managed access group in their account.
+        """
+        self.users = users
+        self.services = services
+        self.action_controls = action_controls
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Members':
+        """Initialize a Members object from a json dictionary."""
+        args = {}
+        if 'users' in _dict:
+            args['users'] = _dict.get('users')
+        if 'services' in _dict:
+            args['services'] = _dict.get('services')
+        if 'action_controls' in _dict:
+            args['action_controls'] = MembersActionControls.from_dict(_dict.get('action_controls'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Members object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'users') and self.users is not None:
+            _dict['users'] = self.users
+        if hasattr(self, 'services') and self.services is not None:
+            _dict['services'] = self.services
+        if hasattr(self, 'action_controls') and self.action_controls is not None:
+            if isinstance(self.action_controls, dict):
+                _dict['action_controls'] = self.action_controls
+            else:
+                _dict['action_controls'] = self.action_controls.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Members object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Members') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Members') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class MembersActionControls:
+    """
+    Control whether or not access group administrators in child accounts can add and
+    remove members from the enterprise-managed access group in their account.
+
+    :attr bool add: (optional) Action control for adding child account members to an
+          enterprise-managed access group. If an access group administrator in a child
+          account adds a member, they can always remove them. Note that if conflicts arise
+          between an update to this control in a new version and members added by an
+          administrator in the child account, you must resolve those conflicts in the
+          child account. This prevents breaking access in the child account. For more
+          information, see [Working with versions]
+          (https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
+    :attr bool remove: (optional) Action control for removing enterprise-managed
+          members from an enterprise-managed access group. Note that if an enterprise
+          member is removed from an enterprise-managed access group in a child account and
+          you reassign the template, the membership is reinstated.
+    """
+
+    def __init__(
+        self,
+        *,
+        add: bool = None,
+        remove: bool = None,
+    ) -> None:
+        """
+        Initialize a MembersActionControls object.
+
+        :param bool add: (optional) Action control for adding child account members
+               to an enterprise-managed access group. If an access group administrator in
+               a child account adds a member, they can always remove them. Note that if
+               conflicts arise between an update to this control in a new version and
+               members added by an administrator in the child account, you must resolve
+               those conflicts in the child account. This prevents breaking access in the
+               child account. For more information, see [Working with versions]
+               (https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
+        :param bool remove: (optional) Action control for removing
+               enterprise-managed members from an enterprise-managed access group. Note
+               that if an enterprise member is removed from an enterprise-managed access
+               group in a child account and you reassign the template, the membership is
+               reinstated.
+        """
+        self.add = add
+        self.remove = remove
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'MembersActionControls':
+        """Initialize a MembersActionControls object from a json dictionary."""
+        args = {}
+        if 'add' in _dict:
+            args['add'] = _dict.get('add')
+        if 'remove' in _dict:
+            args['remove'] = _dict.get('remove')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a MembersActionControls object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'add') and self.add is not None:
+            _dict['add'] = self.add
+        if hasattr(self, 'remove') and self.remove is not None:
+            _dict['remove'] = self.remove
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this MembersActionControls object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'MembersActionControls') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'MembersActionControls') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class PolicyTemplates:
+    """
+    Policy Templates Input component.
+
+    :attr str id: (optional) Policy template ID.
+    :attr str version: (optional) Policy template version.
+    """
+
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        version: str = None,
+    ) -> None:
+        """
+        Initialize a PolicyTemplates object.
+
+        :param str id: (optional) Policy template ID.
+        :param str version: (optional) Policy template version.
+        """
+        self.id = id
+        self.version = version
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PolicyTemplates':
+        """Initialize a PolicyTemplates object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PolicyTemplates object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PolicyTemplates object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PolicyTemplates') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PolicyTemplates') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ResourceListWithTargetAccountID:
+    """
+    Object containing details of a resource list with target account ID.
+
+    :attr str target: (optional) The ID of the entity that the resource list applies
+          to.
+    :attr AssignmentResourceAccessGroup group: (optional) Assignment Resource Access
+          Group.
+    :attr List[AssignmentResourceEntry] policy_template_references: (optional) List
+          of policy template references for the resource list.
+    """
+
+    def __init__(
+        self,
+        *,
+        target: str = None,
+        group: 'AssignmentResourceAccessGroup' = None,
+        policy_template_references: List['AssignmentResourceEntry'] = None,
+    ) -> None:
+        """
+        Initialize a ResourceListWithTargetAccountID object.
+
+        :param str target: (optional) The ID of the entity that the resource list
+               applies to.
+        :param AssignmentResourceAccessGroup group: (optional) Assignment Resource
+               Access Group.
+        :param List[AssignmentResourceEntry] policy_template_references: (optional)
+               List of policy template references for the resource list.
+        """
+        self.target = target
+        self.group = group
+        self.policy_template_references = policy_template_references
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ResourceListWithTargetAccountID':
+        """Initialize a ResourceListWithTargetAccountID object from a json dictionary."""
+        args = {}
+        if 'target' in _dict:
+            args['target'] = _dict.get('target')
+        if 'group' in _dict:
+            args['group'] = AssignmentResourceAccessGroup.from_dict(_dict.get('group'))
+        if 'policy_template_references' in _dict:
+            args['policy_template_references'] = [
+                AssignmentResourceEntry.from_dict(v) for v in _dict.get('policy_template_references')
+            ]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ResourceListWithTargetAccountID object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'target') and self.target is not None:
+            _dict['target'] = self.target
+        if hasattr(self, 'group') and self.group is not None:
+            if isinstance(self.group, dict):
+                _dict['group'] = self.group
+            else:
+                _dict['group'] = self.group.to_dict()
+        if hasattr(self, 'policy_template_references') and self.policy_template_references is not None:
+            policy_template_references_list = []
+            for v in self.policy_template_references:
+                if isinstance(v, dict):
+                    policy_template_references_list.append(v)
+                else:
+                    policy_template_references_list.append(v.to_dict())
+            _dict['policy_template_references'] = policy_template_references_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ResourceListWithTargetAccountID object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ResourceListWithTargetAccountID') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ResourceListWithTargetAccountID') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class Rule:
     """
-    A rule of an access group.
+    A dynamic rule of an access group.
 
     :attr str id: (optional) The rule id.
     :attr str name: (optional) The name of the rule.
-    :attr int expiration: (optional) The number of hours that the rule lives for
-          (Must be between 1 and 24).
-    :attr str realm_name: (optional) The url of the identity provider.
-    :attr str access_group_id: (optional) The group id that the rule is assigned to.
+    :attr int expiration: (optional) Session duration in hours. Access group
+          membership is revoked after this time period expires. Users must log back in to
+          refresh their access group membership. Must be between 1 and 24.
+    :attr str realm_name: (optional) The URL of the identity provider.
+    :attr str access_group_id: (optional) The group id that the dynamic rule is
+          assigned to.
     :attr str account_id: (optional) The account id that the group is in.
-    :attr List[RuleConditions] conditions: (optional) A list of conditions the rule
-          must satisfy.
-    :attr datetime created_at: (optional) The timestamp the rule was created at.
+    :attr List[RuleConditions] conditions: (optional) A list of conditions that
+          identities must satisfy to gain access group membership.
+    :attr datetime created_at: (optional) The timestamp for when the rule was
+          created.
     :attr str created_by_id: (optional) The `iam_id` of the entity that created the
-          rule.
-    :attr datetime last_modified_at: (optional) The timestamp the rule was last
-          edited at.
+          dynamic rule.
+    :attr datetime last_modified_at: (optional) The timestamp for when the dynamic
+          rule was last edited.
     :attr str last_modified_by_id: (optional) The IAM id that last modified the
           rule.
     """
@@ -3042,20 +6121,21 @@ class Rule:
 
         :param str id: (optional) The rule id.
         :param str name: (optional) The name of the rule.
-        :param int expiration: (optional) The number of hours that the rule lives
-               for (Must be between 1 and 24).
-        :param str realm_name: (optional) The url of the identity provider.
-        :param str access_group_id: (optional) The group id that the rule is
-               assigned to.
+        :param int expiration: (optional) Session duration in hours. Access group
+               membership is revoked after this time period expires. Users must log back
+               in to refresh their access group membership. Must be between 1 and 24.
+        :param str realm_name: (optional) The URL of the identity provider.
+        :param str access_group_id: (optional) The group id that the dynamic rule
+               is assigned to.
         :param str account_id: (optional) The account id that the group is in.
-        :param List[RuleConditions] conditions: (optional) A list of conditions the
-               rule must satisfy.
-        :param datetime created_at: (optional) The timestamp the rule was created
-               at.
+        :param List[RuleConditions] conditions: (optional) A list of conditions
+               that identities must satisfy to gain access group membership.
+        :param datetime created_at: (optional) The timestamp for when the rule was
+               created.
         :param str created_by_id: (optional) The `iam_id` of the entity that
-               created the rule.
-        :param datetime last_modified_at: (optional) The timestamp the rule was
-               last edited at.
+               created the dynamic rule.
+        :param datetime last_modified_at: (optional) The timestamp for when the
+               dynamic rule was last edited.
         :param str last_modified_by_id: (optional) The IAM id that last modified
                the rule.
         """
@@ -3156,9 +6236,71 @@ class Rule:
         return not self == other
 
 
+class RuleActionControls:
+    """
+    Control whether or not access group administrators in child accounts can update and
+    remove this dynamic rule in the enterprise-managed access group in their account.This
+    overrides outer level AssertionsActionControls.
+
+    :attr bool remove: (optional) Action control for removing this
+          enterprise-managed dynamic rule.
+    """
+
+    def __init__(
+        self,
+        *,
+        remove: bool = None,
+    ) -> None:
+        """
+        Initialize a RuleActionControls object.
+
+        :param bool remove: (optional) Action control for removing this
+               enterprise-managed dynamic rule.
+        """
+        self.remove = remove
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RuleActionControls':
+        """Initialize a RuleActionControls object from a json dictionary."""
+        args = {}
+        if 'remove' in _dict:
+            args['remove'] = _dict.get('remove')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RuleActionControls object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'remove') and self.remove is not None:
+            _dict['remove'] = self.remove
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RuleActionControls object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RuleActionControls') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RuleActionControls') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class RuleConditions:
     """
-    The conditions of a rule.
+    The conditions of a dynamic rule.
 
     :attr str claim: The claim to evaluate against. This will be found in the `ext`
           claims of a user's login request.
@@ -3253,9 +6395,9 @@ class RuleConditions:
 
 class RulesList:
     """
-    A list of rules attached to the access group.
+    A list of dynamic rules attached to the access group.
 
-    :attr List[Rule] rules: (optional) A list of rules.
+    :attr List[Rule] rules: (optional) A list of dynamic rules.
     """
 
     def __init__(
@@ -3266,7 +6408,7 @@ class RulesList:
         """
         Initialize a RulesList object.
 
-        :param List[Rule] rules: (optional) A list of rules.
+        :param List[Rule] rules: (optional) A list of dynamic rules.
         """
         self.rules = rules
 
@@ -3311,6 +6453,860 @@ class RulesList:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'RulesList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateAssignmentResponse:
+    """
+    Response object containing the details of a template assignment.
+
+    :attr str id: The ID of the assignment.
+    :attr str account_id: The ID of the account that the assignment belongs to.
+    :attr str template_id: The ID of the template that the assignment is based on.
+    :attr str template_version: The version of the template that the assignment is
+          based on.
+    :attr str target_type: The type of the entity that the assignment applies to.
+    :attr str target: The ID of the entity that the assignment applies to.
+    :attr str operation: The operation that the assignment applies to (e.g.
+          'assign', 'update', 'remove').
+    :attr str status: The status of the assignment (e.g. 'accepted', 'in_progress',
+          'succeeded', 'failed', 'superseded').
+    :attr str href: The URL of the assignment resource.
+    :attr datetime created_at: The date and time when the assignment was created.
+    :attr str created_by_id: The user or system that created the assignment.
+    :attr datetime last_modified_at: The date and time when the assignment was last
+          updated.
+    :attr str last_modified_by_id: The user or system that last updated the
+          assignment.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        account_id: str,
+        template_id: str,
+        template_version: str,
+        target_type: str,
+        target: str,
+        operation: str,
+        status: str,
+        href: str,
+        created_at: datetime,
+        created_by_id: str,
+        last_modified_at: datetime,
+        last_modified_by_id: str,
+    ) -> None:
+        """
+        Initialize a TemplateAssignmentResponse object.
+
+        :param str id: The ID of the assignment.
+        :param str account_id: The ID of the account that the assignment belongs
+               to.
+        :param str template_id: The ID of the template that the assignment is based
+               on.
+        :param str template_version: The version of the template that the
+               assignment is based on.
+        :param str target_type: The type of the entity that the assignment applies
+               to.
+        :param str target: The ID of the entity that the assignment applies to.
+        :param str operation: The operation that the assignment applies to (e.g.
+               'assign', 'update', 'remove').
+        :param str status: The status of the assignment (e.g. 'accepted',
+               'in_progress', 'succeeded', 'failed', 'superseded').
+        :param str href: The URL of the assignment resource.
+        :param datetime created_at: The date and time when the assignment was
+               created.
+        :param str created_by_id: The user or system that created the assignment.
+        :param datetime last_modified_at: The date and time when the assignment was
+               last updated.
+        :param str last_modified_by_id: The user or system that last updated the
+               assignment.
+        """
+        self.id = id
+        self.account_id = account_id
+        self.template_id = template_id
+        self.template_version = template_version
+        self.target_type = target_type
+        self.target = target
+        self.operation = operation
+        self.status = status
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResponse':
+        """Initialize a TemplateAssignmentResponse object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in TemplateAssignmentResponse JSON')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in TemplateAssignmentResponse JSON')
+        if 'template_id' in _dict:
+            args['template_id'] = _dict.get('template_id')
+        else:
+            raise ValueError('Required property \'template_id\' not present in TemplateAssignmentResponse JSON')
+        if 'template_version' in _dict:
+            args['template_version'] = _dict.get('template_version')
+        else:
+            raise ValueError('Required property \'template_version\' not present in TemplateAssignmentResponse JSON')
+        if 'target_type' in _dict:
+            args['target_type'] = _dict.get('target_type')
+        else:
+            raise ValueError('Required property \'target_type\' not present in TemplateAssignmentResponse JSON')
+        if 'target' in _dict:
+            args['target'] = _dict.get('target')
+        else:
+            raise ValueError('Required property \'target\' not present in TemplateAssignmentResponse JSON')
+        if 'operation' in _dict:
+            args['operation'] = _dict.get('operation')
+        else:
+            raise ValueError('Required property \'operation\' not present in TemplateAssignmentResponse JSON')
+        if 'status' in _dict:
+            args['status'] = _dict.get('status')
+        else:
+            raise ValueError('Required property \'status\' not present in TemplateAssignmentResponse JSON')
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        else:
+            raise ValueError('Required property \'href\' not present in TemplateAssignmentResponse JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in TemplateAssignmentResponse JSON')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        else:
+            raise ValueError('Required property \'created_by_id\' not present in TemplateAssignmentResponse JSON')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        else:
+            raise ValueError('Required property \'last_modified_at\' not present in TemplateAssignmentResponse JSON')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        else:
+            raise ValueError('Required property \'last_modified_by_id\' not present in TemplateAssignmentResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateAssignmentResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'template_id') and self.template_id is not None:
+            _dict['template_id'] = self.template_id
+        if hasattr(self, 'template_version') and self.template_version is not None:
+            _dict['template_version'] = self.template_version
+        if hasattr(self, 'target_type') and self.target_type is not None:
+            _dict['target_type'] = self.target_type
+        if hasattr(self, 'target') and self.target is not None:
+            _dict['target'] = self.target
+        if hasattr(self, 'operation') and self.operation is not None:
+            _dict['operation'] = self.operation
+        if hasattr(self, 'status') and self.status is not None:
+            _dict['status'] = self.status
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateAssignmentResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateAssignmentResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateAssignmentResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TargetTypeEnum(str, Enum):
+        """
+        The type of the entity that the assignment applies to.
+        """
+
+        ACCOUNT = 'Account'
+        ACCOUNTGROUP = 'AccountGroup'
+
+    class OperationEnum(str, Enum):
+        """
+        The operation that the assignment applies to (e.g. 'assign', 'update', 'remove').
+        """
+
+        ASSIGN = 'assign'
+        UPDATE = 'update'
+        REMOVE = 'remove'
+
+    class StatusEnum(str, Enum):
+        """
+        The status of the assignment (e.g. 'accepted', 'in_progress', 'succeeded',
+        'failed', 'superseded').
+        """
+
+        ACCEPTED = 'accepted'
+        IN_PROGRESS = 'in_progress'
+        SUCCEEDED = 'succeeded'
+        FAILED = 'failed'
+        SUPERSEDED = 'superseded'
+
+
+class TemplateAssignmentVerboseResponse:
+    """
+    Response object containing the details of a template assignment.
+
+    :attr str id: The ID of the assignment.
+    :attr str account_id: The ID of the account that the assignment belongs to.
+    :attr str template_id: The ID of the template that the assignment is based on.
+    :attr str template_version: The version of the template that the assignment is
+          based on.
+    :attr str target_type: The type of the entity that the assignment applies to.
+    :attr str target: The ID of the entity that the assignment applies to.
+    :attr str operation: The operation that the assignment applies to (e.g.
+          'create', 'update', 'delete').
+    :attr str status: The status of the assignment (e.g. 'pending', 'success',
+          'failure').
+    :attr List[ResourceListWithTargetAccountID] resources: (optional) List of
+          resources for the assignment.
+    :attr str href: The URL of the assignment resource.
+    :attr datetime created_at: The date and time when the assignment was created.
+    :attr str created_by_id: The user or system that created the assignment.
+    :attr datetime last_modified_at: The date and time when the assignment was last
+          updated.
+    :attr str last_modified_by_id: The user or system that last updated the
+          assignment.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        account_id: str,
+        template_id: str,
+        template_version: str,
+        target_type: str,
+        target: str,
+        operation: str,
+        status: str,
+        href: str,
+        created_at: datetime,
+        created_by_id: str,
+        last_modified_at: datetime,
+        last_modified_by_id: str,
+        *,
+        resources: List['ResourceListWithTargetAccountID'] = None,
+    ) -> None:
+        """
+        Initialize a TemplateAssignmentVerboseResponse object.
+
+        :param str id: The ID of the assignment.
+        :param str account_id: The ID of the account that the assignment belongs
+               to.
+        :param str template_id: The ID of the template that the assignment is based
+               on.
+        :param str template_version: The version of the template that the
+               assignment is based on.
+        :param str target_type: The type of the entity that the assignment applies
+               to.
+        :param str target: The ID of the entity that the assignment applies to.
+        :param str operation: The operation that the assignment applies to (e.g.
+               'create', 'update', 'delete').
+        :param str status: The status of the assignment (e.g. 'pending', 'success',
+               'failure').
+        :param str href: The URL of the assignment resource.
+        :param datetime created_at: The date and time when the assignment was
+               created.
+        :param str created_by_id: The user or system that created the assignment.
+        :param datetime last_modified_at: The date and time when the assignment was
+               last updated.
+        :param str last_modified_by_id: The user or system that last updated the
+               assignment.
+        :param List[ResourceListWithTargetAccountID] resources: (optional) List of
+               resources for the assignment.
+        """
+        self.id = id
+        self.account_id = account_id
+        self.template_id = template_id
+        self.template_version = template_version
+        self.target_type = target_type
+        self.target = target
+        self.operation = operation
+        self.status = status
+        self.resources = resources
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentVerboseResponse':
+        """Initialize a TemplateAssignmentVerboseResponse object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in TemplateAssignmentVerboseResponse JSON')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in TemplateAssignmentVerboseResponse JSON')
+        if 'template_id' in _dict:
+            args['template_id'] = _dict.get('template_id')
+        else:
+            raise ValueError('Required property \'template_id\' not present in TemplateAssignmentVerboseResponse JSON')
+        if 'template_version' in _dict:
+            args['template_version'] = _dict.get('template_version')
+        else:
+            raise ValueError(
+                'Required property \'template_version\' not present in TemplateAssignmentVerboseResponse JSON'
+            )
+        if 'target_type' in _dict:
+            args['target_type'] = _dict.get('target_type')
+        else:
+            raise ValueError('Required property \'target_type\' not present in TemplateAssignmentVerboseResponse JSON')
+        if 'target' in _dict:
+            args['target'] = _dict.get('target')
+        else:
+            raise ValueError('Required property \'target\' not present in TemplateAssignmentVerboseResponse JSON')
+        if 'operation' in _dict:
+            args['operation'] = _dict.get('operation')
+        else:
+            raise ValueError('Required property \'operation\' not present in TemplateAssignmentVerboseResponse JSON')
+        if 'status' in _dict:
+            args['status'] = _dict.get('status')
+        else:
+            raise ValueError('Required property \'status\' not present in TemplateAssignmentVerboseResponse JSON')
+        if 'resources' in _dict:
+            args['resources'] = [ResourceListWithTargetAccountID.from_dict(v) for v in _dict.get('resources')]
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        else:
+            raise ValueError('Required property \'href\' not present in TemplateAssignmentVerboseResponse JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in TemplateAssignmentVerboseResponse JSON')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        else:
+            raise ValueError(
+                'Required property \'created_by_id\' not present in TemplateAssignmentVerboseResponse JSON'
+            )
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        else:
+            raise ValueError(
+                'Required property \'last_modified_at\' not present in TemplateAssignmentVerboseResponse JSON'
+            )
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        else:
+            raise ValueError(
+                'Required property \'last_modified_by_id\' not present in TemplateAssignmentVerboseResponse JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateAssignmentVerboseResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'template_id') and self.template_id is not None:
+            _dict['template_id'] = self.template_id
+        if hasattr(self, 'template_version') and self.template_version is not None:
+            _dict['template_version'] = self.template_version
+        if hasattr(self, 'target_type') and self.target_type is not None:
+            _dict['target_type'] = self.target_type
+        if hasattr(self, 'target') and self.target is not None:
+            _dict['target'] = self.target
+        if hasattr(self, 'operation') and self.operation is not None:
+            _dict['operation'] = self.operation
+        if hasattr(self, 'status') and self.status is not None:
+            _dict['status'] = self.status
+        if hasattr(self, 'resources') and self.resources is not None:
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateAssignmentVerboseResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateAssignmentVerboseResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateAssignmentVerboseResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateResponse:
+    """
+    Response output for template.
+
+    :attr str id: The ID of the access group template.
+    :attr str name: The name of the access group template.
+    :attr str description: The description of the access group template.
+    :attr str account_id: The ID of the account to which the access group template
+          is assigned.
+    :attr str version: The version of the access group template.
+    :attr bool committed: A boolean indicating whether the access group template is
+          committed. You must commit a template before you can assign it to child
+          accounts.
+    :attr AccessGroupResponse group: Access Group Component.
+    :attr List[PolicyTemplates] policy_template_references: References to policy
+          templates assigned to the access group template.
+    :attr str href: The URL of the access group template resource.
+    :attr datetime created_at: The date and time when the access group template was
+          created.
+    :attr str created_by_id: The ID of the user who created the access group
+          template.
+    :attr datetime last_modified_at: The date and time when the access group
+          template was last modified.
+    :attr str last_modified_by_id: The ID of the user who last modified the access
+          group template.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        name: str,
+        description: str,
+        account_id: str,
+        version: str,
+        committed: bool,
+        group: 'AccessGroupResponse',
+        policy_template_references: List['PolicyTemplates'],
+        href: str,
+        created_at: datetime,
+        created_by_id: str,
+        last_modified_at: datetime,
+        last_modified_by_id: str,
+    ) -> None:
+        """
+        Initialize a TemplateResponse object.
+
+        :param str id: The ID of the access group template.
+        :param str name: The name of the access group template.
+        :param str description: The description of the access group template.
+        :param str account_id: The ID of the account to which the access group
+               template is assigned.
+        :param str version: The version of the access group template.
+        :param bool committed: A boolean indicating whether the access group
+               template is committed. You must commit a template before you can assign it
+               to child accounts.
+        :param AccessGroupResponse group: Access Group Component.
+        :param List[PolicyTemplates] policy_template_references: References to
+               policy templates assigned to the access group template.
+        :param str href: The URL of the access group template resource.
+        :param datetime created_at: The date and time when the access group
+               template was created.
+        :param str created_by_id: The ID of the user who created the access group
+               template.
+        :param datetime last_modified_at: The date and time when the access group
+               template was last modified.
+        :param str last_modified_by_id: The ID of the user who last modified the
+               access group template.
+        """
+        self.id = id
+        self.name = name
+        self.description = description
+        self.account_id = account_id
+        self.version = version
+        self.committed = committed
+        self.group = group
+        self.policy_template_references = policy_template_references
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateResponse':
+        """Initialize a TemplateResponse object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in TemplateResponse JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in TemplateResponse JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in TemplateResponse JSON')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in TemplateResponse JSON')
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        else:
+            raise ValueError('Required property \'version\' not present in TemplateResponse JSON')
+        if 'committed' in _dict:
+            args['committed'] = _dict.get('committed')
+        else:
+            raise ValueError('Required property \'committed\' not present in TemplateResponse JSON')
+        if 'group' in _dict:
+            args['group'] = AccessGroupResponse.from_dict(_dict.get('group'))
+        else:
+            raise ValueError('Required property \'group\' not present in TemplateResponse JSON')
+        if 'policy_template_references' in _dict:
+            args['policy_template_references'] = [
+                PolicyTemplates.from_dict(v) for v in _dict.get('policy_template_references')
+            ]
+        else:
+            raise ValueError('Required property \'policy_template_references\' not present in TemplateResponse JSON')
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        else:
+            raise ValueError('Required property \'href\' not present in TemplateResponse JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in TemplateResponse JSON')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        else:
+            raise ValueError('Required property \'created_by_id\' not present in TemplateResponse JSON')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        else:
+            raise ValueError('Required property \'last_modified_at\' not present in TemplateResponse JSON')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        else:
+            raise ValueError('Required property \'last_modified_by_id\' not present in TemplateResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'committed') and self.committed is not None:
+            _dict['committed'] = self.committed
+        if hasattr(self, 'group') and self.group is not None:
+            if isinstance(self.group, dict):
+                _dict['group'] = self.group
+            else:
+                _dict['group'] = self.group.to_dict()
+        if hasattr(self, 'policy_template_references') and self.policy_template_references is not None:
+            policy_template_references_list = []
+            for v in self.policy_template_references:
+                if isinstance(v, dict):
+                    policy_template_references_list.append(v)
+                else:
+                    policy_template_references_list.append(v.to_dict())
+            _dict['policy_template_references'] = policy_template_references_list
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateVersionResponse:
+    """
+    Response output for template.
+
+    :attr str id: The ID of the access group template.
+    :attr str name: The name of the access group template.
+    :attr str description: The description of the access group template.
+    :attr str account_id: The ID of the account to which the access group template
+          is assigned.
+    :attr str version: The version of the access group template.
+    :attr bool committed: A boolean indicating whether the access group template is
+          committed. You must commit a template before you can assign it to child
+          accounts.
+    :attr AccessGroupResponse group: Access Group Component.
+    :attr List[PolicyTemplates] policy_template_references: References to policy
+          templates assigned to the access group template.
+    :attr str href: The URL of the access group template resource.
+    :attr datetime created_at: The date and time when the access group template was
+          created.
+    :attr str created_by_id: The ID of the user who created the access group
+          template.
+    :attr datetime last_modified_at: The date and time when the access group
+          template was last modified.
+    :attr str last_modified_by_id: The ID of the user who last modified the access
+          group template.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        name: str,
+        description: str,
+        account_id: str,
+        version: str,
+        committed: bool,
+        group: 'AccessGroupResponse',
+        policy_template_references: List['PolicyTemplates'],
+        href: str,
+        created_at: datetime,
+        created_by_id: str,
+        last_modified_at: datetime,
+        last_modified_by_id: str,
+    ) -> None:
+        """
+        Initialize a TemplateVersionResponse object.
+
+        :param str id: The ID of the access group template.
+        :param str name: The name of the access group template.
+        :param str description: The description of the access group template.
+        :param str account_id: The ID of the account to which the access group
+               template is assigned.
+        :param str version: The version of the access group template.
+        :param bool committed: A boolean indicating whether the access group
+               template is committed. You must commit a template before you can assign it
+               to child accounts.
+        :param AccessGroupResponse group: Access Group Component.
+        :param List[PolicyTemplates] policy_template_references: References to
+               policy templates assigned to the access group template.
+        :param str href: The URL of the access group template resource.
+        :param datetime created_at: The date and time when the access group
+               template was created.
+        :param str created_by_id: The ID of the user who created the access group
+               template.
+        :param datetime last_modified_at: The date and time when the access group
+               template was last modified.
+        :param str last_modified_by_id: The ID of the user who last modified the
+               access group template.
+        """
+        self.id = id
+        self.name = name
+        self.description = description
+        self.account_id = account_id
+        self.version = version
+        self.committed = committed
+        self.group = group
+        self.policy_template_references = policy_template_references
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateVersionResponse':
+        """Initialize a TemplateVersionResponse object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in TemplateVersionResponse JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in TemplateVersionResponse JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in TemplateVersionResponse JSON')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in TemplateVersionResponse JSON')
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        else:
+            raise ValueError('Required property \'version\' not present in TemplateVersionResponse JSON')
+        if 'committed' in _dict:
+            args['committed'] = _dict.get('committed')
+        else:
+            raise ValueError('Required property \'committed\' not present in TemplateVersionResponse JSON')
+        if 'group' in _dict:
+            args['group'] = AccessGroupResponse.from_dict(_dict.get('group'))
+        else:
+            raise ValueError('Required property \'group\' not present in TemplateVersionResponse JSON')
+        if 'policy_template_references' in _dict:
+            args['policy_template_references'] = [
+                PolicyTemplates.from_dict(v) for v in _dict.get('policy_template_references')
+            ]
+        else:
+            raise ValueError(
+                'Required property \'policy_template_references\' not present in TemplateVersionResponse JSON'
+            )
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        else:
+            raise ValueError('Required property \'href\' not present in TemplateVersionResponse JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in TemplateVersionResponse JSON')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        else:
+            raise ValueError('Required property \'created_by_id\' not present in TemplateVersionResponse JSON')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        else:
+            raise ValueError('Required property \'last_modified_at\' not present in TemplateVersionResponse JSON')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        else:
+            raise ValueError('Required property \'last_modified_by_id\' not present in TemplateVersionResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateVersionResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'committed') and self.committed is not None:
+            _dict['committed'] = self.committed
+        if hasattr(self, 'group') and self.group is not None:
+            if isinstance(self.group, dict):
+                _dict['group'] = self.group
+            else:
+                _dict['group'] = self.group.to_dict()
+        if hasattr(self, 'policy_template_references') and self.policy_template_references is not None:
+            policy_template_references_list = []
+            for v in self.policy_template_references:
+                if isinstance(v, dict):
+                    policy_template_references_list.append(v)
+                else:
+                    policy_template_references_list.append(v.to_dict())
+            _dict['policy_template_references'] = policy_template_references_list
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateVersionResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateVersionResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateVersionResponse') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -3465,9 +7461,9 @@ class AccessGroupMembersPager:
                Transaction-Id and the value is anything that you choose. If no transaction
                ID is passed in, then a random ID is generated.
         :param str membership_type: (optional) Filters members by membership type.
-               Membership type can be either `static`, `dynamic` or `all`. `static` lists
-               those members explicitly added to the access group, `dynamic` lists those
-               members part of access group via dynamic rules at the moment. `all` lists
+               Filter by `static`, `dynamic` or `all`. `static` lists the members
+               explicitly added to the access group, and `dynamic` lists the members that
+               are part of the access group at that time via dynamic rules. `all` lists
                both static and dynamic members.
         :param int limit: (optional) Return up to this limit of results where limit
                is between 0 and 100.
@@ -3529,6 +7525,156 @@ class AccessGroupMembersPager:
         Returns all results by invoking get_next() repeatedly
         until all pages of results have been retrieved.
         :return: A List[dict], where each element is a dict that represents an instance of ListGroupMembersResponseMember.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class TemplatesPager:
+    """
+    TemplatesPager can be used to simplify the use of the "list_templates" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamAccessGroupsV2,
+        account_id: str,
+        transaction_id: str = None,
+        limit: int = None,
+        verbose: bool = None,
+    ) -> None:
+        """
+        Initialize a TemplatesPager object.
+        :param str account_id: Enterprise account ID.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param int limit: (optional) Return up to this limit of results where limit
+               is between 0 and 100.
+        :param bool verbose: (optional) If `verbose=true`, IAM resource details are
+               returned. If performance is a concern, leave the `verbose` parameter off so
+               that details are not retrieved.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._transaction_id = transaction_id
+        self._limit = limit
+        self._verbose = verbose
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of GroupTemplate.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_templates(
+            account_id=self._account_id,
+            transaction_id=self._transaction_id,
+            limit=self._limit,
+            verbose=self._verbose,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('group_templates')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of GroupTemplate.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class TemplateVersionsPager:
+    """
+    TemplateVersionsPager can be used to simplify the use of the "list_template_versions" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamAccessGroupsV2,
+        template_id: str,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a TemplateVersionsPager object.
+        :param str template_id: ID of the template that you want to list all
+               versions of.
+        :param int limit: (optional) Return up to this limit of results where limit
+               is between 0 and 100.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._template_id = template_id
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ListTemplateVersionResponse.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_template_versions(
+            template_id=self._template_id,
+            limit=self._limit,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('group_template_versions')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ListTemplateVersionResponse.
         :rtype: List[dict]
         """
         results = []

@@ -1,3 +1,31 @@
+# [0.41.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.40.2...v0.41.0) (2023-09-05)
+
+
+### Features
+
+* **IAM Policy Management:** add support for policy templates ([#203](https://github.com/IBM/platform-services-python-sdk/issues/203)) ([c9df540](https://github.com/IBM/platform-services-python-sdk/commit/c9df5402cea5896196bd941c857f81348e6ac24c))
+
+## [0.40.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.40.1...v0.40.2) (2023-09-05)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** remove update action control from assertions ([#218](https://github.com/IBM/platform-services-python-sdk/issues/218)) ([baa58c6](https://github.com/IBM/platform-services-python-sdk/commit/baa58c6379ef5e29a7d5f7b2af857a5474d1b8eb))
+
+## [0.40.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.40.0...v0.40.1) (2023-08-31)
+
+
+### Bug Fixes
+
+* enable builds on Windows ([#215](https://github.com/IBM/platform-services-python-sdk/issues/215)) ([6395ae1](https://github.com/IBM/platform-services-python-sdk/commit/6395ae117164f378ada8bff02da98180e20f6deb))
+
+# [0.40.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.39.0...v0.40.0) (2023-08-22)
+
+
+### Features
+
+* **IAM Access Groups:** add support for access group templates ([#212](https://github.com/IBM/platform-services-python-sdk/issues/212)) ([2aef015](https://github.com/IBM/platform-services-python-sdk/commit/2aef015bbf0984d6e30d3873bb9e055ba64850cd))
+
 # [0.39.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.38.0...v0.39.0) (2023-08-15)
 
 

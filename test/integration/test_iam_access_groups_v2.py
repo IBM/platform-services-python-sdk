@@ -1,6 +1,5 @@
-# coding: utf-8
-
-# Copyright 2019, 2022 IBM All Rights Reserved.
+# -*- coding: utf-8 -*-
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,9 +14,12 @@
 # limitations under the License.
 
 """
- This class contains an integration test for the IAM Access Groups service.
+Integration Tests for IamAccessGroupsV2
 """
 
+from ibm_cloud_sdk_core import *
+import os
+import time
 import pytest
 import os
 import os.path
@@ -51,6 +53,8 @@ class TestIamAccessGroupsV2:
             cls.config = read_external_sources(IamAccessGroupsV2.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
             cls.testAccountId = cls.config.get('TEST_ACCOUNT_ID')
+            cls.testPolicyTemplateId = cls.config.get('TEST_POLICY_TEMPLATE_ID')
+            cls.testAccountGroupId = cls.config.get('TEST_ACCOUNT_GROUP_ID')
             assert cls.testAccountId is not None
 
             cls.etagHeader = "ETag"
@@ -65,6 +69,11 @@ class TestIamAccessGroupsV2:
             cls.testClaimRuleId = ""
             cls.testClaimRuleETag = ""
             cls.testAccountSettings = AccountSettings()
+            cls.testTemplateId = ""
+            cls.testTemplateEtag = ""
+            cls.testTemplateLatestEtag = ""
+            cls.testAssignmentId = ""
+            cls.testAssignmentEtag = ""
 
         print('Setup complete.')
 
@@ -536,3 +545,439 @@ class TestIamAccessGroupsV2:
         assert result is not None
         assert result.account_id == self.testAccountId
         assert result.public_access_enabled == self.testAccountSettings.public_access_enabled
+
+    @needscredentials
+    def test_create_template(self):
+        # Construct a dict representation of a MembersActionControls model
+        members_action_controls_model = {
+            'add': True,
+            'remove': False,
+        }
+        # Construct a dict representation of a MembersInput model
+        members_input_model = {
+            'users': ['IBMid-50PJGPKYJJ', 'IBMid-665000T8WY'],
+            'action_controls': members_action_controls_model,
+        }
+        # Construct a dict representation of a ConditionInput model
+        condition_input_model = {
+            'claim': 'blueGroup',
+            'operator': 'CONTAINS',
+            'value': '\"test-bluegroup-saml\"',
+        }
+        # Construct a dict representation of a RulesActionControls model
+        rules_action_controls_model = {
+            'remove': False,
+        }
+        # Construct a dict representation of a RuleInput model
+        rule_input_model = {
+            'name': 'Manager group rule',
+            'expiration': 12,
+            'realm_name': 'https://idp.example.org/SAML2',
+            'conditions': [condition_input_model],
+            'action_controls': rules_action_controls_model,
+        }
+        # Construct a dict representation of a AssertionsActionControls model
+        assertions_action_controls_model = {
+            'add': False,
+            'remove': True,
+        }
+        # Construct a dict representation of a AssertionsInput model
+        assertions_input_model = {
+            'rules': [rule_input_model],
+            'action_controls': assertions_action_controls_model,
+        }
+        # Construct a dict representation of a AccessActionControls model
+        access_action_controls_model = {
+            'add': False,
+        }
+        # Construct a dict representation of a GroupActionControls model
+        group_action_controls_model = {
+            'access': access_action_controls_model,
+        }
+        # Construct a dict representation of a AccessGroupInput model
+        access_group_input_model = {
+            'name': 'IAM Admin Group',
+            'description': 'This access group template allows admin access to all IAM platform services in the account.',
+            'members': members_input_model,
+            'assertions': assertions_input_model,
+            'action_controls': group_action_controls_model,
+        }
+        # Construct a dict representation of a PolicyTemplatesInput model
+        policy_templates_input_model = {
+            'id': self.testPolicyTemplateId,
+            'version': '1',
+        }
+
+        response = self.iam_access_groups_service.create_template(
+            name='IAM Admin Group template',
+            account_id=self.testAccountId,
+            description='This access group template allows admin access to all IAM platform services in the account.',
+            group=access_group_input_model,
+            policy_template_references=[policy_templates_input_model],
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 201
+        create_template_response = response.get_result()
+        assert create_template_response is not None
+        self.__class__.testTemplateId = create_template_response['id']
+
+    @needscredentials
+    def test_list_templates(self):
+        response = self.iam_access_groups_service.list_templates(
+            account_id=self.testAccountId,
+            transaction_id='testString',
+            limit=50,
+            offset=0,
+            verbose=True,
+        )
+
+        assert response.get_status_code() == 200
+        list_templates_response = response.get_result()
+        assert list_templates_response is not None
+
+    @needscredentials
+    def test_list_templates_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = TemplatesPager(
+            client=self.iam_access_groups_service,
+            account_id=self.testAccountId,
+            transaction_id='testString',
+            limit=50,
+            verbose=True,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = TemplatesPager(
+            client=self.iam_access_groups_service,
+            account_id=self.testAccountId,
+            transaction_id='testString',
+            limit=50,
+            verbose=True,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_templates() returned a total of {len(all_results)} items(s) using TemplatesPager.')
+
+    @needscredentials
+    def test_create_template_version(self):
+        # Construct a dict representation of a MembersActionControls model
+        members_action_controls_model = {
+            'add': True,
+            'remove': False,
+        }
+        # Construct a dict representation of a MembersInput model
+        members_input_model = {
+            'users': ['IBMid-50PJGPKYJJ', 'IBMid-665000T8WY'],
+            'action_controls': members_action_controls_model,
+        }
+        # Construct a dict representation of a ConditionInput model
+        condition_input_model = {
+            'claim': 'blueGroup',
+            'operator': 'CONTAINS',
+            'value': '\"test-bluegroup-saml\"',
+        }
+        # Construct a dict representation of a RulesActionControls model
+        rules_action_controls_model = {
+            'remove': True,
+        }
+        # Construct a dict representation of a RuleInput model
+        rule_input_model = {
+            'name': 'Manager group rule',
+            'expiration': 12,
+            'realm_name': 'https://idp.example.org/SAML2',
+            'conditions': [condition_input_model],
+            'action_controls': rules_action_controls_model,
+        }
+        # Construct a dict representation of a AssertionsActionControls model
+        assertions_action_controls_model = {
+            'add': False,
+            'remove': True,
+        }
+        # Construct a dict representation of a AssertionsInput model
+        assertions_input_model = {
+            'rules': [rule_input_model],
+            'action_controls': assertions_action_controls_model,
+        }
+        # Construct a dict representation of a AccessActionControls model
+        access_action_controls_model = {
+            'add': False,
+        }
+        # Construct a dict representation of a GroupActionControls model
+        group_action_controls_model = {
+            'access': access_action_controls_model,
+        }
+        # Construct a dict representation of a AccessGroupInput model
+        access_group_input_model = {
+            'name': 'IAM Admin Group 8',
+            'description': 'This access group template allows admin access to all IAM platform services in the account.',
+            'members': members_input_model,
+            'assertions': assertions_input_model,
+            'action_controls': group_action_controls_model,
+        }
+        # Construct a dict representation of a PolicyTemplatesInput model
+        policy_templates_input_model = {
+            'id': self.testPolicyTemplateId,
+            'version': '1',
+        }
+
+        response = self.iam_access_groups_service.create_template_version(
+            template_id=self.testTemplateId,
+            name='IAM Admin Group template 2',
+            description='This access group template allows admin access to all IAM platform services in the account.',
+            group=access_group_input_model,
+            policy_template_references=[policy_templates_input_model],
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 201
+        create_template_response = response.get_result()
+        assert create_template_response is not None
+
+    @needscredentials
+    def test_list_template_versions(self):
+        response = self.iam_access_groups_service.list_template_versions(
+            template_id=self.testTemplateId,
+            limit=100,
+            offset=0,
+        )
+
+        assert response.get_status_code() == 200
+        list_template_versions_response = response.get_result()
+        assert list_template_versions_response is not None
+
+    @needscredentials
+    def test_list_template_versions_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = TemplateVersionsPager(
+            client=self.iam_access_groups_service,
+            template_id=self.testTemplateId,
+            limit=100,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = TemplateVersionsPager(
+            client=self.iam_access_groups_service,
+            template_id=self.testTemplateId,
+            limit=100,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(
+            f'\nlist_template_versions() returned a total of {len(all_results)} items(s) using TemplateVersionsPager.'
+        )
+
+    @needscredentials
+    def test_get_template_version(self):
+        response = self.iam_access_groups_service.get_template_version(
+            template_id=self.testTemplateId,
+            version_num='1',
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 200
+        create_template_response = response.get_result()
+        assert create_template_response is not None
+
+        self.__class__.testTemplateEtag = response.get_headers().get(self.etagHeader)
+
+    @needscredentials
+    def test_update_template_version(self):
+        # Construct a dict representation of a MembersActionControls model
+        members_action_controls_model = {
+            'add': True,
+            'remove': False,
+        }
+        # Construct a dict representation of a MembersInput model
+        members_input_model = {
+            'users': ['IBMid-665000T8WY'],
+            'action_controls': members_action_controls_model,
+        }
+        # Construct a dict representation of a ConditionInput model
+        condition_input_model = {
+            'claim': 'blueGroup',
+            'operator': 'CONTAINS',
+            'value': '\"test-bluegroup-saml\"',
+        }
+        # Construct a dict representation of a RulesActionControls model
+        rules_action_controls_model = {
+            'remove': False,
+        }
+        # Construct a dict representation of a RuleInput model
+        rule_input_model = {
+            'name': 'Manager group rule',
+            'expiration': 12,
+            'realm_name': 'https://idp.example.org/SAML2',
+            'conditions': [condition_input_model],
+            'action_controls': rules_action_controls_model,
+        }
+        # Construct a dict representation of a AssertionsActionControls model
+        assertions_action_controls_model = {
+            'add': False,
+            'remove': True,
+        }
+        # Construct a dict representation of a AssertionsInput model
+        assertions_input_model = {
+            'rules': [rule_input_model],
+            'action_controls': assertions_action_controls_model,
+        }
+        # Construct a dict representation of a AccessActionControls model
+        access_action_controls_model = {
+            'add': False,
+        }
+        # Construct a dict representation of a GroupActionControls model
+        group_action_controls_model = {
+            'access': access_action_controls_model,
+        }
+        # Construct a dict representation of a AccessGroupInput model
+        access_group_input_model = {
+            'name': 'IAM Admin Group 8',
+            'description': 'This access group template allows admin access to all IAM platform services in the account.',
+            'members': members_input_model,
+            'assertions': assertions_input_model,
+            'action_controls': group_action_controls_model,
+        }
+        # Construct a dict representation of a PolicyTemplatesInput model
+        policy_templates_input_model = {
+            'id': self.testPolicyTemplateId,
+            'version': '1',
+        }
+
+        response = self.iam_access_groups_service.update_template_version(
+            template_id=self.testTemplateId,
+            version_num='1',
+            if_match=self.testTemplateEtag,
+            name='IAM Admin Group template 2',
+            description='This access group template allows admin access to all IAM platform services in the account.',
+            group=access_group_input_model,
+            policy_template_references=[policy_templates_input_model],
+            transaction_id='83adf5bd-de790caa3',
+        )
+
+        assert response.get_status_code() == 201
+        create_template_response = response.get_result()
+        assert create_template_response is not None
+
+    @needscredentials
+    def test_get_latest_template_version(self):
+        response = self.iam_access_groups_service.get_latest_template_version(
+            template_id=self.testTemplateId,
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 200
+        create_template_response = response.get_result()
+        assert create_template_response is not None
+
+        self.__class__.testTemplateLatestEtag = response.get_headers().get(self.etagHeader)
+
+    @needscredentials
+    def test_commit_template(self):
+        response = self.iam_access_groups_service.commit_template(
+            template_id=self.testTemplateId,
+            version_num='2',
+            if_match=self.testTemplateLatestEtag,
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 204
+
+    @needscredentials
+    def test_create_assignment(self):
+        response = self.iam_access_groups_service.create_assignment(
+            template_id=self.testTemplateId,
+            template_version='2',
+            target_type='AccountGroup',
+            target=self.testAccountGroupId,
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 202
+        template_create_assignment_response = response.get_result()
+        assert template_create_assignment_response is not None
+
+        self.__class__.testAssignmentId = template_create_assignment_response['id']
+        time.sleep(60)
+
+    @needscredentials
+    def test_list_assignments(self):
+        response = self.iam_access_groups_service.list_assignments(
+            account_id=self.testTemplateId,
+        )
+
+        assert response.get_status_code() == 200
+        templates_list_assignment_response = response.get_result()
+        assert templates_list_assignment_response is not None
+
+    @needscredentials
+    def test_get_assignment(self):
+        response = self.iam_access_groups_service.get_assignment(
+            assignment_id=self.testAssignmentId,
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 200
+        get_assignment_response = response.get_result()
+        assert get_assignment_response is not None
+
+        self.__class__.testAssignmentEtag = response.get_headers().get(self.etagHeader)
+
+    @needscredentials
+    def test_update_assignment(self):
+        response = self.iam_access_groups_service.update_assignment(
+            assignment_id=self.testAssignmentId,
+            if_match=self.testAssignmentEtag,
+            template_version="2",
+        )
+
+        assert response.get_status_code() == 202
+        update_template_assignment_response = response.get_result()
+        assert update_template_assignment_response is not None
+
+        time.sleep(60)
+
+    @needscredentials
+    def test_delete_assignment(self):
+        response = self.iam_access_groups_service.delete_assignment(
+            assignment_id=self.testAssignmentId,
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 202
+
+        time.sleep(90)
+
+    @needscredentials
+    def test_delete_template_version(self):
+        response = self.iam_access_groups_service.delete_template_version(
+            template_id=self.testTemplateId,
+            version_num='2',
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 204
+
+    @needscredentials
+    def test_delete_template(self):
+        response = self.iam_access_groups_service.delete_template(
+            template_id=self.testTemplateId,
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 204
