@@ -116,6 +116,25 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             actions=['iam-groups.groups.read'],
         )
 
+        cls.testTemplateId = ""
+        cls.testTemplateETag = ""
+        cls.testTemplateVersion = ""
+        cls.testNewTemplateVersion = ""
+        cls.testAssignmentId = ""
+        cls.testV2PolicyTemplateResource = V2PolicyResource(
+            attributes=[
+                V2PolicyResourceAttribute(key='serviceName', value='watson', operator='stringEquals'),
+            ],
+        )
+        cls.testTemplatePolicy = TemplatePolicy(
+            type='access',
+            control=cls.testV2PolicyControl,
+            resource=cls.testV2PolicyTemplateResource,
+            description='SDK Test Policy',
+        )
+        cls.testTemplatePrefix = 'SDKPython'
+        cls.testTemplateName = cls.testTemplatePrefix + str(random.randint(0, 99999))
+
         print('\nSetup complete.')
 
     @classmethod
@@ -130,7 +149,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result_dict = response.get_result()
         assert result_dict is not None
 
-        result = PolicyList.from_dict(result_dict)
+        result = PolicyCollection.from_dict(result_dict)
         assert result is not None
 
         # Iterate across the policies
@@ -154,6 +173,27 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         response = cls.service.delete_role(role_id=cls.testCustomRoleId)
         assert response is not None
         assert response.get_status_code() == 204
+
+        # Delete all the policy templates that we created during the test.
+        #
+        # List all policy templates in the account
+        response = cls.service.list_policy_templates(account_id=cls.testAccountId)
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyTemplateCollection.from_dict(result_dict)
+        assert result is not None
+
+        for template in result.policy_templates:
+            now = datetime.now(timezone.utc)
+            minutesDifference = (now - policy.created_at).seconds / 60
+            if cls.testTemplatePrefix in template.name and (template.id == cls.testTemplateId or minutesDifference < 5):
+                response = cls.service.delete_policy_template(policy_template_id=template.id)
+                assert response is not None
+                assert response.get_status_code() == 204
 
         print('\nClean up complete.')
 
@@ -244,7 +284,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result_dict = response.get_result()
         assert result_dict is not None
 
-        result = PolicyList.from_dict(result_dict)
+        result = PolicyCollection.from_dict(result_dict)
         assert result is not None
 
         print("Policy list: ", result)
@@ -344,7 +384,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result_dict = response.get_result()
         assert result_dict is not None
 
-        result = RoleList.from_dict(result_dict)
+        result = RoleCollection.from_dict(result_dict)
         assert result is not None
 
         print("Custom roles list: ", result)
@@ -461,6 +501,9 @@ class TestIamPolicyManagementV1(unittest.TestCase):
 
         self.__class__.testPolicyETag = response.get_headers().get(self.etagHeader)
 
+        # Set role_id back to default
+        self.testV2PolicyControl.grant.roles[0].role_id = self.testViewerRoleCrn
+
     def test_13_list_v2_access_policies(self):
         print("Policy ID: ", self.testPolicyId)
 
@@ -493,7 +536,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result_dict = response.get_result()
         assert result_dict is not None
 
-        result = RoleList.from_dict(result_dict)
+        result = RoleCollection.from_dict(result_dict)
         assert result is not None
 
         print("List roles: ", result)
@@ -511,3 +554,214 @@ class TestIamPolicyManagementV1(unittest.TestCase):
                 testServiceRolePresent = True
                 break
         assert testServiceRolePresent
+
+    def test_15_create_policy_template(self):
+
+        response = self.service.create_policy_template(
+            name=self.testTemplateName,
+            account_id=self.testAccountId,
+            policy=self.testTemplatePolicy,
+            description='SDK Test Policy Template',
+        )
+        assert response is not None
+
+        assert response.get_status_code() == 201
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyTemplate.from_dict(result_dict)
+        assert result is not None
+
+        self.__class__.testTemplateId = result.id
+        self.__class__.testTemplateVersion = result.version
+
+    def test_16_get_policy_template(self):
+        assert self.testTemplateId
+        print("Policy Tempate ID: ", self.testTemplateId)
+
+        response = self.service.get_policy_template(
+            policy_template_id=self.testTemplateId,
+        )
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyTemplate.from_dict(result_dict)
+        assert result is not None
+
+        self.__class__.testTemplateETag = response.get_headers().get(self.etagHeader)
+
+    def test_17_replace_policy_template(self):
+        assert self.testTemplateId
+        assert self.testTemplateETag
+        assert self.testTemplateVersion
+
+        print("Policy Tempate ID: ", self.testTemplateId)
+        self.testV2PolicyControl.grant.roles[0].role_id = self.testEditorRoleCrn
+
+        updated_template_description = 'SDK Updated Test Policy Template'
+        response = self.service.replace_policy_template(
+            policy_template_id=self.testTemplateId,
+            version=self.testTemplateVersion,
+            if_match=self.testTemplateETag,
+            policy=self.testTemplatePolicy,
+            description=updated_template_description,
+        )
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyTemplate.from_dict(result_dict)
+        assert result is not None
+        assert result.description == updated_template_description
+
+    def test_18_list_policy_templates(self):
+        response = self.service.list_policy_templates(
+            account_id=self.testAccountId,
+            accept_language='default',
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyTemplateCollection.from_dict(result_dict)
+
+        print("Policy Template list: ", result)
+
+        # Confirm the test policy template is present
+        foundTestTemplate = False
+        for policy_template in result.policy_templates:
+            if policy_template.id == self.testTemplateId:
+                foundTestTemplate = True
+                break
+        assert foundTestTemplate
+
+    def test_19_create_policy_template_version(self):
+
+        self.testV2PolicyControl.grant.roles[0].role_id = self.testViewerRoleCrn
+        response = self.service.create_policy_template_version(
+            policy_template_id=self.testTemplateId,
+            policy=self.testTemplatePolicy,
+            description='SDK New Test Policy Template',
+        )
+
+        assert response.get_status_code() == 201
+        result_dict = response.get_result()
+        assert result_dict is not None
+        result = PolicyTemplate.from_dict(result_dict)
+        assert result is not None
+
+        assert result.version > self.testTemplateVersion
+        self.__class__.testNewTemplateVersion = result.version
+
+    def test_20_get_policy_template_version(self):
+        response = self.service.get_policy_template_version(
+            policy_template_id=self.testTemplateId,
+            version=self.testNewTemplateVersion,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        self.__class__.testTemplateETag = response.get_headers().get(self.etagHeader)
+
+    def test_21_commit_policy_template(self):
+        response = self.service.commit_policy_template(
+            policy_template_id=self.testTemplateId,
+            version=self.testTemplateVersion,
+            if_match=self.testTemplateETag,
+        )
+
+        assert response.get_status_code() == 204
+
+        response = self.service.get_policy_template_version(
+            policy_template_id=self.testTemplateId,
+            version=self.testTemplateVersion,
+        )
+
+        assert response.get_status_code() == 200
+        self.__class__.testTemplateETag = response.get_headers().get(self.etagHeader)
+        assert self.testTemplateETag is not None
+
+        # Now that policy template is committed, should fail to update version
+        try:
+            response = self.service.replace_policy_template(
+                policy_template_id=self.testTemplateId,
+                version=self.testTemplateVersion,
+                if_match=self.testTemplateETag,
+                policy=self.testTemplatePolicy,
+                description='SDK Fail to Update Committed Version',
+            )
+        except ApiException as e:
+            assert (
+                e.message
+                == "Policy template id '"
+                + self.testTemplateId
+                + "' and version '"
+                + self.testTemplateVersion
+                + "' is committed and cannot be updated"
+            )
+
+    def test_22_delete_policy_template_version(self):
+
+        response = self.service.delete_policy_template_version(
+            policy_template_id=self.testTemplateId,
+            version=self.testTemplateVersion,
+        )
+
+        assert response.get_status_code() == 204
+
+    def test_23_list_policy_template_versions(self):
+
+        response = self.service.list_policy_template_versions(
+            policy_template_id=self.testTemplateId,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyTemplateVersionsCollection.from_dict(result_dict)
+        assert result is not None
+        assert len(result.versions) == 1
+
+        # Confirm the test policy template with new version is present
+        foundTestTemplateVersion = False
+        for version in result.versions:
+            if version.version == self.testNewTemplateVersion:
+                foundTestTemplateVersion = True
+                break
+        assert foundTestTemplateVersion
+
+    def test_24_list_policy_assignments(self):
+        response = self.service.list_policy_assignments(
+            account_id=self.testAccountId,
+            accept_language='default',
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+        result = PolicyTemplateAssignmentCollection.from_dict(result_dict)
+        assert result is not None
+
+        self.__class__.testAssignmentId = result.assignments[0].id
+
+    def test_25_get_policy_assignment(self):
+
+        response = self.service.get_policy_assignment(
+            assignment_id=self.testAssignmentId,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyAssignment.from_dict(result_dict)
+        assert result is not None
+        assert result.id == self.testAssignmentId
