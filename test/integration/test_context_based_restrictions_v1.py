@@ -654,6 +654,8 @@ class TestContextBasedRestrictionsV1:
         assert response.get_status_code() == 200
         operations_list = response.get_result()
         assert operations_list is not None
+        for api_type in operations_list['api_types']:
+            assert api_type is not ""
 
     @needscredentials
     def test_list_available_service_operations_with_service_group(self):
@@ -665,6 +667,8 @@ class TestContextBasedRestrictionsV1:
         assert response.get_status_code() == 200
         operations_list = response.get_result()
         assert operations_list is not None
+        for api_type in operations_list['api_types']:
+            assert api_type is not ""
 
     @needscredentials
     def test_list_available_service_operations_with_resource_type(self):
@@ -677,6 +681,17 @@ class TestContextBasedRestrictionsV1:
         assert response.get_status_code() == 200
         operations_list = response.get_result()
         assert operations_list is not None
+        for api_type in operations_list['api_types']:
+            assert api_type is not ""
+
+    @needscredentials
+    def test_list_available_service_operations_with_mutual_exclusion_error(self):
+        with pytest.raises(ApiException, match="400"):
+            self.context_based_restrictions_service.list_available_service_operations(
+                transaction_id=self.getTransactionID(),
+                service_name='iam-access-management',
+                service_group_id='IAM',
+            )
 
     @needscredentials
     def test_delete_rule(self):

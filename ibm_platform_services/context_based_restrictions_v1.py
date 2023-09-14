@@ -1114,6 +1114,7 @@ class APIType:
     :attr str api_type_id: The id of the API type.
     :attr str display_name: The displayed name of the API type.
     :attr str description: The description of the API type.
+    :attr str type: The type of the API type.
     :attr List[Action] actions: The actions available for the API type.
     """
 
@@ -1122,6 +1123,7 @@ class APIType:
         api_type_id: str,
         display_name: str,
         description: str,
+        type: str,
         actions: List['Action'],
     ) -> None:
         """
@@ -1130,11 +1132,13 @@ class APIType:
         :param str api_type_id: The id of the API type.
         :param str display_name: The displayed name of the API type.
         :param str description: The description of the API type.
+        :param str type: The type of the API type.
         :param List[Action] actions: The actions available for the API type.
         """
         self.api_type_id = api_type_id
         self.display_name = display_name
         self.description = description
+        self.type = type
         self.actions = actions
 
     @classmethod
@@ -1153,6 +1157,10 @@ class APIType:
             args['description'] = _dict.get('description')
         else:
             raise ValueError('Required property \'description\' not present in APIType JSON')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in APIType JSON')
         if 'actions' in _dict:
             args['actions'] = [Action.from_dict(v) for v in _dict.get('actions')]
         else:
@@ -1173,6 +1181,8 @@ class APIType:
             _dict['display_name'] = self.display_name
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
         if hasattr(self, 'actions') and self.actions is not None:
             actions_list = []
             for v in self.actions:
@@ -3131,7 +3141,7 @@ class ZoneSummary:
 
 class AddressIPAddress(Address):
     """
-    A single IP address.
+    A single IP address. IPv4 and IPv6 are supported.
 
     :attr str type: The type of address.
     :attr str value: The IP address.
@@ -3209,7 +3219,7 @@ class AddressIPAddress(Address):
 
 class AddressIPAddressRange(Address):
     """
-    An IP address range.
+    An IP address range. IPv4 and IPv6 are supported.
 
     :attr str type: The type of address.
     :attr str value: The ip range in <first-ip>-<last-ip> format.

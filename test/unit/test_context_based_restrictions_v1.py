@@ -123,7 +123,7 @@ class TestCreateZone:
         # Construct a dict representation of a AddressIPAddress model
         address_model = {}
         address_model['type'] = 'ipAddress'
-        address_model['value'] = '169.23.56.234'
+        address_model['value'] = '169.23.56.234, 3ffe:1900:fe21:4545::'
 
         # Set up parameter values
         name = 'an example of zone'
@@ -483,7 +483,7 @@ class TestReplaceZone:
         # Construct a dict representation of a AddressIPAddress model
         address_model = {}
         address_model['type'] = 'ipAddress'
-        address_model['value'] = '169.23.56.234'
+        address_model['value'] = '169.23.56.234, 3ffe:1900:fe21:4545::'
 
         # Set up parameter values
         zone_id = 'testString'
@@ -1767,7 +1767,7 @@ class TestListAvailableServiceOperations:
         """
         # Set up mock
         url = preprocess_url('/v1/operations')
-        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
+        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "type": "type", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
         responses.add(
             responses.GET,
             url,
@@ -1819,10 +1819,7 @@ class TestListAvailableServiceOperations:
         """
         # Set up mock
         url = preprocess_url('/v1/operations')
-        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
-        # Set up parameter values
-        service_name = 'testString'
-
+        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "type": "type", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
         responses.add(
             responses.GET,
             url,
@@ -1832,7 +1829,7 @@ class TestListAvailableServiceOperations:
         )
 
         # Invoke method
-        response = _service.list_available_service_operations(service_name, headers={})
+        response = _service.list_available_service_operations()
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1881,6 +1878,7 @@ class TestModel_APIType:
         api_type_model_json['api_type_id'] = 'testString'
         api_type_model_json['display_name'] = 'testString'
         api_type_model_json['description'] = 'testString'
+        api_type_model_json['type'] = 'testString'
         api_type_model_json['actions'] = [action_model]
 
         # Construct a model instance of APIType by calling from_dict on the json representation
@@ -2055,6 +2053,7 @@ class TestModel_OperationsList:
         api_type_model['api_type_id'] = 'testString'
         api_type_model['display_name'] = 'testString'
         api_type_model['description'] = 'testString'
+        api_type_model['type'] = 'testString'
         api_type_model['actions'] = [action_model]
 
         # Construct a json representation of a OperationsList model
