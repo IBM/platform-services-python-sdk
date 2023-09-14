@@ -30,6 +30,10 @@ from ibm_platform_services.context_based_restrictions_v1 import *
 # CONTEXT_BASED_RESTRICTIONS_AUTH_TYPE=iam
 # CONTEXT_BASED_RESTRICTIONS_APIKEY=<IAM apikey>
 # CONTEXT_BASED_RESTRICTIONS_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
+# CONTEXT_BASED_RESTRICTIONS_TEST_ACCOUNT_ID=<the id of the account under which test CBR zones and rules are created>
+# CONTEXT_BASED_RESTRICTIONS_TEST_SERVICE_NAME=<the name of the service to be associated with the test CBR rules>
+# CONTEXT_BASED_RESTRICTIONS_TEST_VPC_CRN=<the CRN of the vpc instance to be associated with the test CBR rules>
+#
 #
 # These configuration properties can be exported as environment variables, or stored
 # in a configuration file and then:
@@ -41,6 +45,13 @@ context_based_restrictions_service = None
 
 config = None
 
+account_id = None
+service_name = None
+vpc_crn = None
+zone_id = None
+zone_rev = None
+rule_id = None
+rule_rev = None
 
 ##############################################################################
 # Start of Examples for Service: ContextBasedRestrictionsV1
@@ -68,6 +79,15 @@ class TestContextBasedRestrictionsV1Examples:
             global config
             config = read_external_sources(ContextBasedRestrictionsV1.DEFAULT_SERVICE_NAME)
 
+            global account_id
+            account_id = config['TEST_ACCOUNT_ID']
+
+            global service_name
+            service_name = config['TEST_SERVICE_NAME']
+
+            global vpc_crn
+            vpc_crn = config['TEST_VPC_CRN']
+
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
@@ -83,23 +103,54 @@ class TestContextBasedRestrictionsV1Examples:
             print('\ncreate_zone() result:')
             # begin-create_zone
 
-            address_model = {
+            ip_address_model = {
                 'type': 'ipAddress',
                 'value': '169.23.56.234',
+            }
+            ip_range_address_model = {
+                'type': 'ipRange',
+                'value': '169.23.22.0-169.23.22.255',
+            }
+            subnet_address_model = {
+                'type': 'subnet',
+                'value': '192.0.2.0/24',
+            }
+            vpc_address_model = {
+                'type': 'vpc',
+                'value': vpc_crn,
+            }
+            service_ref_address_model = {
+                'type': 'serviceRef',
+                'ref': {
+                    'account_id': account_id,
+                    'service_name': 'cloud-object-storage',
+                },
+            }
+            excluded_ip_address_model = {
+                'type': 'ipAddress',
+                'value': '169.23.22.127',
             }
 
             response = context_based_restrictions_service.create_zone(
                 name='an example of zone',
-                account_id='12ab34cd56ef78ab90cd12ef34ab56cd',
-                addresses=[address_model],
+                account_id=account_id,
+                addresses=[
+                    ip_address_model,
+                    ip_range_address_model,
+                    subnet_address_model,
+                    vpc_address_model,
+                    service_ref_address_model
+                ],
                 description='this is an example of zone',
-                excluded=[address_model],
+                excluded=[excluded_ip_address_model],
             )
             zone = response.get_result()
 
             print(json.dumps(zone, indent=2))
 
             # end-create_zone
+            global zone_id
+            zone_id = zone['id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -114,7 +165,7 @@ class TestContextBasedRestrictionsV1Examples:
             # begin-list_zones
 
             response = context_based_restrictions_service.list_zones(
-                account_id='testString',
+                account_id=account_id,
             )
             zone_list = response.get_result()
 
@@ -135,13 +186,15 @@ class TestContextBasedRestrictionsV1Examples:
             # begin-get_zone
 
             response = context_based_restrictions_service.get_zone(
-                zone_id='testString',
+                zone_id=zone_id,
             )
             zone = response.get_result()
 
             print(json.dumps(zone, indent=2))
 
             # end-get_zone
+            global zone_rev
+            zone_rev = response.headers.get("ETag")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -161,13 +214,12 @@ class TestContextBasedRestrictionsV1Examples:
             }
 
             response = context_based_restrictions_service.replace_zone(
-                zone_id='testString',
-                if_match='testString',
+                zone_id=zone_id,
+                if_match=zone_rev,
                 name='an example of zone',
-                account_id='12ab34cd56ef78ab90cd12ef34ab56cd',
+                account_id=account_id,
                 addresses=[address_model],
                 description='this is an example of zone',
-                excluded=[address_model],
             )
             zone = response.get_result()
 
@@ -208,7 +260,7 @@ class TestContextBasedRestrictionsV1Examples:
 
             rule_context_attribute_model = {
                 'name': 'networkZoneId',
-                'value': '65810ac762004f22ac19f8f8edf70a34',
+                'value': zone_id,
             }
 
             rule_context_model = {
@@ -217,11 +269,16 @@ class TestContextBasedRestrictionsV1Examples:
 
             resource_attribute_model = {
                 'name': 'accountId',
-                'value': '12ab34cd56ef78ab90cd12ef34ab56cd',
+                'value': account_id,
+            }
+
+            resource_attribute_service_name_model = {
+                'name': 'serviceName',
+                'value': service_name,
             }
 
             resource_model = {
-                'attributes': [resource_attribute_model],
+                'attributes': [resource_attribute_model, resource_attribute_service_name_model],
             }
 
             response = context_based_restrictions_service.create_rule(
@@ -235,6 +292,8 @@ class TestContextBasedRestrictionsV1Examples:
             print(json.dumps(rule, indent=2))
 
             # end-create_rule
+            global rule_id
+            rule_id = rule['id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -249,7 +308,7 @@ class TestContextBasedRestrictionsV1Examples:
             # begin-list_rules
 
             response = context_based_restrictions_service.list_rules(
-                account_id='testString',
+                account_id=account_id,
             )
             rule_list = response.get_result()
 
@@ -270,13 +329,15 @@ class TestContextBasedRestrictionsV1Examples:
             # begin-get_rule
 
             response = context_based_restrictions_service.get_rule(
-                rule_id='testString',
+                rule_id=rule_id,
             )
             rule = response.get_result()
 
             print(json.dumps(rule, indent=2))
 
             # end-get_rule
+            global rule_rev
+            rule_rev = response.headers.get("ETag")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -292,7 +353,7 @@ class TestContextBasedRestrictionsV1Examples:
 
             rule_context_attribute_model = {
                 'name': 'networkZoneId',
-                'value': '76921bd873115033bd2a0909fe081b45',
+                'value': zone_id,
             }
 
             rule_context_model = {
@@ -301,19 +362,30 @@ class TestContextBasedRestrictionsV1Examples:
 
             resource_attribute_model = {
                 'name': 'accountId',
-                'value': '12ab34cd56ef78ab90cd12ef34ab56cd',
+                'value': account_id,
+            }
+
+            resource_attribute_service_name_model = {
+                'name': 'serviceName',
+                'value': service_name,
+            }
+
+            resource_tag_attribute_model = {
+                'name': 'tagName',
+                'value': 'tagValue',
             }
 
             resource_model = {
-                'attributes': [resource_attribute_model],
+                'attributes': [resource_attribute_model, resource_attribute_service_name_model],
+                'tags': [resource_tag_attribute_model],
             }
 
             response = context_based_restrictions_service.replace_rule(
-                rule_id='testString',
-                if_match='testString',
+                rule_id=rule_id,
+                if_match=rule_rev,
                 contexts=[rule_context_model],
                 resources=[resource_model],
-                description='this is an example of rule',
+                description='this is an example of updated rule',
                 enforcement_mode='disabled',
             )
             rule = response.get_result()
@@ -335,7 +407,7 @@ class TestContextBasedRestrictionsV1Examples:
             # begin-get_account_settings
 
             response = context_based_restrictions_service.get_account_settings(
-                account_id='testString',
+                account_id=account_id,
             )
             account_settings = response.get_result()
 
@@ -367,24 +439,6 @@ class TestContextBasedRestrictionsV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_delete_zone_example(self):
-        """
-        delete_zone request example
-        """
-        try:
-            # begin-delete_zone
-
-            response = context_based_restrictions_service.delete_zone(
-                zone_id='testString',
-            )
-
-            # end-delete_zone
-            print('\ndelete_zone() response status code: ', response.get_status_code())
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
     def test_delete_rule_example(self):
         """
         delete_rule request example
@@ -393,11 +447,29 @@ class TestContextBasedRestrictionsV1Examples:
             # begin-delete_rule
 
             response = context_based_restrictions_service.delete_rule(
-                rule_id='testString',
+                rule_id=rule_id,
             )
 
             # end-delete_rule
             print('\ndelete_rule() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_delete_zone_example(self):
+        """
+        delete_zone request example
+        """
+        try:
+            # begin-delete_zone
+
+            response = context_based_restrictions_service.delete_zone(
+                zone_id=zone_id,
+            )
+
+            # end-delete_zone
+            print('\ndelete_zone() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
