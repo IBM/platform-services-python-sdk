@@ -91,10 +91,26 @@ class TestUsageReportsV4Examples:
             global billing_month
             billing_month = config.get("BILLING_MONTH")
 
+            global cos_bucket
+            cos_bucket = config.get("COS_BUCKET")
+
+            global cos_location
+            cos_location = config.get("COS_LOCATION")
+
+            global snapshot_date_from
+            snapshot_date_from = config.get("DATE_FROM")
+
+            global snapshot_date_to
+            snapshot_date_to = config.get("DATE_TO")
+
             assert account_id is not None
             assert resource_group_id is not None
             assert org_id is not None
             assert billing_month is not None
+            assert cos_bucket is not None
+            assert cos_location is not None
+            assert snapshot_date_from is not None
+            assert snapshot_date_to is not None
 
         print('Setup complete.')
 
@@ -252,6 +268,124 @@ class TestUsageReportsV4Examples:
             print(json.dumps(instances_usage, indent=2))
 
             # end-get_resource_usage_org
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_reports_snapshot_config_example(self):
+        """
+        create_reports_snapshot_config request example
+        """
+        try:
+            global account_id, cos_bucket, cos_location
+
+            print('\ncreate_reports_snapshot_config() result:')
+            # begin-create_reports_snapshot_config
+
+            response = usage_reports_service.create_reports_snapshot_config(
+                account_id=account_id,
+                interval='daily',
+                cos_bucket=cos_bucket,
+                cos_location=cos_location,
+            )
+            snapshot_config = response.get_result()
+
+            print(json.dumps(snapshot_config, indent=2))
+
+            # end-create_reports_snapshot_config
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_reports_snapshot_config_example(self):
+        """
+        get_reports_snapshot_config request example
+        """
+        try:
+            global account_id
+
+            print('\nget_reports_snapshot_config() result:')
+            # begin-get_reports_snapshot_config
+
+            response = usage_reports_service.get_reports_snapshot_config(
+                account_id=account_id,
+            )
+            snapshot_config = response.get_result()
+
+            print(json.dumps(snapshot_config, indent=2))
+
+            # end-get_reports_snapshot_config
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_reports_snapshot_config_example(self):
+        """
+        update_reports_snapshot_config request example
+        """
+        try:
+            global account_id
+
+            print('\nupdate_reports_snapshot_config() result:')
+            # begin-update_reports_snapshot_config
+
+            response = usage_reports_service.update_reports_snapshot_config(
+                account_id=account_id, report_types=["account_summary", "enterprise_summary"]
+            )
+            snapshot_config = response.get_result()
+
+            print(json.dumps(snapshot_config, indent=2))
+
+            # end-update_reports_snapshot_config
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_reports_snapshot_example(self):
+        """
+        get_reports_snapshot request example
+        """
+        try:
+            global account_id, billing_month, snapshot_date_from, snapshot_date_to
+
+            print('\nget_reports_snapshot() result:')
+            # begin-get_reports_snapshot
+
+            response = usage_reports_service.get_reports_snapshot(
+                account_id=account_id,
+                month=billing_month,
+                date_from=snapshot_date_from,
+                date_to=snapshot_date_to,
+            )
+            snapshot_list = response.get_result()
+
+            print(json.dumps(snapshot_list, indent=2))
+
+            # end-get_reports_snapshot
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_reports_snapshot_config_example(self):
+        """
+        delete_reports_snapshot_config request example
+        """
+        try:
+            global account_id
+
+            # begin-delete_reports_snapshot_config
+
+            response = usage_reports_service.delete_reports_snapshot_config(
+                account_id=account_id,
+            )
+
+            # end-delete_reports_snapshot_config
+            print('\ndelete_reports_snapshot_config() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
