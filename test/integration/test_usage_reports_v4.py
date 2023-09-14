@@ -47,10 +47,18 @@ class TestUsageReportsV4:
             cls.RESOURCE_GROUP_ID = cls.config.get("RESOURCE_GROUP_ID")
             cls.ORG_ID = cls.config.get("ORG_ID")
             cls.BILLING_MONTH = cls.config.get("BILLING_MONTH")
+            cls.COS_BUCKET = cls.config.get("COS_BUCKET")
+            cls.COS_LOCATION = cls.config.get("COS_LOCATION")
+            cls.SNAPSHOT_DATE_FROM = cls.config.get("DATE_FROM")
+            cls.SNAPSHOT_DATE_TO = cls.config.get("DATE_TO")
             assert cls.ACCOUNT_ID is not None
             assert cls.RESOURCE_GROUP_ID is not None
             assert cls.ORG_ID is not None
             assert cls.BILLING_MONTH is not None
+            assert cls.COS_BUCKET is not None
+            assert cls.COS_LOCATION is not None
+            assert cls.SNAPSHOT_DATE_FROM is not None
+            assert cls.SNAPSHOT_DATE_TO is not None
 
         print('Setup complete.')
 
@@ -215,3 +223,66 @@ class TestUsageReportsV4:
         numResources = len(resources)
         print(f'get_resource_usage_org() response contained {numResources} total resources')
         assert numResources > 0
+
+    @needscredentials
+    def test_create_reports_snapshot_config(self):
+        response = self.usage_reports_service.create_reports_snapshot_config(
+            account_id=self.ACCOUNT_ID,
+            interval='daily',
+            cos_bucket=self.COS_BUCKET,
+            cos_location=self.COS_LOCATION,
+            cos_reports_folder='IBMCloud-Billing-Reports',
+            report_types=['account_summary', 'enterprise_summary', 'account_resource_instance_usage'],
+            versioning='new',
+        )
+
+        assert response.get_status_code() == 201
+        snapshot_config = response.get_result()
+        assert snapshot_config is not None
+
+    @needscredentials
+    def test_get_reports_snapshot_config(self):
+        response = self.usage_reports_service.get_reports_snapshot_config(
+            account_id=self.ACCOUNT_ID,
+        )
+
+        assert response.get_status_code() == 200
+        snapshot_config = response.get_result()
+        assert snapshot_config is not None
+
+    @needscredentials
+    def test_update_reports_snapshot_config(self):
+        response = self.usage_reports_service.update_reports_snapshot_config(
+            account_id=self.ACCOUNT_ID,
+            interval='daily',
+            cos_bucket=self.COS_BUCKET,
+            cos_location=self.COS_LOCATION,
+            cos_reports_folder='IBMCloud-Billing-Reports',
+            report_types=['account_summary', 'enterprise_summary'],
+            versioning='new',
+        )
+
+        assert response.get_status_code() == 200
+        snapshot_config = response.get_result()
+        assert snapshot_config is not None
+
+    @needscredentials
+    def test_get_reports_snapshot(self):
+        response = self.usage_reports_service.get_reports_snapshot(
+            account_id=self.ACCOUNT_ID,
+            month=self.BILLING_MONTH,
+            date_from=self.SNAPSHOT_DATE_FROM,
+            date_to=self.SNAPSHOT_DATE_TO,
+        )
+
+        assert response.get_status_code() == 200
+        snapshot_list = response.get_result()
+        assert snapshot_list is not None
+
+    @needscredentials
+    def test_delete_reports_snapshot_config(self):
+        response = self.usage_reports_service.delete_reports_snapshot_config(
+            account_id=self.ACCOUNT_ID,
+        )
+
+        assert response.get_status_code() == 204
