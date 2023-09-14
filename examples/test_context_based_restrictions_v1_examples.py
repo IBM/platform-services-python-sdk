@@ -59,8 +59,7 @@ class TestContextBasedRestrictionsV1Examples:
 
             # begin-common
 
-            context_based_restrictions_service = ContextBasedRestrictionsV1.new_instance(
-            )
+            context_based_restrictions_service = ContextBasedRestrictionsV1.new_instance()
 
             # end-common
             assert context_based_restrictions_service is not None
