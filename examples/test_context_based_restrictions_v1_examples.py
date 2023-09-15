@@ -139,7 +139,7 @@ class TestContextBasedRestrictionsV1Examples:
                     ip_range_address_model,
                     subnet_address_model,
                     vpc_address_model,
-                    service_ref_address_model
+                    service_ref_address_model,
                 ],
                 description='this is an example of zone',
                 excluded=[excluded_ip_address_model],
@@ -455,7 +455,7 @@ class TestContextBasedRestrictionsV1Examples:
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_delete_zone_example(self):
         """
