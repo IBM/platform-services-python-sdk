@@ -1,3 +1,10 @@
+# [0.43.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.42.0...v0.43.0) (2023-09-15)
+
+
+### Features
+
+* **Context-Based Restrictions:** add service group support to operations ([#219](https://github.com/IBM/platform-services-python-sdk/issues/219)) ([8b666db](https://github.com/IBM/platform-services-python-sdk/commit/8b666db9be26e0530f6939ab95b778494e5f41e8))
+
 # [0.42.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.41.0...v0.42.0) (2023-09-14)
 
 
