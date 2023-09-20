@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.70.0-7df966bf-20230419-195904
+# IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
 
 """
 Search for resources with the global and shared resource properties repository that is
@@ -23,7 +23,7 @@ resources attributes, which categorize or classify resources. A resource is a ph
 logical component that can be created or reserved for an application or service instance.
 They are owned by resource providers, such as Cloud Foundry, IBM Kubernetes Service, or
 resource controller in IBM Cloud. Resources are uniquely identified by a Cloud Resource
-Name (CRN)  or by an IMS ID. The properties of a resource include tags and system
+Name (CRN) or by an IMS ID. The properties of a resource include tags and system
 properties. Both properties are defined in an IBM Cloud billing account, and span across
 many regions.
 
@@ -89,6 +89,8 @@ class GlobalSearchV2(BaseService):
         query: str = None,
         fields: List[str] = None,
         search_cursor: str = None,
+        x_request_id: str = None,
+        x_correlation_id: str = None,
         transaction_id: str = None,
         account_id: str = None,
         limit: int = None,
@@ -129,9 +131,26 @@ class GlobalSearchV2(BaseService):
                each call and that must be set on the subsequent call to get the next batch
                of items. If the search returns no items, then the search_cursor is not
                present in the response.
-        :param str transaction_id: (optional) An alphanumeric string that can be
-               used to trace a request across services. If not specified, it automatically
-               generated with the prefix "gst-".
+        :param str x_request_id: (optional) An alphanumeric string that is used to
+               trace the request. The value  may include ASCII alphanumerics and any of
+               following segment separators: space ( ), comma (,), hyphen, (-), and
+               underscore (_) and may have a length up to 1024 bytes. The value is
+               considered invalid and must be ignored if that value includes any other
+               character or is longer than 1024 bytes or is fewer than 8 characters. If
+               not specified or invalid, it is automatically replaced by a random (version
+               4) UUID.
+        :param str x_correlation_id: (optional) An alphanumeric string that is used
+               to trace the request as a part of a larger context: the same value is used
+               for downstream requests and retries of those requests. The value may
+               include ASCII alphanumerics and any of following segment separators: space
+               ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to
+               1024 bytes. The value is considered invalid and must be ignored if that
+               value includes any other character or is longer than 1024 bytes or is fewer
+               than 8 characters. If not specified or invalid, it is automatically
+               replaced by a random (version 4) UUID.
+        :param str transaction_id: (optional) Deprecated: An alphanumeric string
+               that can be used to trace a request across services. If not specified, it
+               automatically generated with the prefix "gst-".
         :param str account_id: (optional) The account ID to filter resources.
         :param int limit: (optional) The maximum number of hits to return. Defaults
                to 10.
@@ -170,6 +189,8 @@ class GlobalSearchV2(BaseService):
         """
 
         headers = {
+            'x-request-id': x_request_id,
+            'x-correlation-id': x_correlation_id,
             'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
