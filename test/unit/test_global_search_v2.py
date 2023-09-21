@@ -120,9 +120,11 @@ class TestSearch:
         query = 'testString'
         fields = ['testString']
         search_cursor = 'testString'
+        x_request_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
         account_id = 'testString'
-        limit = 1
+        limit = 10
         timeout = 0
         sort = ['testString']
         is_deleted = 'false'
@@ -136,6 +138,8 @@ class TestSearch:
             query=query,
             fields=fields,
             search_cursor=search_cursor,
+            x_request_id=x_request_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             account_id=account_id,
             limit=limit,
