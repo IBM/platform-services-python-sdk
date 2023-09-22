@@ -1,3 +1,24 @@
+## [0.43.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.43.0...v0.43.1) (2023-09-21)
+
+
+### Bug Fixes
+
+* **Global Search/Tagging:** regen services with latest API definitions ([#220](https://github.com/IBM/platform-services-python-sdk/issues/220)) ([9cd3301](https://github.com/IBM/platform-services-python-sdk/commit/9cd33014bd57c04426c0129be313f4277864834b))
+
+# [0.43.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.42.0...v0.43.0) (2023-09-15)
+
+
+### Features
+
+* **Context-Based Restrictions:** add service group support to operations ([#219](https://github.com/IBM/platform-services-python-sdk/issues/219)) ([8b666db](https://github.com/IBM/platform-services-python-sdk/commit/8b666db9be26e0530f6939ab95b778494e5f41e8))
+
+# [0.42.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.41.0...v0.42.0) (2023-09-14)
+
+
+### Features
+
+* **Usage Reports:** add billing snapshot config service to usage reports ([#214](https://github.com/IBM/platform-services-python-sdk/issues/214)) ([7a3a43b](https://github.com/IBM/platform-services-python-sdk/commit/7a3a43b5f45b84c1ecb99609dc0c9854883fa372))
+
 # [0.41.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.40.2...v0.41.0) (2023-09-05)
 
 

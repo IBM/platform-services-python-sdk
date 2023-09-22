@@ -57,7 +57,8 @@ def preprocess_url(operation_path: str):
     # Otherwise, return a regular expression that matches one or more trailing /.
     if re.fullmatch('.*/+', request_url) is None:
         return request_url
-    return re.compile(request_url.rstrip('/') + '/+')
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
 
 
 ##############################################################################
@@ -107,9 +108,17 @@ class TestListTags:
         # Set up mock
         url = preprocess_url('/v3/tags')
         mock_response = '{"total_count": 0, "offset": 0, "limit": 1, "items": [{"name": "name"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
+        x_request_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
         impersonate_user = 'testString'
         account_id = 'testString'
@@ -118,13 +127,15 @@ class TestListTags:
         providers = ['ghost']
         attached_to = 'testString'
         offset = 0
-        limit = 1
+        limit = 100
         timeout = 0
         order_by_name = 'asc'
         attached_only = False
 
         # Invoke method
         response = _service.list_tags(
+            x_request_id=x_request_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             impersonate_user=impersonate_user,
             account_id=account_id,
@@ -175,7 +186,13 @@ class TestListTags:
         # Set up mock
         url = preprocess_url('/v3/tags')
         mock_response = '{"total_count": 0, "offset": 0, "limit": 1, "items": [{"name": "name"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Invoke method
         response = _service.list_tags()
@@ -207,11 +224,19 @@ class TestCreateTag:
         # Set up mock
         url = preprocess_url('/v3/tags')
         mock_response = '{"results": [{"tag_name": "tag_name", "is_error": true}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         tag_names = ['testString']
         impersonate_user = 'testString'
+        x_request_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
         account_id = 'testString'
         tag_type = 'access'
@@ -220,6 +245,8 @@ class TestCreateTag:
         response = _service.create_tag(
             tag_names,
             impersonate_user=impersonate_user,
+            x_request_id=x_request_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             account_id=account_id,
             tag_type=tag_type,
@@ -256,13 +283,22 @@ class TestCreateTag:
         # Set up mock
         url = preprocess_url('/v3/tags')
         mock_response = '{"results": [{"tag_name": "tag_name", "is_error": true}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         tag_names = ['testString']
 
         # Invoke method
-        response = _service.create_tag(tag_names, headers={})
+        response = _service.create_tag(
+            tag_names,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -288,7 +324,13 @@ class TestCreateTag:
         # Set up mock
         url = preprocess_url('/v3/tags')
         mock_response = '{"results": [{"tag_name": "tag_name", "is_error": true}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         tag_names = ['testString']
@@ -325,9 +367,17 @@ class TestDeleteTagAll:
         # Set up mock
         url = preprocess_url('/v3/tags')
         mock_response = '{"total_count": 11, "errors": true, "items": [{"tag_name": "tag_name", "is_error": true}]}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.DELETE,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
+        x_request_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
         providers = 'ghost'
         impersonate_user = 'testString'
@@ -336,6 +386,8 @@ class TestDeleteTagAll:
 
         # Invoke method
         response = _service.delete_tag_all(
+            x_request_id=x_request_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             providers=providers,
             impersonate_user=impersonate_user,
@@ -372,7 +424,13 @@ class TestDeleteTagAll:
         # Set up mock
         url = preprocess_url('/v3/tags')
         mock_response = '{"total_count": 11, "errors": true, "items": [{"tag_name": "tag_name", "is_error": true}]}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.DELETE,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Invoke method
         response = _service.delete_tag_all()
@@ -404,10 +462,18 @@ class TestDeleteTag:
         # Set up mock
         url = preprocess_url('/v3/tags/testString')
         mock_response = '{"results": [{"provider": "ghost", "is_error": true}]}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.DELETE,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         tag_name = 'testString'
+        x_request_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
         providers = ['ghost']
         impersonate_user = 'testString'
@@ -417,6 +483,8 @@ class TestDeleteTag:
         # Invoke method
         response = _service.delete_tag(
             tag_name,
+            x_request_id=x_request_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             providers=providers,
             impersonate_user=impersonate_user,
@@ -453,13 +521,22 @@ class TestDeleteTag:
         # Set up mock
         url = preprocess_url('/v3/tags/testString')
         mock_response = '{"results": [{"provider": "ghost", "is_error": true}]}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.DELETE,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         tag_name = 'testString'
 
         # Invoke method
-        response = _service.delete_tag(tag_name, headers={})
+        response = _service.delete_tag(
+            tag_name,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -482,7 +559,13 @@ class TestDeleteTag:
         # Set up mock
         url = preprocess_url('/v3/tags/testString')
         mock_response = '{"results": [{"provider": "ghost", "is_error": true}]}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.DELETE,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         tag_name = 'testString'
@@ -519,7 +602,13 @@ class TestAttachTag:
         # Set up mock
         url = preprocess_url('/v3/tags/attach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a Resource model
         resource_model = {}
@@ -530,6 +619,8 @@ class TestAttachTag:
         resources = [resource_model]
         tag_name = 'testString'
         tag_names = ['testString']
+        x_request_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
         impersonate_user = 'testString'
         account_id = 'testString'
@@ -540,6 +631,8 @@ class TestAttachTag:
             resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            x_request_id=x_request_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             impersonate_user=impersonate_user,
             account_id=account_id,
@@ -579,7 +672,13 @@ class TestAttachTag:
         # Set up mock
         url = preprocess_url('/v3/tags/attach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a Resource model
         resource_model = {}
@@ -592,7 +691,12 @@ class TestAttachTag:
         tag_names = ['testString']
 
         # Invoke method
-        response = _service.attach_tag(resources, tag_name=tag_name, tag_names=tag_names, headers={})
+        response = _service.attach_tag(
+            resources,
+            tag_name=tag_name,
+            tag_names=tag_names,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -620,7 +724,13 @@ class TestAttachTag:
         # Set up mock
         url = preprocess_url('/v3/tags/attach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a Resource model
         resource_model = {}
@@ -664,7 +774,13 @@ class TestDetachTag:
         # Set up mock
         url = preprocess_url('/v3/tags/detach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a Resource model
         resource_model = {}
@@ -675,6 +791,8 @@ class TestDetachTag:
         resources = [resource_model]
         tag_name = 'testString'
         tag_names = ['testString']
+        x_request_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
         impersonate_user = 'testString'
         account_id = 'testString'
@@ -685,6 +803,8 @@ class TestDetachTag:
             resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            x_request_id=x_request_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             impersonate_user=impersonate_user,
             account_id=account_id,
@@ -724,7 +844,13 @@ class TestDetachTag:
         # Set up mock
         url = preprocess_url('/v3/tags/detach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a Resource model
         resource_model = {}
@@ -737,7 +863,12 @@ class TestDetachTag:
         tag_names = ['testString']
 
         # Invoke method
-        response = _service.detach_tag(resources, tag_name=tag_name, tag_names=tag_names, headers={})
+        response = _service.detach_tag(
+            resources,
+            tag_name=tag_name,
+            tag_names=tag_names,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -765,7 +896,13 @@ class TestDetachTag:
         # Set up mock
         url = preprocess_url('/v3/tags/detach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a Resource model
         resource_model = {}
@@ -806,6 +943,8 @@ class TestDetachTag:
 # Start of Model Tests
 ##############################################################################
 # region
+
+
 class TestModel_CreateTagResults:
     """
     Test Class for CreateTagResults
@@ -950,7 +1089,7 @@ class TestModel_DeleteTagResultsItem:
         # Test get_properties and set_properties methods.
         delete_tag_results_item_model.set_properties({})
         actual_dict = delete_tag_results_item_model.get_properties()
-        assert not actual_dict
+        assert actual_dict == {}
 
         expected_dict = {'foo': 'testString'}
         delete_tag_results_item_model.set_properties(expected_dict)

@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.63.0-5dae26c1-20230111-193039
+# IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
 
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete, or
@@ -85,6 +85,8 @@ class GlobalTaggingV1(BaseService):
     def list_tags(
         self,
         *,
+        x_request_id: str = None,
+        x_correlation_id: str = None,
         transaction_id: str = None,
         impersonate_user: str = None,
         account_id: str = None,
@@ -97,7 +99,7 @@ class GlobalTaggingV1(BaseService):
         timeout: int = None,
         order_by_name: str = None,
         attached_only: bool = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get all tags.
@@ -105,9 +107,26 @@ class GlobalTaggingV1(BaseService):
         Lists all tags that are in a billing account. Use the `attached_to` parameter to
         return the list of tags that are attached to the specified resource.
 
-        :param str transaction_id: (optional) An alphanumeric string that can be
-               used to trace a request across services. If not specified, it automatically
-               generated with the prefix "gst-".
+        :param str x_request_id: (optional) An alphanumeric string that is used to
+               trace the request. The value  may include ASCII alphanumerics and any of
+               following segment separators: space ( ), comma (,), hyphen, (-), and
+               underscore (_) and may have a length up to 1024 bytes. The value is
+               considered invalid and must be ignored if that value includes any other
+               character or is longer than 1024 bytes or is fewer than 8 characters. If
+               not specified or invalid, it is automatically replaced by a random (version
+               4) UUID.
+        :param str x_correlation_id: (optional) An alphanumeric string that is used
+               to trace the request as a part of a larger context: the same value is used
+               for downstream requests and retries of those requests. The value may
+               include ASCII alphanumerics and any of following segment separators: space
+               ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to
+               1024 bytes. The value is considered invalid and must be ignored if that
+               value includes any other character or is longer than 1024 bytes or is fewer
+               than 8 characters. If not specified or invalid, it is automatically
+               replaced by a random (version 4) UUID.
+        :param str transaction_id: (optional) Deprecated: An alphanumeric string
+               that can be used to trace a request across services. If not specified, it
+               automatically generated with the prefix "gst-".
         :param str impersonate_user: (optional) The user on whose behalf the get
                operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account to list the
@@ -145,10 +164,14 @@ class GlobalTaggingV1(BaseService):
         """
 
         headers = {
+            'x-request-id': x_request_id,
+            'x-correlation-id': x_correlation_id,
             'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_tags'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_tags',
         )
         headers.update(sdk_headers)
 
@@ -172,7 +195,12 @@ class GlobalTaggingV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v3/tags'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -182,10 +210,12 @@ class GlobalTaggingV1(BaseService):
         tag_names: List[str],
         *,
         impersonate_user: str = None,
+        x_request_id: str = None,
+        x_correlation_id: str = None,
         transaction_id: str = None,
         account_id: str = None,
         tag_type: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create an access management tag.
@@ -199,9 +229,26 @@ class GlobalTaggingV1(BaseService):
         :param List[str] tag_names: An array of tag names to create.
         :param str impersonate_user: (optional) The user on whose behalf the create
                operation must be performed (_for administrators only_).
-        :param str transaction_id: (optional) An alphanumeric string that can be
-               used to trace a request across services. If not specified, it automatically
-               generated with the prefix "gst-".
+        :param str x_request_id: (optional) An alphanumeric string that is used to
+               trace the request. The value  may include ASCII alphanumerics and any of
+               following segment separators: space ( ), comma (,), hyphen, (-), and
+               underscore (_) and may have a length up to 1024 bytes. The value is
+               considered invalid and must be ignored if that value includes any other
+               character or is longer than 1024 bytes or is fewer than 8 characters. If
+               not specified or invalid, it is automatically replaced by a random (version
+               4) UUID.
+        :param str x_correlation_id: (optional) An alphanumeric string that is used
+               to trace the request as a part of a larger context: the same value is used
+               for downstream requests and retries of those requests. The value may
+               include ASCII alphanumerics and any of following segment separators: space
+               ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to
+               1024 bytes. The value is considered invalid and must be ignored if that
+               value includes any other character or is longer than 1024 bytes or is fewer
+               than 8 characters. If not specified or invalid, it is automatically
+               replaced by a random (version 4) UUID.
+        :param str transaction_id: (optional) Deprecated: An alphanumeric string
+               that can be used to trace a request across services. If not specified, it
+               automatically generated with the prefix "gst-".
         :param str account_id: (optional) The ID of the billing account where the
                tag must be created. It is a required parameter if `impersonate_user` is
                set.
@@ -215,10 +262,14 @@ class GlobalTaggingV1(BaseService):
         if tag_names is None:
             raise ValueError('tag_names must be provided')
         headers = {
+            'x-request-id': x_request_id,
+            'x-correlation-id': x_correlation_id,
             'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_tag'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_tag',
         )
         headers.update(sdk_headers)
 
@@ -241,7 +292,13 @@ class GlobalTaggingV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v3/tags'
-        request = self.prepare_request(method='POST', url=url, headers=headers, params=params, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -249,21 +306,40 @@ class GlobalTaggingV1(BaseService):
     def delete_tag_all(
         self,
         *,
+        x_request_id: str = None,
+        x_correlation_id: str = None,
         transaction_id: str = None,
         providers: str = None,
         impersonate_user: str = None,
         account_id: str = None,
         tag_type: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Delete all unused tags.
 
         Delete the tags that are not attached to any resource.
 
-        :param str transaction_id: (optional) An alphanumeric string that can be
-               used to trace a request across services. If not specified, it automatically
-               generated with the prefix "gst-".
+        :param str x_request_id: (optional) An alphanumeric string that is used to
+               trace the request. The value  may include ASCII alphanumerics and any of
+               following segment separators: space ( ), comma (,), hyphen, (-), and
+               underscore (_) and may have a length up to 1024 bytes. The value is
+               considered invalid and must be ignored if that value includes any other
+               character or is longer than 1024 bytes or is fewer than 8 characters. If
+               not specified or invalid, it is automatically replaced by a random (version
+               4) UUID.
+        :param str x_correlation_id: (optional) An alphanumeric string that is used
+               to trace the request as a part of a larger context: the same value is used
+               for downstream requests and retries of those requests. The value may
+               include ASCII alphanumerics and any of following segment separators: space
+               ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to
+               1024 bytes. The value is considered invalid and must be ignored if that
+               value includes any other character or is longer than 1024 bytes or is fewer
+               than 8 characters. If not specified or invalid, it is automatically
+               replaced by a random (version 4) UUID.
+        :param str transaction_id: (optional) Deprecated: An alphanumeric string
+               that can be used to trace a request across services. If not specified, it
+               automatically generated with the prefix "gst-".
         :param str providers: (optional) Select a provider. Supported values are
                `ghost` and `ims`.
         :param str impersonate_user: (optional) The user on whose behalf the delete
@@ -280,10 +356,14 @@ class GlobalTaggingV1(BaseService):
         """
 
         headers = {
+            'x-request-id': x_request_id,
+            'x-correlation-id': x_correlation_id,
             'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_tag_all'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_tag_all',
         )
         headers.update(sdk_headers)
 
@@ -300,7 +380,12 @@ class GlobalTaggingV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v3/tags'
-        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -309,12 +394,14 @@ class GlobalTaggingV1(BaseService):
         self,
         tag_name: str,
         *,
+        x_request_id: str = None,
+        x_correlation_id: str = None,
         transaction_id: str = None,
         providers: List[str] = None,
         impersonate_user: str = None,
         account_id: str = None,
         tag_type: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Delete an unused tag.
@@ -323,9 +410,26 @@ class GlobalTaggingV1(BaseService):
         resource.
 
         :param str tag_name: The name of tag to be deleted.
-        :param str transaction_id: (optional) An alphanumeric string that can be
-               used to trace a request across services. If not specified, it automatically
-               generated with the prefix "gst-".
+        :param str x_request_id: (optional) An alphanumeric string that is used to
+               trace the request. The value  may include ASCII alphanumerics and any of
+               following segment separators: space ( ), comma (,), hyphen, (-), and
+               underscore (_) and may have a length up to 1024 bytes. The value is
+               considered invalid and must be ignored if that value includes any other
+               character or is longer than 1024 bytes or is fewer than 8 characters. If
+               not specified or invalid, it is automatically replaced by a random (version
+               4) UUID.
+        :param str x_correlation_id: (optional) An alphanumeric string that is used
+               to trace the request as a part of a larger context: the same value is used
+               for downstream requests and retries of those requests. The value may
+               include ASCII alphanumerics and any of following segment separators: space
+               ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to
+               1024 bytes. The value is considered invalid and must be ignored if that
+               value includes any other character or is longer than 1024 bytes or is fewer
+               than 8 characters. If not specified or invalid, it is automatically
+               replaced by a random (version 4) UUID.
+        :param str transaction_id: (optional) Deprecated: An alphanumeric string
+               that can be used to trace a request across services. If not specified, it
+               automatically generated with the prefix "gst-".
         :param List[str] providers: (optional) Select a provider. Supported values
                are `ghost` and `ims`. To delete tags both in Global Search and Tagging and
                in IMS, use `ghost,ims`.
@@ -345,10 +449,14 @@ class GlobalTaggingV1(BaseService):
         if not tag_name:
             raise ValueError('tag_name must be provided')
         headers = {
+            'x-request-id': x_request_id,
+            'x-correlation-id': x_correlation_id,
             'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_tag'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_tag',
         )
         headers.update(sdk_headers)
 
@@ -368,7 +476,12 @@ class GlobalTaggingV1(BaseService):
         path_param_values = self.encode_path_vars(tag_name)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v3/tags/{tag_name}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -379,11 +492,13 @@ class GlobalTaggingV1(BaseService):
         *,
         tag_name: str = None,
         tag_names: List[str] = None,
+        x_request_id: str = None,
+        x_correlation_id: str = None,
         transaction_id: str = None,
         impersonate_user: str = None,
         account_id: str = None,
         tag_type: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Attach tags.
@@ -396,9 +511,26 @@ class GlobalTaggingV1(BaseService):
                are attached.
         :param str tag_name: (optional) The name of the tag to attach.
         :param List[str] tag_names: (optional) An array of tag names to attach.
-        :param str transaction_id: (optional) An alphanumeric string that can be
-               used to trace a request across services. If not specified, it automatically
-               generated with the prefix "gst-".
+        :param str x_request_id: (optional) An alphanumeric string that is used to
+               trace the request. The value  may include ASCII alphanumerics and any of
+               following segment separators: space ( ), comma (,), hyphen, (-), and
+               underscore (_) and may have a length up to 1024 bytes. The value is
+               considered invalid and must be ignored if that value includes any other
+               character or is longer than 1024 bytes or is fewer than 8 characters. If
+               not specified or invalid, it is automatically replaced by a random (version
+               4) UUID.
+        :param str x_correlation_id: (optional) An alphanumeric string that is used
+               to trace the request as a part of a larger context: the same value is used
+               for downstream requests and retries of those requests. The value may
+               include ASCII alphanumerics and any of following segment separators: space
+               ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to
+               1024 bytes. The value is considered invalid and must be ignored if that
+               value includes any other character or is longer than 1024 bytes or is fewer
+               than 8 characters. If not specified or invalid, it is automatically
+               replaced by a random (version 4) UUID.
+        :param str transaction_id: (optional) Deprecated: An alphanumeric string
+               that can be used to trace a request across services. If not specified, it
+               automatically generated with the prefix "gst-".
         :param str impersonate_user: (optional) The user on whose behalf the attach
                operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account of the
@@ -416,10 +548,14 @@ class GlobalTaggingV1(BaseService):
             raise ValueError('resources must be provided')
         resources = [convert_model(x) for x in resources]
         headers = {
+            'x-request-id': x_request_id,
+            'x-correlation-id': x_correlation_id,
             'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='attach_tag'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='attach_tag',
         )
         headers.update(sdk_headers)
 
@@ -444,7 +580,13 @@ class GlobalTaggingV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v3/tags/attach'
-        request = self.prepare_request(method='POST', url=url, headers=headers, params=params, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -455,11 +597,13 @@ class GlobalTaggingV1(BaseService):
         *,
         tag_name: str = None,
         tag_names: List[str] = None,
+        x_request_id: str = None,
+        x_correlation_id: str = None,
         transaction_id: str = None,
         impersonate_user: str = None,
         account_id: str = None,
         tag_type: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Detach tags.
@@ -470,13 +614,30 @@ class GlobalTaggingV1(BaseService):
                are detached.
         :param str tag_name: (optional) The name of the tag to detach.
         :param List[str] tag_names: (optional) An array of tag names to detach.
-        :param str transaction_id: (optional) An alphanumeric string that can be
-               used to trace a request across services. If not specified, it automatically
-               generated with the prefix "gst-".
+        :param str x_request_id: (optional) An alphanumeric string that is used to
+               trace the request. The value  may include ASCII alphanumerics and any of
+               following segment separators: space ( ), comma (,), hyphen, (-), and
+               underscore (_) and may have a length up to 1024 bytes. The value is
+               considered invalid and must be ignored if that value includes any other
+               character or is longer than 1024 bytes or is fewer than 8 characters. If
+               not specified or invalid, it is automatically replaced by a random (version
+               4) UUID.
+        :param str x_correlation_id: (optional) An alphanumeric string that is used
+               to trace the request as a part of a larger context: the same value is used
+               for downstream requests and retries of those requests. The value may
+               include ASCII alphanumerics and any of following segment separators: space
+               ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to
+               1024 bytes. The value is considered invalid and must be ignored if that
+               value includes any other character or is longer than 1024 bytes or is fewer
+               than 8 characters. If not specified or invalid, it is automatically
+               replaced by a random (version 4) UUID.
+        :param str transaction_id: (optional) Deprecated: An alphanumeric string
+               that can be used to trace a request across services. If not specified, it
+               automatically generated with the prefix "gst-".
         :param str impersonate_user: (optional) The user on whose behalf the detach
                operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account of the
-               untagged resource.  It is a required parameter if `tag_type` is set to
+               untagged resource. It is a required parameter if `tag_type` is set to
                `service`, otherwise it is inferred from the authorization IAM token.
         :param str tag_type: (optional) The type of the tag. Supported values are
                `user`, `service` and `access`. `service` and `access` are not supported
@@ -490,10 +651,14 @@ class GlobalTaggingV1(BaseService):
             raise ValueError('resources must be provided')
         resources = [convert_model(x) for x in resources]
         headers = {
+            'x-request-id': x_request_id,
+            'x-correlation-id': x_correlation_id,
             'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='detach_tag'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='detach_tag',
         )
         headers.update(sdk_headers)
 
@@ -518,7 +683,13 @@ class GlobalTaggingV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v3/tags/detach'
-        request = self.prepare_request(method='POST', url=url, headers=headers, params=params, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -668,7 +839,11 @@ class CreateTagResults:
           a create_tag request.
     """
 
-    def __init__(self, *, results: List['CreateTagResultsResultsItem'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        results: List['CreateTagResultsResultsItem'] = None,
+    ) -> None:
         """
         Initialize a CreateTagResults object.
 
@@ -731,7 +906,12 @@ class CreateTagResultsResultsItem:
           the tag already exists).
     """
 
-    def __init__(self, *, tag_name: str = None, is_error: bool = None) -> None:
+    def __init__(
+        self,
+        *,
+        tag_name: str = None,
+        is_error: bool = None,
+    ) -> None:
         """
         Initialize a CreateTagResultsResultsItem object.
 
@@ -793,7 +973,11 @@ class DeleteTagResults:
           delete_tag request.
     """
 
-    def __init__(self, *, results: List['DeleteTagResultsItem'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        results: List['DeleteTagResultsItem'] = None,
+    ) -> None:
         """
         Initialize a DeleteTagResults object.
 
@@ -859,7 +1043,13 @@ class DeleteTagResultsItem:
     # The set of defined properties for the class
     _properties = frozenset(['provider', 'is_error'])
 
-    def __init__(self, *, provider: str = None, is_error: bool = None, **kwargs) -> None:
+    def __init__(
+        self,
+        *,
+        provider: str = None,
+        is_error: bool = None,
+        **kwargs,
+    ) -> None:
         """
         Initialize a DeleteTagResultsItem object.
 
@@ -956,7 +1146,11 @@ class DeleteTagsResult:
     """
 
     def __init__(
-        self, *, total_count: int = None, errors: bool = None, items: List['DeleteTagsResultItem'] = None
+        self,
+        *,
+        total_count: int = None,
+        errors: bool = None,
+        items: List['DeleteTagsResultItem'] = None,
     ) -> None:
         """
         Initialize a DeleteTagsResult object.
@@ -1033,7 +1227,12 @@ class DeleteTagsResultItem:
     :attr bool is_error: (optional) true if the tag was not deleted.
     """
 
-    def __init__(self, *, tag_name: str = None, is_error: bool = None) -> None:
+    def __init__(
+        self,
+        *,
+        tag_name: str = None,
+        is_error: bool = None,
+    ) -> None:
         """
         Initialize a DeleteTagsResultItem object.
 
@@ -1094,7 +1293,12 @@ class Resource:
     :attr str resource_type: (optional) The IMS resource type of the resource.
     """
 
-    def __init__(self, resource_id: str, *, resource_type: str = None) -> None:
+    def __init__(
+        self,
+        resource_id: str,
+        *,
+        resource_type: str = None,
+    ) -> None:
         """
         Initialize a Resource object.
 
@@ -1156,7 +1360,10 @@ class Tag:
     :attr str name: The name of the tag.
     """
 
-    def __init__(self, name: str) -> None:
+    def __init__(
+        self,
+        name: str,
+    ) -> None:
         """
         Initialize a Tag object.
 
@@ -1217,7 +1424,12 @@ class TagList:
     """
 
     def __init__(
-        self, *, total_count: int = None, offset: int = None, limit: int = None, items: List['Tag'] = None
+        self,
+        *,
+        total_count: int = None,
+        offset: int = None,
+        limit: int = None,
+        items: List['Tag'] = None,
     ) -> None:
         """
         Initialize a TagList object.
@@ -1298,7 +1510,11 @@ class TagResults:
           or detach_tag request.
     """
 
-    def __init__(self, *, results: List['TagResultsItem'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        results: List['TagResultsItem'] = None,
+    ) -> None:
         """
         Initialize a TagResults object.
 
@@ -1361,7 +1577,12 @@ class TagResultsItem:
           error.
     """
 
-    def __init__(self, resource_id: str, *, is_error: bool = None) -> None:
+    def __init__(
+        self,
+        resource_id: str,
+        *,
+        is_error: bool = None,
+    ) -> None:
         """
         Initialize a TagResultsItem object.
 

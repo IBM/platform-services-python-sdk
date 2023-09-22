@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -645,16 +645,53 @@ class TestContextBasedRestrictionsV1:
             )
 
     @needscredentials
-    def test_list_available_service_operations(self):
-        list_available_service_operations_response = (
-            self.context_based_restrictions_service.list_available_service_operations(
-                service_name='containers-kubernetes', transaction_id=self.getTransactionID()
-            )
+    def test_list_available_service_operations_with_service_name(self):
+        response = self.context_based_restrictions_service.list_available_service_operations(
+            transaction_id=self.getTransactionID(),
+            service_name='containers-kubernetes',
         )
 
-        assert list_available_service_operations_response.get_status_code() == 200
-        operations_list = list_available_service_operations_response.get_result()
+        assert response.get_status_code() == 200
+        operations_list = response.get_result()
         assert operations_list is not None
+        for api_type in operations_list['api_types']:
+            assert api_type is not ""
+
+    @needscredentials
+    def test_list_available_service_operations_with_service_group(self):
+        response = self.context_based_restrictions_service.list_available_service_operations(
+            transaction_id=self.getTransactionID(),
+            service_group_id='IAM',
+        )
+
+        assert response.get_status_code() == 200
+        operations_list = response.get_result()
+        assert operations_list is not None
+        for api_type in operations_list['api_types']:
+            assert api_type is not ""
+
+    @needscredentials
+    def test_list_available_service_operations_with_resource_type(self):
+        response = self.context_based_restrictions_service.list_available_service_operations(
+            transaction_id=self.getTransactionID(),
+            service_name='iam-access-management',
+            resource_type='customRole',
+        )
+
+        assert response.get_status_code() == 200
+        operations_list = response.get_result()
+        assert operations_list is not None
+        for api_type in operations_list['api_types']:
+            assert api_type is not ""
+
+    @needscredentials
+    def test_list_available_service_operations_with_mutual_exclusion_error(self):
+        with pytest.raises(ApiException, match="400"):
+            self.context_based_restrictions_service.list_available_service_operations(
+                transaction_id=self.getTransactionID(),
+                service_name='iam-access-management',
+                service_group_id='IAM',
+            )
 
     @needscredentials
     def test_delete_rule(self):
