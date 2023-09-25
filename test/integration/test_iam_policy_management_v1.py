@@ -121,6 +121,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         cls.testTemplateVersion = ""
         cls.testNewTemplateVersion = ""
         cls.testAssignmentId = ""
+        cls.testAssignmentPolicyId = ""
         cls.testV2PolicyTemplateResource = V2PolicyResource(
             attributes=[
                 V2PolicyResourceAttribute(key='serviceName', value='watson', operator='stringEquals'),
@@ -674,7 +675,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         response = self.service.commit_policy_template(
             policy_template_id=self.testTemplateId,
             version=self.testTemplateVersion,
-            if_match=self.testTemplateETag,
         )
 
         assert response.get_status_code() == 204
@@ -711,9 +711,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
 
         response = self.service.delete_policy_template_version(
             policy_template_id=self.testTemplateId,
-            version=self.testTemplateVersion,
+            version=self.testNewTemplateVersion,
         )
-
         assert response.get_status_code() == 204
 
     def test_23_list_policy_template_versions(self):
@@ -733,7 +732,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         # Confirm the test policy template with new version is present
         foundTestTemplateVersion = False
         for version in result.versions:
-            if version.version == self.testNewTemplateVersion:
+            if version.version == self.testTemplateVersion:
                 foundTestTemplateVersion = True
                 break
         assert foundTestTemplateVersion
@@ -765,3 +764,19 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result = PolicyAssignment.from_dict(result_dict)
         assert result is not None
         assert result.id == self.testAssignmentId
+        self.__class__.testAssignmentPolicyId = result.resources[0].policy.resource_created.id
+
+    def test_26_get_v2_assignment_policy(self):
+        assert self.testAssignmentPolicyId
+        print("Assignment Policy ID: ", self.testAssignmentPolicyId)
+
+        response = self.service.get_v2_policy(id=self.testAssignmentPolicyId)
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = V2PolicyTemplateMetaData.from_dict(result_dict)
+        assert result is not None
+        assert result.template is not None
