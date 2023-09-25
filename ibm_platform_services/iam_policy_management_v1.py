@@ -55,9 +55,7 @@ class IamPolicyManagementV1(BaseService):
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
@@ -2227,6 +2225,7 @@ class ListPoliciesEnums:
 
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
+
     class ServiceType(str, Enum):
         """
         Optional type of service.
@@ -2234,6 +2233,7 @@ class ListPoliciesEnums:
 
         SERVICE = 'service'
         PLATFORM_SERVICE = 'platform_service'
+
     class Sort(str, Enum):
         """
         Optional top level policy field to sort results. Ascending sort is default.
@@ -2248,6 +2248,7 @@ class ListPoliciesEnums:
         LAST_MODIFIED_AT = 'last_modified_at'
         LAST_MODIFIED_BY_ID = 'last_modified_by_id'
         STATE = 'state'
+
     class Format(str, Enum):
         """
         Include additional data per policy returned
@@ -2259,6 +2260,7 @@ class ListPoliciesEnums:
 
         INCLUDE_LAST_PERMIT = 'include_last_permit'
         DISPLAY = 'display'
+
     class State(str, Enum):
         """
         The state of the policy.
@@ -2282,6 +2284,7 @@ class ListV2PoliciesEnums:
 
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
+
     class ServiceType(str, Enum):
         """
         Optional type of service.
@@ -2289,6 +2292,7 @@ class ListV2PoliciesEnums:
 
         SERVICE = 'service'
         PLATFORM_SERVICE = 'platform_service'
+
     class Format(str, Enum):
         """
         Include additional data per policy returned
@@ -2300,6 +2304,7 @@ class ListV2PoliciesEnums:
 
         INCLUDE_LAST_PERMIT = 'include_last_permit'
         DISPLAY = 'display'
+
     class State(str, Enum):
         """
         The state of the policy.
@@ -2990,7 +2995,6 @@ class ErrorObject:
         POLICY_ASSIGNMENT_CONFLICT_ERROR = 'policy_assignment_conflict_error'
 
 
-
 class ErrorResponse:
     """
     The error response from API.
@@ -3387,7 +3391,6 @@ class Policy:
         DELETED = 'deleted'
 
 
-
 class PolicyAssignment:
     """
     The set of properties associated with the policy template assignment.
@@ -3594,7 +3597,6 @@ class PolicyAssignment:
 
         ACCOUNT = 'Account'
 
-
     class StatusEnum(str, Enum):
         """
         The policy assignment status.
@@ -3604,7 +3606,6 @@ class PolicyAssignment:
         SUCCEEDED = 'succeeded'
         SUCCEED_WITH_ERRORS = 'succeed_with_errors'
         FAILED = 'failed'
-
 
 
 class PolicyAssignmentOptions:
@@ -3715,7 +3716,6 @@ class PolicyAssignmentOptions:
 
         IAM_ID = 'iam_id'
         ACCESS_GROUP_ID = 'access_group_id'
-
 
 
 class PolicyAssignmentResourcePolicy:
@@ -4654,7 +4654,6 @@ class PolicyTemplateMetaData:
         DELETED = 'deleted'
 
 
-
 class PolicyTemplateVersionsCollection:
     """
     A collection of versions for a specific policy template.
@@ -5302,7 +5301,6 @@ class RuleAttribute:
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
 
 
-
 class SubjectAttribute:
     """
     An attribute associated with a subject.
@@ -5595,7 +5593,6 @@ class TemplatePolicy:
         AUTHORIZATION = 'authorization'
 
 
-
 class V2Policy:
     """
     The core set of properties associated with the policy.
@@ -5814,7 +5811,6 @@ class V2Policy:
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
 
-
     class StateEnum(str, Enum):
         """
         The policy state, either 'deleted' or 'active'.
@@ -5822,7 +5818,6 @@ class V2Policy:
 
         ACTIVE = 'active'
         DELETED = 'deleted'
-
 
 
 class V2PolicyCollection:
@@ -6066,7 +6061,6 @@ class V2PolicyResourceAttribute:
         STRINGMATCH = 'stringMatch'
 
 
-
 class V2PolicyResourceTag:
     """
     A tag associated with a resource.
@@ -6152,7 +6146,6 @@ class V2PolicyResourceTag:
 
         STRINGEQUALS = 'stringEquals'
         STRINGMATCH = 'stringMatch'
-
 
 
 class V2PolicyRule:
@@ -6328,7 +6321,6 @@ class V2PolicySubjectAttribute:
         """
 
         STRINGEQUALS = 'stringEquals'
-
 
 
 class V2PolicyTemplateMetaData:
@@ -6566,7 +6558,6 @@ class V2PolicyTemplateMetaData:
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
 
-
     class StateEnum(str, Enum):
         """
         The policy state, either 'deleted' or 'active'.
@@ -6574,7 +6565,6 @@ class V2PolicyTemplateMetaData:
 
         ACTIVE = 'active'
         DELETED = 'deleted'
-
 
 
 class ControlResponseControl(ControlResponse):
@@ -6805,7 +6795,6 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
 
 
-
 class V2PolicyRuleRuleWithConditions(V2PolicyRule):
     """
     Rule that specifies additional access granted (e.g., time-based condition) accross
@@ -6893,4 +6882,3 @@ class V2PolicyRuleRuleWithConditions(V2PolicyRule):
 
         AND = 'and'
         OR = 'or'
-
