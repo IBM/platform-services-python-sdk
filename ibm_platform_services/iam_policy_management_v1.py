@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.71.0-316eb5da-20230504-195406
+# IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
 
 """
 IAM Policy Management API
@@ -456,7 +456,7 @@ class IamPolicyManagementV1(BaseService):
         :param str policy_id: The policy ID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `Policy` object
+        :rtype: DetailedResponse with `dict` result representing a `PolicyTemplateMetaData` object
         """
 
         if not policy_id:
@@ -1404,7 +1404,7 @@ class IamPolicyManagementV1(BaseService):
                policy roles and translations for all relevant fields.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `V2Policy` object
+        :rtype: DetailedResponse with `dict` result representing a `V2PolicyTemplateMetaData` object
         """
 
         if not id:
@@ -1743,6 +1743,7 @@ class IamPolicyManagementV1(BaseService):
         policy_template_id: str,
         policy: 'TemplatePolicy',
         *,
+        name: str = None,
         description: str = None,
         committed: bool = None,
         **kwargs,
@@ -1756,6 +1757,9 @@ class IamPolicyManagementV1(BaseService):
         :param str policy_template_id: The policy template ID.
         :param TemplatePolicy policy: The core set of properties associated with
                the template's policy objet.
+        :param str name: (optional) Required field when creating a new template.
+               Otherwise this field is optional. If the field is included it will change
+               the name value for all existing versions of the template.
         :param str description: (optional) Description of the policy template. This
                is shown to users in the enterprise account. Use this to describe the
                purpose or context of the policy for enterprise users managing IAM
@@ -1781,6 +1785,7 @@ class IamPolicyManagementV1(BaseService):
 
         data = {
             'policy': policy,
+            'name': name,
             'description': description,
             'committed': committed,
         }
@@ -1858,6 +1863,7 @@ class IamPolicyManagementV1(BaseService):
         if_match: str,
         policy: 'TemplatePolicy',
         *,
+        name: str = None,
         description: str = None,
         committed: bool = None,
         **kwargs,
@@ -1877,6 +1883,9 @@ class IamPolicyManagementV1(BaseService):
                looking at the ETag response header.
         :param TemplatePolicy policy: The core set of properties associated with
                the template's policy objet.
+        :param str name: (optional) Required field when creating a new template.
+               Otherwise this field is optional. If the field is included it will change
+               the name value for all existing versions of the template.
         :param str description: (optional) Description of the policy template. This
                is shown to users in the enterprise account. Use this to describe the
                purpose or context of the policy for enterprise users managing IAM
@@ -1908,6 +1917,7 @@ class IamPolicyManagementV1(BaseService):
 
         data = {
             'policy': policy,
+            'name': name,
             'description': description,
             'committed': committed,
         }
@@ -2035,7 +2045,6 @@ class IamPolicyManagementV1(BaseService):
         self,
         policy_template_id: str,
         version: str,
-        if_match: str,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2047,11 +2056,6 @@ class IamPolicyManagementV1(BaseService):
 
         :param str policy_template_id: The policy template ID.
         :param str version: The policy template version.
-        :param str if_match: The revision number for updating a policy template
-               version and must match the ETag value of the existing policy template
-               version. The Etag can be retrieved using the GET
-               /v1/policy_templates/{policy_template_id}/versions/{version} API and
-               looking at the ETag response header.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
@@ -2061,11 +2065,7 @@ class IamPolicyManagementV1(BaseService):
             raise ValueError('policy_template_id must be provided')
         if not version:
             raise ValueError('version must be provided')
-        if not if_match:
-            raise ValueError('if_match must be provided')
-        headers = {
-            'If-Match': if_match,
-        }
+        headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
             service_version='V1',
@@ -3231,7 +3231,6 @@ class Policy:
     :attr str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy.
     :attr str state: (optional) The policy state.
-    :attr TemplateMetadata template: (optional) Origin Template information.
     """
 
     def __init__(
@@ -3249,7 +3248,6 @@ class Policy:
         last_modified_at: datetime = None,
         last_modified_by_id: str = None,
         state: str = None,
-        template: 'TemplateMetadata' = None,
     ) -> None:
         """
         Initialize a Policy object.
@@ -3262,7 +3260,6 @@ class Policy:
                policy.
         :param str description: (optional) Customer-defined description.
         :param str state: (optional) The policy state.
-        :param TemplateMetadata template: (optional) Origin Template information.
         """
         self.id = id
         self.type = type
@@ -3276,7 +3273,6 @@ class Policy:
         self.last_modified_at = last_modified_at
         self.last_modified_by_id = last_modified_by_id
         self.state = state
-        self.template = template
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Policy':
@@ -3314,8 +3310,6 @@ class Policy:
             args['last_modified_by_id'] = _dict.get('last_modified_by_id')
         if 'state' in _dict:
             args['state'] = _dict.get('state')
-        if 'template' in _dict:
-            args['template'] = TemplateMetadata.from_dict(_dict.get('template'))
         return cls(**args)
 
     @classmethod
@@ -3368,11 +3362,6 @@ class Policy:
             _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
         if hasattr(self, 'state') and self.state is not None:
             _dict['state'] = self.state
-        if hasattr(self, 'template') and self.template is not None:
-            if isinstance(self.template, dict):
-                _dict['template'] = self.template
-            else:
-                _dict['template'] = self.template.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -3411,8 +3400,8 @@ class PolicyAssignment:
     :attr str assignment_id: Passed in value to correlate with other assignments.
     :attr str target_type: Assignment target type.
     :attr str target: ID of the target account.
-    :attr List[PolicyAssignmentRequestOptionsItem] options: List of objects with
-          required properties for a policy assignment.
+    :attr List[PolicyAssignmentOptions] options: List of objects with required
+          properties for a policy assignment.
     :attr str id: (optional) Policy assignment ID.
     :attr str account_id: (optional) The account GUID that the policies assignments
           belong to..
@@ -3438,7 +3427,7 @@ class PolicyAssignment:
         assignment_id: str,
         target_type: str,
         target: str,
-        options: List['PolicyAssignmentRequestOptionsItem'],
+        options: List['PolicyAssignmentOptions'],
         status: str,
         *,
         id: str = None,
@@ -3459,8 +3448,8 @@ class PolicyAssignment:
                assignments.
         :param str target_type: Assignment target type.
         :param str target: ID of the target account.
-        :param List[PolicyAssignmentRequestOptionsItem] options: List of objects
-               with required properties for a policy assignment.
+        :param List[PolicyAssignmentOptions] options: List of objects with required
+               properties for a policy assignment.
         :param str status: The policy assignment status.
         :param List[PolicyAssignmentResources] resources: (optional) Object for
                each account assigned.
@@ -3506,7 +3495,7 @@ class PolicyAssignment:
         else:
             raise ValueError('Required property \'target\' not present in PolicyAssignment JSON')
         if 'options' in _dict:
-            args['options'] = [PolicyAssignmentRequestOptionsItem.from_dict(v) for v in _dict.get('options')]
+            args['options'] = [PolicyAssignmentOptions.from_dict(v) for v in _dict.get('options')]
         else:
             raise ValueError('Required property \'options\' not present in PolicyAssignment JSON')
         if 'id' in _dict:
@@ -3619,7 +3608,7 @@ class PolicyAssignment:
         FAILED = 'failed'
 
 
-class PolicyAssignmentRequestOptionsItem:
+class PolicyAssignmentOptions:
     """
     The set of properties required for a policy assignment.
 
@@ -3643,7 +3632,7 @@ class PolicyAssignmentRequestOptionsItem:
         root_template_version: str = None,
     ) -> None:
         """
-        Initialize a PolicyAssignmentRequestOptionsItem object.
+        Initialize a PolicyAssignmentOptions object.
 
         :param str subject_type: The policy subject type; either 'iam_id' or
                'access_group_id'.
@@ -3661,25 +3650,21 @@ class PolicyAssignmentRequestOptionsItem:
         self.root_template_version = root_template_version
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'PolicyAssignmentRequestOptionsItem':
-        """Initialize a PolicyAssignmentRequestOptionsItem object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'PolicyAssignmentOptions':
+        """Initialize a PolicyAssignmentOptions object from a json dictionary."""
         args = {}
         if 'subject_type' in _dict:
             args['subject_type'] = _dict.get('subject_type')
         else:
-            raise ValueError(
-                'Required property \'subject_type\' not present in PolicyAssignmentRequestOptionsItem JSON'
-            )
+            raise ValueError('Required property \'subject_type\' not present in PolicyAssignmentOptions JSON')
         if 'subject_id' in _dict:
             args['subject_id'] = _dict.get('subject_id')
         else:
-            raise ValueError('Required property \'subject_id\' not present in PolicyAssignmentRequestOptionsItem JSON')
+            raise ValueError('Required property \'subject_id\' not present in PolicyAssignmentOptions JSON')
         if 'root_requester_id' in _dict:
             args['root_requester_id'] = _dict.get('root_requester_id')
         else:
-            raise ValueError(
-                'Required property \'root_requester_id\' not present in PolicyAssignmentRequestOptionsItem JSON'
-            )
+            raise ValueError('Required property \'root_requester_id\' not present in PolicyAssignmentOptions JSON')
         if 'root_template_id' in _dict:
             args['root_template_id'] = _dict.get('root_template_id')
         if 'root_template_version' in _dict:
@@ -3688,7 +3673,7 @@ class PolicyAssignmentRequestOptionsItem:
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a PolicyAssignmentRequestOptionsItem object from a json dictionary."""
+        """Initialize a PolicyAssignmentOptions object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -3711,16 +3696,16 @@ class PolicyAssignmentRequestOptionsItem:
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this PolicyAssignmentRequestOptionsItem object."""
+        """Return a `str` version of this PolicyAssignmentOptions object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'PolicyAssignmentRequestOptionsItem') -> bool:
+    def __eq__(self, other: 'PolicyAssignmentOptions') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'PolicyAssignmentRequestOptionsItem') -> bool:
+    def __ne__(self, other: 'PolicyAssignmentOptions') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -3733,12 +3718,94 @@ class PolicyAssignmentRequestOptionsItem:
         ACCESS_GROUP_ID = 'access_group_id'
 
 
+class PolicyAssignmentResourcePolicy:
+    """
+    Set of properties for the assigned resource.
+
+    :attr AssignmentResourceCreated resource_created: (optional) On success,
+          includes the  policy assigned.
+    :attr str status: (optional) policy status.
+    :attr ErrorResponse error_message: (optional) The error response from API.
+    """
+
+    def __init__(
+        self,
+        *,
+        resource_created: 'AssignmentResourceCreated' = None,
+        status: str = None,
+        error_message: 'ErrorResponse' = None,
+    ) -> None:
+        """
+        Initialize a PolicyAssignmentResourcePolicy object.
+
+        :param AssignmentResourceCreated resource_created: (optional) On success,
+               includes the  policy assigned.
+        :param str status: (optional) policy status.
+        :param ErrorResponse error_message: (optional) The error response from API.
+        """
+        self.resource_created = resource_created
+        self.status = status
+        self.error_message = error_message
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PolicyAssignmentResourcePolicy':
+        """Initialize a PolicyAssignmentResourcePolicy object from a json dictionary."""
+        args = {}
+        if 'resource_created' in _dict:
+            args['resource_created'] = AssignmentResourceCreated.from_dict(_dict.get('resource_created'))
+        if 'status' in _dict:
+            args['status'] = _dict.get('status')
+        if 'error_message' in _dict:
+            args['error_message'] = ErrorResponse.from_dict(_dict.get('error_message'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PolicyAssignmentResourcePolicy object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'resource_created') and self.resource_created is not None:
+            if isinstance(self.resource_created, dict):
+                _dict['resource_created'] = self.resource_created
+            else:
+                _dict['resource_created'] = self.resource_created.to_dict()
+        if hasattr(self, 'status') and self.status is not None:
+            _dict['status'] = self.status
+        if hasattr(self, 'error_message') and self.error_message is not None:
+            if isinstance(self.error_message, dict):
+                _dict['error_message'] = self.error_message
+            else:
+                _dict['error_message'] = self.error_message.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PolicyAssignmentResourcePolicy object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PolicyAssignmentResourcePolicy') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PolicyAssignmentResourcePolicy') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class PolicyAssignmentResources:
     """
     The policy assignment resources.
 
     :attr str target: (optional) Account ID where resources are assigned.
-    :attr PolicyAssignmentResourcesPolicy policy: (optional) Set of properties for
+    :attr PolicyAssignmentResourcePolicy policy: (optional) Set of properties for
           the assigned resource.
     """
 
@@ -3746,13 +3813,13 @@ class PolicyAssignmentResources:
         self,
         *,
         target: str = None,
-        policy: 'PolicyAssignmentResourcesPolicy' = None,
+        policy: 'PolicyAssignmentResourcePolicy' = None,
     ) -> None:
         """
         Initialize a PolicyAssignmentResources object.
 
         :param str target: (optional) Account ID where resources are assigned.
-        :param PolicyAssignmentResourcesPolicy policy: (optional) Set of properties
+        :param PolicyAssignmentResourcePolicy policy: (optional) Set of properties
                for the assigned resource.
         """
         self.target = target
@@ -3765,7 +3832,7 @@ class PolicyAssignmentResources:
         if 'target' in _dict:
             args['target'] = _dict.get('target')
         if 'policy' in _dict:
-            args['policy'] = PolicyAssignmentResourcesPolicy.from_dict(_dict.get('policy'))
+            args['policy'] = PolicyAssignmentResourcePolicy.from_dict(_dict.get('policy'))
         return cls(**args)
 
     @classmethod
@@ -3804,100 +3871,22 @@ class PolicyAssignmentResources:
         return not self == other
 
 
-class PolicyAssignmentResourcesPolicy:
-    """
-    Set of properties for the assigned resource.
-
-    :attr AssignmentResourceCreated resource_created: On success, includes the
-          policy assigned.
-    :attr ErrorResponse error_message: (optional) The error response from API.
-    """
-
-    def __init__(
-        self,
-        resource_created: 'AssignmentResourceCreated',
-        *,
-        error_message: 'ErrorResponse' = None,
-    ) -> None:
-        """
-        Initialize a PolicyAssignmentResourcesPolicy object.
-
-        :param AssignmentResourceCreated resource_created: On success, includes the
-                policy assigned.
-        :param ErrorResponse error_message: (optional) The error response from API.
-        """
-        self.resource_created = resource_created
-        self.error_message = error_message
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'PolicyAssignmentResourcesPolicy':
-        """Initialize a PolicyAssignmentResourcesPolicy object from a json dictionary."""
-        args = {}
-        if 'resource_created' in _dict:
-            args['resource_created'] = AssignmentResourceCreated.from_dict(_dict.get('resource_created'))
-        else:
-            raise ValueError(
-                'Required property \'resource_created\' not present in PolicyAssignmentResourcesPolicy JSON'
-            )
-        if 'error_message' in _dict:
-            args['error_message'] = ErrorResponse.from_dict(_dict.get('error_message'))
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a PolicyAssignmentResourcesPolicy object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'resource_created') and self.resource_created is not None:
-            if isinstance(self.resource_created, dict):
-                _dict['resource_created'] = self.resource_created
-            else:
-                _dict['resource_created'] = self.resource_created.to_dict()
-        if hasattr(self, 'error_message') and self.error_message is not None:
-            if isinstance(self.error_message, dict):
-                _dict['error_message'] = self.error_message
-            else:
-                _dict['error_message'] = self.error_message.to_dict()
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this PolicyAssignmentResourcesPolicy object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'PolicyAssignmentResourcesPolicy') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'PolicyAssignmentResourcesPolicy') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
 class PolicyCollection:
     """
     A collection of policies.
 
-    :attr List[Policy] policies: (optional) List of policies.
+    :attr List[PolicyTemplateMetaData] policies: (optional) List of policies.
     """
 
     def __init__(
         self,
         *,
-        policies: List['Policy'] = None,
+        policies: List['PolicyTemplateMetaData'] = None,
     ) -> None:
         """
         Initialize a PolicyCollection object.
 
-        :param List[Policy] policies: (optional) List of policies.
+        :param List[PolicyTemplateMetaData] policies: (optional) List of policies.
         """
         self.policies = policies
 
@@ -3906,7 +3895,7 @@ class PolicyCollection:
         """Initialize a PolicyCollection object from a json dictionary."""
         args = {}
         if 'policies' in _dict:
-            args['policies'] = [Policy.from_dict(v) for v in _dict.get('policies')]
+            args['policies'] = [PolicyTemplateMetaData.from_dict(v) for v in _dict.get('policies')]
         return cls(**args)
 
     @classmethod
@@ -4465,6 +4454,204 @@ class PolicyTemplateCollection:
     def __ne__(self, other: 'PolicyTemplateCollection') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+class PolicyTemplateMetaData:
+    """
+    The core set of properties associated with a policy.
+
+    :attr str id: (optional) The policy ID.
+    :attr str type: The policy type; either 'access' or 'authorization'.
+    :attr str description: (optional) Customer-defined description.
+    :attr List[PolicySubject] subjects: The subjects associated with a policy.
+    :attr List[PolicyRole] roles: A set of role cloud resource names (CRNs) granted
+          by the policy.
+    :attr List[PolicyResource] resources: The resources associated with a policy.
+    :attr str href: (optional) The href link back to the policy.
+    :attr datetime created_at: (optional) The UTC timestamp when the policy was
+          created.
+    :attr str created_by_id: (optional) The iam ID of the entity that created the
+          policy.
+    :attr datetime last_modified_at: (optional) The UTC timestamp when the policy
+          was last modified.
+    :attr str last_modified_by_id: (optional) The iam ID of the entity that last
+          modified the policy.
+    :attr str state: (optional) The policy state.
+    :attr TemplateMetadata template: (optional) The details of the IAM template that
+          was used to create an enterprise-managed policy in your account. When returned,
+          this indicates that the policy is created from and managed by a template in the
+          root enterprise account.
+    """
+
+    def __init__(
+        self,
+        type: str,
+        subjects: List['PolicySubject'],
+        roles: List['PolicyRole'],
+        resources: List['PolicyResource'],
+        *,
+        id: str = None,
+        description: str = None,
+        href: str = None,
+        created_at: datetime = None,
+        created_by_id: str = None,
+        last_modified_at: datetime = None,
+        last_modified_by_id: str = None,
+        state: str = None,
+        template: 'TemplateMetadata' = None,
+    ) -> None:
+        """
+        Initialize a PolicyTemplateMetaData object.
+
+        :param str type: The policy type; either 'access' or 'authorization'.
+        :param List[PolicySubject] subjects: The subjects associated with a policy.
+        :param List[PolicyRole] roles: A set of role cloud resource names (CRNs)
+               granted by the policy.
+        :param List[PolicyResource] resources: The resources associated with a
+               policy.
+        :param str description: (optional) Customer-defined description.
+        :param str state: (optional) The policy state.
+        :param TemplateMetadata template: (optional) The details of the IAM
+               template that was used to create an enterprise-managed policy in your
+               account. When returned, this indicates that the policy is created from and
+               managed by a template in the root enterprise account.
+        """
+        self.id = id
+        self.type = type
+        self.description = description
+        self.subjects = subjects
+        self.roles = roles
+        self.resources = resources
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+        self.state = state
+        self.template = template
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PolicyTemplateMetaData':
+        """Initialize a PolicyTemplateMetaData object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in PolicyTemplateMetaData JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'subjects' in _dict:
+            args['subjects'] = [PolicySubject.from_dict(v) for v in _dict.get('subjects')]
+        else:
+            raise ValueError('Required property \'subjects\' not present in PolicyTemplateMetaData JSON')
+        if 'roles' in _dict:
+            args['roles'] = [PolicyRole.from_dict(v) for v in _dict.get('roles')]
+        else:
+            raise ValueError('Required property \'roles\' not present in PolicyTemplateMetaData JSON')
+        if 'resources' in _dict:
+            args['resources'] = [PolicyResource.from_dict(v) for v in _dict.get('resources')]
+        else:
+            raise ValueError('Required property \'resources\' not present in PolicyTemplateMetaData JSON')
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if 'state' in _dict:
+            args['state'] = _dict.get('state')
+        if 'template' in _dict:
+            args['template'] = TemplateMetadata.from_dict(_dict.get('template'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PolicyTemplateMetaData object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and getattr(self, 'id') is not None:
+            _dict['id'] = getattr(self, 'id')
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'subjects') and self.subjects is not None:
+            subjects_list = []
+            for v in self.subjects:
+                if isinstance(v, dict):
+                    subjects_list.append(v)
+                else:
+                    subjects_list.append(v.to_dict())
+            _dict['subjects'] = subjects_list
+        if hasattr(self, 'roles') and self.roles is not None:
+            roles_list = []
+            for v in self.roles:
+                if isinstance(v, dict):
+                    roles_list.append(v)
+                else:
+                    roles_list.append(v.to_dict())
+            _dict['roles'] = roles_list
+        if hasattr(self, 'resources') and self.resources is not None:
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
+            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
+        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
+            _dict['created_by_id'] = getattr(self, 'created_by_id')
+        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
+            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
+        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
+            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        if hasattr(self, 'template') and self.template is not None:
+            if isinstance(self.template, dict):
+                _dict['template'] = self.template
+            else:
+                _dict['template'] = self.template.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PolicyTemplateMetaData object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PolicyTemplateMetaData') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PolicyTemplateMetaData') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class StateEnum(str, Enum):
+        """
+        The policy state.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
 
 
 class PolicyTemplateVersionsCollection:
@@ -5185,35 +5372,55 @@ class SubjectAttribute:
 
 class TemplateMetadata:
     """
-    Origin Template information.
+    The details of the IAM template that was used to create an enterprise-managed policy
+    in your account. When returned, this indicates that the policy is created from and
+    managed by a template in the root enterprise account.
 
-    :attr str crn: (optional) Origin Template CRN.
+    :attr str id: (optional) The policy template ID.
     :attr str version: (optional) Template version.
+    :attr str assignment_id: (optional) policy assignment id.
+    :attr str root_id: (optional) orchestrator template id.
+    :attr str root_version: (optional) orchestrator template version.
     """
 
     def __init__(
         self,
         *,
-        crn: str = None,
+        id: str = None,
         version: str = None,
+        assignment_id: str = None,
+        root_id: str = None,
+        root_version: str = None,
     ) -> None:
         """
         Initialize a TemplateMetadata object.
 
-        :param str crn: (optional) Origin Template CRN.
+        :param str id: (optional) The policy template ID.
         :param str version: (optional) Template version.
+        :param str assignment_id: (optional) policy assignment id.
+        :param str root_id: (optional) orchestrator template id.
+        :param str root_version: (optional) orchestrator template version.
         """
-        self.crn = crn
+        self.id = id
         self.version = version
+        self.assignment_id = assignment_id
+        self.root_id = root_id
+        self.root_version = root_version
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'TemplateMetadata':
         """Initialize a TemplateMetadata object from a json dictionary."""
         args = {}
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
         if 'version' in _dict:
             args['version'] = _dict.get('version')
+        if 'assignment_id' in _dict:
+            args['assignment_id'] = _dict.get('assignment_id')
+        if 'root_id' in _dict:
+            args['root_id'] = _dict.get('root_id')
+        if 'root_version' in _dict:
+            args['root_version'] = _dict.get('root_version')
         return cls(**args)
 
     @classmethod
@@ -5224,10 +5431,16 @@ class TemplateMetadata:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'crn') and self.crn is not None:
-            _dict['crn'] = self.crn
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
         if hasattr(self, 'version') and self.version is not None:
             _dict['version'] = self.version
+        if hasattr(self, 'assignment_id') and self.assignment_id is not None:
+            _dict['assignment_id'] = self.assignment_id
+        if hasattr(self, 'root_id') and self.root_id is not None:
+            _dict['root_id'] = self.root_id
+        if hasattr(self, 'root_version') and self.root_version is not None:
+            _dict['root_version'] = self.root_version
         return _dict
 
     def _to_dict(self):
@@ -5257,8 +5470,8 @@ class TemplatePolicy:
     :attr str description: (optional) Description of the policy. This is shown in
           child accounts when an access group or trusted profile template uses the policy
           template to assign access.
-    :attr V2PolicyResource resource: The resource attributes to which the policy
-          grants access.
+    :attr V2PolicyResource resource: (optional) The resource attributes to which the
+          policy grants access.
     :attr str pattern: (optional) Indicates pattern of rule, either
           'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
           'time-based-conditions:weekly:custom-hours'.
@@ -5270,10 +5483,10 @@ class TemplatePolicy:
     def __init__(
         self,
         type: str,
-        resource: 'V2PolicyResource',
         control: 'Control',
         *,
         description: str = None,
+        resource: 'V2PolicyResource' = None,
         pattern: str = None,
         rule: 'V2PolicyRule' = None,
     ) -> None:
@@ -5281,12 +5494,12 @@ class TemplatePolicy:
         Initialize a TemplatePolicy object.
 
         :param str type: The policy type; either 'access' or 'authorization'.
-        :param V2PolicyResource resource: The resource attributes to which the
-               policy grants access.
         :param Control control: Specifies the type of access granted by the policy.
         :param str description: (optional) Description of the policy. This is shown
                in child accounts when an access group or trusted profile template uses the
                policy template to assign access.
+        :param V2PolicyResource resource: (optional) The resource attributes to
+               which the policy grants access.
         :param str pattern: (optional) Indicates pattern of rule, either
                'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
                'time-based-conditions:weekly:custom-hours'.
@@ -5312,8 +5525,6 @@ class TemplatePolicy:
             args['description'] = _dict.get('description')
         if 'resource' in _dict:
             args['resource'] = V2PolicyResource.from_dict(_dict.get('resource'))
-        else:
-            raise ValueError('Required property \'resource\' not present in TemplatePolicy JSON')
         if 'pattern' in _dict:
             args['pattern'] = _dict.get('pattern')
         if 'rule' in _dict:
@@ -5415,7 +5626,6 @@ class V2Policy:
     :attr int last_permit_frequency: (optional) The optional count of times that
           policy has provided a permit, when passing query parameter
           format=include_last_permit.
-    :attr TemplateMetadata template: (optional) Origin Template information.
     """
 
     def __init__(
@@ -5437,7 +5647,6 @@ class V2Policy:
         last_modified_by_id: str = None,
         last_permit_at: str = None,
         last_permit_frequency: int = None,
-        template: 'TemplateMetadata' = None,
     ) -> None:
         """
         Initialize a V2Policy object.
@@ -5460,7 +5669,6 @@ class V2Policy:
         :param int last_permit_frequency: (optional) The optional count of times
                that policy has provided a permit, when passing query parameter
                format=include_last_permit.
-        :param TemplateMetadata template: (optional) Origin Template information.
         """
         self.type = type
         self.description = description
@@ -5478,7 +5686,6 @@ class V2Policy:
         self.state = state
         self.last_permit_at = last_permit_at
         self.last_permit_frequency = last_permit_frequency
-        self.template = template
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'V2Policy':
@@ -5522,8 +5729,6 @@ class V2Policy:
             args['last_permit_at'] = _dict.get('last_permit_at')
         if 'last_permit_frequency' in _dict:
             args['last_permit_frequency'] = _dict.get('last_permit_frequency')
-        if 'template' in _dict:
-            args['template'] = TemplateMetadata.from_dict(_dict.get('template'))
         return cls(**args)
 
     @classmethod
@@ -5578,11 +5783,6 @@ class V2Policy:
             _dict['last_permit_at'] = self.last_permit_at
         if hasattr(self, 'last_permit_frequency') and self.last_permit_frequency is not None:
             _dict['last_permit_frequency'] = self.last_permit_frequency
-        if hasattr(self, 'template') and self.template is not None:
-            if isinstance(self.template, dict):
-                _dict['template'] = self.template
-            else:
-                _dict['template'] = self.template.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -5624,18 +5824,19 @@ class V2PolicyCollection:
     """
     A collection of policies.
 
-    :attr List[V2Policy] policies: (optional) List of policies.
+    :attr List[V2PolicyTemplateMetaData] policies: (optional) List of policies.
     """
 
     def __init__(
         self,
         *,
-        policies: List['V2Policy'] = None,
+        policies: List['V2PolicyTemplateMetaData'] = None,
     ) -> None:
         """
         Initialize a V2PolicyCollection object.
 
-        :param List[V2Policy] policies: (optional) List of policies.
+        :param List[V2PolicyTemplateMetaData] policies: (optional) List of
+               policies.
         """
         self.policies = policies
 
@@ -5644,7 +5845,7 @@ class V2PolicyCollection:
         """Initialize a V2PolicyCollection object from a json dictionary."""
         args = {}
         if 'policies' in _dict:
-            args['policies'] = [V2Policy.from_dict(v) for v in _dict.get('policies')]
+            args['policies'] = [V2PolicyTemplateMetaData.from_dict(v) for v in _dict.get('policies')]
         return cls(**args)
 
     @classmethod
@@ -6120,6 +6321,250 @@ class V2PolicySubjectAttribute:
         """
 
         STRINGEQUALS = 'stringEquals'
+
+
+class V2PolicyTemplateMetaData:
+    """
+    The core set of properties associated with the policy.
+
+    :attr str type: The policy type; either 'access' or 'authorization'.
+    :attr str description: (optional) Description of the policy.
+    :attr V2PolicySubject subject: (optional) The subject attributes for whom the
+          policy grants access.
+    :attr V2PolicyResource resource: (optional) The resource attributes to which the
+          policy grants access.
+    :attr str pattern: (optional) Indicates pattern of rule, either
+          'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
+          'time-based-conditions:weekly:custom-hours'.
+    :attr V2PolicyRule rule: (optional) Additional access conditions associated with
+          the policy.
+    :attr str id: (optional) The policy ID.
+    :attr str href: (optional) The href URL that links to the policies API by policy
+          ID.
+    :attr ControlResponse control:
+    :attr datetime created_at: (optional) The UTC timestamp when the policy was
+          created.
+    :attr str created_by_id: (optional) The iam ID of the entity that created the
+          policy.
+    :attr datetime last_modified_at: (optional) The UTC timestamp when the policy
+          was last modified.
+    :attr str last_modified_by_id: (optional) The iam ID of the entity that last
+          modified the policy.
+    :attr str state: The policy state, either 'deleted' or 'active'.
+    :attr str last_permit_at: (optional) The optional last permit time of policy,
+          when passing query parameter format=include_last_permit.
+    :attr int last_permit_frequency: (optional) The optional count of times that
+          policy has provided a permit, when passing query parameter
+          format=include_last_permit.
+    :attr TemplateMetadata template: (optional) The details of the IAM template that
+          was used to create an enterprise-managed policy in your account. When returned,
+          this indicates that the policy is created from and managed by a template in the
+          root enterprise account.
+    """
+
+    def __init__(
+        self,
+        type: str,
+        control: 'ControlResponse',
+        state: str,
+        *,
+        description: str = None,
+        subject: 'V2PolicySubject' = None,
+        resource: 'V2PolicyResource' = None,
+        pattern: str = None,
+        rule: 'V2PolicyRule' = None,
+        id: str = None,
+        href: str = None,
+        created_at: datetime = None,
+        created_by_id: str = None,
+        last_modified_at: datetime = None,
+        last_modified_by_id: str = None,
+        last_permit_at: str = None,
+        last_permit_frequency: int = None,
+        template: 'TemplateMetadata' = None,
+    ) -> None:
+        """
+        Initialize a V2PolicyTemplateMetaData object.
+
+        :param str type: The policy type; either 'access' or 'authorization'.
+        :param ControlResponse control:
+        :param str state: The policy state, either 'deleted' or 'active'.
+        :param str description: (optional) Description of the policy.
+        :param V2PolicySubject subject: (optional) The subject attributes for whom
+               the policy grants access.
+        :param V2PolicyResource resource: (optional) The resource attributes to
+               which the policy grants access.
+        :param str pattern: (optional) Indicates pattern of rule, either
+               'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
+               'time-based-conditions:weekly:custom-hours'.
+        :param V2PolicyRule rule: (optional) Additional access conditions
+               associated with the policy.
+        :param str last_permit_at: (optional) The optional last permit time of
+               policy, when passing query parameter format=include_last_permit.
+        :param int last_permit_frequency: (optional) The optional count of times
+               that policy has provided a permit, when passing query parameter
+               format=include_last_permit.
+        :param TemplateMetadata template: (optional) The details of the IAM
+               template that was used to create an enterprise-managed policy in your
+               account. When returned, this indicates that the policy is created from and
+               managed by a template in the root enterprise account.
+        """
+        self.type = type
+        self.description = description
+        self.subject = subject
+        self.resource = resource
+        self.pattern = pattern
+        self.rule = rule
+        self.id = id
+        self.href = href
+        self.control = control
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+        self.state = state
+        self.last_permit_at = last_permit_at
+        self.last_permit_frequency = last_permit_frequency
+        self.template = template
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'V2PolicyTemplateMetaData':
+        """Initialize a V2PolicyTemplateMetaData object from a json dictionary."""
+        args = {}
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in V2PolicyTemplateMetaData JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'subject' in _dict:
+            args['subject'] = V2PolicySubject.from_dict(_dict.get('subject'))
+        if 'resource' in _dict:
+            args['resource'] = V2PolicyResource.from_dict(_dict.get('resource'))
+        if 'pattern' in _dict:
+            args['pattern'] = _dict.get('pattern')
+        if 'rule' in _dict:
+            args['rule'] = _dict.get('rule')
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        if 'control' in _dict:
+            args['control'] = _dict.get('control')
+        else:
+            raise ValueError('Required property \'control\' not present in V2PolicyTemplateMetaData JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if 'state' in _dict:
+            args['state'] = _dict.get('state')
+        else:
+            raise ValueError('Required property \'state\' not present in V2PolicyTemplateMetaData JSON')
+        if 'last_permit_at' in _dict:
+            args['last_permit_at'] = _dict.get('last_permit_at')
+        if 'last_permit_frequency' in _dict:
+            args['last_permit_frequency'] = _dict.get('last_permit_frequency')
+        if 'template' in _dict:
+            args['template'] = TemplateMetadata.from_dict(_dict.get('template'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a V2PolicyTemplateMetaData object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'subject') and self.subject is not None:
+            if isinstance(self.subject, dict):
+                _dict['subject'] = self.subject
+            else:
+                _dict['subject'] = self.subject.to_dict()
+        if hasattr(self, 'resource') and self.resource is not None:
+            if isinstance(self.resource, dict):
+                _dict['resource'] = self.resource
+            else:
+                _dict['resource'] = self.resource.to_dict()
+        if hasattr(self, 'pattern') and self.pattern is not None:
+            _dict['pattern'] = self.pattern
+        if hasattr(self, 'rule') and self.rule is not None:
+            if isinstance(self.rule, dict):
+                _dict['rule'] = self.rule
+            else:
+                _dict['rule'] = self.rule.to_dict()
+        if hasattr(self, 'id') and getattr(self, 'id') is not None:
+            _dict['id'] = getattr(self, 'id')
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        if hasattr(self, 'control') and self.control is not None:
+            if isinstance(self.control, dict):
+                _dict['control'] = self.control
+            else:
+                _dict['control'] = self.control.to_dict()
+        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
+            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
+        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
+            _dict['created_by_id'] = getattr(self, 'created_by_id')
+        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
+            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
+        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
+            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        if hasattr(self, 'last_permit_at') and self.last_permit_at is not None:
+            _dict['last_permit_at'] = self.last_permit_at
+        if hasattr(self, 'last_permit_frequency') and self.last_permit_frequency is not None:
+            _dict['last_permit_frequency'] = self.last_permit_frequency
+        if hasattr(self, 'template') and self.template is not None:
+            if isinstance(self.template, dict):
+                _dict['template'] = self.template
+            else:
+                _dict['template'] = self.template.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this V2PolicyTemplateMetaData object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'V2PolicyTemplateMetaData') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'V2PolicyTemplateMetaData') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        The policy type; either 'access' or 'authorization'.
+        """
+
+        ACCESS = 'access'
+        AUTHORIZATION = 'authorization'
+
+    class StateEnum(str, Enum):
+        """
+        The policy state, either 'deleted' or 'active'.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
 
 
 class ControlResponseControl(ControlResponse):

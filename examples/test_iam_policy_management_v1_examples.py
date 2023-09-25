@@ -55,6 +55,7 @@ example_template_version = None
 example_assignment_id = None
 example_user_id = "IBMid-user1"
 example_service_name = "iam-groups"
+example_assignment_policy_id = None
 
 ##############################################################################
 # Start of Examples for Service: IamPolicyManagementV1
@@ -809,7 +810,6 @@ class TestIamPolicyManagementV1Examples:
             response = iam_policy_management_service.commit_policy_template(
                 policy_template_id=example_template_id,
                 version=example_template_version,
-                if_match=example_template_etag,
             )
 
             # end-commit_policy_template
@@ -850,6 +850,8 @@ class TestIamPolicyManagementV1Examples:
         """
         try:
             print('\nget_policy_assignment() result:')
+
+            global example_assignment_policy_id
             # begin-get_policy_assignment
 
             response = iam_policy_management_service.get_policy_assignment(
@@ -859,7 +861,29 @@ class TestIamPolicyManagementV1Examples:
 
             print(json.dumps(policy_assignment_record, indent=2))
 
+            example_assignment_policy_id = policy_assignment_record['resources'][0]['policy']['resource_created']['id']
+
             # end-get_policy_assignment
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_v2_assignment_policy_example(self):
+        """
+        get_v2_assignment_policy request example
+        """
+        try:
+
+            print('\nget_v2_assignment_policy() result:')
+            # begin-get_v2_assignment_policy
+
+            response = iam_policy_management_service.get_v2_policy(id=example_assignment_policy_id)
+            policy = response.get_result()
+
+            print(json.dumps(policy, indent=2))
+
+            # end-get_v2_assignment_policy
 
         except ApiException as e:
             pytest.fail(str(e))
