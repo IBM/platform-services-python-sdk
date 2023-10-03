@@ -58,6 +58,8 @@ test_template_latest_etag = None
 test_account_group_id = None
 test_assignment_id = None
 test_assignment_etag = None
+access_group_e_tag_link = None
+
 
 ##############################################################################
 # Start of Examples for Service: IamAccessGroupsV2
@@ -101,7 +103,6 @@ class TestIamAccessGroupsV2Examples:
         create_access_group request example
         """
         try:
-            global access_group_id_link
             print('\ncreate_access_group() result:')
             # begin-create_access_group
 
@@ -128,7 +129,6 @@ class TestIamAccessGroupsV2Examples:
         get_access_group request example
         """
         try:
-            global access_group_e_tag_link
             print('\nget_access_group() result:')
             # begin-get_access_group
 
@@ -141,6 +141,7 @@ class TestIamAccessGroupsV2Examples:
 
             # end-get_access_group
 
+            global access_group_e_tag_link
             access_group_e_tag_link = response.get_headers().get('ETag')
         except ApiException as e:
             pytest.fail(str(e))

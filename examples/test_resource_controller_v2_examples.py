@@ -123,7 +123,6 @@ class TestResourceControllerV2Examples:
         create_resource_instance request example
         """
         try:
-            global instance_guid, resource_instance_name, target_region, resource_group, resource_plan_id
             print('\ncreate_resource_instance() result:')
             # begin-create_resource_instance
 
@@ -138,6 +137,7 @@ class TestResourceControllerV2Examples:
 
             # end-create_resource_instance
 
+            global instance_guid
             instance_guid = resource_instance.get('guid')
 
         except ApiException as e:
@@ -149,7 +149,6 @@ class TestResourceControllerV2Examples:
         get_resource_instance request example
         """
         try:
-            global instance_guid
             print('\nget_resource_instance() result:')
             # begin-get_resource_instance
 
@@ -193,7 +192,6 @@ class TestResourceControllerV2Examples:
         update_resource_instance request example
         """
         try:
-            global instance_guid, resource_instance_update_name
             print('\nupdate_resource_instance() result:')
             # begin-update_resource_instance
 
@@ -215,7 +213,6 @@ class TestResourceControllerV2Examples:
         create_resource_alias request example
         """
         try:
-            global instance_guid, alias_name, alias_guid, alias_target_crn
             print('\ncreate_resource_alias() result:')
             # begin-create_resource_alias
 
@@ -227,6 +224,7 @@ class TestResourceControllerV2Examples:
 
             # end-create_resource_alias
 
+            global alias_guid
             alias_guid = resource_alias.get('guid')
 
         except ApiException as e:
@@ -238,7 +236,6 @@ class TestResourceControllerV2Examples:
         get_resource_alias request example
         """
         try:
-            global alias_guid
             print('\nget_resource_alias() result:')
             # begin-get_resource_alias
 
@@ -257,7 +254,6 @@ class TestResourceControllerV2Examples:
         list_resource_aliases request example
         """
         try:
-            global alias_name
             print('\nlist_resource_aliases() result:')
             # begin-list_resource_aliases
 
@@ -283,7 +279,6 @@ class TestResourceControllerV2Examples:
         update_resource_alias request example
         """
         try:
-            global alias_guid, alias_update_name
             print('\nupdate_resource_alias() result:')
             # begin-update_resource_alias
 
@@ -304,7 +299,6 @@ class TestResourceControllerV2Examples:
         list_resource_aliases_for_instance request example
         """
         try:
-            global instance_guid
             print('\nlist_resource_aliases_for_instance() result:')
             # begin-list_resource_aliases_for_instance
 
@@ -330,7 +324,6 @@ class TestResourceControllerV2Examples:
         create_resource_binding request example
         """
         try:
-            global alias_guid, binding_guid, binding_name, binding_target_crn
             print('\ncreate_resource_binding() result:')
             # begin-create_resource_binding
 
@@ -343,6 +336,7 @@ class TestResourceControllerV2Examples:
 
             # end-create_resource_binding
 
+            global binding_guid
             binding_guid = resource_binding.get('guid')
 
         except ApiException as e:
@@ -354,7 +348,6 @@ class TestResourceControllerV2Examples:
         get_resource_binding request example
         """
         try:
-            global binding_guid
             print('\nget_resource_binding() result:')
             # begin-get_resource_binding
 
@@ -378,7 +371,6 @@ class TestResourceControllerV2Examples:
         list_resource_bindings request example
         """
         try:
-            global binding_name
             print('\nlist_resource_bindings() result:')
             # begin-list_resource_bindings
 
@@ -404,7 +396,6 @@ class TestResourceControllerV2Examples:
         update_resource_binding request example
         """
         try:
-            global binding_guid, binding_update_name
             print('\nupdate_resource_binding() result:')
             # begin-update_resource_binding
 
@@ -425,7 +416,6 @@ class TestResourceControllerV2Examples:
         list_resource_bindings_for_alias request example
         """
         try:
-            global alias_guid
             print('\nlist_resource_bindings_for_alias() result:')
             # begin-list_resource_bindings_for_alias
 
@@ -451,7 +441,6 @@ class TestResourceControllerV2Examples:
         create_resource_key request example
         """
         try:
-            global instance_guid, instance_key_guid, key_name
             print('\ncreate_resource_key() result:')
             # begin-create_resource_key
 
@@ -464,6 +453,7 @@ class TestResourceControllerV2Examples:
 
             # end-create_resource_key
 
+            global instance_key_guid
             instance_key_guid = resource_key.get('guid')
 
         except ApiException as e:
@@ -475,7 +465,6 @@ class TestResourceControllerV2Examples:
         get_resource_key request example
         """
         try:
-            global instance_key_guid
             print('\nget_resource_key() result:')
             # begin-get_resource_key
 
@@ -500,7 +489,6 @@ class TestResourceControllerV2Examples:
         list_resource_keys request example
         """
         try:
-            global key_name
             print('\nlist_resource_keys() result:')
             # begin-list_resource_keys
 
@@ -526,7 +514,6 @@ class TestResourceControllerV2Examples:
         update_resource_key request example
         """
         try:
-            global instance_key_guid, key_update_name
             print('\nupdate_resource_key() result:')
             # begin-update_resource_key
 
@@ -547,7 +534,6 @@ class TestResourceControllerV2Examples:
         list_resource_keys_for_instance request example
         """
         try:
-            global instance_guid
             print('\nlist_resource_keys_for_instance() result:')
             # begin-list_resource_keys_for_instance
 
@@ -573,7 +559,6 @@ class TestResourceControllerV2Examples:
         delete_resource_binding request example
         """
         try:
-            global binding_guid
             # begin-delete_resource_binding
 
             response = resource_controller_service.delete_resource_binding(id=binding_guid)
@@ -590,7 +575,6 @@ class TestResourceControllerV2Examples:
         delete_resource_key request example
         """
         try:
-            global instance_key_guid
             # begin-delete_resource_key
 
             response = resource_controller_service.delete_resource_key(id=instance_key_guid)
@@ -607,7 +591,6 @@ class TestResourceControllerV2Examples:
         delete_resource_alias request example
         """
         try:
-            global alias_guid
             # begin-delete_resource_alias
 
             response = resource_controller_service.delete_resource_alias(id=alias_guid)
@@ -624,7 +607,6 @@ class TestResourceControllerV2Examples:
         lock_resource_instance request example
         """
         try:
-            global instance_guid
             print('\nlock_resource_instance() result:')
             # begin-lock_resource_instance
 
@@ -643,7 +625,6 @@ class TestResourceControllerV2Examples:
         unlock_resource_instance request example
         """
         try:
-            global instance_guid
             print('\nunlock_resource_instance() result:')
             # begin-unlock_resource_instance
 
@@ -662,7 +643,6 @@ class TestResourceControllerV2Examples:
         delete_resource_instance request example
         """
         try:
-            global instance_guid
             # begin-delete_resource_instance
 
             response = resource_controller_service.delete_resource_instance(id=instance_guid, recursive=False)
@@ -682,7 +662,6 @@ class TestResourceControllerV2Examples:
         list_reclamations request example
         """
         try:
-            global instance_guid, reclamation_id, account_id
             print('\nlist_reclamations() result:')
             # begin-list_reclamations
 
@@ -705,7 +684,6 @@ class TestResourceControllerV2Examples:
         run_reclamation_action request example
         """
         try:
-            global reclamation_id
             assert reclamation_id is not None
             print('\nrun_reclamation_action() result:')
             # begin-run_reclamation_action

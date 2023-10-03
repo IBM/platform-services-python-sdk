@@ -350,7 +350,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_api_key(self):
-        global apikey_id1
         assert apikey_id1 is not None
 
         get_api_key_response = self.iam_identity_service.get_api_key(
@@ -422,10 +421,7 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_update_api_key(self):
-        global apikey_id1
         assert apikey_id1 is not None
-
-        global apikey_etag1
         assert apikey_etag1 is not None
 
         new_description = 'This is an updated description'
@@ -441,7 +437,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_lock_api_key(self):
-        global apikey_id1
         assert apikey_id1 is not None
 
         lock_api_key_response = self.iam_identity_service.lock_api_key(id=apikey_id1)
@@ -455,7 +450,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_unlock_api_key(self):
-        global apikey_id1
         assert apikey_id1 is not None
 
         unlock_api_key_response = self.iam_identity_service.unlock_api_key(id=apikey_id1)
@@ -469,7 +463,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_api_key1(self):
-        global apikey_id1
         assert apikey_id1 is not None
 
         delete_api_key_response = self.iam_identity_service.delete_api_key(id=apikey_id1)
@@ -481,7 +474,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_api_key2(self):
-        global apikey_id2
         assert apikey_id2 is not None
 
         delete_api_key_response = self.iam_identity_service.delete_api_key(id=apikey_id2)
@@ -510,7 +502,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_service_id(self):
-        global serviceid_id1
         assert serviceid_id1 is not None
 
         get_service_id_response = self.iam_identity_service.get_service_id(
@@ -546,10 +537,7 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_update_service_id(self):
-        global serviceid_id1
         assert serviceid_id1 is not None
-
-        global serviceid_etag1
         assert serviceid_etag1 is not None
 
         new_description = 'This is an updated description'
@@ -566,7 +554,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_lock_service_id(self):
-        global serviceid_id1
         assert serviceid_id1 is not None
 
         lock_service_id_response = self.iam_identity_service.lock_service_id(id=serviceid_id1)
@@ -579,7 +566,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_unlock_service_id(self):
-        global serviceid_id1
         assert serviceid_id1 is not None
 
         unlock_service_id_response = self.iam_identity_service.unlock_service_id(id=serviceid_id1)
@@ -592,7 +578,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_service_id(self):
-        global serviceid_id1
         assert serviceid_id1 is not None
 
         delete_service_id_response = self.iam_identity_service.delete_service_id(id=serviceid_id1)
@@ -637,7 +622,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_profile(self):
-        global profile_id1
         assert profile_id1 is not None
 
         get_profile_response = self.iam_identity_service.get_profile(
@@ -687,10 +671,7 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_update_profile(self):
-        global profile_id1
         assert profile_id1 is not None
-
-        global profile_etag
         assert profile_etag is not None
 
         new_description = 'This is an updated description'
@@ -706,7 +687,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_profile1(self):
-        global profile_id1
         assert profile_id1 is not None
 
         delete_profile_response = self.iam_identity_service.delete_profile(profile_id=profile_id1)
@@ -766,7 +746,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_claimRule(self):
-        global claimRule_id1
         assert claimRule_id1 is not None
 
         get_claimRule_response = self.iam_identity_service.get_claim_rule(profile_id=profile_id2, rule_id=claimRule_id1)
@@ -804,10 +783,7 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_update_claimRule(self):
-        global claimRule_id1
         assert claimRule_id1 is not None
-
-        global claimRule_etag
         assert claimRule_etag is not None
 
         profile_claim_rule_conditions_model = {}
@@ -832,7 +808,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_claimRule1(self):
-        global claimRule_id1
         assert claimRule_id1 is not None
 
         delete_claimRule_response = self.iam_identity_service.delete_claim_rule(
@@ -846,7 +821,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_claimRule2(self):
-        global claimRule_id2
         assert claimRule_id2 is not None
 
         delete_claimRule_response = self.iam_identity_service.delete_claim_rule(
@@ -882,7 +856,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_link(self):
-        global link_id
         assert link_id is not None
 
         get_link_response = self.iam_identity_service.get_link(profile_id=profile_id2, link_id=link_id)
@@ -916,7 +889,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_link(self):
-        global link_id
         assert link_id is not None
 
         delete_link_response = self.iam_identity_service.delete_link(profile_id=profile_id2, link_id=link_id)
@@ -1008,7 +980,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_profile2(self):
-        global profile_id2
         assert profile_id2 is not None
 
         delete_profile_response = self.iam_identity_service.delete_profile(profile_id=profile_id2)
@@ -1135,7 +1106,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_update_account_settings(self):
-        global account_setting_etag
         assert account_setting_etag is not None
 
         account_settings_user_mfa = {}
@@ -1338,9 +1308,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_profile_template(self):
-        global profile_template_id
-        global profile_template_version
-
         assert profile_template_id is not None
         assert profile_template_version is not None
 
@@ -1362,7 +1329,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_list_profile_templates(self):
-
         list_response = self.iam_identity_service.list_profile_templates(account_id=self.enterprise_account_id)
 
         assert list_response.get_status_code() == 200
@@ -1372,8 +1338,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_update_profile_template(self):
-        global profile_template_id
-        global profile_template_version
         global profile_template_etag
 
         assert profile_template_id is not None
@@ -1399,9 +1363,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_assign_profile_template(self):
-        global profile_template_id
-        global profile_template_version
-
         assert profile_template_id is not None
         assert profile_template_version is not None
 
@@ -1427,7 +1388,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_list_profile_template_assignments(self):
-        global profile_template_id
         assert profile_template_id is not None
 
         list_response = self.iam_identity_service.list_trusted_profile_assignments(
@@ -1440,7 +1400,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_create_new_profile_template_version(self):
-        global profile_template_id
         assert profile_template_id is not None
 
         profile_claim_rule_conditions = {}
@@ -1486,7 +1445,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_latest_profile_template_version(self):
-        global profile_template_id
         assert profile_template_id is not None
 
         get_response = self.iam_identity_service.get_latest_profile_template_version(template_id=profile_template_id)
@@ -1498,7 +1456,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_list_profile_template_versions(self):
-        global profile_template_id
         assert profile_template_id is not None
 
         list_response = self.iam_identity_service.list_versions_of_profile_template(template_id=profile_template_id)
@@ -1510,9 +1467,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_update_profile_template_assignment(self):
-        global profile_template_id
-        global profile_template_version
-        global profile_template_assignment_id
         global profile_template_assignment_etag
 
         assert profile_template_id is not None
@@ -1540,7 +1494,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_profile_template_assignment(self):
-        global profile_template_assignment_id
         assert profile_template_assignment_id is not None
 
         self.waitUntilTrustedProfileAssignmentFinished(self.iam_identity_service, profile_template_assignment_id)
@@ -1552,8 +1505,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_profile_template_version(self):
-        global profile_template_id
-        global profile_template_assignment_id
         assert profile_template_id is not None
         assert profile_template_assignment_id is not None
 
@@ -1564,7 +1515,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_profile_template(self):
-        global profile_template_id
         assert profile_template_id is not None
 
         self.waitUntilTrustedProfileAssignmentFinished(self.iam_identity_service, profile_template_assignment_id)
@@ -1601,9 +1551,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_account_settings_template(self):
-        global account_settings_template_id
-        global account_settings_template_version
-
         assert account_settings_template_id is not None
         assert account_settings_template_version is not None
 
@@ -1625,7 +1572,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_list_account_settings_templates(self):
-
         list_response = self.iam_identity_service.list_account_settings_templates(account_id=self.enterprise_account_id)
 
         assert list_response.get_status_code() == 200
@@ -1635,8 +1581,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_update_account_settings_template(self):
-        global account_settings_template_id
-        global account_settings_template_version
         global account_settings_template_etag
 
         assert account_settings_template_id is not None
@@ -1667,9 +1611,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_assign_account_settings_template(self):
-        global account_settings_template_id
-        global account_settings_template_version
-
         assert account_settings_template_id is not None
         assert account_settings_template_version is not None
 
@@ -1695,7 +1636,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_list_account_settings_template_assignments(self):
-        global account_settings_template_id
         assert account_settings_template_id is not None
 
         list_response = self.iam_identity_service.list_account_settings_assignments(
@@ -1708,7 +1648,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_create_new_account_settings_template_version(self):
-        global account_settings_template_id
         assert account_settings_template_id is not None
 
         account_settings = {}
@@ -1738,7 +1677,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_latest_account_settings_template_version(self):
-        global account_settings_template_id
         assert account_settings_template_id is not None
 
         get_response = self.iam_identity_service.get_latest_account_settings_template_version(
@@ -1754,7 +1692,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_list_account_settings_template_versions(self):
-        global account_settings_template_id
         assert account_settings_template_id is not None
 
         list_response = self.iam_identity_service.list_versions_of_account_settings_template(
@@ -1770,9 +1707,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_update_account_settings_template_assignment(self):
-        global account_settings_template_id
-        global account_settings_template_version
-        global account_settings_template_assignment_id
         global account_settings_template_assignment_etag
 
         assert account_settings_template_id is not None
@@ -1802,7 +1736,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_account_settings_template_assignment(self):
-        global account_settings_template_assignment_id
         assert account_settings_template_assignment_id is not None
 
         self.waitUntilAccountSettingsAssignmentFinished(
@@ -1816,8 +1749,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_account_settings_template_version(self):
-        global account_settings_template_id
-        global account_settings_template_assignment_id
         assert account_settings_template_id is not None
         assert account_settings_template_assignment_id is not None
 
@@ -1828,7 +1759,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_account_settings_template(self):
-        global account_settings_template_id
         assert account_settings_template_id is not None
 
         self.waitUntilAccountSettingsAssignmentFinished(

@@ -80,14 +80,14 @@ Service Name | Module Name | Service Class Name
 
 * An [IBM Cloud][ibm-cloud-onboarding] account.
 * An IAM API key to allow the SDK to access your account. Create one [here](https://cloud.ibm.com/iam/apikeys).
-* Python 3.7 or above.
+* Python 3.8 or above.
 
 ## Installation
 
 To install, use `pip`:
 
 ```bash
-pip install --upgrade ibm-platform-services
+python -m pip install --upgrade ibm-platform-services
 ```
 
 Then in your code, you can import the appropriate service like this:

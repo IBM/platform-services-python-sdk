@@ -125,8 +125,6 @@ class TestOpenServiceBrokerV1Examples:
         get_service_instance_state request example
         """
         try:
-            global instanceId
-
             print('\nget_service_instance_state() result:')
             # begin-get_service_instance_state
 
@@ -145,8 +143,6 @@ class TestOpenServiceBrokerV1Examples:
         replace_service_instance_state request example
         """
         try:
-            global instanceId, initiatorId, reasonCode
-
             print('\nreplace_service_instance_state() result:')
             # begin-replace_service_instance_state
 
@@ -167,8 +163,6 @@ class TestOpenServiceBrokerV1Examples:
         replace_service_instance request example
         """
         try:
-            global instanceId, orgGuid, planId, serviceId, accountId
-
             print('\nreplace_service_instance() result:')
             # begin-replace_service_instance
 
@@ -198,8 +192,6 @@ class TestOpenServiceBrokerV1Examples:
         update_service_instance request example
         """
         try:
-            global instanceId, planId, serviceId, accountId
-
             print('\nupdate_service_instance() result:')
             # begin-update_service_instance
 
@@ -247,8 +239,6 @@ class TestOpenServiceBrokerV1Examples:
         get_last_operation request example
         """
         try:
-            global instanceId, operation, planId, serviceId
-
             print('\nget_last_operation() result:')
             # begin-get_last_operation
 
@@ -269,8 +259,6 @@ class TestOpenServiceBrokerV1Examples:
         replace_service_binding request example
         """
         try:
-            global instanceId, bindingId, appGuid, planId, serviceId, spaceGuid, accountId
-
             print('\nreplace_service_binding() result:')
             # begin-replace_service_binding
 
@@ -298,8 +286,6 @@ class TestOpenServiceBrokerV1Examples:
         delete_service_instance request example
         """
         try:
-            global instanceId, planId, serviceId
-
             print('\ndelete_service_instance() result:')
             # begin-delete_service_instance
 
@@ -322,8 +308,6 @@ class TestOpenServiceBrokerV1Examples:
         delete_service_binding request example
         """
         try:
-            global bindingId, instanceId, planId, serviceId
-
             print('\ndelete_service_binding() result:')
             # begin-delete_service_binding
 

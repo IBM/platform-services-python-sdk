@@ -357,7 +357,6 @@ class TestEnterpriseManagementV1:
 
     @needscredentials
     def test_delete_account(self):
-
         response = self.enterprise_management_service.delete_account(
             account_id=example_account_id,
         )
@@ -366,7 +365,6 @@ class TestEnterpriseManagementV1:
 
     @needscredentials
     def test_delete_account_group(self):
-
         response = self.enterprise_management_service.delete_account_group(
             account_group_id=first_example_account_group_id,
         )

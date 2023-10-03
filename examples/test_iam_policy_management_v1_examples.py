@@ -56,6 +56,7 @@ example_assignment_id = None
 example_user_id = "IBMid-user1"
 example_service_name = "iam-groups"
 example_assignment_policy_id = None
+example_updated_policy_etag = None
 
 ##############################################################################
 # Start of Examples for Service: IamPolicyManagementV1
@@ -98,8 +99,6 @@ class TestIamPolicyManagementV1Examples:
         create_policy request example
         """
         try:
-            global example_policy_id
-
             print('\ncreate_policy() result:')
             # begin-create_policy
 
@@ -120,6 +119,7 @@ class TestIamPolicyManagementV1Examples:
 
             # end-create_policy
 
+            global example_policy_id
             example_policy_id = policy['id']
 
         except ApiException as e:
@@ -131,8 +131,6 @@ class TestIamPolicyManagementV1Examples:
         get_policy request example
         """
         try:
-            global example_policy_etag
-
             print('\nget_policy() result:')
             # begin-get_policy
 
@@ -143,6 +141,7 @@ class TestIamPolicyManagementV1Examples:
 
             # end-get_policy
 
+            global example_policy_etag
             example_policy_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
@@ -154,8 +153,6 @@ class TestIamPolicyManagementV1Examples:
         replace_policy request example
         """
         try:
-            global example_updated_policy_etag
-
             print('\nreplace_policy() result:')
             # begin-replace_policy
 
@@ -182,6 +179,7 @@ class TestIamPolicyManagementV1Examples:
 
             # end-replace_policy
 
+            global example_updated_policy_etag
             example_updated_policy_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
@@ -251,8 +249,6 @@ class TestIamPolicyManagementV1Examples:
         create_v2_policy request example
         """
         try:
-            global example_policy_id
-
             print('\ncreate_v2_policy() result:')
             # begin-create_v2_policy
 
@@ -306,6 +302,7 @@ class TestIamPolicyManagementV1Examples:
 
             # end-create_v2_policy
 
+            global example_policy_id
             example_policy_id = policy['id']
 
         except ApiException as e:
@@ -317,8 +314,6 @@ class TestIamPolicyManagementV1Examples:
         get_v2_policy request example
         """
         try:
-            global example_policy_etag
-
             print('\nget_v2_policy() result:')
             # begin-get_v2_policy
 
@@ -329,6 +324,7 @@ class TestIamPolicyManagementV1Examples:
 
             # end-get_v2_policy
 
+            global example_policy_etag
             example_policy_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
@@ -443,8 +439,6 @@ class TestIamPolicyManagementV1Examples:
         create_role request example
         """
         try:
-            global example_custom_role_id
-
             print('\ncreate_role() result:')
             # begin-create_role
 
@@ -460,6 +454,7 @@ class TestIamPolicyManagementV1Examples:
 
             # end-create_role
 
+            global example_custom_role_id
             example_custom_role_id = custom_role["id"]
 
         except ApiException as e:
@@ -471,8 +466,6 @@ class TestIamPolicyManagementV1Examples:
         get_role request example
         """
         try:
-            global example_custom_role_etag
-
             print('\nget_role() result:')
             # begin-get_role
 
@@ -483,6 +476,7 @@ class TestIamPolicyManagementV1Examples:
 
             # end-get_role
 
+            global example_custom_role_etag
             example_custom_role_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
@@ -555,9 +549,6 @@ class TestIamPolicyManagementV1Examples:
         """
         try:
             print('\ncreate_policy_template() result:')
-
-            global example_template_id
-            global example_template_version
             # begin-create_policy_template
 
             v2_policy_resource_attribute_model = {
@@ -599,7 +590,9 @@ class TestIamPolicyManagementV1Examples:
 
             # end-create_policy_template
 
+            global example_template_id
             example_template_id = policy_template['id']
+            global example_template_version
             example_template_version = policy_template['version']
 
         except ApiException as e:
@@ -612,8 +605,6 @@ class TestIamPolicyManagementV1Examples:
         """
         try:
             print('\nget_policy_template() result:')
-
-            global example_template_etag
             # begin-get_policy_template
 
             print('example_template_id: ', example_template_id)
@@ -626,6 +617,7 @@ class TestIamPolicyManagementV1Examples:
 
             # end-get_policy_template
 
+            global example_template_etag
             example_template_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
@@ -794,6 +786,7 @@ class TestIamPolicyManagementV1Examples:
 
             # end-get_policy_template_version
 
+            global example_template_etag
             example_template_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
@@ -825,8 +818,6 @@ class TestIamPolicyManagementV1Examples:
         """
         try:
             print('\nlist_policy_assignments() result:')
-
-            global example_assignment_id
             # begin-list_Policy Assignments
 
             response = iam_policy_management_service.list_policy_assignments(
@@ -838,6 +829,7 @@ class TestIamPolicyManagementV1Examples:
 
             # end-list_Policy Assignments
 
+            global example_assignment_id
             example_assignment_id = polcy_template_assignment_collection['assignments'][0]['id']
 
         except ApiException as e:
@@ -850,8 +842,6 @@ class TestIamPolicyManagementV1Examples:
         """
         try:
             print('\nget_policy_assignment() result:')
-
-            global example_assignment_policy_id
             # begin-get_policy_assignment
 
             response = iam_policy_management_service.get_policy_assignment(
@@ -861,9 +851,9 @@ class TestIamPolicyManagementV1Examples:
 
             print(json.dumps(policy_assignment_record, indent=2))
 
-            example_assignment_policy_id = policy_assignment_record['resources'][0]['policy']['resource_created']['id']
-
             # end-get_policy_assignment
+            global example_assignment_policy_id
+            example_assignment_policy_id = policy_assignment_record['resources'][0]['policy']['resource_created']['id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -874,7 +864,6 @@ class TestIamPolicyManagementV1Examples:
         get_v2_assignment_policy request example
         """
         try:
-
             print('\nget_v2_assignment_policy() result:')
             # begin-get_v2_assignment_policy
 
