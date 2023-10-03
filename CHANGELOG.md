@@ -1,3 +1,10 @@
+## [0.44.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.44.0...v0.44.1) (2023-10-03)
+
+
+### Bug Fixes
+
+* bump min supported version of python to 3.8 ([#223](https://github.com/IBM/platform-services-python-sdk/issues/223)) ([6d3e84a](https://github.com/IBM/platform-services-python-sdk/commit/6d3e84acd81bf3c439f1b8113cd8630235d3e65f))
+
 # [0.44.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.43.1...v0.44.0) (2023-09-25)
 
 
