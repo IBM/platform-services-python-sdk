@@ -62,7 +62,8 @@ disable=too-many-arguments,
         deprecated-pragma,
         use-symbolic-message-instead,
         invalid-name,
-        global-statement
+        global-statement,
+        use-implicit-booleaness-not-comparison
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -191,14 +192,6 @@ attr-naming-style=snake_case
 # Regular expression matching correct attribute names. Overrides attr-naming-
 # style.
 #attr-rgx=
-
-# Bad variable names which should always be refused, separated by a comma.
-bad-names=foo,
-          bar,
-          baz,
-          toto,
-          tutu,
-          tata
 
 # Naming style matching correct class attribute names.
 class-attribute-naming-style=any
@@ -501,5 +494,5 @@ valid-metaclass-classmethod-first-arg=cls
 
 # Exceptions that will emit a warning when being caught. Defaults to
 # "BaseException, Exception".
-overgeneral-exceptions=BaseException,
-                       Exception
+overgeneral-exceptions=builtins.BaseException,
+                       builtins.Exception

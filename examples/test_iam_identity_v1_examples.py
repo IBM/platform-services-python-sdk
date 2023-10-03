@@ -52,6 +52,7 @@ config = None
 apikey_name = 'Example-ApiKey'
 serviceid_name = 'Example-ServiceId'
 
+# config property values
 account_id = None
 iam_id = None
 iam_id_member = None
@@ -61,6 +62,7 @@ enterprise_subaccount_id = None
 
 apikey_id = None
 apikey_etag = None
+
 svc_id = None
 svc_id_etag = None
 
@@ -190,19 +192,16 @@ class TestIamIdentityV1Examples:
         create_api_key request example
         """
         try:
-            global apikey_name, iam_id, apikey_id
-
             print('\ncreate_api_key() result:')
             # begin-create_api_key
 
             api_key = iam_identity_service.create_api_key(name=apikey_name, iam_id=iam_id).get_result()
-
-            apikey_id = api_key['id']
-
             print(json.dumps(api_key, indent=2))
 
             # end-create_api_key
 
+            global apikey_id
+            apikey_id = api_key['id']
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -212,15 +211,12 @@ class TestIamIdentityV1Examples:
         list_api_keys request example
         """
         try:
-            global account_id, iam_id
-
             print('\nlist_api_keys() result:')
             # begin-list_api_keys
 
             api_key_list = iam_identity_service.list_api_keys(
                 account_id=account_id, iam_id=iam_id, include_history=True
             ).get_result()
-
             print(json.dumps(api_key_list, indent=2))
 
             # end-list_api_keys
@@ -234,13 +230,10 @@ class TestIamIdentityV1Examples:
         get_api_keys_details request example
         """
         try:
-            global apikey
-
             print('\nget_api_keys_details() result:')
             # begin-get_api_keys_details
 
             api_key = iam_identity_service.get_api_keys_details(iam_api_key=apikey).get_result()
-
             print(json.dumps(api_key, indent=2))
 
             # end-get_api_keys_details
@@ -254,8 +247,6 @@ class TestIamIdentityV1Examples:
         get_api_key request example
         """
         try:
-            global apikey_id, apikey_etag
-
             print('\nget_api_key() result:')
             # begin-get_api_key
 
@@ -263,13 +254,13 @@ class TestIamIdentityV1Examples:
                 id=apikey_id,
                 include_activity=True,
             )
-
-            apikey_etag = response.get_headers()['Etag']
             api_key = response.get_result()
-
             print(json.dumps(api_key, indent=2))
 
             # end-get_api_key
+
+            global apikey_etag
+            apikey_etag = response.get_headers()['Etag']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -280,15 +271,12 @@ class TestIamIdentityV1Examples:
         update_api_key request example
         """
         try:
-            global apikey_id, apikey_etag
-
             print('\nupdate_api_key() result:')
             # begin-update_api_key
 
             api_key = iam_identity_service.update_api_key(
                 id=apikey_id, if_match=apikey_etag, description='This is an updated description'
             ).get_result()
-
             print(json.dumps(api_key, indent=2))
 
             # end-update_api_key
@@ -302,8 +290,6 @@ class TestIamIdentityV1Examples:
         lock_api_key request example
         """
         try:
-            global apikey_id
-
             # begin-lock_api_key
 
             response = iam_identity_service.lock_api_key(id=apikey_id)
@@ -320,13 +306,12 @@ class TestIamIdentityV1Examples:
         unlock_api_key request example
         """
         try:
-            global apikey_id
-
             # begin-unlock_api_key
 
             response = iam_identity_service.unlock_api_key(id=apikey_id)
 
             # end-unlock_api_key
+
             print('\nunlock_api_key() response status code: ', response.get_status_code())
 
         except ApiException as e:
@@ -338,13 +323,12 @@ class TestIamIdentityV1Examples:
         delete_api_key request example
         """
         try:
-            global apikey_id
-
             # begin-delete_api_key
 
             response = iam_identity_service.delete_api_key(id=apikey_id)
 
             # end-delete_api_key
+
             print('\ndelete_api_key() response status code: ', response.get_status_code())
 
         except ApiException as e:
@@ -356,20 +340,18 @@ class TestIamIdentityV1Examples:
         create_service_id request example
         """
         try:
-            global account_id, serviceid_name, svc_id
-
             print('\ncreate_service_id() result:')
             # begin-create_service_id
 
             service_id = iam_identity_service.create_service_id(
                 account_id=account_id, name=serviceid_name, description='Example ServiceId'
             ).get_result()
-
-            svc_id = service_id['id']
-
             print(json.dumps(service_id, indent=2))
 
             # end-create_service_id
+
+            global svc_id
+            svc_id = service_id['id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -380,8 +362,6 @@ class TestIamIdentityV1Examples:
         get_service_id request example
         """
         try:
-            global svc_id, svc_id_etag
-
             print('\nget_service_id() result:')
             # begin-get_service_id
 
@@ -390,15 +370,13 @@ class TestIamIdentityV1Examples:
                 include_history=True,
                 include_activity=True,
             )
-
-            svc_id_etag = response.get_headers()['Etag']
             service_id = response.get_result()
-
             print(json.dumps(service_id, indent=2))
 
             # end-get_service_id
 
-            serviceIDEtag = service_id['entity_tag']
+            global svc_id_etag
+            svc_id_etag = response.get_headers()['Etag']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -409,15 +387,12 @@ class TestIamIdentityV1Examples:
         list_service_ids request example
         """
         try:
-            global account_id, serviceid_name
-
             print('\nlist_service_ids() result:')
             # begin-list_service_ids
 
             service_id_list = iam_identity_service.list_service_ids(
                 account_id=account_id, name=serviceid_name
             ).get_result()
-
             print(json.dumps(service_id_list, indent=2))
 
             # end-list_service_ids
@@ -431,15 +406,12 @@ class TestIamIdentityV1Examples:
         update_service_id request example
         """
         try:
-            global svc_id, svc_id_etag
-
             print('\nupdate_service_id() result:')
             # begin-update_service_id
 
             service_id = iam_identity_service.update_service_id(
                 id=svc_id, if_match=svc_id_etag, description='This is an updated description'
             ).get_result()
-
             print(json.dumps(service_id, indent=2))
 
             # end-update_service_id
@@ -453,13 +425,12 @@ class TestIamIdentityV1Examples:
         lock_service_id request example
         """
         try:
-            global svc_id
-
             # begin-lock_service_id
 
             response = iam_identity_service.lock_service_id(id=svc_id)
 
             # end-lock_service_id
+
             print('\nlock_service_id() response status code: ', response.get_status_code())
 
         except ApiException as e:
@@ -471,13 +442,12 @@ class TestIamIdentityV1Examples:
         unlock_service_id request example
         """
         try:
-            global svc_id
-
             # begin-unlock_service_id
 
             response = iam_identity_service.unlock_service_id(id=svc_id)
 
             # end-unlock_service_id
+
             print('\nunlock_service_id() response status code: ', response.get_status_code())
 
         except ApiException as e:
@@ -489,13 +459,12 @@ class TestIamIdentityV1Examples:
         delete_service_id request example
         """
         try:
-            global svc_id
-
             # begin-delete_service_id
 
             response = iam_identity_service.delete_service_id(id=svc_id)
 
             # end-delete_service_id
+
             print('\ndelete_service_id() response status code: ', response.get_status_code())
 
         except ApiException as e:
@@ -507,19 +476,18 @@ class TestIamIdentityV1Examples:
         create_profile request example
         """
         try:
-            global profile_id
             print('\ncreate_profile() result:')
             # begin-create_profile
 
             profile = iam_identity_service.create_profile(
                 name="example profile", description="example profile", account_id=account_id
             ).get_result()
-
-            profile_id = profile['id']
-
             print(json.dumps(profile, indent=2))
 
             # end-create_profile
+
+            global profile_id
+            profile_id = profile['id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -530,8 +498,6 @@ class TestIamIdentityV1Examples:
         get_profile request example
         """
         try:
-            global profile_id, profile_etag
-
             print('\nget_profile() result:')
             # begin-get_profile
 
@@ -539,13 +505,12 @@ class TestIamIdentityV1Examples:
                 profile_id=profile_id,
                 include_activity=True,
             )
-
-            profile_etag = response.get_headers()['Etag']
             profile = response.get_result()
-
             print(json.dumps(profile, indent=2))
 
             # end-get_profile
+            global profile_etag
+            profile_etag = response.get_headers()['Etag']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -556,13 +521,10 @@ class TestIamIdentityV1Examples:
         list_profiles request example
         """
         try:
-            global account_id
-
             print('\nlist_profiles() result:')
             # begin-list_profiles
 
             profile_list = iam_identity_service.list_profiles(account_id=account_id, include_history=True).get_result()
-
             print(json.dumps(profile_list, indent=2))
 
             # end-list_profiles
@@ -576,8 +538,6 @@ class TestIamIdentityV1Examples:
         update_profile request example
         """
         try:
-            global profile_id, profile_etag
-
             print('\nupdate_profile() result:')
             # begin-update_profile
 
@@ -598,7 +558,6 @@ class TestIamIdentityV1Examples:
         create_claim_rule request example
         """
         try:
-            global claimRule_id, profile_id
             print('\ncreate_claim_rule() result:')
             # begin-create_claim_rule
 
@@ -606,7 +565,6 @@ class TestIamIdentityV1Examples:
             profile_claim_rule_conditions_model['claim'] = 'blueGroups'
             profile_claim_rule_conditions_model['operator'] = 'EQUALS'
             profile_claim_rule_conditions_model['value'] = '\"cloud-docs-dev\"'
-
             claimRule = iam_identity_service.create_claim_rule(
                 profile_id=profile_id,
                 type='Profile-SAML',
@@ -614,12 +572,12 @@ class TestIamIdentityV1Examples:
                 expiration=43200,
                 conditions=[profile_claim_rule_conditions_model],
             ).get_result()
-
-            claimRule_id = claimRule['id']
-
             print(json.dumps(claimRule, indent=2))
 
             # end-create_claim_rule
+
+            global claimRule_id
+            claimRule_id = claimRule['id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -630,19 +588,17 @@ class TestIamIdentityV1Examples:
         get_claim_rule request example
         """
         try:
-            global profile_id, claimRule_id, claimRule_etag
-
             print('\nget_claim_rule() result:')
             # begin-get_claim_rule
 
             response = iam_identity_service.get_claim_rule(profile_id=profile_id, rule_id=claimRule_id)
-
-            claimRule_etag = response.get_headers()['Etag']
             claimRule = response.get_result()
-
             print(json.dumps(claimRule, indent=2))
 
             # end-get_claim_rule
+
+            global claimRule_etag
+            claimRule_etag = response.get_headers()['Etag']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -653,15 +609,12 @@ class TestIamIdentityV1Examples:
         list_claim_rules request example
         """
         try:
-            global profile_id
-
             print('\nlist_claim_rules() result:')
             # begin-list_claim_rules
 
             claimRule_list = iam_identity_service.list_claim_rules(
                 profile_id=profile_id,
             ).get_result()
-
             print(json.dumps(claimRule_list, indent=2))
 
             # end-list_claim_rules
@@ -675,8 +628,6 @@ class TestIamIdentityV1Examples:
         update_claim_rule request example
         """
         try:
-            global claimRule_id, claimRule_etag, profile_id
-
             print('\nupdate_claim_rule() result:')
             # begin-update_claim_rule
 
@@ -684,7 +635,6 @@ class TestIamIdentityV1Examples:
             profile_claim_rule_conditions_model['claim'] = 'blueGroups'
             profile_claim_rule_conditions_model['operator'] = 'EQUALS'
             profile_claim_rule_conditions_model['value'] = '\"Europe_Group\"'
-
             claimRule = iam_identity_service.update_claim_rule(
                 profile_id=profile_id,
                 rule_id=claimRule_id,
@@ -694,7 +644,6 @@ class TestIamIdentityV1Examples:
                 type='Profile-SAML',
                 realm_name='https://sdk.test.realm/1234',
             ).get_result()
-
             print(json.dumps(claimRule, indent=2))
 
             # end-update_claim_rule
@@ -708,8 +657,6 @@ class TestIamIdentityV1Examples:
         delete_claim_rule request example
         """
         try:
-            global profile_id, claimRule_id
-
             # begin-delete_claim_rule
 
             response = iam_identity_service.delete_claim_rule(profile_id=profile_id, rule_id=claimRule_id)
@@ -726,7 +673,6 @@ class TestIamIdentityV1Examples:
         create_link request example
         """
         try:
-            global profile_id, link_id
             print('\ncreate_link() result:')
             # begin-create_link
 
@@ -736,16 +682,15 @@ class TestIamIdentityV1Examples:
             )
             CreateProfileLinkRequestLink['namespace'] = 'default'
             CreateProfileLinkRequestLink['name'] = 'nice name'
-
             link = iam_identity_service.create_link(
                 profile_id=profile_id, name='nice link', cr_type='ROKS_SA', link=CreateProfileLinkRequestLink
             ).get_result()
-
-            link_id = link['id']
-
             print(json.dumps(link, indent=2))
 
             # end-create_link
+
+            global link_id
+            link_id = link['id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -756,15 +701,11 @@ class TestIamIdentityV1Examples:
         get_link request example
         """
         try:
-            global profile_id, link_id
-
             print('\nget_link() result:')
             # begin-get_link
 
             response = iam_identity_service.get_link(profile_id=profile_id, link_id=link_id)
-
             link = response.get_result()
-
             print(json.dumps(link, indent=2))
 
             # end-get_link
@@ -778,15 +719,12 @@ class TestIamIdentityV1Examples:
         list_links request example
         """
         try:
-            global profile_id
-
             print('\nlist_links() result:')
             # begin-list_links
 
             link_list = iam_identity_service.list_links(
                 profile_id=profile_id,
             ).get_result()
-
             print(json.dumps(link_list, indent=2))
 
             # end-list_links
@@ -800,8 +738,6 @@ class TestIamIdentityV1Examples:
         delete_link request example
         """
         try:
-            global profile_id, link_id
-
             # begin-delete_link
 
             response = iam_identity_service.delete_link(profile_id=profile_id, link_id=link_id)
@@ -818,14 +754,14 @@ class TestIamIdentityV1Examples:
         get_profile_identities request example
         """
         try:
-            global profile_id, profile_identity_etag
-
             # begin-get_profile_identities
 
             response = iam_identity_service.get_profile_identities(profile_id=profile_id)
 
             # end-get_profile_identities
+
             print('\nget_profile_identities() response status code: ', response.get_status_code())
+            global profile_identity_etag
             profile_identity_etag = response.get_headers()['Etag']
 
         except ApiException as e:
@@ -837,20 +773,17 @@ class TestIamIdentityV1Examples:
         set_profile_identities request example
         """
         try:
-            global profile_id, profile_identity_etag
-
             # begin-set_profile_identities
             accounts = [account_id]
             profileIdentity = ProfileIdentityRequest(
                 identifier=iam_id, accounts=accounts, type="user", description="Identity description"
             )
             profile_identities_input = [profileIdentity]
-
             response = iam_identity_service.set_profile_identities(
                 profile_id=profile_id, if_match=profile_identity_etag, identities=profile_identities_input
             )
-
             # end-set_profile_identities
+
             print('\nset_profile_identities() response status code: ', response.get_status_code())
 
         except ApiException as e:
@@ -862,9 +795,8 @@ class TestIamIdentityV1Examples:
         set_profile_identity request example
         """
         try:
-            global profile_id
-
             # begin-set_profile_identity
+
             accounts = [account_id]
             response = iam_identity_service.set_profile_identity(
                 profile_id=profile_id,
@@ -876,6 +808,7 @@ class TestIamIdentityV1Examples:
             )
 
             # end-set_profile_identity
+
             print('\nset_profile_identities() response status code: ', response.get_status_code())
         except ApiException as e:
             pytest.fail(str(e))
@@ -886,8 +819,6 @@ class TestIamIdentityV1Examples:
         get_profile_identity request example
         """
         try:
-            global profile_id
-
             # begin-get_profile_identity
 
             response = iam_identity_service.get_profile_identity(
@@ -895,6 +826,7 @@ class TestIamIdentityV1Examples:
             )
 
             # end-get_profile_identity
+
             print('\nget_profile_identities() response status code: ', response.get_status_code())
         except ApiException as e:
             pytest.fail(str(e))
@@ -905,8 +837,6 @@ class TestIamIdentityV1Examples:
         delete_profile_identity request example
         """
         try:
-            global profile_id
-
             # begin-delete_profile_identity
 
             response = iam_identity_service.delete_profile_identity(
@@ -914,6 +844,7 @@ class TestIamIdentityV1Examples:
             )
 
             # end-delete_profile_identity
+
             print('\ndelete_profile_identity() response status code: ', response.get_status_code())
         except ApiException as e:
             pytest.fail(str(e))
@@ -924,13 +855,12 @@ class TestIamIdentityV1Examples:
         delete_profile request example
         """
         try:
-            global profile_id
-
             # begin-delete_profile
 
             response = iam_identity_service.delete_profile(profile_id=profile_id)
 
             # end-delete_profile
+
             print('\ndelete_profile() response status code: ', response.get_status_code())
 
         except ApiException as e:
@@ -942,18 +872,17 @@ class TestIamIdentityV1Examples:
         get_account_settings request example
         """
         try:
-            global account_settings_etag
-
             print('\nget_account_settings() result:')
             # begin-getAccountSettings
 
             response = iam_identity_service.get_account_settings(account_id=account_id)
             settings = response.get_result()
-            account_settings_etag = response.get_headers()['Etag']
-
             print(json.dumps(settings, indent=2))
 
             # end-getAccountSettings
+
+            global account_settings_etag
+            account_settings_etag = response.get_headers()['Etag']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -964,15 +893,12 @@ class TestIamIdentityV1Examples:
         update_account_settings request example
         """
         try:
-            global account_settings_etag
-
             print('\nupdate_account_settings() result:')
             # begin-updateAccountSettings
 
             account_settings_user_mfa = {}
             account_settings_user_mfa['iam_id'] = iam_id_member
             account_settings_user_mfa['mfa'] = 'NONE'
-
             account_settings_response = iam_identity_service.update_account_settings(
                 account_id=account_id,
                 if_match=account_settings_etag,
@@ -986,7 +912,6 @@ class TestIamIdentityV1Examples:
                 system_access_token_expiration_in_seconds='3600',
                 system_refresh_token_expiration_in_seconds='259200',
             ).get_result()
-
             print(json.dumps(account_settings_response, indent=2))
 
             # end-updateAccountSettings
@@ -1008,7 +933,6 @@ class TestIamIdentityV1Examples:
                 type="inactive",
                 duration="120",
             ).get_result()
-
             print(json.dumps(create_report_response, indent=2))
 
             # end-create_report
@@ -1028,7 +952,6 @@ class TestIamIdentityV1Examples:
             get_report_response = iam_identity_service.get_report(
                 account_id=account_id, reference="latest"
             ).get_result()
-
             print(json.dumps(get_report_response, indent=2))
 
             # end-get_report
@@ -1042,18 +965,17 @@ class TestIamIdentityV1Examples:
         create_mfa_report request example
         """
         try:
-            global report_reference_mfa
             print('\ncreate_mfa_report() result:')
             # begin-create_mfa_report
 
             create_report_response = iam_identity_service.create_mfa_report(
                 account_id=account_id, type="mfa_status"
             ).get_result()
-
             print(json.dumps(create_report_response, indent=2))
-            report_reference_mfa = create_report_response['reference']
 
             # end-create_mfa_report
+            global report_reference_mfa
+            report_reference_mfa = create_report_response['reference']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1070,7 +992,6 @@ class TestIamIdentityV1Examples:
             get_report_response = iam_identity_service.get_mfa_report(
                 account_id=account_id, reference=report_reference_mfa
             ).get_result()
-
             print(json.dumps(get_report_response, indent=2))
 
             # end-get_mfa_report
@@ -1090,7 +1011,6 @@ class TestIamIdentityV1Examples:
             get_mfa_status_response = iam_identity_service.get_mfa_status(
                 account_id=account_id, iam_id=iam_id
             ).get_result()
-
             print(json.dumps(get_mfa_status_response, indent=2))
 
             # end-get_mfa_status
@@ -1106,6 +1026,7 @@ class TestIamIdentityV1Examples:
         try:
             print('\ncreate_profile_template() result:')
             # begin-create_profile_template
+
             profile_claim_rule_conditions = {}
             profile_claim_rule_conditions['claim'] = 'blueGroups'
             profile_claim_rule_conditions['operator'] = 'EQUALS'
@@ -1129,15 +1050,15 @@ class TestIamIdentityV1Examples:
                 account_id=enterprise_account_id,
                 profile=profile,
             )
-
             profile_template = create_response.get_result()
             print('\ncreate_profile_template() response: ', json.dumps(profile_template, indent=2))
 
+            # end-create_profile_template
             global profile_template_id
             profile_template_id = profile_template['id']
             global profile_template_version
             profile_template_version = profile_template['version']
-            # end-create_profile_template
+
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1148,21 +1069,19 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nget_profile_template() result:')
-            global profile_template_id
-            global profile_template_version
-
             # begin-get_profile_template_version
+
             get_response = iam_identity_service.get_profile_template_version(
                 template_id=profile_template_id, version=str(profile_template_version)
             )
-
             profile_template = get_response.get_result()
             print('\nget_profile_template response: ', json.dumps(profile_template, indent=2))
+
+            # end-get_profile_template_version
 
             global profile_template_etag
             profile_template_etag = get_response.get_headers()['Etag']
             profile_template_etag is not None
-            # end-get_profile_template_version
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1176,9 +1095,9 @@ class TestIamIdentityV1Examples:
             # begin-list_profile_templates
 
             list_response = iam_identity_service.list_profile_templates(account_id=enterprise_account_id)
-
             profile_template_list = list_response.get_result()
             print('\nlist_profile_templates response: ', json.dumps(profile_template_list, indent=2))
+
             # end-list_profile_templates
         except ApiException as e:
             pytest.fail(str(e))
@@ -1190,11 +1109,8 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nupdate_profile_template() result:')
-            global profile_template_id
-            global profile_template_version
-            global profile_template_etag
-
             # begin-update_profile_template_version
+
             update_response = iam_identity_service.update_profile_template_version(
                 account_id=enterprise_account_id,
                 template_id=profile_template_id,
@@ -1203,12 +1119,13 @@ class TestIamIdentityV1Examples:
                 name='Example-Profile-Template',
                 description='IAM enterprise trusted profile template example - updated',
             )
-
             profile_template = update_response.get_result()
             print('\nupdate_profile_template() response: ', json.dumps(profile_template, indent=2))
 
-            profile_template_etag = update_response.get_headers()['Etag']
             # end-update_profile_template_version
+            global profile_template_etag
+            profile_template_etag = update_response.get_headers()['Etag']
+
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1219,19 +1136,19 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nupdate_profile_template() result:')
-            global profile_template_id
-            global profile_template_version
-
             # begin-commit_profile_template
+
             commit_response = iam_identity_service.commit_profile_template(
                 template_id=profile_template_id, version=str(profile_template_version)
             )
+
             # end-commit_profile_template
 
             """
             create_trusted_profile_assignment request example
             """
             # begin-create_trusted_profile_assignment
+
             assign_response = iam_identity_service.create_trusted_profile_assignment(
                 template_id=profile_template_id,
                 template_version=profile_template_version,
@@ -1240,11 +1157,13 @@ class TestIamIdentityV1Examples:
             )
             assignment = assign_response.get_result()
             print('\ncreate_trusted_profile_assignment() response: ', json.dumps(assignment, indent=2))
+
+            # end-create_trusted_profile_assignment
+
             global profile_template_assignment_id
             profile_template_assignment_id = assignment['id']
             global profile_template_assignment_etag
             profile_template_assignment_etag = assign_response.get_headers()['Etag']
-            # end-create_trusted_profile_assignment
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1255,13 +1174,14 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nget_trusted_profile_assignment() result:')
-            global profile_template_assignment_id
-
             # begin-get_trusted_profile_assignment
+
             response = iam_identity_service.get_trusted_profile_assignment(assignment_id=profile_template_assignment_id)
             assignment = response.get_result()
             print('\nget_trusted_profile_assignment() response: ', json.dumps(assignment, indent=2))
+
             # end-get_trusted_profile_assignment
+
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1272,14 +1192,14 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nlist_profile_template_assignments() result:')
-            global profile_template_id
-
             # begin-list_trusted_profile_assignments
+
             list_response = iam_identity_service.list_trusted_profile_assignments(
                 account_id=enterprise_account_id, template_id=profile_template_id
             )
             assignment_list = list_response.get_result()
             print('\nlist_trusted_profile_assignments() response: ', json.dumps(assignment_list, indent=2))
+
             # end-list_trusted_profile_assignments
         except ApiException as e:
             pytest.fail(str(e))
@@ -1291,9 +1211,8 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\ncreate_profile_template_version() result:')
-            global profile_template_id
-
             # begin-create_profile_template_version
+
             profile_claim_rule_conditions = {}
             profile_claim_rule_conditions['claim'] = 'blueGroups'
             profile_claim_rule_conditions['operator'] = 'EQUALS'
@@ -1325,13 +1244,12 @@ class TestIamIdentityV1Examples:
                 account_id=enterprise_account_id,
                 profile=profile,
             )
-
             profile_template = create_response.get_result()
             print('\ncreate_profile_template_version() response: ', json.dumps(profile_template, indent=2))
 
+            # end-create_profile_template_version
             global profile_template_version
             profile_template_version = profile_template['version']
-            # end-create_profile_template_version
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1342,13 +1260,13 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nget_latest_profile_template_version() result:')
-            global profile_template_id
-
             # begin-get_latest_profile_template_version
+
             get_response = iam_identity_service.get_latest_profile_template_version(template_id=profile_template_id)
 
             profile_template = get_response.get_result()
             print('\nget_latest_profile_template_version response: ', json.dumps(profile_template, indent=2))
+
             # end-get_latest_profile_template_version
         except ApiException as e:
             pytest.fail(str(e))
@@ -1360,12 +1278,12 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nlist_profile_template_versions() result:')
-            global profile_template_id
-
             # begin-list_versions_of_profile_template
+
             list_response = iam_identity_service.list_versions_of_profile_template(template_id=profile_template_id)
             profile_template_list = list_response.get_result()
             print('\nlist_profile_template_versions response: ', json.dumps(profile_template_list, indent=2))
+
             # end-list_versions_of_profile_template
         except ApiException as e:
             pytest.fail(str(e))
@@ -1377,18 +1295,12 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nupdate_trusted_profile_assignment() result:')
-            global profile_template_id
-            global profile_template_version
-            global profile_template_assignment_id
-            global profile_template_assignment_etag
-
             commit_response = iam_identity_service.commit_profile_template(
                 template_id=profile_template_id, version=str(profile_template_version)
             )
-
             self.waitUntilTrustedProfileAssignmentFinished(iam_identity_service, profile_template_assignment_id)
-
             # begin-update_trusted_profile_assignment
+
             assign_response = iam_identity_service.update_trusted_profile_assignment(
                 assignment_id=profile_template_assignment_id,
                 template_version=profile_template_version,
@@ -1396,8 +1308,12 @@ class TestIamIdentityV1Examples:
             )
             assignment = assign_response.get_result()
             print('\nupdate_profile_template_assignment response: ', json.dumps(assignment, indent=2))
-            profile_template_assignment_etag = assign_response.get_headers()['Etag']
+
             # end-update_trusted_profile_assignment
+
+            global profile_template_assignment_etag
+            profile_template_assignment_etag = assign_response.get_headers()['Etag']
+
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1408,14 +1324,13 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\ndelete_trusted_profile_assignment() result:')
-            global profile_template_assignment_id
-
             self.waitUntilTrustedProfileAssignmentFinished(iam_identity_service, profile_template_assignment_id)
-
             # begin-delete_trusted_profile_assignment
+
             delete_response = iam_identity_service.delete_trusted_profile_assignment(
                 assignment_id=profile_template_assignment_id
             )
+
             # end-delete_trusted_profile_assignment
         except ApiException as e:
             pytest.fail(str(e))
@@ -1427,13 +1342,12 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\ndelete_profile_template_version() result:')
-            global profile_template_id
-            global profile_template_assignment_id
-
             # begin-delete_profile_template_version
+
             delete_response = iam_identity_service.delete_profile_template_version(
                 template_id=profile_template_id, version='1'
             )
+
             # end-delete_profile_template_version
         except ApiException as e:
             pytest.fail(str(e))
@@ -1445,14 +1359,13 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\ndelete_all_versions_of_profile_template() result:')
-            global profile_template_id
-
             self.waitUntilTrustedProfileAssignmentFinished(iam_identity_service, profile_template_assignment_id)
-
             # begin-delete_all_versions_of_profile_template
+
             delete_response = iam_identity_service.delete_all_versions_of_profile_template(
                 template_id=profile_template_id
             )
+
             # end-delete_all_versions_of_profile_template
         except ApiException as e:
             pytest.fail(str(e))
@@ -1465,6 +1378,7 @@ class TestIamIdentityV1Examples:
         try:
             print('\ncreate_account_settings_template() result:')
             # begin-create_account_settings_template
+
             account_settings = {}
             account_settings['mfa'] = 'LEVEL1'
             account_settings['system_access_token_expiration_in_seconds'] = 3000
@@ -1475,15 +1389,15 @@ class TestIamIdentityV1Examples:
                 account_id=enterprise_account_id,
                 account_settings=account_settings,
             )
-
             account_settings_template = create_response.get_result()
             print('\ncreate_account_settings_template() response: ', json.dumps(account_settings_template, indent=2))
 
-            global account_settings_template_id
-            account_settings_template_id = account_settings_template['id']
-            global account_settings_template_version
-            account_settings_template_version = account_settings_template['version']
             # end-create_account_settings_template
+            global account_settings_template_id
+            global account_settings_template_version
+            account_settings_template_id = account_settings_template['id']
+            account_settings_template_version = account_settings_template['version']
+
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1494,10 +1408,8 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nget_account_settings_template_version() result:')
-            global account_settings_template_id
-            global account_settings_template_version
-
             # begin-get_account_settings_template_version
+
             get_response = iam_identity_service.get_account_settings_template_version(
                 template_id=account_settings_template_id, version=str(account_settings_template_version)
             )
@@ -1505,9 +1417,10 @@ class TestIamIdentityV1Examples:
             account_settings_template = get_response.get_result()
             print('\nget_account_settings_template response: ', json.dumps(account_settings_template, indent=2))
 
+            # end-get_account_settings_template_version
+
             global account_settings_template_etag
             account_settings_template_etag = get_response.get_headers()['Etag']
-            # end-get_account_settings_template_version
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1518,12 +1431,12 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nlist_account_settings_templates() result:')
-
             # begin-list_account_settings_templates
-            list_response = iam_identity_service.list_account_settings_templates(account_id=enterprise_account_id)
 
+            list_response = iam_identity_service.list_account_settings_templates(account_id=enterprise_account_id)
             account_settings_template_list = list_response.get_result()
             print('\nlist_account_settings_templates response: ', json.dumps(account_settings_template_list, indent=2))
+
             # end-list_account_settings_templates
         except ApiException as e:
             pytest.fail(str(e))
@@ -1535,10 +1448,6 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nupdate_account_settings_template_version() result:')
-
-            global account_settings_template_id
-            global account_settings_template_version
-            global account_settings_template_etag
             # begin-update_account_settings_template_version
 
             account_settings = {}
@@ -1554,12 +1463,13 @@ class TestIamIdentityV1Examples:
                 description='IAM enterprise account settings template example - updated',
                 account_settings=account_settings,
             )
-
             account_settings_template = update_response.get_result()
             print('\nupdate_account_settings_template() response: ', json.dumps(account_settings_template, indent=2))
 
-            account_settings_template_etag = update_response.get_headers()['Etag']
             # end-update_account_settings_template_version
+            global account_settings_template_etag
+            account_settings_template_etag = update_response.get_headers()['Etag']
+
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1570,19 +1480,20 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\ncommit_account_settings_template() result:')
-
-            global account_settings_template_id
-            global account_settings_template_version
             # begin-commit_account_settings_template
+
             commit_response = iam_identity_service.commit_account_settings_template(
                 template_id=account_settings_template_id, version=str(account_settings_template_version)
             )
+
             # end-commit_account_settings_template
+
             """
             create_account_settings_assignment request example
             """
             print('\ncreate_account_settings_assignment() result:')
             # begin-create_account_settings_assignment
+
             assign_response = iam_identity_service.create_account_settings_assignment(
                 template_id=account_settings_template_id,
                 template_version=account_settings_template_version,
@@ -1591,11 +1502,13 @@ class TestIamIdentityV1Examples:
             )
             assignment = assign_response.get_result()
             print('\ncreate_account_settings_assignment() response: ', json.dumps(assignment, indent=2))
+
+            # end-create_account_settings_assignment
+
             global account_settings_template_assignment_id
             account_settings_template_assignment_id = assignment['id']
             global account_settings_template_assignment_etag
             account_settings_template_assignment_etag = assign_response.get_headers()['Etag']
-            # end-create_account_settings_assignment
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1606,8 +1519,6 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nlist_account_settings_assignments() result:')
-
-            global account_settings_template_id
             # begin-list_account_settings_assignments
 
             list_response = iam_identity_service.list_account_settings_assignments(
@@ -1615,6 +1526,7 @@ class TestIamIdentityV1Examples:
             )
             assignment_list = list_response.get_result()
             print('\ncreate_account_settings_assignment() response: ', json.dumps(assignment_list, indent=2))
+
             # end-list_account_settings_assignments
         except ApiException as e:
             pytest.fail(str(e))
@@ -1626,12 +1538,14 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nget_account_settings_assignment() result:')
-            global account_settings_template_assignment_id
-
             # begin-get_account_settings_assignment
-            response = service.get_account_settings_assignment(assignment_id=account_settings_template_assignment_id)
+
+            response = iam_identity_service.get_account_settings_assignment(
+                assignment_id=account_settings_template_assignment_id
+            )
             assignment = response.get_result()
             print('\nget_latest_account_settings_template_version response: ', json.dumps(assignment, indent=2))
+
             # end-get_account_settings_assignment
         except ApiException as e:
             pytest.fail(str(e))
@@ -1643,8 +1557,6 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\ncreate_account_settings_template_version() result:')
-
-            global account_settings_template_id
             # begin-create_account_settings_template_version
 
             account_settings = {}
@@ -1660,16 +1572,16 @@ class TestIamIdentityV1Examples:
                 account_id=enterprise_account_id,
                 account_settings=account_settings,
             )
-
             account_settings_template = create_response.get_result()
             print(
                 '\ncreate_account_settings_template_version() response: ',
                 json.dumps(account_settings_template, indent=2),
             )
 
+            # end-create_account_settings_template_version
+
             global account_settings_template_version
             account_settings_template_version = account_settings_template['version']
-            # end-create_account_settings_template_version
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1680,9 +1592,8 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nget_latest_account_settings_template_version() result:')
-
-            global account_settings_template_id
             # begin-get_latest_account_settings_template_version
+
             get_response = iam_identity_service.get_latest_account_settings_template_version(
                 template_id=account_settings_template_id
             )
@@ -1691,6 +1602,7 @@ class TestIamIdentityV1Examples:
                 '\nget_latest_account_settings_template_version response: ',
                 json.dumps(account_settings_template, indent=2),
             )
+
             # end-get_latest_account_settings_template_version
         except ApiException as e:
             pytest.fail(str(e))
@@ -1702,9 +1614,8 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nlist_versions_of_account_settings_template() result:')
-
-            global account_settings_template_id
             # begin-list_versions_of_account_settings_template
+
             list_response = iam_identity_service.list_versions_of_account_settings_template(
                 template_id=account_settings_template_id
             )
@@ -1713,6 +1624,7 @@ class TestIamIdentityV1Examples:
                 '\nlist_account_settings_template_versions response: ',
                 json.dumps(account_settings_template_list, indent=2),
             )
+
             # end-list_versions_of_account_settings_template
         except ApiException as e:
             pytest.fail(str(e))
@@ -1724,11 +1636,6 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nupdate_account_settings_assignment() result:')
-
-            global account_settings_template_id
-            global account_settings_template_version
-            global account_settings_template_assignment_id
-            global account_settings_template_assignment_etag
             commit_response = iam_identity_service.commit_account_settings_template(
                 template_id=account_settings_template_id, version=str(account_settings_template_version)
             )
@@ -1738,6 +1645,7 @@ class TestIamIdentityV1Examples:
             )
 
             # begin-update_account_settings_assignment
+
             assign_response = iam_identity_service.update_account_settings_assignment(
                 assignment_id=account_settings_template_assignment_id,
                 template_version=account_settings_template_version,
@@ -1745,8 +1653,10 @@ class TestIamIdentityV1Examples:
             )
             assignment = assign_response.get_result()
             print('\nupdate_account_settings_template_assignment response: ', json.dumps(assignment, indent=2))
-            account_settings_template_assignment_etag = assign_response.get_headers()['Etag']
+
             # end-update_account_settings_assignment
+            global account_settings_template_assignment_etag
+            account_settings_template_assignment_etag = assign_response.get_headers()['Etag']
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1757,15 +1667,16 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\ndelete_account_settings_assignment() result:')
-            global account_settings_template_assignment_id
-
             self.waitUntilAccountSettingsAssignmentFinished(
                 iam_identity_service, account_settings_template_assignment_id
             )
+
             # begin-delete_account_settings_assignment
+
             delete_response = iam_identity_service.delete_account_settings_assignment(
                 assignment_id=account_settings_template_assignment_id
             )
+
             # end-delete_account_settings_assignment
         except ApiException as e:
             pytest.fail(str(e))
@@ -1777,13 +1688,12 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\ndelete_account_settings_template_version() result:')
-            global account_settings_template_assignment_id
-            global account_settings_template_assignment_id
             # begin-delete_account_settings_template_version
 
             delete_response = iam_identity_service.delete_account_settings_template_version(
                 template_id=account_settings_template_id, version='1'
             )
+
             # end-delete_account_settings_template_version
         except ApiException as e:
             pytest.fail(str(e))
@@ -1795,14 +1705,17 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\ndelete_all_versions_of_account_settings_template() result:')
-            global account_settings_template_id
+
             self.waitUntilAccountSettingsAssignmentFinished(
                 iam_identity_service, account_settings_template_assignment_id
             )
+
             # begin-delete_all_versions_of_account_settings_template
+
             delete_response = iam_identity_service.delete_all_versions_of_account_settings_template(
                 template_id=account_settings_template_id
             )
+
             # end-delete_all_versions_of_account_settings_template
         except ApiException as e:
             pytest.fail(str(e))

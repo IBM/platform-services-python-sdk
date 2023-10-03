@@ -43,6 +43,8 @@ config_file = 'enterprise_billing_units.env'
 enterprise_billing_units_service = None
 
 config = None
+enterprise_id = None
+billing_unit_id = None
 
 
 ##############################################################################
@@ -87,7 +89,6 @@ class TestEnterpriseBillingUnitsV1Examples:
         get_billing_unit request example
         """
         try:
-            global billing_unit_id
             print('\nget_billing_unit() result:')
 
             # begin-get_billing_unit
@@ -109,7 +110,6 @@ class TestEnterpriseBillingUnitsV1Examples:
         list_billing_units request example
         """
         try:
-            global enterprise_id
             print('\nlist_billing_units() result:')
             # begin-list_billing_units
 
@@ -137,7 +137,6 @@ class TestEnterpriseBillingUnitsV1Examples:
         list_billing_options request example
         """
         try:
-            global billing_unit_id
             print('\nlist_billing_options() result:')
             # begin-list_billing_options
 
@@ -165,7 +164,6 @@ class TestEnterpriseBillingUnitsV1Examples:
         get_credit_pools request example
         """
         try:
-            global billing_unit_id
             print('\nget_credit_pools() result:')
 
             # begin-get_credit_pools

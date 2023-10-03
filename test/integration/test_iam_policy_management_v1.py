@@ -529,7 +529,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert foundTestPolicy
 
     def test_14_list_v2_roles(self):
-
         response = self.service.list_roles(account_id=self.testCustomRole.account_id, service_group_id="IAM")
         assert response is not None
         assert response.get_status_code() == 200
@@ -557,7 +556,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert testServiceRolePresent
 
     def test_15_create_policy_template(self):
-
         response = self.service.create_policy_template(
             name=self.testTemplateName,
             account_id=self.testAccountId,
@@ -642,7 +640,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert foundTestTemplate
 
     def test_19_create_policy_template_version(self):
-
         self.testV2PolicyControl.grant.roles[0].role_id = self.testViewerRoleCrn
         response = self.service.create_policy_template_version(
             policy_template_id=self.testTemplateId,
@@ -708,7 +705,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             )
 
     def test_22_delete_policy_template_version(self):
-
         response = self.service.delete_policy_template_version(
             policy_template_id=self.testTemplateId,
             version=self.testNewTemplateVersion,
@@ -716,7 +712,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert response.get_status_code() == 204
 
     def test_23_list_policy_template_versions(self):
-
         response = self.service.list_policy_template_versions(
             policy_template_id=self.testTemplateId,
         )
@@ -752,7 +747,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         self.__class__.testAssignmentId = result.assignments[0].id
 
     def test_25_get_policy_assignment(self):
-
         response = self.service.get_policy_assignment(
             assignment_id=self.testAssignmentId,
         )

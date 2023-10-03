@@ -3,7 +3,7 @@
 # example: "make setup"
 
 PYTHON=python
-LINT_DIRS=ibm_platform_services test examples
+LINT_DIRS=ibm_platform_services test/unit test/integration examples
 
 setup: deps dev_deps install_project
 

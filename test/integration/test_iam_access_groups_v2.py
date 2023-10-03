@@ -17,11 +17,9 @@
 Integration Tests for IamAccessGroupsV2
 """
 
-from ibm_cloud_sdk_core import *
 import os
 import time
 import pytest
-import os
 import os.path
 from datetime import datetime, timezone
 import random

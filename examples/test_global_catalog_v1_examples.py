@@ -131,7 +131,6 @@ class TestGlobalCatalogV1Examples:
         """
         get_catalog_entry request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -155,7 +154,6 @@ class TestGlobalCatalogV1Examples:
         """
         update_catalog_entry request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -234,7 +232,6 @@ class TestGlobalCatalogV1Examples:
         """
         get_child_objects request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -261,7 +258,6 @@ class TestGlobalCatalogV1Examples:
         """
         restore_catalog_entry request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -283,7 +279,6 @@ class TestGlobalCatalogV1Examples:
         """
         get_visibility request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -306,7 +301,6 @@ class TestGlobalCatalogV1Examples:
         """
         update_visibility request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -329,7 +323,6 @@ class TestGlobalCatalogV1Examples:
         """
         get_pricing request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -352,7 +345,6 @@ class TestGlobalCatalogV1Examples:
         """
         get_audit_logs request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -377,7 +369,6 @@ class TestGlobalCatalogV1Examples:
         """
         upload_artifact request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -404,7 +395,6 @@ class TestGlobalCatalogV1Examples:
         """
         get_artifact request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -430,7 +420,6 @@ class TestGlobalCatalogV1Examples:
         """
         list_artifacts request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -451,7 +440,6 @@ class TestGlobalCatalogV1Examples:
         """
         delete_artifact request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:
@@ -474,7 +462,6 @@ class TestGlobalCatalogV1Examples:
         """
         delete_catalog_entry request example
         """
-        global catalog_entry_id
         assert catalog_entry_id is not None
 
         try:

@@ -655,7 +655,7 @@ class TestContextBasedRestrictionsV1:
         operations_list = response.get_result()
         assert operations_list is not None
         for api_type in operations_list['api_types']:
-            assert api_type is not ""
+            assert api_type != ""
 
     @needscredentials
     def test_list_available_service_operations_with_service_group(self):
@@ -668,7 +668,7 @@ class TestContextBasedRestrictionsV1:
         operations_list = response.get_result()
         assert operations_list is not None
         for api_type in operations_list['api_types']:
-            assert api_type is not ""
+            assert api_type != ""
 
     @needscredentials
     def test_list_available_service_operations_with_resource_type(self):
@@ -682,7 +682,7 @@ class TestContextBasedRestrictionsV1:
         operations_list = response.get_result()
         assert operations_list is not None
         for api_type in operations_list['api_types']:
-            assert api_type is not ""
+            assert api_type != ""
 
     @needscredentials
     def test_list_available_service_operations_with_mutual_exclusion_error(self):

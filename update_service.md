@@ -177,15 +177,9 @@ see [Running Integration Tests/Examples](#running-integration-testsexamples).
 
 ### 8. Open PR with your changes
 After completing the previous steps to update the service, unit test, integration test, and working examples
-code, commit your changes.  This is also a good time to make sure that the entire project builds and tests
-cleanly.
+code, commit your changes.
 Example:  
 ```sh
-cd <project-root>
-npm ci
-npm run all
-# Fix any remaining lint-check errors with "npm run lint-fix"
-
 git add .
 git commit -s -m "feat(Example Service): re-gen service after recent API changes"
 git push
@@ -227,17 +221,17 @@ make all
 ```sh
 cd <project-root>
 
-pytest test/integration/test_example_service_v1.py
+python -m pytest test/integration/test_example_service_v1.py
 ```
-You should see 100% clean test results from the `pytest` command above, with no tests being skipped.
+You should see 100% clean test results from the command above, with no tests being skipped.
 
 4. To run the examples code for a service, follow these steps:  
 ```sh
 cd <project-root>
 
-pytest examples/test_example_service_v1_examples.py
+python -m pytest examples/test_example_service_v1_examples.py
 ```
-You should see 100% clean results from the `pytest` command above, with no tests being skipped.
+You should see 100% clean results from the command above, with no tests being skipped.
 
 
 ### Updating Integration Tests/Examples

@@ -309,8 +309,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_create_offering(self):
-        global offering_id
-        global created_offering_ids
         assert catalog_id is not None
 
         for i in range(2):
@@ -326,6 +324,7 @@ class TestCatalogManagementV1:
             assert offering is not None
             assert offering['id'] is not None
             print('offering id: ' + offering['id'])
+            global offering_id
             if offering_id is None:
                 offering_id = offering['id']
 
@@ -837,8 +836,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_create_object(self):
-        global object_id
-        global created_object_ids
         assert catalog_id is not None
 
         for i in range(2):
@@ -868,6 +865,7 @@ class TestCatalogManagementV1:
             assert catalog_object is not None
             assert catalog_object['id'] is not None
 
+            global object_id
             if object_id is None:
                 object_id = catalog_object['id']
 

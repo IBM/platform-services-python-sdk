@@ -49,6 +49,10 @@ account_id = None
 resource_group_id = None
 org_id = None
 billing_month = None
+cos_bucket = None
+cos_location = None
+snapshot_date_from = None
+snapshot_date_to = None
 
 ##############################################################################
 # Start of Examples for Service: UsageReportsV4
@@ -124,8 +128,6 @@ class TestUsageReportsV4Examples:
         get_account_summary request example
         """
         try:
-            global account_id, billing_month
-
             print('\nget_account_summary() result:')
             # begin-get_account_summary
 
@@ -146,8 +148,6 @@ class TestUsageReportsV4Examples:
         get_account_usage request example
         """
         try:
-            global account_id, billing_month
-
             print('\nget_account_usage() result:')
             # begin-get_account_usage
 
@@ -168,8 +168,6 @@ class TestUsageReportsV4Examples:
         get_resource_group_usage request example
         """
         try:
-            global account_id, resource_group_id, billing_month
-
             print('\nget_resource_group_usage() result:')
             # begin-get_resource_group_usage
 
@@ -190,8 +188,6 @@ class TestUsageReportsV4Examples:
         get_org_usage request example
         """
         try:
-            global account_id, org_id, billing_month
-
             print('\nget_org_usage() result:')
             # begin-get_org_usage
 
@@ -212,8 +208,6 @@ class TestUsageReportsV4Examples:
         get_resource_usage_account request example
         """
         try:
-            global account_id, billing_month
-
             print('\nget_resource_usage_account() result:')
             # begin-get_resource_usage_account
 
@@ -234,8 +228,6 @@ class TestUsageReportsV4Examples:
         get_resource_usage_resource_group request example
         """
         try:
-            global account_id, resource_group_id, billing_month
-
             print('\nget_resource_usage_resource_group() result:')
             # begin-get_resource_usage_resource_group
 
@@ -256,8 +248,6 @@ class TestUsageReportsV4Examples:
         get_resource_usage_org request example
         """
         try:
-            global account_id, org_id, billing_month
-
             print('\nget_resource_usage_org() result:')
             # begin-get_resource_usage_org
 
@@ -278,8 +268,6 @@ class TestUsageReportsV4Examples:
         create_reports_snapshot_config request example
         """
         try:
-            global account_id, cos_bucket, cos_location
-
             print('\ncreate_reports_snapshot_config() result:')
             # begin-create_reports_snapshot_config
 
@@ -304,8 +292,6 @@ class TestUsageReportsV4Examples:
         get_reports_snapshot_config request example
         """
         try:
-            global account_id
-
             print('\nget_reports_snapshot_config() result:')
             # begin-get_reports_snapshot_config
 
@@ -327,8 +313,6 @@ class TestUsageReportsV4Examples:
         update_reports_snapshot_config request example
         """
         try:
-            global account_id
-
             print('\nupdate_reports_snapshot_config() result:')
             # begin-update_reports_snapshot_config
 
@@ -350,8 +334,6 @@ class TestUsageReportsV4Examples:
         get_reports_snapshot request example
         """
         try:
-            global account_id, billing_month, snapshot_date_from, snapshot_date_to
-
             print('\nget_reports_snapshot() result:')
             # begin-get_reports_snapshot
 
@@ -376,8 +358,6 @@ class TestUsageReportsV4Examples:
         delete_reports_snapshot_config request example
         """
         try:
-            global account_id
-
             # begin-delete_reports_snapshot_config
 
             response = usage_reports_service.delete_reports_snapshot_config(

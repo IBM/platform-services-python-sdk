@@ -244,7 +244,6 @@ class TestUserManagementV1(unittest.TestCase):
         assert response.get_status_code() == 204
 
     def test_07_remove_user(self):
-        global REMOVED_USERID
         assert REMOVED_USERID is not None
 
         response = self.user_management_service.remove_user(account_id=self.ACCOUNT_ID, iam_id=REMOVED_USERID)
