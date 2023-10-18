@@ -826,6 +826,8 @@ class UsageReportsV4(BaseService):
         *,
         date_from: int = None,
         date_to: int = None,
+        limit: int = None,
+        start: str = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -842,6 +844,10 @@ class UsageReportsV4(BaseService):
                billing report snapshot is requested.
         :param int date_to: (optional) Timestamp in milliseconds for which billing
                report snapshot is requested.
+        :param int limit: (optional) Number of usage records returned. The default
+               value is 30. Maximum value is 200.
+        :param str start: (optional) The offset from which the records must be
+               fetched. Offset information is included in the response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `SnapshotList` object
@@ -864,6 +870,8 @@ class UsageReportsV4(BaseService):
             'month': month,
             'date_from': date_from,
             'date_to': date_to,
+            '_limit': limit,
+            '_start': start,
         }
 
         if 'headers' in kwargs:
@@ -3151,19 +3159,23 @@ class SnapshotListNext:
     Reference to the next page of the search query if any.
 
     :attr str href: (optional)
+    :attr str offset: (optional)
     """
 
     def __init__(
         self,
         *,
         href: str = None,
+        offset: str = None,
     ) -> None:
         """
         Initialize a SnapshotListNext object.
 
         :param str href: (optional)
+        :param str offset: (optional)
         """
         self.href = href
+        self.offset = offset
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SnapshotListNext':
@@ -3171,6 +3183,8 @@ class SnapshotListNext:
         args = {}
         if 'href' in _dict:
             args['href'] = _dict.get('href')
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
         return cls(**args)
 
     @classmethod
@@ -3183,6 +3197,8 @@ class SnapshotListNext:
         _dict = {}
         if hasattr(self, 'href') and self.href is not None:
             _dict['href'] = self.href
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
         return _dict
 
     def _to_dict(self):
@@ -4689,6 +4705,91 @@ class GetResourceUsageOrgPager:
         Returns all results by invoking get_next() repeatedly
         until all pages of results have been retrieved.
         :return: A List[dict], where each element is a dict that represents an instance of InstanceUsage.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class GetReportsSnapshotPager:
+    """
+    GetReportsSnapshotPager can be used to simplify the use of the "get_reports_snapshot" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: UsageReportsV4,
+        account_id: str,
+        month: str,
+        date_from: int = None,
+        date_to: int = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a GetReportsSnapshotPager object.
+        :param str account_id: Account ID for which the billing report snapshot is
+               requested.
+        :param str month: The month for which billing report snapshot is requested.
+                Format is yyyy-mm.
+        :param int date_from: (optional) Timestamp in milliseconds for which
+               billing report snapshot is requested.
+        :param int date_to: (optional) Timestamp in milliseconds for which billing
+               report snapshot is requested.
+        :param int limit: (optional) Number of usage records returned. The default
+               value is 30. Maximum value is 200.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._month = month
+        self._date_from = date_from
+        self._date_to = date_to
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of SnapshotListSnapshotsItem.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.get_reports_snapshot(
+            account_id=self._account_id,
+            month=self._month,
+            date_from=self._date_from,
+            date_to=self._date_to,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), '_start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('snapshots')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of SnapshotListSnapshotsItem.
         :rtype: List[dict]
         """
         results = []
