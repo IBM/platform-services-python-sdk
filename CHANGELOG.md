@@ -1,3 +1,10 @@
+# [0.45.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.44.1...v0.45.0) (2023-10-18)
+
+
+### Features
+
+* **Usage Reports:** Update query param for getting reports snapshot list ([#224](https://github.com/IBM/platform-services-python-sdk/issues/224)) ([2fc205a](https://github.com/IBM/platform-services-python-sdk/commit/2fc205ab7770b06dcfc5a1040dd01f7adf417cb3))
+
 ## [0.44.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.44.0...v0.44.1) (2023-10-03)
 
 
