@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
+# IBM OpenAPI SDK Code Generator Version: 3.81.0-c73a091c-20231026-215706
 
 """
 IAM Policy Management API
@@ -24,7 +24,7 @@ API Version: 1.0.1
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
@@ -80,16 +80,16 @@ class IamPolicyManagementV1(BaseService):
         self,
         account_id: str,
         *,
-        accept_language: str = None,
-        iam_id: str = None,
-        access_group_id: str = None,
-        type: str = None,
-        service_type: str = None,
-        tag_name: str = None,
-        tag_value: str = None,
-        sort: str = None,
-        format: str = None,
-        state: str = None,
+        accept_language: Optional[str] = None,
+        iam_id: Optional[str] = None,
+        access_group_id: Optional[str] = None,
+        type: Optional[str] = None,
+        service_type: Optional[str] = None,
+        tag_name: Optional[str] = None,
+        tag_value: Optional[str] = None,
+        sort: Optional[str] = None,
+        format: Optional[str] = None,
+        state: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -188,8 +188,8 @@ class IamPolicyManagementV1(BaseService):
         roles: List['PolicyRole'],
         resources: List['PolicyResource'],
         *,
-        description: str = None,
-        accept_language: str = None,
+        description: Optional[str] = None,
+        accept_language: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -223,15 +223,16 @@ class IamPolicyManagementV1(BaseService):
         subject attributes must match the supported authorization subjects of the
         resource. Multiple subject attributes might be provided. The following attributes
         are supported:
-          serviceName, serviceInstance, region, resourceType, resource, accountId Assign
-        roles that are supported by the service or platform roles. For more information,
-        see [IAM roles and
+          serviceName, serviceInstance, region, resourceType, resource, accountId,
+        resourceGroupId Assign roles that are supported by the service or platform roles.
+        For more information, see [IAM roles and
         actions](/docs/account?topic=account-iam-service-roles-actions). The user must
         also have the same level of access or greater to the target resource in order to
         grant the role. Use only the resource attributes supported by the service. To view
         a service's or the platform's supported attributes, check the
         [documentation](/docs?tab=all-docs). Both the policy subject and the policy
-        resource must include the **`serviceName`** and **`accountId`** attributes.
+        resource must include the **`accountId`** attributes. The policy subject must
+        include either **`serviceName`** or **`resourceGroupId`** (or both) attributes.
         ### Attribute Operators
         Currently, only the `stringEquals` and the `stringMatch` operators are available.
         Resource attributes may support one or both operators. For more information, see
@@ -324,7 +325,7 @@ class IamPolicyManagementV1(BaseService):
         roles: List['PolicyRole'],
         resources: List['PolicyResource'],
         *,
-        description: str = None,
+        description: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -351,15 +352,16 @@ class IamPolicyManagementV1(BaseService):
         The subject attributes must match the supported authorization subjects of the
         resource. Multiple subject attributes might be provided. The following attributes
         are supported:
-          serviceName, serviceInstance, region, resourceType, resource, accountId Assign
-        roles that are supported by the service or platform roles. For more information,
-        see [IAM roles and
+          serviceName, serviceInstance, region, resourceType, resource, accountId,
+        resourceGroupId Assign roles that are supported by the service or platform roles.
+        For more information, see [IAM roles and
         actions](/docs/account?topic=account-iam-service-roles-actions). The user must
         also have the same level of access or greater to the target resource in order to
         grant the role. Use only the resource attributes supported by the service. To view
         a service's or the platform's supported attributes, check the
         [documentation](/docs?tab=all-docs). Both the policy subject and the policy
-        resource must include the **`serviceName`** and **`accountId`** attributes.
+        resource must include the **`accountId`** attributes. The policy subject must
+        include either **`serviceName`** or **`resourceGroupId`** (or both) attributes.
         ### Attribute Operators
         Currently, only the `stringEquals` and the `stringMatch` operators are available.
         Resource attributes might support one or both operators. For more information, see
@@ -537,7 +539,7 @@ class IamPolicyManagementV1(BaseService):
         policy_id: str,
         if_match: str,
         *,
-        state: str = None,
+        state: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -605,12 +607,12 @@ class IamPolicyManagementV1(BaseService):
     def list_roles(
         self,
         *,
-        accept_language: str = None,
-        account_id: str = None,
-        service_name: str = None,
-        source_service_name: str = None,
-        policy_type: str = None,
-        service_group_id: str = None,
+        accept_language: Optional[str] = None,
+        account_id: Optional[str] = None,
+        service_name: Optional[str] = None,
+        source_service_name: Optional[str] = None,
+        policy_type: Optional[str] = None,
+        service_group_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -690,8 +692,8 @@ class IamPolicyManagementV1(BaseService):
         account_id: str,
         service_name: str,
         *,
-        description: str = None,
-        accept_language: str = None,
+        description: Optional[str] = None,
+        accept_language: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -785,7 +787,7 @@ class IamPolicyManagementV1(BaseService):
         display_name: str,
         actions: List[str],
         *,
-        description: str = None,
+        description: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -951,16 +953,16 @@ class IamPolicyManagementV1(BaseService):
         self,
         account_id: str,
         *,
-        accept_language: str = None,
-        iam_id: str = None,
-        access_group_id: str = None,
-        type: str = None,
-        service_type: str = None,
-        service_name: str = None,
-        service_group_id: str = None,
-        sort: str = None,
-        format: str = None,
-        state: str = None,
+        accept_language: Optional[str] = None,
+        iam_id: Optional[str] = None,
+        access_group_id: Optional[str] = None,
+        type: Optional[str] = None,
+        service_type: Optional[str] = None,
+        service_name: Optional[str] = None,
+        service_group_id: Optional[str] = None,
+        sort: Optional[str] = None,
+        format: Optional[str] = None,
+        state: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1068,12 +1070,12 @@ class IamPolicyManagementV1(BaseService):
         control: 'Control',
         type: str,
         *,
-        description: str = None,
-        subject: 'V2PolicySubject' = None,
-        resource: 'V2PolicyResource' = None,
-        pattern: str = None,
-        rule: 'V2PolicyRule' = None,
-        accept_language: str = None,
+        description: Optional[str] = None,
+        subject: Optional['V2PolicySubject'] = None,
+        resource: Optional['V2PolicyResource'] = None,
+        pattern: Optional[str] = None,
+        rule: Optional['V2PolicyRule'] = None,
+        accept_language: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1136,6 +1138,23 @@ class IamPolicyManagementV1(BaseService):
         [Limiting access with time-based
         conditions](https://cloud.ibm.com/docs/account?topic=account-iam-time-based&interface=ui).
         If the subject is a locked service-id, the request will fail.
+        ### Authorization
+        Authorization policies are supported by services on a case by case basis. Refer to
+        service documentation to verify their support of authorization policies. To create
+        an authorization policy, use **`"type": "authorization"`** in the body. The
+        subject attributes must match the supported authorization subjects of the
+        resource. Multiple subject attributes might be provided. The following attributes
+        are supported:
+          serviceName, serviceInstance, region, resourceType, resource, accountId,
+        resourceGroupId Assign roles that are supported by the service or platform roles.
+        For more information, see [IAM roles and
+        actions](/docs/account?topic=account-iam-service-roles-actions). The user must
+        also have the same level of access or greater to the target resource in order to
+        grant the role. Use only the resource attributes supported by the service. To view
+        a service's or the platform's supported attributes, check the
+        [documentation](/docs?tab=all-docs). Both the policy subject and the policy
+        resource must include the **`accountId`** attributes. The policy subject must
+        include either **`serviceName`** or **`resourceGroupId`** (or both) attributes.
         ### Attribute Operators
         Currently, only the `stringEquals`, `stringMatch`, and `stringEquals` operators
         are available. For more information, see [Assigning access by using wildcard
@@ -1232,11 +1251,11 @@ class IamPolicyManagementV1(BaseService):
         control: 'Control',
         type: str,
         *,
-        description: str = None,
-        subject: 'V2PolicySubject' = None,
-        resource: 'V2PolicyResource' = None,
-        pattern: str = None,
-        rule: 'V2PolicyRule' = None,
+        description: Optional[str] = None,
+        subject: Optional['V2PolicySubject'] = None,
+        resource: Optional['V2PolicyResource'] = None,
+        pattern: Optional[str] = None,
+        rule: Optional['V2PolicyRule'] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1245,7 +1264,7 @@ class IamPolicyManagementV1(BaseService):
         Update a policy to grant access between a subject and a resource. A policy
         administrator might want to update an existing policy.
         ### Access
-        To create an access policy, use **`"type": "access"`** in the body. The supported
+        To update an access policy, use **`"type": "access"`** in the body. The supported
         subject attributes are **`iam_id`** and **`access_group_id`**. Use the
         **`iam_id`** subject attribute to assign access to a user or service-id. Use the
         **`access_group_id`** subject attribute to assign access to an access group.
@@ -1295,6 +1314,21 @@ class IamPolicyManagementV1(BaseService):
         and
         [Limiting access with time-based
         conditions](https://cloud.ibm.com/docs/account?topic=account-iam-time-based&interface=ui).
+        ### Authorization
+        To update an authorization policy, use **`"type": "authorization"`** in the body.
+        The subject attributes must match the supported authorization subjects of the
+        resource. Multiple subject attributes might be provided. The following attributes
+        are supported:
+          serviceName, serviceInstance, region, resourceType, resource, accountId,
+        resourceGroupId Assign roles that are supported by the service or platform roles.
+        For more information, see [IAM roles and
+        actions](/docs/account?topic=account-iam-service-roles-actions). The user must
+        also have the same level of access or greater to the target resource in order to
+        grant the role. Use only the resource attributes supported by the service. To view
+        a service's or the platform's supported attributes, check the
+        [documentation](/docs?tab=all-docs). Both the policy subject and the policy
+        resource must include the **`accountId`** attributes. The policy subject must
+        include either **`serviceName`** or **`resourceGroupId`** (or both) attributes.
         ### Attribute Operators
         Currently, only the `stringEquals`, `stringMatch`, and `stringEquals` operators
         are available. For more information, see [Assigning access by using wildcard
@@ -1388,7 +1422,7 @@ class IamPolicyManagementV1(BaseService):
         self,
         id: str,
         *,
-        format: str = None,
+        format: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1493,7 +1527,7 @@ class IamPolicyManagementV1(BaseService):
         self,
         account_id: str,
         *,
-        accept_language: str = None,
+        accept_language: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1563,9 +1597,9 @@ class IamPolicyManagementV1(BaseService):
         account_id: str,
         policy: 'TemplatePolicy',
         *,
-        description: str = None,
-        committed: bool = None,
-        accept_language: str = None,
+        description: Optional[str] = None,
+        committed: Optional[bool] = None,
+        accept_language: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1600,7 +1634,7 @@ class IamPolicyManagementV1(BaseService):
                * `zh-tw` - (Chinese, Taiwan).
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `PolicyTemplate` object
+        :rtype: DetailedResponse with `dict` result representing a `PolicyTemplateLimitData` object
         """
 
         if name is None:
@@ -1743,9 +1777,9 @@ class IamPolicyManagementV1(BaseService):
         policy_template_id: str,
         policy: 'TemplatePolicy',
         *,
-        name: str = None,
-        description: str = None,
-        committed: bool = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        committed: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1767,7 +1801,7 @@ class IamPolicyManagementV1(BaseService):
         :param bool committed: (optional) Committed status of the template version.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `PolicyTemplate` object
+        :rtype: DetailedResponse with `dict` result representing a `PolicyTemplateLimitData` object
         """
 
         if not policy_template_id:
@@ -1863,9 +1897,9 @@ class IamPolicyManagementV1(BaseService):
         if_match: str,
         policy: 'TemplatePolicy',
         *,
-        name: str = None,
-        description: str = None,
-        committed: bool = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        committed: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2098,9 +2132,9 @@ class IamPolicyManagementV1(BaseService):
         self,
         account_id: str,
         *,
-        accept_language: str = None,
-        template_id: str = None,
-        template_version: str = None,
+        accept_language: Optional[str] = None,
+        template_id: Optional[str] = None,
+        template_version: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2343,13 +2377,13 @@ class AssignmentResourceCreated:
     """
     On success, includes the  policy assigned.
 
-    :attr str id: (optional) policy id.
+    :param str id: (optional) policy id.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
+        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AssignmentResourceCreated object.
@@ -2401,17 +2435,17 @@ class ConflictsWith:
     """
     Details of conflicting resource.
 
-    :attr str etag: (optional) The revision number of the resource.
-    :attr str role: (optional) The conflicting role id.
-    :attr str policy: (optional) The conflicting policy id.
+    :param str etag: (optional) The revision number of the resource.
+    :param str role: (optional) The conflicting role id.
+    :param str policy: (optional) The conflicting policy id.
     """
 
     def __init__(
         self,
         *,
-        etag: str = None,
-        role: str = None,
-        policy: str = None,
+        etag: Optional[str] = None,
+        role: Optional[str] = None,
+        policy: Optional[str] = None,
     ) -> None:
         """
         Initialize a ConflictsWith object.
@@ -2475,7 +2509,7 @@ class Control:
     """
     Specifies the type of access granted by the policy.
 
-    :attr Grant grant: Permission granted by the policy.
+    :param Grant grant: Permission granted by the policy.
     """
 
     def __init__(
@@ -2556,28 +2590,28 @@ class CustomRole:
     """
     An additional set of properties associated with a role.
 
-    :attr str id: (optional) The role ID. Composed of hexadecimal characters.
-    :attr str display_name: The display name of the role that is shown in the
+    :param str id: (optional) The role ID. Composed of hexadecimal characters.
+    :param str display_name: The display name of the role that is shown in the
           console.
-    :attr str description: (optional) The description of the role.
-    :attr List[str] actions: The actions of the role. For more information, see [IAM
-          roles and
+    :param str description: (optional) The description of the role.
+    :param List[str] actions: The actions of the role. For more information, see
+          [IAM roles and
           actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
-    :attr str crn: (optional) The role Cloud Resource Name (CRN). Example CRN:
+    :param str crn: (optional) The role Cloud Resource Name (CRN). Example CRN:
           'crn:v1:ibmcloud:public:iam-access-management::a/exampleAccountId::customRole:ExampleRoleName'.
-    :attr str name: The name of the role that is used in the CRN. Can only be
+    :param str name: The name of the role that is used in the CRN. Can only be
           alphanumeric and has to be capitalized.
-    :attr str account_id: The account GUID.
-    :attr str service_name: The service name.
-    :attr datetime created_at: (optional) The UTC timestamp when the role was
+    :param str account_id: The account GUID.
+    :param str service_name: The service name.
+    :param datetime created_at: (optional) The UTC timestamp when the role was
           created.
-    :attr str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The iam ID of the entity that created the
           role.
-    :attr datetime last_modified_at: (optional) The UTC timestamp when the role was
+    :param datetime last_modified_at: (optional) The UTC timestamp when the role was
           last modified.
-    :attr str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy.
-    :attr str href: (optional) The href link back to the role.
+    :param str href: (optional) The href link back to the role.
     """
 
     def __init__(
@@ -2588,14 +2622,14 @@ class CustomRole:
         account_id: str,
         service_name: str,
         *,
-        id: str = None,
-        description: str = None,
-        crn: str = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
-        last_modified_at: datetime = None,
-        last_modified_by_id: str = None,
-        href: str = None,
+        id: Optional[str] = None,
+        description: Optional[str] = None,
+        crn: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+        href: Optional[str] = None,
     ) -> None:
         """
         Initialize a CustomRole object.
@@ -2727,13 +2761,13 @@ class EnrichedRoles:
     A role associated with a policy with additional information (display_name,
     description, actions) when `format=display`.
 
-    :attr str role_id: The role Cloud Resource Name (CRN) granted by the policy.
+    :param str role_id: The role Cloud Resource Name (CRN) granted by the policy.
           Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
-    :attr str display_name: (optional) The service defined (or user defined if a
+    :param str display_name: (optional) The service defined (or user defined if a
           custom role) display name of the role.
-    :attr str description: (optional) The service defined (or user defined if a
+    :param str description: (optional) The service defined (or user defined if a
           custom role) description of the role.
-    :attr List[RoleAction] actions: The actions of the role. For more information,
+    :param List[RoleAction] actions: The actions of the role. For more information,
           see [IAM roles and
           actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
     """
@@ -2743,8 +2777,8 @@ class EnrichedRoles:
         role_id: str,
         actions: List['RoleAction'],
         *,
-        display_name: str = None,
-        description: str = None,
+        display_name: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> None:
         """
         Initialize a EnrichedRoles object.
@@ -2825,13 +2859,13 @@ class ErrorDetails:
     """
     Additional error details.
 
-    :attr ConflictsWith conflicts_with: (optional) Details of conflicting resource.
+    :param ConflictsWith conflicts_with: (optional) Details of conflicting resource.
     """
 
     def __init__(
         self,
         *,
-        conflicts_with: 'ConflictsWith' = None,
+        conflicts_with: Optional['ConflictsWith'] = None,
     ) -> None:
         """
         Initialize a ErrorDetails object.
@@ -2887,10 +2921,10 @@ class ErrorObject:
     """
     ErrorObject.
 
-    :attr str code: The API error code for the error.
-    :attr str message: The error message returned by the API.
-    :attr ErrorDetails details: (optional) Additional error details.
-    :attr str more_info: (optional) Additional info for error.
+    :param str code: The API error code for the error.
+    :param str message: The error message returned by the API.
+    :param ErrorDetails details: (optional) Additional error details.
+    :param str more_info: (optional) Additional info for error.
     """
 
     def __init__(
@@ -2898,8 +2932,8 @@ class ErrorObject:
         code: str,
         message: str,
         *,
-        details: 'ErrorDetails' = None,
-        more_info: str = None,
+        details: Optional['ErrorDetails'] = None,
+        more_info: Optional[str] = None,
     ) -> None:
         """
         Initialize a ErrorObject object.
@@ -2999,18 +3033,18 @@ class ErrorResponse:
     """
     The error response from API.
 
-    :attr str trace: (optional) The unique transaction id for the request.
-    :attr List[ErrorObject] errors: (optional) The errors encountered during the
+    :param str trace: (optional) The unique transaction id for the request.
+    :param List[ErrorObject] errors: (optional) The errors encountered during the
           response.
-    :attr int status_code: (optional) The http error code of the response.
+    :param int status_code: (optional) The http error code of the response.
     """
 
     def __init__(
         self,
         *,
-        trace: str = None,
-        errors: List['ErrorObject'] = None,
-        status_code: int = None,
+        trace: Optional[str] = None,
+        errors: Optional[List['ErrorObject']] = None,
+        status_code: Optional[int] = None,
     ) -> None:
         """
         Initialize a ErrorResponse object.
@@ -3081,7 +3115,7 @@ class Grant:
     """
     Permission granted by the policy.
 
-    :attr List[Roles] roles: A set of role cloud resource names (CRNs) granted by
+    :param List[Roles] roles: A set of role cloud resource names (CRNs) granted by
           the policy.
     """
 
@@ -3149,7 +3183,7 @@ class GrantWithEnrichedRoles:
     Permission granted by the policy with translated roles and additional role
     information.
 
-    :attr List[EnrichedRoles] roles: A set of roles granted by the policy.
+    :param List[EnrichedRoles] roles: A set of roles granted by the policy.
     """
 
     def __init__(
@@ -3210,27 +3244,91 @@ class GrantWithEnrichedRoles:
         return not self == other
 
 
+class LimitData:
+    """
+    policy template current and limit details with in an account.
+
+    :param int current: (optional) policy template current count.
+    :param int limit: (optional) policy template limit count.
+    """
+
+    def __init__(
+        self,
+        *,
+        current: Optional[int] = None,
+        limit: Optional[int] = None,
+    ) -> None:
+        """
+        Initialize a LimitData object.
+
+        """
+        self.current = current
+        self.limit = limit
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'LimitData':
+        """Initialize a LimitData object from a json dictionary."""
+        args = {}
+        if 'current' in _dict:
+            args['current'] = _dict.get('current')
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a LimitData object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'current') and getattr(self, 'current') is not None:
+            _dict['current'] = getattr(self, 'current')
+        if hasattr(self, 'limit') and getattr(self, 'limit') is not None:
+            _dict['limit'] = getattr(self, 'limit')
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this LimitData object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'LimitData') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'LimitData') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class Policy:
     """
     The core set of properties associated with a policy.
 
-    :attr str id: (optional) The policy ID.
-    :attr str type: The policy type; either 'access' or 'authorization'.
-    :attr str description: (optional) Customer-defined description.
-    :attr List[PolicySubject] subjects: The subjects associated with a policy.
-    :attr List[PolicyRole] roles: A set of role cloud resource names (CRNs) granted
+    :param str id: (optional) The policy ID.
+    :param str type: The policy type; either 'access' or 'authorization'.
+    :param str description: (optional) Customer-defined description.
+    :param List[PolicySubject] subjects: The subjects associated with a policy.
+    :param List[PolicyRole] roles: A set of role cloud resource names (CRNs) granted
           by the policy.
-    :attr List[PolicyResource] resources: The resources associated with a policy.
-    :attr str href: (optional) The href link back to the policy.
-    :attr datetime created_at: (optional) The UTC timestamp when the policy was
+    :param List[PolicyResource] resources: The resources associated with a policy.
+    :param str href: (optional) The href link back to the policy.
+    :param datetime created_at: (optional) The UTC timestamp when the policy was
           created.
-    :attr str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The iam ID of the entity that created the
           policy.
-    :attr datetime last_modified_at: (optional) The UTC timestamp when the policy
+    :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           was last modified.
-    :attr str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy.
-    :attr str state: (optional) The policy state.
+    :param str state: (optional) The policy state.
     """
 
     def __init__(
@@ -3240,14 +3338,14 @@ class Policy:
         roles: List['PolicyRole'],
         resources: List['PolicyResource'],
         *,
-        id: str = None,
-        description: str = None,
-        href: str = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
-        last_modified_at: datetime = None,
-        last_modified_by_id: str = None,
-        state: str = None,
+        id: Optional[str] = None,
+        description: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+        state: Optional[str] = None,
     ) -> None:
         """
         Initialize a Policy object.
@@ -3395,29 +3493,29 @@ class PolicyAssignment:
     """
     The set of properties associated with the policy template assignment.
 
-    :attr str template_id: policy template id.
-    :attr str template_version: policy template version.
-    :attr str assignment_id: Passed in value to correlate with other assignments.
-    :attr str target_type: Assignment target type.
-    :attr str target: ID of the target account.
-    :attr List[PolicyAssignmentOptions] options: List of objects with required
+    :param str template_id: policy template id.
+    :param str template_version: policy template version.
+    :param str assignment_id: Passed in value to correlate with other assignments.
+    :param str target_type: Assignment target type.
+    :param str target: ID of the target account.
+    :param List[PolicyAssignmentOptions] options: List of objects with required
           properties for a policy assignment.
-    :attr str id: (optional) Policy assignment ID.
-    :attr str account_id: (optional) The account GUID that the policies assignments
+    :param str id: (optional) Policy assignment ID.
+    :param str account_id: (optional) The account GUID that the policies assignments
           belong to..
-    :attr str href: (optional) The href URL that links to the policies assignments
+    :param str href: (optional) The href URL that links to the policies assignments
           API by policy assignment ID.
-    :attr datetime created_at: (optional) The UTC timestamp when the policy
+    :param datetime created_at: (optional) The UTC timestamp when the policy
           assignment was created.
-    :attr str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The iam ID of the entity that created the
           policy assignment.
-    :attr datetime last_modified_at: (optional) The UTC timestamp when the policy
+    :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           assignment was last modified.
-    :attr str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy assignment.
-    :attr List[PolicyAssignmentResources] resources: (optional) Object for each
+    :param List[PolicyAssignmentResources] resources: (optional) Object for each
           account assigned.
-    :attr str status: The policy assignment status.
+    :param str status: The policy assignment status.
     """
 
     def __init__(
@@ -3430,14 +3528,14 @@ class PolicyAssignment:
         options: List['PolicyAssignmentOptions'],
         status: str,
         *,
-        id: str = None,
-        account_id: str = None,
-        href: str = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
-        last_modified_at: datetime = None,
-        last_modified_by_id: str = None,
-        resources: List['PolicyAssignmentResources'] = None,
+        id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+        resources: Optional[List['PolicyAssignmentResources']] = None,
     ) -> None:
         """
         Initialize a PolicyAssignment object.
@@ -3612,13 +3710,13 @@ class PolicyAssignmentOptions:
     """
     The set of properties required for a policy assignment.
 
-    :attr str subject_type: The policy subject type; either 'iam_id' or
+    :param str subject_type: The policy subject type; either 'iam_id' or
           'access_group_id'.
-    :attr str subject_id: The policy subject id.
-    :attr str root_requester_id: The policy assignment requester id.
-    :attr str root_template_id: (optional) The template id where this policy is
+    :param str subject_id: The policy subject id.
+    :param str root_requester_id: The policy assignment requester id.
+    :param str root_template_id: (optional) The template id where this policy is
           being assigned from.
-    :attr str root_template_version: (optional) The template version where this
+    :param str root_template_version: (optional) The template version where this
           policy is being assigned from.
     """
 
@@ -3628,8 +3726,8 @@ class PolicyAssignmentOptions:
         subject_id: str,
         root_requester_id: str,
         *,
-        root_template_id: str = None,
-        root_template_version: str = None,
+        root_template_id: Optional[str] = None,
+        root_template_version: Optional[str] = None,
     ) -> None:
         """
         Initialize a PolicyAssignmentOptions object.
@@ -3722,18 +3820,18 @@ class PolicyAssignmentResourcePolicy:
     """
     Set of properties for the assigned resource.
 
-    :attr AssignmentResourceCreated resource_created: (optional) On success,
+    :param AssignmentResourceCreated resource_created: (optional) On success,
           includes the  policy assigned.
-    :attr str status: (optional) policy status.
-    :attr ErrorResponse error_message: (optional) The error response from API.
+    :param str status: (optional) policy status.
+    :param ErrorResponse error_message: (optional) The error response from API.
     """
 
     def __init__(
         self,
         *,
-        resource_created: 'AssignmentResourceCreated' = None,
-        status: str = None,
-        error_message: 'ErrorResponse' = None,
+        resource_created: Optional['AssignmentResourceCreated'] = None,
+        status: Optional[str] = None,
+        error_message: Optional['ErrorResponse'] = None,
     ) -> None:
         """
         Initialize a PolicyAssignmentResourcePolicy object.
@@ -3804,16 +3902,16 @@ class PolicyAssignmentResources:
     """
     The policy assignment resources.
 
-    :attr str target: (optional) Account ID where resources are assigned.
-    :attr PolicyAssignmentResourcePolicy policy: (optional) Set of properties for
+    :param str target: (optional) Account ID where resources are assigned.
+    :param PolicyAssignmentResourcePolicy policy: (optional) Set of properties for
           the assigned resource.
     """
 
     def __init__(
         self,
         *,
-        target: str = None,
-        policy: 'PolicyAssignmentResourcePolicy' = None,
+        target: Optional[str] = None,
+        policy: Optional['PolicyAssignmentResourcePolicy'] = None,
     ) -> None:
         """
         Initialize a PolicyAssignmentResources object.
@@ -3875,13 +3973,13 @@ class PolicyCollection:
     """
     A collection of policies.
 
-    :attr List[PolicyTemplateMetaData] policies: (optional) List of policies.
+    :param List[PolicyTemplateMetaData] policies: (optional) List of policies.
     """
 
     def __init__(
         self,
         *,
-        policies: List['PolicyTemplateMetaData'] = None,
+        policies: Optional[List['PolicyTemplateMetaData']] = None,
     ) -> None:
         """
         Initialize a PolicyCollection object.
@@ -3939,16 +4037,16 @@ class PolicyResource:
     """
     The attributes of the resource. Note that only one resource is allowed in a policy.
 
-    :attr List[ResourceAttribute] attributes: (optional) List of resource
+    :param List[ResourceAttribute] attributes: (optional) List of resource
           attributes.
-    :attr List[ResourceTag] tags: (optional) List of access management tags.
+    :param List[ResourceTag] tags: (optional) List of access management tags.
     """
 
     def __init__(
         self,
         *,
-        attributes: List['ResourceAttribute'] = None,
-        tags: List['ResourceTag'] = None,
+        attributes: Optional[List['ResourceAttribute']] = None,
+        tags: Optional[List['ResourceTag']] = None,
     ) -> None:
         """
         Initialize a PolicyResource object.
@@ -4019,18 +4117,18 @@ class PolicyRole:
     """
     A role associated with a policy.
 
-    :attr str role_id: The role Cloud Resource Name (CRN) granted by the policy.
+    :param str role_id: The role Cloud Resource Name (CRN) granted by the policy.
           Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
-    :attr str display_name: (optional) The display name of the role.
-    :attr str description: (optional) The description of the role.
+    :param str display_name: (optional) The display name of the role.
+    :param str description: (optional) The description of the role.
     """
 
     def __init__(
         self,
         role_id: str,
         *,
-        display_name: str = None,
-        description: str = None,
+        display_name: Optional[str] = None,
+        description: Optional[str] = None,
     ) -> None:
         """
         Initialize a PolicyRole object.
@@ -4096,13 +4194,13 @@ class PolicySubject:
     The subject attribute values that must match in order for this policy to apply in a
     permission decision.
 
-    :attr List[SubjectAttribute] attributes: (optional) List of subject attributes.
+    :param List[SubjectAttribute] attributes: (optional) List of subject attributes.
     """
 
     def __init__(
         self,
         *,
-        attributes: List['SubjectAttribute'] = None,
+        attributes: Optional[List['SubjectAttribute']] = None,
     ) -> None:
         """
         Initialize a PolicySubject object.
@@ -4161,27 +4259,28 @@ class PolicyTemplate:
     """
     The core set of properties associated with the policy template.
 
-    :attr str name: Required field when creating a new template. Otherwise this
+    :param str name: Required field when creating a new template. Otherwise this
           field is optional. If the field is included it will change the name value for
           all existing versions of the template.
-    :attr str description: (optional) Description of the policy template. This is
+    :param str description: (optional) Description of the policy template. This is
           shown to users in the enterprise account. Use this to describe the purpose or
           context of the policy for enterprise users managing IAM templates.
-    :attr str account_id: Enterprise account ID where this template will be created.
-    :attr str version: Template version.
-    :attr bool committed: (optional) Committed status of the template version.
-    :attr TemplatePolicy policy: The core set of properties associated with the
+    :param str account_id: Enterprise account ID where this template will be
+          created.
+    :param str version: Template version.
+    :param bool committed: (optional) Committed status of the template version.
+    :param TemplatePolicy policy: The core set of properties associated with the
           template's policy objet.
-    :attr str id: (optional) The policy template ID.
-    :attr str href: (optional) The href URL that links to the policy templates API
+    :param str id: (optional) The policy template ID.
+    :param str href: (optional) The href URL that links to the policy templates API
           by policy template ID.
-    :attr datetime created_at: (optional) The UTC timestamp when the policy template
-          was created.
-    :attr str created_by_id: (optional) The iam ID of the entity that created the
+    :param datetime created_at: (optional) The UTC timestamp when the policy
+          template was created.
+    :param str created_by_id: (optional) The iam ID of the entity that created the
           policy template.
-    :attr datetime last_modified_at: (optional) The UTC timestamp when the policy
+    :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           template was last modified.
-    :attr str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy template.
     """
 
@@ -4192,14 +4291,14 @@ class PolicyTemplate:
         version: str,
         policy: 'TemplatePolicy',
         *,
-        description: str = None,
-        committed: bool = None,
-        id: str = None,
-        href: str = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
-        last_modified_at: datetime = None,
-        last_modified_by_id: str = None,
+        description: Optional[str] = None,
+        committed: Optional[bool] = None,
+        id: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
     ) -> None:
         """
         Initialize a PolicyTemplate object.
@@ -4329,13 +4428,14 @@ class PolicyTemplateAssignmentCollection:
     """
     A collection of policies assignments.
 
-    :attr List[PolicyAssignment] assignments: (optional) List of policy assignments.
+    :param List[PolicyAssignment] assignments: (optional) List of policy
+          assignments.
     """
 
     def __init__(
         self,
         *,
-        assignments: List['PolicyAssignment'] = None,
+        assignments: Optional[List['PolicyAssignment']] = None,
     ) -> None:
         """
         Initialize a PolicyTemplateAssignmentCollection object.
@@ -4394,14 +4494,14 @@ class PolicyTemplateCollection:
     """
     A collection of policy Templates.
 
-    :attr List[PolicyTemplate] policy_templates: (optional) List of policy
+    :param List[PolicyTemplate] policy_templates: (optional) List of policy
           templates.
     """
 
     def __init__(
         self,
         *,
-        policy_templates: List['PolicyTemplate'] = None,
+        policy_templates: Optional[List['PolicyTemplate']] = None,
     ) -> None:
         """
         Initialize a PolicyTemplateCollection object.
@@ -4456,31 +4556,211 @@ class PolicyTemplateCollection:
         return not self == other
 
 
+class PolicyTemplateLimitData:
+    """
+    The core set of properties associated with the policy template.
+
+    :param str name: Required field when creating a new template. Otherwise this
+          field is optional. If the field is included it will change the name value for
+          all existing versions of the template.
+    :param str description: (optional) Description of the policy template. This is
+          shown to users in the enterprise account. Use this to describe the purpose or
+          context of the policy for enterprise users managing IAM templates.
+    :param str account_id: Enterprise account ID where this template will be
+          created.
+    :param str version: Template version.
+    :param bool committed: (optional) Committed status of the template version.
+    :param TemplatePolicy policy: The core set of properties associated with the
+          template's policy objet.
+    :param str id: (optional) The policy template ID.
+    :param str href: (optional) The href URL that links to the policy templates API
+          by policy template ID.
+    :param datetime created_at: (optional) The UTC timestamp when the policy
+          template was created.
+    :param str created_by_id: (optional) The iam ID of the entity that created the
+          policy template.
+    :param datetime last_modified_at: (optional) The UTC timestamp when the policy
+          template was last modified.
+    :param str last_modified_by_id: (optional) The iam ID of the entity that last
+          modified the policy template.
+    :param TemplateCountData counts: (optional) policy template count details.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        account_id: str,
+        version: str,
+        policy: 'TemplatePolicy',
+        *,
+        description: Optional[str] = None,
+        committed: Optional[bool] = None,
+        id: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+        counts: Optional['TemplateCountData'] = None,
+    ) -> None:
+        """
+        Initialize a PolicyTemplateLimitData object.
+
+        :param str name: Required field when creating a new template. Otherwise
+               this field is optional. If the field is included it will change the name
+               value for all existing versions of the template.
+        :param str account_id: Enterprise account ID where this template will be
+               created.
+        :param str version: Template version.
+        :param TemplatePolicy policy: The core set of properties associated with
+               the template's policy objet.
+        :param str description: (optional) Description of the policy template. This
+               is shown to users in the enterprise account. Use this to describe the
+               purpose or context of the policy for enterprise users managing IAM
+               templates.
+        :param bool committed: (optional) Committed status of the template version.
+        :param TemplateCountData counts: (optional) policy template count details.
+        """
+        self.name = name
+        self.description = description
+        self.account_id = account_id
+        self.version = version
+        self.committed = committed
+        self.policy = policy
+        self.id = id
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+        self.counts = counts
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PolicyTemplateLimitData':
+        """Initialize a PolicyTemplateLimitData object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in PolicyTemplateLimitData JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in PolicyTemplateLimitData JSON')
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        else:
+            raise ValueError('Required property \'version\' not present in PolicyTemplateLimitData JSON')
+        if 'committed' in _dict:
+            args['committed'] = _dict.get('committed')
+        if 'policy' in _dict:
+            args['policy'] = TemplatePolicy.from_dict(_dict.get('policy'))
+        else:
+            raise ValueError('Required property \'policy\' not present in PolicyTemplateLimitData JSON')
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if 'counts' in _dict:
+            args['counts'] = TemplateCountData.from_dict(_dict.get('counts'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PolicyTemplateLimitData object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'committed') and self.committed is not None:
+            _dict['committed'] = self.committed
+        if hasattr(self, 'policy') and self.policy is not None:
+            if isinstance(self.policy, dict):
+                _dict['policy'] = self.policy
+            else:
+                _dict['policy'] = self.policy.to_dict()
+        if hasattr(self, 'id') and getattr(self, 'id') is not None:
+            _dict['id'] = getattr(self, 'id')
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
+            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
+        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
+            _dict['created_by_id'] = getattr(self, 'created_by_id')
+        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
+            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
+        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
+            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
+        if hasattr(self, 'counts') and self.counts is not None:
+            if isinstance(self.counts, dict):
+                _dict['counts'] = self.counts
+            else:
+                _dict['counts'] = self.counts.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PolicyTemplateLimitData object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PolicyTemplateLimitData') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PolicyTemplateLimitData') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class PolicyTemplateMetaData:
     """
     The core set of properties associated with a policy.
 
-    :attr str id: (optional) The policy ID.
-    :attr str type: The policy type; either 'access' or 'authorization'.
-    :attr str description: (optional) Customer-defined description.
-    :attr List[PolicySubject] subjects: The subjects associated with a policy.
-    :attr List[PolicyRole] roles: A set of role cloud resource names (CRNs) granted
+    :param str id: (optional) The policy ID.
+    :param str type: The policy type; either 'access' or 'authorization'.
+    :param str description: (optional) Customer-defined description.
+    :param List[PolicySubject] subjects: The subjects associated with a policy.
+    :param List[PolicyRole] roles: A set of role cloud resource names (CRNs) granted
           by the policy.
-    :attr List[PolicyResource] resources: The resources associated with a policy.
-    :attr str href: (optional) The href link back to the policy.
-    :attr datetime created_at: (optional) The UTC timestamp when the policy was
+    :param List[PolicyResource] resources: The resources associated with a policy.
+    :param str href: (optional) The href link back to the policy.
+    :param datetime created_at: (optional) The UTC timestamp when the policy was
           created.
-    :attr str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The iam ID of the entity that created the
           policy.
-    :attr datetime last_modified_at: (optional) The UTC timestamp when the policy
+    :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           was last modified.
-    :attr str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy.
-    :attr str state: (optional) The policy state.
-    :attr TemplateMetadata template: (optional) The details of the IAM template that
-          was used to create an enterprise-managed policy in your account. When returned,
-          this indicates that the policy is created from and managed by a template in the
-          root enterprise account.
+    :param str state: (optional) The policy state.
+    :param TemplateMetadata template: (optional) The details of the IAM template
+          that was used to create an enterprise-managed policy in your account. When
+          returned, this indicates that the policy is created from and managed by a
+          template in the root enterprise account.
     """
 
     def __init__(
@@ -4490,15 +4770,15 @@ class PolicyTemplateMetaData:
         roles: List['PolicyRole'],
         resources: List['PolicyResource'],
         *,
-        id: str = None,
-        description: str = None,
-        href: str = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
-        last_modified_at: datetime = None,
-        last_modified_by_id: str = None,
-        state: str = None,
-        template: 'TemplateMetadata' = None,
+        id: Optional[str] = None,
+        description: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+        state: Optional[str] = None,
+        template: Optional['TemplateMetadata'] = None,
     ) -> None:
         """
         Initialize a PolicyTemplateMetaData object.
@@ -4658,14 +4938,14 @@ class PolicyTemplateVersionsCollection:
     """
     A collection of versions for a specific policy template.
 
-    :attr List[PolicyTemplate] versions: (optional) List of policy templates
+    :param List[PolicyTemplate] versions: (optional) List of policy templates
           versions.
     """
 
     def __init__(
         self,
         *,
-        versions: List['PolicyTemplate'] = None,
+        versions: Optional[List['PolicyTemplate']] = None,
     ) -> None:
         """
         Initialize a PolicyTemplateVersionsCollection object.
@@ -4724,9 +5004,9 @@ class ResourceAttribute:
     """
     An attribute associated with a resource.
 
-    :attr str name: The name of an attribute.
-    :attr str value: The value of an attribute.
-    :attr str operator: (optional) The operator of an attribute.
+    :param str name: The name of an attribute.
+    :param str value: The value of an attribute.
+    :param str operator: (optional) The operator of an attribute.
     """
 
     def __init__(
@@ -4734,7 +5014,7 @@ class ResourceAttribute:
         name: str,
         value: str,
         *,
-        operator: str = None,
+        operator: Optional[str] = None,
     ) -> None:
         """
         Initialize a ResourceAttribute object.
@@ -4802,9 +5082,9 @@ class ResourceTag:
     """
     A tag associated with a resource.
 
-    :attr str name: The name of an access management tag.
-    :attr str value: The value of an access management tag.
-    :attr str operator: (optional) The operator of an access management tag.
+    :param str name: The name of an access management tag.
+    :param str value: The value of an access management tag.
+    :param str operator: (optional) The operator of an access management tag.
     """
 
     def __init__(
@@ -4812,7 +5092,7 @@ class ResourceTag:
         name: str,
         value: str,
         *,
-        operator: str = None,
+        operator: Optional[str] = None,
     ) -> None:
         """
         Initialize a ResourceTag object.
@@ -4880,13 +5160,13 @@ class Role:
     """
     A role resource.
 
-    :attr str display_name: The display name of the role that is shown in the
+    :param str display_name: The display name of the role that is shown in the
           console.
-    :attr str description: (optional) The description of the role.
-    :attr List[str] actions: The actions of the role. For more information, see [IAM
-          roles and
+    :param str description: (optional) The description of the role.
+    :param List[str] actions: The actions of the role. For more information, see
+          [IAM roles and
           actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
-    :attr str crn: (optional) The role Cloud Resource Name (CRN). Example CRN:
+    :param str crn: (optional) The role Cloud Resource Name (CRN). Example CRN:
           'crn:v1:ibmcloud:public:iam-access-management::a/exampleAccountId::customRole:ExampleRoleName'.
     """
 
@@ -4895,8 +5175,8 @@ class Role:
         display_name: str,
         actions: List[str],
         *,
-        description: str = None,
-        crn: str = None,
+        description: Optional[str] = None,
+        crn: Optional[str] = None,
     ) -> None:
         """
         Initialize a Role object.
@@ -4972,10 +5252,10 @@ class RoleAction:
     """
     An action that can be performed by the policy subject when assigned role.
 
-    :attr str id: Unique identifier for action with structure
+    :param str id: Unique identifier for action with structure
           service.resource.action e.g., cbr.rule.read.
-    :attr str display_name: Service defined display name for action.
-    :attr str description: Service defined description for action.
+    :param str display_name: Service defined display name for action.
+    :param str description: Service defined description for action.
     """
 
     def __init__(
@@ -5053,17 +5333,17 @@ class RoleCollection:
     """
     A collection of roles returned by the 'list roles' operation.
 
-    :attr List[CustomRole] custom_roles: (optional) List of custom roles.
-    :attr List[Role] service_roles: (optional) List of service roles.
-    :attr List[Role] system_roles: (optional) List of system roles.
+    :param List[CustomRole] custom_roles: (optional) List of custom roles.
+    :param List[Role] service_roles: (optional) List of service roles.
+    :param List[Role] system_roles: (optional) List of system roles.
     """
 
     def __init__(
         self,
         *,
-        custom_roles: List['CustomRole'] = None,
-        service_roles: List['Role'] = None,
-        system_roles: List['Role'] = None,
+        custom_roles: Optional[List['CustomRole']] = None,
+        service_roles: Optional[List['Role']] = None,
+        system_roles: Optional[List['Role']] = None,
     ) -> None:
         """
         Initialize a RoleCollection object.
@@ -5145,7 +5425,7 @@ class Roles:
     """
     A role associated with a policy.
 
-    :attr str role_id: The role Cloud Resource Name (CRN) granted by the policy.
+    :param str role_id: The role Cloud Resource Name (CRN) granted by the policy.
           Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
     """
 
@@ -5206,11 +5486,11 @@ class RuleAttribute:
     """
     Rule that specifies additional access granted (e.g., time-based condition).
 
-    :attr str key: The name of an attribute.
-    :attr str operator: The operator of an attribute.
-    :attr object value: The value of a rule or resource attribute; can be boolean or
-          string for resource attribute. Can be string or an array of strings (e.g., array
-          of days to permit access) for rule attribute.
+    :param str key: The name of an attribute.
+    :param str operator: The operator of an attribute.
+    :param object value: The value of a rule or resource attribute; can be boolean
+          or string for resource attribute. Can be string or an array of strings (e.g.,
+          array of days to permit access) for rule attribute.
     """
 
     def __init__(
@@ -5301,12 +5581,128 @@ class RuleAttribute:
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
 
 
+class RuleAttributeWithConditions:
+    """
+    Rule that specifies additional conditions.
+
+    :param str key: (optional) The name of an attribute.
+    :param str operator: The operator of an attribute.
+    :param object value: (optional) The value of a rule or resource attribute; can
+          be boolean or string for resource attribute. Can be string or an array of
+          strings (e.g., array of days to permit access) for rule attribute.
+    :param List[RuleAttribute] conditions: (optional) List of additional conditions
+          associated with a policy, e.g., time-based conditions that grant access over a
+          certain time period.
+    """
+
+    def __init__(
+        self,
+        operator: str,
+        *,
+        key: Optional[str] = None,
+        value: Optional[object] = None,
+        conditions: Optional[List['RuleAttribute']] = None,
+    ) -> None:
+        """
+        Initialize a RuleAttributeWithConditions object.
+
+        :param str operator: The operator of an attribute.
+        :param str key: (optional) The name of an attribute.
+        :param object value: (optional) The value of a rule or resource attribute;
+               can be boolean or string for resource attribute. Can be string or an array
+               of strings (e.g., array of days to permit access) for rule attribute.
+        :param List[RuleAttribute] conditions: (optional) List of additional
+               conditions associated with a policy, e.g., time-based conditions that grant
+               access over a certain time period.
+        """
+        self.key = key
+        self.operator = operator
+        self.value = value
+        self.conditions = conditions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RuleAttributeWithConditions':
+        """Initialize a RuleAttributeWithConditions object from a json dictionary."""
+        args = {}
+        if 'key' in _dict:
+            args['key'] = _dict.get('key')
+        if 'operator' in _dict:
+            args['operator'] = _dict.get('operator')
+        else:
+            raise ValueError('Required property \'operator\' not present in RuleAttributeWithConditions JSON')
+        if 'value' in _dict:
+            args['value'] = _dict.get('value')
+        if 'conditions' in _dict:
+            args['conditions'] = [RuleAttribute.from_dict(v) for v in _dict.get('conditions')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RuleAttributeWithConditions object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'key') and self.key is not None:
+            _dict['key'] = self.key
+        if hasattr(self, 'operator') and self.operator is not None:
+            _dict['operator'] = self.operator
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        if hasattr(self, 'conditions') and self.conditions is not None:
+            conditions_list = []
+            for v in self.conditions:
+                if isinstance(v, dict):
+                    conditions_list.append(v)
+                else:
+                    conditions_list.append(v.to_dict())
+            _dict['conditions'] = conditions_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RuleAttributeWithConditions object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RuleAttributeWithConditions') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RuleAttributeWithConditions') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class OperatorEnum(str, Enum):
+        """
+        The operator of an attribute.
+        """
+
+        TIMELESSTHAN = 'timeLessThan'
+        TIMELESSTHANOREQUALS = 'timeLessThanOrEquals'
+        TIMEGREATERTHAN = 'timeGreaterThan'
+        TIMEGREATERTHANOREQUALS = 'timeGreaterThanOrEquals'
+        DATETIMELESSTHAN = 'dateTimeLessThan'
+        DATETIMELESSTHANOREQUALS = 'dateTimeLessThanOrEquals'
+        DATETIMEGREATERTHAN = 'dateTimeGreaterThan'
+        DATETIMEGREATERTHANOREQUALS = 'dateTimeGreaterThanOrEquals'
+        DAYOFWEEKEQUALS = 'dayOfWeekEquals'
+        DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
+        AND = 'and'
+        OR = 'or'
+
+
 class SubjectAttribute:
     """
     An attribute associated with a subject.
 
-    :attr str name: The name of an attribute.
-    :attr str value: The value of an attribute.
+    :param str name: The name of an attribute.
+    :param str value: The value of an attribute.
     """
 
     def __init__(
@@ -5370,27 +5766,103 @@ class SubjectAttribute:
         return not self == other
 
 
+class TemplateCountData:
+    """
+    policy template count details.
+
+    :param LimitData template: (optional) policy template current and limit details
+          with in an account.
+    :param LimitData version: (optional) policy template current and limit details
+          with in an account.
+    """
+
+    def __init__(
+        self,
+        *,
+        template: Optional['LimitData'] = None,
+        version: Optional['LimitData'] = None,
+    ) -> None:
+        """
+        Initialize a TemplateCountData object.
+
+        :param LimitData template: (optional) policy template current and limit
+               details with in an account.
+        :param LimitData version: (optional) policy template current and limit
+               details with in an account.
+        """
+        self.template = template
+        self.version = version
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateCountData':
+        """Initialize a TemplateCountData object from a json dictionary."""
+        args = {}
+        if 'template' in _dict:
+            args['template'] = LimitData.from_dict(_dict.get('template'))
+        if 'version' in _dict:
+            args['version'] = LimitData.from_dict(_dict.get('version'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateCountData object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template') and self.template is not None:
+            if isinstance(self.template, dict):
+                _dict['template'] = self.template
+            else:
+                _dict['template'] = self.template.to_dict()
+        if hasattr(self, 'version') and self.version is not None:
+            if isinstance(self.version, dict):
+                _dict['version'] = self.version
+            else:
+                _dict['version'] = self.version.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateCountData object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateCountData') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateCountData') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class TemplateMetadata:
     """
     The details of the IAM template that was used to create an enterprise-managed policy
     in your account. When returned, this indicates that the policy is created from and
     managed by a template in the root enterprise account.
 
-    :attr str id: (optional) The policy template ID.
-    :attr str version: (optional) Template version.
-    :attr str assignment_id: (optional) policy assignment id.
-    :attr str root_id: (optional) orchestrator template id.
-    :attr str root_version: (optional) orchestrator template version.
+    :param str id: (optional) The policy template ID.
+    :param str version: (optional) Template version.
+    :param str assignment_id: (optional) policy assignment id.
+    :param str root_id: (optional) orchestrator template id.
+    :param str root_version: (optional) orchestrator template version.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
-        version: str = None,
-        assignment_id: str = None,
-        root_id: str = None,
-        root_version: str = None,
+        id: Optional[str] = None,
+        version: Optional[str] = None,
+        assignment_id: Optional[str] = None,
+        root_id: Optional[str] = None,
+        root_version: Optional[str] = None,
     ) -> None:
         """
         Initialize a TemplateMetadata object.
@@ -5466,18 +5938,18 @@ class TemplatePolicy:
     """
     The core set of properties associated with the template's policy objet.
 
-    :attr str type: The policy type; either 'access' or 'authorization'.
-    :attr str description: (optional) Description of the policy. This is shown in
+    :param str type: The policy type; either 'access' or 'authorization'.
+    :param str description: (optional) Description of the policy. This is shown in
           child accounts when an access group or trusted profile template uses the policy
           template to assign access.
-    :attr V2PolicyResource resource: (optional) The resource attributes to which the
-          policy grants access.
-    :attr str pattern: (optional) Indicates pattern of rule, either
+    :param V2PolicyResource resource: (optional) The resource attributes to which
+          the policy grants access.
+    :param str pattern: (optional) Indicates pattern of rule, either
           'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
           'time-based-conditions:weekly:custom-hours'.
-    :attr V2PolicyRule rule: (optional) Additional access conditions associated with
-          the policy.
-    :attr Control control: Specifies the type of access granted by the policy.
+    :param V2PolicyRule rule: (optional) Additional access conditions associated
+          with the policy.
+    :param Control control: Specifies the type of access granted by the policy.
     """
 
     def __init__(
@@ -5485,10 +5957,10 @@ class TemplatePolicy:
         type: str,
         control: 'Control',
         *,
-        description: str = None,
-        resource: 'V2PolicyResource' = None,
-        pattern: str = None,
-        rule: 'V2PolicyRule' = None,
+        description: Optional[str] = None,
+        resource: Optional['V2PolicyResource'] = None,
+        pattern: Optional[str] = None,
+        rule: Optional['V2PolicyRule'] = None,
     ) -> None:
         """
         Initialize a TemplatePolicy object.
@@ -5597,33 +6069,33 @@ class V2Policy:
     """
     The core set of properties associated with the policy.
 
-    :attr str type: The policy type; either 'access' or 'authorization'.
-    :attr str description: (optional) Description of the policy.
-    :attr V2PolicySubject subject: (optional) The subject attributes for whom the
+    :param str type: The policy type; either 'access' or 'authorization'.
+    :param str description: (optional) Description of the policy.
+    :param V2PolicySubject subject: (optional) The subject attributes for whom the
           policy grants access.
-    :attr V2PolicyResource resource: (optional) The resource attributes to which the
-          policy grants access.
-    :attr str pattern: (optional) Indicates pattern of rule, either
+    :param V2PolicyResource resource: (optional) The resource attributes to which
+          the policy grants access.
+    :param str pattern: (optional) Indicates pattern of rule, either
           'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
           'time-based-conditions:weekly:custom-hours'.
-    :attr V2PolicyRule rule: (optional) Additional access conditions associated with
-          the policy.
-    :attr str id: (optional) The policy ID.
-    :attr str href: (optional) The href URL that links to the policies API by policy
-          ID.
-    :attr ControlResponse control:
-    :attr datetime created_at: (optional) The UTC timestamp when the policy was
+    :param V2PolicyRule rule: (optional) Additional access conditions associated
+          with the policy.
+    :param str id: (optional) The policy ID.
+    :param str href: (optional) The href URL that links to the policies API by
+          policy ID.
+    :param ControlResponse control:
+    :param datetime created_at: (optional) The UTC timestamp when the policy was
           created.
-    :attr str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The iam ID of the entity that created the
           policy.
-    :attr datetime last_modified_at: (optional) The UTC timestamp when the policy
+    :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           was last modified.
-    :attr str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy.
-    :attr str state: The policy state, either 'deleted' or 'active'.
-    :attr str last_permit_at: (optional) The optional last permit time of policy,
+    :param str state: The policy state, either 'deleted' or 'active'.
+    :param str last_permit_at: (optional) The optional last permit time of policy,
           when passing query parameter format=include_last_permit.
-    :attr int last_permit_frequency: (optional) The optional count of times that
+    :param int last_permit_frequency: (optional) The optional count of times that
           policy has provided a permit, when passing query parameter
           format=include_last_permit.
     """
@@ -5634,19 +6106,19 @@ class V2Policy:
         control: 'ControlResponse',
         state: str,
         *,
-        description: str = None,
-        subject: 'V2PolicySubject' = None,
-        resource: 'V2PolicyResource' = None,
-        pattern: str = None,
-        rule: 'V2PolicyRule' = None,
-        id: str = None,
-        href: str = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
-        last_modified_at: datetime = None,
-        last_modified_by_id: str = None,
-        last_permit_at: str = None,
-        last_permit_frequency: int = None,
+        description: Optional[str] = None,
+        subject: Optional['V2PolicySubject'] = None,
+        resource: Optional['V2PolicyResource'] = None,
+        pattern: Optional[str] = None,
+        rule: Optional['V2PolicyRule'] = None,
+        id: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+        last_permit_at: Optional[str] = None,
+        last_permit_frequency: Optional[int] = None,
     ) -> None:
         """
         Initialize a V2Policy object.
@@ -5824,13 +6296,13 @@ class V2PolicyCollection:
     """
     A collection of policies.
 
-    :attr List[V2PolicyTemplateMetaData] policies: (optional) List of policies.
+    :param List[V2PolicyTemplateMetaData] policies: (optional) List of policies.
     """
 
     def __init__(
         self,
         *,
-        policies: List['V2PolicyTemplateMetaData'] = None,
+        policies: Optional[List['V2PolicyTemplateMetaData']] = None,
     ) -> None:
         """
         Initialize a V2PolicyCollection object.
@@ -5889,9 +6361,9 @@ class V2PolicyResource:
     """
     The resource attributes to which the policy grants access.
 
-    :attr List[V2PolicyResourceAttribute] attributes: List of resource attributes to
-          which the policy grants access.
-    :attr List[V2PolicyResourceTag] tags: (optional) Optional list of resource tags
+    :param List[V2PolicyResourceAttribute] attributes: List of resource attributes
+          to which the policy grants access.
+    :param List[V2PolicyResourceTag] tags: (optional) Optional list of resource tags
           to which the policy grants access.
     """
 
@@ -5899,7 +6371,7 @@ class V2PolicyResource:
         self,
         attributes: List['V2PolicyResourceAttribute'],
         *,
-        tags: List['V2PolicyResourceTag'] = None,
+        tags: Optional[List['V2PolicyResourceTag']] = None,
     ) -> None:
         """
         Initialize a V2PolicyResource object.
@@ -5973,11 +6445,11 @@ class V2PolicyResourceAttribute:
     """
     Resource attribute to which the policy grants access.
 
-    :attr str key: The name of a resource attribute.
-    :attr str operator: The operator of an attribute.
-    :attr object value: The value of a rule or resource attribute; can be boolean or
-          string for resource attribute. Can be string or an array of strings (e.g., array
-          of days to permit access) for rule attribute.
+    :param str key: The name of a resource attribute.
+    :param str operator: The operator of an attribute.
+    :param object value: The value of a rule or resource attribute; can be boolean
+          or string for resource attribute. Can be string or an array of strings (e.g.,
+          array of days to permit access) for rule attribute.
     """
 
     def __init__(
@@ -6065,9 +6537,9 @@ class V2PolicyResourceTag:
     """
     A tag associated with a resource.
 
-    :attr str key: The name of an access management tag.
-    :attr str value: The value of an access management tag.
-    :attr str operator: The operator of an access management tag.
+    :param str key: The name of an access management tag.
+    :param str value: The value of an access management tag.
+    :param str operator: The operator of an access management tag.
     """
 
     def __init__(
@@ -6171,7 +6643,7 @@ class V2PolicySubject:
     """
     The subject attributes for whom the policy grants access.
 
-    :attr List[V2PolicySubjectAttribute] attributes: List of subject attributes
+    :param List[V2PolicySubjectAttribute] attributes: List of subject attributes
           associated with policy/.
     """
 
@@ -6238,9 +6710,9 @@ class V2PolicySubjectAttribute:
     """
     Subject attribute for whom the policy grants access.
 
-    :attr str key: The name of a subject attribute, e.g., iam_id, access_group_id.
-    :attr str operator: The operator of an attribute.
-    :attr str value: The value of the ID of the subject, e.g., service ID, access
+    :param str key: The name of a subject attribute, e.g., iam_id, access_group_id.
+    :param str operator: The operator of an attribute.
+    :param str value: The value of the ID of the subject, e.g., service ID, access
           group ID, IAM ID.
     """
 
@@ -6327,39 +6799,39 @@ class V2PolicyTemplateMetaData:
     """
     The core set of properties associated with the policy.
 
-    :attr str type: The policy type; either 'access' or 'authorization'.
-    :attr str description: (optional) Description of the policy.
-    :attr V2PolicySubject subject: (optional) The subject attributes for whom the
+    :param str type: The policy type; either 'access' or 'authorization'.
+    :param str description: (optional) Description of the policy.
+    :param V2PolicySubject subject: (optional) The subject attributes for whom the
           policy grants access.
-    :attr V2PolicyResource resource: (optional) The resource attributes to which the
-          policy grants access.
-    :attr str pattern: (optional) Indicates pattern of rule, either
+    :param V2PolicyResource resource: (optional) The resource attributes to which
+          the policy grants access.
+    :param str pattern: (optional) Indicates pattern of rule, either
           'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
           'time-based-conditions:weekly:custom-hours'.
-    :attr V2PolicyRule rule: (optional) Additional access conditions associated with
-          the policy.
-    :attr str id: (optional) The policy ID.
-    :attr str href: (optional) The href URL that links to the policies API by policy
-          ID.
-    :attr ControlResponse control:
-    :attr datetime created_at: (optional) The UTC timestamp when the policy was
+    :param V2PolicyRule rule: (optional) Additional access conditions associated
+          with the policy.
+    :param str id: (optional) The policy ID.
+    :param str href: (optional) The href URL that links to the policies API by
+          policy ID.
+    :param ControlResponse control:
+    :param datetime created_at: (optional) The UTC timestamp when the policy was
           created.
-    :attr str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The iam ID of the entity that created the
           policy.
-    :attr datetime last_modified_at: (optional) The UTC timestamp when the policy
+    :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           was last modified.
-    :attr str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy.
-    :attr str state: The policy state, either 'deleted' or 'active'.
-    :attr str last_permit_at: (optional) The optional last permit time of policy,
+    :param str state: The policy state, either 'deleted' or 'active'.
+    :param str last_permit_at: (optional) The optional last permit time of policy,
           when passing query parameter format=include_last_permit.
-    :attr int last_permit_frequency: (optional) The optional count of times that
+    :param int last_permit_frequency: (optional) The optional count of times that
           policy has provided a permit, when passing query parameter
           format=include_last_permit.
-    :attr TemplateMetadata template: (optional) The details of the IAM template that
-          was used to create an enterprise-managed policy in your account. When returned,
-          this indicates that the policy is created from and managed by a template in the
-          root enterprise account.
+    :param TemplateMetadata template: (optional) The details of the IAM template
+          that was used to create an enterprise-managed policy in your account. When
+          returned, this indicates that the policy is created from and managed by a
+          template in the root enterprise account.
     """
 
     def __init__(
@@ -6368,20 +6840,20 @@ class V2PolicyTemplateMetaData:
         control: 'ControlResponse',
         state: str,
         *,
-        description: str = None,
-        subject: 'V2PolicySubject' = None,
-        resource: 'V2PolicyResource' = None,
-        pattern: str = None,
-        rule: 'V2PolicyRule' = None,
-        id: str = None,
-        href: str = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
-        last_modified_at: datetime = None,
-        last_modified_by_id: str = None,
-        last_permit_at: str = None,
-        last_permit_frequency: int = None,
-        template: 'TemplateMetadata' = None,
+        description: Optional[str] = None,
+        subject: Optional['V2PolicySubject'] = None,
+        resource: Optional['V2PolicyResource'] = None,
+        pattern: Optional[str] = None,
+        rule: Optional['V2PolicyRule'] = None,
+        id: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+        last_permit_at: Optional[str] = None,
+        last_permit_frequency: Optional[int] = None,
+        template: Optional['TemplateMetadata'] = None,
     ) -> None:
         """
         Initialize a V2PolicyTemplateMetaData object.
@@ -6571,7 +7043,7 @@ class ControlResponseControl(ControlResponse):
     """
     Specifies the type of access granted by the policy.
 
-    :attr Grant grant: Permission granted by the policy.
+    :param Grant grant: Permission granted by the policy.
     """
 
     def __init__(
@@ -6634,7 +7106,7 @@ class ControlResponseControlWithEnrichedRoles(ControlResponse):
     """
     Specifies the type of access granted by the policy with additional role information.
 
-    :attr GrantWithEnrichedRoles grant: Permission granted by the policy with
+    :param GrantWithEnrichedRoles grant: Permission granted by the policy with
           translated roles and additional role information.
     """
 
@@ -6699,11 +7171,11 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
     """
     Rule that specifies additional access granted (e.g., time-based condition).
 
-    :attr str key: The name of an attribute.
-    :attr str operator: The operator of an attribute.
-    :attr object value: The value of a rule or resource attribute; can be boolean or
-          string for resource attribute. Can be string or an array of strings (e.g., array
-          of days to permit access) for rule attribute.
+    :param str key: The name of an attribute.
+    :param str operator: The operator of an attribute.
+    :param object value: The value of a rule or resource attribute; can be boolean
+          or string for resource attribute. Can be string or an array of strings (e.g.,
+          array of days to permit access) for rule attribute.
     """
 
     def __init__(
@@ -6800,24 +7272,24 @@ class V2PolicyRuleRuleWithConditions(V2PolicyRule):
     Rule that specifies additional access granted (e.g., time-based condition) accross
     multiple conditions.
 
-    :attr str operator: Operator to evaluate conditions.
-    :attr List[RuleAttribute] conditions: List of conditions associated with a
-          policy, e.g., time-based conditions that grant access over a certain time
-          period.
+    :param str operator: Operator to evaluate conditions.
+    :param List[RuleAttributeWithConditions] conditions: List of conditions
+          associated with a policy, e.g., time-based conditions that grant access over a
+          certain time period.
     """
 
     def __init__(
         self,
         operator: str,
-        conditions: List['RuleAttribute'],
+        conditions: List['RuleAttributeWithConditions'],
     ) -> None:
         """
         Initialize a V2PolicyRuleRuleWithConditions object.
 
         :param str operator: Operator to evaluate conditions.
-        :param List[RuleAttribute] conditions: List of conditions associated with a
-               policy, e.g., time-based conditions that grant access over a certain time
-               period.
+        :param List[RuleAttributeWithConditions] conditions: List of conditions
+               associated with a policy, e.g., time-based conditions that grant access
+               over a certain time period.
         """
         # pylint: disable=super-init-not-called
         self.operator = operator
@@ -6832,7 +7304,7 @@ class V2PolicyRuleRuleWithConditions(V2PolicyRule):
         else:
             raise ValueError('Required property \'operator\' not present in V2PolicyRuleRuleWithConditions JSON')
         if 'conditions' in _dict:
-            args['conditions'] = [RuleAttribute.from_dict(v) for v in _dict.get('conditions')]
+            args['conditions'] = [RuleAttributeWithConditions.from_dict(v) for v in _dict.get('conditions')]
         else:
             raise ValueError('Required property \'conditions\' not present in V2PolicyRuleRuleWithConditions JSON')
         return cls(**args)
