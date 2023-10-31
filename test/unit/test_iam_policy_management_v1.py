@@ -2561,7 +2561,7 @@ class TestCreatePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -2660,7 +2660,7 @@ class TestCreatePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -2757,7 +2757,7 @@ class TestCreatePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -3006,7 +3006,7 @@ class TestCreatePolicyTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -3102,7 +3102,7 @@ class TestCreatePolicyTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -4350,6 +4350,35 @@ class TestModel_GrantWithEnrichedRoles:
         assert grant_with_enriched_roles_model_json2 == grant_with_enriched_roles_model_json
 
 
+class TestModel_LimitData:
+    """
+    Test Class for LimitData
+    """
+
+    def test_limit_data_serialization(self):
+        """
+        Test serialization/deserialization for LimitData
+        """
+
+        # Construct a json representation of a LimitData model
+        limit_data_model_json = {}
+
+        # Construct a model instance of LimitData by calling from_dict on the json representation
+        limit_data_model = LimitData.from_dict(limit_data_model_json)
+        assert limit_data_model != False
+
+        # Construct a model instance of LimitData by calling from_dict on the json representation
+        limit_data_model_dict = LimitData.from_dict(limit_data_model_json).__dict__
+        limit_data_model2 = LimitData(**limit_data_model_dict)
+
+        # Verify the model instances are equivalent
+        assert limit_data_model == limit_data_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        limit_data_model_json2 = limit_data_model.to_dict()
+        assert limit_data_model_json2 == limit_data_model_json
+
+
 class TestModel_Policy:
     """
     Test Class for Policy
@@ -5066,6 +5095,88 @@ class TestModel_PolicyTemplateCollection:
         assert policy_template_collection_model_json2 == policy_template_collection_model_json
 
 
+class TestModel_PolicyTemplateLimitData:
+    """
+    Test Class for PolicyTemplateLimitData
+    """
+
+    def test_policy_template_limit_data_serialization(self):
+        """
+        Test serialization/deserialization for PolicyTemplateLimitData
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
+
+        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        v2_policy_resource_model = {}  # V2PolicyResource
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
+
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
+
+        grant_model = {}  # Grant
+        grant_model['roles'] = [roles_model]
+
+        control_model = {}  # Control
+        control_model['grant'] = grant_model
+
+        template_policy_model = {}  # TemplatePolicy
+        template_policy_model['type'] = 'access'
+        template_policy_model['description'] = 'testString'
+        template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['pattern'] = 'testString'
+        template_policy_model['rule'] = v2_policy_rule_model
+        template_policy_model['control'] = control_model
+
+        limit_data_model = {}  # LimitData
+
+        template_count_data_model = {}  # TemplateCountData
+        template_count_data_model['template'] = limit_data_model
+        template_count_data_model['version'] = limit_data_model
+
+        # Construct a json representation of a PolicyTemplateLimitData model
+        policy_template_limit_data_model_json = {}
+        policy_template_limit_data_model_json['name'] = 'testString'
+        policy_template_limit_data_model_json['description'] = 'testString'
+        policy_template_limit_data_model_json['account_id'] = 'testString'
+        policy_template_limit_data_model_json['version'] = 'testString'
+        policy_template_limit_data_model_json['committed'] = True
+        policy_template_limit_data_model_json['policy'] = template_policy_model
+        policy_template_limit_data_model_json['counts'] = template_count_data_model
+
+        # Construct a model instance of PolicyTemplateLimitData by calling from_dict on the json representation
+        policy_template_limit_data_model = PolicyTemplateLimitData.from_dict(policy_template_limit_data_model_json)
+        assert policy_template_limit_data_model != False
+
+        # Construct a model instance of PolicyTemplateLimitData by calling from_dict on the json representation
+        policy_template_limit_data_model_dict = PolicyTemplateLimitData.from_dict(
+            policy_template_limit_data_model_json
+        ).__dict__
+        policy_template_limit_data_model2 = PolicyTemplateLimitData(**policy_template_limit_data_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_template_limit_data_model == policy_template_limit_data_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_template_limit_data_model_json2 = policy_template_limit_data_model.to_dict()
+        assert policy_template_limit_data_model_json2 == policy_template_limit_data_model_json
+
+
 class TestModel_PolicyTemplateMetaData:
     """
     Test Class for PolicyTemplateMetaData
@@ -5456,6 +5567,50 @@ class TestModel_RuleAttribute:
         assert rule_attribute_model_json2 == rule_attribute_model_json
 
 
+class TestModel_RuleAttributeWithConditions:
+    """
+    Test Class for RuleAttributeWithConditions
+    """
+
+    def test_rule_attribute_with_conditions_serialization(self):
+        """
+        Test serialization/deserialization for RuleAttributeWithConditions
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        rule_attribute_model = {}  # RuleAttribute
+        rule_attribute_model['key'] = 'testString'
+        rule_attribute_model['operator'] = 'timeLessThan'
+        rule_attribute_model['value'] = 'testString'
+
+        # Construct a json representation of a RuleAttributeWithConditions model
+        rule_attribute_with_conditions_model_json = {}
+        rule_attribute_with_conditions_model_json['key'] = 'testString'
+        rule_attribute_with_conditions_model_json['operator'] = 'timeLessThan'
+        rule_attribute_with_conditions_model_json['value'] = 'testString'
+        rule_attribute_with_conditions_model_json['conditions'] = [rule_attribute_model]
+
+        # Construct a model instance of RuleAttributeWithConditions by calling from_dict on the json representation
+        rule_attribute_with_conditions_model = RuleAttributeWithConditions.from_dict(
+            rule_attribute_with_conditions_model_json
+        )
+        assert rule_attribute_with_conditions_model != False
+
+        # Construct a model instance of RuleAttributeWithConditions by calling from_dict on the json representation
+        rule_attribute_with_conditions_model_dict = RuleAttributeWithConditions.from_dict(
+            rule_attribute_with_conditions_model_json
+        ).__dict__
+        rule_attribute_with_conditions_model2 = RuleAttributeWithConditions(**rule_attribute_with_conditions_model_dict)
+
+        # Verify the model instances are equivalent
+        assert rule_attribute_with_conditions_model == rule_attribute_with_conditions_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        rule_attribute_with_conditions_model_json2 = rule_attribute_with_conditions_model.to_dict()
+        assert rule_attribute_with_conditions_model_json2 == rule_attribute_with_conditions_model_json
+
+
 class TestModel_SubjectAttribute:
     """
     Test Class for SubjectAttribute
@@ -5485,6 +5640,41 @@ class TestModel_SubjectAttribute:
         # Convert model instance back to dict and verify no loss of data
         subject_attribute_model_json2 = subject_attribute_model.to_dict()
         assert subject_attribute_model_json2 == subject_attribute_model_json
+
+
+class TestModel_TemplateCountData:
+    """
+    Test Class for TemplateCountData
+    """
+
+    def test_template_count_data_serialization(self):
+        """
+        Test serialization/deserialization for TemplateCountData
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        limit_data_model = {}  # LimitData
+
+        # Construct a json representation of a TemplateCountData model
+        template_count_data_model_json = {}
+        template_count_data_model_json['template'] = limit_data_model
+        template_count_data_model_json['version'] = limit_data_model
+
+        # Construct a model instance of TemplateCountData by calling from_dict on the json representation
+        template_count_data_model = TemplateCountData.from_dict(template_count_data_model_json)
+        assert template_count_data_model != False
+
+        # Construct a model instance of TemplateCountData by calling from_dict on the json representation
+        template_count_data_model_dict = TemplateCountData.from_dict(template_count_data_model_json).__dict__
+        template_count_data_model2 = TemplateCountData(**template_count_data_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_count_data_model == template_count_data_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_count_data_model_json2 = template_count_data_model.to_dict()
+        assert template_count_data_model_json2 == template_count_data_model_json
 
 
 class TestModel_TemplateMetadata:
@@ -6168,10 +6358,16 @@ class TestModel_V2PolicyRuleRuleWithConditions:
         rule_attribute_model['operator'] = 'timeLessThan'
         rule_attribute_model['value'] = 'testString'
 
+        rule_attribute_with_conditions_model = {}  # RuleAttributeWithConditions
+        rule_attribute_with_conditions_model['key'] = 'testString'
+        rule_attribute_with_conditions_model['operator'] = 'timeLessThan'
+        rule_attribute_with_conditions_model['value'] = 'testString'
+        rule_attribute_with_conditions_model['conditions'] = [rule_attribute_model]
+
         # Construct a json representation of a V2PolicyRuleRuleWithConditions model
         v2_policy_rule_rule_with_conditions_model_json = {}
         v2_policy_rule_rule_with_conditions_model_json['operator'] = 'and'
-        v2_policy_rule_rule_with_conditions_model_json['conditions'] = [rule_attribute_model]
+        v2_policy_rule_rule_with_conditions_model_json['conditions'] = [rule_attribute_with_conditions_model]
 
         # Construct a model instance of V2PolicyRuleRuleWithConditions by calling from_dict on the json representation
         v2_policy_rule_rule_with_conditions_model = V2PolicyRuleRuleWithConditions.from_dict(
