@@ -1,3 +1,10 @@
+## [0.45.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.45.0...v0.45.1) (2023-10-31)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** add nested conditions to rule.conditions ([#226](https://github.com/IBM/platform-services-python-sdk/issues/226)) ([93bf662](https://github.com/IBM/platform-services-python-sdk/commit/93bf662a46f4683ebc6cb0b264aa70f6c391de94))
+
 # [0.45.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.44.1...v0.45.0) (2023-10-18)
 
 
