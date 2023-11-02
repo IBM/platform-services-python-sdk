@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
+# IBM OpenAPI SDK Code Generator Version: 3.81.0-c73a091c-20231026-215706
 
 """
 With the Context Based Restrictions API, you can:
@@ -27,7 +27,7 @@ API Version: 1.0.1
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 import sys
 
@@ -59,7 +59,9 @@ class ContextBasedRestrictionsV1(BaseService):
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -83,13 +85,13 @@ class ContextBasedRestrictionsV1(BaseService):
     def create_zone(
         self,
         *,
-        name: str = None,
-        account_id: str = None,
-        addresses: List['Address'] = None,
-        description: str = None,
-        excluded: List['Address'] = None,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
+        name: Optional[str] = None,
+        account_id: Optional[str] = None,
+        addresses: Optional[List['Address']] = None,
+        description: Optional[str] = None,
+        excluded: Optional[List['Address']] = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -167,10 +169,10 @@ class ContextBasedRestrictionsV1(BaseService):
         self,
         account_id: str,
         *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        name: str = None,
-        sort: str = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        name: Optional[str] = None,
+        sort: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -238,8 +240,8 @@ class ContextBasedRestrictionsV1(BaseService):
         self,
         zone_id: str,
         *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -300,13 +302,13 @@ class ContextBasedRestrictionsV1(BaseService):
         zone_id: str,
         if_match: str,
         *,
-        name: str = None,
-        account_id: str = None,
-        addresses: List['Address'] = None,
-        description: str = None,
-        excluded: List['Address'] = None,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
+        name: Optional[str] = None,
+        account_id: Optional[str] = None,
+        addresses: Optional[List['Address']] = None,
+        description: Optional[str] = None,
+        excluded: Optional[List['Address']] = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -397,8 +399,8 @@ class ContextBasedRestrictionsV1(BaseService):
         self,
         zone_id: str,
         *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -456,9 +458,9 @@ class ContextBasedRestrictionsV1(BaseService):
     def list_available_serviceref_targets(
         self,
         *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        type: str = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        type: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -521,13 +523,13 @@ class ContextBasedRestrictionsV1(BaseService):
     def create_rule(
         self,
         *,
-        contexts: List['RuleContext'] = None,
-        resources: List['Resource'] = None,
-        description: str = None,
-        operations: 'NewRuleOperations' = None,
-        enforcement_mode: str = None,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
+        contexts: Optional[List['RuleContext']] = None,
+        resources: Optional[List['Resource']] = None,
+        description: Optional[str] = None,
+        operations: Optional['NewRuleOperations'] = None,
+        enforcement_mode: Optional[str] = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -613,18 +615,18 @@ class ContextBasedRestrictionsV1(BaseService):
         self,
         account_id: str,
         *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        region: str = None,
-        resource: str = None,
-        resource_type: str = None,
-        service_instance: str = None,
-        service_name: str = None,
-        service_type: str = None,
-        service_group_id: str = None,
-        zone_id: str = None,
-        sort: str = None,
-        enforcement_mode: str = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        region: Optional[str] = None,
+        resource: Optional[str] = None,
+        resource_type: Optional[str] = None,
+        service_instance: Optional[str] = None,
+        service_name: Optional[str] = None,
+        service_type: Optional[str] = None,
+        service_group_id: Optional[str] = None,
+        zone_id: Optional[str] = None,
+        sort: Optional[str] = None,
+        enforcement_mode: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -712,8 +714,8 @@ class ContextBasedRestrictionsV1(BaseService):
         self,
         rule_id: str,
         *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -774,13 +776,13 @@ class ContextBasedRestrictionsV1(BaseService):
         rule_id: str,
         if_match: str,
         *,
-        contexts: List['RuleContext'] = None,
-        resources: List['Resource'] = None,
-        description: str = None,
-        operations: 'NewRuleOperations' = None,
-        enforcement_mode: str = None,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
+        contexts: Optional[List['RuleContext']] = None,
+        resources: Optional[List['Resource']] = None,
+        description: Optional[str] = None,
+        operations: Optional['NewRuleOperations'] = None,
+        enforcement_mode: Optional[str] = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -878,8 +880,8 @@ class ContextBasedRestrictionsV1(BaseService):
         self,
         rule_id: str,
         *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -942,8 +944,8 @@ class ContextBasedRestrictionsV1(BaseService):
         self,
         account_id: str,
         *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1006,11 +1008,11 @@ class ContextBasedRestrictionsV1(BaseService):
     def list_available_service_operations(
         self,
         *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        service_name: str = None,
-        service_group_id: str = None,
-        resource_type: str = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        service_name: Optional[str] = None,
+        service_group_id: Optional[str] = None,
+        resource_type: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1109,11 +1111,13 @@ class APIType:
     """
     Service API Type details.
 
-    :attr str api_type_id: The id of the API type.
-    :attr str display_name: The displayed name of the API type.
-    :attr str description: The description of the API type.
-    :attr str type: The type of the API type.
-    :attr List[Action] actions: The actions available for the API type.
+    :param str api_type_id: The id of the API type.
+    :param str display_name: The displayed name of the API type.
+    :param str description: The description of the API type.
+    :param str type: The type of the API type.
+    :param List[Action] actions: The actions available for the API type.
+    :param List[str] enforcement_modes: (optional) The enforcement modes supported
+          by the API type.
     """
 
     def __init__(
@@ -1123,6 +1127,8 @@ class APIType:
         description: str,
         type: str,
         actions: List['Action'],
+        *,
+        enforcement_modes: Optional[List[str]] = None,
     ) -> None:
         """
         Initialize a APIType object.
@@ -1132,12 +1138,15 @@ class APIType:
         :param str description: The description of the API type.
         :param str type: The type of the API type.
         :param List[Action] actions: The actions available for the API type.
+        :param List[str] enforcement_modes: (optional) The enforcement modes
+               supported by the API type.
         """
         self.api_type_id = api_type_id
         self.display_name = display_name
         self.description = description
         self.type = type
         self.actions = actions
+        self.enforcement_modes = enforcement_modes
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'APIType':
@@ -1163,6 +1172,8 @@ class APIType:
             args['actions'] = [Action.from_dict(v) for v in _dict.get('actions')]
         else:
             raise ValueError('Required property \'actions\' not present in APIType JSON')
+        if 'enforcement_modes' in _dict:
+            args['enforcement_modes'] = _dict.get('enforcement_modes')
         return cls(**args)
 
     @classmethod
@@ -1189,6 +1200,8 @@ class APIType:
                 else:
                     actions_list.append(v.to_dict())
             _dict['actions'] = actions_list
+        if hasattr(self, 'enforcement_modes') and self.enforcement_modes is not None:
+            _dict['enforcement_modes'] = self.enforcement_modes
         return _dict
 
     def _to_dict(self):
@@ -1214,18 +1227,18 @@ class AccountSettings:
     """
     An output account settings.
 
-    :attr str id: The globally unique ID of the account settings.
-    :attr str crn: The account settings CRN.
-    :attr int rule_count_limit: the max number of rules allowed for the account.
-    :attr int zone_count_limit: the max number of zones allowed for the account.
-    :attr int current_rule_count: the current number of rules used by the account.
-    :attr int current_zone_count: the current number of zones used by the account.
-    :attr str href: The href link to the resource.
-    :attr datetime created_at: The time the resource was created.
-    :attr str created_by_id: IAM ID of the user or service which created the
+    :param str id: The globally unique ID of the account settings.
+    :param str crn: The account settings CRN.
+    :param int rule_count_limit: the max number of rules allowed for the account.
+    :param int zone_count_limit: the max number of zones allowed for the account.
+    :param int current_rule_count: the current number of rules used by the account.
+    :param int current_zone_count: the current number of zones used by the account.
+    :param str href: The href link to the resource.
+    :param datetime created_at: The time the resource was created.
+    :param str created_by_id: IAM ID of the user or service which created the
           resource.
-    :attr datetime last_modified_at: The last time the resource was modified.
-    :attr str last_modified_by_id: IAM ID of the user or service which modified the
+    :param datetime last_modified_at: The last time the resource was modified.
+    :param str last_modified_by_id: IAM ID of the user or service which modified the
           resource.
     """
 
@@ -1381,8 +1394,8 @@ class Action:
     """
     Service API Type actions.
 
-    :attr str action_id: The id of the action.
-    :attr str description: The description of the action.
+    :param str action_id: The id of the action.
+    :param str description: The description of the action.
     """
 
     def __init__(
@@ -1450,13 +1463,13 @@ class Address:
     """
     A zone address.
 
-    :attr str type: (optional) The type of address.
+    :param str type: (optional) The type of address.
     """
 
     def __init__(
         self,
         *,
-        type: str = None,
+        type: Optional[str] = None,
     ) -> None:
         """
         Initialize a Address object.
@@ -1516,11 +1529,12 @@ class Address:
         SERVICEREF = 'serviceRef'
 
 
+
 class NewRuleOperations:
     """
     The operations this rule applies to.
 
-    :attr List[NewRuleOperationsApiTypesItem] api_types: The API types this rule
+    :param List[NewRuleOperationsApiTypesItem] api_types: The API types this rule
           applies to.
     """
 
@@ -1587,7 +1601,7 @@ class NewRuleOperationsApiTypesItem:
     """
     NewRuleOperationsApiTypesItem.
 
-    :attr str api_type_id:
+    :param str api_type_id:
     """
 
     def __init__(
@@ -1646,7 +1660,7 @@ class OperationsList:
     """
     The response object of the `list_available_service_operations` operation.
 
-    :attr List[APIType] api_types: The returned API types.
+    :param List[APIType] api_types: The returned API types.
     """
 
     def __init__(
@@ -1711,15 +1725,15 @@ class Resource:
     """
     An rule resource.
 
-    :attr List[ResourceAttribute] attributes: The resource attributes.
-    :attr List[ResourceTagAttribute] tags: (optional) The optional resource tags.
+    :param List[ResourceAttribute] attributes: The resource attributes.
+    :param List[ResourceTagAttribute] tags: (optional) The optional resource tags.
     """
 
     def __init__(
         self,
         attributes: List['ResourceAttribute'],
         *,
-        tags: List['ResourceTagAttribute'] = None,
+        tags: Optional[List['ResourceTagAttribute']] = None,
     ) -> None:
         """
         Initialize a Resource object.
@@ -1792,9 +1806,9 @@ class ResourceAttribute:
     """
     A rule resource attribute.
 
-    :attr str name: The attribute name.
-    :attr str value: The attribute value.
-    :attr str operator: (optional) The attribute operator.
+    :param str name: The attribute name.
+    :param str value: The attribute value.
+    :param str operator: (optional) The attribute operator.
     """
 
     def __init__(
@@ -1802,7 +1816,7 @@ class ResourceAttribute:
         name: str,
         value: str,
         *,
-        operator: str = None,
+        operator: Optional[str] = None,
     ) -> None:
         """
         Initialize a ResourceAttribute object.
@@ -1870,9 +1884,9 @@ class ResourceTagAttribute:
     """
     A rule resource tag attribute.
 
-    :attr str name: The tag attribute name.
-    :attr str value: The tag attribute value.
-    :attr str operator: (optional) The attribute operator.
+    :param str name: The tag attribute name.
+    :param str value: The tag attribute value.
+    :param str operator: (optional) The attribute operator.
     """
 
     def __init__(
@@ -1880,7 +1894,7 @@ class ResourceTagAttribute:
         name: str,
         value: str,
         *,
-        operator: str = None,
+        operator: Optional[str] = None,
     ) -> None:
         """
         Initialize a ResourceTagAttribute object.
@@ -1948,23 +1962,23 @@ class Rule:
     """
     An output rule.
 
-    :attr str id: The globally unique ID of the rule.
-    :attr str crn: The rule CRN.
-    :attr str description: The description of the rule.
-    :attr List[RuleContext] contexts: The contexts this rule applies to.
-    :attr List[Resource] resources: The resources this rule apply to.
-    :attr NewRuleOperations operations: (optional) The operations this rule applies
+    :param str id: The globally unique ID of the rule.
+    :param str crn: The rule CRN.
+    :param str description: The description of the rule.
+    :param List[RuleContext] contexts: The contexts this rule applies to.
+    :param List[Resource] resources: The resources this rule apply to.
+    :param NewRuleOperations operations: (optional) The operations this rule applies
           to.
-    :attr str enforcement_mode: (optional) The rule enforcement mode:
+    :param str enforcement_mode: (optional) The rule enforcement mode:
            * `enabled` - The restrictions are enforced and reported. This is the default.
            * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
            * `report` - The restrictions are evaluated and reported, but not enforced.
-    :attr str href: The href link to the resource.
-    :attr datetime created_at: The time the resource was created.
-    :attr str created_by_id: IAM ID of the user or service which created the
+    :param str href: The href link to the resource.
+    :param datetime created_at: The time the resource was created.
+    :param str created_by_id: IAM ID of the user or service which created the
           resource.
-    :attr datetime last_modified_at: The last time the resource was modified.
-    :attr str last_modified_by_id: IAM ID of the user or service which modified the
+    :param datetime last_modified_at: The last time the resource was modified.
+    :param str last_modified_by_id: IAM ID of the user or service which modified the
           resource.
     """
 
@@ -1981,8 +1995,8 @@ class Rule:
         last_modified_at: datetime,
         last_modified_by_id: str,
         *,
-        operations: 'NewRuleOperations' = None,
-        enforcement_mode: str = None,
+        operations: Optional['NewRuleOperations'] = None,
+        enforcement_mode: Optional[str] = None,
     ) -> None:
         """
         Initialize a Rule object.
@@ -2152,11 +2166,12 @@ class Rule:
         REPORT = 'report'
 
 
+
 class RuleContext:
     """
     A rule context.
 
-    :attr List[RuleContextAttribute] attributes: The attributes.
+    :param List[RuleContextAttribute] attributes: The attributes.
     """
 
     def __init__(
@@ -2221,8 +2236,8 @@ class RuleContextAttribute:
     """
     An rule context attribute.
 
-    :attr str name: The attribute name.
-    :attr str value: The attribute value.
+    :param str name: The attribute name.
+    :param str value: The attribute value.
     """
 
     def __init__(
@@ -2290,8 +2305,8 @@ class RuleList:
     """
     The response object of the ListRules operation.
 
-    :attr int count: The number of returned results.
-    :attr List[Rule] rules: The returned rules.
+    :param int count: The number of returned results.
+    :param List[Rule] rules: The returned rules.
     """
 
     def __init__(
@@ -2365,9 +2380,9 @@ class ServiceRefTarget:
     """
     Summary information about a service reference target.
 
-    :attr str service_name: The name of the service.
-    :attr str service_type: (optional) The type of the service.
-    :attr List[ServiceRefTargetLocationsItem] locations: (optional) The locations
+    :param str service_name: The name of the service.
+    :param str service_type: (optional) The type of the service.
+    :param List[ServiceRefTargetLocationsItem] locations: (optional) The locations
           the service is available.
     """
 
@@ -2375,8 +2390,8 @@ class ServiceRefTarget:
         self,
         service_name: str,
         *,
-        service_type: str = None,
-        locations: List['ServiceRefTargetLocationsItem'] = None,
+        service_type: Optional[str] = None,
+        locations: Optional[List['ServiceRefTargetLocationsItem']] = None,
     ) -> None:
         """
         Initialize a ServiceRefTarget object.
@@ -2449,8 +2464,8 @@ class ServiceRefTargetList:
     """
     A list of service reference targets.
 
-    :attr int count: The number of returned results.
-    :attr List[ServiceRefTarget] targets: The list of service reference targets.
+    :param int count: The number of returned results.
+    :param List[ServiceRefTarget] targets: The list of service reference targets.
     """
 
     def __init__(
@@ -2525,7 +2540,7 @@ class ServiceRefTargetLocationsItem:
     """
     ServiceRefTargetLocationsItem.
 
-    :attr str name: The location name.
+    :param str name: The location name.
     """
 
     def __init__(
@@ -2584,21 +2599,21 @@ class ServiceRefValue:
     """
     A service reference value.
 
-    :attr str account_id: The id of the account owning the service.
-    :attr str service_type: (optional) The service type.
-    :attr str service_name: (optional) The service name.
-    :attr str service_instance: (optional) The service instance.
-    :attr str location: (optional) The location.
+    :param str account_id: The id of the account owning the service.
+    :param str service_type: (optional) The service type.
+    :param str service_name: (optional) The service name.
+    :param str service_instance: (optional) The service instance.
+    :param str location: (optional) The location.
     """
 
     def __init__(
         self,
         account_id: str,
         *,
-        service_type: str = None,
-        service_name: str = None,
-        service_instance: str = None,
-        location: str = None,
+        service_type: Optional[str] = None,
+        service_name: Optional[str] = None,
+        service_instance: Optional[str] = None,
+        location: Optional[str] = None,
     ) -> None:
         """
         Initialize a ServiceRefValue object.
@@ -2676,22 +2691,22 @@ class Zone:
     """
     An output zone.
 
-    :attr str id: The globally unique ID of the zone.
-    :attr str crn: The zone CRN.
-    :attr int address_count: The number of addresses in the zone.
-    :attr int excluded_count: The number of excluded addresses in the zone.
-    :attr str name: The name of the zone.
-    :attr str account_id: The id of the account owning this zone.
-    :attr str description: The description of the zone.
-    :attr List[Address] addresses: The list of addresses in the zone.
-    :attr List[Address] excluded: The list of excluded addresses in the zone. Only
+    :param str id: The globally unique ID of the zone.
+    :param str crn: The zone CRN.
+    :param int address_count: The number of addresses in the zone.
+    :param int excluded_count: The number of excluded addresses in the zone.
+    :param str name: The name of the zone.
+    :param str account_id: The id of the account owning this zone.
+    :param str description: The description of the zone.
+    :param List[Address] addresses: The list of addresses in the zone.
+    :param List[Address] excluded: The list of excluded addresses in the zone. Only
           addresses of type `ipAddress`, `ipRange`, and `subnet` can be excluded.
-    :attr str href: The href link to the resource.
-    :attr datetime created_at: The time the resource was created.
-    :attr str created_by_id: IAM ID of the user or service which created the
+    :param str href: The href link to the resource.
+    :param datetime created_at: The time the resource was created.
+    :param str created_by_id: IAM ID of the user or service which created the
           resource.
-    :attr datetime last_modified_at: The last time the resource was modified.
-    :attr str last_modified_by_id: IAM ID of the user or service which modified the
+    :param datetime last_modified_at: The last time the resource was modified.
+    :param str last_modified_by_id: IAM ID of the user or service which modified the
           resource.
     """
 
@@ -2884,8 +2899,8 @@ class ZoneList:
     """
     The response object of the ListZones operation.
 
-    :attr int count: The number of returned results.
-    :attr List[ZoneSummary] zones: The returned zones.
+    :param int count: The number of returned results.
+    :param List[ZoneSummary] zones: The returned zones.
     """
 
     def __init__(
@@ -2959,20 +2974,20 @@ class ZoneSummary:
     """
     An output zone summary.
 
-    :attr str id: The globally unique ID of the zone.
-    :attr str crn: The zone CRN.
-    :attr str name: The name of the zone.
-    :attr str description: (optional) The description of the zone.
-    :attr List[Address] addresses_preview: A preview of addresses in the zone (3
+    :param str id: The globally unique ID of the zone.
+    :param str crn: The zone CRN.
+    :param str name: The name of the zone.
+    :param str description: (optional) The description of the zone.
+    :param List[Address] addresses_preview: A preview of addresses in the zone (3
           addresses maximum).
-    :attr int address_count: The number of addresses in the zone.
-    :attr int excluded_count: The number of excluded addresses in the zone.
-    :attr str href: The href link to the resource.
-    :attr datetime created_at: The time the resource was created.
-    :attr str created_by_id: IAM ID of the user or service which created the
+    :param int address_count: The number of addresses in the zone.
+    :param int excluded_count: The number of excluded addresses in the zone.
+    :param str href: The href link to the resource.
+    :param datetime created_at: The time the resource was created.
+    :param str created_by_id: IAM ID of the user or service which created the
           resource.
-    :attr datetime last_modified_at: The last time the resource was modified.
-    :attr str last_modified_by_id: IAM ID of the user or service which modified the
+    :param datetime last_modified_at: The last time the resource was modified.
+    :param str last_modified_by_id: IAM ID of the user or service which modified the
           resource.
     """
 
@@ -2990,7 +3005,7 @@ class ZoneSummary:
         last_modified_at: datetime,
         last_modified_by_id: str,
         *,
-        description: str = None,
+        description: Optional[str] = None,
     ) -> None:
         """
         Initialize a ZoneSummary object.
@@ -3139,8 +3154,8 @@ class AddressIPAddress(Address):
     """
     A single IP address. IPv4 and IPv6 are supported.
 
-    :attr str type: The type of address.
-    :attr str value: The IP address.
+    :param str type: The type of address.
+    :param str value: The IP address.
     """
 
     def __init__(
@@ -3212,12 +3227,13 @@ class AddressIPAddress(Address):
         IPADDRESS = 'ipAddress'
 
 
+
 class AddressIPAddressRange(Address):
     """
     An IP address range. IPv4 and IPv6 are supported.
 
-    :attr str type: The type of address.
-    :attr str value: The ip range in <first-ip>-<last-ip> format.
+    :param str type: The type of address.
+    :param str value: The ip range in <first-ip>-<last-ip> format.
     """
 
     def __init__(
@@ -3289,12 +3305,13 @@ class AddressIPAddressRange(Address):
         IPRANGE = 'ipRange'
 
 
+
 class AddressServiceRef(Address):
     """
     A service reference.
 
-    :attr str type: The type of address.
-    :attr ServiceRefValue ref: A service reference value.
+    :param str type: The type of address.
+    :param ServiceRefValue ref: A service reference value.
     """
 
     def __init__(
@@ -3369,12 +3386,13 @@ class AddressServiceRef(Address):
         SERVICEREF = 'serviceRef'
 
 
+
 class AddressSubnet(Address):
     """
     A subnet in CIDR format.
 
-    :attr str type: The type of address.
-    :attr str value: The subnet in CIDR format.
+    :param str type: The type of address.
+    :param str value: The subnet in CIDR format.
     """
 
     def __init__(
@@ -3446,12 +3464,13 @@ class AddressSubnet(Address):
         SUBNET = 'subnet'
 
 
+
 class AddressVPC(Address):
     """
     A single VPC address.
 
-    :attr str type: The type of address.
-    :attr str value: The VPC CRN.
+    :param str type: The type of address.
+    :param str value: The VPC CRN.
     """
 
     def __init__(
@@ -3521,3 +3540,4 @@ class AddressVPC(Address):
         """
 
         VPC = 'vpc'
+

@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.context_based_restrictions_v1 import *
 
 
-_service = ContextBasedRestrictionsV1(authenticator=NoAuthAuthenticator())
+_service = ContextBasedRestrictionsV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://cbr.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -120,7 +122,7 @@ class TestCreateZone:
         # Construct a dict representation of a AddressIPAddress model
         address_model = {}
         address_model['type'] = 'ipAddress'
-        address_model['value'] = '169.23.56.234, 3ffe:1900:fe21:4545::'
+        address_model['value'] = '169.23.56.234'
 
         # Set up parameter values
         name = 'an example of zone'
@@ -480,7 +482,7 @@ class TestReplaceZone:
         # Construct a dict representation of a AddressIPAddress model
         address_model = {}
         address_model['type'] = 'ipAddress'
-        address_model['value'] = '169.23.56.234, 3ffe:1900:fe21:4545::'
+        address_model['value'] = '169.23.56.234'
 
         # Set up parameter values
         zone_id = 'testString'
@@ -1764,7 +1766,7 @@ class TestListAvailableServiceOperations:
         """
         # Set up mock
         url = preprocess_url('/v1/operations')
-        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "type": "type", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
+        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "type": "type", "actions": [{"action_id": "action_id", "description": "description"}], "enforcement_modes": ["enforcement_modes"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -1816,7 +1818,7 @@ class TestListAvailableServiceOperations:
         """
         # Set up mock
         url = preprocess_url('/v1/operations')
-        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "type": "type", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
+        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "type": "type", "actions": [{"action_id": "action_id", "description": "description"}], "enforcement_modes": ["enforcement_modes"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -1877,6 +1879,7 @@ class TestModel_APIType:
         api_type_model_json['description'] = 'testString'
         api_type_model_json['type'] = 'testString'
         api_type_model_json['actions'] = [action_model]
+        api_type_model_json['enforcement_modes'] = ['testString']
 
         # Construct a model instance of APIType by calling from_dict on the json representation
         api_type_model = APIType.from_dict(api_type_model_json)
@@ -2015,18 +2018,12 @@ class TestModel_NewRuleOperationsApiTypesItem:
         new_rule_operations_api_types_item_model_json['api_type_id'] = 'testString'
 
         # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
-        new_rule_operations_api_types_item_model = NewRuleOperationsApiTypesItem.from_dict(
-            new_rule_operations_api_types_item_model_json
-        )
+        new_rule_operations_api_types_item_model = NewRuleOperationsApiTypesItem.from_dict(new_rule_operations_api_types_item_model_json)
         assert new_rule_operations_api_types_item_model != False
 
         # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
-        new_rule_operations_api_types_item_model_dict = NewRuleOperationsApiTypesItem.from_dict(
-            new_rule_operations_api_types_item_model_json
-        ).__dict__
-        new_rule_operations_api_types_item_model2 = NewRuleOperationsApiTypesItem(
-            **new_rule_operations_api_types_item_model_dict
-        )
+        new_rule_operations_api_types_item_model_dict = NewRuleOperationsApiTypesItem.from_dict(new_rule_operations_api_types_item_model_json).__dict__
+        new_rule_operations_api_types_item_model2 = NewRuleOperationsApiTypesItem(**new_rule_operations_api_types_item_model_dict)
 
         # Verify the model instances are equivalent
         assert new_rule_operations_api_types_item_model == new_rule_operations_api_types_item_model2
@@ -2058,6 +2055,7 @@ class TestModel_OperationsList:
         api_type_model['description'] = 'testString'
         api_type_model['type'] = 'testString'
         api_type_model['actions'] = [action_model]
+        api_type_model['enforcement_modes'] = ['testString']
 
         # Construct a json representation of a OperationsList model
         operations_list_model_json = {}
@@ -2490,18 +2488,12 @@ class TestModel_ServiceRefTargetLocationsItem:
         service_ref_target_locations_item_model_json['name'] = 'testString'
 
         # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
-        service_ref_target_locations_item_model = ServiceRefTargetLocationsItem.from_dict(
-            service_ref_target_locations_item_model_json
-        )
+        service_ref_target_locations_item_model = ServiceRefTargetLocationsItem.from_dict(service_ref_target_locations_item_model_json)
         assert service_ref_target_locations_item_model != False
 
         # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
-        service_ref_target_locations_item_model_dict = ServiceRefTargetLocationsItem.from_dict(
-            service_ref_target_locations_item_model_json
-        ).__dict__
-        service_ref_target_locations_item_model2 = ServiceRefTargetLocationsItem(
-            **service_ref_target_locations_item_model_dict
-        )
+        service_ref_target_locations_item_model_dict = ServiceRefTargetLocationsItem.from_dict(service_ref_target_locations_item_model_json).__dict__
+        service_ref_target_locations_item_model2 = ServiceRefTargetLocationsItem(**service_ref_target_locations_item_model_dict)
 
         # Verify the model instances are equivalent
         assert service_ref_target_locations_item_model == service_ref_target_locations_item_model2
@@ -2743,9 +2735,7 @@ class TestModel_AddressIPAddressRange:
         assert address_ip_address_range_model != False
 
         # Construct a model instance of AddressIPAddressRange by calling from_dict on the json representation
-        address_ip_address_range_model_dict = AddressIPAddressRange.from_dict(
-            address_ip_address_range_model_json
-        ).__dict__
+        address_ip_address_range_model_dict = AddressIPAddressRange.from_dict(address_ip_address_range_model_json).__dict__
         address_ip_address_range_model2 = AddressIPAddressRange(**address_ip_address_range_model_dict)
 
         # Verify the model instances are equivalent
