@@ -108,9 +108,17 @@ class TestContextBasedRestrictionsV1Examples:
                 'type': 'ipAddress',
                 'value': '169.23.56.234',
             }
+            ip_address_v6_model = {
+                'type': 'ipAddress',
+                'value': '3ffe:1900:fe21:4545::',
+            }
             ip_range_address_model = {
                 'type': 'ipRange',
                 'value': '169.23.22.0-169.23.22.255',
+            }
+            ip_range_address_v6_model = {
+                'type': 'ipRange',
+                'value': '3ffe:1900:fe21:4545::-3ffe:1900:fe21:6767::',
             }
             subnet_address_model = {
                 'type': 'subnet',
@@ -137,7 +145,9 @@ class TestContextBasedRestrictionsV1Examples:
                 account_id=account_id,
                 addresses=[
                     ip_address_model,
+                    ip_address_v6_model,
                     ip_range_address_model,
+                    ip_range_address_v6_model,
                     subnet_address_model,
                     vpc_address_model,
                     service_ref_address_model,
