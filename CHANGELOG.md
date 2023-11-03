@@ -1,3 +1,10 @@
+# [0.46.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.45.1...v0.46.0) (2023-11-03)
+
+
+### Features
+
+* **Context-Based Restrictions:** add enforcement_modes to operations response ([#227](https://github.com/IBM/platform-services-python-sdk/issues/227)) ([cf7c5cc](https://github.com/IBM/platform-services-python-sdk/commit/cf7c5cc0cd15d40da95c1813f04e903b24e03234))
+
 ## [0.45.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.45.0...v0.45.1) (2023-10-31)
 
 
