@@ -56,9 +56,7 @@ class IamIdentityV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
@@ -4512,6 +4510,7 @@ class ListApiKeysEnums:
 
         ENTITY = 'entity'
         ACCOUNT = 'account'
+
     class Type(str, Enum):
         """
         Optional parameter to filter the type of the queried API keys. Can be 'user' or
@@ -4520,6 +4519,7 @@ class ListApiKeysEnums:
 
         USER = 'user'
         SERVICEID = 'serviceid'
+
     class Order(str, Enum):
         """
         Optional sort order, valid values are asc and desc. Default: asc.
@@ -4614,6 +4614,7 @@ class ListAccountSettingsAssignmentsEnums:
 
         ACCOUNT = 'Account'
         ACCOUNTGROUP = 'AccountGroup'
+
     class Sort(str, Enum):
         """
         If specified, the items are sorted by the value of this property.
@@ -4622,6 +4623,7 @@ class ListAccountSettingsAssignmentsEnums:
         TEMPLATE_ID = 'template_id'
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
+
     class Order(str, Enum):
         """
         Sort order.
@@ -4645,6 +4647,7 @@ class ListAccountSettingsTemplatesEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
+
     class Order(str, Enum):
         """
         Optional sort order.
@@ -4668,6 +4671,7 @@ class ListVersionsOfAccountSettingsTemplateEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
+
     class Order(str, Enum):
         """
         Optional sort order.
@@ -4689,6 +4693,7 @@ class ListTrustedProfileAssignmentsEnums:
 
         ACCOUNT = 'Account'
         ACCOUNTGROUP = 'AccountGroup'
+
     class Sort(str, Enum):
         """
         If specified, the items are sorted by the value of this property.
@@ -4697,6 +4702,7 @@ class ListTrustedProfileAssignmentsEnums:
         TEMPLATE_ID = 'template_id'
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
+
     class Order(str, Enum):
         """
         Sort order.
@@ -4720,6 +4726,7 @@ class ListProfileTemplatesEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
+
     class Order(str, Enum):
         """
         Optional sort order.
@@ -4743,6 +4750,7 @@ class ListVersionsOfProfileTemplateEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
+
     class Order(str, Enum):
         """
         Optional sort order.
@@ -5035,9 +5043,15 @@ class AccountSettingsComponent:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
+        if (
+            hasattr(self, 'system_access_token_expiration_in_seconds')
+            and self.system_access_token_expiration_in_seconds is not None
+        ):
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
+        if (
+            hasattr(self, 'system_refresh_token_expiration_in_seconds')
+            and self.system_refresh_token_expiration_in_seconds is not None
+        ):
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         return _dict
 
@@ -5072,7 +5086,6 @@ class AccountSettingsComponent:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
-
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating platform API keys is access controlled. Valid
@@ -5085,7 +5098,6 @@ class AccountSettingsComponent:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
-
 
     class MfaEnum(str, Enum):
         """
@@ -5106,7 +5118,6 @@ class AccountSettingsComponent:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
-
 
 
 class AccountSettingsResponse:
@@ -5264,11 +5275,15 @@ class AccountSettingsResponse:
         if 'restrict_create_service_id' in _dict:
             args['restrict_create_service_id'] = _dict.get('restrict_create_service_id')
         else:
-            raise ValueError('Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON')
+            raise ValueError(
+                'Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON'
+            )
         if 'restrict_create_platform_apikey' in _dict:
             args['restrict_create_platform_apikey'] = _dict.get('restrict_create_platform_apikey')
         else:
-            raise ValueError('Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON')
+            raise ValueError(
+                'Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON'
+            )
         if 'allowed_ip_addresses' in _dict:
             args['allowed_ip_addresses'] = _dict.get('allowed_ip_addresses')
         else:
@@ -5290,23 +5305,33 @@ class AccountSettingsResponse:
         if 'session_expiration_in_seconds' in _dict:
             args['session_expiration_in_seconds'] = _dict.get('session_expiration_in_seconds')
         else:
-            raise ValueError('Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
+            raise ValueError(
+                'Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
+            )
         if 'session_invalidation_in_seconds' in _dict:
             args['session_invalidation_in_seconds'] = _dict.get('session_invalidation_in_seconds')
         else:
-            raise ValueError('Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON')
+            raise ValueError(
+                'Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON'
+            )
         if 'max_sessions_per_identity' in _dict:
             args['max_sessions_per_identity'] = _dict.get('max_sessions_per_identity')
         else:
-            raise ValueError('Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON')
+            raise ValueError(
+                'Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON'
+            )
         if 'system_access_token_expiration_in_seconds' in _dict:
             args['system_access_token_expiration_in_seconds'] = _dict.get('system_access_token_expiration_in_seconds')
         else:
-            raise ValueError('Required property \'system_access_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
+            raise ValueError(
+                'Required property \'system_access_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
+            )
         if 'system_refresh_token_expiration_in_seconds' in _dict:
             args['system_refresh_token_expiration_in_seconds'] = _dict.get('system_refresh_token_expiration_in_seconds')
         else:
-            raise ValueError('Required property \'system_refresh_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
+            raise ValueError(
+                'Required property \'system_refresh_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
+            )
         return cls(**args)
 
     @classmethod
@@ -5356,9 +5381,15 @@ class AccountSettingsResponse:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
+        if (
+            hasattr(self, 'system_access_token_expiration_in_seconds')
+            and self.system_access_token_expiration_in_seconds is not None
+        ):
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
+        if (
+            hasattr(self, 'system_refresh_token_expiration_in_seconds')
+            and self.system_refresh_token_expiration_in_seconds is not None
+        ):
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         return _dict
 
@@ -5393,7 +5424,6 @@ class AccountSettingsResponse:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
-
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating platform API keys is access controlled. Valid
@@ -5406,7 +5436,6 @@ class AccountSettingsResponse:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
-
 
     class MfaEnum(str, Enum):
         """
@@ -5427,7 +5456,6 @@ class AccountSettingsResponse:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
-
 
 
 class AccountSettingsTemplateList:
@@ -5504,9 +5532,13 @@ class AccountSettingsTemplateList:
         if 'next' in _dict:
             args['next'] = _dict.get('next')
         if 'account_settings_templates' in _dict:
-            args['account_settings_templates'] = [AccountSettingsTemplateResponse.from_dict(v) for v in _dict.get('account_settings_templates')]
+            args['account_settings_templates'] = [
+                AccountSettingsTemplateResponse.from_dict(v) for v in _dict.get('account_settings_templates')
+            ]
         else:
-            raise ValueError('Required property \'account_settings_templates\' not present in AccountSettingsTemplateList JSON')
+            raise ValueError(
+                'Required property \'account_settings_templates\' not present in AccountSettingsTemplateList JSON'
+            )
         return cls(**args)
 
     @classmethod
@@ -5670,7 +5702,9 @@ class AccountSettingsTemplateResponse:
         if 'account_settings' in _dict:
             args['account_settings'] = AccountSettingsComponent.from_dict(_dict.get('account_settings'))
         else:
-            raise ValueError('Required property \'account_settings\' not present in AccountSettingsTemplateResponse JSON')
+            raise ValueError(
+                'Required property \'account_settings\' not present in AccountSettingsTemplateResponse JSON'
+            )
         if 'history' in _dict:
             args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
         if 'entity_tag' in _dict:
@@ -5858,7 +5892,6 @@ class AccountSettingsUserMFA:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
-
 
 
 class Activity:
@@ -7295,7 +7328,6 @@ class IdBasedMfaEnrollment:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
-
     class TraitUserSpecificEnum(str, Enum):
         """
         Defines the MFA trait for the account. Valid values:
@@ -7315,7 +7347,6 @@ class IdBasedMfaEnrollment:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
-
 
     class TraitEffectiveEnum(str, Enum):
         """
@@ -7337,7 +7368,6 @@ class IdBasedMfaEnrollment:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
-
     class ComplyStateEnum(str, Enum):
         """
         Defines comply state for the account. Valid values:
@@ -7351,7 +7381,6 @@ class IdBasedMfaEnrollment:
         NO = 'NO'
         ACCOUNT = 'ACCOUNT'
         CROSS_ACCOUNT = 'CROSS_ACCOUNT'
-
 
 
 class MfaEnrollmentTypeStatus:
@@ -8087,7 +8116,6 @@ class ProfileIdentityRequest:
         CRN = 'crn'
 
 
-
 class ProfileIdentityResponse:
     """
     ProfileIdentityResponse.
@@ -8209,7 +8237,6 @@ class ProfileIdentityResponse:
         USER = 'user'
         SERVICEID = 'serviceid'
         CRN = 'crn'
-
 
 
 class ProfileLink:
@@ -9872,7 +9899,9 @@ class TemplateAssignmentResponseResource:
         if 'account_settings' in _dict:
             args['account_settings'] = TemplateAssignmentResponseResourceDetail.from_dict(_dict.get('account_settings'))
         if 'policy_template_refs' in _dict:
-            args['policy_template_refs'] = [TemplateAssignmentResponseResourceDetail.from_dict(v) for v in _dict.get('policy_template_refs')]
+            args['policy_template_refs'] = [
+                TemplateAssignmentResponseResourceDetail.from_dict(v) for v in _dict.get('policy_template_refs')
+            ]
         return cls(**args)
 
     @classmethod
@@ -9982,7 +10011,9 @@ class TemplateAssignmentResponseResourceDetail:
         if 'status' in _dict:
             args['status'] = _dict.get('status')
         else:
-            raise ValueError('Required property \'status\' not present in TemplateAssignmentResponseResourceDetail JSON')
+            raise ValueError(
+                'Required property \'status\' not present in TemplateAssignmentResponseResourceDetail JSON'
+            )
         return cls(**args)
 
     @classmethod
@@ -10585,7 +10616,6 @@ class TrustedProfileTemplateClaimRule:
         PROFILE_SAML = 'Profile-SAML'
 
 
-
 class TrustedProfileTemplateList:
     """
     TrustedProfileTemplateList.
@@ -10659,7 +10689,9 @@ class TrustedProfileTemplateList:
         if 'next' in _dict:
             args['next'] = _dict.get('next')
         if 'profile_templates' in _dict:
-            args['profile_templates'] = [TrustedProfileTemplateResponse.from_dict(v) for v in _dict.get('profile_templates')]
+            args['profile_templates'] = [
+                TrustedProfileTemplateResponse.from_dict(v) for v in _dict.get('profile_templates')
+            ]
         else:
             raise ValueError('Required property \'profile_templates\' not present in TrustedProfileTemplateList JSON')
         return cls(**args)
@@ -10839,7 +10871,9 @@ class TrustedProfileTemplateResponse:
         if 'profile' in _dict:
             args['profile'] = TemplateProfileComponentResponse.from_dict(_dict.get('profile'))
         if 'policy_template_references' in _dict:
-            args['policy_template_references'] = [PolicyTemplateReference.from_dict(v) for v in _dict.get('policy_template_references')]
+            args['policy_template_references'] = [
+                PolicyTemplateReference.from_dict(v) for v in _dict.get('policy_template_references')
+            ]
         if 'history' in _dict:
             args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
         if 'entity_tag' in _dict:

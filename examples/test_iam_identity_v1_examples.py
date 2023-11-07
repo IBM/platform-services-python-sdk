@@ -1124,7 +1124,7 @@ class TestIamIdentityV1Examples:
             print('\nupdate_profile_template() response: ', json.dumps(profile_template, indent=2))
 
             # end-update_profile_template_version
-            
+
             profile_template_etag = update_response.get_headers()['Etag']
 
         except ApiException as e:
