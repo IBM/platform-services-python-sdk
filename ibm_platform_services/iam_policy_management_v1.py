@@ -3308,6 +3308,25 @@ class LimitData:
         return not self == other
 
 
+class NestedCondition:
+    """
+    Condition that specifies additional conditions or RuleAttribute to grant access.s.
+
+    """
+
+    def __init__(
+        self,
+    ) -> None:
+        """
+        Initialize a NestedCondition object.
+
+        """
+        msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
+            ", ".join(['NestedConditionRuleAttribute', 'NestedConditionRuleWithConditions'])
+        )
+        raise Exception(msg)
+
+
 class Policy:
     """
     The core set of properties associated with a policy.
@@ -5581,30 +5600,6 @@ class RuleAttribute:
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
 
 
-class RuleWithNestedConditionsConditionsItem:
-    """
-    RuleWithNestedConditionsConditionsItem.
-
-    """
-
-    def __init__(
-        self,
-    ) -> None:
-        """
-        Initialize a RuleWithNestedConditionsConditionsItem object.
-
-        """
-        msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(
-                [
-                    'RuleWithNestedConditionsConditionsItemRuleAttribute',
-                    'RuleWithNestedConditionsConditionsItemRuleWithConditions',
-                ]
-            )
-        )
-        raise Exception(msg)
-
-
 class SubjectAttribute:
     """
     An attribute associated with a subject.
@@ -7075,7 +7070,7 @@ class ControlResponseControlWithEnrichedRoles(ControlResponse):
         return not self == other
 
 
-class RuleWithNestedConditionsConditionsItemRuleAttribute(RuleWithNestedConditionsConditionsItem):
+class NestedConditionRuleAttribute(NestedCondition):
     """
     Rule that specifies additional access granted (e.g., time-based condition).
 
@@ -7093,7 +7088,7 @@ class RuleWithNestedConditionsConditionsItemRuleAttribute(RuleWithNestedConditio
         value: object,
     ) -> None:
         """
-        Initialize a RuleWithNestedConditionsConditionsItemRuleAttribute object.
+        Initialize a NestedConditionRuleAttribute object.
 
         :param str key: The name of an attribute.
         :param str operator: The operator of an attribute.
@@ -7107,32 +7102,26 @@ class RuleWithNestedConditionsConditionsItemRuleAttribute(RuleWithNestedConditio
         self.value = value
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'RuleWithNestedConditionsConditionsItemRuleAttribute':
-        """Initialize a RuleWithNestedConditionsConditionsItemRuleAttribute object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'NestedConditionRuleAttribute':
+        """Initialize a NestedConditionRuleAttribute object from a json dictionary."""
         args = {}
         if 'key' in _dict:
             args['key'] = _dict.get('key')
         else:
-            raise ValueError(
-                'Required property \'key\' not present in RuleWithNestedConditionsConditionsItemRuleAttribute JSON'
-            )
+            raise ValueError('Required property \'key\' not present in NestedConditionRuleAttribute JSON')
         if 'operator' in _dict:
             args['operator'] = _dict.get('operator')
         else:
-            raise ValueError(
-                'Required property \'operator\' not present in RuleWithNestedConditionsConditionsItemRuleAttribute JSON'
-            )
+            raise ValueError('Required property \'operator\' not present in NestedConditionRuleAttribute JSON')
         if 'value' in _dict:
             args['value'] = _dict.get('value')
         else:
-            raise ValueError(
-                'Required property \'value\' not present in RuleWithNestedConditionsConditionsItemRuleAttribute JSON'
-            )
+            raise ValueError('Required property \'value\' not present in NestedConditionRuleAttribute JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a RuleWithNestedConditionsConditionsItemRuleAttribute object from a json dictionary."""
+        """Initialize a NestedConditionRuleAttribute object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -7151,16 +7140,16 @@ class RuleWithNestedConditionsConditionsItemRuleAttribute(RuleWithNestedConditio
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this RuleWithNestedConditionsConditionsItemRuleAttribute object."""
+        """Return a `str` version of this NestedConditionRuleAttribute object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'RuleWithNestedConditionsConditionsItemRuleAttribute') -> bool:
+    def __eq__(self, other: 'NestedConditionRuleAttribute') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'RuleWithNestedConditionsConditionsItemRuleAttribute') -> bool:
+    def __ne__(self, other: 'NestedConditionRuleAttribute') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -7181,7 +7170,7 @@ class RuleWithNestedConditionsConditionsItemRuleAttribute(RuleWithNestedConditio
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
 
 
-class RuleWithNestedConditionsConditionsItemRuleWithConditions(RuleWithNestedConditionsConditionsItem):
+class NestedConditionRuleWithConditions(NestedCondition):
     """
     Rule that specifies additional access granted (e.g., time-based condition) accross
     multiple conditions.
@@ -7198,7 +7187,7 @@ class RuleWithNestedConditionsConditionsItemRuleWithConditions(RuleWithNestedCon
         conditions: List['RuleAttribute'],
     ) -> None:
         """
-        Initialize a RuleWithNestedConditionsConditionsItemRuleWithConditions object.
+        Initialize a NestedConditionRuleWithConditions object.
 
         :param str operator: Operator to evaluate conditions.
         :param List[RuleAttribute] conditions: List of conditions associated with a
@@ -7210,26 +7199,22 @@ class RuleWithNestedConditionsConditionsItemRuleWithConditions(RuleWithNestedCon
         self.conditions = conditions
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'RuleWithNestedConditionsConditionsItemRuleWithConditions':
-        """Initialize a RuleWithNestedConditionsConditionsItemRuleWithConditions object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'NestedConditionRuleWithConditions':
+        """Initialize a NestedConditionRuleWithConditions object from a json dictionary."""
         args = {}
         if 'operator' in _dict:
             args['operator'] = _dict.get('operator')
         else:
-            raise ValueError(
-                'Required property \'operator\' not present in RuleWithNestedConditionsConditionsItemRuleWithConditions JSON'
-            )
+            raise ValueError('Required property \'operator\' not present in NestedConditionRuleWithConditions JSON')
         if 'conditions' in _dict:
             args['conditions'] = [RuleAttribute.from_dict(v) for v in _dict.get('conditions')]
         else:
-            raise ValueError(
-                'Required property \'conditions\' not present in RuleWithNestedConditionsConditionsItemRuleWithConditions JSON'
-            )
+            raise ValueError('Required property \'conditions\' not present in NestedConditionRuleWithConditions JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a RuleWithNestedConditionsConditionsItemRuleWithConditions object from a json dictionary."""
+        """Initialize a NestedConditionRuleWithConditions object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -7252,16 +7237,16 @@ class RuleWithNestedConditionsConditionsItemRuleWithConditions(RuleWithNestedCon
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this RuleWithNestedConditionsConditionsItemRuleWithConditions object."""
+        """Return a `str` version of this NestedConditionRuleWithConditions object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'RuleWithNestedConditionsConditionsItemRuleWithConditions') -> bool:
+    def __eq__(self, other: 'NestedConditionRuleWithConditions') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'RuleWithNestedConditionsConditionsItemRuleWithConditions') -> bool:
+    def __ne__(self, other: 'NestedConditionRuleWithConditions') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -7380,23 +7365,23 @@ class V2PolicyRuleRuleWithNestedConditions(V2PolicyRule):
     multiple conditions.
 
     :param str operator: Operator to evaluate conditions.
-    :param List[RuleWithNestedConditionsConditionsItem] conditions: List of
-          conditions associated with a policy, e.g., time-based conditions that grant
-          access over a certain time period.
+    :param List[NestedCondition] conditions: List of conditions associated with a
+          policy, e.g., time-based conditions that grant access over a certain time
+          period.
     """
 
     def __init__(
         self,
         operator: str,
-        conditions: List['RuleWithNestedConditionsConditionsItem'],
+        conditions: List['NestedCondition'],
     ) -> None:
         """
         Initialize a V2PolicyRuleRuleWithNestedConditions object.
 
         :param str operator: Operator to evaluate conditions.
-        :param List[RuleWithNestedConditionsConditionsItem] conditions: List of
-               conditions associated with a policy, e.g., time-based conditions that grant
-               access over a certain time period.
+        :param List[NestedCondition] conditions: List of conditions associated with
+               a policy, e.g., time-based conditions that grant access over a certain time
+               period.
         """
         # pylint: disable=super-init-not-called
         self.operator = operator
