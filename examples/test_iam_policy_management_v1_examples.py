@@ -267,7 +267,7 @@ class TestIamPolicyManagementV1Examples:
                 attributes=[account_id_resource_attribute, service_name_resource_attribute], tags=[policy_resource_tag]
             )
             policy_control = Control(grant=Grant(roles=[policy_role]))
-            policy_rule = V2PolicyRuleRuleWithConditions(
+            policy_rule = V2PolicyRuleRuleWithNestedConditions(
                 operator='and',
                 conditions=[
                     RuleAttribute(
@@ -354,7 +354,7 @@ class TestIamPolicyManagementV1Examples:
                 attributes=[account_id_resource_attribute, service_name_resource_attribute], tags=[policy_resource_tag]
             )
             policy_control = Control(grant=Grant(roles=[updated_policy_role]))
-            policy_rule = V2PolicyRuleRuleWithConditions(
+            policy_rule = V2PolicyRuleRuleWithNestedConditions(
                 operator='and',
                 conditions=[
                     RuleAttribute(
