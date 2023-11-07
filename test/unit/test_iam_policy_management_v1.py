@@ -5567,50 +5567,6 @@ class TestModel_RuleAttribute:
         assert rule_attribute_model_json2 == rule_attribute_model_json
 
 
-class TestModel_RuleAttributeWithConditions:
-    """
-    Test Class for RuleAttributeWithConditions
-    """
-
-    def test_rule_attribute_with_conditions_serialization(self):
-        """
-        Test serialization/deserialization for RuleAttributeWithConditions
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        rule_attribute_model = {}  # RuleAttribute
-        rule_attribute_model['key'] = 'testString'
-        rule_attribute_model['operator'] = 'timeLessThan'
-        rule_attribute_model['value'] = 'testString'
-
-        # Construct a json representation of a RuleAttributeWithConditions model
-        rule_attribute_with_conditions_model_json = {}
-        rule_attribute_with_conditions_model_json['key'] = 'testString'
-        rule_attribute_with_conditions_model_json['operator'] = 'timeLessThan'
-        rule_attribute_with_conditions_model_json['value'] = 'testString'
-        rule_attribute_with_conditions_model_json['conditions'] = [rule_attribute_model]
-
-        # Construct a model instance of RuleAttributeWithConditions by calling from_dict on the json representation
-        rule_attribute_with_conditions_model = RuleAttributeWithConditions.from_dict(
-            rule_attribute_with_conditions_model_json
-        )
-        assert rule_attribute_with_conditions_model != False
-
-        # Construct a model instance of RuleAttributeWithConditions by calling from_dict on the json representation
-        rule_attribute_with_conditions_model_dict = RuleAttributeWithConditions.from_dict(
-            rule_attribute_with_conditions_model_json
-        ).__dict__
-        rule_attribute_with_conditions_model2 = RuleAttributeWithConditions(**rule_attribute_with_conditions_model_dict)
-
-        # Verify the model instances are equivalent
-        assert rule_attribute_with_conditions_model == rule_attribute_with_conditions_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        rule_attribute_with_conditions_model_json2 = rule_attribute_with_conditions_model.to_dict()
-        assert rule_attribute_with_conditions_model_json2 == rule_attribute_with_conditions_model_json
-
-
 class TestModel_SubjectAttribute:
     """
     Test Class for SubjectAttribute
@@ -6305,6 +6261,118 @@ class TestModel_ControlResponseControlWithEnrichedRoles:
         )
 
 
+class TestModel_RuleWithNestedConditionsConditionsItemRuleAttribute:
+    """
+    Test Class for RuleWithNestedConditionsConditionsItemRuleAttribute
+    """
+
+    def test_rule_with_nested_conditions_conditions_item_rule_attribute_serialization(self):
+        """
+        Test serialization/deserialization for RuleWithNestedConditionsConditionsItemRuleAttribute
+        """
+
+        # Construct a json representation of a RuleWithNestedConditionsConditionsItemRuleAttribute model
+        rule_with_nested_conditions_conditions_item_rule_attribute_model_json = {}
+        rule_with_nested_conditions_conditions_item_rule_attribute_model_json['key'] = 'testString'
+        rule_with_nested_conditions_conditions_item_rule_attribute_model_json['operator'] = 'timeLessThan'
+        rule_with_nested_conditions_conditions_item_rule_attribute_model_json['value'] = 'testString'
+
+        # Construct a model instance of RuleWithNestedConditionsConditionsItemRuleAttribute by calling from_dict on the json representation
+        rule_with_nested_conditions_conditions_item_rule_attribute_model = (
+            RuleWithNestedConditionsConditionsItemRuleAttribute.from_dict(
+                rule_with_nested_conditions_conditions_item_rule_attribute_model_json
+            )
+        )
+        assert rule_with_nested_conditions_conditions_item_rule_attribute_model != False
+
+        # Construct a model instance of RuleWithNestedConditionsConditionsItemRuleAttribute by calling from_dict on the json representation
+        rule_with_nested_conditions_conditions_item_rule_attribute_model_dict = (
+            RuleWithNestedConditionsConditionsItemRuleAttribute.from_dict(
+                rule_with_nested_conditions_conditions_item_rule_attribute_model_json
+            ).__dict__
+        )
+        rule_with_nested_conditions_conditions_item_rule_attribute_model2 = (
+            RuleWithNestedConditionsConditionsItemRuleAttribute(
+                **rule_with_nested_conditions_conditions_item_rule_attribute_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            rule_with_nested_conditions_conditions_item_rule_attribute_model
+            == rule_with_nested_conditions_conditions_item_rule_attribute_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        rule_with_nested_conditions_conditions_item_rule_attribute_model_json2 = (
+            rule_with_nested_conditions_conditions_item_rule_attribute_model.to_dict()
+        )
+        assert (
+            rule_with_nested_conditions_conditions_item_rule_attribute_model_json2
+            == rule_with_nested_conditions_conditions_item_rule_attribute_model_json
+        )
+
+
+class TestModel_RuleWithNestedConditionsConditionsItemRuleWithConditions:
+    """
+    Test Class for RuleWithNestedConditionsConditionsItemRuleWithConditions
+    """
+
+    def test_rule_with_nested_conditions_conditions_item_rule_with_conditions_serialization(self):
+        """
+        Test serialization/deserialization for RuleWithNestedConditionsConditionsItemRuleWithConditions
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        rule_attribute_model = {}  # RuleAttribute
+        rule_attribute_model['key'] = 'testString'
+        rule_attribute_model['operator'] = 'timeLessThan'
+        rule_attribute_model['value'] = 'testString'
+
+        # Construct a json representation of a RuleWithNestedConditionsConditionsItemRuleWithConditions model
+        rule_with_nested_conditions_conditions_item_rule_with_conditions_model_json = {}
+        rule_with_nested_conditions_conditions_item_rule_with_conditions_model_json['operator'] = 'and'
+        rule_with_nested_conditions_conditions_item_rule_with_conditions_model_json['conditions'] = [
+            rule_attribute_model
+        ]
+
+        # Construct a model instance of RuleWithNestedConditionsConditionsItemRuleWithConditions by calling from_dict on the json representation
+        rule_with_nested_conditions_conditions_item_rule_with_conditions_model = (
+            RuleWithNestedConditionsConditionsItemRuleWithConditions.from_dict(
+                rule_with_nested_conditions_conditions_item_rule_with_conditions_model_json
+            )
+        )
+        assert rule_with_nested_conditions_conditions_item_rule_with_conditions_model != False
+
+        # Construct a model instance of RuleWithNestedConditionsConditionsItemRuleWithConditions by calling from_dict on the json representation
+        rule_with_nested_conditions_conditions_item_rule_with_conditions_model_dict = (
+            RuleWithNestedConditionsConditionsItemRuleWithConditions.from_dict(
+                rule_with_nested_conditions_conditions_item_rule_with_conditions_model_json
+            ).__dict__
+        )
+        rule_with_nested_conditions_conditions_item_rule_with_conditions_model2 = (
+            RuleWithNestedConditionsConditionsItemRuleWithConditions(
+                **rule_with_nested_conditions_conditions_item_rule_with_conditions_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            rule_with_nested_conditions_conditions_item_rule_with_conditions_model
+            == rule_with_nested_conditions_conditions_item_rule_with_conditions_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        rule_with_nested_conditions_conditions_item_rule_with_conditions_model_json2 = (
+            rule_with_nested_conditions_conditions_item_rule_with_conditions_model.to_dict()
+        )
+        assert (
+            rule_with_nested_conditions_conditions_item_rule_with_conditions_model_json2
+            == rule_with_nested_conditions_conditions_item_rule_with_conditions_model_json
+        )
+
+
 class TestModel_V2PolicyRuleRuleAttribute:
     """
     Test Class for V2PolicyRuleRuleAttribute
@@ -6341,54 +6409,55 @@ class TestModel_V2PolicyRuleRuleAttribute:
         assert v2_policy_rule_rule_attribute_model_json2 == v2_policy_rule_rule_attribute_model_json
 
 
-class TestModel_V2PolicyRuleRuleWithConditions:
+class TestModel_V2PolicyRuleRuleWithNestedConditions:
     """
-    Test Class for V2PolicyRuleRuleWithConditions
+    Test Class for V2PolicyRuleRuleWithNestedConditions
     """
 
-    def test_v2_policy_rule_rule_with_conditions_serialization(self):
+    def test_v2_policy_rule_rule_with_nested_conditions_serialization(self):
         """
-        Test serialization/deserialization for V2PolicyRuleRuleWithConditions
+        Test serialization/deserialization for V2PolicyRuleRuleWithNestedConditions
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rule_attribute_model = {}  # RuleAttribute
-        rule_attribute_model['key'] = 'testString'
-        rule_attribute_model['operator'] = 'timeLessThan'
-        rule_attribute_model['value'] = 'testString'
+        rule_with_nested_conditions_conditions_item_model = {}  # RuleWithNestedConditionsConditionsItemRuleAttribute
+        rule_with_nested_conditions_conditions_item_model['key'] = 'testString'
+        rule_with_nested_conditions_conditions_item_model['operator'] = 'timeLessThan'
+        rule_with_nested_conditions_conditions_item_model['value'] = 'testString'
 
-        rule_attribute_with_conditions_model = {}  # RuleAttributeWithConditions
-        rule_attribute_with_conditions_model['key'] = 'testString'
-        rule_attribute_with_conditions_model['operator'] = 'timeLessThan'
-        rule_attribute_with_conditions_model['value'] = 'testString'
-        rule_attribute_with_conditions_model['conditions'] = [rule_attribute_model]
+        # Construct a json representation of a V2PolicyRuleRuleWithNestedConditions model
+        v2_policy_rule_rule_with_nested_conditions_model_json = {}
+        v2_policy_rule_rule_with_nested_conditions_model_json['operator'] = 'and'
+        v2_policy_rule_rule_with_nested_conditions_model_json['conditions'] = [
+            rule_with_nested_conditions_conditions_item_model
+        ]
 
-        # Construct a json representation of a V2PolicyRuleRuleWithConditions model
-        v2_policy_rule_rule_with_conditions_model_json = {}
-        v2_policy_rule_rule_with_conditions_model_json['operator'] = 'and'
-        v2_policy_rule_rule_with_conditions_model_json['conditions'] = [rule_attribute_with_conditions_model]
-
-        # Construct a model instance of V2PolicyRuleRuleWithConditions by calling from_dict on the json representation
-        v2_policy_rule_rule_with_conditions_model = V2PolicyRuleRuleWithConditions.from_dict(
-            v2_policy_rule_rule_with_conditions_model_json
+        # Construct a model instance of V2PolicyRuleRuleWithNestedConditions by calling from_dict on the json representation
+        v2_policy_rule_rule_with_nested_conditions_model = V2PolicyRuleRuleWithNestedConditions.from_dict(
+            v2_policy_rule_rule_with_nested_conditions_model_json
         )
-        assert v2_policy_rule_rule_with_conditions_model != False
+        assert v2_policy_rule_rule_with_nested_conditions_model != False
 
-        # Construct a model instance of V2PolicyRuleRuleWithConditions by calling from_dict on the json representation
-        v2_policy_rule_rule_with_conditions_model_dict = V2PolicyRuleRuleWithConditions.from_dict(
-            v2_policy_rule_rule_with_conditions_model_json
+        # Construct a model instance of V2PolicyRuleRuleWithNestedConditions by calling from_dict on the json representation
+        v2_policy_rule_rule_with_nested_conditions_model_dict = V2PolicyRuleRuleWithNestedConditions.from_dict(
+            v2_policy_rule_rule_with_nested_conditions_model_json
         ).__dict__
-        v2_policy_rule_rule_with_conditions_model2 = V2PolicyRuleRuleWithConditions(
-            **v2_policy_rule_rule_with_conditions_model_dict
+        v2_policy_rule_rule_with_nested_conditions_model2 = V2PolicyRuleRuleWithNestedConditions(
+            **v2_policy_rule_rule_with_nested_conditions_model_dict
         )
 
         # Verify the model instances are equivalent
-        assert v2_policy_rule_rule_with_conditions_model == v2_policy_rule_rule_with_conditions_model2
+        assert v2_policy_rule_rule_with_nested_conditions_model == v2_policy_rule_rule_with_nested_conditions_model2
 
         # Convert model instance back to dict and verify no loss of data
-        v2_policy_rule_rule_with_conditions_model_json2 = v2_policy_rule_rule_with_conditions_model.to_dict()
-        assert v2_policy_rule_rule_with_conditions_model_json2 == v2_policy_rule_rule_with_conditions_model_json
+        v2_policy_rule_rule_with_nested_conditions_model_json2 = (
+            v2_policy_rule_rule_with_nested_conditions_model.to_dict()
+        )
+        assert (
+            v2_policy_rule_rule_with_nested_conditions_model_json2
+            == v2_policy_rule_rule_with_nested_conditions_model_json
+        )
 
 
 # endregion

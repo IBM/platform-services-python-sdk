@@ -5581,120 +5581,28 @@ class RuleAttribute:
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
 
 
-class RuleAttributeWithConditions:
+class RuleWithNestedConditionsConditionsItem:
     """
-    Rule that specifies additional conditions.
+    RuleWithNestedConditionsConditionsItem.
 
-    :param str key: (optional) The name of an attribute.
-    :param str operator: The operator of an attribute.
-    :param object value: (optional) The value of a rule or resource attribute; can
-          be boolean or string for resource attribute. Can be string or an array of
-          strings (e.g., array of days to permit access) for rule attribute.
-    :param List[RuleAttribute] conditions: (optional) List of additional conditions
-          associated with a policy, e.g., time-based conditions that grant access over a
-          certain time period.
     """
 
     def __init__(
         self,
-        operator: str,
-        *,
-        key: Optional[str] = None,
-        value: Optional[object] = None,
-        conditions: Optional[List['RuleAttribute']] = None,
     ) -> None:
         """
-        Initialize a RuleAttributeWithConditions object.
+        Initialize a RuleWithNestedConditionsConditionsItem object.
 
-        :param str operator: The operator of an attribute.
-        :param str key: (optional) The name of an attribute.
-        :param object value: (optional) The value of a rule or resource attribute;
-               can be boolean or string for resource attribute. Can be string or an array
-               of strings (e.g., array of days to permit access) for rule attribute.
-        :param List[RuleAttribute] conditions: (optional) List of additional
-               conditions associated with a policy, e.g., time-based conditions that grant
-               access over a certain time period.
         """
-        self.key = key
-        self.operator = operator
-        self.value = value
-        self.conditions = conditions
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'RuleAttributeWithConditions':
-        """Initialize a RuleAttributeWithConditions object from a json dictionary."""
-        args = {}
-        if 'key' in _dict:
-            args['key'] = _dict.get('key')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
-        else:
-            raise ValueError('Required property \'operator\' not present in RuleAttributeWithConditions JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
-        if 'conditions' in _dict:
-            args['conditions'] = [RuleAttribute.from_dict(v) for v in _dict.get('conditions')]
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a RuleAttributeWithConditions object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'key') and self.key is not None:
-            _dict['key'] = self.key
-        if hasattr(self, 'operator') and self.operator is not None:
-            _dict['operator'] = self.operator
-        if hasattr(self, 'value') and self.value is not None:
-            _dict['value'] = self.value
-        if hasattr(self, 'conditions') and self.conditions is not None:
-            conditions_list = []
-            for v in self.conditions:
-                if isinstance(v, dict):
-                    conditions_list.append(v)
-                else:
-                    conditions_list.append(v.to_dict())
-            _dict['conditions'] = conditions_list
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this RuleAttributeWithConditions object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'RuleAttributeWithConditions') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'RuleAttributeWithConditions') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-    class OperatorEnum(str, Enum):
-        """
-        The operator of an attribute.
-        """
-
-        TIMELESSTHAN = 'timeLessThan'
-        TIMELESSTHANOREQUALS = 'timeLessThanOrEquals'
-        TIMEGREATERTHAN = 'timeGreaterThan'
-        TIMEGREATERTHANOREQUALS = 'timeGreaterThanOrEquals'
-        DATETIMELESSTHAN = 'dateTimeLessThan'
-        DATETIMELESSTHANOREQUALS = 'dateTimeLessThanOrEquals'
-        DATETIMEGREATERTHAN = 'dateTimeGreaterThan'
-        DATETIMEGREATERTHANOREQUALS = 'dateTimeGreaterThanOrEquals'
-        DAYOFWEEKEQUALS = 'dayOfWeekEquals'
-        DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
-        AND = 'and'
-        OR = 'or'
+        msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
+            ", ".join(
+                [
+                    'RuleWithNestedConditionsConditionsItemRuleAttribute',
+                    'RuleWithNestedConditionsConditionsItemRuleWithConditions',
+                ]
+            )
+        )
+        raise Exception(msg)
 
 
 class SubjectAttribute:
@@ -6634,7 +6542,7 @@ class V2PolicyRule:
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(['V2PolicyRuleRuleAttribute', 'V2PolicyRuleRuleWithConditions'])
+            ", ".join(['V2PolicyRuleRuleAttribute', 'V2PolicyRuleRuleWithNestedConditions'])
         )
         raise Exception(msg)
 
@@ -7167,6 +7075,205 @@ class ControlResponseControlWithEnrichedRoles(ControlResponse):
         return not self == other
 
 
+class RuleWithNestedConditionsConditionsItemRuleAttribute(RuleWithNestedConditionsConditionsItem):
+    """
+    Rule that specifies additional access granted (e.g., time-based condition).
+
+    :param str key: The name of an attribute.
+    :param str operator: The operator of an attribute.
+    :param object value: The value of a rule or resource attribute; can be boolean
+          or string for resource attribute. Can be string or an array of strings (e.g.,
+          array of days to permit access) for rule attribute.
+    """
+
+    def __init__(
+        self,
+        key: str,
+        operator: str,
+        value: object,
+    ) -> None:
+        """
+        Initialize a RuleWithNestedConditionsConditionsItemRuleAttribute object.
+
+        :param str key: The name of an attribute.
+        :param str operator: The operator of an attribute.
+        :param object value: The value of a rule or resource attribute; can be
+               boolean or string for resource attribute. Can be string or an array of
+               strings (e.g., array of days to permit access) for rule attribute.
+        """
+        # pylint: disable=super-init-not-called
+        self.key = key
+        self.operator = operator
+        self.value = value
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RuleWithNestedConditionsConditionsItemRuleAttribute':
+        """Initialize a RuleWithNestedConditionsConditionsItemRuleAttribute object from a json dictionary."""
+        args = {}
+        if 'key' in _dict:
+            args['key'] = _dict.get('key')
+        else:
+            raise ValueError(
+                'Required property \'key\' not present in RuleWithNestedConditionsConditionsItemRuleAttribute JSON'
+            )
+        if 'operator' in _dict:
+            args['operator'] = _dict.get('operator')
+        else:
+            raise ValueError(
+                'Required property \'operator\' not present in RuleWithNestedConditionsConditionsItemRuleAttribute JSON'
+            )
+        if 'value' in _dict:
+            args['value'] = _dict.get('value')
+        else:
+            raise ValueError(
+                'Required property \'value\' not present in RuleWithNestedConditionsConditionsItemRuleAttribute JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RuleWithNestedConditionsConditionsItemRuleAttribute object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'key') and self.key is not None:
+            _dict['key'] = self.key
+        if hasattr(self, 'operator') and self.operator is not None:
+            _dict['operator'] = self.operator
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RuleWithNestedConditionsConditionsItemRuleAttribute object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RuleWithNestedConditionsConditionsItemRuleAttribute') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RuleWithNestedConditionsConditionsItemRuleAttribute') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class OperatorEnum(str, Enum):
+        """
+        The operator of an attribute.
+        """
+
+        TIMELESSTHAN = 'timeLessThan'
+        TIMELESSTHANOREQUALS = 'timeLessThanOrEquals'
+        TIMEGREATERTHAN = 'timeGreaterThan'
+        TIMEGREATERTHANOREQUALS = 'timeGreaterThanOrEquals'
+        DATETIMELESSTHAN = 'dateTimeLessThan'
+        DATETIMELESSTHANOREQUALS = 'dateTimeLessThanOrEquals'
+        DATETIMEGREATERTHAN = 'dateTimeGreaterThan'
+        DATETIMEGREATERTHANOREQUALS = 'dateTimeGreaterThanOrEquals'
+        DAYOFWEEKEQUALS = 'dayOfWeekEquals'
+        DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
+
+
+class RuleWithNestedConditionsConditionsItemRuleWithConditions(RuleWithNestedConditionsConditionsItem):
+    """
+    Rule that specifies additional access granted (e.g., time-based condition) accross
+    multiple conditions.
+
+    :param str operator: Operator to evaluate conditions.
+    :param List[RuleAttribute] conditions: List of conditions associated with a
+          policy, e.g., time-based conditions that grant access over a certain time
+          period.
+    """
+
+    def __init__(
+        self,
+        operator: str,
+        conditions: List['RuleAttribute'],
+    ) -> None:
+        """
+        Initialize a RuleWithNestedConditionsConditionsItemRuleWithConditions object.
+
+        :param str operator: Operator to evaluate conditions.
+        :param List[RuleAttribute] conditions: List of conditions associated with a
+               policy, e.g., time-based conditions that grant access over a certain time
+               period.
+        """
+        # pylint: disable=super-init-not-called
+        self.operator = operator
+        self.conditions = conditions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RuleWithNestedConditionsConditionsItemRuleWithConditions':
+        """Initialize a RuleWithNestedConditionsConditionsItemRuleWithConditions object from a json dictionary."""
+        args = {}
+        if 'operator' in _dict:
+            args['operator'] = _dict.get('operator')
+        else:
+            raise ValueError(
+                'Required property \'operator\' not present in RuleWithNestedConditionsConditionsItemRuleWithConditions JSON'
+            )
+        if 'conditions' in _dict:
+            args['conditions'] = [RuleAttribute.from_dict(v) for v in _dict.get('conditions')]
+        else:
+            raise ValueError(
+                'Required property \'conditions\' not present in RuleWithNestedConditionsConditionsItemRuleWithConditions JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RuleWithNestedConditionsConditionsItemRuleWithConditions object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'operator') and self.operator is not None:
+            _dict['operator'] = self.operator
+        if hasattr(self, 'conditions') and self.conditions is not None:
+            conditions_list = []
+            for v in self.conditions:
+                if isinstance(v, dict):
+                    conditions_list.append(v)
+                else:
+                    conditions_list.append(v.to_dict())
+            _dict['conditions'] = conditions_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RuleWithNestedConditionsConditionsItemRuleWithConditions object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RuleWithNestedConditionsConditionsItemRuleWithConditions') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RuleWithNestedConditionsConditionsItemRuleWithConditions') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class OperatorEnum(str, Enum):
+        """
+        Operator to evaluate conditions.
+        """
+
+        AND = 'and'
+        OR = 'or'
+
+
 class V2PolicyRuleRuleAttribute(V2PolicyRule):
     """
     Rule that specifies additional access granted (e.g., time-based condition).
@@ -7267,51 +7374,53 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
 
 
-class V2PolicyRuleRuleWithConditions(V2PolicyRule):
+class V2PolicyRuleRuleWithNestedConditions(V2PolicyRule):
     """
     Rule that specifies additional access granted (e.g., time-based condition) accross
     multiple conditions.
 
     :param str operator: Operator to evaluate conditions.
-    :param List[RuleAttributeWithConditions] conditions: List of conditions
-          associated with a policy, e.g., time-based conditions that grant access over a
-          certain time period.
+    :param List[RuleWithNestedConditionsConditionsItem] conditions: List of
+          conditions associated with a policy, e.g., time-based conditions that grant
+          access over a certain time period.
     """
 
     def __init__(
         self,
         operator: str,
-        conditions: List['RuleAttributeWithConditions'],
+        conditions: List['RuleWithNestedConditionsConditionsItem'],
     ) -> None:
         """
-        Initialize a V2PolicyRuleRuleWithConditions object.
+        Initialize a V2PolicyRuleRuleWithNestedConditions object.
 
         :param str operator: Operator to evaluate conditions.
-        :param List[RuleAttributeWithConditions] conditions: List of conditions
-               associated with a policy, e.g., time-based conditions that grant access
-               over a certain time period.
+        :param List[RuleWithNestedConditionsConditionsItem] conditions: List of
+               conditions associated with a policy, e.g., time-based conditions that grant
+               access over a certain time period.
         """
         # pylint: disable=super-init-not-called
         self.operator = operator
         self.conditions = conditions
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'V2PolicyRuleRuleWithConditions':
-        """Initialize a V2PolicyRuleRuleWithConditions object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'V2PolicyRuleRuleWithNestedConditions':
+        """Initialize a V2PolicyRuleRuleWithNestedConditions object from a json dictionary."""
         args = {}
         if 'operator' in _dict:
             args['operator'] = _dict.get('operator')
         else:
-            raise ValueError('Required property \'operator\' not present in V2PolicyRuleRuleWithConditions JSON')
+            raise ValueError('Required property \'operator\' not present in V2PolicyRuleRuleWithNestedConditions JSON')
         if 'conditions' in _dict:
-            args['conditions'] = [RuleAttributeWithConditions.from_dict(v) for v in _dict.get('conditions')]
+            args['conditions'] = _dict.get('conditions')
         else:
-            raise ValueError('Required property \'conditions\' not present in V2PolicyRuleRuleWithConditions JSON')
+            raise ValueError(
+                'Required property \'conditions\' not present in V2PolicyRuleRuleWithNestedConditions JSON'
+            )
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a V2PolicyRuleRuleWithConditions object from a json dictionary."""
+        """Initialize a V2PolicyRuleRuleWithNestedConditions object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -7334,16 +7443,16 @@ class V2PolicyRuleRuleWithConditions(V2PolicyRule):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this V2PolicyRuleRuleWithConditions object."""
+        """Return a `str` version of this V2PolicyRuleRuleWithNestedConditions object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'V2PolicyRuleRuleWithConditions') -> bool:
+    def __eq__(self, other: 'V2PolicyRuleRuleWithNestedConditions') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'V2PolicyRuleRuleWithConditions') -> bool:
+    def __ne__(self, other: 'V2PolicyRuleRuleWithNestedConditions') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
