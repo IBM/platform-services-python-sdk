@@ -83,7 +83,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             tags=[V2PolicyResourceTag(key='project', value='prototype', operator='stringEquals')],
         )
         cls.testV2PolicyControl = Control(grant=Grant(roles=[cls.testPolicyRole]))
-        cls.testV2PolicyRule = V2PolicyRuleRuleWithConditions(
+        cls.testV2PolicyRule = V2PolicyRuleRuleWithNestedConditions(
             operator='and',
             conditions=[
                 RuleAttribute(
