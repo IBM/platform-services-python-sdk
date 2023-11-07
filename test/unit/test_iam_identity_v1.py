@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.iam_identity_v1 import *
 
 
-_service = IamIdentityV1(authenticator=NoAuthAuthenticator())
+_service = IamIdentityV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://iam.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -59,7 +61,8 @@ def preprocess_url(operation_path: str):
     # Otherwise, return a regular expression that matches one or more trailing /.
     if re.fullmatch('.*/+', request_url) is None:
         return request_url
-    return re.compile(request_url.rstrip('/') + '/+')
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
 
 
 ##############################################################################
@@ -3959,7 +3962,7 @@ class TestGetMfaStatus:
         """
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/status')
-        mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
+        mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true, "comply_state": "NO"}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
         responses.add(
             responses.GET,
             url,
@@ -4003,7 +4006,7 @@ class TestGetMfaStatus:
         """
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/status')
-        mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
+        mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true, "comply_state": "NO"}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
         responses.add(
             responses.GET,
             url,
@@ -4173,7 +4176,7 @@ class TestGetMfaReport:
         """
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/report/testString')
-        mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
+        mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true, "comply_state": "NO"}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
         responses.add(
             responses.GET,
             url,
@@ -4213,7 +4216,7 @@ class TestGetMfaReport:
         """
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/report/testString')
-        mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
+        mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true, "comply_state": "NO"}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
         responses.add(
             responses.GET,
             url,
@@ -7930,15 +7933,11 @@ class TestModel_AccountBasedMfaEnrollment:
         account_based_mfa_enrollment_model_json['complies'] = True
 
         # Construct a model instance of AccountBasedMfaEnrollment by calling from_dict on the json representation
-        account_based_mfa_enrollment_model = AccountBasedMfaEnrollment.from_dict(
-            account_based_mfa_enrollment_model_json
-        )
+        account_based_mfa_enrollment_model = AccountBasedMfaEnrollment.from_dict(account_based_mfa_enrollment_model_json)
         assert account_based_mfa_enrollment_model != False
 
         # Construct a model instance of AccountBasedMfaEnrollment by calling from_dict on the json representation
-        account_based_mfa_enrollment_model_dict = AccountBasedMfaEnrollment.from_dict(
-            account_based_mfa_enrollment_model_json
-        ).__dict__
+        account_based_mfa_enrollment_model_dict = AccountBasedMfaEnrollment.from_dict(account_based_mfa_enrollment_model_json).__dict__
         account_based_mfa_enrollment_model2 = AccountBasedMfaEnrollment(**account_based_mfa_enrollment_model_dict)
 
         # Verify the model instances are equivalent
@@ -7983,9 +7982,7 @@ class TestModel_AccountSettingsComponent:
         assert account_settings_component_model != False
 
         # Construct a model instance of AccountSettingsComponent by calling from_dict on the json representation
-        account_settings_component_model_dict = AccountSettingsComponent.from_dict(
-            account_settings_component_model_json
-        ).__dict__
+        account_settings_component_model_dict = AccountSettingsComponent.from_dict(account_settings_component_model_json).__dict__
         account_settings_component_model2 = AccountSettingsComponent(**account_settings_component_model_dict)
 
         # Verify the model instances are equivalent
@@ -8055,9 +8052,7 @@ class TestModel_AccountSettingsResponse:
         assert account_settings_response_model != False
 
         # Construct a model instance of AccountSettingsResponse by calling from_dict on the json representation
-        account_settings_response_model_dict = AccountSettingsResponse.from_dict(
-            account_settings_response_model_json
-        ).__dict__
+        account_settings_response_model_dict = AccountSettingsResponse.from_dict(account_settings_response_model_json).__dict__
         account_settings_response_model2 = AccountSettingsResponse(**account_settings_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -8141,20 +8136,14 @@ class TestModel_AccountSettingsTemplateList:
         account_settings_template_list_model_json['first'] = 'testString'
         account_settings_template_list_model_json['previous'] = 'testString'
         account_settings_template_list_model_json['next'] = 'testString'
-        account_settings_template_list_model_json['account_settings_templates'] = [
-            account_settings_template_response_model
-        ]
+        account_settings_template_list_model_json['account_settings_templates'] = [account_settings_template_response_model]
 
         # Construct a model instance of AccountSettingsTemplateList by calling from_dict on the json representation
-        account_settings_template_list_model = AccountSettingsTemplateList.from_dict(
-            account_settings_template_list_model_json
-        )
+        account_settings_template_list_model = AccountSettingsTemplateList.from_dict(account_settings_template_list_model_json)
         assert account_settings_template_list_model != False
 
         # Construct a model instance of AccountSettingsTemplateList by calling from_dict on the json representation
-        account_settings_template_list_model_dict = AccountSettingsTemplateList.from_dict(
-            account_settings_template_list_model_json
-        ).__dict__
+        account_settings_template_list_model_dict = AccountSettingsTemplateList.from_dict(account_settings_template_list_model_json).__dict__
         account_settings_template_list_model2 = AccountSettingsTemplateList(**account_settings_template_list_model_dict)
 
         # Verify the model instances are equivalent
@@ -8219,18 +8208,12 @@ class TestModel_AccountSettingsTemplateResponse:
         account_settings_template_response_model_json['last_modified_by_id'] = 'testString'
 
         # Construct a model instance of AccountSettingsTemplateResponse by calling from_dict on the json representation
-        account_settings_template_response_model = AccountSettingsTemplateResponse.from_dict(
-            account_settings_template_response_model_json
-        )
+        account_settings_template_response_model = AccountSettingsTemplateResponse.from_dict(account_settings_template_response_model_json)
         assert account_settings_template_response_model != False
 
         # Construct a model instance of AccountSettingsTemplateResponse by calling from_dict on the json representation
-        account_settings_template_response_model_dict = AccountSettingsTemplateResponse.from_dict(
-            account_settings_template_response_model_json
-        ).__dict__
-        account_settings_template_response_model2 = AccountSettingsTemplateResponse(
-            **account_settings_template_response_model_dict
-        )
+        account_settings_template_response_model_dict = AccountSettingsTemplateResponse.from_dict(account_settings_template_response_model_json).__dict__
+        account_settings_template_response_model2 = AccountSettingsTemplateResponse(**account_settings_template_response_model_dict)
 
         # Verify the model instances are equivalent
         assert account_settings_template_response_model == account_settings_template_response_model2
@@ -8260,9 +8243,7 @@ class TestModel_AccountSettingsUserMFA:
         assert account_settings_user_mfa_model != False
 
         # Construct a model instance of AccountSettingsUserMFA by calling from_dict on the json representation
-        account_settings_user_mfa_model_dict = AccountSettingsUserMFA.from_dict(
-            account_settings_user_mfa_model_json
-        ).__dict__
+        account_settings_user_mfa_model_dict = AccountSettingsUserMFA.from_dict(account_settings_user_mfa_model_json).__dict__
         account_settings_user_mfa_model2 = AccountSettingsUserMFA(**account_settings_user_mfa_model_dict)
 
         # Verify the model instances are equivalent
@@ -8393,27 +8374,19 @@ class TestModel_ApiKeyInsideCreateServiceIdRequest:
         api_key_inside_create_service_id_request_model_json['store_value'] = True
 
         # Construct a model instance of ApiKeyInsideCreateServiceIdRequest by calling from_dict on the json representation
-        api_key_inside_create_service_id_request_model = ApiKeyInsideCreateServiceIdRequest.from_dict(
-            api_key_inside_create_service_id_request_model_json
-        )
+        api_key_inside_create_service_id_request_model = ApiKeyInsideCreateServiceIdRequest.from_dict(api_key_inside_create_service_id_request_model_json)
         assert api_key_inside_create_service_id_request_model != False
 
         # Construct a model instance of ApiKeyInsideCreateServiceIdRequest by calling from_dict on the json representation
-        api_key_inside_create_service_id_request_model_dict = ApiKeyInsideCreateServiceIdRequest.from_dict(
-            api_key_inside_create_service_id_request_model_json
-        ).__dict__
-        api_key_inside_create_service_id_request_model2 = ApiKeyInsideCreateServiceIdRequest(
-            **api_key_inside_create_service_id_request_model_dict
-        )
+        api_key_inside_create_service_id_request_model_dict = ApiKeyInsideCreateServiceIdRequest.from_dict(api_key_inside_create_service_id_request_model_json).__dict__
+        api_key_inside_create_service_id_request_model2 = ApiKeyInsideCreateServiceIdRequest(**api_key_inside_create_service_id_request_model_dict)
 
         # Verify the model instances are equivalent
         assert api_key_inside_create_service_id_request_model == api_key_inside_create_service_id_request_model2
 
         # Convert model instance back to dict and verify no loss of data
         api_key_inside_create_service_id_request_model_json2 = api_key_inside_create_service_id_request_model.to_dict()
-        assert (
-            api_key_inside_create_service_id_request_model_json2 == api_key_inside_create_service_id_request_model_json
-        )
+        assert api_key_inside_create_service_id_request_model_json2 == api_key_inside_create_service_id_request_model_json
 
 
 class TestModel_ApiKeyList:
@@ -8563,9 +8536,7 @@ class TestModel_ApikeyActivityServiceid:
         assert apikey_activity_serviceid_model != False
 
         # Construct a model instance of ApikeyActivityServiceid by calling from_dict on the json representation
-        apikey_activity_serviceid_model_dict = ApikeyActivityServiceid.from_dict(
-            apikey_activity_serviceid_model_json
-        ).__dict__
+        apikey_activity_serviceid_model_dict = ApikeyActivityServiceid.from_dict(apikey_activity_serviceid_model_json).__dict__
         apikey_activity_serviceid_model2 = ApikeyActivityServiceid(**apikey_activity_serviceid_model_dict)
 
         # Verify the model instances are equivalent
@@ -8626,18 +8597,12 @@ class TestModel_CreateProfileLinkRequestLink:
         create_profile_link_request_link_model_json['name'] = 'testString'
 
         # Construct a model instance of CreateProfileLinkRequestLink by calling from_dict on the json representation
-        create_profile_link_request_link_model = CreateProfileLinkRequestLink.from_dict(
-            create_profile_link_request_link_model_json
-        )
+        create_profile_link_request_link_model = CreateProfileLinkRequestLink.from_dict(create_profile_link_request_link_model_json)
         assert create_profile_link_request_link_model != False
 
         # Construct a model instance of CreateProfileLinkRequestLink by calling from_dict on the json representation
-        create_profile_link_request_link_model_dict = CreateProfileLinkRequestLink.from_dict(
-            create_profile_link_request_link_model_json
-        ).__dict__
-        create_profile_link_request_link_model2 = CreateProfileLinkRequestLink(
-            **create_profile_link_request_link_model_dict
-        )
+        create_profile_link_request_link_model_dict = CreateProfileLinkRequestLink.from_dict(create_profile_link_request_link_model_json).__dict__
+        create_profile_link_request_link_model2 = CreateProfileLinkRequestLink(**create_profile_link_request_link_model_dict)
 
         # Verify the model instances are equivalent
         assert create_profile_link_request_link_model == create_profile_link_request_link_model2
@@ -8817,6 +8782,7 @@ class TestModel_IdBasedMfaEnrollment:
         id_based_mfa_enrollment_model_json['trait_user_specific'] = 'NONE'
         id_based_mfa_enrollment_model_json['trait_effective'] = 'NONE'
         id_based_mfa_enrollment_model_json['complies'] = True
+        id_based_mfa_enrollment_model_json['comply_state'] = 'NO'
 
         # Construct a model instance of IdBasedMfaEnrollment by calling from_dict on the json representation
         id_based_mfa_enrollment_model = IdBasedMfaEnrollment.from_dict(id_based_mfa_enrollment_model_json)
@@ -8854,9 +8820,7 @@ class TestModel_MfaEnrollmentTypeStatus:
         assert mfa_enrollment_type_status_model != False
 
         # Construct a model instance of MfaEnrollmentTypeStatus by calling from_dict on the json representation
-        mfa_enrollment_type_status_model_dict = MfaEnrollmentTypeStatus.from_dict(
-            mfa_enrollment_type_status_model_json
-        ).__dict__
+        mfa_enrollment_type_status_model_dict = MfaEnrollmentTypeStatus.from_dict(mfa_enrollment_type_status_model_json).__dict__
         mfa_enrollment_type_status_model2 = MfaEnrollmentTypeStatus(**mfa_enrollment_type_status_model_dict)
 
         # Verify the model instances are equivalent
@@ -8884,6 +8848,7 @@ class TestModel_MfaEnrollments:
         id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
         id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
         id_based_mfa_enrollment_model['complies'] = True
+        id_based_mfa_enrollment_model['comply_state'] = 'NO'
 
         mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
         mfa_enrollment_type_status_model['required'] = True
@@ -8937,9 +8902,7 @@ class TestModel_PolicyTemplateReference:
         assert policy_template_reference_model != False
 
         # Construct a model instance of PolicyTemplateReference by calling from_dict on the json representation
-        policy_template_reference_model_dict = PolicyTemplateReference.from_dict(
-            policy_template_reference_model_json
-        ).__dict__
+        policy_template_reference_model_dict = PolicyTemplateReference.from_dict(policy_template_reference_model_json).__dict__
         policy_template_reference_model2 = PolicyTemplateReference(**policy_template_reference_model_dict)
 
         # Verify the model instances are equivalent
@@ -9013,15 +8976,11 @@ class TestModel_ProfileClaimRuleConditions:
         profile_claim_rule_conditions_model_json['value'] = 'testString'
 
         # Construct a model instance of ProfileClaimRuleConditions by calling from_dict on the json representation
-        profile_claim_rule_conditions_model = ProfileClaimRuleConditions.from_dict(
-            profile_claim_rule_conditions_model_json
-        )
+        profile_claim_rule_conditions_model = ProfileClaimRuleConditions.from_dict(profile_claim_rule_conditions_model_json)
         assert profile_claim_rule_conditions_model != False
 
         # Construct a model instance of ProfileClaimRuleConditions by calling from_dict on the json representation
-        profile_claim_rule_conditions_model_dict = ProfileClaimRuleConditions.from_dict(
-            profile_claim_rule_conditions_model_json
-        ).__dict__
+        profile_claim_rule_conditions_model_dict = ProfileClaimRuleConditions.from_dict(profile_claim_rule_conditions_model_json).__dict__
         profile_claim_rule_conditions_model2 = ProfileClaimRuleConditions(**profile_claim_rule_conditions_model_dict)
 
         # Verify the model instances are equivalent
@@ -9124,9 +9083,7 @@ class TestModel_ProfileIdentitiesResponse:
         assert profile_identities_response_model != False
 
         # Construct a model instance of ProfileIdentitiesResponse by calling from_dict on the json representation
-        profile_identities_response_model_dict = ProfileIdentitiesResponse.from_dict(
-            profile_identities_response_model_json
-        ).__dict__
+        profile_identities_response_model_dict = ProfileIdentitiesResponse.from_dict(profile_identities_response_model_json).__dict__
         profile_identities_response_model2 = ProfileIdentitiesResponse(**profile_identities_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -9159,9 +9116,7 @@ class TestModel_ProfileIdentityRequest:
         assert profile_identity_request_model != False
 
         # Construct a model instance of ProfileIdentityRequest by calling from_dict on the json representation
-        profile_identity_request_model_dict = ProfileIdentityRequest.from_dict(
-            profile_identity_request_model_json
-        ).__dict__
+        profile_identity_request_model_dict = ProfileIdentityRequest.from_dict(profile_identity_request_model_json).__dict__
         profile_identity_request_model2 = ProfileIdentityRequest(**profile_identity_request_model_dict)
 
         # Verify the model instances are equivalent
@@ -9195,9 +9150,7 @@ class TestModel_ProfileIdentityResponse:
         assert profile_identity_response_model != False
 
         # Construct a model instance of ProfileIdentityResponse by calling from_dict on the json representation
-        profile_identity_response_model_dict = ProfileIdentityResponse.from_dict(
-            profile_identity_response_model_json
-        ).__dict__
+        profile_identity_response_model_dict = ProfileIdentityResponse.from_dict(profile_identity_response_model_json).__dict__
         profile_identity_response_model2 = ProfileIdentityResponse(**profile_identity_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -9416,6 +9369,7 @@ class TestModel_ReportMfaEnrollmentStatus:
         id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
         id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
         id_based_mfa_enrollment_model['complies'] = True
+        id_based_mfa_enrollment_model['comply_state'] = 'NO'
 
         mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
         mfa_enrollment_type_status_model['required'] = True
@@ -9449,15 +9403,11 @@ class TestModel_ReportMfaEnrollmentStatus:
         report_mfa_enrollment_status_model_json['users'] = [user_report_mfa_enrollment_status_model]
 
         # Construct a model instance of ReportMfaEnrollmentStatus by calling from_dict on the json representation
-        report_mfa_enrollment_status_model = ReportMfaEnrollmentStatus.from_dict(
-            report_mfa_enrollment_status_model_json
-        )
+        report_mfa_enrollment_status_model = ReportMfaEnrollmentStatus.from_dict(report_mfa_enrollment_status_model_json)
         assert report_mfa_enrollment_status_model != False
 
         # Construct a model instance of ReportMfaEnrollmentStatus by calling from_dict on the json representation
-        report_mfa_enrollment_status_model_dict = ReportMfaEnrollmentStatus.from_dict(
-            report_mfa_enrollment_status_model_json
-        ).__dict__
+        report_mfa_enrollment_status_model_dict = ReportMfaEnrollmentStatus.from_dict(report_mfa_enrollment_status_model_json).__dict__
         report_mfa_enrollment_status_model2 = ReportMfaEnrollmentStatus(**report_mfa_enrollment_status_model_dict)
 
         # Verify the model instances are equivalent
@@ -9767,12 +9717,8 @@ class TestModel_TemplateAssignmentListResponse:
         template_assignment_response_resource_model = {}  # TemplateAssignmentResponseResource
         template_assignment_response_resource_model['target'] = 'testString'
         template_assignment_response_resource_model['profile'] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model[
-            'account_settings'
-        ] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model['policy_template_refs'] = [
-            template_assignment_response_resource_detail_model
-        ]
+        template_assignment_response_resource_model['account_settings'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model['policy_template_refs'] = [template_assignment_response_resource_detail_model]
 
         enity_history_record_model = {}  # EnityHistoryRecord
         enity_history_record_model['timestamp'] = 'testString'
@@ -9811,18 +9757,12 @@ class TestModel_TemplateAssignmentListResponse:
         template_assignment_list_response_model_json['assignments'] = [template_assignment_response_model]
 
         # Construct a model instance of TemplateAssignmentListResponse by calling from_dict on the json representation
-        template_assignment_list_response_model = TemplateAssignmentListResponse.from_dict(
-            template_assignment_list_response_model_json
-        )
+        template_assignment_list_response_model = TemplateAssignmentListResponse.from_dict(template_assignment_list_response_model_json)
         assert template_assignment_list_response_model != False
 
         # Construct a model instance of TemplateAssignmentListResponse by calling from_dict on the json representation
-        template_assignment_list_response_model_dict = TemplateAssignmentListResponse.from_dict(
-            template_assignment_list_response_model_json
-        ).__dict__
-        template_assignment_list_response_model2 = TemplateAssignmentListResponse(
-            **template_assignment_list_response_model_dict
-        )
+        template_assignment_list_response_model_dict = TemplateAssignmentListResponse.from_dict(template_assignment_list_response_model_json).__dict__
+        template_assignment_list_response_model2 = TemplateAssignmentListResponse(**template_assignment_list_response_model_dict)
 
         # Verify the model instances are equivalent
         assert template_assignment_list_response_model == template_assignment_list_response_model2
@@ -9847,15 +9787,11 @@ class TestModel_TemplateAssignmentResource:
         template_assignment_resource_model_json['id'] = 'testString'
 
         # Construct a model instance of TemplateAssignmentResource by calling from_dict on the json representation
-        template_assignment_resource_model = TemplateAssignmentResource.from_dict(
-            template_assignment_resource_model_json
-        )
+        template_assignment_resource_model = TemplateAssignmentResource.from_dict(template_assignment_resource_model_json)
         assert template_assignment_resource_model != False
 
         # Construct a model instance of TemplateAssignmentResource by calling from_dict on the json representation
-        template_assignment_resource_model_dict = TemplateAssignmentResource.from_dict(
-            template_assignment_resource_model_json
-        ).__dict__
+        template_assignment_resource_model_dict = TemplateAssignmentResource.from_dict(template_assignment_resource_model_json).__dict__
         template_assignment_resource_model2 = TemplateAssignmentResource(**template_assignment_resource_model_dict)
 
         # Verify the model instances are equivalent
@@ -9884,18 +9820,12 @@ class TestModel_TemplateAssignmentResourceError:
         template_assignment_resource_error_model_json['statusCode'] = 'testString'
 
         # Construct a model instance of TemplateAssignmentResourceError by calling from_dict on the json representation
-        template_assignment_resource_error_model = TemplateAssignmentResourceError.from_dict(
-            template_assignment_resource_error_model_json
-        )
+        template_assignment_resource_error_model = TemplateAssignmentResourceError.from_dict(template_assignment_resource_error_model_json)
         assert template_assignment_resource_error_model != False
 
         # Construct a model instance of TemplateAssignmentResourceError by calling from_dict on the json representation
-        template_assignment_resource_error_model_dict = TemplateAssignmentResourceError.from_dict(
-            template_assignment_resource_error_model_json
-        ).__dict__
-        template_assignment_resource_error_model2 = TemplateAssignmentResourceError(
-            **template_assignment_resource_error_model_dict
-        )
+        template_assignment_resource_error_model_dict = TemplateAssignmentResourceError.from_dict(template_assignment_resource_error_model_json).__dict__
+        template_assignment_resource_error_model2 = TemplateAssignmentResourceError(**template_assignment_resource_error_model_dict)
 
         # Verify the model instances are equivalent
         assert template_assignment_resource_error_model == template_assignment_resource_error_model2
@@ -9949,12 +9879,8 @@ class TestModel_TemplateAssignmentResponse:
         template_assignment_response_resource_model = {}  # TemplateAssignmentResponseResource
         template_assignment_response_resource_model['target'] = 'testString'
         template_assignment_response_resource_model['profile'] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model[
-            'account_settings'
-        ] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model['policy_template_refs'] = [
-            template_assignment_response_resource_detail_model
-        ]
+        template_assignment_response_resource_model['account_settings'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model['policy_template_refs'] = [template_assignment_response_resource_detail_model]
 
         enity_history_record_model = {}  # EnityHistoryRecord
         enity_history_record_model['timestamp'] = 'testString'
@@ -9984,15 +9910,11 @@ class TestModel_TemplateAssignmentResponse:
         template_assignment_response_model_json['entity_tag'] = 'testString'
 
         # Construct a model instance of TemplateAssignmentResponse by calling from_dict on the json representation
-        template_assignment_response_model = TemplateAssignmentResponse.from_dict(
-            template_assignment_response_model_json
-        )
+        template_assignment_response_model = TemplateAssignmentResponse.from_dict(template_assignment_response_model_json)
         assert template_assignment_response_model != False
 
         # Construct a model instance of TemplateAssignmentResponse by calling from_dict on the json representation
-        template_assignment_response_model_dict = TemplateAssignmentResponse.from_dict(
-            template_assignment_response_model_json
-        ).__dict__
+        template_assignment_response_model_dict = TemplateAssignmentResponse.from_dict(template_assignment_response_model_json).__dict__
         template_assignment_response_model2 = TemplateAssignmentResponse(**template_assignment_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -10035,26 +9957,16 @@ class TestModel_TemplateAssignmentResponseResource:
         template_assignment_response_resource_model_json = {}
         template_assignment_response_resource_model_json['target'] = 'testString'
         template_assignment_response_resource_model_json['profile'] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model_json[
-            'account_settings'
-        ] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model_json['policy_template_refs'] = [
-            template_assignment_response_resource_detail_model
-        ]
+        template_assignment_response_resource_model_json['account_settings'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model_json['policy_template_refs'] = [template_assignment_response_resource_detail_model]
 
         # Construct a model instance of TemplateAssignmentResponseResource by calling from_dict on the json representation
-        template_assignment_response_resource_model = TemplateAssignmentResponseResource.from_dict(
-            template_assignment_response_resource_model_json
-        )
+        template_assignment_response_resource_model = TemplateAssignmentResponseResource.from_dict(template_assignment_response_resource_model_json)
         assert template_assignment_response_resource_model != False
 
         # Construct a model instance of TemplateAssignmentResponseResource by calling from_dict on the json representation
-        template_assignment_response_resource_model_dict = TemplateAssignmentResponseResource.from_dict(
-            template_assignment_response_resource_model_json
-        ).__dict__
-        template_assignment_response_resource_model2 = TemplateAssignmentResponseResource(
-            **template_assignment_response_resource_model_dict
-        )
+        template_assignment_response_resource_model_dict = TemplateAssignmentResponseResource.from_dict(template_assignment_response_resource_model_json).__dict__
+        template_assignment_response_resource_model2 = TemplateAssignmentResponseResource(**template_assignment_response_resource_model_dict)
 
         # Verify the model instances are equivalent
         assert template_assignment_response_resource_model == template_assignment_response_resource_model2
@@ -10090,36 +10002,23 @@ class TestModel_TemplateAssignmentResponseResourceDetail:
         template_assignment_response_resource_detail_model_json['id'] = 'testString'
         template_assignment_response_resource_detail_model_json['version'] = 'testString'
         template_assignment_response_resource_detail_model_json['resource_created'] = template_assignment_resource_model
-        template_assignment_response_resource_detail_model_json[
-            'error_message'
-        ] = template_assignment_resource_error_model
+        template_assignment_response_resource_detail_model_json['error_message'] = template_assignment_resource_error_model
         template_assignment_response_resource_detail_model_json['status'] = 'testString'
 
         # Construct a model instance of TemplateAssignmentResponseResourceDetail by calling from_dict on the json representation
-        template_assignment_response_resource_detail_model = TemplateAssignmentResponseResourceDetail.from_dict(
-            template_assignment_response_resource_detail_model_json
-        )
+        template_assignment_response_resource_detail_model = TemplateAssignmentResponseResourceDetail.from_dict(template_assignment_response_resource_detail_model_json)
         assert template_assignment_response_resource_detail_model != False
 
         # Construct a model instance of TemplateAssignmentResponseResourceDetail by calling from_dict on the json representation
-        template_assignment_response_resource_detail_model_dict = TemplateAssignmentResponseResourceDetail.from_dict(
-            template_assignment_response_resource_detail_model_json
-        ).__dict__
-        template_assignment_response_resource_detail_model2 = TemplateAssignmentResponseResourceDetail(
-            **template_assignment_response_resource_detail_model_dict
-        )
+        template_assignment_response_resource_detail_model_dict = TemplateAssignmentResponseResourceDetail.from_dict(template_assignment_response_resource_detail_model_json).__dict__
+        template_assignment_response_resource_detail_model2 = TemplateAssignmentResponseResourceDetail(**template_assignment_response_resource_detail_model_dict)
 
         # Verify the model instances are equivalent
         assert template_assignment_response_resource_detail_model == template_assignment_response_resource_detail_model2
 
         # Convert model instance back to dict and verify no loss of data
-        template_assignment_response_resource_detail_model_json2 = (
-            template_assignment_response_resource_detail_model.to_dict()
-        )
-        assert (
-            template_assignment_response_resource_detail_model_json2
-            == template_assignment_response_resource_detail_model_json
-        )
+        template_assignment_response_resource_detail_model_json2 = template_assignment_response_resource_detail_model.to_dict()
+        assert template_assignment_response_resource_detail_model_json2 == template_assignment_response_resource_detail_model_json
 
 
 class TestModel_TemplateProfileComponentRequest:
@@ -10160,18 +10059,12 @@ class TestModel_TemplateProfileComponentRequest:
         template_profile_component_request_model_json['identities'] = [profile_identity_request_model]
 
         # Construct a model instance of TemplateProfileComponentRequest by calling from_dict on the json representation
-        template_profile_component_request_model = TemplateProfileComponentRequest.from_dict(
-            template_profile_component_request_model_json
-        )
+        template_profile_component_request_model = TemplateProfileComponentRequest.from_dict(template_profile_component_request_model_json)
         assert template_profile_component_request_model != False
 
         # Construct a model instance of TemplateProfileComponentRequest by calling from_dict on the json representation
-        template_profile_component_request_model_dict = TemplateProfileComponentRequest.from_dict(
-            template_profile_component_request_model_json
-        ).__dict__
-        template_profile_component_request_model2 = TemplateProfileComponentRequest(
-            **template_profile_component_request_model_dict
-        )
+        template_profile_component_request_model_dict = TemplateProfileComponentRequest.from_dict(template_profile_component_request_model_json).__dict__
+        template_profile_component_request_model2 = TemplateProfileComponentRequest(**template_profile_component_request_model_dict)
 
         # Verify the model instances are equivalent
         assert template_profile_component_request_model == template_profile_component_request_model2
@@ -10220,18 +10113,12 @@ class TestModel_TemplateProfileComponentResponse:
         template_profile_component_response_model_json['identities'] = [profile_identity_response_model]
 
         # Construct a model instance of TemplateProfileComponentResponse by calling from_dict on the json representation
-        template_profile_component_response_model = TemplateProfileComponentResponse.from_dict(
-            template_profile_component_response_model_json
-        )
+        template_profile_component_response_model = TemplateProfileComponentResponse.from_dict(template_profile_component_response_model_json)
         assert template_profile_component_response_model != False
 
         # Construct a model instance of TemplateProfileComponentResponse by calling from_dict on the json representation
-        template_profile_component_response_model_dict = TemplateProfileComponentResponse.from_dict(
-            template_profile_component_response_model_json
-        ).__dict__
-        template_profile_component_response_model2 = TemplateProfileComponentResponse(
-            **template_profile_component_response_model_dict
-        )
+        template_profile_component_response_model_dict = TemplateProfileComponentResponse.from_dict(template_profile_component_response_model_json).__dict__
+        template_profile_component_response_model2 = TemplateProfileComponentResponse(**template_profile_component_response_model_dict)
 
         # Verify the model instances are equivalent
         assert template_profile_component_response_model == template_profile_component_response_model2
@@ -10339,18 +10226,12 @@ class TestModel_TrustedProfileTemplateClaimRule:
         trusted_profile_template_claim_rule_model_json['conditions'] = [profile_claim_rule_conditions_model]
 
         # Construct a model instance of TrustedProfileTemplateClaimRule by calling from_dict on the json representation
-        trusted_profile_template_claim_rule_model = TrustedProfileTemplateClaimRule.from_dict(
-            trusted_profile_template_claim_rule_model_json
-        )
+        trusted_profile_template_claim_rule_model = TrustedProfileTemplateClaimRule.from_dict(trusted_profile_template_claim_rule_model_json)
         assert trusted_profile_template_claim_rule_model != False
 
         # Construct a model instance of TrustedProfileTemplateClaimRule by calling from_dict on the json representation
-        trusted_profile_template_claim_rule_model_dict = TrustedProfileTemplateClaimRule.from_dict(
-            trusted_profile_template_claim_rule_model_json
-        ).__dict__
-        trusted_profile_template_claim_rule_model2 = TrustedProfileTemplateClaimRule(
-            **trusted_profile_template_claim_rule_model_dict
-        )
+        trusted_profile_template_claim_rule_model_dict = TrustedProfileTemplateClaimRule.from_dict(trusted_profile_template_claim_rule_model_json).__dict__
+        trusted_profile_template_claim_rule_model2 = TrustedProfileTemplateClaimRule(**trusted_profile_template_claim_rule_model_dict)
 
         # Verify the model instances are equivalent
         assert trusted_profile_template_claim_rule_model == trusted_profile_template_claim_rule_model2
@@ -10450,15 +10331,11 @@ class TestModel_TrustedProfileTemplateList:
         trusted_profile_template_list_model_json['profile_templates'] = [trusted_profile_template_response_model]
 
         # Construct a model instance of TrustedProfileTemplateList by calling from_dict on the json representation
-        trusted_profile_template_list_model = TrustedProfileTemplateList.from_dict(
-            trusted_profile_template_list_model_json
-        )
+        trusted_profile_template_list_model = TrustedProfileTemplateList.from_dict(trusted_profile_template_list_model_json)
         assert trusted_profile_template_list_model != False
 
         # Construct a model instance of TrustedProfileTemplateList by calling from_dict on the json representation
-        trusted_profile_template_list_model_dict = TrustedProfileTemplateList.from_dict(
-            trusted_profile_template_list_model_json
-        ).__dict__
+        trusted_profile_template_list_model_dict = TrustedProfileTemplateList.from_dict(trusted_profile_template_list_model_json).__dict__
         trusted_profile_template_list_model2 = TrustedProfileTemplateList(**trusted_profile_template_list_model_dict)
 
         # Verify the model instances are equivalent
@@ -10537,18 +10414,12 @@ class TestModel_TrustedProfileTemplateResponse:
         trusted_profile_template_response_model_json['last_modified_by_id'] = 'testString'
 
         # Construct a model instance of TrustedProfileTemplateResponse by calling from_dict on the json representation
-        trusted_profile_template_response_model = TrustedProfileTemplateResponse.from_dict(
-            trusted_profile_template_response_model_json
-        )
+        trusted_profile_template_response_model = TrustedProfileTemplateResponse.from_dict(trusted_profile_template_response_model_json)
         assert trusted_profile_template_response_model != False
 
         # Construct a model instance of TrustedProfileTemplateResponse by calling from_dict on the json representation
-        trusted_profile_template_response_model_dict = TrustedProfileTemplateResponse.from_dict(
-            trusted_profile_template_response_model_json
-        ).__dict__
-        trusted_profile_template_response_model2 = TrustedProfileTemplateResponse(
-            **trusted_profile_template_response_model_dict
-        )
+        trusted_profile_template_response_model_dict = TrustedProfileTemplateResponse.from_dict(trusted_profile_template_response_model_json).__dict__
+        trusted_profile_template_response_model2 = TrustedProfileTemplateResponse(**trusted_profile_template_response_model_dict)
 
         # Verify the model instances are equivalent
         assert trusted_profile_template_response_model == trusted_profile_template_response_model2
@@ -10690,6 +10561,7 @@ class TestModel_UserMfaEnrollments:
         id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
         id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
         id_based_mfa_enrollment_model['complies'] = True
+        id_based_mfa_enrollment_model['comply_state'] = 'NO'
 
         mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
         mfa_enrollment_type_status_model['required'] = True
@@ -10741,6 +10613,7 @@ class TestModel_UserReportMfaEnrollmentStatus:
         id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
         id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
         id_based_mfa_enrollment_model['complies'] = True
+        id_based_mfa_enrollment_model['comply_state'] = 'NO'
 
         mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
         mfa_enrollment_type_status_model['required'] = True
@@ -10766,18 +10639,12 @@ class TestModel_UserReportMfaEnrollmentStatus:
         user_report_mfa_enrollment_status_model_json['enrollments'] = mfa_enrollments_model
 
         # Construct a model instance of UserReportMfaEnrollmentStatus by calling from_dict on the json representation
-        user_report_mfa_enrollment_status_model = UserReportMfaEnrollmentStatus.from_dict(
-            user_report_mfa_enrollment_status_model_json
-        )
+        user_report_mfa_enrollment_status_model = UserReportMfaEnrollmentStatus.from_dict(user_report_mfa_enrollment_status_model_json)
         assert user_report_mfa_enrollment_status_model != False
 
         # Construct a model instance of UserReportMfaEnrollmentStatus by calling from_dict on the json representation
-        user_report_mfa_enrollment_status_model_dict = UserReportMfaEnrollmentStatus.from_dict(
-            user_report_mfa_enrollment_status_model_json
-        ).__dict__
-        user_report_mfa_enrollment_status_model2 = UserReportMfaEnrollmentStatus(
-            **user_report_mfa_enrollment_status_model_dict
-        )
+        user_report_mfa_enrollment_status_model_dict = UserReportMfaEnrollmentStatus.from_dict(user_report_mfa_enrollment_status_model_json).__dict__
+        user_report_mfa_enrollment_status_model2 = UserReportMfaEnrollmentStatus(**user_report_mfa_enrollment_status_model_dict)
 
         # Verify the model instances are equivalent
         assert user_report_mfa_enrollment_status_model == user_report_mfa_enrollment_status_model2
