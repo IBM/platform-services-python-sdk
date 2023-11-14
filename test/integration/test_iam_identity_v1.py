@@ -1503,6 +1503,8 @@ class TestIamIdentityV1:
         )
         assert delete_response.get_status_code() == 202
 
+        self.waitUntilTrustedProfileAssignmentFinished(self.iam_identity_service, profile_template_assignment_id)
+
     @needscredentials
     def test_delete_profile_template_version(self):
         assert profile_template_id is not None
@@ -1746,6 +1748,10 @@ class TestIamIdentityV1:
             assignment_id=account_settings_template_assignment_id
         )
         assert delete_response.get_status_code() == 202
+
+        self.waitUntilAccountSettingsAssignmentFinished(
+            self.iam_identity_service, account_settings_template_assignment_id
+        )
 
     @needscredentials
     def test_delete_account_settings_template_version(self):

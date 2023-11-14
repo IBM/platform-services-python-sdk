@@ -1109,6 +1109,7 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nupdate_profile_template() result:')
+            global profile_template_etag
             # begin-update_profile_template_version
 
             update_response = iam_identity_service.update_profile_template_version(
@@ -1123,7 +1124,7 @@ class TestIamIdentityV1Examples:
             print('\nupdate_profile_template() response: ', json.dumps(profile_template, indent=2))
 
             # end-update_profile_template_version
-            global profile_template_etag
+
             profile_template_etag = update_response.get_headers()['Etag']
 
         except ApiException as e:
@@ -1299,6 +1300,7 @@ class TestIamIdentityV1Examples:
                 template_id=profile_template_id, version=str(profile_template_version)
             )
             self.waitUntilTrustedProfileAssignmentFinished(iam_identity_service, profile_template_assignment_id)
+            global profile_template_assignment_etag
             # begin-update_trusted_profile_assignment
 
             assign_response = iam_identity_service.update_trusted_profile_assignment(
@@ -1311,7 +1313,6 @@ class TestIamIdentityV1Examples:
 
             # end-update_trusted_profile_assignment
 
-            global profile_template_assignment_etag
             profile_template_assignment_etag = assign_response.get_headers()['Etag']
 
         except ApiException as e:
@@ -1332,6 +1333,7 @@ class TestIamIdentityV1Examples:
             )
 
             # end-delete_trusted_profile_assignment
+            self.waitUntilTrustedProfileAssignmentFinished(iam_identity_service, profile_template_assignment_id)
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1448,6 +1450,7 @@ class TestIamIdentityV1Examples:
         """
         try:
             print('\nupdate_account_settings_template_version() result:')
+            global account_settings_template_etag
             # begin-update_account_settings_template_version
 
             account_settings = {}
@@ -1467,7 +1470,6 @@ class TestIamIdentityV1Examples:
             print('\nupdate_account_settings_template() response: ', json.dumps(account_settings_template, indent=2))
 
             # end-update_account_settings_template_version
-            global account_settings_template_etag
             account_settings_template_etag = update_response.get_headers()['Etag']
 
         except ApiException as e:
@@ -1643,7 +1645,7 @@ class TestIamIdentityV1Examples:
             self.waitUntilAccountSettingsAssignmentFinished(
                 iam_identity_service, account_settings_template_assignment_id
             )
-
+            global account_settings_template_assignment_etag
             # begin-update_account_settings_assignment
 
             assign_response = iam_identity_service.update_account_settings_assignment(
@@ -1655,7 +1657,6 @@ class TestIamIdentityV1Examples:
             print('\nupdate_account_settings_template_assignment response: ', json.dumps(assignment, indent=2))
 
             # end-update_account_settings_assignment
-            global account_settings_template_assignment_etag
             account_settings_template_assignment_etag = assign_response.get_headers()['Etag']
         except ApiException as e:
             pytest.fail(str(e))
@@ -1678,6 +1679,9 @@ class TestIamIdentityV1Examples:
             )
 
             # end-delete_account_settings_assignment
+            self.waitUntilAccountSettingsAssignmentFinished(
+                iam_identity_service, account_settings_template_assignment_id
+            )
         except ApiException as e:
             pytest.fail(str(e))
 

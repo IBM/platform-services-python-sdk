@@ -3959,7 +3959,7 @@ class TestGetMfaStatus:
         """
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/status')
-        mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
+        mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true, "comply_state": "NO"}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
         responses.add(
             responses.GET,
             url,
@@ -4003,7 +4003,7 @@ class TestGetMfaStatus:
         """
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/status')
-        mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
+        mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true, "comply_state": "NO"}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
         responses.add(
             responses.GET,
             url,
@@ -4173,7 +4173,7 @@ class TestGetMfaReport:
         """
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/report/testString')
-        mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
+        mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true, "comply_state": "NO"}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
         responses.add(
             responses.GET,
             url,
@@ -4213,7 +4213,7 @@ class TestGetMfaReport:
         """
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/report/testString')
-        mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
+        mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true, "comply_state": "NO"}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
         responses.add(
             responses.GET,
             url,
@@ -8817,6 +8817,7 @@ class TestModel_IdBasedMfaEnrollment:
         id_based_mfa_enrollment_model_json['trait_user_specific'] = 'NONE'
         id_based_mfa_enrollment_model_json['trait_effective'] = 'NONE'
         id_based_mfa_enrollment_model_json['complies'] = True
+        id_based_mfa_enrollment_model_json['comply_state'] = 'NO'
 
         # Construct a model instance of IdBasedMfaEnrollment by calling from_dict on the json representation
         id_based_mfa_enrollment_model = IdBasedMfaEnrollment.from_dict(id_based_mfa_enrollment_model_json)
@@ -8884,6 +8885,7 @@ class TestModel_MfaEnrollments:
         id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
         id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
         id_based_mfa_enrollment_model['complies'] = True
+        id_based_mfa_enrollment_model['comply_state'] = 'NO'
 
         mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
         mfa_enrollment_type_status_model['required'] = True
@@ -9416,6 +9418,7 @@ class TestModel_ReportMfaEnrollmentStatus:
         id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
         id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
         id_based_mfa_enrollment_model['complies'] = True
+        id_based_mfa_enrollment_model['comply_state'] = 'NO'
 
         mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
         mfa_enrollment_type_status_model['required'] = True
@@ -10690,6 +10693,7 @@ class TestModel_UserMfaEnrollments:
         id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
         id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
         id_based_mfa_enrollment_model['complies'] = True
+        id_based_mfa_enrollment_model['comply_state'] = 'NO'
 
         mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
         mfa_enrollment_type_status_model['required'] = True
@@ -10741,6 +10745,7 @@ class TestModel_UserReportMfaEnrollmentStatus:
         id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
         id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
         id_based_mfa_enrollment_model['complies'] = True
+        id_based_mfa_enrollment_model['comply_state'] = 'NO'
 
         mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
         mfa_enrollment_type_status_model['required'] = True
