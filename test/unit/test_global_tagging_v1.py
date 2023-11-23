@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.global_tagging_v1 import *
 
 
-_service = GlobalTaggingV1(authenticator=NoAuthAuthenticator())
+_service = GlobalTaggingV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://tags.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -119,7 +121,6 @@ class TestListTags:
         x_request_id = 'testString'
         x_correlation_id = 'testString'
         transaction_id = 'testString'
-        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
         full_data = False
@@ -136,7 +137,6 @@ class TestListTags:
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
-            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             full_data=full_data,
@@ -156,7 +156,6 @@ class TestListTags:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         assert 'full_data={}'.format('true' if full_data else 'false') in query_string
@@ -233,7 +232,6 @@ class TestCreateTag:
 
         # Set up parameter values
         tag_names = ['testString']
-        impersonate_user = 'testString'
         x_request_id = 'testString'
         x_correlation_id = 'testString'
         transaction_id = 'testString'
@@ -243,7 +241,6 @@ class TestCreateTag:
         # Invoke method
         response = _service.create_tag(
             tag_names,
-            impersonate_user=impersonate_user,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
@@ -258,7 +255,6 @@ class TestCreateTag:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         # Validate body params
@@ -379,7 +375,6 @@ class TestDeleteTagAll:
         x_correlation_id = 'testString'
         transaction_id = 'testString'
         providers = 'ghost'
-        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -389,7 +384,6 @@ class TestDeleteTagAll:
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             providers=providers,
-            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={},
@@ -402,7 +396,6 @@ class TestDeleteTagAll:
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'providers={}'.format(providers) in query_string
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
 
@@ -475,7 +468,6 @@ class TestDeleteTag:
         x_correlation_id = 'testString'
         transaction_id = 'testString'
         providers = ['ghost']
-        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -486,7 +478,6 @@ class TestDeleteTag:
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             providers=providers,
-            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={},
@@ -499,7 +490,6 @@ class TestDeleteTag:
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'providers={}'.format(','.join(providers)) in query_string
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
 
@@ -621,7 +611,6 @@ class TestAttachTag:
         x_request_id = 'testString'
         x_correlation_id = 'testString'
         transaction_id = 'testString'
-        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -633,7 +622,6 @@ class TestAttachTag:
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
-            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={},
@@ -645,7 +633,6 @@ class TestAttachTag:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         # Validate body params
@@ -793,7 +780,6 @@ class TestDetachTag:
         x_request_id = 'testString'
         x_correlation_id = 'testString'
         transaction_id = 'testString'
-        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -805,7 +791,6 @@ class TestDetachTag:
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
-            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={},
@@ -817,7 +802,6 @@ class TestDetachTag:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         # Validate body params
@@ -996,18 +980,12 @@ class TestModel_CreateTagResultsResultsItem:
         create_tag_results_results_item_model_json['is_error'] = True
 
         # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
-        create_tag_results_results_item_model = CreateTagResultsResultsItem.from_dict(
-            create_tag_results_results_item_model_json
-        )
+        create_tag_results_results_item_model = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json)
         assert create_tag_results_results_item_model != False
 
         # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
-        create_tag_results_results_item_model_dict = CreateTagResultsResultsItem.from_dict(
-            create_tag_results_results_item_model_json
-        ).__dict__
-        create_tag_results_results_item_model2 = CreateTagResultsResultsItem(
-            **create_tag_results_results_item_model_dict
-        )
+        create_tag_results_results_item_model_dict = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json).__dict__
+        create_tag_results_results_item_model2 = CreateTagResultsResultsItem(**create_tag_results_results_item_model_dict)
 
         # Verify the model instances are equivalent
         assert create_tag_results_results_item_model == create_tag_results_results_item_model2
@@ -1277,9 +1255,7 @@ class TestModel_TagResults:
         # Construct dict forms of any model objects needed in order to build this model.
 
         tag_results_item_model = {}  # TagResultsItem
-        tag_results_item_model[
-            'resource_id'
-        ] = 'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
+        tag_results_item_model['resource_id'] = 'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
         tag_results_item_model['is_error'] = False
 
         # Construct a json representation of a TagResults model

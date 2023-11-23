@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.global_search_v2 import *
 
 
-_service = GlobalSearchV2(authenticator=NoAuthAuthenticator())
+_service = GlobalSearchV2(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://api.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)

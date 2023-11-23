@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
+# IBM OpenAPI SDK Code Generator Version: 3.82.1-2082d402-20231115-195014
 
 """
 Search for resources with the global and shared resource properties repository that is
@@ -31,7 +31,7 @@ API Version: 2.0.1
 """
 
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
@@ -62,7 +62,9 @@ class GlobalSearchV2(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -86,21 +88,21 @@ class GlobalSearchV2(BaseService):
     def search(
         self,
         *,
-        query: str = None,
-        fields: List[str] = None,
-        search_cursor: str = None,
-        x_request_id: str = None,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        account_id: str = None,
-        limit: int = None,
-        timeout: int = None,
-        sort: List[str] = None,
-        is_deleted: str = None,
-        is_reclaimed: str = None,
-        is_public: str = None,
-        impersonate_user: str = None,
-        can_tag: str = None,
+        query: Optional[str] = None,
+        fields: Optional[List[str]] = None,
+        search_cursor: Optional[str] = None,
+        x_request_id: Optional[str] = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        timeout: Optional[int] = None,
+        sort: Optional[List[str]] = None,
+        is_deleted: Optional[str] = None,
+        is_reclaimed: Optional[str] = None,
+        is_public: Optional[str] = None,
+        impersonate_user: Optional[str] = None,
+        can_tag: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -255,7 +257,6 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
-
     class IsReclaimed(str, Enum):
         """
         Determines if reclaimed documents should be included in result set or not.
@@ -267,7 +268,6 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
-
     class IsPublic(str, Enum):
         """
         Determines if public resources should be included in result set or not. Possible
@@ -278,7 +278,6 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
-
     class CanTag(str, Enum):
         """
         Determines if the result set must return the resources that the user can tag or
@@ -302,7 +301,7 @@ class ResultItem:
     A resource returned in a search result, which is identified by its `crn`. It contains
     other properties that depend on the resource type.
 
-    :attr str crn: Resource identifier in CRN format.
+    :param str crn: Resource identifier in CRN format.
     """
 
     # The set of defined properties for the class
@@ -388,10 +387,10 @@ class ScanResult:
     """
     The search scan response.
 
-    :attr str search_cursor: (optional) The search cursor to use on all calls after
+    :param str search_cursor: (optional) The search cursor to use on all calls after
           the first one.
-    :attr int limit: Value of the limit parameter specified by the user.
-    :attr List[ResultItem] items: The array of results. Each item represents a
+    :param int limit: Value of the limit parameter specified by the user.
+    :param List[ResultItem] items: The array of results. Each item represents a
           resource. An empty array signals the end of the result set, which means there
           are no more results to fetch.
     """
@@ -401,7 +400,7 @@ class ScanResult:
         limit: int,
         items: List['ResultItem'],
         *,
-        search_cursor: str = None,
+        search_cursor: Optional[str] = None,
     ) -> None:
         """
         Initialize a ScanResult object.
