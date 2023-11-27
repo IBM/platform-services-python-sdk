@@ -119,7 +119,6 @@ class TestListTags:
         x_request_id = 'testString'
         x_correlation_id = 'testString'
         transaction_id = 'testString'
-        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
         full_data = False
@@ -136,7 +135,6 @@ class TestListTags:
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
-            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             full_data=full_data,
@@ -156,7 +154,6 @@ class TestListTags:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         assert 'full_data={}'.format('true' if full_data else 'false') in query_string
@@ -233,7 +230,6 @@ class TestCreateTag:
 
         # Set up parameter values
         tag_names = ['testString']
-        impersonate_user = 'testString'
         x_request_id = 'testString'
         x_correlation_id = 'testString'
         transaction_id = 'testString'
@@ -243,7 +239,6 @@ class TestCreateTag:
         # Invoke method
         response = _service.create_tag(
             tag_names,
-            impersonate_user=impersonate_user,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
@@ -258,7 +253,6 @@ class TestCreateTag:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         # Validate body params
@@ -379,7 +373,6 @@ class TestDeleteTagAll:
         x_correlation_id = 'testString'
         transaction_id = 'testString'
         providers = 'ghost'
-        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -389,7 +382,6 @@ class TestDeleteTagAll:
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             providers=providers,
-            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={},
@@ -402,7 +394,6 @@ class TestDeleteTagAll:
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'providers={}'.format(providers) in query_string
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
 
@@ -475,7 +466,6 @@ class TestDeleteTag:
         x_correlation_id = 'testString'
         transaction_id = 'testString'
         providers = ['ghost']
-        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -486,7 +476,6 @@ class TestDeleteTag:
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             providers=providers,
-            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={},
@@ -499,7 +488,6 @@ class TestDeleteTag:
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'providers={}'.format(','.join(providers)) in query_string
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
 
@@ -621,7 +609,6 @@ class TestAttachTag:
         x_request_id = 'testString'
         x_correlation_id = 'testString'
         transaction_id = 'testString'
-        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -633,7 +620,6 @@ class TestAttachTag:
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
-            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={},
@@ -645,7 +631,6 @@ class TestAttachTag:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         # Validate body params
@@ -793,7 +778,6 @@ class TestDetachTag:
         x_request_id = 'testString'
         x_correlation_id = 'testString'
         transaction_id = 'testString'
-        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -805,7 +789,6 @@ class TestDetachTag:
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
-            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={},
@@ -817,7 +800,6 @@ class TestDetachTag:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         # Validate body params

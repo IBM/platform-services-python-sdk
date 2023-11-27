@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
+# IBM OpenAPI SDK Code Generator Version: 3.82.1-2082d402-20231115-195014
 
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete, or
@@ -30,7 +30,7 @@ API Version: 1.2.0
 """
 
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
@@ -85,20 +85,19 @@ class GlobalTaggingV1(BaseService):
     def list_tags(
         self,
         *,
-        x_request_id: str = None,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        impersonate_user: str = None,
-        account_id: str = None,
-        tag_type: str = None,
-        full_data: bool = None,
-        providers: List[str] = None,
-        attached_to: str = None,
-        offset: int = None,
-        limit: int = None,
-        timeout: int = None,
-        order_by_name: str = None,
-        attached_only: bool = None,
+        x_request_id: Optional[str] = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        tag_type: Optional[str] = None,
+        full_data: Optional[bool] = None,
+        providers: Optional[List[str]] = None,
+        attached_to: Optional[str] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+        timeout: Optional[int] = None,
+        order_by_name: Optional[str] = None,
+        attached_only: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -127,8 +126,6 @@ class GlobalTaggingV1(BaseService):
         :param str transaction_id: (optional) Deprecated: An alphanumeric string
                that can be used to trace a request across services. If not specified, it
                automatically generated with the prefix "gst-".
-        :param str impersonate_user: (optional) The user on whose behalf the get
-               operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account to list the
                tags for. If it is not set, then it is taken from the authorization token.
                This parameter is required if `tag_type` is set to `service`.
@@ -176,7 +173,6 @@ class GlobalTaggingV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'impersonate_user': impersonate_user,
             'account_id': account_id,
             'tag_type': tag_type,
             'full_data': full_data,
@@ -209,12 +205,11 @@ class GlobalTaggingV1(BaseService):
         self,
         tag_names: List[str],
         *,
-        impersonate_user: str = None,
-        x_request_id: str = None,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        account_id: str = None,
-        tag_type: str = None,
+        x_request_id: Optional[str] = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        tag_type: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -227,8 +222,6 @@ class GlobalTaggingV1(BaseService):
         are attached for the first time to a resource.
 
         :param List[str] tag_names: An array of tag names to create.
-        :param str impersonate_user: (optional) The user on whose behalf the create
-               operation must be performed (_for administrators only_).
         :param str x_request_id: (optional) An alphanumeric string that is used to
                trace the request. The value  may include ASCII alphanumerics and any of
                following segment separators: space ( ), comma (,), hyphen, (-), and
@@ -250,8 +243,7 @@ class GlobalTaggingV1(BaseService):
                that can be used to trace a request across services. If not specified, it
                automatically generated with the prefix "gst-".
         :param str account_id: (optional) The ID of the billing account where the
-               tag must be created. It is a required parameter if `impersonate_user` is
-               set.
+               tag must be created.
         :param str tag_type: (optional) The type of the tags you want to create.
                The only allowed value is `access`.
         :param dict headers: A `dict` containing the request headers
@@ -274,7 +266,6 @@ class GlobalTaggingV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'impersonate_user': impersonate_user,
             'account_id': account_id,
             'tag_type': tag_type,
         }
@@ -306,13 +297,12 @@ class GlobalTaggingV1(BaseService):
     def delete_tag_all(
         self,
         *,
-        x_request_id: str = None,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        providers: str = None,
-        impersonate_user: str = None,
-        account_id: str = None,
-        tag_type: str = None,
+        x_request_id: Optional[str] = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        providers: Optional[str] = None,
+        account_id: Optional[str] = None,
+        tag_type: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -342,8 +332,6 @@ class GlobalTaggingV1(BaseService):
                automatically generated with the prefix "gst-".
         :param str providers: (optional) Select a provider. Supported values are
                `ghost` and `ims`.
-        :param str impersonate_user: (optional) The user on whose behalf the delete
-               all operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account to delete
                the tags for. If it is not set, then it is taken from the authorization
                token. It is a required parameter if `tag_type` is set to `service`.
@@ -369,7 +357,6 @@ class GlobalTaggingV1(BaseService):
 
         params = {
             'providers': providers,
-            'impersonate_user': impersonate_user,
             'account_id': account_id,
             'tag_type': tag_type,
         }
@@ -394,13 +381,12 @@ class GlobalTaggingV1(BaseService):
         self,
         tag_name: str,
         *,
-        x_request_id: str = None,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        providers: List[str] = None,
-        impersonate_user: str = None,
-        account_id: str = None,
-        tag_type: str = None,
+        x_request_id: Optional[str] = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        providers: Optional[List[str]] = None,
+        account_id: Optional[str] = None,
+        tag_type: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -433,8 +419,6 @@ class GlobalTaggingV1(BaseService):
         :param List[str] providers: (optional) Select a provider. Supported values
                are `ghost` and `ims`. To delete tags both in Global Search and Tagging and
                in IMS, use `ghost,ims`.
-        :param str impersonate_user: (optional) The user on whose behalf the delete
-               operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account to delete
                the tag for. It is a required parameter if `tag_type` is set to `service`,
                otherwise it is inferred from the authorization IAM token.
@@ -462,7 +446,6 @@ class GlobalTaggingV1(BaseService):
 
         params = {
             'providers': convert_list(providers),
-            'impersonate_user': impersonate_user,
             'account_id': account_id,
             'tag_type': tag_type,
         }
@@ -490,14 +473,13 @@ class GlobalTaggingV1(BaseService):
         self,
         resources: List['Resource'],
         *,
-        tag_name: str = None,
-        tag_names: List[str] = None,
-        x_request_id: str = None,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        impersonate_user: str = None,
-        account_id: str = None,
-        tag_type: str = None,
+        tag_name: Optional[str] = None,
+        tag_names: Optional[List[str]] = None,
+        x_request_id: Optional[str] = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        tag_type: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -531,8 +513,6 @@ class GlobalTaggingV1(BaseService):
         :param str transaction_id: (optional) Deprecated: An alphanumeric string
                that can be used to trace a request across services. If not specified, it
                automatically generated with the prefix "gst-".
-        :param str impersonate_user: (optional) The user on whose behalf the attach
-               operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account of the
                tagged resource. It is a required parameter if `tag_type` is set to
                `service`. Otherwise, it is inferred from the authorization IAM token.
@@ -560,7 +540,6 @@ class GlobalTaggingV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'impersonate_user': impersonate_user,
             'account_id': account_id,
             'tag_type': tag_type,
         }
@@ -595,14 +574,13 @@ class GlobalTaggingV1(BaseService):
         self,
         resources: List['Resource'],
         *,
-        tag_name: str = None,
-        tag_names: List[str] = None,
-        x_request_id: str = None,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        impersonate_user: str = None,
-        account_id: str = None,
-        tag_type: str = None,
+        tag_name: Optional[str] = None,
+        tag_names: Optional[List[str]] = None,
+        x_request_id: Optional[str] = None,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        tag_type: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -634,8 +612,6 @@ class GlobalTaggingV1(BaseService):
         :param str transaction_id: (optional) Deprecated: An alphanumeric string
                that can be used to trace a request across services. If not specified, it
                automatically generated with the prefix "gst-".
-        :param str impersonate_user: (optional) The user on whose behalf the detach
-               operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account of the
                untagged resource. It is a required parameter if `tag_type` is set to
                `service`, otherwise it is inferred from the authorization IAM token.
@@ -663,7 +639,6 @@ class GlobalTaggingV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'impersonate_user': impersonate_user,
             'account_id': account_id,
             'tag_type': tag_type,
         }
@@ -835,14 +810,14 @@ class CreateTagResults:
     """
     Results of a create tag(s) request.
 
-    :attr List[CreateTagResultsResultsItem] results: (optional) Array of results of
+    :param List[CreateTagResultsResultsItem] results: (optional) Array of results of
           a create_tag request.
     """
 
     def __init__(
         self,
         *,
-        results: List['CreateTagResultsResultsItem'] = None,
+        results: Optional[List['CreateTagResultsResultsItem']] = None,
     ) -> None:
         """
         Initialize a CreateTagResults object.
@@ -901,16 +876,16 @@ class CreateTagResultsResultsItem:
     """
     CreateTagResultsResultsItem.
 
-    :attr str tag_name: (optional) The name of the tag created.
-    :attr bool is_error: (optional) true if the tag was not created (for example,
+    :param str tag_name: (optional) The name of the tag created.
+    :param bool is_error: (optional) true if the tag was not created (for example,
           the tag already exists).
     """
 
     def __init__(
         self,
         *,
-        tag_name: str = None,
-        is_error: bool = None,
+        tag_name: Optional[str] = None,
+        is_error: Optional[bool] = None,
     ) -> None:
         """
         Initialize a CreateTagResultsResultsItem object.
@@ -969,14 +944,14 @@ class DeleteTagResults:
     """
     Results of a delete_tag request.
 
-    :attr List[DeleteTagResultsItem] results: (optional) Array of results of a
+    :param List[DeleteTagResultsItem] results: (optional) Array of results of a
           delete_tag request.
     """
 
     def __init__(
         self,
         *,
-        results: List['DeleteTagResultsItem'] = None,
+        results: Optional[List['DeleteTagResultsItem']] = None,
     ) -> None:
         """
         Initialize a DeleteTagResults object.
@@ -1035,8 +1010,8 @@ class DeleteTagResultsItem:
     """
     Result of a delete_tag request.
 
-    :attr str provider: (optional) The provider of the tag.
-    :attr bool is_error: (optional) It is `true` if the operation exits with an
+    :param str provider: (optional) The provider of the tag.
+    :param bool is_error: (optional) It is `true` if the operation exits with an
           error (for example, the tag does not exist).
     """
 
@@ -1046,8 +1021,8 @@ class DeleteTagResultsItem:
     def __init__(
         self,
         *,
-        provider: str = None,
-        is_error: bool = None,
+        provider: Optional[str] = None,
+        is_error: Optional[bool] = None,
         **kwargs,
     ) -> None:
         """
@@ -1138,19 +1113,19 @@ class DeleteTagsResult:
     """
     Results of deleting unattatched tags.
 
-    :attr int total_count: (optional) The number of tags that have been deleted.
-    :attr bool errors: (optional) It is set to true if there is at least one tag
+    :param int total_count: (optional) The number of tags that have been deleted.
+    :param bool errors: (optional) It is set to true if there is at least one tag
           operation in error.
-    :attr List[DeleteTagsResultItem] items: (optional) The list of tag operation
+    :param List[DeleteTagsResultItem] items: (optional) The list of tag operation
           results.
     """
 
     def __init__(
         self,
         *,
-        total_count: int = None,
-        errors: bool = None,
-        items: List['DeleteTagsResultItem'] = None,
+        total_count: Optional[int] = None,
+        errors: Optional[bool] = None,
+        items: Optional[List['DeleteTagsResultItem']] = None,
     ) -> None:
         """
         Initialize a DeleteTagsResult object.
@@ -1223,15 +1198,15 @@ class DeleteTagsResultItem:
     """
     Result of a delete_tags request.
 
-    :attr str tag_name: (optional) The name of the deleted tag.
-    :attr bool is_error: (optional) true if the tag was not deleted.
+    :param str tag_name: (optional) The name of the deleted tag.
+    :param bool is_error: (optional) true if the tag was not deleted.
     """
 
     def __init__(
         self,
         *,
-        tag_name: str = None,
-        is_error: bool = None,
+        tag_name: Optional[str] = None,
+        is_error: Optional[bool] = None,
     ) -> None:
         """
         Initialize a DeleteTagsResultItem object.
@@ -1289,15 +1264,15 @@ class Resource:
     """
     A resource that might have tags that are attached.
 
-    :attr str resource_id: The CRN or IMS ID of the resource.
-    :attr str resource_type: (optional) The IMS resource type of the resource.
+    :param str resource_id: The CRN or IMS ID of the resource.
+    :param str resource_type: (optional) The IMS resource type of the resource.
     """
 
     def __init__(
         self,
         resource_id: str,
         *,
-        resource_type: str = None,
+        resource_type: Optional[str] = None,
     ) -> None:
         """
         Initialize a Resource object.
@@ -1357,7 +1332,7 @@ class Tag:
     """
     A tag.
 
-    :attr str name: The name of the tag.
+    :param str name: The name of the tag.
     """
 
     def __init__(
@@ -1416,20 +1391,20 @@ class TagList:
     """
     A list of tags.
 
-    :attr int total_count: (optional) Set the occurrences of the total tags that are
-          associated with this account.
-    :attr int offset: (optional) The offset at which tags are returned.
-    :attr int limit: (optional) The number of tags requested to be returned.
-    :attr List[Tag] items: (optional) Array of output results.
+    :param int total_count: (optional) Set the occurrences of the total tags that
+          are associated with this account.
+    :param int offset: (optional) The offset at which tags are returned.
+    :param int limit: (optional) The number of tags requested to be returned.
+    :param List[Tag] items: (optional) Array of output results.
     """
 
     def __init__(
         self,
         *,
-        total_count: int = None,
-        offset: int = None,
-        limit: int = None,
-        items: List['Tag'] = None,
+        total_count: Optional[int] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+        items: Optional[List['Tag']] = None,
     ) -> None:
         """
         Initialize a TagList object.
@@ -1506,14 +1481,14 @@ class TagResults:
     """
     Results of an attach_tag or detach_tag request.
 
-    :attr List[TagResultsItem] results: (optional) Array of results of an attach_tag
-          or detach_tag request.
+    :param List[TagResultsItem] results: (optional) Array of results of an
+          attach_tag or detach_tag request.
     """
 
     def __init__(
         self,
         *,
-        results: List['TagResultsItem'] = None,
+        results: Optional[List['TagResultsItem']] = None,
     ) -> None:
         """
         Initialize a TagResults object.
@@ -1572,8 +1547,8 @@ class TagResultsItem:
     """
     Result of an attach_tag or detach_tag request for a tagged resource.
 
-    :attr str resource_id: The CRN or IMS ID of the resource.
-    :attr bool is_error: (optional) It is `true` if the operation exits with an
+    :param str resource_id: The CRN or IMS ID of the resource.
+    :param bool is_error: (optional) It is `true` if the operation exits with an
           error.
     """
 
@@ -1581,7 +1556,7 @@ class TagResultsItem:
         self,
         resource_id: str,
         *,
-        is_error: bool = None,
+        is_error: Optional[bool] = None,
     ) -> None:
         """
         Initialize a TagResultsItem object.
