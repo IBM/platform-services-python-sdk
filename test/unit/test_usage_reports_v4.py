@@ -1588,6 +1588,114 @@ class TestDeleteReportsSnapshotConfig:
         self.test_delete_reports_snapshot_config_value_error()
 
 
+class TestValidateReportsSnapshotConfig:
+    """
+    Test Class for validate_reports_snapshot_config
+    """
+
+    @responses.activate
+    def test_validate_reports_snapshot_config_all_params(self):
+        """
+        validate_reports_snapshot_config()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/billing-reports-snapshot-config/validate')
+        mock_response = '{"account_id": "abc", "cos_bucket": "bucket_name", "cos_location": "us-south"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'abc'
+        interval = 'daily'
+        cos_bucket = 'bucket_name'
+        cos_location = 'us-south'
+        cos_reports_folder = 'IBMCloud-Billing-Reports'
+        report_types = ['account_summary', 'enterprise_summary', 'account_resource_instance_usage']
+        versioning = 'new'
+
+        # Invoke method
+        response = _service.validate_reports_snapshot_config(
+            account_id,
+            interval=interval,
+            cos_bucket=cos_bucket,
+            cos_location=cos_location,
+            cos_reports_folder=cos_reports_folder,
+            report_types=report_types,
+            versioning=versioning,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'abc'
+        assert req_body['interval'] == 'daily'
+        assert req_body['cos_bucket'] == 'bucket_name'
+        assert req_body['cos_location'] == 'us-south'
+        assert req_body['cos_reports_folder'] == 'IBMCloud-Billing-Reports'
+        assert req_body['report_types'] == ['account_summary', 'enterprise_summary', 'account_resource_instance_usage']
+        assert req_body['versioning'] == 'new'
+
+    def test_validate_reports_snapshot_config_all_params_with_retries(self):
+        # Enable retries and run test_validate_reports_snapshot_config_all_params.
+        _service.enable_retries()
+        self.test_validate_reports_snapshot_config_all_params()
+
+        # Disable retries and run test_validate_reports_snapshot_config_all_params.
+        _service.disable_retries()
+        self.test_validate_reports_snapshot_config_all_params()
+
+    @responses.activate
+    def test_validate_reports_snapshot_config_value_error(self):
+        """
+        test_validate_reports_snapshot_config_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/billing-reports-snapshot-config/validate')
+        mock_response = '{"account_id": "abc", "cos_bucket": "bucket_name", "cos_location": "us-south"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'abc'
+        interval = 'daily'
+        cos_bucket = 'bucket_name'
+        cos_location = 'us-south'
+        cos_reports_folder = 'IBMCloud-Billing-Reports'
+        report_types = ['account_summary', 'enterprise_summary', 'account_resource_instance_usage']
+        versioning = 'new'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.validate_reports_snapshot_config(**req_copy)
+
+    def test_validate_reports_snapshot_config_value_error_with_retries(self):
+        # Enable retries and run test_validate_reports_snapshot_config_value_error.
+        _service.enable_retries()
+        self.test_validate_reports_snapshot_config_value_error()
+
+        # Disable retries and run test_validate_reports_snapshot_config_value_error.
+        _service.disable_retries()
+        self.test_validate_reports_snapshot_config_value_error()
+
+
 class TestGetReportsSnapshot:
     """
     Test Class for get_reports_snapshot
@@ -3194,6 +3302,44 @@ class TestModel_SnapshotConfig:
         # Convert model instance back to dict and verify no loss of data
         snapshot_config_model_json2 = snapshot_config_model.to_dict()
         assert snapshot_config_model_json2 == snapshot_config_model_json
+
+
+class TestModel_SnapshotConfigValidateResponse:
+    """
+    Test Class for SnapshotConfigValidateResponse
+    """
+
+    def test_snapshot_config_validate_response_serialization(self):
+        """
+        Test serialization/deserialization for SnapshotConfigValidateResponse
+        """
+
+        # Construct a json representation of a SnapshotConfigValidateResponse model
+        snapshot_config_validate_response_model_json = {}
+        snapshot_config_validate_response_model_json['account_id'] = 'abc'
+        snapshot_config_validate_response_model_json['cos_bucket'] = 'bucket_name'
+        snapshot_config_validate_response_model_json['cos_location'] = 'us-south'
+
+        # Construct a model instance of SnapshotConfigValidateResponse by calling from_dict on the json representation
+        snapshot_config_validate_response_model = SnapshotConfigValidateResponse.from_dict(
+            snapshot_config_validate_response_model_json
+        )
+        assert snapshot_config_validate_response_model != False
+
+        # Construct a model instance of SnapshotConfigValidateResponse by calling from_dict on the json representation
+        snapshot_config_validate_response_model_dict = SnapshotConfigValidateResponse.from_dict(
+            snapshot_config_validate_response_model_json
+        ).__dict__
+        snapshot_config_validate_response_model2 = SnapshotConfigValidateResponse(
+            **snapshot_config_validate_response_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert snapshot_config_validate_response_model == snapshot_config_validate_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        snapshot_config_validate_response_model_json2 = snapshot_config_validate_response_model.to_dict()
+        assert snapshot_config_validate_response_model_json2 == snapshot_config_validate_response_model_json
 
 
 class TestModel_Subscription:

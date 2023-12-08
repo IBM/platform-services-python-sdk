@@ -329,6 +329,30 @@ class TestUsageReportsV4Examples:
             pytest.fail(str(e))
 
     @needscredentials
+    def test_validate_reports_snapshot_config_example(self):
+        """
+        validate_reports_snapshot_config request example
+        """
+        try:
+            print('\nvalidate_reports_snapshot_config() result:')
+            # begin-validate_reports_snapshot_config
+
+            response = usage_reports_service.validate_reports_snapshot_config(
+                account_id=account_id,
+                interval='daily',
+                cos_bucket=cos_bucket,
+                cos_location=cos_location,
+            )
+            snapshot_config_validate_response = response.get_result()
+
+            print(json.dumps(snapshot_config_validate_response, indent=2))
+
+            # end-validate_reports_snapshot_config
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_get_reports_snapshot_example(self):
         """
         get_reports_snapshot request example
@@ -336,16 +360,21 @@ class TestUsageReportsV4Examples:
         try:
             print('\nget_reports_snapshot() result:')
             # begin-get_reports_snapshot
-
-            response = usage_reports_service.get_reports_snapshot(
+            all_results = []
+            pager = GetReportsSnapshotPager(
+                client=usage_reports_service,
                 account_id=account_id,
                 month=billing_month,
                 date_from=snapshot_date_from,
                 date_to=snapshot_date_to,
+                limit=30,
             )
-            snapshot_list = response.get_result()
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(snapshot_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-get_reports_snapshot
 

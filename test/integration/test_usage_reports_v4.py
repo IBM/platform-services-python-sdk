@@ -267,6 +267,22 @@ class TestUsageReportsV4:
         assert snapshot_config is not None
 
     @needscredentials
+    def test_validate_reports_snapshot_config(self):
+        response = self.usage_reports_service.validate_reports_snapshot_config(
+            account_id=self.ACCOUNT_ID,
+            interval='daily',
+            cos_bucket=self.COS_BUCKET,
+            cos_location=self.COS_LOCATION,
+            cos_reports_folder='IBMCloud-Billing-Reports',
+            report_types=['account_summary', 'enterprise_summary', 'account_resource_instance_usage'],
+            versioning='new',
+        )
+
+        assert response.get_status_code() == 200
+        snapshot_config_validate_response = response.get_result()
+        assert snapshot_config_validate_response is not None
+
+    @needscredentials
     def test_get_reports_snapshot(self):
         response = self.usage_reports_service.get_reports_snapshot(
             account_id=self.ACCOUNT_ID,
@@ -278,6 +294,41 @@ class TestUsageReportsV4:
         assert response.get_status_code() == 200
         snapshot_list = response.get_result()
         assert snapshot_list is not None
+
+    @needscredentials
+    def test_get_reports_snapshot_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = GetReportsSnapshotPager(
+            client=self.usage_reports_service,
+            account_id=self.ACCOUNT_ID,
+            month=self.BILLING_MONTH,
+            date_from=self.SNAPSHOT_DATE_FROM,
+            date_to=self.SNAPSHOT_DATE_TO,
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = GetReportsSnapshotPager(
+            client=self.usage_reports_service,
+            account_id=self.ACCOUNT_ID,
+            month=self.BILLING_MONTH,
+            date_from=self.SNAPSHOT_DATE_FROM,
+            date_to=self.SNAPSHOT_DATE_TO,
+            limit=10,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(
+            f'\nget_reports_snapshot() returned a total of {len(all_results)} items(s) using GetReportsSnapshotPager.'
+        )
 
     @needscredentials
     def test_delete_reports_snapshot_config(self):

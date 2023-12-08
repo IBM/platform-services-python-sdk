@@ -819,6 +819,85 @@ class UsageReportsV4(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    def validate_reports_snapshot_config(
+        self,
+        account_id: str,
+        *,
+        interval: str = None,
+        cos_bucket: str = None,
+        cos_location: str = None,
+        cos_reports_folder: str = None,
+        report_types: List[str] = None,
+        versioning: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Verify billing to COS authorization.
+
+        Verify billing service to COS bucket authorization for the given account_id. If
+        COS bucket information is not provided, COS bucket information is retrieved from
+        the configuration file.
+
+        :param str account_id: Account ID for which billing report snapshot is
+               configured.
+        :param str interval: (optional) Frequency of taking the snapshot of the
+               billing reports.
+        :param str cos_bucket: (optional) The name of the COS bucket to store the
+               snapshot of the billing reports.
+        :param str cos_location: (optional) Region of the COS instance.
+        :param str cos_reports_folder: (optional) The billing reports root folder
+               to store the billing reports snapshots. Defaults to
+               "IBMCloud-Billing-Reports".
+        :param List[str] report_types: (optional) The type of billing reports to
+               take snapshot of. Possible values are [account_summary, enterprise_summary,
+               account_resource_instance_usage].
+        :param str versioning: (optional) A new version of report is created or the
+               existing report version is overwritten with every update. Defaults to
+               "new".
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `SnapshotConfigValidateResponse` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V4',
+            operation_id='validate_reports_snapshot_config',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id,
+            'interval': interval,
+            'cos_bucket': cos_bucket,
+            'cos_location': cos_location,
+            'cos_reports_folder': cos_reports_folder,
+            'report_types': report_types,
+            'versioning': versioning,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/billing-reports-snapshot-config/validate'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
     def get_reports_snapshot(
         self,
         account_id: str,
@@ -3935,6 +4014,84 @@ class SnapshotConfig:
         ACCOUNT_SUMMARY = 'account_summary'
         ENTERPRISE_SUMMARY = 'enterprise_summary'
         ACCOUNT_RESOURCE_INSTANCE_USAGE = 'account_resource_instance_usage'
+
+
+class SnapshotConfigValidateResponse:
+    """
+    Validated billing service to COS bucket authorization.
+
+    :attr str account_id: (optional) Account ID for which billing report snapshot is
+          configured.
+    :attr str cos_bucket: (optional) The name of the COS bucket to store the
+          snapshot of the billing reports.
+    :attr str cos_location: (optional) Region of the COS instance.
+    """
+
+    def __init__(
+        self,
+        *,
+        account_id: str = None,
+        cos_bucket: str = None,
+        cos_location: str = None,
+    ) -> None:
+        """
+        Initialize a SnapshotConfigValidateResponse object.
+
+        :param str account_id: (optional) Account ID for which billing report
+               snapshot is configured.
+        :param str cos_bucket: (optional) The name of the COS bucket to store the
+               snapshot of the billing reports.
+        :param str cos_location: (optional) Region of the COS instance.
+        """
+        self.account_id = account_id
+        self.cos_bucket = cos_bucket
+        self.cos_location = cos_location
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SnapshotConfigValidateResponse':
+        """Initialize a SnapshotConfigValidateResponse object from a json dictionary."""
+        args = {}
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        if 'cos_bucket' in _dict:
+            args['cos_bucket'] = _dict.get('cos_bucket')
+        if 'cos_location' in _dict:
+            args['cos_location'] = _dict.get('cos_location')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SnapshotConfigValidateResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'cos_bucket') and self.cos_bucket is not None:
+            _dict['cos_bucket'] = self.cos_bucket
+        if hasattr(self, 'cos_location') and self.cos_location is not None:
+            _dict['cos_location'] = self.cos_location
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SnapshotConfigValidateResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SnapshotConfigValidateResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SnapshotConfigValidateResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class Subscription:
