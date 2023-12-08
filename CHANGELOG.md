@@ -1,3 +1,10 @@
+# [0.48.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.47.1...v0.48.0) (2023-12-08)
+
+
+### Features
+
+* **Usage Reports:** add billing snapshot config validate service to usage reports ([#232](https://github.com/IBM/platform-services-python-sdk/issues/232)) ([52893d6](https://github.com/IBM/platform-services-python-sdk/commit/52893d626f1344cae7f6d2a8e7893c96f5031d00))
+
 ## [0.47.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.47.0...v0.47.1) (2023-11-27)
 
 
