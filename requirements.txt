@@ -1,1 +1,1 @@
-ibm_cloud_sdk_core>=3.17.0,<4.0.0
+ibm_cloud_sdk_core>=3.18.1,<4.0.0
