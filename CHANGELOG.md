@@ -1,3 +1,10 @@
+## [0.48.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.48.0...v0.48.1) (2023-12-11)
+
+
+### Bug Fixes
+
+* bump python core to v3.18.1 ([#233](https://github.com/IBM/platform-services-python-sdk/issues/233)) ([e7b85ed](https://github.com/IBM/platform-services-python-sdk/commit/e7b85edb099e68346b268ee5c12f5859e8ff3527))
+
 # [0.48.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.47.1...v0.48.0) (2023-12-08)
 
 
