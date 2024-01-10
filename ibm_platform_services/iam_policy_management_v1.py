@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.81.0-c73a091c-20231026-215706
+# IBM OpenAPI SDK Code Generator Version: 3.84.0-a4533f12-20240103-170852
 
 """
 IAM Policy Management API
@@ -345,8 +345,90 @@ class IamPolicyManagementV1(BaseService):
         resource attributes supported by the service. To view a service's or the
         platform's supported attributes, check the [documentation](/docs?tab=all-docs).
         The policy resource must include either the **`serviceType`**, **`serviceName`**,
-        or **`resourceGroupId`** attribute and the **`accountId`** attribute.` If the
+        or **`resourceGroupId`** attribute and the **`accountId`** attribute.`
+        In the rule field, you can specify a single condition by using **`key`**,
+        **`value`**, and condition **`operator`**, or a set of **`conditions`** with a
+        combination **`operator`**. The possible combination operators are **`and`** and
+        **`or`**.
+        Currently, we support two types of patterns:
+        1. `time-based`: Used to specify a time-based restriction
+        Combine conditions to specify a time-based restriction (e.g., access only during
+        business hours, during the Monday-Friday work week). For example, a policy can
+        grant access Monday-Friday, 9:00am-5:00pm using the following rule:
+        ```json
+          "rule": {
+            "operator": "and",
+            "conditions": [{
+              "key": "{{environment.attributes.day_of_week}}",
+              "operator": "dayOfWeekAnyOf",
+              "value": ["1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00"]
+            },
+              "key": "{{environment.attributes.current_time}}",
+              "operator": "timeGreaterThanOrEquals",
+              "value": "09:00:00+00:00"
+            },
+              "key": "{{environment.attributes.current_time}}",
+              "operator": "timeLessThanOrEquals",
+              "value": "17:00:00+00:00"
+            }]
+          }
+        ``` You can use the following operators in the **`key`** and **`value`** pair:
+        ```
+          'timeLessThan', 'timeLessThanOrEquals', 'timeGreaterThan',
+        'timeGreaterThanOrEquals',
+          'dateTimeLessThan', 'dateTimeLessThanOrEquals', 'dateTimeGreaterThan',
+        'dateTimeGreaterThanOrEquals',
+          'dayOfWeekEquals', 'dayOfWeekAnyOf',
+        ``` The pattern field that matches the rule is required when rule is provided. For
+        the business hour rule example above, the **`pattern`** is
+        **`"time-based-conditions:weekly"`**. For more information, see [Time-based
+        conditions
+        operators](/docs/account?topic=account-iam-condition-properties&interface=ui#policy-condition-properties)
+        and
+        [Limiting access with time-based
+        conditions](/docs/account?topic=account-iam-time-based&interface=ui). If the
         subject is a locked service-id, the request will fail.
+        2. `attribute-based`: Used to specify a combination of OR/AND based conditions
+        applied on resource attributes.
+        Combine conditions to specify an attribute-based condition using AN/OR-based
+        operators.
+        For example, a policy can grant access based on multiple conditions applied on the
+        resource attributes below:
+        ```json
+          "pattern": "attribute-based-condition:resource:literal-and-wildcard"
+          "rule": {
+              "operator": "or",
+              "conditions": [
+                {
+                  "operator": "and",
+                  "conditions": [
+                    {
+                      "key": "{{resource.attributes.prefix}}",
+                      "operator": "stringEquals",
+                      "value": "home/test"
+                    },
+                    {
+                      "key": "{{environment.attributes.delimiter}}",
+                      "operator": "stringEquals",
+                      "value": "/"
+                    }
+                  ]
+                },
+                {
+                  "key": "{{resource.attributes.path}}",
+                  "operator": "stringMatch",
+                  "value": "home/David/*"
+                }
+              ]
+          }
+        ```
+        In addition to satisfying the `resources` section, the policy grants permission
+        only if either the `path` begins with `home/David/` **OR**  the `prefix` is
+        `home/test` and the `delimiter` is `/`. This mechanism helps you consolidate
+        multiple policies in to a single policy,  making policies easier to administer and
+        stay within the policy limit for an account. View the list of operators that can
+        be used in the condition
+        [here](/docs/account?topic=account-wildcard#string-comparisons).
         ### Authorization
         To update an authorization policy, use **`"type": "authorization"`** in the body.
         The subject attributes must match the supported authorization subjects of the
@@ -1528,6 +1610,7 @@ class IamPolicyManagementV1(BaseService):
         account_id: str,
         *,
         accept_language: Optional[str] = None,
+        state: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1554,6 +1637,7 @@ class IamPolicyManagementV1(BaseService):
                * `pt-br` - Portuguese (Brazil)
                * `zh-cn` - Chinese (Simplified, PRC)
                * `zh-tw` - (Chinese, Taiwan).
+        :param str state: (optional) The policy template state.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `PolicyTemplateCollection` object
@@ -1573,6 +1657,7 @@ class IamPolicyManagementV1(BaseService):
 
         params = {
             'account_id': account_id,
+            'state': state,
         }
 
         if 'headers' in kwargs:
@@ -1684,6 +1769,8 @@ class IamPolicyManagementV1(BaseService):
     def get_policy_template(
         self,
         policy_template_id: str,
+        *,
+        state: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1693,6 +1780,7 @@ class IamPolicyManagementV1(BaseService):
         ID.
 
         :param str policy_template_id: The policy template ID.
+        :param str state: (optional) The policy template state.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `PolicyTemplate` object
@@ -1708,6 +1796,10 @@ class IamPolicyManagementV1(BaseService):
         )
         headers.update(sdk_headers)
 
+        params = {
+            'state': state,
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
             del kwargs['headers']
@@ -1721,6 +1813,7 @@ class IamPolicyManagementV1(BaseService):
             method='GET',
             url=url,
             headers=headers,
+            params=params,
         )
 
         response = self.send(request, **kwargs)
@@ -1849,6 +1942,8 @@ class IamPolicyManagementV1(BaseService):
     def list_policy_template_versions(
         self,
         policy_template_id: str,
+        *,
+        state: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1857,6 +1952,7 @@ class IamPolicyManagementV1(BaseService):
         Retrieve the versions of a policy template by providing a policy template ID.
 
         :param str policy_template_id: The policy template ID.
+        :param str state: (optional) The policy template state.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `PolicyTemplateVersionsCollection` object
@@ -1872,6 +1968,10 @@ class IamPolicyManagementV1(BaseService):
         )
         headers.update(sdk_headers)
 
+        params = {
+            'state': state,
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
             del kwargs['headers']
@@ -1885,6 +1985,7 @@ class IamPolicyManagementV1(BaseService):
             method='GET',
             url=url,
             headers=headers,
+            params=params,
         )
 
         response = self.send(request, **kwargs)
@@ -2366,6 +2467,48 @@ class GetV2PolicyEnums:
 
         INCLUDE_LAST_PERMIT = 'include_last_permit'
         DISPLAY = 'display'
+
+
+class ListPolicyTemplatesEnums:
+    """
+    Enums for list_policy_templates parameters.
+    """
+
+    class State(str, Enum):
+        """
+        The policy template state.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
+
+
+class GetPolicyTemplateEnums:
+    """
+    Enums for get_policy_template parameters.
+    """
+
+    class State(str, Enum):
+        """
+        The policy template state.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
+
+
+class ListPolicyTemplateVersionsEnums:
+    """
+    Enums for list_policy_template_versions parameters.
+    """
+
+    class State(str, Enum):
+        """
+        The policy template state.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
 
 
 ##############################################################################
@@ -3310,7 +3453,7 @@ class LimitData:
 
 class NestedCondition:
     """
-    Condition that specifies additional conditions or RuleAttribute to grant access.s.
+    Condition that specifies additional conditions or RuleAttribute to grant access.
 
     """
 
@@ -4290,6 +4433,7 @@ class PolicyTemplate:
     :param bool committed: (optional) Committed status of the template version.
     :param TemplatePolicy policy: The core set of properties associated with the
           template's policy objet.
+    :param str state: (optional) State of policy template.
     :param str id: (optional) The policy template ID.
     :param str href: (optional) The href URL that links to the policy templates API
           by policy template ID.
@@ -4312,6 +4456,7 @@ class PolicyTemplate:
         *,
         description: Optional[str] = None,
         committed: Optional[bool] = None,
+        state: Optional[str] = None,
         id: Optional[str] = None,
         href: Optional[str] = None,
         created_at: Optional[datetime] = None,
@@ -4335,6 +4480,7 @@ class PolicyTemplate:
                purpose or context of the policy for enterprise users managing IAM
                templates.
         :param bool committed: (optional) Committed status of the template version.
+        :param str state: (optional) State of policy template.
         """
         self.name = name
         self.description = description
@@ -4342,6 +4488,7 @@ class PolicyTemplate:
         self.version = version
         self.committed = committed
         self.policy = policy
+        self.state = state
         self.id = id
         self.href = href
         self.created_at = created_at
@@ -4373,6 +4520,8 @@ class PolicyTemplate:
             args['policy'] = TemplatePolicy.from_dict(_dict.get('policy'))
         else:
             raise ValueError('Required property \'policy\' not present in PolicyTemplate JSON')
+        if 'state' in _dict:
+            args['state'] = _dict.get('state')
         if 'id' in _dict:
             args['id'] = _dict.get('id')
         if 'href' in _dict:
@@ -4410,6 +4559,8 @@ class PolicyTemplate:
                 _dict['policy'] = self.policy
             else:
                 _dict['policy'] = self.policy.to_dict()
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
         if hasattr(self, 'id') and getattr(self, 'id') is not None:
             _dict['id'] = getattr(self, 'id')
         if hasattr(self, 'href') and getattr(self, 'href') is not None:
@@ -4441,6 +4592,14 @@ class PolicyTemplate:
     def __ne__(self, other: 'PolicyTemplate') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+    class StateEnum(str, Enum):
+        """
+        State of policy template.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
 
 
 class PolicyTemplateAssignmentCollection:
@@ -4591,6 +4750,7 @@ class PolicyTemplateLimitData:
     :param bool committed: (optional) Committed status of the template version.
     :param TemplatePolicy policy: The core set of properties associated with the
           template's policy objet.
+    :param str state: (optional) State of policy template.
     :param str id: (optional) The policy template ID.
     :param str href: (optional) The href URL that links to the policy templates API
           by policy template ID.
@@ -4614,6 +4774,7 @@ class PolicyTemplateLimitData:
         *,
         description: Optional[str] = None,
         committed: Optional[bool] = None,
+        state: Optional[str] = None,
         id: Optional[str] = None,
         href: Optional[str] = None,
         created_at: Optional[datetime] = None,
@@ -4638,6 +4799,7 @@ class PolicyTemplateLimitData:
                purpose or context of the policy for enterprise users managing IAM
                templates.
         :param bool committed: (optional) Committed status of the template version.
+        :param str state: (optional) State of policy template.
         :param TemplateCountData counts: (optional) policy template count details.
         """
         self.name = name
@@ -4646,6 +4808,7 @@ class PolicyTemplateLimitData:
         self.version = version
         self.committed = committed
         self.policy = policy
+        self.state = state
         self.id = id
         self.href = href
         self.created_at = created_at
@@ -4678,6 +4841,8 @@ class PolicyTemplateLimitData:
             args['policy'] = TemplatePolicy.from_dict(_dict.get('policy'))
         else:
             raise ValueError('Required property \'policy\' not present in PolicyTemplateLimitData JSON')
+        if 'state' in _dict:
+            args['state'] = _dict.get('state')
         if 'id' in _dict:
             args['id'] = _dict.get('id')
         if 'href' in _dict:
@@ -4717,6 +4882,8 @@ class PolicyTemplateLimitData:
                 _dict['policy'] = self.policy
             else:
                 _dict['policy'] = self.policy.to_dict()
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
         if hasattr(self, 'id') and getattr(self, 'id') is not None:
             _dict['id'] = getattr(self, 'id')
         if hasattr(self, 'href') and getattr(self, 'href') is not None:
@@ -4753,6 +4920,14 @@ class PolicyTemplateLimitData:
     def __ne__(self, other: 'PolicyTemplateLimitData') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+    class StateEnum(str, Enum):
+        """
+        State of policy template.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
 
 
 class PolicyTemplateMetaData:
