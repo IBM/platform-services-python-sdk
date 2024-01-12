@@ -1,3 +1,10 @@
+# [0.49.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.48.1...v0.49.0) (2024-01-12)
+
+
+### Features
+
+* **IAM Policy Management:** re-gen service after fix the template state parameter ([#235](https://github.com/IBM/platform-services-python-sdk/issues/235)) ([69ddcdb](https://github.com/IBM/platform-services-python-sdk/commit/69ddcdba2f84c3a03454979a0e98f9c91618557c))
+
 ## [0.48.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.48.0...v0.48.1) (2023-12-11)
 
 
