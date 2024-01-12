@@ -574,6 +574,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
 
         self.__class__.testTemplateId = result.id
         self.__class__.testTemplateVersion = result.version
+        assert result.state == "active"
 
     def test_16_get_policy_template(self):
         assert self.testTemplateId
@@ -592,6 +593,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result is not None
 
         self.__class__.testTemplateETag = response.get_headers().get(self.etagHeader)
+        assert result.state == "active"
 
     def test_17_replace_policy_template(self):
         assert self.testTemplateId
@@ -616,6 +618,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result = PolicyTemplate.from_dict(result_dict)
         assert result is not None
         assert result.description == updated_template_description
+        assert result.state == "active"
 
     def test_18_list_policy_templates(self):
         response = self.service.list_policy_templates(
@@ -638,6 +641,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
                 foundTestTemplate = True
                 break
         assert foundTestTemplate
+        assert result.policy_templates[0].state == "active"
 
     def test_19_create_policy_template_version(self):
         self.testV2PolicyControl.grant.roles[0].role_id = self.testViewerRoleCrn
@@ -655,6 +659,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
 
         assert result.version > self.testTemplateVersion
         self.__class__.testNewTemplateVersion = result.version
+        assert result.state == "active"
 
     def test_20_get_policy_template_version(self):
         response = self.service.get_policy_template_version(
@@ -667,6 +672,9 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result_dict is not None
 
         self.__class__.testTemplateETag = response.get_headers().get(self.etagHeader)
+        result = PolicyTemplate.from_dict(result_dict)
+        assert result is not None
+        assert result.state == "active"
 
     def test_21_commit_policy_template(self):
         response = self.service.commit_policy_template(
