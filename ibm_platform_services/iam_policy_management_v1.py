@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.84.0-a4533f12-20240103-170852
+# IBM OpenAPI SDK Code Generator Version: 3.84.1-55f6d880-20240110-194020
 
 """
 IAM Policy Management API
@@ -5682,9 +5682,9 @@ class RuleAttribute:
 
     :param str key: The name of an attribute.
     :param str operator: The operator of an attribute.
-    :param object value: The value of a rule or resource attribute; can be boolean
-          or string for resource attribute. Can be string or an array of strings (e.g.,
-          array of days to permit access) for rule attribute.
+    :param object value: The value of a rule, resource, or subject attribute; can be
+          boolean or string for resource and subject attribute. Can be string or an array
+          of strings (e.g., array of days to permit access) for rule attribute.
     """
 
     def __init__(
@@ -5698,9 +5698,10 @@ class RuleAttribute:
 
         :param str key: The name of an attribute.
         :param str operator: The operator of an attribute.
-        :param object value: The value of a rule or resource attribute; can be
-               boolean or string for resource attribute. Can be string or an array of
-               strings (e.g., array of days to permit access) for rule attribute.
+        :param object value: The value of a rule, resource, or subject attribute;
+               can be boolean or string for resource and subject attribute. Can be string
+               or an array of strings (e.g., array of days to permit access) for rule
+               attribute.
         """
         self.key = key
         self.operator = operator
@@ -6525,9 +6526,9 @@ class V2PolicyResourceAttribute:
 
     :param str key: The name of a resource attribute.
     :param str operator: The operator of an attribute.
-    :param object value: The value of a rule or resource attribute; can be boolean
-          or string for resource attribute. Can be string or an array of strings (e.g.,
-          array of days to permit access) for rule attribute.
+    :param object value: The value of a rule, resource, or subject attribute; can be
+          boolean or string for resource and subject attribute. Can be string or an array
+          of strings (e.g., array of days to permit access) for rule attribute.
     """
 
     def __init__(
@@ -6541,9 +6542,10 @@ class V2PolicyResourceAttribute:
 
         :param str key: The name of a resource attribute.
         :param str operator: The operator of an attribute.
-        :param object value: The value of a rule or resource attribute; can be
-               boolean or string for resource attribute. Can be string or an array of
-               strings (e.g., array of days to permit access) for rule attribute.
+        :param object value: The value of a rule, resource, or subject attribute;
+               can be boolean or string for resource and subject attribute. Can be string
+               or an array of strings (e.g., array of days to permit access) for rule
+               attribute.
         """
         self.key = key
         self.operator = operator
@@ -6790,15 +6792,16 @@ class V2PolicySubjectAttribute:
 
     :param str key: The name of a subject attribute, e.g., iam_id, access_group_id.
     :param str operator: The operator of an attribute.
-    :param str value: The value of the ID of the subject, e.g., service ID, access
-          group ID, IAM ID.
+    :param object value: The value of a rule, resource, or subject attribute; can be
+          boolean or string for resource and subject attribute. Can be string or an array
+          of strings (e.g., array of days to permit access) for rule attribute.
     """
 
     def __init__(
         self,
         key: str,
         operator: str,
-        value: str,
+        value: object,
     ) -> None:
         """
         Initialize a V2PolicySubjectAttribute object.
@@ -6806,8 +6809,10 @@ class V2PolicySubjectAttribute:
         :param str key: The name of a subject attribute, e.g., iam_id,
                access_group_id.
         :param str operator: The operator of an attribute.
-        :param str value: The value of the ID of the subject, e.g., service ID,
-               access group ID, IAM ID.
+        :param object value: The value of a rule, resource, or subject attribute;
+               can be boolean or string for resource and subject attribute. Can be string
+               or an array of strings (e.g., array of days to permit access) for rule
+               attribute.
         """
         self.key = key
         self.operator = operator
@@ -7251,9 +7256,9 @@ class NestedConditionRuleAttribute(NestedCondition):
 
     :param str key: The name of an attribute.
     :param str operator: The operator of an attribute.
-    :param object value: The value of a rule or resource attribute; can be boolean
-          or string for resource attribute. Can be string or an array of strings (e.g.,
-          array of days to permit access) for rule attribute.
+    :param object value: The value of a rule, resource, or subject attribute; can be
+          boolean or string for resource and subject attribute. Can be string or an array
+          of strings (e.g., array of days to permit access) for rule attribute.
     """
 
     def __init__(
@@ -7267,9 +7272,10 @@ class NestedConditionRuleAttribute(NestedCondition):
 
         :param str key: The name of an attribute.
         :param str operator: The operator of an attribute.
-        :param object value: The value of a rule or resource attribute; can be
-               boolean or string for resource attribute. Can be string or an array of
-               strings (e.g., array of days to permit access) for rule attribute.
+        :param object value: The value of a rule, resource, or subject attribute;
+               can be boolean or string for resource and subject attribute. Can be string
+               or an array of strings (e.g., array of days to permit access) for rule
+               attribute.
         """
         # pylint: disable=super-init-not-called
         self.key = key
@@ -7440,9 +7446,9 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
 
     :param str key: The name of an attribute.
     :param str operator: The operator of an attribute.
-    :param object value: The value of a rule or resource attribute; can be boolean
-          or string for resource attribute. Can be string or an array of strings (e.g.,
-          array of days to permit access) for rule attribute.
+    :param object value: The value of a rule, resource, or subject attribute; can be
+          boolean or string for resource and subject attribute. Can be string or an array
+          of strings (e.g., array of days to permit access) for rule attribute.
     """
 
     def __init__(
@@ -7456,9 +7462,10 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
 
         :param str key: The name of an attribute.
         :param str operator: The operator of an attribute.
-        :param object value: The value of a rule or resource attribute; can be
-               boolean or string for resource attribute. Can be string or an array of
-               strings (e.g., array of days to permit access) for rule attribute.
+        :param object value: The value of a rule, resource, or subject attribute;
+               can be boolean or string for resource and subject attribute. Can be string
+               or an array of strings (e.g., array of days to permit access) for rule
+               attribute.
         """
         # pylint: disable=super-init-not-called
         self.key = key
