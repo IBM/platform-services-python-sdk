@@ -109,7 +109,7 @@ class TestGetBillingOptions:
         """
         # Set up mock
         url = preprocess_url('/v1/billing-options')
-        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"id": "CFL_JJKLVZ2I0JE-_MGU", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2022-04", "errors": [{"anyKey": "anyValue"}], "type": "SUBSCRIPTION", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "part_number": "<PART_NUMBER_1>", "catalog_id": "ibmcloud-platform-payg-commit", "order_id": "23wzpnpmh8", "po_number": "<PO_NUMBER_1>", "subscription_model": "4.0", "duration_in_months": 11, "monthly_amount": 8333.333333333334, "billing_system": {"anyKey": "anyValue"}, "country_code": "USA", "currency_code": "USD"}]}'
+        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"id": "CFL_JJKLVZ2I0JE-_MGU", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2024-01", "errors": [{"anyKey": "anyValue"}], "type": "SUBSCRIPTION", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "part_number": "<PART_NUMBER_1>", "catalog_id": "ibmcloud-platform-payg-commit", "order_id": "23wzpnpmh8", "po_number": "<PO_NUMBER_1>", "subscription_model": "4.0", "duration_in_months": 11, "monthly_amount": 8333.333333333334, "billing_system": {"anyKey": "anyValue"}, "country_code": "USA", "currency_code": "USD"}]}'
         responses.add(
             responses.GET,
             url,
@@ -122,7 +122,7 @@ class TestGetBillingOptions:
         partner_id = 'testString'
         customer_id = 'testString'
         reseller_id = 'testString'
-        date = '2022-04'
+        date = '2024-01'
         limit = 30
 
         # Invoke method
@@ -163,7 +163,7 @@ class TestGetBillingOptions:
         """
         # Set up mock
         url = preprocess_url('/v1/billing-options')
-        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"id": "CFL_JJKLVZ2I0JE-_MGU", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2022-04", "errors": [{"anyKey": "anyValue"}], "type": "SUBSCRIPTION", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "part_number": "<PART_NUMBER_1>", "catalog_id": "ibmcloud-platform-payg-commit", "order_id": "23wzpnpmh8", "po_number": "<PO_NUMBER_1>", "subscription_model": "4.0", "duration_in_months": 11, "monthly_amount": 8333.333333333334, "billing_system": {"anyKey": "anyValue"}, "country_code": "USA", "currency_code": "USD"}]}'
+        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"id": "CFL_JJKLVZ2I0JE-_MGU", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2024-01", "errors": [{"anyKey": "anyValue"}], "type": "SUBSCRIPTION", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "part_number": "<PART_NUMBER_1>", "catalog_id": "ibmcloud-platform-payg-commit", "order_id": "23wzpnpmh8", "po_number": "<PO_NUMBER_1>", "subscription_model": "4.0", "duration_in_months": 11, "monthly_amount": 8333.333333333334, "billing_system": {"anyKey": "anyValue"}, "country_code": "USA", "currency_code": "USD"}]}'
         responses.add(
             responses.GET,
             url,
@@ -205,7 +205,7 @@ class TestGetBillingOptions:
         """
         # Set up mock
         url = preprocess_url('/v1/billing-options')
-        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"id": "CFL_JJKLVZ2I0JE-_MGU", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2022-04", "errors": [{"anyKey": "anyValue"}], "type": "SUBSCRIPTION", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "part_number": "<PART_NUMBER_1>", "catalog_id": "ibmcloud-platform-payg-commit", "order_id": "23wzpnpmh8", "po_number": "<PO_NUMBER_1>", "subscription_model": "4.0", "duration_in_months": 11, "monthly_amount": 8333.333333333334, "billing_system": {"anyKey": "anyValue"}, "country_code": "USA", "currency_code": "USD"}]}'
+        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"id": "CFL_JJKLVZ2I0JE-_MGU", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2024-01", "errors": [{"anyKey": "anyValue"}], "type": "SUBSCRIPTION", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "part_number": "<PART_NUMBER_1>", "catalog_id": "ibmcloud-platform-payg-commit", "order_id": "23wzpnpmh8", "po_number": "<PO_NUMBER_1>", "subscription_model": "4.0", "duration_in_months": 11, "monthly_amount": 8333.333333333334, "billing_system": {"anyKey": "anyValue"}, "country_code": "USA", "currency_code": "USD"}]}'
         responses.add(
             responses.GET,
             url,
@@ -287,7 +287,7 @@ class TestGetCreditPoolsReport:
         """
         # Set up mock
         url = preprocess_url('/v1/credit-pools')
-        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"type": "PLATFORM", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2022-04", "currency_code": "USD", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "billing_option_model": "4.0", "category": "PLATFORM", "start_date": "2019-07-01T00:00:00.000Z", "end_date": "2019-08-31T23:59:59.999Z", "total_credits": 100000, "starting_balance": 100000, "used_credits": 0, "current_balance": 100000, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
+        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"type": "PLATFORM", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2024-01", "currency_code": "USD", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "billing_option_model": "4.0", "category": "PLATFORM", "start_date": "2019-07-01T00:00:00.000Z", "end_date": "2019-08-31T23:59:59.999Z", "total_credits": 100000, "starting_balance": 100000, "used_credits": 0, "current_balance": 100000, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
         responses.add(
             responses.GET,
             url,
@@ -300,7 +300,7 @@ class TestGetCreditPoolsReport:
         partner_id = 'testString'
         customer_id = 'testString'
         reseller_id = 'testString'
-        date = '2022-04'
+        date = '2024-01'
         limit = 30
 
         # Invoke method
@@ -341,7 +341,7 @@ class TestGetCreditPoolsReport:
         """
         # Set up mock
         url = preprocess_url('/v1/credit-pools')
-        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"type": "PLATFORM", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2022-04", "currency_code": "USD", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "billing_option_model": "4.0", "category": "PLATFORM", "start_date": "2019-07-01T00:00:00.000Z", "end_date": "2019-08-31T23:59:59.999Z", "total_credits": 100000, "starting_balance": 100000, "used_credits": 0, "current_balance": 100000, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
+        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"type": "PLATFORM", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2024-01", "currency_code": "USD", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "billing_option_model": "4.0", "category": "PLATFORM", "start_date": "2019-07-01T00:00:00.000Z", "end_date": "2019-08-31T23:59:59.999Z", "total_credits": 100000, "starting_balance": 100000, "used_credits": 0, "current_balance": 100000, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
         responses.add(
             responses.GET,
             url,
@@ -383,7 +383,7 @@ class TestGetCreditPoolsReport:
         """
         # Set up mock
         url = preprocess_url('/v1/credit-pools')
-        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"type": "PLATFORM", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2022-04", "currency_code": "USD", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "billing_option_model": "4.0", "category": "PLATFORM", "start_date": "2019-07-01T00:00:00.000Z", "end_date": "2019-08-31T23:59:59.999Z", "total_credits": 100000, "starting_balance": 100000, "used_credits": 0, "current_balance": 100000, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
+        mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"type": "PLATFORM", "billing_unit_id": "e19fa97c9bb34963a31a2008044d8b59", "customer_id": "<ford_account_id>", "customer_type": "ACCOUNT", "customer_name": "Ford", "reseller_id": "<techdata_enterprise_id>", "reseller_name": "TechData", "month": "2024-01", "currency_code": "USD", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "billing_option_model": "4.0", "category": "PLATFORM", "start_date": "2019-07-01T00:00:00.000Z", "end_date": "2019-08-31T23:59:59.999Z", "total_credits": 100000, "starting_balance": 100000, "used_credits": 0, "current_balance": 100000, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
         responses.add(
             responses.GET,
             url,
@@ -514,7 +514,7 @@ class TestModel_BillingOption:
         billing_option_model_json['customer_name'] = 'Ford'
         billing_option_model_json['reseller_id'] = '<techdata_enterprise_id>'
         billing_option_model_json['reseller_name'] = 'TechData'
-        billing_option_model_json['month'] = '2022-04'
+        billing_option_model_json['month'] = '2024-01'
         billing_option_model_json['errors'] = [{'anyKey': 'anyValue'}]
         billing_option_model_json['type'] = 'SUBSCRIPTION'
         billing_option_model_json['start_date'] = '2019-05-01T00:00:00Z'
@@ -576,7 +576,7 @@ class TestModel_BillingOptionsSummary:
         billing_option_model['customer_name'] = 'Ford'
         billing_option_model['reseller_id'] = '<techdata_enterprise_id>'
         billing_option_model['reseller_name'] = 'TechData'
-        billing_option_model['month'] = '2022-04'
+        billing_option_model['month'] = '2024-01'
         billing_option_model['errors'] = [{'anyKey': 'anyValue'}]
         billing_option_model['type'] = 'SUBSCRIPTION'
         billing_option_model['start_date'] = '2019-05-01T00:00:00Z'
@@ -730,7 +730,7 @@ class TestModel_CreditPoolsReport:
         credit_pools_report_model_json['customer_name'] = 'Ford'
         credit_pools_report_model_json['reseller_id'] = '<techdata_enterprise_id>'
         credit_pools_report_model_json['reseller_name'] = 'TechData'
-        credit_pools_report_model_json['month'] = '2022-04'
+        credit_pools_report_model_json['month'] = '2024-01'
         credit_pools_report_model_json['currency_code'] = 'USD'
         credit_pools_report_model_json['term_credits'] = [term_credits_model]
         credit_pools_report_model_json['overage'] = overage_model
@@ -794,7 +794,7 @@ class TestModel_CreditPoolsReportSummary:
         credit_pools_report_model['customer_name'] = 'Ford'
         credit_pools_report_model['reseller_id'] = '<techdata_enterprise_id>'
         credit_pools_report_model['reseller_name'] = 'TechData'
-        credit_pools_report_model['month'] = '2022-04'
+        credit_pools_report_model['month'] = '2024-01'
         credit_pools_report_model['currency_code'] = 'USD'
         credit_pools_report_model['term_credits'] = [term_credits_model]
         credit_pools_report_model['overage'] = overage_model
