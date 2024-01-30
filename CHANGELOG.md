@@ -1,3 +1,11 @@
+## [0.49.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.49.0...v0.49.1) (2024-01-30)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** update subject attribute value based on API def  ([#237](https://github.com/IBM/platform-services-python-sdk/issues/237)) ([4155bc4](https://github.com/IBM/platform-services-python-sdk/commit/4155bc4eb3f185d8aacbd385b8f0d38cbc913105))
+* pin black version and fix formatting ([#239](https://github.com/IBM/platform-services-python-sdk/issues/239)) ([ba6cdde](https://github.com/IBM/platform-services-python-sdk/commit/ba6cdde7093081b196b200dc9b7e6a0ba1c114c6))
+
 # [0.49.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.48.1...v0.49.0) (2024-01-12)
 
 
