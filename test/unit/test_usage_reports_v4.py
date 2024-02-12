@@ -2866,9 +2866,9 @@ class TestModel_SnapshotConfigHistoryItem:
         snapshot_config_history_item_model_json['cos_reports_folder'] = 'IBMCloud-Billing-Reports'
         snapshot_config_history_item_model_json['cos_bucket'] = 'bucket_name'
         snapshot_config_history_item_model_json['cos_location'] = 'us-south'
-        snapshot_config_history_item_model_json['cos_endpoint'] = (
-            'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
-        )
+        snapshot_config_history_item_model_json[
+            'cos_endpoint'
+        ] = 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
 
         # Construct a model instance of SnapshotConfigHistoryItem by calling from_dict on the json representation
         snapshot_config_history_item_model = SnapshotConfigHistoryItem.from_dict(
@@ -2903,17 +2903,17 @@ class TestModel_SnapshotList:
         # Construct dict forms of any model objects needed in order to build this model.
 
         snapshot_list_first_model = {}  # SnapshotListFirst
-        snapshot_list_first_model['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
+        snapshot_list_first_model[
+            'href'
+        ] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
 
         snapshot_list_next_model = {}  # SnapshotListNext
-        snapshot_list_next_model['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
-        snapshot_list_next_model['offset'] = (
-            'g1AAAAHyeJzLYWBgYMtgTmHQSklKzi9KdUhJMtRLytVNTtZNSU3JTE4sSU0xMjTUS87JL01JzCvRy0styQHqYUpSAJJJ-v___88C892cKtZ'
-        )
+        snapshot_list_next_model[
+            'href'
+        ] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
+        snapshot_list_next_model[
+            'offset'
+        ] = 'g1AAAAHyeJzLYWBgYMtgTmHQSklKzi9KdUhJMtRLytVNTtZNSU3JTE4sSU0xMjTUS87JL01JzCvRy0styQHqYUpSAJJJ-v___88C892cKtZ'
 
         snapshot_list_snapshots_item_billing_period_model = {}  # SnapshotListSnapshotsItemBillingPeriod
         snapshot_list_snapshots_item_billing_period_model['start'] = '2023-06-01T00:00:00.000Z'
@@ -2925,9 +2925,9 @@ class TestModel_SnapshotList:
 
         snapshot_list_snapshots_item_files_item_model = {}  # SnapshotListSnapshotsItemFilesItem
         snapshot_list_snapshots_item_files_item_model['report_types'] = 'account_summary'
-        snapshot_list_snapshots_item_files_item_model['location'] = (
-            'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
-        )
+        snapshot_list_snapshots_item_files_item_model[
+            'location'
+        ] = 'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
         snapshot_list_snapshots_item_files_item_model['account_id'] = 'abc'
 
         snapshot_list_snapshots_item_model = {}  # SnapshotListSnapshotsItem
@@ -2983,9 +2983,9 @@ class TestModel_SnapshotListFirst:
 
         # Construct a json representation of a SnapshotListFirst model
         snapshot_list_first_model_json = {}
-        snapshot_list_first_model_json['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
+        snapshot_list_first_model_json[
+            'href'
+        ] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
 
         # Construct a model instance of SnapshotListFirst by calling from_dict on the json representation
         snapshot_list_first_model = SnapshotListFirst.from_dict(snapshot_list_first_model_json)
@@ -3015,12 +3015,12 @@ class TestModel_SnapshotListNext:
 
         # Construct a json representation of a SnapshotListNext model
         snapshot_list_next_model_json = {}
-        snapshot_list_next_model_json['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
-        snapshot_list_next_model_json['offset'] = (
-            'g1AAAAHyeJzLYWBgYMtgTmHQSklKzi9KdUhJMtRLytVNTtZNSU3JTE4sSU0xMjTUS87JL01JzCvRy0styQHqYUpSAJJJ-v___88C892cKtZ'
-        )
+        snapshot_list_next_model_json[
+            'href'
+        ] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
+        snapshot_list_next_model_json[
+            'offset'
+        ] = 'g1AAAAHyeJzLYWBgYMtgTmHQSklKzi9KdUhJMtRLytVNTtZNSU3JTE4sSU0xMjTUS87JL01JzCvRy0styQHqYUpSAJJJ-v___88C892cKtZ'
 
         # Construct a model instance of SnapshotListNext by calling from_dict on the json representation
         snapshot_list_next_model = SnapshotListNext.from_dict(snapshot_list_next_model_json)
@@ -3060,9 +3060,9 @@ class TestModel_SnapshotListSnapshotsItem:
 
         snapshot_list_snapshots_item_files_item_model = {}  # SnapshotListSnapshotsItemFilesItem
         snapshot_list_snapshots_item_files_item_model['report_types'] = 'account_summary'
-        snapshot_list_snapshots_item_files_item_model['location'] = (
-            'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
-        )
+        snapshot_list_snapshots_item_files_item_model[
+            'location'
+        ] = 'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
         snapshot_list_snapshots_item_files_item_model['account_id'] = 'abc'
 
         # Construct a json representation of a SnapshotListSnapshotsItem model
@@ -3159,9 +3159,9 @@ class TestModel_SnapshotListSnapshotsItemFilesItem:
         # Construct a json representation of a SnapshotListSnapshotsItemFilesItem model
         snapshot_list_snapshots_item_files_item_model_json = {}
         snapshot_list_snapshots_item_files_item_model_json['report_types'] = 'account_summary'
-        snapshot_list_snapshots_item_files_item_model_json['location'] = (
-            'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
-        )
+        snapshot_list_snapshots_item_files_item_model_json[
+            'location'
+        ] = 'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
         snapshot_list_snapshots_item_files_item_model_json['account_id'] = 'abc'
 
         # Construct a model instance of SnapshotListSnapshotsItemFilesItem by calling from_dict on the json representation
@@ -3262,9 +3262,9 @@ class TestModel_SnapshotConfig:
         snapshot_config_history_item_model['cos_reports_folder'] = 'IBMCloud-Billing-Reports'
         snapshot_config_history_item_model['cos_bucket'] = 'bucket_name'
         snapshot_config_history_item_model['cos_location'] = 'us-south'
-        snapshot_config_history_item_model['cos_endpoint'] = (
-            'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
-        )
+        snapshot_config_history_item_model[
+            'cos_endpoint'
+        ] = 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
 
         # Construct a json representation of a SnapshotConfig model
         snapshot_config_model_json = {}

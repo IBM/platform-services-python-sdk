@@ -68,9 +68,9 @@ class TestReportResourceUsage:
 
         # Construct a dict representation of a ResourceInstanceUsage model
         resource_instance_usage_model = {}
-        resource_instance_usage_model['resource_instance_id'] = (
-            'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
-        )
+        resource_instance_usage_model[
+            'resource_instance_id'
+        ] = 'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
         resource_instance_usage_model['plan_id'] = 'database-lite'
         resource_instance_usage_model['region'] = 'us-south'
         resource_instance_usage_model['start'] = 1485907200000
@@ -109,9 +109,9 @@ class TestReportResourceUsage:
 
         # Construct a dict representation of a ResourceInstanceUsage model
         resource_instance_usage_model = {}
-        resource_instance_usage_model['resource_instance_id'] = (
-            'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
-        )
+        resource_instance_usage_model[
+            'resource_instance_id'
+        ] = 'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
         resource_instance_usage_model['plan_id'] = 'database-lite'
         resource_instance_usage_model['region'] = 'us-south'
         resource_instance_usage_model['start'] = 1485907200000
@@ -193,9 +193,9 @@ class TestResourceInstanceUsage:
 
         # Construct a json representation of a ResourceInstanceUsage model
         resource_instance_usage_model_json = {}
-        resource_instance_usage_model_json['resource_instance_id'] = (
-            'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
-        )
+        resource_instance_usage_model_json[
+            'resource_instance_id'
+        ] = 'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
         resource_instance_usage_model_json['plan_id'] = 'database-lite'
         resource_instance_usage_model_json['region'] = 'us-south'
         resource_instance_usage_model_json['start'] = 1485907200000
