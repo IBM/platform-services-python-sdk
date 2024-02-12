@@ -1259,9 +1259,9 @@ class TestModel_TagResults:
         # Construct dict forms of any model objects needed in order to build this model.
 
         tag_results_item_model = {}  # TagResultsItem
-        tag_results_item_model[
-            'resource_id'
-        ] = 'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
+        tag_results_item_model['resource_id'] = (
+            'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
+        )
         tag_results_item_model['is_error'] = False
 
         # Construct a json representation of a TagResults model
