@@ -492,9 +492,9 @@ class TestModel_PartnerUsageReport:
         partner_usage_report_model_json = {}
         partner_usage_report_model_json['entity_id'] = '<distributor_enterprise_id>'
         partner_usage_report_model_json['entity_type'] = 'enterprise'
-        partner_usage_report_model_json[
-            'entity_crn'
-        ] = 'crn:v1:bluemix:public:enterprise::a/fa359b76ff2c41eda727aad47b7e4063::enterprise:33a7eb04e7d547cd9489e90c99d476a5'
+        partner_usage_report_model_json['entity_crn'] = (
+            'crn:v1:bluemix:public:enterprise::a/fa359b76ff2c41eda727aad47b7e4063::enterprise:33a7eb04e7d547cd9489e90c99d476a5'
+        )
         partner_usage_report_model_json['entity_name'] = 'Arrow'
         partner_usage_report_model_json['entity_partner_type'] = 'DISTRIBUTOR'
         partner_usage_report_model_json['viewpoint'] = 'DISTRIBUTOR'
@@ -572,9 +572,9 @@ class TestModel_PartnerUsageReportSummary:
         partner_usage_report_model = {}  # PartnerUsageReport
         partner_usage_report_model['entity_id'] = '<distributor_enterprise_id>'
         partner_usage_report_model['entity_type'] = 'enterprise'
-        partner_usage_report_model[
-            'entity_crn'
-        ] = 'crn:v1:bluemix:public:enterprise::a/fa359b76ff2c41eda727aad47b7e4063::enterprise:33a7eb04e7d547cd9489e90c99d476a5'
+        partner_usage_report_model['entity_crn'] = (
+            'crn:v1:bluemix:public:enterprise::a/fa359b76ff2c41eda727aad47b7e4063::enterprise:33a7eb04e7d547cd9489e90c99d476a5'
+        )
         partner_usage_report_model['entity_name'] = 'Arrow'
         partner_usage_report_model['entity_partner_type'] = 'DISTRIBUTOR'
         partner_usage_report_model['viewpoint'] = 'DISTRIBUTOR'
