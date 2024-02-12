@@ -115,12 +115,11 @@ class TestIamPolicyManagementV1Examples:
                 type='access', subjects=[policy_subjects], roles=[policy_roles], resources=[policy_resources]
             ).get_result()
 
+            global example_policy_id
+            example_policy_id = policy['id']
             print(json.dumps(policy, indent=2))
 
             # end-create_policy
-
-            global example_policy_id
-            example_policy_id = policy['id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -136,13 +135,12 @@ class TestIamPolicyManagementV1Examples:
 
             response = iam_policy_management_service.get_policy(policy_id=example_policy_id)
             policy = response.get_result()
+            global example_policy_etag
+            example_policy_etag = response.get_headers().get("Etag")
 
             print(json.dumps(policy, indent=2))
 
             # end-get_policy
-
-            global example_policy_etag
-            example_policy_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -174,13 +172,12 @@ class TestIamPolicyManagementV1Examples:
                 resources=[policy_resources],
             )
             policy = response.get_result()
+            global example_updated_policy_etag
+            example_updated_policy_etag = response.get_headers().get("Etag")
 
             print(json.dumps(policy, indent=2))
 
             # end-replace_policy
-
-            global example_updated_policy_etag
-            example_updated_policy_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -298,12 +295,12 @@ class TestIamPolicyManagementV1Examples:
                 pattern=policy_pattern,
             ).get_result()
 
+            global example_policy_id
+            example_policy_id = policy['id']
+
             print(json.dumps(policy, indent=2))
 
             # end-create_v2_policy
-
-            global example_policy_id
-            example_policy_id = policy['id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -320,12 +317,12 @@ class TestIamPolicyManagementV1Examples:
             response = iam_policy_management_service.get_v2_policy(id=example_policy_id)
             policy = response.get_result()
 
+            global example_policy_etag
+            example_policy_etag = response.get_headers().get("Etag")
+
             print(json.dumps(policy, indent=2))
 
             # end-get_v2_policy
-
-            global example_policy_etag
-            example_policy_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -450,12 +447,12 @@ class TestIamPolicyManagementV1Examples:
                 service_name=example_service_name,
             ).get_result()
 
+            global example_custom_role_id
+            example_custom_role_id = custom_role["id"]
+
             print(json.dumps(custom_role, indent=2))
 
             # end-create_role
-
-            global example_custom_role_id
-            example_custom_role_id = custom_role["id"]
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -472,12 +469,12 @@ class TestIamPolicyManagementV1Examples:
             response = iam_policy_management_service.get_role(role_id=example_custom_role_id)
             custom_role = response.get_result()
 
+            global example_custom_role_etag
+            example_custom_role_etag = response.get_headers().get("Etag")
+
             print(json.dumps(custom_role, indent=2))
 
             # end-get_role
-
-            global example_custom_role_etag
-            example_custom_role_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -586,14 +583,14 @@ class TestIamPolicyManagementV1Examples:
             )
             policy_template = response.get_result()
 
-            print(json.dumps(policy_template, indent=2))
-
-            # end-create_policy_template
-
             global example_template_id
             example_template_id = policy_template['id']
             global example_template_version
             example_template_version = policy_template['version']
+
+            print(json.dumps(policy_template, indent=2))
+
+            # end-create_policy_template
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -613,12 +610,12 @@ class TestIamPolicyManagementV1Examples:
             )
             policy_template = response.get_result()
 
+            global example_template_etag
+            example_template_etag = response.get_headers().get("Etag")
+
             print(json.dumps(policy_template, indent=2))
 
             # end-get_policy_template
-
-            global example_template_etag
-            example_template_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -782,12 +779,12 @@ class TestIamPolicyManagementV1Examples:
             )
             policy_template = response.get_result()
 
+            global example_template_etag
+            example_template_etag = response.get_headers().get("Etag")
+
             print(json.dumps(policy_template, indent=2))
 
             # end-get_policy_template_version
-
-            global example_template_etag
-            example_template_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -818,19 +815,19 @@ class TestIamPolicyManagementV1Examples:
         """
         try:
             print('\nlist_policy_assignments() result:')
-            # begin-list_Policy Assignments
+            # begin-list_policy_assignments
 
             response = iam_policy_management_service.list_policy_assignments(
                 account_id=example_account_id,
             )
             polcy_template_assignment_collection = response.get_result()
 
-            print(json.dumps(polcy_template_assignment_collection, indent=2))
-
-            # end-list_Policy Assignments
-
             global example_assignment_id
             example_assignment_id = polcy_template_assignment_collection['assignments'][0]['id']
+
+            print(json.dumps(polcy_template_assignment_collection, indent=2))
+
+            # end-list_policy_assignments
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -849,11 +846,12 @@ class TestIamPolicyManagementV1Examples:
             )
             policy_assignment_record = response.get_result()
 
+            global example_assignment_policy_id
+            example_assignment_policy_id = policy_assignment_record['resources'][0]['policy']['resource_created']['id']
+
             print(json.dumps(policy_assignment_record, indent=2))
 
             # end-get_policy_assignment
-            global example_assignment_policy_id
-            example_assignment_policy_id = policy_assignment_record['resources'][0]['policy']['resource_created']['id']
 
         except ApiException as e:
             pytest.fail(str(e))
