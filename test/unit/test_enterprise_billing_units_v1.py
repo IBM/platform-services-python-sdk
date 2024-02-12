@@ -752,9 +752,9 @@ class TestModel_BillingUnit:
         # Construct a json representation of a BillingUnit model
         billing_unit_model_json = {}
         billing_unit_model_json['id'] = 'testString'
-        billing_unit_model_json[
-            'crn'
-        ] = 'crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>'
+        billing_unit_model_json['crn'] = (
+            'crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>'
+        )
         billing_unit_model_json['name'] = 'testString'
         billing_unit_model_json['enterprise_id'] = 'testString'
         billing_unit_model_json['currency_code'] = 'USD'
@@ -792,9 +792,9 @@ class TestModel_BillingUnitsList:
 
         billing_unit_model = {}  # BillingUnit
         billing_unit_model['id'] = '$BILLING_UNIT_ID'
-        billing_unit_model[
-            'crn'
-        ] = 'crn:v1:bluemix:public:billing::a/$ENTERPRISE_ACCOUNT_ID::billing-unit:$BILLING_UNIT_ID'
+        billing_unit_model['crn'] = (
+            'crn:v1:bluemix:public:billing::a/$ENTERPRISE_ACCOUNT_ID::billing-unit:$BILLING_UNIT_ID'
+        )
         billing_unit_model['name'] = 'Sample Billing Unit'
         billing_unit_model['enterprise_id'] = '$ENTERPRISE_ID'
         billing_unit_model['currency_code'] = 'USD'
