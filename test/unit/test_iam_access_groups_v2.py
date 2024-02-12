@@ -3120,9 +3120,9 @@ class TestCreateTemplate:
         # Construct a dict representation of a AccessGroupRequest model
         access_group_request_model = {}
         access_group_request_model['name'] = 'IAM Admin Group'
-        access_group_request_model['description'] = (
-            'This access group template allows admin access to all IAM platform services in the account.'
-        )
+        access_group_request_model[
+            'description'
+        ] = 'This access group template allows admin access to all IAM platform services in the account.'
         access_group_request_model['members'] = members_model
         access_group_request_model['assertions'] = assertions_model
         access_group_request_model['action_controls'] = group_action_controls_model
@@ -3240,9 +3240,9 @@ class TestCreateTemplate:
         # Construct a dict representation of a AccessGroupRequest model
         access_group_request_model = {}
         access_group_request_model['name'] = 'IAM Admin Group'
-        access_group_request_model['description'] = (
-            'This access group template allows admin access to all IAM platform services in the account.'
-        )
+        access_group_request_model[
+            'description'
+        ] = 'This access group template allows admin access to all IAM platform services in the account.'
         access_group_request_model['members'] = members_model
         access_group_request_model['assertions'] = assertions_model
         access_group_request_model['action_controls'] = group_action_controls_model
@@ -3358,9 +3358,9 @@ class TestCreateTemplate:
         # Construct a dict representation of a AccessGroupRequest model
         access_group_request_model = {}
         access_group_request_model['name'] = 'IAM Admin Group'
-        access_group_request_model['description'] = (
-            'This access group template allows admin access to all IAM platform services in the account.'
-        )
+        access_group_request_model[
+            'description'
+        ] = 'This access group template allows admin access to all IAM platform services in the account.'
         access_group_request_model['members'] = members_model
         access_group_request_model['assertions'] = assertions_model
         access_group_request_model['action_controls'] = group_action_controls_model
@@ -3681,9 +3681,9 @@ class TestCreateTemplateVersion:
         # Construct a dict representation of a AccessGroupRequest model
         access_group_request_model = {}
         access_group_request_model['name'] = 'IAM Admin Group 8'
-        access_group_request_model['description'] = (
-            'This access group template allows admin access to all IAM platform services in the account.'
-        )
+        access_group_request_model[
+            'description'
+        ] = 'This access group template allows admin access to all IAM platform services in the account.'
         access_group_request_model['members'] = members_model
         access_group_request_model['assertions'] = assertions_model
         access_group_request_model['action_controls'] = group_action_controls_model
@@ -4213,9 +4213,9 @@ class TestUpdateTemplateVersion:
         # Construct a dict representation of a AccessGroupRequest model
         access_group_request_model = {}
         access_group_request_model['name'] = 'IAM Admin Group 8'
-        access_group_request_model['description'] = (
-            'This access group template allows admin access to all IAM platform services in the account.'
-        )
+        access_group_request_model[
+            'description'
+        ] = 'This access group template allows admin access to all IAM platform services in the account.'
         access_group_request_model['members'] = members_model
         access_group_request_model['assertions'] = assertions_model
         access_group_request_model['action_controls'] = group_action_controls_model

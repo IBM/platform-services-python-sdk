@@ -8335,9 +8335,9 @@ class TestModel_AccumulatedFilters:
         accumulated_filters_catalog_filters_item_catalog_model['name'] = 'testString'
 
         accumulated_filters_catalog_filters_item_model = {}  # AccumulatedFiltersCatalogFiltersItem
-        accumulated_filters_catalog_filters_item_model['catalog'] = (
-            accumulated_filters_catalog_filters_item_catalog_model
-        )
+        accumulated_filters_catalog_filters_item_model[
+            'catalog'
+        ] = accumulated_filters_catalog_filters_item_catalog_model
         accumulated_filters_catalog_filters_item_model['filters'] = filters_model
 
         # Construct a json representation of a AccumulatedFilters model
@@ -8395,9 +8395,9 @@ class TestModel_AccumulatedFiltersCatalogFiltersItem:
 
         # Construct a json representation of a AccumulatedFiltersCatalogFiltersItem model
         accumulated_filters_catalog_filters_item_model_json = {}
-        accumulated_filters_catalog_filters_item_model_json['catalog'] = (
-            accumulated_filters_catalog_filters_item_catalog_model
-        )
+        accumulated_filters_catalog_filters_item_model_json[
+            'catalog'
+        ] = accumulated_filters_catalog_filters_item_catalog_model
         accumulated_filters_catalog_filters_item_model_json['filters'] = filters_model
 
         # Construct a model instance of AccumulatedFiltersCatalogFiltersItem by calling from_dict on the json representation

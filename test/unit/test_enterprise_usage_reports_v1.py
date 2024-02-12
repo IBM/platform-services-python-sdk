@@ -376,9 +376,9 @@ class TestModel_Reports:
         # Construct dict forms of any model objects needed in order to build this model.
 
         link_model = {}  # Link
-        link_model['href'] = (
-            '/v1/resource-usage-reports?enterprise_id=5ac9eb23c91b429b893e038aa5a2dec8&children=true&month=2019-06&limit=2'
-        )
+        link_model[
+            'href'
+        ] = '/v1/resource-usage-reports?enterprise_id=5ac9eb23c91b429b893e038aa5a2dec8&children=true&month=2019-06&limit=2'
 
         metric_usage_model = {}  # MetricUsage
         metric_usage_model['metric'] = 'GB_STORAGE_ACCRUED_PER_MONTH'
@@ -409,14 +409,14 @@ class TestModel_Reports:
         resource_usage_report_model = {}  # ResourceUsageReport
         resource_usage_report_model['entity_id'] = '41848d0e2711434bbc134242452f7fc7'
         resource_usage_report_model['entity_type'] = 'account'
-        resource_usage_report_model['entity_crn'] = (
-            'crn:v1:bluemix:public:enterprise::a/3f99f8accbc848ea96f3c61a0ae22c44::account:41848d0e2711434bbc134242452f7fc7'
-        )
+        resource_usage_report_model[
+            'entity_crn'
+        ] = 'crn:v1:bluemix:public:enterprise::a/3f99f8accbc848ea96f3c61a0ae22c44::account:41848d0e2711434bbc134242452f7fc7'
         resource_usage_report_model['entity_name'] = 'Example Account'
         resource_usage_report_model['billing_unit_id'] = '65719a07280a4022a9efa2f6ff4c3369'
-        resource_usage_report_model['billing_unit_crn'] = (
-            'crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369'
-        )
+        resource_usage_report_model[
+            'billing_unit_crn'
+        ] = 'crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369'
         resource_usage_report_model['billing_unit_name'] = 'Example Billing Unit'
         resource_usage_report_model['country_code'] = 'USA'
         resource_usage_report_model['currency_code'] = 'USD'
@@ -547,14 +547,14 @@ class TestModel_ResourceUsageReport:
         resource_usage_report_model_json = {}
         resource_usage_report_model_json['entity_id'] = 'de129b787b86403db7d3a14be2ae5f76'
         resource_usage_report_model_json['entity_type'] = 'enterprise'
-        resource_usage_report_model_json['entity_crn'] = (
-            'crn:v1:bluemix:public:enterprise::a/e9a57260546c4b4aa9ebfa316a82e56e::enterprise:de129b787b86403db7d3a14be2ae5f76'
-        )
+        resource_usage_report_model_json[
+            'entity_crn'
+        ] = 'crn:v1:bluemix:public:enterprise::a/e9a57260546c4b4aa9ebfa316a82e56e::enterprise:de129b787b86403db7d3a14be2ae5f76'
         resource_usage_report_model_json['entity_name'] = 'Platform-Services'
         resource_usage_report_model_json['billing_unit_id'] = '65719a07280a4022a9efa2f6ff4c3369'
-        resource_usage_report_model_json['billing_unit_crn'] = (
-            'crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369'
-        )
+        resource_usage_report_model_json[
+            'billing_unit_crn'
+        ] = 'crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369'
         resource_usage_report_model_json['billing_unit_name'] = 'Operations'
         resource_usage_report_model_json['country_code'] = 'USA'
         resource_usage_report_model_json['currency_code'] = 'USD'

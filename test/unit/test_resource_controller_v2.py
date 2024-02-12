@@ -1364,9 +1364,9 @@ class TestCreateResourceKey:
 
         # Construct a dict representation of a ResourceKeyPostParameters model
         resource_key_post_parameters_model = {}
-        resource_key_post_parameters_model['serviceid_crn'] = (
-            'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        )
+        resource_key_post_parameters_model[
+            'serviceid_crn'
+        ] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
         resource_key_post_parameters_model['exampleParameter'] = 'exampleValue'
 
         # Set up parameter values
@@ -1409,9 +1409,9 @@ class TestCreateResourceKey:
 
         # Construct a dict representation of a ResourceKeyPostParameters model
         resource_key_post_parameters_model = {}
-        resource_key_post_parameters_model['serviceid_crn'] = (
-            'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        )
+        resource_key_post_parameters_model[
+            'serviceid_crn'
+        ] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
         resource_key_post_parameters_model['exampleParameter'] = 'exampleValue'
 
         # Set up parameter values
@@ -1849,9 +1849,9 @@ class TestCreateResourceBinding:
 
         # Construct a dict representation of a ResourceBindingPostParameters model
         resource_binding_post_parameters_model = {}
-        resource_binding_post_parameters_model['serviceid_crn'] = (
-            'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        )
+        resource_binding_post_parameters_model[
+            'serviceid_crn'
+        ] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
         resource_binding_post_parameters_model['exampleParameter'] = 'exampleValue'
 
         # Set up parameter values
@@ -1901,9 +1901,9 @@ class TestCreateResourceBinding:
 
         # Construct a dict representation of a ResourceBindingPostParameters model
         resource_binding_post_parameters_model = {}
-        resource_binding_post_parameters_model['serviceid_crn'] = (
-            'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        )
+        resource_binding_post_parameters_model[
+            'serviceid_crn'
+        ] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
         resource_binding_post_parameters_model['exampleParameter'] = 'exampleValue'
 
         # Set up parameter values
@@ -3374,9 +3374,9 @@ class TestModel_ResourceBindingPostParameters:
 
         # Construct a json representation of a ResourceBindingPostParameters model
         resource_binding_post_parameters_model_json = {}
-        resource_binding_post_parameters_model_json['serviceid_crn'] = (
-            'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        )
+        resource_binding_post_parameters_model_json[
+            'serviceid_crn'
+        ] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
         resource_binding_post_parameters_model_json['foo'] = 'testString'
 
         # Construct a model instance of ResourceBindingPostParameters by calling from_dict on the json representation
@@ -3786,9 +3786,9 @@ class TestModel_ResourceKeyPostParameters:
 
         # Construct a json representation of a ResourceKeyPostParameters model
         resource_key_post_parameters_model_json = {}
-        resource_key_post_parameters_model_json['serviceid_crn'] = (
-            'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        )
+        resource_key_post_parameters_model_json[
+            'serviceid_crn'
+        ] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
         resource_key_post_parameters_model_json['foo'] = 'testString'
 
         # Construct a model instance of ResourceKeyPostParameters by calling from_dict on the json representation
