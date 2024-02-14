@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.75.0-726bc7e3-20230713-221716
+# IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
 
 """
 Billing units for IBM Cloud partners
@@ -24,7 +24,7 @@ API Version: 1.0.0
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
@@ -80,10 +80,10 @@ class PartnerBillingUnitsV1(BaseService):
         self,
         partner_id: str,
         *,
-        customer_id: str = None,
-        reseller_id: str = None,
-        date: str = None,
-        limit: int = None,
+        customer_id: Optional[str] = None,
+        reseller_id: Optional[str] = None,
+        date: Optional[str] = None,
+        limit: Optional[int] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -148,10 +148,10 @@ class PartnerBillingUnitsV1(BaseService):
         self,
         partner_id: str,
         *,
-        customer_id: str = None,
-        reseller_id: str = None,
-        date: str = None,
-        limit: int = None,
+        customer_id: Optional[str] = None,
+        reseller_id: Optional[str] = None,
+        date: Optional[str] = None,
+        limit: Optional[int] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -219,13 +219,13 @@ class BillingOptionsSummaryFirst:
     """
     The link to the first page of the search query.
 
-    :attr str href: (optional) A link to a page of query results.
+    :param str href: (optional) A link to a page of query results.
     """
 
     def __init__(
         self,
         *,
-        href: str = None,
+        href: Optional[str] = None,
     ) -> None:
         """
         Initialize a BillingOptionsSummaryFirst object.
@@ -238,8 +238,8 @@ class BillingOptionsSummaryFirst:
     def from_dict(cls, _dict: Dict) -> 'BillingOptionsSummaryFirst':
         """Initialize a BillingOptionsSummaryFirst object from a json dictionary."""
         args = {}
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         return cls(**args)
 
     @classmethod
@@ -277,16 +277,16 @@ class BillingOptionsSummaryNext:
     """
     The link to the next page of the search query.
 
-    :attr str href: (optional) A link to a page of query results.
-    :attr str offset: (optional) The value of the `_start` query parameter to fetch
+    :param str href: (optional) A link to a page of query results.
+    :param str offset: (optional) The value of the `_start` query parameter to fetch
           the next page.
     """
 
     def __init__(
         self,
         *,
-        href: str = None,
-        offset: str = None,
+        href: Optional[str] = None,
+        offset: Optional[str] = None,
     ) -> None:
         """
         Initialize a BillingOptionsSummaryNext object.
@@ -302,10 +302,10 @@ class BillingOptionsSummaryNext:
     def from_dict(cls, _dict: Dict) -> 'BillingOptionsSummaryNext':
         """Initialize a BillingOptionsSummaryNext object from a json dictionary."""
         args = {}
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
         return cls(**args)
 
     @classmethod
@@ -345,70 +345,70 @@ class BillingOption:
     """
     Billing options report for the end customers.
 
-    :attr str id: (optional) The ID of the billing option.
-    :attr str billing_unit_id: (optional) The ID of the billing unit that's
+    :param str id: (optional) The ID of the billing option.
+    :param str billing_unit_id: (optional) The ID of the billing unit that's
           associated with the billing option.
-    :attr str customer_id: (optional) Account ID of the customer.
-    :attr str customer_type: (optional) The customer type. The valid values are
+    :param str customer_id: (optional) Account ID of the customer.
+    :param str customer_type: (optional) The customer type. The valid values are
           `ENTERPRISE`, `ACCOUNT`, and `ACCOUNT_GROUP`.
-    :attr str customer_name: (optional) A user-defined name for the customer.
-    :attr str reseller_id: (optional) ID of the reseller in the heirarchy of the
+    :param str customer_name: (optional) A user-defined name for the customer.
+    :param str reseller_id: (optional) ID of the reseller in the heirarchy of the
           requested customer.
-    :attr str reseller_name: (optional) Name of the reseller in the heirarchy of the
-          requested customer.
-    :attr str month: (optional) The billing month for which the burn-down report is
+    :param str reseller_name: (optional) Name of the reseller in the heirarchy of
+          the requested customer.
+    :param str month: (optional) The billing month for which the burn-down report is
           requested. Format is yyyy-mm. Defaults to current month.
-    :attr List[dict] errors: (optional) Errors in the billing.
-    :attr str type: (optional) The type of billing option. The valid values are
+    :param List[dict] errors: (optional) Errors in the billing.
+    :param str type: (optional) The type of billing option. The valid values are
           `SUBSCRIPTION` and `OFFER`.
-    :attr datetime start_date: (optional) The start date of billing option.
-    :attr datetime end_date: (optional) The end date of billing option.
-    :attr str state: (optional) The state of the billing option. The valid values
+    :param datetime start_date: (optional) The start date of billing option.
+    :param datetime end_date: (optional) The end date of billing option.
+    :param str state: (optional) The state of the billing option. The valid values
           include `ACTIVE, `SUSPENDED`, and `CANCELED`.
-    :attr str category: (optional) The category of the billing option. The valid
+    :param str category: (optional) The category of the billing option. The valid
           values are `PLATFORM`, `SERVICE`, and `SUPPORT`.
-    :attr dict payment_instrument: (optional) The payment method for support.
-    :attr str part_number: (optional) Part number of the offering.
-    :attr str catalog_id: (optional) ID of the catalog containing this offering.
-    :attr str order_id: (optional) ID of the order containing this offering.
-    :attr str po_number: (optional) PO Number of the offering.
-    :attr str subscription_model: (optional) Subscription model.
-    :attr int duration_in_months: (optional) The duration of the billing options in
+    :param dict payment_instrument: (optional) The payment method for support.
+    :param str part_number: (optional) Part number of the offering.
+    :param str catalog_id: (optional) ID of the catalog containing this offering.
+    :param str order_id: (optional) ID of the order containing this offering.
+    :param str po_number: (optional) PO Number of the offering.
+    :param str subscription_model: (optional) Subscription model.
+    :param int duration_in_months: (optional) The duration of the billing options in
           months.
-    :attr float monthly_amount: (optional) Amount billed monthly for this offering.
-    :attr dict billing_system: (optional) The support billing system.
-    :attr str country_code: (optional) The country code for the billing unit.
-    :attr str currency_code: (optional) The currency code of the billing unit.
+    :param float monthly_amount: (optional) Amount billed monthly for this offering.
+    :param dict billing_system: (optional) The support billing system.
+    :param str country_code: (optional) The country code for the billing unit.
+    :param str currency_code: (optional) The currency code of the billing unit.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
-        billing_unit_id: str = None,
-        customer_id: str = None,
-        customer_type: str = None,
-        customer_name: str = None,
-        reseller_id: str = None,
-        reseller_name: str = None,
-        month: str = None,
-        errors: List[dict] = None,
-        type: str = None,
-        start_date: datetime = None,
-        end_date: datetime = None,
-        state: str = None,
-        category: str = None,
-        payment_instrument: dict = None,
-        part_number: str = None,
-        catalog_id: str = None,
-        order_id: str = None,
-        po_number: str = None,
-        subscription_model: str = None,
-        duration_in_months: int = None,
-        monthly_amount: float = None,
-        billing_system: dict = None,
-        country_code: str = None,
-        currency_code: str = None,
+        id: Optional[str] = None,
+        billing_unit_id: Optional[str] = None,
+        customer_id: Optional[str] = None,
+        customer_type: Optional[str] = None,
+        customer_name: Optional[str] = None,
+        reseller_id: Optional[str] = None,
+        reseller_name: Optional[str] = None,
+        month: Optional[str] = None,
+        errors: Optional[List[dict]] = None,
+        type: Optional[str] = None,
+        start_date: Optional[datetime] = None,
+        end_date: Optional[datetime] = None,
+        state: Optional[str] = None,
+        category: Optional[str] = None,
+        payment_instrument: Optional[dict] = None,
+        part_number: Optional[str] = None,
+        catalog_id: Optional[str] = None,
+        order_id: Optional[str] = None,
+        po_number: Optional[str] = None,
+        subscription_model: Optional[str] = None,
+        duration_in_months: Optional[int] = None,
+        monthly_amount: Optional[float] = None,
+        billing_system: Optional[dict] = None,
+        country_code: Optional[str] = None,
+        currency_code: Optional[str] = None,
     ) -> None:
         """
         Initialize a BillingOption object.
@@ -480,56 +480,56 @@ class BillingOption:
     def from_dict(cls, _dict: Dict) -> 'BillingOption':
         """Initialize a BillingOption object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'billing_unit_id' in _dict:
-            args['billing_unit_id'] = _dict.get('billing_unit_id')
-        if 'customer_id' in _dict:
-            args['customer_id'] = _dict.get('customer_id')
-        if 'customer_type' in _dict:
-            args['customer_type'] = _dict.get('customer_type')
-        if 'customer_name' in _dict:
-            args['customer_name'] = _dict.get('customer_name')
-        if 'reseller_id' in _dict:
-            args['reseller_id'] = _dict.get('reseller_id')
-        if 'reseller_name' in _dict:
-            args['reseller_name'] = _dict.get('reseller_name')
-        if 'month' in _dict:
-            args['month'] = _dict.get('month')
-        if 'errors' in _dict:
-            args['errors'] = _dict.get('errors')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
-        if 'start_date' in _dict:
-            args['start_date'] = string_to_datetime(_dict.get('start_date'))
-        if 'end_date' in _dict:
-            args['end_date'] = string_to_datetime(_dict.get('end_date'))
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'category' in _dict:
-            args['category'] = _dict.get('category')
-        if 'payment_instrument' in _dict:
-            args['payment_instrument'] = _dict.get('payment_instrument')
-        if 'part_number' in _dict:
-            args['part_number'] = _dict.get('part_number')
-        if 'catalog_id' in _dict:
-            args['catalog_id'] = _dict.get('catalog_id')
-        if 'order_id' in _dict:
-            args['order_id'] = _dict.get('order_id')
-        if 'po_number' in _dict:
-            args['po_number'] = _dict.get('po_number')
-        if 'subscription_model' in _dict:
-            args['subscription_model'] = _dict.get('subscription_model')
-        if 'duration_in_months' in _dict:
-            args['duration_in_months'] = _dict.get('duration_in_months')
-        if 'monthly_amount' in _dict:
-            args['monthly_amount'] = _dict.get('monthly_amount')
-        if 'billing_system' in _dict:
-            args['billing_system'] = _dict.get('billing_system')
-        if 'country_code' in _dict:
-            args['country_code'] = _dict.get('country_code')
-        if 'currency_code' in _dict:
-            args['currency_code'] = _dict.get('currency_code')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (billing_unit_id := _dict.get('billing_unit_id')) is not None:
+            args['billing_unit_id'] = billing_unit_id
+        if (customer_id := _dict.get('customer_id')) is not None:
+            args['customer_id'] = customer_id
+        if (customer_type := _dict.get('customer_type')) is not None:
+            args['customer_type'] = customer_type
+        if (customer_name := _dict.get('customer_name')) is not None:
+            args['customer_name'] = customer_name
+        if (reseller_id := _dict.get('reseller_id')) is not None:
+            args['reseller_id'] = reseller_id
+        if (reseller_name := _dict.get('reseller_name')) is not None:
+            args['reseller_name'] = reseller_name
+        if (month := _dict.get('month')) is not None:
+            args['month'] = month
+        if (errors := _dict.get('errors')) is not None:
+            args['errors'] = errors
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        if (start_date := _dict.get('start_date')) is not None:
+            args['start_date'] = string_to_datetime(start_date)
+        if (end_date := _dict.get('end_date')) is not None:
+            args['end_date'] = string_to_datetime(end_date)
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (category := _dict.get('category')) is not None:
+            args['category'] = category
+        if (payment_instrument := _dict.get('payment_instrument')) is not None:
+            args['payment_instrument'] = payment_instrument
+        if (part_number := _dict.get('part_number')) is not None:
+            args['part_number'] = part_number
+        if (catalog_id := _dict.get('catalog_id')) is not None:
+            args['catalog_id'] = catalog_id
+        if (order_id := _dict.get('order_id')) is not None:
+            args['order_id'] = order_id
+        if (po_number := _dict.get('po_number')) is not None:
+            args['po_number'] = po_number
+        if (subscription_model := _dict.get('subscription_model')) is not None:
+            args['subscription_model'] = subscription_model
+        if (duration_in_months := _dict.get('duration_in_months')) is not None:
+            args['duration_in_months'] = duration_in_months
+        if (monthly_amount := _dict.get('monthly_amount')) is not None:
+            args['monthly_amount'] = monthly_amount
+        if (billing_system := _dict.get('billing_system')) is not None:
+            args['billing_system'] = billing_system
+        if (country_code := _dict.get('country_code')) is not None:
+            args['country_code'] = country_code
+        if (currency_code := _dict.get('currency_code')) is not None:
+            args['currency_code'] = currency_code
         return cls(**args)
 
     @classmethod
@@ -653,22 +653,22 @@ class BillingOptionsSummary:
     """
     The billing options report for the customer.
 
-    :attr int limit: (optional) The max number of reports in the response.
-    :attr BillingOptionsSummaryFirst first: (optional) The link to the first page of
+    :param int limit: (optional) The max number of reports in the response.
+    :param BillingOptionsSummaryFirst first: (optional) The link to the first page
+          of the search query.
+    :param BillingOptionsSummaryNext next: (optional) The link to the next page of
           the search query.
-    :attr BillingOptionsSummaryNext next: (optional) The link to the next page of
-          the search query.
-    :attr List[BillingOption] resources: (optional) Aggregated usage report of all
+    :param List[BillingOption] resources: (optional) Aggregated usage report of all
           requested partners.
     """
 
     def __init__(
         self,
         *,
-        limit: int = None,
-        first: 'BillingOptionsSummaryFirst' = None,
-        next: 'BillingOptionsSummaryNext' = None,
-        resources: List['BillingOption'] = None,
+        limit: Optional[int] = None,
+        first: Optional['BillingOptionsSummaryFirst'] = None,
+        next: Optional['BillingOptionsSummaryNext'] = None,
+        resources: Optional[List['BillingOption']] = None,
     ) -> None:
         """
         Initialize a BillingOptionsSummary object.
@@ -690,14 +690,14 @@ class BillingOptionsSummary:
     def from_dict(cls, _dict: Dict) -> 'BillingOptionsSummary':
         """Initialize a BillingOptionsSummary object from a json dictionary."""
         args = {}
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
-        if 'first' in _dict:
-            args['first'] = BillingOptionsSummaryFirst.from_dict(_dict.get('first'))
-        if 'next' in _dict:
-            args['next'] = BillingOptionsSummaryNext.from_dict(_dict.get('next'))
-        if 'resources' in _dict:
-            args['resources'] = [BillingOption.from_dict(v) for v in _dict.get('resources')]
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = BillingOptionsSummaryFirst.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = BillingOptionsSummaryNext.from_dict(next)
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [BillingOption.from_dict(v) for v in resources]
         return cls(**args)
 
     @classmethod
@@ -753,13 +753,13 @@ class CreditPoolsReportSummaryFirst:
     """
     The link to the first page of the search query.
 
-    :attr str href: (optional) A link to a page of query results.
+    :param str href: (optional) A link to a page of query results.
     """
 
     def __init__(
         self,
         *,
-        href: str = None,
+        href: Optional[str] = None,
     ) -> None:
         """
         Initialize a CreditPoolsReportSummaryFirst object.
@@ -772,8 +772,8 @@ class CreditPoolsReportSummaryFirst:
     def from_dict(cls, _dict: Dict) -> 'CreditPoolsReportSummaryFirst':
         """Initialize a CreditPoolsReportSummaryFirst object from a json dictionary."""
         args = {}
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         return cls(**args)
 
     @classmethod
@@ -811,16 +811,16 @@ class CreditPoolsReportSummaryNext:
     """
     The link to the next page of the search query.
 
-    :attr str href: (optional) A link to a page of query results.
-    :attr str offset: (optional) The value of the `_start` query parameter to fetch
+    :param str href: (optional) A link to a page of query results.
+    :param str offset: (optional) The value of the `_start` query parameter to fetch
           the next page.
     """
 
     def __init__(
         self,
         *,
-        href: str = None,
-        offset: str = None,
+        href: Optional[str] = None,
+        offset: Optional[str] = None,
     ) -> None:
         """
         Initialize a CreditPoolsReportSummaryNext object.
@@ -836,10 +836,10 @@ class CreditPoolsReportSummaryNext:
     def from_dict(cls, _dict: Dict) -> 'CreditPoolsReportSummaryNext':
         """Initialize a CreditPoolsReportSummaryNext object from a json dictionary."""
         args = {}
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
         return cls(**args)
 
     @classmethod
@@ -879,40 +879,41 @@ class CreditPoolsReport:
     """
     Aggregated subscription burn-down report for the end customers.
 
-    :attr str type: (optional) The category of the billing option. The valid values
+    :param str type: (optional) The category of the billing option. The valid values
           are `PLATFORM`, `SERVICE` and `SUPPORT`.
-    :attr str billing_unit_id: (optional) The ID of the billing unit that's
+    :param str billing_unit_id: (optional) The ID of the billing unit that's
           associated with the billing option.
-    :attr str customer_id: (optional) Account ID of the customer.
-    :attr str customer_type: (optional) The customer type. The valid values are
+    :param str customer_id: (optional) Account ID of the customer.
+    :param str customer_type: (optional) The customer type. The valid values are
           `ENTERPRISE`, `ACCOUNT`, and `ACCOUNT_GROUP`.
-    :attr str customer_name: (optional) A user-defined name for the customer.
-    :attr str reseller_id: (optional) ID of the reseller in the heirarchy of the
+    :param str customer_name: (optional) A user-defined name for the customer.
+    :param str reseller_id: (optional) ID of the reseller in the heirarchy of the
           requested customer.
-    :attr str reseller_name: (optional) Name of the reseller in the heirarchy of the
-          requested customer.
-    :attr str month: (optional) The billing month for which the burn-down report is
+    :param str reseller_name: (optional) Name of the reseller in the heirarchy of
+          the requested customer.
+    :param str month: (optional) The billing month for which the burn-down report is
           requested. Format is yyyy-mm. Defaults to current month.
-    :attr str currency_code: (optional) The currency code of the billing unit.
-    :attr List[TermCredits] term_credits: (optional) A list of active subscription
+    :param str currency_code: (optional) The currency code of the billing unit.
+    :param List[TermCredits] term_credits: (optional) A list of active subscription
           terms available within a credit.
-    :attr Overage overage: (optional) Overage that was generated on the credit pool.
+    :param Overage overage: (optional) Overage that was generated on the credit
+          pool.
     """
 
     def __init__(
         self,
         *,
-        type: str = None,
-        billing_unit_id: str = None,
-        customer_id: str = None,
-        customer_type: str = None,
-        customer_name: str = None,
-        reseller_id: str = None,
-        reseller_name: str = None,
-        month: str = None,
-        currency_code: str = None,
-        term_credits: List['TermCredits'] = None,
-        overage: 'Overage' = None,
+        type: Optional[str] = None,
+        billing_unit_id: Optional[str] = None,
+        customer_id: Optional[str] = None,
+        customer_type: Optional[str] = None,
+        customer_name: Optional[str] = None,
+        reseller_id: Optional[str] = None,
+        reseller_name: Optional[str] = None,
+        month: Optional[str] = None,
+        currency_code: Optional[str] = None,
+        term_credits: Optional[List['TermCredits']] = None,
+        overage: Optional['Overage'] = None,
     ) -> None:
         """
         Initialize a CreditPoolsReport object.
@@ -953,28 +954,28 @@ class CreditPoolsReport:
     def from_dict(cls, _dict: Dict) -> 'CreditPoolsReport':
         """Initialize a CreditPoolsReport object from a json dictionary."""
         args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
-        if 'billing_unit_id' in _dict:
-            args['billing_unit_id'] = _dict.get('billing_unit_id')
-        if 'customer_id' in _dict:
-            args['customer_id'] = _dict.get('customer_id')
-        if 'customer_type' in _dict:
-            args['customer_type'] = _dict.get('customer_type')
-        if 'customer_name' in _dict:
-            args['customer_name'] = _dict.get('customer_name')
-        if 'reseller_id' in _dict:
-            args['reseller_id'] = _dict.get('reseller_id')
-        if 'reseller_name' in _dict:
-            args['reseller_name'] = _dict.get('reseller_name')
-        if 'month' in _dict:
-            args['month'] = _dict.get('month')
-        if 'currency_code' in _dict:
-            args['currency_code'] = _dict.get('currency_code')
-        if 'term_credits' in _dict:
-            args['term_credits'] = [TermCredits.from_dict(v) for v in _dict.get('term_credits')]
-        if 'overage' in _dict:
-            args['overage'] = Overage.from_dict(_dict.get('overage'))
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        if (billing_unit_id := _dict.get('billing_unit_id')) is not None:
+            args['billing_unit_id'] = billing_unit_id
+        if (customer_id := _dict.get('customer_id')) is not None:
+            args['customer_id'] = customer_id
+        if (customer_type := _dict.get('customer_type')) is not None:
+            args['customer_type'] = customer_type
+        if (customer_name := _dict.get('customer_name')) is not None:
+            args['customer_name'] = customer_name
+        if (reseller_id := _dict.get('reseller_id')) is not None:
+            args['reseller_id'] = reseller_id
+        if (reseller_name := _dict.get('reseller_name')) is not None:
+            args['reseller_name'] = reseller_name
+        if (month := _dict.get('month')) is not None:
+            args['month'] = month
+        if (currency_code := _dict.get('currency_code')) is not None:
+            args['currency_code'] = currency_code
+        if (term_credits := _dict.get('term_credits')) is not None:
+            args['term_credits'] = [TermCredits.from_dict(v) for v in term_credits]
+        if (overage := _dict.get('overage')) is not None:
+            args['overage'] = Overage.from_dict(overage)
         return cls(**args)
 
     @classmethod
@@ -1061,22 +1062,22 @@ class CreditPoolsReportSummary:
     """
     The aggregated credit pools report.
 
-    :attr int limit: (optional) The max number of reports in the response.
-    :attr CreditPoolsReportSummaryFirst first: (optional) The link to the first page
+    :param int limit: (optional) The max number of reports in the response.
+    :param CreditPoolsReportSummaryFirst first: (optional) The link to the first
+          page of the search query.
+    :param CreditPoolsReportSummaryNext next: (optional) The link to the next page
           of the search query.
-    :attr CreditPoolsReportSummaryNext next: (optional) The link to the next page of
-          the search query.
-    :attr List[CreditPoolsReport] resources: (optional) Aggregated usage report of
+    :param List[CreditPoolsReport] resources: (optional) Aggregated usage report of
           all requested partners.
     """
 
     def __init__(
         self,
         *,
-        limit: int = None,
-        first: 'CreditPoolsReportSummaryFirst' = None,
-        next: 'CreditPoolsReportSummaryNext' = None,
-        resources: List['CreditPoolsReport'] = None,
+        limit: Optional[int] = None,
+        first: Optional['CreditPoolsReportSummaryFirst'] = None,
+        next: Optional['CreditPoolsReportSummaryNext'] = None,
+        resources: Optional[List['CreditPoolsReport']] = None,
     ) -> None:
         """
         Initialize a CreditPoolsReportSummary object.
@@ -1098,14 +1099,14 @@ class CreditPoolsReportSummary:
     def from_dict(cls, _dict: Dict) -> 'CreditPoolsReportSummary':
         """Initialize a CreditPoolsReportSummary object from a json dictionary."""
         args = {}
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
-        if 'first' in _dict:
-            args['first'] = CreditPoolsReportSummaryFirst.from_dict(_dict.get('first'))
-        if 'next' in _dict:
-            args['next'] = CreditPoolsReportSummaryNext.from_dict(_dict.get('next'))
-        if 'resources' in _dict:
-            args['resources'] = [CreditPoolsReport.from_dict(v) for v in _dict.get('resources')]
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = CreditPoolsReportSummaryFirst.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = CreditPoolsReportSummaryNext.from_dict(next)
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [CreditPoolsReport.from_dict(v) for v in resources]
         return cls(**args)
 
     @classmethod
@@ -1161,16 +1162,16 @@ class Overage:
     """
     Overage that was generated on the credit pool.
 
-    :attr float cost: (optional) The number of credits used as overage.
-    :attr List[dict] resources: (optional) A list of resources that generated
+    :param float cost: (optional) The number of credits used as overage.
+    :param List[dict] resources: (optional) A list of resources that generated
           overage.
     """
 
     def __init__(
         self,
         *,
-        cost: float = None,
-        resources: List[dict] = None,
+        cost: Optional[float] = None,
+        resources: Optional[List[dict]] = None,
     ) -> None:
         """
         Initialize a Overage object.
@@ -1186,10 +1187,10 @@ class Overage:
     def from_dict(cls, _dict: Dict) -> 'Overage':
         """Initialize a Overage object from a json dictionary."""
         args = {}
-        if 'cost' in _dict:
-            args['cost'] = _dict.get('cost')
-        if 'resources' in _dict:
-            args['resources'] = _dict.get('resources')
+        if (cost := _dict.get('cost')) is not None:
+            args['cost'] = cost
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = resources
         return cls(**args)
 
     @classmethod
@@ -1229,37 +1230,37 @@ class TermCredits:
     """
     The subscription term that is active in the requested month.
 
-    :attr str billing_option_id: (optional) The ID of the billing option from which
+    :param str billing_option_id: (optional) The ID of the billing option from which
           the subscription term is derived.
-    :attr str billing_option_model: (optional) Billing option model.
-    :attr str category: (optional) The category of the billing option. The valid
+    :param str billing_option_model: (optional) Billing option model.
+    :param str category: (optional) The category of the billing option. The valid
           values are `PLATFORM`, `SERVICE`, and `SUPPORT`.
-    :attr datetime start_date: (optional) The start date of the term in ISO format.
-    :attr datetime end_date: (optional) The end date of the term in ISO format.
-    :attr float total_credits: (optional) The total credit available in this term.
-    :attr float starting_balance: (optional) The balance of available credit at the
+    :param datetime start_date: (optional) The start date of the term in ISO format.
+    :param datetime end_date: (optional) The end date of the term in ISO format.
+    :param float total_credits: (optional) The total credit available in this term.
+    :param float starting_balance: (optional) The balance of available credit at the
           start of the current month.
-    :attr float used_credits: (optional) The amount of credit used during the
+    :param float used_credits: (optional) The amount of credit used during the
           current month.
-    :attr float current_balance: (optional) The balance of remaining credit in the
+    :param float current_balance: (optional) The balance of remaining credit in the
           subscription term.
-    :attr List[dict] resources: (optional) A list of resources that used credit
+    :param List[dict] resources: (optional) A list of resources that used credit
           during the month.
     """
 
     def __init__(
         self,
         *,
-        billing_option_id: str = None,
-        billing_option_model: str = None,
-        category: str = None,
-        start_date: datetime = None,
-        end_date: datetime = None,
-        total_credits: float = None,
-        starting_balance: float = None,
-        used_credits: float = None,
-        current_balance: float = None,
-        resources: List[dict] = None,
+        billing_option_id: Optional[str] = None,
+        billing_option_model: Optional[str] = None,
+        category: Optional[str] = None,
+        start_date: Optional[datetime] = None,
+        end_date: Optional[datetime] = None,
+        total_credits: Optional[float] = None,
+        starting_balance: Optional[float] = None,
+        used_credits: Optional[float] = None,
+        current_balance: Optional[float] = None,
+        resources: Optional[List[dict]] = None,
     ) -> None:
         """
         Initialize a TermCredits object.
@@ -1299,26 +1300,26 @@ class TermCredits:
     def from_dict(cls, _dict: Dict) -> 'TermCredits':
         """Initialize a TermCredits object from a json dictionary."""
         args = {}
-        if 'billing_option_id' in _dict:
-            args['billing_option_id'] = _dict.get('billing_option_id')
-        if 'billing_option_model' in _dict:
-            args['billing_option_model'] = _dict.get('billing_option_model')
-        if 'category' in _dict:
-            args['category'] = _dict.get('category')
-        if 'start_date' in _dict:
-            args['start_date'] = string_to_datetime(_dict.get('start_date'))
-        if 'end_date' in _dict:
-            args['end_date'] = string_to_datetime(_dict.get('end_date'))
-        if 'total_credits' in _dict:
-            args['total_credits'] = _dict.get('total_credits')
-        if 'starting_balance' in _dict:
-            args['starting_balance'] = _dict.get('starting_balance')
-        if 'used_credits' in _dict:
-            args['used_credits'] = _dict.get('used_credits')
-        if 'current_balance' in _dict:
-            args['current_balance'] = _dict.get('current_balance')
-        if 'resources' in _dict:
-            args['resources'] = _dict.get('resources')
+        if (billing_option_id := _dict.get('billing_option_id')) is not None:
+            args['billing_option_id'] = billing_option_id
+        if (billing_option_model := _dict.get('billing_option_model')) is not None:
+            args['billing_option_model'] = billing_option_model
+        if (category := _dict.get('category')) is not None:
+            args['category'] = category
+        if (start_date := _dict.get('start_date')) is not None:
+            args['start_date'] = string_to_datetime(start_date)
+        if (end_date := _dict.get('end_date')) is not None:
+            args['end_date'] = string_to_datetime(end_date)
+        if (total_credits := _dict.get('total_credits')) is not None:
+            args['total_credits'] = total_credits
+        if (starting_balance := _dict.get('starting_balance')) is not None:
+            args['starting_balance'] = starting_balance
+        if (used_credits := _dict.get('used_credits')) is not None:
+            args['used_credits'] = used_credits
+        if (current_balance := _dict.get('current_balance')) is not None:
+            args['current_balance'] = current_balance
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = resources
         return cls(**args)
 
     @classmethod
