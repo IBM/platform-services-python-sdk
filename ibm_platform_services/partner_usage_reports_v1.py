@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.75.0-726bc7e3-20230713-221716
+# IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
 
 """
 Usage reports for IBM Cloud partner entities
@@ -23,7 +23,7 @@ API Version: 1.0.0
 """
 
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
@@ -78,14 +78,14 @@ class PartnerUsageReportsV1(BaseService):
         self,
         partner_id: str,
         *,
-        reseller_id: str = None,
-        customer_id: str = None,
-        children: bool = None,
-        month: str = None,
-        viewpoint: str = None,
-        recurse: bool = None,
-        limit: int = None,
-        offset: str = None,
+        reseller_id: Optional[str] = None,
+        customer_id: Optional[str] = None,
+        children: Optional[bool] = None,
+        month: Optional[str] = None,
+        viewpoint: Optional[str] = None,
+        recurse: Optional[bool] = None,
+        limit: Optional[int] = None,
+        offset: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -192,14 +192,15 @@ class MetricUsage:
     """
     An object that represents a metric.
 
-    :attr str metric: The name of the metric.
-    :attr str unit: A unit to qualify the quantity.
-    :attr float quantity: The aggregated value for the metric.
-    :attr float rateable_quantity: The quantity that is used for calculating
+    :param str metric: The name of the metric.
+    :param str unit: A unit to qualify the quantity.
+    :param float quantity: The aggregated value for the metric.
+    :param float rateable_quantity: The quantity that is used for calculating
           charges.
-    :attr float cost: The cost that was incurred by the metric.
-    :attr float rated_cost: The pre-discounted cost that was incurred by the metric.
-    :attr List[dict] price: (optional) The price with which cost was calculated.
+    :param float cost: The cost that was incurred by the metric.
+    :param float rated_cost: The pre-discounted cost that was incurred by the
+          metric.
+    :param List[dict] price: (optional) The price with which cost was calculated.
     """
 
     def __init__(
@@ -211,7 +212,7 @@ class MetricUsage:
         cost: float,
         rated_cost: float,
         *,
-        price: List[dict] = None,
+        price: Optional[List[dict]] = None,
     ) -> None:
         """
         Initialize a MetricUsage object.
@@ -239,32 +240,32 @@ class MetricUsage:
     def from_dict(cls, _dict: Dict) -> 'MetricUsage':
         """Initialize a MetricUsage object from a json dictionary."""
         args = {}
-        if 'metric' in _dict:
-            args['metric'] = _dict.get('metric')
+        if (metric := _dict.get('metric')) is not None:
+            args['metric'] = metric
         else:
             raise ValueError('Required property \'metric\' not present in MetricUsage JSON')
-        if 'unit' in _dict:
-            args['unit'] = _dict.get('unit')
+        if (unit := _dict.get('unit')) is not None:
+            args['unit'] = unit
         else:
             raise ValueError('Required property \'unit\' not present in MetricUsage JSON')
-        if 'quantity' in _dict:
-            args['quantity'] = _dict.get('quantity')
+        if (quantity := _dict.get('quantity')) is not None:
+            args['quantity'] = quantity
         else:
             raise ValueError('Required property \'quantity\' not present in MetricUsage JSON')
-        if 'rateable_quantity' in _dict:
-            args['rateable_quantity'] = _dict.get('rateable_quantity')
+        if (rateable_quantity := _dict.get('rateable_quantity')) is not None:
+            args['rateable_quantity'] = rateable_quantity
         else:
             raise ValueError('Required property \'rateable_quantity\' not present in MetricUsage JSON')
-        if 'cost' in _dict:
-            args['cost'] = _dict.get('cost')
+        if (cost := _dict.get('cost')) is not None:
+            args['cost'] = cost
         else:
             raise ValueError('Required property \'cost\' not present in MetricUsage JSON')
-        if 'rated_cost' in _dict:
-            args['rated_cost'] = _dict.get('rated_cost')
+        if (rated_cost := _dict.get('rated_cost')) is not None:
+            args['rated_cost'] = rated_cost
         else:
             raise ValueError('Required property \'rated_cost\' not present in MetricUsage JSON')
-        if 'price' in _dict:
-            args['price'] = _dict.get('price')
+        if (price := _dict.get('price')) is not None:
+            args['price'] = price
         return cls(**args)
 
     @classmethod
@@ -314,13 +315,13 @@ class PartnerUsageReportSummaryFirst:
     """
     The link to the first page of the search query.
 
-    :attr str href: (optional) A link to a page of query results.
+    :param str href: (optional) A link to a page of query results.
     """
 
     def __init__(
         self,
         *,
-        href: str = None,
+        href: Optional[str] = None,
     ) -> None:
         """
         Initialize a PartnerUsageReportSummaryFirst object.
@@ -333,8 +334,8 @@ class PartnerUsageReportSummaryFirst:
     def from_dict(cls, _dict: Dict) -> 'PartnerUsageReportSummaryFirst':
         """Initialize a PartnerUsageReportSummaryFirst object from a json dictionary."""
         args = {}
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         return cls(**args)
 
     @classmethod
@@ -372,16 +373,16 @@ class PartnerUsageReportSummaryNext:
     """
     The link to the next page of the search query.
 
-    :attr str href: (optional) A link to a page of query results.
-    :attr str offset: (optional) The value of the `_start` query parameter to fetch
+    :param str href: (optional) A link to a page of query results.
+    :param str offset: (optional) The value of the `_start` query parameter to fetch
           the next page.
     """
 
     def __init__(
         self,
         *,
-        href: str = None,
-        offset: str = None,
+        href: Optional[str] = None,
+        offset: Optional[str] = None,
     ) -> None:
         """
         Initialize a PartnerUsageReportSummaryNext object.
@@ -397,10 +398,10 @@ class PartnerUsageReportSummaryNext:
     def from_dict(cls, _dict: Dict) -> 'PartnerUsageReportSummaryNext':
         """Initialize a PartnerUsageReportSummaryNext object from a json dictionary."""
         args = {}
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
         return cls(**args)
 
     @classmethod
@@ -440,48 +441,48 @@ class PartnerUsageReport:
     """
     Aggregated usage report of a partner.
 
-    :attr str entity_id: (optional) The ID of the entity.
-    :attr str entity_type: (optional) The entity type.
-    :attr str entity_crn: (optional) The Cloud Resource Name (CRN) of the entity
+    :param str entity_id: (optional) The ID of the entity.
+    :param str entity_type: (optional) The entity type.
+    :param str entity_crn: (optional) The Cloud Resource Name (CRN) of the entity
           towards which the resource usages were rolled up.
-    :attr str entity_name: (optional) A user-defined name for the entity, such as
+    :param str entity_name: (optional) A user-defined name for the entity, such as
           the enterprise name or account group name.
-    :attr str entity_partner_type: (optional) Role of the `entity_id` for which the
+    :param str entity_partner_type: (optional) Role of the `entity_id` for which the
           usage report is fetched.
-    :attr str viewpoint: (optional) Enables partner to view the cost of provisioned
+    :param str viewpoint: (optional) Enables partner to view the cost of provisioned
           services as applicable at each level of the hierarchy.
-    :attr str month: (optional) The billing month for which the usage report is
+    :param str month: (optional) The billing month for which the usage report is
           requested. Format is yyyy-mm.
-    :attr str currency_code: (optional) The currency code of the billing unit.
-    :attr str country_code: (optional) The country code of the billing unit.
-    :attr float billable_cost: (optional) Billable charges that are aggregated from
+    :param str currency_code: (optional) The currency code of the billing unit.
+    :param str country_code: (optional) The country code of the billing unit.
+    :param float billable_cost: (optional) Billable charges that are aggregated from
           all entities in the report.
-    :attr float billable_rated_cost: (optional) Aggregated billable charges before
+    :param float billable_rated_cost: (optional) Aggregated billable charges before
           discounts.
-    :attr float non_billable_cost: (optional) Non-billable charges that are
+    :param float non_billable_cost: (optional) Non-billable charges that are
           aggregated from all entities in the report.
-    :attr float non_billable_rated_cost: (optional) Aggregated non-billable charges
+    :param float non_billable_rated_cost: (optional) Aggregated non-billable charges
           before discounts.
-    :attr List[ResourceUsage] resources: (optional)
+    :param List[ResourceUsage] resources: (optional)
     """
 
     def __init__(
         self,
         *,
-        entity_id: str = None,
-        entity_type: str = None,
-        entity_crn: str = None,
-        entity_name: str = None,
-        entity_partner_type: str = None,
-        viewpoint: str = None,
-        month: str = None,
-        currency_code: str = None,
-        country_code: str = None,
-        billable_cost: float = None,
-        billable_rated_cost: float = None,
-        non_billable_cost: float = None,
-        non_billable_rated_cost: float = None,
-        resources: List['ResourceUsage'] = None,
+        entity_id: Optional[str] = None,
+        entity_type: Optional[str] = None,
+        entity_crn: Optional[str] = None,
+        entity_name: Optional[str] = None,
+        entity_partner_type: Optional[str] = None,
+        viewpoint: Optional[str] = None,
+        month: Optional[str] = None,
+        currency_code: Optional[str] = None,
+        country_code: Optional[str] = None,
+        billable_cost: Optional[float] = None,
+        billable_rated_cost: Optional[float] = None,
+        non_billable_cost: Optional[float] = None,
+        non_billable_rated_cost: Optional[float] = None,
+        resources: Optional[List['ResourceUsage']] = None,
     ) -> None:
         """
         Initialize a PartnerUsageReport object.
@@ -529,34 +530,34 @@ class PartnerUsageReport:
     def from_dict(cls, _dict: Dict) -> 'PartnerUsageReport':
         """Initialize a PartnerUsageReport object from a json dictionary."""
         args = {}
-        if 'entity_id' in _dict:
-            args['entity_id'] = _dict.get('entity_id')
-        if 'entity_type' in _dict:
-            args['entity_type'] = _dict.get('entity_type')
-        if 'entity_crn' in _dict:
-            args['entity_crn'] = _dict.get('entity_crn')
-        if 'entity_name' in _dict:
-            args['entity_name'] = _dict.get('entity_name')
-        if 'entity_partner_type' in _dict:
-            args['entity_partner_type'] = _dict.get('entity_partner_type')
-        if 'viewpoint' in _dict:
-            args['viewpoint'] = _dict.get('viewpoint')
-        if 'month' in _dict:
-            args['month'] = _dict.get('month')
-        if 'currency_code' in _dict:
-            args['currency_code'] = _dict.get('currency_code')
-        if 'country_code' in _dict:
-            args['country_code'] = _dict.get('country_code')
-        if 'billable_cost' in _dict:
-            args['billable_cost'] = _dict.get('billable_cost')
-        if 'billable_rated_cost' in _dict:
-            args['billable_rated_cost'] = _dict.get('billable_rated_cost')
-        if 'non_billable_cost' in _dict:
-            args['non_billable_cost'] = _dict.get('non_billable_cost')
-        if 'non_billable_rated_cost' in _dict:
-            args['non_billable_rated_cost'] = _dict.get('non_billable_rated_cost')
-        if 'resources' in _dict:
-            args['resources'] = [ResourceUsage.from_dict(v) for v in _dict.get('resources')]
+        if (entity_id := _dict.get('entity_id')) is not None:
+            args['entity_id'] = entity_id
+        if (entity_type := _dict.get('entity_type')) is not None:
+            args['entity_type'] = entity_type
+        if (entity_crn := _dict.get('entity_crn')) is not None:
+            args['entity_crn'] = entity_crn
+        if (entity_name := _dict.get('entity_name')) is not None:
+            args['entity_name'] = entity_name
+        if (entity_partner_type := _dict.get('entity_partner_type')) is not None:
+            args['entity_partner_type'] = entity_partner_type
+        if (viewpoint := _dict.get('viewpoint')) is not None:
+            args['viewpoint'] = viewpoint
+        if (month := _dict.get('month')) is not None:
+            args['month'] = month
+        if (currency_code := _dict.get('currency_code')) is not None:
+            args['currency_code'] = currency_code
+        if (country_code := _dict.get('country_code')) is not None:
+            args['country_code'] = country_code
+        if (billable_cost := _dict.get('billable_cost')) is not None:
+            args['billable_cost'] = billable_cost
+        if (billable_rated_cost := _dict.get('billable_rated_cost')) is not None:
+            args['billable_rated_cost'] = billable_rated_cost
+        if (non_billable_cost := _dict.get('non_billable_cost')) is not None:
+            args['non_billable_cost'] = non_billable_cost
+        if (non_billable_rated_cost := _dict.get('non_billable_rated_cost')) is not None:
+            args['non_billable_rated_cost'] = non_billable_rated_cost
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [ResourceUsage.from_dict(v) for v in resources]
         return cls(**args)
 
     @classmethod
@@ -626,22 +627,23 @@ class PartnerUsageReportSummary:
     """
     The aggregated partner usage report.
 
-    :attr int limit: (optional) The maximum number of usage records in the response.
-    :attr PartnerUsageReportSummaryFirst first: (optional) The link to the first
+    :param int limit: (optional) The maximum number of usage records in the
+          response.
+    :param PartnerUsageReportSummaryFirst first: (optional) The link to the first
           page of the search query.
-    :attr PartnerUsageReportSummaryNext next: (optional) The link to the next page
+    :param PartnerUsageReportSummaryNext next: (optional) The link to the next page
           of the search query.
-    :attr List[PartnerUsageReport] reports: (optional) Aggregated usage report of
+    :param List[PartnerUsageReport] reports: (optional) Aggregated usage report of
           all requested partners.
     """
 
     def __init__(
         self,
         *,
-        limit: int = None,
-        first: 'PartnerUsageReportSummaryFirst' = None,
-        next: 'PartnerUsageReportSummaryNext' = None,
-        reports: List['PartnerUsageReport'] = None,
+        limit: Optional[int] = None,
+        first: Optional['PartnerUsageReportSummaryFirst'] = None,
+        next: Optional['PartnerUsageReportSummaryNext'] = None,
+        reports: Optional[List['PartnerUsageReport']] = None,
     ) -> None:
         """
         Initialize a PartnerUsageReportSummary object.
@@ -664,14 +666,14 @@ class PartnerUsageReportSummary:
     def from_dict(cls, _dict: Dict) -> 'PartnerUsageReportSummary':
         """Initialize a PartnerUsageReportSummary object from a json dictionary."""
         args = {}
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
-        if 'first' in _dict:
-            args['first'] = PartnerUsageReportSummaryFirst.from_dict(_dict.get('first'))
-        if 'next' in _dict:
-            args['next'] = PartnerUsageReportSummaryNext.from_dict(_dict.get('next'))
-        if 'reports' in _dict:
-            args['reports'] = [PartnerUsageReport.from_dict(v) for v in _dict.get('reports')]
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = PartnerUsageReportSummaryFirst.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = PartnerUsageReportSummaryNext.from_dict(next)
+        if (reports := _dict.get('reports')) is not None:
+            args['reports'] = [PartnerUsageReport.from_dict(v) for v in reports]
         return cls(**args)
 
     @classmethod
@@ -727,15 +729,15 @@ class PlanUsage:
     """
     Aggregated values for the plan.
 
-    :attr str plan_id: The ID of the plan.
-    :attr str pricing_region: (optional) The pricing region for the plan.
-    :attr str pricing_plan_id: (optional) The pricing plan with which the usage was
+    :param str plan_id: The ID of the plan.
+    :param str pricing_region: (optional) The pricing region for the plan.
+    :param str pricing_plan_id: (optional) The pricing plan with which the usage was
           rated.
-    :attr bool billable: Whether the plan charges are billed to the customer.
-    :attr float cost: The total cost that was incurred by the plan.
-    :attr float rated_cost: The total pre-discounted cost that was incurred by the
+    :param bool billable: Whether the plan charges are billed to the customer.
+    :param float cost: The total cost that was incurred by the plan.
+    :param float rated_cost: The total pre-discounted cost that was incurred by the
           plan.
-    :attr List[MetricUsage] usage: All of the metrics in the plan.
+    :param List[MetricUsage] usage: All of the metrics in the plan.
     """
 
     def __init__(
@@ -746,8 +748,8 @@ class PlanUsage:
         rated_cost: float,
         usage: List['MetricUsage'],
         *,
-        pricing_region: str = None,
-        pricing_plan_id: str = None,
+        pricing_region: Optional[str] = None,
+        pricing_plan_id: Optional[str] = None,
     ) -> None:
         """
         Initialize a PlanUsage object.
@@ -774,28 +776,28 @@ class PlanUsage:
     def from_dict(cls, _dict: Dict) -> 'PlanUsage':
         """Initialize a PlanUsage object from a json dictionary."""
         args = {}
-        if 'plan_id' in _dict:
-            args['plan_id'] = _dict.get('plan_id')
+        if (plan_id := _dict.get('plan_id')) is not None:
+            args['plan_id'] = plan_id
         else:
             raise ValueError('Required property \'plan_id\' not present in PlanUsage JSON')
-        if 'pricing_region' in _dict:
-            args['pricing_region'] = _dict.get('pricing_region')
-        if 'pricing_plan_id' in _dict:
-            args['pricing_plan_id'] = _dict.get('pricing_plan_id')
-        if 'billable' in _dict:
-            args['billable'] = _dict.get('billable')
+        if (pricing_region := _dict.get('pricing_region')) is not None:
+            args['pricing_region'] = pricing_region
+        if (pricing_plan_id := _dict.get('pricing_plan_id')) is not None:
+            args['pricing_plan_id'] = pricing_plan_id
+        if (billable := _dict.get('billable')) is not None:
+            args['billable'] = billable
         else:
             raise ValueError('Required property \'billable\' not present in PlanUsage JSON')
-        if 'cost' in _dict:
-            args['cost'] = _dict.get('cost')
+        if (cost := _dict.get('cost')) is not None:
+            args['cost'] = cost
         else:
             raise ValueError('Required property \'cost\' not present in PlanUsage JSON')
-        if 'rated_cost' in _dict:
-            args['rated_cost'] = _dict.get('rated_cost')
+        if (rated_cost := _dict.get('rated_cost')) is not None:
+            args['rated_cost'] = rated_cost
         else:
             raise ValueError('Required property \'rated_cost\' not present in PlanUsage JSON')
-        if 'usage' in _dict:
-            args['usage'] = [MetricUsage.from_dict(v) for v in _dict.get('usage')]
+        if (usage := _dict.get('usage')) is not None:
+            args['usage'] = [MetricUsage.from_dict(v) for v in usage]
         else:
             raise ValueError('Required property \'usage\' not present in PlanUsage JSON')
         return cls(**args)
@@ -853,15 +855,15 @@ class ResourceUsage:
     """
     A container for all the plans in the resource.
 
-    :attr str resource_id: The ID of the resource.
-    :attr str resource_name: (optional) The name of the resource.
-    :attr float billable_cost: The billable charges for the partner.
-    :attr float billable_rated_cost: The pre-discounted billable charges for the
+    :param str resource_id: The ID of the resource.
+    :param str resource_name: (optional) The name of the resource.
+    :param float billable_cost: The billable charges for the partner.
+    :param float billable_rated_cost: The pre-discounted billable charges for the
           partner.
-    :attr float non_billable_cost: The non-billable charges for the partner.
-    :attr float non_billable_rated_cost: The pre-discounted, non-billable charges
+    :param float non_billable_cost: The non-billable charges for the partner.
+    :param float non_billable_rated_cost: The pre-discounted, non-billable charges
           for the partner.
-    :attr List[PlanUsage] plans: All of the plans in the resource.
+    :param List[PlanUsage] plans: All of the plans in the resource.
     """
 
     def __init__(
@@ -873,7 +875,7 @@ class ResourceUsage:
         non_billable_rated_cost: float,
         plans: List['PlanUsage'],
         *,
-        resource_name: str = None,
+        resource_name: Optional[str] = None,
     ) -> None:
         """
         Initialize a ResourceUsage object.
@@ -900,30 +902,30 @@ class ResourceUsage:
     def from_dict(cls, _dict: Dict) -> 'ResourceUsage':
         """Initialize a ResourceUsage object from a json dictionary."""
         args = {}
-        if 'resource_id' in _dict:
-            args['resource_id'] = _dict.get('resource_id')
+        if (resource_id := _dict.get('resource_id')) is not None:
+            args['resource_id'] = resource_id
         else:
             raise ValueError('Required property \'resource_id\' not present in ResourceUsage JSON')
-        if 'resource_name' in _dict:
-            args['resource_name'] = _dict.get('resource_name')
-        if 'billable_cost' in _dict:
-            args['billable_cost'] = _dict.get('billable_cost')
+        if (resource_name := _dict.get('resource_name')) is not None:
+            args['resource_name'] = resource_name
+        if (billable_cost := _dict.get('billable_cost')) is not None:
+            args['billable_cost'] = billable_cost
         else:
             raise ValueError('Required property \'billable_cost\' not present in ResourceUsage JSON')
-        if 'billable_rated_cost' in _dict:
-            args['billable_rated_cost'] = _dict.get('billable_rated_cost')
+        if (billable_rated_cost := _dict.get('billable_rated_cost')) is not None:
+            args['billable_rated_cost'] = billable_rated_cost
         else:
             raise ValueError('Required property \'billable_rated_cost\' not present in ResourceUsage JSON')
-        if 'non_billable_cost' in _dict:
-            args['non_billable_cost'] = _dict.get('non_billable_cost')
+        if (non_billable_cost := _dict.get('non_billable_cost')) is not None:
+            args['non_billable_cost'] = non_billable_cost
         else:
             raise ValueError('Required property \'non_billable_cost\' not present in ResourceUsage JSON')
-        if 'non_billable_rated_cost' in _dict:
-            args['non_billable_rated_cost'] = _dict.get('non_billable_rated_cost')
+        if (non_billable_rated_cost := _dict.get('non_billable_rated_cost')) is not None:
+            args['non_billable_rated_cost'] = non_billable_rated_cost
         else:
             raise ValueError('Required property \'non_billable_rated_cost\' not present in ResourceUsage JSON')
-        if 'plans' in _dict:
-            args['plans'] = [PlanUsage.from_dict(v) for v in _dict.get('plans')]
+        if (plans := _dict.get('plans')) is not None:
+            args['plans'] = [PlanUsage.from_dict(v) for v in plans]
         else:
             raise ValueError('Required property \'plans\' not present in ResourceUsage JSON')
         return cls(**args)
