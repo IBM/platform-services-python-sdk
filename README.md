@@ -8,7 +8,7 @@
 [![CLA assistant](https://cla-assistant.io/readme/badge/IBM/platform-services-python-sdk)](https://cla-assistant.io/IBM/platform-services-python-sdk)
 
 
-# IBM Cloud Platform Services Python SDK Version 0.49.2
+# IBM Cloud Platform Services Python SDK Version 0.50.0
 
 Python client library to interact with various 
 [IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
@@ -60,6 +60,7 @@ Service Name | Module Name | Service Class Name
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management?code=python) | iam_policy_management_v1 | IamPolicyManagementV1
 [IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell?code=python) | ibm_cloud_shell_v1 | IbmCloudShellV1
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api?code=python) | open_service_broker_v1 | OpenServiceBrokerV1
+[Partner Billing Units](https://cloud.ibm.com/apidocs/partner-apis/billing-unit?code=python) | partner_billing_units_v1 | PartnerBillingUnitsV1
 [Partner Usage Reports](https://cloud.ibm.com/apidocs/partner-apis/resource-usage-reports?code=python) | partner_usage_reports_v1 | PartnerUsageReportsV1
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=python) | resource_controller_v2 | ResourceControllerV2
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager?code=python) | resource_manager_v2 | ResourceManagerV2
