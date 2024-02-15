@@ -1,3 +1,10 @@
+# [0.50.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.49.2...v0.50.0) (2024-02-15)
+
+
+### Features
+
+* **Partner Billing Units:** add new service to project ([#241](https://github.com/IBM/platform-services-python-sdk/issues/241)) ([3147f32](https://github.com/IBM/platform-services-python-sdk/commit/3147f32531097102d3a6749cf17b1afb04fc067c))
+
 ## [0.49.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.49.1...v0.49.2) (2024-01-30)
 
 
