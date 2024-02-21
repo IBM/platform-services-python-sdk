@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.84.1-55f6d880-20240110-194020
+# IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
 
 """
 IAM Policy Management API
@@ -55,7 +55,9 @@ class IamPolicyManagementV1(BaseService):
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -345,90 +347,8 @@ class IamPolicyManagementV1(BaseService):
         resource attributes supported by the service. To view a service's or the
         platform's supported attributes, check the [documentation](/docs?tab=all-docs).
         The policy resource must include either the **`serviceType`**, **`serviceName`**,
-        or **`resourceGroupId`** attribute and the **`accountId`** attribute.`
-        In the rule field, you can specify a single condition by using **`key`**,
-        **`value`**, and condition **`operator`**, or a set of **`conditions`** with a
-        combination **`operator`**. The possible combination operators are **`and`** and
-        **`or`**.
-        Currently, we support two types of patterns:
-        1. `time-based`: Used to specify a time-based restriction
-        Combine conditions to specify a time-based restriction (e.g., access only during
-        business hours, during the Monday-Friday work week). For example, a policy can
-        grant access Monday-Friday, 9:00am-5:00pm using the following rule:
-        ```json
-          "rule": {
-            "operator": "and",
-            "conditions": [{
-              "key": "{{environment.attributes.day_of_week}}",
-              "operator": "dayOfWeekAnyOf",
-              "value": ["1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00"]
-            },
-              "key": "{{environment.attributes.current_time}}",
-              "operator": "timeGreaterThanOrEquals",
-              "value": "09:00:00+00:00"
-            },
-              "key": "{{environment.attributes.current_time}}",
-              "operator": "timeLessThanOrEquals",
-              "value": "17:00:00+00:00"
-            }]
-          }
-        ``` You can use the following operators in the **`key`** and **`value`** pair:
-        ```
-          'timeLessThan', 'timeLessThanOrEquals', 'timeGreaterThan',
-        'timeGreaterThanOrEquals',
-          'dateTimeLessThan', 'dateTimeLessThanOrEquals', 'dateTimeGreaterThan',
-        'dateTimeGreaterThanOrEquals',
-          'dayOfWeekEquals', 'dayOfWeekAnyOf',
-        ``` The pattern field that matches the rule is required when rule is provided. For
-        the business hour rule example above, the **`pattern`** is
-        **`"time-based-conditions:weekly"`**. For more information, see [Time-based
-        conditions
-        operators](/docs/account?topic=account-iam-condition-properties&interface=ui#policy-condition-properties)
-        and
-        [Limiting access with time-based
-        conditions](/docs/account?topic=account-iam-time-based&interface=ui). If the
+        or **`resourceGroupId`** attribute and the **`accountId`** attribute.` If the
         subject is a locked service-id, the request will fail.
-        2. `attribute-based`: Used to specify a combination of OR/AND based conditions
-        applied on resource attributes.
-        Combine conditions to specify an attribute-based condition using AN/OR-based
-        operators.
-        For example, a policy can grant access based on multiple conditions applied on the
-        resource attributes below:
-        ```json
-          "pattern": "attribute-based-condition:resource:literal-and-wildcard"
-          "rule": {
-              "operator": "or",
-              "conditions": [
-                {
-                  "operator": "and",
-                  "conditions": [
-                    {
-                      "key": "{{resource.attributes.prefix}}",
-                      "operator": "stringEquals",
-                      "value": "home/test"
-                    },
-                    {
-                      "key": "{{environment.attributes.delimiter}}",
-                      "operator": "stringEquals",
-                      "value": "/"
-                    }
-                  ]
-                },
-                {
-                  "key": "{{resource.attributes.path}}",
-                  "operator": "stringMatch",
-                  "value": "home/David/*"
-                }
-              ]
-          }
-        ```
-        In addition to satisfying the `resources` section, the policy grants permission
-        only if either the `path` begins with `home/David/` **OR**  the `prefix` is
-        `home/test` and the `delimiter` is `/`. This mechanism helps you consolidate
-        multiple policies in to a single policy,  making policies easier to administer and
-        stay within the policy limit for an account. View the list of operators that can
-        be used in the condition
-        [here](/docs/account?topic=account-wildcard#string-comparisons).
         ### Authorization
         To update an authorization policy, use **`"type": "authorization"`** in the body.
         The subject attributes must match the supported authorization subjects of the
@@ -1182,10 +1102,12 @@ class IamPolicyManagementV1(BaseService):
         attribute. In the rule field, you can specify a single condition by using
         **`key`**, **`value`**, and condition **`operator`**, or a set of **`conditions`**
         with a combination **`operator`**. The possible combination operators are
-        **`and`** and **`or`**. Combine conditions to specify a time-based restriction
-        (e.g., access only during business hours, during the Monday-Friday work week). For
-        example, a policy can grant access Monday-Friday, 9:00am-5:00pm using the
-        following rule:
+        **`and`** and **`or`**.
+        Currently, we support two types of patterns:
+        1. `time-based`: Used to specify a time-based restriction
+        Combine conditions to specify a time-based restriction (e.g., access only during
+        business hours, during the Monday-Friday work week). For example, a policy can
+        grant access Monday-Friday, 9:00am-5:00pm using the following rule:
         ```json
           "rule": {
             "operator": "and",
@@ -1207,19 +1129,61 @@ class IamPolicyManagementV1(BaseService):
         ```
           'timeLessThan', 'timeLessThanOrEquals', 'timeGreaterThan',
         'timeGreaterThanOrEquals',
+          'dateLessThan', 'dateLessThanOrEquals', 'dateGreaterThan',
+        'dateGreaterThanOrEquals',
           'dateTimeLessThan', 'dateTimeLessThanOrEquals', 'dateTimeGreaterThan',
         'dateTimeGreaterThanOrEquals',
-          'dayOfWeekEquals', 'dayOfWeekAnyOf',
-        ```
-        The pattern field that matches the rule is required when rule is provided. For the
-        business hour rule example above, the **`pattern`** is
+          'dayOfWeekEquals', 'dayOfWeekAnyOf'
+        ``` The pattern field that matches the rule is required when rule is provided. For
+        the business hour rule example above, the **`pattern`** is
         **`"time-based-conditions:weekly"`**. For more information, see [Time-based
         conditions
-        operators](https://cloud.ibm.com/docs/account?topic=account-iam-condition-properties&interface=ui#policy-condition-properties)
+        operators](/docs/account?topic=account-iam-condition-properties&interface=ui#policy-condition-properties)
         and
         [Limiting access with time-based
-        conditions](https://cloud.ibm.com/docs/account?topic=account-iam-time-based&interface=ui).
-        If the subject is a locked service-id, the request will fail.
+        conditions](/docs/account?topic=account-iam-time-based&interface=ui). If the
+        subject is a locked service-id, the request will fail.
+        2. `attribute-based`: Used to specify a combination of OR/AND based conditions
+        applied on resource attributes.
+        Combine conditions to specify an attribute-based condition using AND/OR-based
+        operators.
+        For example, a policy can grant access based on multiple conditions applied on the
+        resource attributes below:
+        ```json
+          "pattern": "attribute-based-condition:resource:literal-and-wildcard"
+          "rule": {
+              "operator": "or",
+              "conditions": [
+                {
+                  "operator": "and",
+                  "conditions": [
+                    {
+                      "key": "{{resource.attributes.prefix}}",
+                      "operator": "stringEquals",
+                      "value": "home/test"
+                    },
+                    {
+                      "key": "{{environment.attributes.delimiter}}",
+                      "operator": "stringEquals",
+                      "value": "/"
+                    }
+                  ]
+                },
+                {
+                  "key": "{{resource.attributes.path}}",
+                  "operator": "stringMatch",
+                  "value": "home/David/*"
+                }
+              ]
+          }
+        ```
+        In addition to satisfying the `resources` section, the policy grants permission
+        only if either the `path` begins with `home/David/` **OR**  the `prefix` is
+        `home/test` and the `delimiter` is `/`. This mechanism helps you consolidate
+        multiple policies in to a single policy,  making policies easier to administer and
+        stay within the policy limit for an account. View the list of operators that can
+        be used in the condition
+        [here](/docs/account?topic=account-wildcard#string-comparisons).
         ### Authorization
         Authorization policies are supported by services on a case by case basis. Refer to
         service documentation to verify their support of authorization policies. To create
@@ -1360,10 +1324,12 @@ class IamPolicyManagementV1(BaseService):
         attribute. In the rule field, you can specify a single condition by using
         **`key`**, **`value`**, and condition **`operator`**, or a set of **`conditions`**
         with a combination **`operator`**. The possible combination operators are
-        **`and`** and **`or`**. Combine conditions to specify a time-based restriction
-        (e.g., access only during business hours, during the Monday-Friday work week). For
-        example, a policy can grant access Monday-Friday, 9:00am-5:00pm using the
-        following rule:
+        **`and`** and **`or`**.
+        Currently, we support two types of patterns:
+        1. `time-based`: Used to specify a time-based restriction
+        Combine conditions to specify a time-based restriction (e.g., access only during
+        business hours, during the Monday-Friday work week). For example, a policy can
+        grant access Monday-Friday, 9:00am-5:00pm using the following rule:
         ```json
           "rule": {
             "operator": "and",
@@ -1381,21 +1347,65 @@ class IamPolicyManagementV1(BaseService):
               "value": "17:00:00+00:00"
             }]
           }
-        ``` You can use the following operators in the **`key`**, **`value`** pair:
+        ``` You can use the following operators in the **`key`** and **`value`** pair:
         ```
           'timeLessThan', 'timeLessThanOrEquals', 'timeGreaterThan',
         'timeGreaterThanOrEquals',
+          'dateLessThan', 'dateLessThanOrEquals', 'dateGreaterThan',
+        'dateGreaterThanOrEquals',
           'dateTimeLessThan', 'dateTimeLessThanOrEquals', 'dateTimeGreaterThan',
         'dateTimeGreaterThanOrEquals',
-          'dayOfWeekEquals', 'dayOfWeekAnyOf',
+          'dayOfWeekEquals', 'dayOfWeekAnyOf'
         ``` The pattern field that matches the rule is required when rule is provided. For
         the business hour rule example above, the **`pattern`** is
         **`"time-based-conditions:weekly"`**. For more information, see [Time-based
         conditions
-        operators](https://cloud.ibm.com/docs/account?topic=account-iam-condition-properties&interface=ui#policy-condition-properties)
+        operators](/docs/account?topic=account-iam-condition-properties&interface=ui#policy-condition-properties)
         and
         [Limiting access with time-based
-        conditions](https://cloud.ibm.com/docs/account?topic=account-iam-time-based&interface=ui).
+        conditions](/docs/account?topic=account-iam-time-based&interface=ui). If the
+        subject is a locked service-id, the request will fail.
+        2. `attribute-based`: Used to specify a combination of OR/AND based conditions
+        applied on resource attributes.
+        Combine conditions to specify an attribute-based condition using AND/OR-based
+        operators.
+        For example, a policy can grant access based on multiple conditions applied on the
+        resource attributes below:
+        ```json
+          "pattern": "attribute-based-condition:resource:literal-and-wildcard"
+          "rule": {
+              "operator": "or",
+              "conditions": [
+                {
+                  "operator": "and",
+                  "conditions": [
+                    {
+                      "key": "{{resource.attributes.prefix}}",
+                      "operator": "stringEquals",
+                      "value": "home/test"
+                    },
+                    {
+                      "key": "{{environment.attributes.delimiter}}",
+                      "operator": "stringEquals",
+                      "value": "/"
+                    }
+                  ]
+                },
+                {
+                  "key": "{{resource.attributes.path}}",
+                  "operator": "stringMatch",
+                  "value": "home/David/*"
+                }
+              ]
+          }
+        ```
+        In addition to satisfying the `resources` section, the policy grants permission
+        only if either the `path` begins with `home/David/` **OR**  the `prefix` is
+        `home/test` and the `delimiter` is `/`. This mechanism helps you consolidate
+        multiple policies in to a single policy,  making policies easier to administer and
+        stay within the policy limit for an account. View the list of operators that can
+        be used in the condition
+        [here](/docs/account?topic=account-wildcard#string-comparisons).
         ### Authorization
         To update an authorization policy, use **`"type": "authorization"`** in the body.
         The subject attributes must match the supported authorization subjects of the
@@ -2360,7 +2370,6 @@ class ListPoliciesEnums:
 
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
-
     class ServiceType(str, Enum):
         """
         Optional type of service.
@@ -2368,7 +2377,6 @@ class ListPoliciesEnums:
 
         SERVICE = 'service'
         PLATFORM_SERVICE = 'platform_service'
-
     class Sort(str, Enum):
         """
         Optional top level policy field to sort results. Ascending sort is default.
@@ -2383,7 +2391,6 @@ class ListPoliciesEnums:
         LAST_MODIFIED_AT = 'last_modified_at'
         LAST_MODIFIED_BY_ID = 'last_modified_by_id'
         STATE = 'state'
-
     class Format(str, Enum):
         """
         Include additional data per policy returned
@@ -2395,7 +2402,6 @@ class ListPoliciesEnums:
 
         INCLUDE_LAST_PERMIT = 'include_last_permit'
         DISPLAY = 'display'
-
     class State(str, Enum):
         """
         The state of the policy.
@@ -2419,7 +2425,6 @@ class ListV2PoliciesEnums:
 
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
-
     class ServiceType(str, Enum):
         """
         Optional type of service.
@@ -2427,7 +2432,6 @@ class ListV2PoliciesEnums:
 
         SERVICE = 'service'
         PLATFORM_SERVICE = 'platform_service'
-
     class Format(str, Enum):
         """
         Include additional data per policy returned
@@ -2439,7 +2443,6 @@ class ListV2PoliciesEnums:
 
         INCLUDE_LAST_PERMIT = 'include_last_permit'
         DISPLAY = 'display'
-
     class State(str, Enum):
         """
         The state of the policy.
@@ -2539,8 +2542,8 @@ class AssignmentResourceCreated:
     def from_dict(cls, _dict: Dict) -> 'AssignmentResourceCreated':
         """Initialize a AssignmentResourceCreated object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -2605,12 +2608,12 @@ class ConflictsWith:
     def from_dict(cls, _dict: Dict) -> 'ConflictsWith':
         """Initialize a ConflictsWith object from a json dictionary."""
         args = {}
-        if 'etag' in _dict:
-            args['etag'] = _dict.get('etag')
-        if 'role' in _dict:
-            args['role'] = _dict.get('role')
-        if 'policy' in _dict:
-            args['policy'] = _dict.get('policy')
+        if (etag := _dict.get('etag')) is not None:
+            args['etag'] = etag
+        if (role := _dict.get('role')) is not None:
+            args['role'] = role
+        if (policy := _dict.get('policy')) is not None:
+            args['policy'] = policy
         return cls(**args)
 
     @classmethod
@@ -2670,8 +2673,8 @@ class Control:
     def from_dict(cls, _dict: Dict) -> 'Control':
         """Initialize a Control object from a json dictionary."""
         args = {}
-        if 'grant' in _dict:
-            args['grant'] = Grant.from_dict(_dict.get('grant'))
+        if (grant := _dict.get('grant')) is not None:
+            args['grant'] = Grant.from_dict(grant)
         else:
             raise ValueError('Required property \'grant\' not present in Control JSON')
         return cls(**args)
@@ -2806,42 +2809,42 @@ class CustomRole:
     def from_dict(cls, _dict: Dict) -> 'CustomRole':
         """Initialize a CustomRole object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'display_name' in _dict:
-            args['display_name'] = _dict.get('display_name')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (display_name := _dict.get('display_name')) is not None:
+            args['display_name'] = display_name
         else:
             raise ValueError('Required property \'display_name\' not present in CustomRole JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'actions' in _dict:
-            args['actions'] = _dict.get('actions')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (actions := _dict.get('actions')) is not None:
+            args['actions'] = actions
         else:
             raise ValueError('Required property \'actions\' not present in CustomRole JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in CustomRole JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in CustomRole JSON')
-        if 'service_name' in _dict:
-            args['service_name'] = _dict.get('service_name')
+        if (service_name := _dict.get('service_name')) is not None:
+            args['service_name'] = service_name
         else:
             raise ValueError('Required property \'service_name\' not present in CustomRole JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         return cls(**args)
 
     @classmethod
@@ -2941,16 +2944,16 @@ class EnrichedRoles:
     def from_dict(cls, _dict: Dict) -> 'EnrichedRoles':
         """Initialize a EnrichedRoles object from a json dictionary."""
         args = {}
-        if 'role_id' in _dict:
-            args['role_id'] = _dict.get('role_id')
+        if (role_id := _dict.get('role_id')) is not None:
+            args['role_id'] = role_id
         else:
             raise ValueError('Required property \'role_id\' not present in EnrichedRoles JSON')
-        if 'display_name' in _dict:
-            args['display_name'] = _dict.get('display_name')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'actions' in _dict:
-            args['actions'] = [RoleAction.from_dict(v) for v in _dict.get('actions')]
+        if (display_name := _dict.get('display_name')) is not None:
+            args['display_name'] = display_name
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (actions := _dict.get('actions')) is not None:
+            args['actions'] = [RoleAction.from_dict(v) for v in actions]
         else:
             raise ValueError('Required property \'actions\' not present in EnrichedRoles JSON')
         return cls(**args)
@@ -3022,8 +3025,8 @@ class ErrorDetails:
     def from_dict(cls, _dict: Dict) -> 'ErrorDetails':
         """Initialize a ErrorDetails object from a json dictionary."""
         args = {}
-        if 'conflicts_with' in _dict:
-            args['conflicts_with'] = ConflictsWith.from_dict(_dict.get('conflicts_with'))
+        if (conflicts_with := _dict.get('conflicts_with')) is not None:
+            args['conflicts_with'] = ConflictsWith.from_dict(conflicts_with)
         return cls(**args)
 
     @classmethod
@@ -3095,18 +3098,18 @@ class ErrorObject:
     def from_dict(cls, _dict: Dict) -> 'ErrorObject':
         """Initialize a ErrorObject object from a json dictionary."""
         args = {}
-        if 'code' in _dict:
-            args['code'] = _dict.get('code')
+        if (code := _dict.get('code')) is not None:
+            args['code'] = code
         else:
             raise ValueError('Required property \'code\' not present in ErrorObject JSON')
-        if 'message' in _dict:
-            args['message'] = _dict.get('message')
+        if (message := _dict.get('message')) is not None:
+            args['message'] = message
         else:
             raise ValueError('Required property \'message\' not present in ErrorObject JSON')
-        if 'details' in _dict:
-            args['details'] = ErrorDetails.from_dict(_dict.get('details'))
-        if 'more_info' in _dict:
-            args['more_info'] = _dict.get('more_info')
+        if (details := _dict.get('details')) is not None:
+            args['details'] = ErrorDetails.from_dict(details)
+        if (more_info := _dict.get('more_info')) is not None:
+            args['more_info'] = more_info
         return cls(**args)
 
     @classmethod
@@ -3172,6 +3175,7 @@ class ErrorObject:
         POLICY_ASSIGNMENT_CONFLICT_ERROR = 'policy_assignment_conflict_error'
 
 
+
 class ErrorResponse:
     """
     The error response from API.
@@ -3205,12 +3209,12 @@ class ErrorResponse:
     def from_dict(cls, _dict: Dict) -> 'ErrorResponse':
         """Initialize a ErrorResponse object from a json dictionary."""
         args = {}
-        if 'trace' in _dict:
-            args['trace'] = _dict.get('trace')
-        if 'errors' in _dict:
-            args['errors'] = [ErrorObject.from_dict(v) for v in _dict.get('errors')]
-        if 'status_code' in _dict:
-            args['status_code'] = _dict.get('status_code')
+        if (trace := _dict.get('trace')) is not None:
+            args['trace'] = trace
+        if (errors := _dict.get('errors')) is not None:
+            args['errors'] = [ErrorObject.from_dict(v) for v in errors]
+        if (status_code := _dict.get('status_code')) is not None:
+            args['status_code'] = status_code
         return cls(**args)
 
     @classmethod
@@ -3278,8 +3282,8 @@ class Grant:
     def from_dict(cls, _dict: Dict) -> 'Grant':
         """Initialize a Grant object from a json dictionary."""
         args = {}
-        if 'roles' in _dict:
-            args['roles'] = [Roles.from_dict(v) for v in _dict.get('roles')]
+        if (roles := _dict.get('roles')) is not None:
+            args['roles'] = [Roles.from_dict(v) for v in roles]
         else:
             raise ValueError('Required property \'roles\' not present in Grant JSON')
         return cls(**args)
@@ -3344,8 +3348,8 @@ class GrantWithEnrichedRoles:
     def from_dict(cls, _dict: Dict) -> 'GrantWithEnrichedRoles':
         """Initialize a GrantWithEnrichedRoles object from a json dictionary."""
         args = {}
-        if 'roles' in _dict:
-            args['roles'] = [EnrichedRoles.from_dict(v) for v in _dict.get('roles')]
+        if (roles := _dict.get('roles')) is not None:
+            args['roles'] = [EnrichedRoles.from_dict(v) for v in roles]
         else:
             raise ValueError('Required property \'roles\' not present in GrantWithEnrichedRoles JSON')
         return cls(**args)
@@ -3412,10 +3416,10 @@ class LimitData:
     def from_dict(cls, _dict: Dict) -> 'LimitData':
         """Initialize a LimitData object from a json dictionary."""
         args = {}
-        if 'current' in _dict:
-            args['current'] = _dict.get('current')
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
+        if (current := _dict.get('current')) is not None:
+            args['current'] = current
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
         return cls(**args)
 
     @classmethod
@@ -3538,38 +3542,38 @@ class Policy:
     def from_dict(cls, _dict: Dict) -> 'Policy':
         """Initialize a Policy object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in Policy JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'subjects' in _dict:
-            args['subjects'] = [PolicySubject.from_dict(v) for v in _dict.get('subjects')]
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (subjects := _dict.get('subjects')) is not None:
+            args['subjects'] = [PolicySubject.from_dict(v) for v in subjects]
         else:
             raise ValueError('Required property \'subjects\' not present in Policy JSON')
-        if 'roles' in _dict:
-            args['roles'] = [PolicyRole.from_dict(v) for v in _dict.get('roles')]
+        if (roles := _dict.get('roles')) is not None:
+            args['roles'] = [PolicyRole.from_dict(v) for v in roles]
         else:
             raise ValueError('Required property \'roles\' not present in Policy JSON')
-        if 'resources' in _dict:
-            args['resources'] = [PolicyResource.from_dict(v) for v in _dict.get('resources')]
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [PolicyResource.from_dict(v) for v in resources]
         else:
             raise ValueError('Required property \'resources\' not present in Policy JSON')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
         return cls(**args)
 
     @classmethod
@@ -3649,6 +3653,7 @@ class Policy:
 
         ACTIVE = 'active'
         DELETED = 'deleted'
+
 
 
 class PolicyAssignment:
@@ -3734,48 +3739,48 @@ class PolicyAssignment:
     def from_dict(cls, _dict: Dict) -> 'PolicyAssignment':
         """Initialize a PolicyAssignment object from a json dictionary."""
         args = {}
-        if 'template_id' in _dict:
-            args['template_id'] = _dict.get('template_id')
+        if (template_id := _dict.get('template_id')) is not None:
+            args['template_id'] = template_id
         else:
             raise ValueError('Required property \'template_id\' not present in PolicyAssignment JSON')
-        if 'template_version' in _dict:
-            args['template_version'] = _dict.get('template_version')
+        if (template_version := _dict.get('template_version')) is not None:
+            args['template_version'] = template_version
         else:
             raise ValueError('Required property \'template_version\' not present in PolicyAssignment JSON')
-        if 'assignment_id' in _dict:
-            args['assignment_id'] = _dict.get('assignment_id')
+        if (assignment_id := _dict.get('assignment_id')) is not None:
+            args['assignment_id'] = assignment_id
         else:
             raise ValueError('Required property \'assignment_id\' not present in PolicyAssignment JSON')
-        if 'target_type' in _dict:
-            args['target_type'] = _dict.get('target_type')
+        if (target_type := _dict.get('target_type')) is not None:
+            args['target_type'] = target_type
         else:
             raise ValueError('Required property \'target_type\' not present in PolicyAssignment JSON')
-        if 'target' in _dict:
-            args['target'] = _dict.get('target')
+        if (target := _dict.get('target')) is not None:
+            args['target'] = target
         else:
             raise ValueError('Required property \'target\' not present in PolicyAssignment JSON')
-        if 'options' in _dict:
-            args['options'] = [PolicyAssignmentOptions.from_dict(v) for v in _dict.get('options')]
+        if (options := _dict.get('options')) is not None:
+            args['options'] = [PolicyAssignmentOptions.from_dict(v) for v in options]
         else:
             raise ValueError('Required property \'options\' not present in PolicyAssignment JSON')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        if 'resources' in _dict:
-            args['resources'] = [PolicyAssignmentResources.from_dict(v) for v in _dict.get('resources')]
-        if 'status' in _dict:
-            args['status'] = _dict.get('status')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [PolicyAssignmentResources.from_dict(v) for v in resources]
+        if (status := _dict.get('status')) is not None:
+            args['status'] = status
         else:
             raise ValueError('Required property \'status\' not present in PolicyAssignment JSON')
         return cls(**args)
@@ -3857,6 +3862,7 @@ class PolicyAssignment:
 
         ACCOUNT = 'Account'
 
+
     class StatusEnum(str, Enum):
         """
         The policy assignment status.
@@ -3866,6 +3872,7 @@ class PolicyAssignment:
         SUCCEEDED = 'succeeded'
         SUCCEED_WITH_ERRORS = 'succeed_with_errors'
         FAILED = 'failed'
+
 
 
 class PolicyAssignmentOptions:
@@ -3913,22 +3920,22 @@ class PolicyAssignmentOptions:
     def from_dict(cls, _dict: Dict) -> 'PolicyAssignmentOptions':
         """Initialize a PolicyAssignmentOptions object from a json dictionary."""
         args = {}
-        if 'subject_type' in _dict:
-            args['subject_type'] = _dict.get('subject_type')
+        if (subject_type := _dict.get('subject_type')) is not None:
+            args['subject_type'] = subject_type
         else:
             raise ValueError('Required property \'subject_type\' not present in PolicyAssignmentOptions JSON')
-        if 'subject_id' in _dict:
-            args['subject_id'] = _dict.get('subject_id')
+        if (subject_id := _dict.get('subject_id')) is not None:
+            args['subject_id'] = subject_id
         else:
             raise ValueError('Required property \'subject_id\' not present in PolicyAssignmentOptions JSON')
-        if 'root_requester_id' in _dict:
-            args['root_requester_id'] = _dict.get('root_requester_id')
+        if (root_requester_id := _dict.get('root_requester_id')) is not None:
+            args['root_requester_id'] = root_requester_id
         else:
             raise ValueError('Required property \'root_requester_id\' not present in PolicyAssignmentOptions JSON')
-        if 'root_template_id' in _dict:
-            args['root_template_id'] = _dict.get('root_template_id')
-        if 'root_template_version' in _dict:
-            args['root_template_version'] = _dict.get('root_template_version')
+        if (root_template_id := _dict.get('root_template_id')) is not None:
+            args['root_template_id'] = root_template_id
+        if (root_template_version := _dict.get('root_template_version')) is not None:
+            args['root_template_version'] = root_template_version
         return cls(**args)
 
     @classmethod
@@ -3978,6 +3985,7 @@ class PolicyAssignmentOptions:
         ACCESS_GROUP_ID = 'access_group_id'
 
 
+
 class PolicyAssignmentResourcePolicy:
     """
     Set of properties for the assigned resource.
@@ -4011,12 +4019,12 @@ class PolicyAssignmentResourcePolicy:
     def from_dict(cls, _dict: Dict) -> 'PolicyAssignmentResourcePolicy':
         """Initialize a PolicyAssignmentResourcePolicy object from a json dictionary."""
         args = {}
-        if 'resource_created' in _dict:
-            args['resource_created'] = AssignmentResourceCreated.from_dict(_dict.get('resource_created'))
-        if 'status' in _dict:
-            args['status'] = _dict.get('status')
-        if 'error_message' in _dict:
-            args['error_message'] = ErrorResponse.from_dict(_dict.get('error_message'))
+        if (resource_created := _dict.get('resource_created')) is not None:
+            args['resource_created'] = AssignmentResourceCreated.from_dict(resource_created)
+        if (status := _dict.get('status')) is not None:
+            args['status'] = status
+        if (error_message := _dict.get('error_message')) is not None:
+            args['error_message'] = ErrorResponse.from_dict(error_message)
         return cls(**args)
 
     @classmethod
@@ -4089,10 +4097,10 @@ class PolicyAssignmentResources:
     def from_dict(cls, _dict: Dict) -> 'PolicyAssignmentResources':
         """Initialize a PolicyAssignmentResources object from a json dictionary."""
         args = {}
-        if 'target' in _dict:
-            args['target'] = _dict.get('target')
-        if 'policy' in _dict:
-            args['policy'] = PolicyAssignmentResourcePolicy.from_dict(_dict.get('policy'))
+        if (target := _dict.get('target')) is not None:
+            args['target'] = target
+        if (policy := _dict.get('policy')) is not None:
+            args['policy'] = PolicyAssignmentResourcePolicy.from_dict(policy)
         return cls(**args)
 
     @classmethod
@@ -4154,8 +4162,8 @@ class PolicyCollection:
     def from_dict(cls, _dict: Dict) -> 'PolicyCollection':
         """Initialize a PolicyCollection object from a json dictionary."""
         args = {}
-        if 'policies' in _dict:
-            args['policies'] = [PolicyTemplateMetaData.from_dict(v) for v in _dict.get('policies')]
+        if (policies := _dict.get('policies')) is not None:
+            args['policies'] = [PolicyTemplateMetaData.from_dict(v) for v in policies]
         return cls(**args)
 
     @classmethod
@@ -4224,10 +4232,10 @@ class PolicyResource:
     def from_dict(cls, _dict: Dict) -> 'PolicyResource':
         """Initialize a PolicyResource object from a json dictionary."""
         args = {}
-        if 'attributes' in _dict:
-            args['attributes'] = [ResourceAttribute.from_dict(v) for v in _dict.get('attributes')]
-        if 'tags' in _dict:
-            args['tags'] = [ResourceTag.from_dict(v) for v in _dict.get('tags')]
+        if (attributes := _dict.get('attributes')) is not None:
+            args['attributes'] = [ResourceAttribute.from_dict(v) for v in attributes]
+        if (tags := _dict.get('tags')) is not None:
+            args['tags'] = [ResourceTag.from_dict(v) for v in tags]
         return cls(**args)
 
     @classmethod
@@ -4306,14 +4314,14 @@ class PolicyRole:
     def from_dict(cls, _dict: Dict) -> 'PolicyRole':
         """Initialize a PolicyRole object from a json dictionary."""
         args = {}
-        if 'role_id' in _dict:
-            args['role_id'] = _dict.get('role_id')
+        if (role_id := _dict.get('role_id')) is not None:
+            args['role_id'] = role_id
         else:
             raise ValueError('Required property \'role_id\' not present in PolicyRole JSON')
-        if 'display_name' in _dict:
-            args['display_name'] = _dict.get('display_name')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (display_name := _dict.get('display_name')) is not None:
+            args['display_name'] = display_name
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         return cls(**args)
 
     @classmethod
@@ -4376,8 +4384,8 @@ class PolicySubject:
     def from_dict(cls, _dict: Dict) -> 'PolicySubject':
         """Initialize a PolicySubject object from a json dictionary."""
         args = {}
-        if 'attributes' in _dict:
-            args['attributes'] = [SubjectAttribute.from_dict(v) for v in _dict.get('attributes')]
+        if (attributes := _dict.get('attributes')) is not None:
+            args['attributes'] = [SubjectAttribute.from_dict(v) for v in attributes]
         return cls(**args)
 
     @classmethod
@@ -4500,40 +4508,40 @@ class PolicyTemplate:
     def from_dict(cls, _dict: Dict) -> 'PolicyTemplate':
         """Initialize a PolicyTemplate object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in PolicyTemplate JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in PolicyTemplate JSON')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
         else:
             raise ValueError('Required property \'version\' not present in PolicyTemplate JSON')
-        if 'committed' in _dict:
-            args['committed'] = _dict.get('committed')
-        if 'policy' in _dict:
-            args['policy'] = TemplatePolicy.from_dict(_dict.get('policy'))
+        if (committed := _dict.get('committed')) is not None:
+            args['committed'] = committed
+        if (policy := _dict.get('policy')) is not None:
+            args['policy'] = TemplatePolicy.from_dict(policy)
         else:
             raise ValueError('Required property \'policy\' not present in PolicyTemplate JSON')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         return cls(**args)
 
     @classmethod
@@ -4602,6 +4610,7 @@ class PolicyTemplate:
         DELETED = 'deleted'
 
 
+
 class PolicyTemplateAssignmentCollection:
     """
     A collection of policies assignments.
@@ -4627,8 +4636,8 @@ class PolicyTemplateAssignmentCollection:
     def from_dict(cls, _dict: Dict) -> 'PolicyTemplateAssignmentCollection':
         """Initialize a PolicyTemplateAssignmentCollection object from a json dictionary."""
         args = {}
-        if 'assignments' in _dict:
-            args['assignments'] = [PolicyAssignment.from_dict(v) for v in _dict.get('assignments')]
+        if (assignments := _dict.get('assignments')) is not None:
+            args['assignments'] = [PolicyAssignment.from_dict(v) for v in assignments]
         return cls(**args)
 
     @classmethod
@@ -4693,8 +4702,8 @@ class PolicyTemplateCollection:
     def from_dict(cls, _dict: Dict) -> 'PolicyTemplateCollection':
         """Initialize a PolicyTemplateCollection object from a json dictionary."""
         args = {}
-        if 'policy_templates' in _dict:
-            args['policy_templates'] = [PolicyTemplate.from_dict(v) for v in _dict.get('policy_templates')]
+        if (policy_templates := _dict.get('policy_templates')) is not None:
+            args['policy_templates'] = [PolicyTemplate.from_dict(v) for v in policy_templates]
         return cls(**args)
 
     @classmethod
@@ -4821,42 +4830,42 @@ class PolicyTemplateLimitData:
     def from_dict(cls, _dict: Dict) -> 'PolicyTemplateLimitData':
         """Initialize a PolicyTemplateLimitData object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in PolicyTemplateLimitData JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in PolicyTemplateLimitData JSON')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
         else:
             raise ValueError('Required property \'version\' not present in PolicyTemplateLimitData JSON')
-        if 'committed' in _dict:
-            args['committed'] = _dict.get('committed')
-        if 'policy' in _dict:
-            args['policy'] = TemplatePolicy.from_dict(_dict.get('policy'))
+        if (committed := _dict.get('committed')) is not None:
+            args['committed'] = committed
+        if (policy := _dict.get('policy')) is not None:
+            args['policy'] = TemplatePolicy.from_dict(policy)
         else:
             raise ValueError('Required property \'policy\' not present in PolicyTemplateLimitData JSON')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        if 'counts' in _dict:
-            args['counts'] = TemplateCountData.from_dict(_dict.get('counts'))
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (counts := _dict.get('counts')) is not None:
+            args['counts'] = TemplateCountData.from_dict(counts)
         return cls(**args)
 
     @classmethod
@@ -4928,6 +4937,7 @@ class PolicyTemplateLimitData:
 
         ACTIVE = 'active'
         DELETED = 'deleted'
+
 
 
 class PolicyTemplateMetaData:
@@ -5008,40 +5018,40 @@ class PolicyTemplateMetaData:
     def from_dict(cls, _dict: Dict) -> 'PolicyTemplateMetaData':
         """Initialize a PolicyTemplateMetaData object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in PolicyTemplateMetaData JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'subjects' in _dict:
-            args['subjects'] = [PolicySubject.from_dict(v) for v in _dict.get('subjects')]
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (subjects := _dict.get('subjects')) is not None:
+            args['subjects'] = [PolicySubject.from_dict(v) for v in subjects]
         else:
             raise ValueError('Required property \'subjects\' not present in PolicyTemplateMetaData JSON')
-        if 'roles' in _dict:
-            args['roles'] = [PolicyRole.from_dict(v) for v in _dict.get('roles')]
+        if (roles := _dict.get('roles')) is not None:
+            args['roles'] = [PolicyRole.from_dict(v) for v in roles]
         else:
             raise ValueError('Required property \'roles\' not present in PolicyTemplateMetaData JSON')
-        if 'resources' in _dict:
-            args['resources'] = [PolicyResource.from_dict(v) for v in _dict.get('resources')]
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [PolicyResource.from_dict(v) for v in resources]
         else:
             raise ValueError('Required property \'resources\' not present in PolicyTemplateMetaData JSON')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'template' in _dict:
-            args['template'] = TemplateMetadata.from_dict(_dict.get('template'))
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (template := _dict.get('template')) is not None:
+            args['template'] = TemplateMetadata.from_dict(template)
         return cls(**args)
 
     @classmethod
@@ -5128,6 +5138,7 @@ class PolicyTemplateMetaData:
         DELETED = 'deleted'
 
 
+
 class PolicyTemplateVersionsCollection:
     """
     A collection of versions for a specific policy template.
@@ -5153,8 +5164,8 @@ class PolicyTemplateVersionsCollection:
     def from_dict(cls, _dict: Dict) -> 'PolicyTemplateVersionsCollection':
         """Initialize a PolicyTemplateVersionsCollection object from a json dictionary."""
         args = {}
-        if 'versions' in _dict:
-            args['versions'] = [PolicyTemplate.from_dict(v) for v in _dict.get('versions')]
+        if (versions := _dict.get('versions')) is not None:
+            args['versions'] = [PolicyTemplate.from_dict(v) for v in versions]
         return cls(**args)
 
     @classmethod
@@ -5225,16 +5236,16 @@ class ResourceAttribute:
     def from_dict(cls, _dict: Dict) -> 'ResourceAttribute':
         """Initialize a ResourceAttribute object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in ResourceAttribute JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in ResourceAttribute JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         return cls(**args)
 
     @classmethod
@@ -5303,16 +5314,16 @@ class ResourceTag:
     def from_dict(cls, _dict: Dict) -> 'ResourceTag':
         """Initialize a ResourceTag object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in ResourceTag JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in ResourceTag JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         return cls(**args)
 
     @classmethod
@@ -5391,18 +5402,18 @@ class Role:
     def from_dict(cls, _dict: Dict) -> 'Role':
         """Initialize a Role object from a json dictionary."""
         args = {}
-        if 'display_name' in _dict:
-            args['display_name'] = _dict.get('display_name')
+        if (display_name := _dict.get('display_name')) is not None:
+            args['display_name'] = display_name
         else:
             raise ValueError('Required property \'display_name\' not present in Role JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'actions' in _dict:
-            args['actions'] = _dict.get('actions')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (actions := _dict.get('actions')) is not None:
+            args['actions'] = actions
         else:
             raise ValueError('Required property \'actions\' not present in Role JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
         return cls(**args)
 
     @classmethod
@@ -5474,16 +5485,16 @@ class RoleAction:
     def from_dict(cls, _dict: Dict) -> 'RoleAction':
         """Initialize a RoleAction object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in RoleAction JSON')
-        if 'display_name' in _dict:
-            args['display_name'] = _dict.get('display_name')
+        if (display_name := _dict.get('display_name')) is not None:
+            args['display_name'] = display_name
         else:
             raise ValueError('Required property \'display_name\' not present in RoleAction JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         else:
             raise ValueError('Required property \'description\' not present in RoleAction JSON')
         return cls(**args)
@@ -5554,12 +5565,12 @@ class RoleCollection:
     def from_dict(cls, _dict: Dict) -> 'RoleCollection':
         """Initialize a RoleCollection object from a json dictionary."""
         args = {}
-        if 'custom_roles' in _dict:
-            args['custom_roles'] = [CustomRole.from_dict(v) for v in _dict.get('custom_roles')]
-        if 'service_roles' in _dict:
-            args['service_roles'] = [Role.from_dict(v) for v in _dict.get('service_roles')]
-        if 'system_roles' in _dict:
-            args['system_roles'] = [Role.from_dict(v) for v in _dict.get('system_roles')]
+        if (custom_roles := _dict.get('custom_roles')) is not None:
+            args['custom_roles'] = [CustomRole.from_dict(v) for v in custom_roles]
+        if (service_roles := _dict.get('service_roles')) is not None:
+            args['service_roles'] = [Role.from_dict(v) for v in service_roles]
+        if (system_roles := _dict.get('system_roles')) is not None:
+            args['system_roles'] = [Role.from_dict(v) for v in system_roles]
         return cls(**args)
 
     @classmethod
@@ -5639,8 +5650,8 @@ class Roles:
     def from_dict(cls, _dict: Dict) -> 'Roles':
         """Initialize a Roles object from a json dictionary."""
         args = {}
-        if 'role_id' in _dict:
-            args['role_id'] = _dict.get('role_id')
+        if (role_id := _dict.get('role_id')) is not None:
+            args['role_id'] = role_id
         else:
             raise ValueError('Required property \'role_id\' not present in Roles JSON')
         return cls(**args)
@@ -5711,16 +5722,16 @@ class RuleAttribute:
     def from_dict(cls, _dict: Dict) -> 'RuleAttribute':
         """Initialize a RuleAttribute object from a json dictionary."""
         args = {}
-        if 'key' in _dict:
-            args['key'] = _dict.get('key')
+        if (key := _dict.get('key')) is not None:
+            args['key'] = key
         else:
             raise ValueError('Required property \'key\' not present in RuleAttribute JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         else:
             raise ValueError('Required property \'operator\' not present in RuleAttribute JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in RuleAttribute JSON')
         return cls(**args)
@@ -5764,16 +5775,26 @@ class RuleAttribute:
         The operator of an attribute.
         """
 
+        STRINGEQUALS = 'stringEquals'
+        STRINGEXISTS = 'stringExists'
+        STRINGEQUALSANYOF = 'stringEqualsAnyOf'
+        STRINGMATCHANYOF = 'stringMatchAnyOf'
+        STRINGMATCH = 'stringMatch'
         TIMELESSTHAN = 'timeLessThan'
         TIMELESSTHANOREQUALS = 'timeLessThanOrEquals'
         TIMEGREATERTHAN = 'timeGreaterThan'
         TIMEGREATERTHANOREQUALS = 'timeGreaterThanOrEquals'
+        DATELESSTHAN = 'dateLessThan'
+        DATELESSTHANOREQUALS = 'dateLessThanOrEquals'
+        DATEGREATERTHAN = 'dateGreaterThan'
+        DATEGREATERTHANOREQUALS = 'dateGreaterThanOrEquals'
         DATETIMELESSTHAN = 'dateTimeLessThan'
         DATETIMELESSTHANOREQUALS = 'dateTimeLessThanOrEquals'
         DATETIMEGREATERTHAN = 'dateTimeGreaterThan'
         DATETIMEGREATERTHANOREQUALS = 'dateTimeGreaterThanOrEquals'
         DAYOFWEEKEQUALS = 'dayOfWeekEquals'
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
+
 
 
 class SubjectAttribute:
@@ -5802,12 +5823,12 @@ class SubjectAttribute:
     def from_dict(cls, _dict: Dict) -> 'SubjectAttribute':
         """Initialize a SubjectAttribute object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in SubjectAttribute JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in SubjectAttribute JSON')
         return cls(**args)
@@ -5876,10 +5897,10 @@ class TemplateCountData:
     def from_dict(cls, _dict: Dict) -> 'TemplateCountData':
         """Initialize a TemplateCountData object from a json dictionary."""
         args = {}
-        if 'template' in _dict:
-            args['template'] = LimitData.from_dict(_dict.get('template'))
-        if 'version' in _dict:
-            args['version'] = LimitData.from_dict(_dict.get('version'))
+        if (template := _dict.get('template')) is not None:
+            args['template'] = LimitData.from_dict(template)
+        if (version := _dict.get('version')) is not None:
+            args['version'] = LimitData.from_dict(version)
         return cls(**args)
 
     @classmethod
@@ -5962,16 +5983,16 @@ class TemplateMetadata:
     def from_dict(cls, _dict: Dict) -> 'TemplateMetadata':
         """Initialize a TemplateMetadata object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
-        if 'assignment_id' in _dict:
-            args['assignment_id'] = _dict.get('assignment_id')
-        if 'root_id' in _dict:
-            args['root_id'] = _dict.get('root_id')
-        if 'root_version' in _dict:
-            args['root_version'] = _dict.get('root_version')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
+        if (assignment_id := _dict.get('assignment_id')) is not None:
+            args['assignment_id'] = assignment_id
+        if (root_id := _dict.get('root_id')) is not None:
+            args['root_id'] = root_id
+        if (root_version := _dict.get('root_version')) is not None:
+            args['root_version'] = root_version
         return cls(**args)
 
     @classmethod
@@ -6068,20 +6089,20 @@ class TemplatePolicy:
     def from_dict(cls, _dict: Dict) -> 'TemplatePolicy':
         """Initialize a TemplatePolicy object from a json dictionary."""
         args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in TemplatePolicy JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'resource' in _dict:
-            args['resource'] = V2PolicyResource.from_dict(_dict.get('resource'))
-        if 'pattern' in _dict:
-            args['pattern'] = _dict.get('pattern')
-        if 'rule' in _dict:
-            args['rule'] = _dict.get('rule')
-        if 'control' in _dict:
-            args['control'] = Control.from_dict(_dict.get('control'))
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (resource := _dict.get('resource')) is not None:
+            args['resource'] = V2PolicyResource.from_dict(resource)
+        if (pattern := _dict.get('pattern')) is not None:
+            args['pattern'] = pattern
+        if (rule := _dict.get('rule')) is not None:
+            args['rule'] = rule
+        if (control := _dict.get('control')) is not None:
+            args['control'] = Control.from_dict(control)
         else:
             raise ValueError('Required property \'control\' not present in TemplatePolicy JSON')
         return cls(**args)
@@ -6142,6 +6163,7 @@ class TemplatePolicy:
 
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
+
 
 
 class V2Policy:
@@ -6242,44 +6264,44 @@ class V2Policy:
     def from_dict(cls, _dict: Dict) -> 'V2Policy':
         """Initialize a V2Policy object from a json dictionary."""
         args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in V2Policy JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'subject' in _dict:
-            args['subject'] = V2PolicySubject.from_dict(_dict.get('subject'))
-        if 'resource' in _dict:
-            args['resource'] = V2PolicyResource.from_dict(_dict.get('resource'))
-        if 'pattern' in _dict:
-            args['pattern'] = _dict.get('pattern')
-        if 'rule' in _dict:
-            args['rule'] = _dict.get('rule')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'control' in _dict:
-            args['control'] = _dict.get('control')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (subject := _dict.get('subject')) is not None:
+            args['subject'] = V2PolicySubject.from_dict(subject)
+        if (resource := _dict.get('resource')) is not None:
+            args['resource'] = V2PolicyResource.from_dict(resource)
+        if (pattern := _dict.get('pattern')) is not None:
+            args['pattern'] = pattern
+        if (rule := _dict.get('rule')) is not None:
+            args['rule'] = rule
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (control := _dict.get('control')) is not None:
+            args['control'] = control
         else:
             raise ValueError('Required property \'control\' not present in V2Policy JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
         else:
             raise ValueError('Required property \'state\' not present in V2Policy JSON')
-        if 'last_permit_at' in _dict:
-            args['last_permit_at'] = _dict.get('last_permit_at')
-        if 'last_permit_frequency' in _dict:
-            args['last_permit_frequency'] = _dict.get('last_permit_frequency')
+        if (last_permit_at := _dict.get('last_permit_at')) is not None:
+            args['last_permit_at'] = last_permit_at
+        if (last_permit_frequency := _dict.get('last_permit_frequency')) is not None:
+            args['last_permit_frequency'] = last_permit_frequency
         return cls(**args)
 
     @classmethod
@@ -6362,6 +6384,7 @@ class V2Policy:
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
 
+
     class StateEnum(str, Enum):
         """
         The policy state, either 'deleted' or 'active'.
@@ -6369,6 +6392,7 @@ class V2Policy:
 
         ACTIVE = 'active'
         DELETED = 'deleted'
+
 
 
 class V2PolicyCollection:
@@ -6395,8 +6419,8 @@ class V2PolicyCollection:
     def from_dict(cls, _dict: Dict) -> 'V2PolicyCollection':
         """Initialize a V2PolicyCollection object from a json dictionary."""
         args = {}
-        if 'policies' in _dict:
-            args['policies'] = [V2PolicyTemplateMetaData.from_dict(v) for v in _dict.get('policies')]
+        if (policies := _dict.get('policies')) is not None:
+            args['policies'] = [V2PolicyTemplateMetaData.from_dict(v) for v in policies]
         return cls(**args)
 
     @classmethod
@@ -6467,12 +6491,12 @@ class V2PolicyResource:
     def from_dict(cls, _dict: Dict) -> 'V2PolicyResource':
         """Initialize a V2PolicyResource object from a json dictionary."""
         args = {}
-        if 'attributes' in _dict:
-            args['attributes'] = [V2PolicyResourceAttribute.from_dict(v) for v in _dict.get('attributes')]
+        if (attributes := _dict.get('attributes')) is not None:
+            args['attributes'] = [V2PolicyResourceAttribute.from_dict(v) for v in attributes]
         else:
             raise ValueError('Required property \'attributes\' not present in V2PolicyResource JSON')
-        if 'tags' in _dict:
-            args['tags'] = [V2PolicyResourceTag.from_dict(v) for v in _dict.get('tags')]
+        if (tags := _dict.get('tags')) is not None:
+            args['tags'] = [V2PolicyResourceTag.from_dict(v) for v in tags]
         return cls(**args)
 
     @classmethod
@@ -6555,16 +6579,16 @@ class V2PolicyResourceAttribute:
     def from_dict(cls, _dict: Dict) -> 'V2PolicyResourceAttribute':
         """Initialize a V2PolicyResourceAttribute object from a json dictionary."""
         args = {}
-        if 'key' in _dict:
-            args['key'] = _dict.get('key')
+        if (key := _dict.get('key')) is not None:
+            args['key'] = key
         else:
             raise ValueError('Required property \'key\' not present in V2PolicyResourceAttribute JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         else:
             raise ValueError('Required property \'operator\' not present in V2PolicyResourceAttribute JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in V2PolicyResourceAttribute JSON')
         return cls(**args)
@@ -6611,6 +6635,9 @@ class V2PolicyResourceAttribute:
         STRINGEQUALS = 'stringEquals'
         STRINGEXISTS = 'stringExists'
         STRINGMATCH = 'stringMatch'
+        STRINGEQUALSANYOF = 'stringEqualsAnyOf'
+        STRINGMATCHANYOF = 'stringMatchAnyOf'
+
 
 
 class V2PolicyResourceTag:
@@ -6643,16 +6670,16 @@ class V2PolicyResourceTag:
     def from_dict(cls, _dict: Dict) -> 'V2PolicyResourceTag':
         """Initialize a V2PolicyResourceTag object from a json dictionary."""
         args = {}
-        if 'key' in _dict:
-            args['key'] = _dict.get('key')
+        if (key := _dict.get('key')) is not None:
+            args['key'] = key
         else:
             raise ValueError('Required property \'key\' not present in V2PolicyResourceTag JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in V2PolicyResourceTag JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         else:
             raise ValueError('Required property \'operator\' not present in V2PolicyResourceTag JSON')
         return cls(**args)
@@ -6700,6 +6727,7 @@ class V2PolicyResourceTag:
         STRINGMATCH = 'stringMatch'
 
 
+
 class V2PolicyRule:
     """
     Additional access conditions associated with the policy.
@@ -6743,8 +6771,8 @@ class V2PolicySubject:
     def from_dict(cls, _dict: Dict) -> 'V2PolicySubject':
         """Initialize a V2PolicySubject object from a json dictionary."""
         args = {}
-        if 'attributes' in _dict:
-            args['attributes'] = [V2PolicySubjectAttribute.from_dict(v) for v in _dict.get('attributes')]
+        if (attributes := _dict.get('attributes')) is not None:
+            args['attributes'] = [V2PolicySubjectAttribute.from_dict(v) for v in attributes]
         else:
             raise ValueError('Required property \'attributes\' not present in V2PolicySubject JSON')
         return cls(**args)
@@ -6822,16 +6850,16 @@ class V2PolicySubjectAttribute:
     def from_dict(cls, _dict: Dict) -> 'V2PolicySubjectAttribute':
         """Initialize a V2PolicySubjectAttribute object from a json dictionary."""
         args = {}
-        if 'key' in _dict:
-            args['key'] = _dict.get('key')
+        if (key := _dict.get('key')) is not None:
+            args['key'] = key
         else:
             raise ValueError('Required property \'key\' not present in V2PolicySubjectAttribute JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         else:
             raise ValueError('Required property \'operator\' not present in V2PolicySubjectAttribute JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in V2PolicySubjectAttribute JSON')
         return cls(**args)
@@ -6876,6 +6904,8 @@ class V2PolicySubjectAttribute:
         """
 
         STRINGEQUALS = 'stringEquals'
+        STRINGEXISTS = 'stringExists'
+
 
 
 class V2PolicyTemplateMetaData:
@@ -6986,46 +7016,46 @@ class V2PolicyTemplateMetaData:
     def from_dict(cls, _dict: Dict) -> 'V2PolicyTemplateMetaData':
         """Initialize a V2PolicyTemplateMetaData object from a json dictionary."""
         args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in V2PolicyTemplateMetaData JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'subject' in _dict:
-            args['subject'] = V2PolicySubject.from_dict(_dict.get('subject'))
-        if 'resource' in _dict:
-            args['resource'] = V2PolicyResource.from_dict(_dict.get('resource'))
-        if 'pattern' in _dict:
-            args['pattern'] = _dict.get('pattern')
-        if 'rule' in _dict:
-            args['rule'] = _dict.get('rule')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'control' in _dict:
-            args['control'] = _dict.get('control')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (subject := _dict.get('subject')) is not None:
+            args['subject'] = V2PolicySubject.from_dict(subject)
+        if (resource := _dict.get('resource')) is not None:
+            args['resource'] = V2PolicyResource.from_dict(resource)
+        if (pattern := _dict.get('pattern')) is not None:
+            args['pattern'] = pattern
+        if (rule := _dict.get('rule')) is not None:
+            args['rule'] = rule
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (control := _dict.get('control')) is not None:
+            args['control'] = control
         else:
             raise ValueError('Required property \'control\' not present in V2PolicyTemplateMetaData JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
         else:
             raise ValueError('Required property \'state\' not present in V2PolicyTemplateMetaData JSON')
-        if 'last_permit_at' in _dict:
-            args['last_permit_at'] = _dict.get('last_permit_at')
-        if 'last_permit_frequency' in _dict:
-            args['last_permit_frequency'] = _dict.get('last_permit_frequency')
-        if 'template' in _dict:
-            args['template'] = TemplateMetadata.from_dict(_dict.get('template'))
+        if (last_permit_at := _dict.get('last_permit_at')) is not None:
+            args['last_permit_at'] = last_permit_at
+        if (last_permit_frequency := _dict.get('last_permit_frequency')) is not None:
+            args['last_permit_frequency'] = last_permit_frequency
+        if (template := _dict.get('template')) is not None:
+            args['template'] = TemplateMetadata.from_dict(template)
         return cls(**args)
 
     @classmethod
@@ -7113,6 +7143,7 @@ class V2PolicyTemplateMetaData:
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
 
+
     class StateEnum(str, Enum):
         """
         The policy state, either 'deleted' or 'active'.
@@ -7120,6 +7151,7 @@ class V2PolicyTemplateMetaData:
 
         ACTIVE = 'active'
         DELETED = 'deleted'
+
 
 
 class ControlResponseControl(ControlResponse):
@@ -7145,8 +7177,8 @@ class ControlResponseControl(ControlResponse):
     def from_dict(cls, _dict: Dict) -> 'ControlResponseControl':
         """Initialize a ControlResponseControl object from a json dictionary."""
         args = {}
-        if 'grant' in _dict:
-            args['grant'] = Grant.from_dict(_dict.get('grant'))
+        if (grant := _dict.get('grant')) is not None:
+            args['grant'] = Grant.from_dict(grant)
         else:
             raise ValueError('Required property \'grant\' not present in ControlResponseControl JSON')
         return cls(**args)
@@ -7210,8 +7242,8 @@ class ControlResponseControlWithEnrichedRoles(ControlResponse):
     def from_dict(cls, _dict: Dict) -> 'ControlResponseControlWithEnrichedRoles':
         """Initialize a ControlResponseControlWithEnrichedRoles object from a json dictionary."""
         args = {}
-        if 'grant' in _dict:
-            args['grant'] = GrantWithEnrichedRoles.from_dict(_dict.get('grant'))
+        if (grant := _dict.get('grant')) is not None:
+            args['grant'] = GrantWithEnrichedRoles.from_dict(grant)
         else:
             raise ValueError('Required property \'grant\' not present in ControlResponseControlWithEnrichedRoles JSON')
         return cls(**args)
@@ -7286,16 +7318,16 @@ class NestedConditionRuleAttribute(NestedCondition):
     def from_dict(cls, _dict: Dict) -> 'NestedConditionRuleAttribute':
         """Initialize a NestedConditionRuleAttribute object from a json dictionary."""
         args = {}
-        if 'key' in _dict:
-            args['key'] = _dict.get('key')
+        if (key := _dict.get('key')) is not None:
+            args['key'] = key
         else:
             raise ValueError('Required property \'key\' not present in NestedConditionRuleAttribute JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         else:
             raise ValueError('Required property \'operator\' not present in NestedConditionRuleAttribute JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in NestedConditionRuleAttribute JSON')
         return cls(**args)
@@ -7339,16 +7371,26 @@ class NestedConditionRuleAttribute(NestedCondition):
         The operator of an attribute.
         """
 
+        STRINGEQUALS = 'stringEquals'
+        STRINGEXISTS = 'stringExists'
+        STRINGEQUALSANYOF = 'stringEqualsAnyOf'
+        STRINGMATCHANYOF = 'stringMatchAnyOf'
+        STRINGMATCH = 'stringMatch'
         TIMELESSTHAN = 'timeLessThan'
         TIMELESSTHANOREQUALS = 'timeLessThanOrEquals'
         TIMEGREATERTHAN = 'timeGreaterThan'
         TIMEGREATERTHANOREQUALS = 'timeGreaterThanOrEquals'
+        DATELESSTHAN = 'dateLessThan'
+        DATELESSTHANOREQUALS = 'dateLessThanOrEquals'
+        DATEGREATERTHAN = 'dateGreaterThan'
+        DATEGREATERTHANOREQUALS = 'dateGreaterThanOrEquals'
         DATETIMELESSTHAN = 'dateTimeLessThan'
         DATETIMELESSTHANOREQUALS = 'dateTimeLessThanOrEquals'
         DATETIMEGREATERTHAN = 'dateTimeGreaterThan'
         DATETIMEGREATERTHANOREQUALS = 'dateTimeGreaterThanOrEquals'
         DAYOFWEEKEQUALS = 'dayOfWeekEquals'
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
+
 
 
 class NestedConditionRuleWithConditions(NestedCondition):
@@ -7383,12 +7425,12 @@ class NestedConditionRuleWithConditions(NestedCondition):
     def from_dict(cls, _dict: Dict) -> 'NestedConditionRuleWithConditions':
         """Initialize a NestedConditionRuleWithConditions object from a json dictionary."""
         args = {}
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         else:
             raise ValueError('Required property \'operator\' not present in NestedConditionRuleWithConditions JSON')
-        if 'conditions' in _dict:
-            args['conditions'] = [RuleAttribute.from_dict(v) for v in _dict.get('conditions')]
+        if (conditions := _dict.get('conditions')) is not None:
+            args['conditions'] = [RuleAttribute.from_dict(v) for v in conditions]
         else:
             raise ValueError('Required property \'conditions\' not present in NestedConditionRuleWithConditions JSON')
         return cls(**args)
@@ -7440,6 +7482,7 @@ class NestedConditionRuleWithConditions(NestedCondition):
         OR = 'or'
 
 
+
 class V2PolicyRuleRuleAttribute(V2PolicyRule):
     """
     Rule that specifies additional access granted (e.g., time-based condition).
@@ -7476,16 +7519,16 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
     def from_dict(cls, _dict: Dict) -> 'V2PolicyRuleRuleAttribute':
         """Initialize a V2PolicyRuleRuleAttribute object from a json dictionary."""
         args = {}
-        if 'key' in _dict:
-            args['key'] = _dict.get('key')
+        if (key := _dict.get('key')) is not None:
+            args['key'] = key
         else:
             raise ValueError('Required property \'key\' not present in V2PolicyRuleRuleAttribute JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         else:
             raise ValueError('Required property \'operator\' not present in V2PolicyRuleRuleAttribute JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in V2PolicyRuleRuleAttribute JSON')
         return cls(**args)
@@ -7529,16 +7572,26 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
         The operator of an attribute.
         """
 
+        STRINGEQUALS = 'stringEquals'
+        STRINGEXISTS = 'stringExists'
+        STRINGEQUALSANYOF = 'stringEqualsAnyOf'
+        STRINGMATCHANYOF = 'stringMatchAnyOf'
+        STRINGMATCH = 'stringMatch'
         TIMELESSTHAN = 'timeLessThan'
         TIMELESSTHANOREQUALS = 'timeLessThanOrEquals'
         TIMEGREATERTHAN = 'timeGreaterThan'
         TIMEGREATERTHANOREQUALS = 'timeGreaterThanOrEquals'
+        DATELESSTHAN = 'dateLessThan'
+        DATELESSTHANOREQUALS = 'dateLessThanOrEquals'
+        DATEGREATERTHAN = 'dateGreaterThan'
+        DATEGREATERTHANOREQUALS = 'dateGreaterThanOrEquals'
         DATETIMELESSTHAN = 'dateTimeLessThan'
         DATETIMELESSTHANOREQUALS = 'dateTimeLessThanOrEquals'
         DATETIMEGREATERTHAN = 'dateTimeGreaterThan'
         DATETIMEGREATERTHANOREQUALS = 'dateTimeGreaterThanOrEquals'
         DAYOFWEEKEQUALS = 'dayOfWeekEquals'
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
+
 
 
 class V2PolicyRuleRuleWithNestedConditions(V2PolicyRule):
@@ -7573,16 +7626,14 @@ class V2PolicyRuleRuleWithNestedConditions(V2PolicyRule):
     def from_dict(cls, _dict: Dict) -> 'V2PolicyRuleRuleWithNestedConditions':
         """Initialize a V2PolicyRuleRuleWithNestedConditions object from a json dictionary."""
         args = {}
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         else:
             raise ValueError('Required property \'operator\' not present in V2PolicyRuleRuleWithNestedConditions JSON')
-        if 'conditions' in _dict:
-            args['conditions'] = _dict.get('conditions')
+        if (conditions := _dict.get('conditions')) is not None:
+            args['conditions'] = conditions
         else:
-            raise ValueError(
-                'Required property \'conditions\' not present in V2PolicyRuleRuleWithNestedConditions JSON'
-            )
+            raise ValueError('Required property \'conditions\' not present in V2PolicyRuleRuleWithNestedConditions JSON')
         return cls(**args)
 
     @classmethod
@@ -7630,3 +7681,4 @@ class V2PolicyRuleRuleWithNestedConditions(V2PolicyRule):
 
         AND = 'and'
         OR = 'or'
+
