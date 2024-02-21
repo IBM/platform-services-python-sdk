@@ -31,9 +31,7 @@ import urllib
 from ibm_platform_services.iam_policy_management_v1 import *
 
 
-_service = IamPolicyManagementV1(
-    authenticator=NoAuthAuthenticator()
-)
+_service = IamPolicyManagementV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://iam.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -4081,7 +4079,9 @@ class TestModel_AssignmentResourceCreated:
         assert assignment_resource_created_model != False
 
         # Construct a model instance of AssignmentResourceCreated by calling from_dict on the json representation
-        assignment_resource_created_model_dict = AssignmentResourceCreated.from_dict(assignment_resource_created_model_json).__dict__
+        assignment_resource_created_model_dict = AssignmentResourceCreated.from_dict(
+            assignment_resource_created_model_json
+        ).__dict__
         assignment_resource_created_model2 = AssignmentResourceCreated(**assignment_resource_created_model_dict)
 
         # Verify the model instances are equivalent
@@ -4428,7 +4428,9 @@ class TestModel_GrantWithEnrichedRoles:
         assert grant_with_enriched_roles_model != False
 
         # Construct a model instance of GrantWithEnrichedRoles by calling from_dict on the json representation
-        grant_with_enriched_roles_model_dict = GrantWithEnrichedRoles.from_dict(grant_with_enriched_roles_model_json).__dict__
+        grant_with_enriched_roles_model_dict = GrantWithEnrichedRoles.from_dict(
+            grant_with_enriched_roles_model_json
+        ).__dict__
         grant_with_enriched_roles_model2 = GrantWithEnrichedRoles(**grant_with_enriched_roles_model_dict)
 
         # Verify the model instances are equivalent
@@ -4629,7 +4631,9 @@ class TestModel_PolicyAssignmentOptions:
         assert policy_assignment_options_model != False
 
         # Construct a model instance of PolicyAssignmentOptions by calling from_dict on the json representation
-        policy_assignment_options_model_dict = PolicyAssignmentOptions.from_dict(policy_assignment_options_model_json).__dict__
+        policy_assignment_options_model_dict = PolicyAssignmentOptions.from_dict(
+            policy_assignment_options_model_json
+        ).__dict__
         policy_assignment_options_model2 = PolicyAssignmentOptions(**policy_assignment_options_model_dict)
 
         # Verify the model instances are equivalent
@@ -4681,12 +4685,18 @@ class TestModel_PolicyAssignmentResourcePolicy:
         policy_assignment_resource_policy_model_json['error_message'] = error_response_model
 
         # Construct a model instance of PolicyAssignmentResourcePolicy by calling from_dict on the json representation
-        policy_assignment_resource_policy_model = PolicyAssignmentResourcePolicy.from_dict(policy_assignment_resource_policy_model_json)
+        policy_assignment_resource_policy_model = PolicyAssignmentResourcePolicy.from_dict(
+            policy_assignment_resource_policy_model_json
+        )
         assert policy_assignment_resource_policy_model != False
 
         # Construct a model instance of PolicyAssignmentResourcePolicy by calling from_dict on the json representation
-        policy_assignment_resource_policy_model_dict = PolicyAssignmentResourcePolicy.from_dict(policy_assignment_resource_policy_model_json).__dict__
-        policy_assignment_resource_policy_model2 = PolicyAssignmentResourcePolicy(**policy_assignment_resource_policy_model_dict)
+        policy_assignment_resource_policy_model_dict = PolicyAssignmentResourcePolicy.from_dict(
+            policy_assignment_resource_policy_model_json
+        ).__dict__
+        policy_assignment_resource_policy_model2 = PolicyAssignmentResourcePolicy(
+            **policy_assignment_resource_policy_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert policy_assignment_resource_policy_model == policy_assignment_resource_policy_model2
@@ -4745,7 +4755,9 @@ class TestModel_PolicyAssignmentResources:
         assert policy_assignment_resources_model != False
 
         # Construct a model instance of PolicyAssignmentResources by calling from_dict on the json representation
-        policy_assignment_resources_model_dict = PolicyAssignmentResources.from_dict(policy_assignment_resources_model_json).__dict__
+        policy_assignment_resources_model_dict = PolicyAssignmentResources.from_dict(
+            policy_assignment_resources_model_json
+        ).__dict__
         policy_assignment_resources_model2 = PolicyAssignmentResources(**policy_assignment_resources_model_dict)
 
         # Verify the model instances are equivalent
@@ -5076,12 +5088,18 @@ class TestModel_PolicyTemplateAssignmentCollection:
         policy_template_assignment_collection_model_json['assignments'] = [policy_assignment_model]
 
         # Construct a model instance of PolicyTemplateAssignmentCollection by calling from_dict on the json representation
-        policy_template_assignment_collection_model = PolicyTemplateAssignmentCollection.from_dict(policy_template_assignment_collection_model_json)
+        policy_template_assignment_collection_model = PolicyTemplateAssignmentCollection.from_dict(
+            policy_template_assignment_collection_model_json
+        )
         assert policy_template_assignment_collection_model != False
 
         # Construct a model instance of PolicyTemplateAssignmentCollection by calling from_dict on the json representation
-        policy_template_assignment_collection_model_dict = PolicyTemplateAssignmentCollection.from_dict(policy_template_assignment_collection_model_json).__dict__
-        policy_template_assignment_collection_model2 = PolicyTemplateAssignmentCollection(**policy_template_assignment_collection_model_dict)
+        policy_template_assignment_collection_model_dict = PolicyTemplateAssignmentCollection.from_dict(
+            policy_template_assignment_collection_model_json
+        ).__dict__
+        policy_template_assignment_collection_model2 = PolicyTemplateAssignmentCollection(
+            **policy_template_assignment_collection_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert policy_template_assignment_collection_model == policy_template_assignment_collection_model2
@@ -5157,7 +5175,9 @@ class TestModel_PolicyTemplateCollection:
         assert policy_template_collection_model != False
 
         # Construct a model instance of PolicyTemplateCollection by calling from_dict on the json representation
-        policy_template_collection_model_dict = PolicyTemplateCollection.from_dict(policy_template_collection_model_json).__dict__
+        policy_template_collection_model_dict = PolicyTemplateCollection.from_dict(
+            policy_template_collection_model_json
+        ).__dict__
         policy_template_collection_model2 = PolicyTemplateCollection(**policy_template_collection_model_dict)
 
         # Verify the model instances are equivalent
@@ -5238,7 +5258,9 @@ class TestModel_PolicyTemplateLimitData:
         assert policy_template_limit_data_model != False
 
         # Construct a model instance of PolicyTemplateLimitData by calling from_dict on the json representation
-        policy_template_limit_data_model_dict = PolicyTemplateLimitData.from_dict(policy_template_limit_data_model_json).__dict__
+        policy_template_limit_data_model_dict = PolicyTemplateLimitData.from_dict(
+            policy_template_limit_data_model_json
+        ).__dict__
         policy_template_limit_data_model2 = PolicyTemplateLimitData(**policy_template_limit_data_model_dict)
 
         # Verify the model instances are equivalent
@@ -5307,7 +5329,9 @@ class TestModel_PolicyTemplateMetaData:
         assert policy_template_meta_data_model != False
 
         # Construct a model instance of PolicyTemplateMetaData by calling from_dict on the json representation
-        policy_template_meta_data_model_dict = PolicyTemplateMetaData.from_dict(policy_template_meta_data_model_json).__dict__
+        policy_template_meta_data_model_dict = PolicyTemplateMetaData.from_dict(
+            policy_template_meta_data_model_json
+        ).__dict__
         policy_template_meta_data_model2 = PolicyTemplateMetaData(**policy_template_meta_data_model_dict)
 
         # Verify the model instances are equivalent
@@ -5380,12 +5404,18 @@ class TestModel_PolicyTemplateVersionsCollection:
         policy_template_versions_collection_model_json['versions'] = [policy_template_model]
 
         # Construct a model instance of PolicyTemplateVersionsCollection by calling from_dict on the json representation
-        policy_template_versions_collection_model = PolicyTemplateVersionsCollection.from_dict(policy_template_versions_collection_model_json)
+        policy_template_versions_collection_model = PolicyTemplateVersionsCollection.from_dict(
+            policy_template_versions_collection_model_json
+        )
         assert policy_template_versions_collection_model != False
 
         # Construct a model instance of PolicyTemplateVersionsCollection by calling from_dict on the json representation
-        policy_template_versions_collection_model_dict = PolicyTemplateVersionsCollection.from_dict(policy_template_versions_collection_model_json).__dict__
-        policy_template_versions_collection_model2 = PolicyTemplateVersionsCollection(**policy_template_versions_collection_model_dict)
+        policy_template_versions_collection_model_dict = PolicyTemplateVersionsCollection.from_dict(
+            policy_template_versions_collection_model_json
+        ).__dict__
+        policy_template_versions_collection_model2 = PolicyTemplateVersionsCollection(
+            **policy_template_versions_collection_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert policy_template_versions_collection_model == policy_template_versions_collection_model2
@@ -6022,11 +6052,15 @@ class TestModel_V2PolicyResourceAttribute:
         v2_policy_resource_attribute_model_json['value'] = 'testString'
 
         # Construct a model instance of V2PolicyResourceAttribute by calling from_dict on the json representation
-        v2_policy_resource_attribute_model = V2PolicyResourceAttribute.from_dict(v2_policy_resource_attribute_model_json)
+        v2_policy_resource_attribute_model = V2PolicyResourceAttribute.from_dict(
+            v2_policy_resource_attribute_model_json
+        )
         assert v2_policy_resource_attribute_model != False
 
         # Construct a model instance of V2PolicyResourceAttribute by calling from_dict on the json representation
-        v2_policy_resource_attribute_model_dict = V2PolicyResourceAttribute.from_dict(v2_policy_resource_attribute_model_json).__dict__
+        v2_policy_resource_attribute_model_dict = V2PolicyResourceAttribute.from_dict(
+            v2_policy_resource_attribute_model_json
+        ).__dict__
         v2_policy_resource_attribute_model2 = V2PolicyResourceAttribute(**v2_policy_resource_attribute_model_dict)
 
         # Verify the model instances are equivalent
@@ -6127,7 +6161,9 @@ class TestModel_V2PolicySubjectAttribute:
         assert v2_policy_subject_attribute_model != False
 
         # Construct a model instance of V2PolicySubjectAttribute by calling from_dict on the json representation
-        v2_policy_subject_attribute_model_dict = V2PolicySubjectAttribute.from_dict(v2_policy_subject_attribute_model_json).__dict__
+        v2_policy_subject_attribute_model_dict = V2PolicySubjectAttribute.from_dict(
+            v2_policy_subject_attribute_model_json
+        ).__dict__
         v2_policy_subject_attribute_model2 = V2PolicySubjectAttribute(**v2_policy_subject_attribute_model_dict)
 
         # Verify the model instances are equivalent
@@ -6212,7 +6248,9 @@ class TestModel_V2PolicyTemplateMetaData:
         assert v2_policy_template_meta_data_model != False
 
         # Construct a model instance of V2PolicyTemplateMetaData by calling from_dict on the json representation
-        v2_policy_template_meta_data_model_dict = V2PolicyTemplateMetaData.from_dict(v2_policy_template_meta_data_model_json).__dict__
+        v2_policy_template_meta_data_model_dict = V2PolicyTemplateMetaData.from_dict(
+            v2_policy_template_meta_data_model_json
+        ).__dict__
         v2_policy_template_meta_data_model2 = V2PolicyTemplateMetaData(**v2_policy_template_meta_data_model_dict)
 
         # Verify the model instances are equivalent
@@ -6250,7 +6288,9 @@ class TestModel_ControlResponseControl:
         assert control_response_control_model != False
 
         # Construct a model instance of ControlResponseControl by calling from_dict on the json representation
-        control_response_control_model_dict = ControlResponseControl.from_dict(control_response_control_model_json).__dict__
+        control_response_control_model_dict = ControlResponseControl.from_dict(
+            control_response_control_model_json
+        ).__dict__
         control_response_control_model2 = ControlResponseControl(**control_response_control_model_dict)
 
         # Verify the model instances are equivalent
@@ -6290,19 +6330,30 @@ class TestModel_ControlResponseControlWithEnrichedRoles:
         control_response_control_with_enriched_roles_model_json['grant'] = grant_with_enriched_roles_model
 
         # Construct a model instance of ControlResponseControlWithEnrichedRoles by calling from_dict on the json representation
-        control_response_control_with_enriched_roles_model = ControlResponseControlWithEnrichedRoles.from_dict(control_response_control_with_enriched_roles_model_json)
+        control_response_control_with_enriched_roles_model = ControlResponseControlWithEnrichedRoles.from_dict(
+            control_response_control_with_enriched_roles_model_json
+        )
         assert control_response_control_with_enriched_roles_model != False
 
         # Construct a model instance of ControlResponseControlWithEnrichedRoles by calling from_dict on the json representation
-        control_response_control_with_enriched_roles_model_dict = ControlResponseControlWithEnrichedRoles.from_dict(control_response_control_with_enriched_roles_model_json).__dict__
-        control_response_control_with_enriched_roles_model2 = ControlResponseControlWithEnrichedRoles(**control_response_control_with_enriched_roles_model_dict)
+        control_response_control_with_enriched_roles_model_dict = ControlResponseControlWithEnrichedRoles.from_dict(
+            control_response_control_with_enriched_roles_model_json
+        ).__dict__
+        control_response_control_with_enriched_roles_model2 = ControlResponseControlWithEnrichedRoles(
+            **control_response_control_with_enriched_roles_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert control_response_control_with_enriched_roles_model == control_response_control_with_enriched_roles_model2
 
         # Convert model instance back to dict and verify no loss of data
-        control_response_control_with_enriched_roles_model_json2 = control_response_control_with_enriched_roles_model.to_dict()
-        assert control_response_control_with_enriched_roles_model_json2 == control_response_control_with_enriched_roles_model_json
+        control_response_control_with_enriched_roles_model_json2 = (
+            control_response_control_with_enriched_roles_model.to_dict()
+        )
+        assert (
+            control_response_control_with_enriched_roles_model_json2
+            == control_response_control_with_enriched_roles_model_json
+        )
 
 
 class TestModel_NestedConditionRuleAttribute:
@@ -6322,12 +6373,18 @@ class TestModel_NestedConditionRuleAttribute:
         nested_condition_rule_attribute_model_json['value'] = 'testString'
 
         # Construct a model instance of NestedConditionRuleAttribute by calling from_dict on the json representation
-        nested_condition_rule_attribute_model = NestedConditionRuleAttribute.from_dict(nested_condition_rule_attribute_model_json)
+        nested_condition_rule_attribute_model = NestedConditionRuleAttribute.from_dict(
+            nested_condition_rule_attribute_model_json
+        )
         assert nested_condition_rule_attribute_model != False
 
         # Construct a model instance of NestedConditionRuleAttribute by calling from_dict on the json representation
-        nested_condition_rule_attribute_model_dict = NestedConditionRuleAttribute.from_dict(nested_condition_rule_attribute_model_json).__dict__
-        nested_condition_rule_attribute_model2 = NestedConditionRuleAttribute(**nested_condition_rule_attribute_model_dict)
+        nested_condition_rule_attribute_model_dict = NestedConditionRuleAttribute.from_dict(
+            nested_condition_rule_attribute_model_json
+        ).__dict__
+        nested_condition_rule_attribute_model2 = NestedConditionRuleAttribute(
+            **nested_condition_rule_attribute_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert nested_condition_rule_attribute_model == nested_condition_rule_attribute_model2
@@ -6360,12 +6417,18 @@ class TestModel_NestedConditionRuleWithConditions:
         nested_condition_rule_with_conditions_model_json['conditions'] = [rule_attribute_model]
 
         # Construct a model instance of NestedConditionRuleWithConditions by calling from_dict on the json representation
-        nested_condition_rule_with_conditions_model = NestedConditionRuleWithConditions.from_dict(nested_condition_rule_with_conditions_model_json)
+        nested_condition_rule_with_conditions_model = NestedConditionRuleWithConditions.from_dict(
+            nested_condition_rule_with_conditions_model_json
+        )
         assert nested_condition_rule_with_conditions_model != False
 
         # Construct a model instance of NestedConditionRuleWithConditions by calling from_dict on the json representation
-        nested_condition_rule_with_conditions_model_dict = NestedConditionRuleWithConditions.from_dict(nested_condition_rule_with_conditions_model_json).__dict__
-        nested_condition_rule_with_conditions_model2 = NestedConditionRuleWithConditions(**nested_condition_rule_with_conditions_model_dict)
+        nested_condition_rule_with_conditions_model_dict = NestedConditionRuleWithConditions.from_dict(
+            nested_condition_rule_with_conditions_model_json
+        ).__dict__
+        nested_condition_rule_with_conditions_model2 = NestedConditionRuleWithConditions(
+            **nested_condition_rule_with_conditions_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert nested_condition_rule_with_conditions_model == nested_condition_rule_with_conditions_model2
@@ -6392,11 +6455,15 @@ class TestModel_V2PolicyRuleRuleAttribute:
         v2_policy_rule_rule_attribute_model_json['value'] = 'testString'
 
         # Construct a model instance of V2PolicyRuleRuleAttribute by calling from_dict on the json representation
-        v2_policy_rule_rule_attribute_model = V2PolicyRuleRuleAttribute.from_dict(v2_policy_rule_rule_attribute_model_json)
+        v2_policy_rule_rule_attribute_model = V2PolicyRuleRuleAttribute.from_dict(
+            v2_policy_rule_rule_attribute_model_json
+        )
         assert v2_policy_rule_rule_attribute_model != False
 
         # Construct a model instance of V2PolicyRuleRuleAttribute by calling from_dict on the json representation
-        v2_policy_rule_rule_attribute_model_dict = V2PolicyRuleRuleAttribute.from_dict(v2_policy_rule_rule_attribute_model_json).__dict__
+        v2_policy_rule_rule_attribute_model_dict = V2PolicyRuleRuleAttribute.from_dict(
+            v2_policy_rule_rule_attribute_model_json
+        ).__dict__
         v2_policy_rule_rule_attribute_model2 = V2PolicyRuleRuleAttribute(**v2_policy_rule_rule_attribute_model_dict)
 
         # Verify the model instances are equivalent
@@ -6430,19 +6497,30 @@ class TestModel_V2PolicyRuleRuleWithNestedConditions:
         v2_policy_rule_rule_with_nested_conditions_model_json['conditions'] = [nested_condition_model]
 
         # Construct a model instance of V2PolicyRuleRuleWithNestedConditions by calling from_dict on the json representation
-        v2_policy_rule_rule_with_nested_conditions_model = V2PolicyRuleRuleWithNestedConditions.from_dict(v2_policy_rule_rule_with_nested_conditions_model_json)
+        v2_policy_rule_rule_with_nested_conditions_model = V2PolicyRuleRuleWithNestedConditions.from_dict(
+            v2_policy_rule_rule_with_nested_conditions_model_json
+        )
         assert v2_policy_rule_rule_with_nested_conditions_model != False
 
         # Construct a model instance of V2PolicyRuleRuleWithNestedConditions by calling from_dict on the json representation
-        v2_policy_rule_rule_with_nested_conditions_model_dict = V2PolicyRuleRuleWithNestedConditions.from_dict(v2_policy_rule_rule_with_nested_conditions_model_json).__dict__
-        v2_policy_rule_rule_with_nested_conditions_model2 = V2PolicyRuleRuleWithNestedConditions(**v2_policy_rule_rule_with_nested_conditions_model_dict)
+        v2_policy_rule_rule_with_nested_conditions_model_dict = V2PolicyRuleRuleWithNestedConditions.from_dict(
+            v2_policy_rule_rule_with_nested_conditions_model_json
+        ).__dict__
+        v2_policy_rule_rule_with_nested_conditions_model2 = V2PolicyRuleRuleWithNestedConditions(
+            **v2_policy_rule_rule_with_nested_conditions_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert v2_policy_rule_rule_with_nested_conditions_model == v2_policy_rule_rule_with_nested_conditions_model2
 
         # Convert model instance back to dict and verify no loss of data
-        v2_policy_rule_rule_with_nested_conditions_model_json2 = v2_policy_rule_rule_with_nested_conditions_model.to_dict()
-        assert v2_policy_rule_rule_with_nested_conditions_model_json2 == v2_policy_rule_rule_with_nested_conditions_model_json
+        v2_policy_rule_rule_with_nested_conditions_model_json2 = (
+            v2_policy_rule_rule_with_nested_conditions_model.to_dict()
+        )
+        assert (
+            v2_policy_rule_rule_with_nested_conditions_model_json2
+            == v2_policy_rule_rule_with_nested_conditions_model_json
+        )
 
 
 # endregion
