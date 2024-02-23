@@ -1,3 +1,10 @@
+## [0.51.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.51.0...v0.51.1) (2024-02-23)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** regenerate based on minor API update to operator ([#244](https://github.com/IBM/platform-services-python-sdk/issues/244)) ([938d141](https://github.com/IBM/platform-services-python-sdk/commit/938d141c54d3823589f8b70c628460365fbc6f33))
+
 # [0.51.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.50.0...v0.51.0) (2024-02-16)
 
 
