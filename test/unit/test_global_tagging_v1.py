@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -611,6 +611,7 @@ class TestAttachTag:
         transaction_id = 'testString'
         account_id = 'testString'
         tag_type = 'user'
+        replace = False
 
         # Invoke method
         response = _service.attach_tag(
@@ -622,6 +623,7 @@ class TestAttachTag:
             transaction_id=transaction_id,
             account_id=account_id,
             tag_type=tag_type,
+            replace=replace,
             headers={},
         )
 
@@ -633,6 +635,7 @@ class TestAttachTag:
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
+        assert 'replace={}'.format('true' if replace else 'false') in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['resources'] == [resource_model]

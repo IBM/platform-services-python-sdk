@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.82.1-2082d402-20231115-195014
+# IBM OpenAPI SDK Code Generator Version: 3.86.0-bc6f14b3-20240221-193958
 
 """
 Search for resources with the global and shared resource properties repository that is
@@ -118,15 +118,19 @@ class GlobalSearchV2(BaseService):
         You must use `/v3/resources/search` when you need to fetch more than `10000`
         resource items. On the first call, the operation returns a live cursor on the data
         that you must use on all the subsequent calls to get the next batch of results
-        until you get the empty result set. By default, the fields that are returned for
-        every resource are "crn", "name", "family", "type", and "account_id". You can
-        specify the subset of the fields you want in your request.
+        until you get the empty result set.
+        By default, the fields that are returned for every resource are `crn`, `name`,
+        `family`, `type`, and `account_id`. You can specify the subset of the fields you
+        want in your request using the `fields` request body attribute. Set `"fields":
+        ["*"]` to discover the set of fields which are available to request.
 
         :param str query: (optional) The Lucene-formatted query string. Default to
                '*' if not set.
         :param List[str] fields: (optional) The list of the fields returned by the
                search. By default, the returned fields are the `account_id`, `name`,
-               `type`, `family`, and `crn`. For all queries, `crn` is always returned.
+               `type`, `family`, and `crn`. For all queries, `crn` is always returned. You
+               may set `"fields": ["*"]` to discover the set of fields available to
+               request.
         :param str search_cursor: (optional) An opaque cursor that is returned on
                each call and that must be set on the subsequent call to get the next batch
                of items. If the search returns no items, then the search_cursor is not
@@ -327,8 +331,8 @@ class ResultItem:
     def from_dict(cls, _dict: Dict) -> 'ResultItem':
         """Initialize a ResultItem object from a json dictionary."""
         args = {}
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
         else:
             raise ValueError('Required property \'crn\' not present in ResultItem JSON')
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
@@ -392,8 +396,10 @@ class ScanResult:
           the first one.
     :param int limit: Value of the limit parameter specified by the user.
     :param List[ResultItem] items: The array of results. Each item represents a
-          resource. An empty array signals the end of the result set, which means there
-          are no more results to fetch.
+          resource. For each resource, the requested `fields` are returned. If you did not
+          set the `fields` request body parameter, then the `account_id`, `name`, `type`,
+          `family`, and `crn` are returned. An empty array signals the end of the result
+          set, which means there are no more results to fetch.
     """
 
     def __init__(
@@ -408,8 +414,10 @@ class ScanResult:
 
         :param int limit: Value of the limit parameter specified by the user.
         :param List[ResultItem] items: The array of results. Each item represents a
-               resource. An empty array signals the end of the result set, which means
-               there are no more results to fetch.
+               resource. For each resource, the requested `fields` are returned. If you
+               did not set the `fields` request body parameter, then the `account_id`,
+               `name`, `type`, `family`, and `crn` are returned. An empty array signals
+               the end of the result set, which means there are no more results to fetch.
         :param str search_cursor: (optional) The search cursor to use on all calls
                after the first one.
         """
@@ -421,14 +429,14 @@ class ScanResult:
     def from_dict(cls, _dict: Dict) -> 'ScanResult':
         """Initialize a ScanResult object from a json dictionary."""
         args = {}
-        if 'search_cursor' in _dict:
-            args['search_cursor'] = _dict.get('search_cursor')
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
+        if (search_cursor := _dict.get('search_cursor')) is not None:
+            args['search_cursor'] = search_cursor
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
         else:
             raise ValueError('Required property \'limit\' not present in ScanResult JSON')
-        if 'items' in _dict:
-            args['items'] = [ResultItem.from_dict(v) for v in _dict.get('items')]
+        if (items := _dict.get('items')) is not None:
+            args['items'] = [ResultItem.from_dict(v) for v in items]
         else:
             raise ValueError('Required property \'items\' not present in ScanResult JSON')
         return cls(**args)
