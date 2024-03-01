@@ -62,9 +62,7 @@ class GlobalSearchV2(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
@@ -261,6 +259,7 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
+
     class IsReclaimed(str, Enum):
         """
         Determines if reclaimed documents should be included in result set or not.
@@ -272,6 +271,7 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
+
     class IsPublic(str, Enum):
         """
         Determines if public resources should be included in result set or not. Possible
@@ -282,6 +282,7 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
+
     class CanTag(str, Enum):
         """
         Determines if the result set must return the resources that the user can tag or
