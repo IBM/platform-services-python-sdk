@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.82.1-2082d402-20231115-195014
+# IBM OpenAPI SDK Code Generator Version: 3.86.0-bc6f14b3-20240221-193958
 
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete, or
@@ -61,7 +61,9 @@ class GlobalTaggingV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -480,6 +482,7 @@ class GlobalTaggingV1(BaseService):
         transaction_id: Optional[str] = None,
         account_id: Optional[str] = None,
         tag_type: Optional[str] = None,
+        replace: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -519,6 +522,9 @@ class GlobalTaggingV1(BaseService):
         :param str tag_type: (optional) The type of the tag. Supported values are
                `user`, `service` and `access`. `service` and `access` are not supported
                for IMS resources.
+        :param bool replace: (optional) Flag to request replacement of all attached
+               tags. Set 'true' if you want to replace all the list of tags attached to
+               the resource. Default value is false.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TagResults` object
@@ -542,6 +548,7 @@ class GlobalTaggingV1(BaseService):
         params = {
             'account_id': account_id,
             'tag_type': tag_type,
+            'replace': replace,
         }
 
         data = {
@@ -684,7 +691,6 @@ class ListTagsEnums:
         USER = 'user'
         SERVICE = 'service'
         ACCESS = 'access'
-
     class Providers(str, Enum):
         """
         Select a provider. Supported values are `ghost` and `ims`. To list both Global
@@ -695,7 +701,6 @@ class ListTagsEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class OrderByName(str, Enum):
         """
         Order the output by tag name.
@@ -730,7 +735,6 @@ class DeleteTagAllEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -756,7 +760,6 @@ class DeleteTagEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -831,8 +834,8 @@ class CreateTagResults:
     def from_dict(cls, _dict: Dict) -> 'CreateTagResults':
         """Initialize a CreateTagResults object from a json dictionary."""
         args = {}
-        if 'results' in _dict:
-            args['results'] = [CreateTagResultsResultsItem.from_dict(v) for v in _dict.get('results')]
+        if (results := _dict.get('results')) is not None:
+            args['results'] = [CreateTagResultsResultsItem.from_dict(v) for v in results]
         return cls(**args)
 
     @classmethod
@@ -901,10 +904,10 @@ class CreateTagResultsResultsItem:
     def from_dict(cls, _dict: Dict) -> 'CreateTagResultsResultsItem':
         """Initialize a CreateTagResultsResultsItem object from a json dictionary."""
         args = {}
-        if 'tag_name' in _dict:
-            args['tag_name'] = _dict.get('tag_name')
-        if 'is_error' in _dict:
-            args['is_error'] = _dict.get('is_error')
+        if (tag_name := _dict.get('tag_name')) is not None:
+            args['tag_name'] = tag_name
+        if (is_error := _dict.get('is_error')) is not None:
+            args['is_error'] = is_error
         return cls(**args)
 
     @classmethod
@@ -965,8 +968,8 @@ class DeleteTagResults:
     def from_dict(cls, _dict: Dict) -> 'DeleteTagResults':
         """Initialize a DeleteTagResults object from a json dictionary."""
         args = {}
-        if 'results' in _dict:
-            args['results'] = [DeleteTagResultsItem.from_dict(v) for v in _dict.get('results')]
+        if (results := _dict.get('results')) is not None:
+            args['results'] = [DeleteTagResultsItem.from_dict(v) for v in results]
         return cls(**args)
 
     @classmethod
@@ -1042,10 +1045,10 @@ class DeleteTagResultsItem:
     def from_dict(cls, _dict: Dict) -> 'DeleteTagResultsItem':
         """Initialize a DeleteTagResultsItem object from a json dictionary."""
         args = {}
-        if 'provider' in _dict:
-            args['provider'] = _dict.get('provider')
-        if 'is_error' in _dict:
-            args['is_error'] = _dict.get('is_error')
+        if (provider := _dict.get('provider')) is not None:
+            args['provider'] = provider
+        if (is_error := _dict.get('is_error')) is not None:
+            args['is_error'] = is_error
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -1109,6 +1112,7 @@ class DeleteTagResultsItem:
         IMS = 'ims'
 
 
+
 class DeleteTagsResult:
     """
     Results of deleting unattatched tags.
@@ -1145,12 +1149,12 @@ class DeleteTagsResult:
     def from_dict(cls, _dict: Dict) -> 'DeleteTagsResult':
         """Initialize a DeleteTagsResult object from a json dictionary."""
         args = {}
-        if 'total_count' in _dict:
-            args['total_count'] = _dict.get('total_count')
-        if 'errors' in _dict:
-            args['errors'] = _dict.get('errors')
-        if 'items' in _dict:
-            args['items'] = [DeleteTagsResultItem.from_dict(v) for v in _dict.get('items')]
+        if (total_count := _dict.get('total_count')) is not None:
+            args['total_count'] = total_count
+        if (errors := _dict.get('errors')) is not None:
+            args['errors'] = errors
+        if (items := _dict.get('items')) is not None:
+            args['items'] = [DeleteTagsResultItem.from_dict(v) for v in items]
         return cls(**args)
 
     @classmethod
@@ -1221,10 +1225,10 @@ class DeleteTagsResultItem:
     def from_dict(cls, _dict: Dict) -> 'DeleteTagsResultItem':
         """Initialize a DeleteTagsResultItem object from a json dictionary."""
         args = {}
-        if 'tag_name' in _dict:
-            args['tag_name'] = _dict.get('tag_name')
-        if 'is_error' in _dict:
-            args['is_error'] = _dict.get('is_error')
+        if (tag_name := _dict.get('tag_name')) is not None:
+            args['tag_name'] = tag_name
+        if (is_error := _dict.get('is_error')) is not None:
+            args['is_error'] = is_error
         return cls(**args)
 
     @classmethod
@@ -1287,12 +1291,12 @@ class Resource:
     def from_dict(cls, _dict: Dict) -> 'Resource':
         """Initialize a Resource object from a json dictionary."""
         args = {}
-        if 'resource_id' in _dict:
-            args['resource_id'] = _dict.get('resource_id')
+        if (resource_id := _dict.get('resource_id')) is not None:
+            args['resource_id'] = resource_id
         else:
             raise ValueError('Required property \'resource_id\' not present in Resource JSON')
-        if 'resource_type' in _dict:
-            args['resource_type'] = _dict.get('resource_type')
+        if (resource_type := _dict.get('resource_type')) is not None:
+            args['resource_type'] = resource_type
         return cls(**args)
 
     @classmethod
@@ -1350,8 +1354,8 @@ class Tag:
     def from_dict(cls, _dict: Dict) -> 'Tag':
         """Initialize a Tag object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in Tag JSON')
         return cls(**args)
@@ -1424,14 +1428,14 @@ class TagList:
     def from_dict(cls, _dict: Dict) -> 'TagList':
         """Initialize a TagList object from a json dictionary."""
         args = {}
-        if 'total_count' in _dict:
-            args['total_count'] = _dict.get('total_count')
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
-        if 'items' in _dict:
-            args['items'] = [Tag.from_dict(v) for v in _dict.get('items')]
+        if (total_count := _dict.get('total_count')) is not None:
+            args['total_count'] = total_count
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (items := _dict.get('items')) is not None:
+            args['items'] = [Tag.from_dict(v) for v in items]
         return cls(**args)
 
     @classmethod
@@ -1502,8 +1506,8 @@ class TagResults:
     def from_dict(cls, _dict: Dict) -> 'TagResults':
         """Initialize a TagResults object from a json dictionary."""
         args = {}
-        if 'results' in _dict:
-            args['results'] = [TagResultsItem.from_dict(v) for v in _dict.get('results')]
+        if (results := _dict.get('results')) is not None:
+            args['results'] = [TagResultsItem.from_dict(v) for v in results]
         return cls(**args)
 
     @classmethod
@@ -1572,12 +1576,12 @@ class TagResultsItem:
     def from_dict(cls, _dict: Dict) -> 'TagResultsItem':
         """Initialize a TagResultsItem object from a json dictionary."""
         args = {}
-        if 'resource_id' in _dict:
-            args['resource_id'] = _dict.get('resource_id')
+        if (resource_id := _dict.get('resource_id')) is not None:
+            args['resource_id'] = resource_id
         else:
             raise ValueError('Required property \'resource_id\' not present in TagResultsItem JSON')
-        if 'is_error' in _dict:
-            args['is_error'] = _dict.get('is_error')
+        if (is_error := _dict.get('is_error')) is not None:
+            args['is_error'] = is_error
         return cls(**args)
 
     @classmethod

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.global_search_v2 import *
 
 
-_service = GlobalSearchV2(authenticator=NoAuthAuthenticator())
+_service = GlobalSearchV2(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://api.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
