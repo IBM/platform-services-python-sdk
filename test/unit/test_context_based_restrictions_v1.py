@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.context_based_restrictions_v1 import *
 
 
-_service = ContextBasedRestrictionsV1(authenticator=NoAuthAuthenticator())
+_service = ContextBasedRestrictionsV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://cbr.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -733,7 +735,7 @@ class TestListAvailableServicerefTargets:
         """
         # Set up mock
         url = preprocess_url('/v1/zones/serviceref_targets')
-        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"name": "name"}]}]}'
+        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"display_name": "display_name", "kind": "kind", "name": "name"}]}]}'
         responses.add(
             responses.GET,
             url,
@@ -779,7 +781,7 @@ class TestListAvailableServicerefTargets:
         """
         # Set up mock
         url = preprocess_url('/v1/zones/serviceref_targets')
-        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"name": "name"}]}]}'
+        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"display_name": "display_name", "kind": "kind", "name": "name"}]}]}'
         responses.add(
             responses.GET,
             url,
@@ -803,6 +805,129 @@ class TestListAvailableServicerefTargets:
         # Disable retries and run test_list_available_serviceref_targets_required_params.
         _service.disable_retries()
         self.test_list_available_serviceref_targets_required_params()
+
+
+class TestGetServicerefTarget:
+    """
+    Test Class for get_serviceref_target
+    """
+
+    @responses.activate
+    def test_get_serviceref_target_all_params(self):
+        """
+        get_serviceref_target()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/zones/serviceref_targets/testString')
+        mock_response = '{"service_name": "service_name", "service_type": "service_type", "locations": [{"display_name": "display_name", "kind": "kind", "name": "name"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        service_name = 'testString'
+        x_correlation_id = 'testString'
+        transaction_id = 'testString'
+
+        # Invoke method
+        response = _service.get_serviceref_target(
+            service_name,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_serviceref_target_all_params_with_retries(self):
+        # Enable retries and run test_get_serviceref_target_all_params.
+        _service.enable_retries()
+        self.test_get_serviceref_target_all_params()
+
+        # Disable retries and run test_get_serviceref_target_all_params.
+        _service.disable_retries()
+        self.test_get_serviceref_target_all_params()
+
+    @responses.activate
+    def test_get_serviceref_target_required_params(self):
+        """
+        test_get_serviceref_target_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/zones/serviceref_targets/testString')
+        mock_response = '{"service_name": "service_name", "service_type": "service_type", "locations": [{"display_name": "display_name", "kind": "kind", "name": "name"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        service_name = 'testString'
+
+        # Invoke method
+        response = _service.get_serviceref_target(
+            service_name,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_serviceref_target_required_params_with_retries(self):
+        # Enable retries and run test_get_serviceref_target_required_params.
+        _service.enable_retries()
+        self.test_get_serviceref_target_required_params()
+
+        # Disable retries and run test_get_serviceref_target_required_params.
+        _service.disable_retries()
+        self.test_get_serviceref_target_required_params()
+
+    @responses.activate
+    def test_get_serviceref_target_value_error(self):
+        """
+        test_get_serviceref_target_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/zones/serviceref_targets/testString')
+        mock_response = '{"service_name": "service_name", "service_type": "service_type", "locations": [{"display_name": "display_name", "kind": "kind", "name": "name"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        service_name = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "service_name": service_name,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_serviceref_target(**req_copy)
+
+    def test_get_serviceref_target_value_error_with_retries(self):
+        # Enable retries and run test_get_serviceref_target_value_error.
+        _service.enable_retries()
+        self.test_get_serviceref_target_value_error()
+
+        # Disable retries and run test_get_serviceref_target_value_error.
+        _service.disable_retries()
+        self.test_get_serviceref_target_value_error()
 
 
 # endregion
@@ -1602,7 +1727,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
-        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "tags_rule_count_limit": 21, "current_rule_count": 18, "current_zone_count": 18, "current_tags_rule_count": 23, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -1644,7 +1769,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
-        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "tags_rule_count_limit": 21, "current_rule_count": 18, "current_zone_count": 18, "current_tags_rule_count": 23, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -1682,7 +1807,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
-        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "tags_rule_count_limit": 21, "current_rule_count": 18, "current_zone_count": 18, "current_tags_rule_count": 23, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -1911,8 +2036,10 @@ class TestModel_AccountSettings:
         account_settings_model_json['crn'] = 'testString'
         account_settings_model_json['rule_count_limit'] = 38
         account_settings_model_json['zone_count_limit'] = 38
+        account_settings_model_json['tags_rule_count_limit'] = 38
         account_settings_model_json['current_rule_count'] = 38
         account_settings_model_json['current_zone_count'] = 38
+        account_settings_model_json['current_tags_rule_count'] = 38
         account_settings_model_json['href'] = 'testString'
         account_settings_model_json['created_at'] = '2019-01-01T12:00:00Z'
         account_settings_model_json['created_by_id'] = 'testString'
@@ -2016,18 +2143,12 @@ class TestModel_NewRuleOperationsApiTypesItem:
         new_rule_operations_api_types_item_model_json['api_type_id'] = 'testString'
 
         # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
-        new_rule_operations_api_types_item_model = NewRuleOperationsApiTypesItem.from_dict(
-            new_rule_operations_api_types_item_model_json
-        )
+        new_rule_operations_api_types_item_model = NewRuleOperationsApiTypesItem.from_dict(new_rule_operations_api_types_item_model_json)
         assert new_rule_operations_api_types_item_model != False
 
         # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
-        new_rule_operations_api_types_item_model_dict = NewRuleOperationsApiTypesItem.from_dict(
-            new_rule_operations_api_types_item_model_json
-        ).__dict__
-        new_rule_operations_api_types_item_model2 = NewRuleOperationsApiTypesItem(
-            **new_rule_operations_api_types_item_model_dict
-        )
+        new_rule_operations_api_types_item_model_dict = NewRuleOperationsApiTypesItem.from_dict(new_rule_operations_api_types_item_model_json).__dict__
+        new_rule_operations_api_types_item_model2 = NewRuleOperationsApiTypesItem(**new_rule_operations_api_types_item_model_dict)
 
         # Verify the model instances are equivalent
         assert new_rule_operations_api_types_item_model == new_rule_operations_api_types_item_model2
@@ -2412,6 +2533,8 @@ class TestModel_ServiceRefTarget:
         # Construct dict forms of any model objects needed in order to build this model.
 
         service_ref_target_locations_item_model = {}  # ServiceRefTargetLocationsItem
+        service_ref_target_locations_item_model['display_name'] = 'testString'
+        service_ref_target_locations_item_model['kind'] = 'testString'
         service_ref_target_locations_item_model['name'] = 'testString'
 
         # Construct a json representation of a ServiceRefTarget model
@@ -2449,6 +2572,8 @@ class TestModel_ServiceRefTargetList:
         # Construct dict forms of any model objects needed in order to build this model.
 
         service_ref_target_locations_item_model = {}  # ServiceRefTargetLocationsItem
+        service_ref_target_locations_item_model['display_name'] = 'testString'
+        service_ref_target_locations_item_model['kind'] = 'testString'
         service_ref_target_locations_item_model['name'] = 'testString'
 
         service_ref_target_model = {}  # ServiceRefTarget
@@ -2489,21 +2614,17 @@ class TestModel_ServiceRefTargetLocationsItem:
 
         # Construct a json representation of a ServiceRefTargetLocationsItem model
         service_ref_target_locations_item_model_json = {}
+        service_ref_target_locations_item_model_json['display_name'] = 'testString'
+        service_ref_target_locations_item_model_json['kind'] = 'testString'
         service_ref_target_locations_item_model_json['name'] = 'testString'
 
         # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
-        service_ref_target_locations_item_model = ServiceRefTargetLocationsItem.from_dict(
-            service_ref_target_locations_item_model_json
-        )
+        service_ref_target_locations_item_model = ServiceRefTargetLocationsItem.from_dict(service_ref_target_locations_item_model_json)
         assert service_ref_target_locations_item_model != False
 
         # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
-        service_ref_target_locations_item_model_dict = ServiceRefTargetLocationsItem.from_dict(
-            service_ref_target_locations_item_model_json
-        ).__dict__
-        service_ref_target_locations_item_model2 = ServiceRefTargetLocationsItem(
-            **service_ref_target_locations_item_model_dict
-        )
+        service_ref_target_locations_item_model_dict = ServiceRefTargetLocationsItem.from_dict(service_ref_target_locations_item_model_json).__dict__
+        service_ref_target_locations_item_model2 = ServiceRefTargetLocationsItem(**service_ref_target_locations_item_model_dict)
 
         # Verify the model instances are equivalent
         assert service_ref_target_locations_item_model == service_ref_target_locations_item_model2
@@ -2745,9 +2866,7 @@ class TestModel_AddressIPAddressRange:
         assert address_ip_address_range_model != False
 
         # Construct a model instance of AddressIPAddressRange by calling from_dict on the json representation
-        address_ip_address_range_model_dict = AddressIPAddressRange.from_dict(
-            address_ip_address_range_model_json
-        ).__dict__
+        address_ip_address_range_model_dict = AddressIPAddressRange.from_dict(address_ip_address_range_model_json).__dict__
         address_ip_address_range_model2 = AddressIPAddressRange(**address_ip_address_range_model_dict)
 
         # Verify the model instances are equivalent

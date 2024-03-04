@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -240,6 +240,25 @@ class TestContextBasedRestrictionsV1:
     def test_list_available_serviceref_targets_list_with_invalid_type_parameter_error(self):
         with pytest.raises(ApiException, match="400"):
             self.context_based_restrictions_service.list_available_serviceref_targets(type='invalid-type')
+    
+    @needscredentials
+    def test_get_serviceref_target(self):
+        response = self.context_based_restrictions_service.get_serviceref_target(
+            service_name=service_name,
+            x_correlation_id='testString',
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 200
+        service_ref_target = response.get_result()
+        assert service_ref_target is not None
+
+    @needscredentials
+    def test_get_serviceref_target_with_service_name_not_found_error(self):
+        with pytest.raises(ApiException, match="404"):
+            self.context_based_restrictions_service.get_serviceref_target(
+                service_name='invalid-service-name', transaction_id=self.getTransactionID()
+            )
 
     @needscredentials
     def test_create_rule(self):
