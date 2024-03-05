@@ -268,10 +268,12 @@ class TestContextBasedRestrictionsV1Examples:
         try:
             print('\nget_serviceref_target() result:')
 
+            service_name = "containers-kubernetes"
+
             # begin-get_serviceref_target
 
             response = context_based_restrictions_service.get_serviceref_target(
-                service_name='testString',
+                service_name=service_name,
             )
             service_ref_target = response.get_result()
 

@@ -319,8 +319,8 @@ class ContextBasedRestrictionsV1(BaseService):
         replaced.
 
         :param str zone_id: The ID of a zone.
-        :param str if_match: The ETag of the resource to replace. You can find the
-               ETag in the response header for Create/Get/Update requests.
+        :param str if_match: The current revision of the resource being updated.
+               This can be found in the Create/Get/Update resource response ETag header.
         :param str name: (optional) The name of the zone.
         :param str account_id: (optional) The id of the account owning this zone.
         :param List[Address] addresses: (optional) The list of addresses in the
@@ -853,8 +853,8 @@ class ContextBasedRestrictionsV1(BaseService):
         updates are not supported. The entire rule object must be replaced.
 
         :param str rule_id: The ID of a rule.
-        :param str if_match: The ETag of the resource to replace. You can find the
-               ETag in the response header for Create/Get/Update requests.
+        :param str if_match: The current revision of the resource being updated.
+               This can be found in the Create/Get/Update resource response ETag header.
         :param List[RuleContext] contexts: (optional) The contexts this rule
                applies to.
         :param List[Resource] resources: (optional) The resources this rule apply

@@ -244,7 +244,7 @@ class TestContextBasedRestrictionsV1:
     @needscredentials
     def test_get_serviceref_target(self):
         response = self.context_based_restrictions_service.get_serviceref_target(
-            service_name=service_name,
+            service_name='containers-kubernetes',
             x_correlation_id='testString',
             transaction_id='testString',
         )
