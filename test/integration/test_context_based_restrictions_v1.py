@@ -240,7 +240,7 @@ class TestContextBasedRestrictionsV1:
     def test_list_available_serviceref_targets_list_with_invalid_type_parameter_error(self):
         with pytest.raises(ApiException, match="400"):
             self.context_based_restrictions_service.list_available_serviceref_targets(type='invalid-type')
-    
+
     @needscredentials
     def test_get_serviceref_target(self):
         response = self.context_based_restrictions_service.get_serviceref_target(
@@ -331,7 +331,8 @@ class TestContextBasedRestrictionsV1:
             'attributes': [account_id_resource_attribute_model, service_name_resource_attribute_model],
         }
 
-        # Construct a dict representation of a NewRuleOperationsApiTypesItem model
+        # Construct a dict representation of a NewRuleOperationsApiTypesItem
+        # model
         api_type_model = {'api_type_id': 'crn:v1:bluemix:public:containers-kubernetes::::api-type:management'}
 
         # Construct a dict representation of a NewRuleOperations model

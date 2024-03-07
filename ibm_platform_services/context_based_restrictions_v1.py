@@ -59,9 +59,7 @@ class ContextBasedRestrictionsV1(BaseService):
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
@@ -1611,7 +1609,6 @@ class Address:
         SERVICEREF = 'serviceRef'
 
 
-
 class NewRuleOperations:
     """
     The operations this rule applies to.
@@ -2246,7 +2243,6 @@ class Rule:
         ENABLED = 'enabled'
         DISABLED = 'disabled'
         REPORT = 'report'
-
 
 
 class RuleContext:
@@ -3326,7 +3322,6 @@ class AddressIPAddress(Address):
         IPADDRESS = 'ipAddress'
 
 
-
 class AddressIPAddressRange(Address):
     """
     An IP address range. IPv4 and IPv6 are supported.
@@ -3402,7 +3397,6 @@ class AddressIPAddressRange(Address):
         """
 
         IPRANGE = 'ipRange'
-
 
 
 class AddressServiceRef(Address):
@@ -3485,7 +3479,6 @@ class AddressServiceRef(Address):
         SERVICEREF = 'serviceRef'
 
 
-
 class AddressSubnet(Address):
     """
     A subnet in CIDR format.
@@ -3563,7 +3556,6 @@ class AddressSubnet(Address):
         SUBNET = 'subnet'
 
 
-
 class AddressVPC(Address):
     """
     A single VPC address.
@@ -3639,4 +3631,3 @@ class AddressVPC(Address):
         """
 
         VPC = 'vpc'
-
