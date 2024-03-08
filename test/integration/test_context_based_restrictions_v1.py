@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -242,6 +242,25 @@ class TestContextBasedRestrictionsV1:
             self.context_based_restrictions_service.list_available_serviceref_targets(type='invalid-type')
 
     @needscredentials
+    def test_get_serviceref_target(self):
+        response = self.context_based_restrictions_service.get_serviceref_target(
+            service_name='containers-kubernetes',
+            x_correlation_id='testString',
+            transaction_id='testString',
+        )
+
+        assert response.get_status_code() == 200
+        service_ref_target = response.get_result()
+        assert service_ref_target is not None
+
+    @needscredentials
+    def test_get_serviceref_target_with_service_name_not_found_error(self):
+        with pytest.raises(ApiException, match="404"):
+            self.context_based_restrictions_service.get_serviceref_target(
+                service_name='invalid-service-name', transaction_id=self.getTransactionID()
+            )
+
+    @needscredentials
     def test_create_rule(self):
         # Construct a dict representation of a RuleContextAttribute model
         rule_context_attribute_model = {
@@ -312,7 +331,8 @@ class TestContextBasedRestrictionsV1:
             'attributes': [account_id_resource_attribute_model, service_name_resource_attribute_model],
         }
 
-        # Construct a dict representation of a NewRuleOperationsApiTypesItem model
+        # Construct a dict representation of a NewRuleOperationsApiTypesItem
+        # model
         api_type_model = {'api_type_id': 'crn:v1:bluemix:public:containers-kubernetes::::api-type:management'}
 
         # Construct a dict representation of a NewRuleOperations model

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -256,6 +256,30 @@ class TestContextBasedRestrictionsV1Examples:
             print(json.dumps(service_ref_target_list, indent=2))
 
             # end-list_available_serviceref_targets
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_serviceref_target_example(self):
+        """
+        get_serviceref_target request example
+        """
+        try:
+            print('\nget_serviceref_target() result:')
+
+            service_name = "containers-kubernetes"
+
+            # begin-get_serviceref_target
+
+            response = context_based_restrictions_service.get_serviceref_target(
+                service_name=service_name,
+            )
+            service_ref_target = response.get_result()
+
+            print(json.dumps(service_ref_target, indent=2))
+
+            # end-get_serviceref_target
 
         except ApiException as e:
             pytest.fail(str(e))

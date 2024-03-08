@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -45,7 +45,8 @@ def preprocess_url(operation_path: str):
     to match the request URL that is formed by the requests library.
     """
     # First, unquote the path since it might have some quoted/escaped characters in it
-    # due to how the generator inserts the operation paths into the unit test code.
+    # due to how the generator inserts the operation paths into the unit test
+    # code.
     operation_path = urllib.parse.unquote(operation_path)
 
     # Next, quote the path using urllib so that we approximate what will
@@ -56,7 +57,8 @@ def preprocess_url(operation_path: str):
     request_url = _base_url + operation_path
 
     # If the request url does NOT end with a /, then just return it as-is.
-    # Otherwise, return a regular expression that matches one or more trailing /.
+    # Otherwise, return a regular expression that matches one or more trailing
+    # /.
     if re.fullmatch('.*/+', request_url) is None:
         return request_url
     return re.compile(request_url.rstrip('/') + '/+')
@@ -733,7 +735,7 @@ class TestListAvailableServicerefTargets:
         """
         # Set up mock
         url = preprocess_url('/v1/zones/serviceref_targets')
-        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"name": "name"}]}]}'
+        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"display_name": "display_name", "kind": "kind", "name": "name"}]}]}'
         responses.add(
             responses.GET,
             url,
@@ -764,11 +766,13 @@ class TestListAvailableServicerefTargets:
         assert 'type={}'.format(type) in query_string
 
     def test_list_available_serviceref_targets_all_params_with_retries(self):
-        # Enable retries and run test_list_available_serviceref_targets_all_params.
+        # Enable retries and run
+        # test_list_available_serviceref_targets_all_params.
         _service.enable_retries()
         self.test_list_available_serviceref_targets_all_params()
 
-        # Disable retries and run test_list_available_serviceref_targets_all_params.
+        # Disable retries and run
+        # test_list_available_serviceref_targets_all_params.
         _service.disable_retries()
         self.test_list_available_serviceref_targets_all_params()
 
@@ -779,7 +783,7 @@ class TestListAvailableServicerefTargets:
         """
         # Set up mock
         url = preprocess_url('/v1/zones/serviceref_targets')
-        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"name": "name"}]}]}'
+        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"display_name": "display_name", "kind": "kind", "name": "name"}]}]}'
         responses.add(
             responses.GET,
             url,
@@ -796,13 +800,138 @@ class TestListAvailableServicerefTargets:
         assert response.status_code == 200
 
     def test_list_available_serviceref_targets_required_params_with_retries(self):
-        # Enable retries and run test_list_available_serviceref_targets_required_params.
+        # Enable retries and run
+        # test_list_available_serviceref_targets_required_params.
         _service.enable_retries()
         self.test_list_available_serviceref_targets_required_params()
 
-        # Disable retries and run test_list_available_serviceref_targets_required_params.
+        # Disable retries and run
+        # test_list_available_serviceref_targets_required_params.
         _service.disable_retries()
         self.test_list_available_serviceref_targets_required_params()
+
+
+class TestGetServicerefTarget:
+    """
+    Test Class for get_serviceref_target
+    """
+
+    @responses.activate
+    def test_get_serviceref_target_all_params(self):
+        """
+        get_serviceref_target()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/zones/serviceref_targets/testString')
+        mock_response = '{"service_name": "service_name", "service_type": "service_type", "locations": [{"display_name": "display_name", "kind": "kind", "name": "name"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        service_name = 'testString'
+        x_correlation_id = 'testString'
+        transaction_id = 'testString'
+
+        # Invoke method
+        response = _service.get_serviceref_target(
+            service_name,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_serviceref_target_all_params_with_retries(self):
+        # Enable retries and run test_get_serviceref_target_all_params.
+        _service.enable_retries()
+        self.test_get_serviceref_target_all_params()
+
+        # Disable retries and run test_get_serviceref_target_all_params.
+        _service.disable_retries()
+        self.test_get_serviceref_target_all_params()
+
+    @responses.activate
+    def test_get_serviceref_target_required_params(self):
+        """
+        test_get_serviceref_target_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/zones/serviceref_targets/testString')
+        mock_response = '{"service_name": "service_name", "service_type": "service_type", "locations": [{"display_name": "display_name", "kind": "kind", "name": "name"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        service_name = 'testString'
+
+        # Invoke method
+        response = _service.get_serviceref_target(
+            service_name,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_serviceref_target_required_params_with_retries(self):
+        # Enable retries and run test_get_serviceref_target_required_params.
+        _service.enable_retries()
+        self.test_get_serviceref_target_required_params()
+
+        # Disable retries and run test_get_serviceref_target_required_params.
+        _service.disable_retries()
+        self.test_get_serviceref_target_required_params()
+
+    @responses.activate
+    def test_get_serviceref_target_value_error(self):
+        """
+        test_get_serviceref_target_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/zones/serviceref_targets/testString')
+        mock_response = '{"service_name": "service_name", "service_type": "service_type", "locations": [{"display_name": "display_name", "kind": "kind", "name": "name"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        service_name = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "service_name": service_name,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_serviceref_target(**req_copy)
+
+    def test_get_serviceref_target_value_error_with_retries(self):
+        # Enable retries and run test_get_serviceref_target_value_error.
+        _service.enable_retries()
+        self.test_get_serviceref_target_value_error()
+
+        # Disable retries and run test_get_serviceref_target_value_error.
+        _service.disable_retries()
+        self.test_get_serviceref_target_value_error()
 
 
 # endregion
@@ -891,7 +1020,8 @@ class TestCreateRule:
         resource_model['attributes'] = [resource_attribute_model]
         resource_model['tags'] = [resource_tag_attribute_model]
 
-        # Construct a dict representation of a NewRuleOperationsApiTypesItem model
+        # Construct a dict representation of a NewRuleOperationsApiTypesItem
+        # model
         new_rule_operations_api_types_item_model = {}
         new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
 
@@ -1304,7 +1434,8 @@ class TestReplaceRule:
         resource_model['attributes'] = [resource_attribute_model]
         resource_model['tags'] = [resource_tag_attribute_model]
 
-        # Construct a dict representation of a NewRuleOperationsApiTypesItem model
+        # Construct a dict representation of a NewRuleOperationsApiTypesItem
+        # model
         new_rule_operations_api_types_item_model = {}
         new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
 
@@ -1602,7 +1733,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
-        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "tags_rule_count_limit": 21, "current_rule_count": 18, "current_zone_count": 18, "current_tags_rule_count": 23, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -1644,7 +1775,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
-        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "tags_rule_count_limit": 21, "current_rule_count": 18, "current_zone_count": 18, "current_tags_rule_count": 23, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -1682,7 +1813,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
-        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "tags_rule_count_limit": 21, "current_rule_count": 18, "current_zone_count": 18, "current_tags_rule_count": 23, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -1801,11 +1932,13 @@ class TestListAvailableServiceOperations:
         assert 'resource_type={}'.format(resource_type) in query_string
 
     def test_list_available_service_operations_all_params_with_retries(self):
-        # Enable retries and run test_list_available_service_operations_all_params.
+        # Enable retries and run
+        # test_list_available_service_operations_all_params.
         _service.enable_retries()
         self.test_list_available_service_operations_all_params()
 
-        # Disable retries and run test_list_available_service_operations_all_params.
+        # Disable retries and run
+        # test_list_available_service_operations_all_params.
         _service.disable_retries()
         self.test_list_available_service_operations_all_params()
 
@@ -1833,11 +1966,13 @@ class TestListAvailableServiceOperations:
         assert response.status_code == 200
 
     def test_list_available_service_operations_required_params_with_retries(self):
-        # Enable retries and run test_list_available_service_operations_required_params.
+        # Enable retries and run
+        # test_list_available_service_operations_required_params.
         _service.enable_retries()
         self.test_list_available_service_operations_required_params()
 
-        # Disable retries and run test_list_available_service_operations_required_params.
+        # Disable retries and run
+        # test_list_available_service_operations_required_params.
         _service.disable_retries()
         self.test_list_available_service_operations_required_params()
 
@@ -1864,7 +1999,8 @@ class TestModel_APIType:
         Test serialization/deserialization for APIType
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         action_model = {}  # Action
         action_model['action_id'] = 'testString'
@@ -1879,11 +2015,13 @@ class TestModel_APIType:
         api_type_model_json['actions'] = [action_model]
         api_type_model_json['enforcement_modes'] = ['testString']
 
-        # Construct a model instance of APIType by calling from_dict on the json representation
+        # Construct a model instance of APIType by calling from_dict on the
+        # json representation
         api_type_model = APIType.from_dict(api_type_model_json)
         assert api_type_model != False
 
-        # Construct a model instance of APIType by calling from_dict on the json representation
+        # Construct a model instance of APIType by calling from_dict on the
+        # json representation
         api_type_model_dict = APIType.from_dict(api_type_model_json).__dict__
         api_type_model2 = APIType(**api_type_model_dict)
 
@@ -1911,19 +2049,23 @@ class TestModel_AccountSettings:
         account_settings_model_json['crn'] = 'testString'
         account_settings_model_json['rule_count_limit'] = 38
         account_settings_model_json['zone_count_limit'] = 38
+        account_settings_model_json['tags_rule_count_limit'] = 38
         account_settings_model_json['current_rule_count'] = 38
         account_settings_model_json['current_zone_count'] = 38
+        account_settings_model_json['current_tags_rule_count'] = 38
         account_settings_model_json['href'] = 'testString'
         account_settings_model_json['created_at'] = '2019-01-01T12:00:00Z'
         account_settings_model_json['created_by_id'] = 'testString'
         account_settings_model_json['last_modified_at'] = '2019-01-01T12:00:00Z'
         account_settings_model_json['last_modified_by_id'] = 'testString'
 
-        # Construct a model instance of AccountSettings by calling from_dict on the json representation
+        # Construct a model instance of AccountSettings by calling from_dict on
+        # the json representation
         account_settings_model = AccountSettings.from_dict(account_settings_model_json)
         assert account_settings_model != False
 
-        # Construct a model instance of AccountSettings by calling from_dict on the json representation
+        # Construct a model instance of AccountSettings by calling from_dict on
+        # the json representation
         account_settings_model_dict = AccountSettings.from_dict(account_settings_model_json).__dict__
         account_settings_model2 = AccountSettings(**account_settings_model_dict)
 
@@ -1950,11 +2092,13 @@ class TestModel_Action:
         action_model_json['action_id'] = 'testString'
         action_model_json['description'] = 'testString'
 
-        # Construct a model instance of Action by calling from_dict on the json representation
+        # Construct a model instance of Action by calling from_dict on the json
+        # representation
         action_model = Action.from_dict(action_model_json)
         assert action_model != False
 
-        # Construct a model instance of Action by calling from_dict on the json representation
+        # Construct a model instance of Action by calling from_dict on the json
+        # representation
         action_model_dict = Action.from_dict(action_model_json).__dict__
         action_model2 = Action(**action_model_dict)
 
@@ -1976,7 +2120,8 @@ class TestModel_NewRuleOperations:
         Test serialization/deserialization for NewRuleOperations
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         new_rule_operations_api_types_item_model = {}  # NewRuleOperationsApiTypesItem
         new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
@@ -1985,11 +2130,13 @@ class TestModel_NewRuleOperations:
         new_rule_operations_model_json = {}
         new_rule_operations_model_json['api_types'] = [new_rule_operations_api_types_item_model]
 
-        # Construct a model instance of NewRuleOperations by calling from_dict on the json representation
+        # Construct a model instance of NewRuleOperations by calling from_dict
+        # on the json representation
         new_rule_operations_model = NewRuleOperations.from_dict(new_rule_operations_model_json)
         assert new_rule_operations_model != False
 
-        # Construct a model instance of NewRuleOperations by calling from_dict on the json representation
+        # Construct a model instance of NewRuleOperations by calling from_dict
+        # on the json representation
         new_rule_operations_model_dict = NewRuleOperations.from_dict(new_rule_operations_model_json).__dict__
         new_rule_operations_model2 = NewRuleOperations(**new_rule_operations_model_dict)
 
@@ -2011,17 +2158,20 @@ class TestModel_NewRuleOperationsApiTypesItem:
         Test serialization/deserialization for NewRuleOperationsApiTypesItem
         """
 
-        # Construct a json representation of a NewRuleOperationsApiTypesItem model
+        # Construct a json representation of a NewRuleOperationsApiTypesItem
+        # model
         new_rule_operations_api_types_item_model_json = {}
         new_rule_operations_api_types_item_model_json['api_type_id'] = 'testString'
 
-        # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
+        # Construct a model instance of NewRuleOperationsApiTypesItem by
+        # calling from_dict on the json representation
         new_rule_operations_api_types_item_model = NewRuleOperationsApiTypesItem.from_dict(
             new_rule_operations_api_types_item_model_json
         )
         assert new_rule_operations_api_types_item_model != False
 
-        # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
+        # Construct a model instance of NewRuleOperationsApiTypesItem by
+        # calling from_dict on the json representation
         new_rule_operations_api_types_item_model_dict = NewRuleOperationsApiTypesItem.from_dict(
             new_rule_operations_api_types_item_model_json
         ).__dict__
@@ -2047,7 +2197,8 @@ class TestModel_OperationsList:
         Test serialization/deserialization for OperationsList
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         action_model = {}  # Action
         action_model['action_id'] = 'testString'
@@ -2065,11 +2216,13 @@ class TestModel_OperationsList:
         operations_list_model_json = {}
         operations_list_model_json['api_types'] = [api_type_model]
 
-        # Construct a model instance of OperationsList by calling from_dict on the json representation
+        # Construct a model instance of OperationsList by calling from_dict on
+        # the json representation
         operations_list_model = OperationsList.from_dict(operations_list_model_json)
         assert operations_list_model != False
 
-        # Construct a model instance of OperationsList by calling from_dict on the json representation
+        # Construct a model instance of OperationsList by calling from_dict on
+        # the json representation
         operations_list_model_dict = OperationsList.from_dict(operations_list_model_json).__dict__
         operations_list_model2 = OperationsList(**operations_list_model_dict)
 
@@ -2091,7 +2244,8 @@ class TestModel_Resource:
         Test serialization/deserialization for Resource
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         resource_attribute_model = {}  # ResourceAttribute
         resource_attribute_model['name'] = 'testString'
@@ -2108,11 +2262,13 @@ class TestModel_Resource:
         resource_model_json['attributes'] = [resource_attribute_model]
         resource_model_json['tags'] = [resource_tag_attribute_model]
 
-        # Construct a model instance of Resource by calling from_dict on the json representation
+        # Construct a model instance of Resource by calling from_dict on the
+        # json representation
         resource_model = Resource.from_dict(resource_model_json)
         assert resource_model != False
 
-        # Construct a model instance of Resource by calling from_dict on the json representation
+        # Construct a model instance of Resource by calling from_dict on the
+        # json representation
         resource_model_dict = Resource.from_dict(resource_model_json).__dict__
         resource_model2 = Resource(**resource_model_dict)
 
@@ -2140,11 +2296,13 @@ class TestModel_ResourceAttribute:
         resource_attribute_model_json['value'] = 'testString'
         resource_attribute_model_json['operator'] = 'testString'
 
-        # Construct a model instance of ResourceAttribute by calling from_dict on the json representation
+        # Construct a model instance of ResourceAttribute by calling from_dict
+        # on the json representation
         resource_attribute_model = ResourceAttribute.from_dict(resource_attribute_model_json)
         assert resource_attribute_model != False
 
-        # Construct a model instance of ResourceAttribute by calling from_dict on the json representation
+        # Construct a model instance of ResourceAttribute by calling from_dict
+        # on the json representation
         resource_attribute_model_dict = ResourceAttribute.from_dict(resource_attribute_model_json).__dict__
         resource_attribute_model2 = ResourceAttribute(**resource_attribute_model_dict)
 
@@ -2172,11 +2330,13 @@ class TestModel_ResourceTagAttribute:
         resource_tag_attribute_model_json['value'] = 'testString'
         resource_tag_attribute_model_json['operator'] = 'testString'
 
-        # Construct a model instance of ResourceTagAttribute by calling from_dict on the json representation
+        # Construct a model instance of ResourceTagAttribute by calling
+        # from_dict on the json representation
         resource_tag_attribute_model = ResourceTagAttribute.from_dict(resource_tag_attribute_model_json)
         assert resource_tag_attribute_model != False
 
-        # Construct a model instance of ResourceTagAttribute by calling from_dict on the json representation
+        # Construct a model instance of ResourceTagAttribute by calling
+        # from_dict on the json representation
         resource_tag_attribute_model_dict = ResourceTagAttribute.from_dict(resource_tag_attribute_model_json).__dict__
         resource_tag_attribute_model2 = ResourceTagAttribute(**resource_tag_attribute_model_dict)
 
@@ -2198,7 +2358,8 @@ class TestModel_Rule:
         Test serialization/deserialization for Rule
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         rule_context_attribute_model = {}  # RuleContextAttribute
         rule_context_attribute_model['name'] = 'testString'
@@ -2242,11 +2403,13 @@ class TestModel_Rule:
         rule_model_json['last_modified_at'] = '2019-01-01T12:00:00Z'
         rule_model_json['last_modified_by_id'] = 'testString'
 
-        # Construct a model instance of Rule by calling from_dict on the json representation
+        # Construct a model instance of Rule by calling from_dict on the json
+        # representation
         rule_model = Rule.from_dict(rule_model_json)
         assert rule_model != False
 
-        # Construct a model instance of Rule by calling from_dict on the json representation
+        # Construct a model instance of Rule by calling from_dict on the json
+        # representation
         rule_model_dict = Rule.from_dict(rule_model_json).__dict__
         rule_model2 = Rule(**rule_model_dict)
 
@@ -2268,7 +2431,8 @@ class TestModel_RuleContext:
         Test serialization/deserialization for RuleContext
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         rule_context_attribute_model = {}  # RuleContextAttribute
         rule_context_attribute_model['name'] = 'testString'
@@ -2278,11 +2442,13 @@ class TestModel_RuleContext:
         rule_context_model_json = {}
         rule_context_model_json['attributes'] = [rule_context_attribute_model]
 
-        # Construct a model instance of RuleContext by calling from_dict on the json representation
+        # Construct a model instance of RuleContext by calling from_dict on the
+        # json representation
         rule_context_model = RuleContext.from_dict(rule_context_model_json)
         assert rule_context_model != False
 
-        # Construct a model instance of RuleContext by calling from_dict on the json representation
+        # Construct a model instance of RuleContext by calling from_dict on the
+        # json representation
         rule_context_model_dict = RuleContext.from_dict(rule_context_model_json).__dict__
         rule_context_model2 = RuleContext(**rule_context_model_dict)
 
@@ -2309,11 +2475,13 @@ class TestModel_RuleContextAttribute:
         rule_context_attribute_model_json['name'] = 'testString'
         rule_context_attribute_model_json['value'] = 'testString'
 
-        # Construct a model instance of RuleContextAttribute by calling from_dict on the json representation
+        # Construct a model instance of RuleContextAttribute by calling
+        # from_dict on the json representation
         rule_context_attribute_model = RuleContextAttribute.from_dict(rule_context_attribute_model_json)
         assert rule_context_attribute_model != False
 
-        # Construct a model instance of RuleContextAttribute by calling from_dict on the json representation
+        # Construct a model instance of RuleContextAttribute by calling
+        # from_dict on the json representation
         rule_context_attribute_model_dict = RuleContextAttribute.from_dict(rule_context_attribute_model_json).__dict__
         rule_context_attribute_model2 = RuleContextAttribute(**rule_context_attribute_model_dict)
 
@@ -2335,7 +2503,8 @@ class TestModel_RuleList:
         Test serialization/deserialization for RuleList
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         rule_context_attribute_model = {}  # RuleContextAttribute
         rule_context_attribute_model['name'] = 'testString'
@@ -2383,11 +2552,13 @@ class TestModel_RuleList:
         rule_list_model_json['count'] = 38
         rule_list_model_json['rules'] = [rule_model]
 
-        # Construct a model instance of RuleList by calling from_dict on the json representation
+        # Construct a model instance of RuleList by calling from_dict on the
+        # json representation
         rule_list_model = RuleList.from_dict(rule_list_model_json)
         assert rule_list_model != False
 
-        # Construct a model instance of RuleList by calling from_dict on the json representation
+        # Construct a model instance of RuleList by calling from_dict on the
+        # json representation
         rule_list_model_dict = RuleList.from_dict(rule_list_model_json).__dict__
         rule_list_model2 = RuleList(**rule_list_model_dict)
 
@@ -2409,9 +2580,12 @@ class TestModel_ServiceRefTarget:
         Test serialization/deserialization for ServiceRefTarget
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         service_ref_target_locations_item_model = {}  # ServiceRefTargetLocationsItem
+        service_ref_target_locations_item_model['display_name'] = 'testString'
+        service_ref_target_locations_item_model['kind'] = 'testString'
         service_ref_target_locations_item_model['name'] = 'testString'
 
         # Construct a json representation of a ServiceRefTarget model
@@ -2420,11 +2594,13 @@ class TestModel_ServiceRefTarget:
         service_ref_target_model_json['service_type'] = 'testString'
         service_ref_target_model_json['locations'] = [service_ref_target_locations_item_model]
 
-        # Construct a model instance of ServiceRefTarget by calling from_dict on the json representation
+        # Construct a model instance of ServiceRefTarget by calling from_dict
+        # on the json representation
         service_ref_target_model = ServiceRefTarget.from_dict(service_ref_target_model_json)
         assert service_ref_target_model != False
 
-        # Construct a model instance of ServiceRefTarget by calling from_dict on the json representation
+        # Construct a model instance of ServiceRefTarget by calling from_dict
+        # on the json representation
         service_ref_target_model_dict = ServiceRefTarget.from_dict(service_ref_target_model_json).__dict__
         service_ref_target_model2 = ServiceRefTarget(**service_ref_target_model_dict)
 
@@ -2446,9 +2622,12 @@ class TestModel_ServiceRefTargetList:
         Test serialization/deserialization for ServiceRefTargetList
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         service_ref_target_locations_item_model = {}  # ServiceRefTargetLocationsItem
+        service_ref_target_locations_item_model['display_name'] = 'testString'
+        service_ref_target_locations_item_model['kind'] = 'testString'
         service_ref_target_locations_item_model['name'] = 'testString'
 
         service_ref_target_model = {}  # ServiceRefTarget
@@ -2461,11 +2640,13 @@ class TestModel_ServiceRefTargetList:
         service_ref_target_list_model_json['count'] = 38
         service_ref_target_list_model_json['targets'] = [service_ref_target_model]
 
-        # Construct a model instance of ServiceRefTargetList by calling from_dict on the json representation
+        # Construct a model instance of ServiceRefTargetList by calling
+        # from_dict on the json representation
         service_ref_target_list_model = ServiceRefTargetList.from_dict(service_ref_target_list_model_json)
         assert service_ref_target_list_model != False
 
-        # Construct a model instance of ServiceRefTargetList by calling from_dict on the json representation
+        # Construct a model instance of ServiceRefTargetList by calling
+        # from_dict on the json representation
         service_ref_target_list_model_dict = ServiceRefTargetList.from_dict(service_ref_target_list_model_json).__dict__
         service_ref_target_list_model2 = ServiceRefTargetList(**service_ref_target_list_model_dict)
 
@@ -2487,17 +2668,22 @@ class TestModel_ServiceRefTargetLocationsItem:
         Test serialization/deserialization for ServiceRefTargetLocationsItem
         """
 
-        # Construct a json representation of a ServiceRefTargetLocationsItem model
+        # Construct a json representation of a ServiceRefTargetLocationsItem
+        # model
         service_ref_target_locations_item_model_json = {}
+        service_ref_target_locations_item_model_json['display_name'] = 'testString'
+        service_ref_target_locations_item_model_json['kind'] = 'testString'
         service_ref_target_locations_item_model_json['name'] = 'testString'
 
-        # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
+        # Construct a model instance of ServiceRefTargetLocationsItem by
+        # calling from_dict on the json representation
         service_ref_target_locations_item_model = ServiceRefTargetLocationsItem.from_dict(
             service_ref_target_locations_item_model_json
         )
         assert service_ref_target_locations_item_model != False
 
-        # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
+        # Construct a model instance of ServiceRefTargetLocationsItem by
+        # calling from_dict on the json representation
         service_ref_target_locations_item_model_dict = ServiceRefTargetLocationsItem.from_dict(
             service_ref_target_locations_item_model_json
         ).__dict__
@@ -2531,11 +2717,13 @@ class TestModel_ServiceRefValue:
         service_ref_value_model_json['service_instance'] = 'testString'
         service_ref_value_model_json['location'] = 'testString'
 
-        # Construct a model instance of ServiceRefValue by calling from_dict on the json representation
+        # Construct a model instance of ServiceRefValue by calling from_dict on
+        # the json representation
         service_ref_value_model = ServiceRefValue.from_dict(service_ref_value_model_json)
         assert service_ref_value_model != False
 
-        # Construct a model instance of ServiceRefValue by calling from_dict on the json representation
+        # Construct a model instance of ServiceRefValue by calling from_dict on
+        # the json representation
         service_ref_value_model_dict = ServiceRefValue.from_dict(service_ref_value_model_json).__dict__
         service_ref_value_model2 = ServiceRefValue(**service_ref_value_model_dict)
 
@@ -2557,7 +2745,8 @@ class TestModel_Zone:
         Test serialization/deserialization for Zone
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         address_model = {}  # AddressIPAddress
         address_model['type'] = 'ipAddress'
@@ -2580,11 +2769,13 @@ class TestModel_Zone:
         zone_model_json['last_modified_at'] = '2019-01-01T12:00:00Z'
         zone_model_json['last_modified_by_id'] = 'testString'
 
-        # Construct a model instance of Zone by calling from_dict on the json representation
+        # Construct a model instance of Zone by calling from_dict on the json
+        # representation
         zone_model = Zone.from_dict(zone_model_json)
         assert zone_model != False
 
-        # Construct a model instance of Zone by calling from_dict on the json representation
+        # Construct a model instance of Zone by calling from_dict on the json
+        # representation
         zone_model_dict = Zone.from_dict(zone_model_json).__dict__
         zone_model2 = Zone(**zone_model_dict)
 
@@ -2606,7 +2797,8 @@ class TestModel_ZoneList:
         Test serialization/deserialization for ZoneList
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         address_model = {}  # AddressIPAddress
         address_model['type'] = 'ipAddress'
@@ -2631,11 +2823,13 @@ class TestModel_ZoneList:
         zone_list_model_json['count'] = 38
         zone_list_model_json['zones'] = [zone_summary_model]
 
-        # Construct a model instance of ZoneList by calling from_dict on the json representation
+        # Construct a model instance of ZoneList by calling from_dict on the
+        # json representation
         zone_list_model = ZoneList.from_dict(zone_list_model_json)
         assert zone_list_model != False
 
-        # Construct a model instance of ZoneList by calling from_dict on the json representation
+        # Construct a model instance of ZoneList by calling from_dict on the
+        # json representation
         zone_list_model_dict = ZoneList.from_dict(zone_list_model_json).__dict__
         zone_list_model2 = ZoneList(**zone_list_model_dict)
 
@@ -2657,7 +2851,8 @@ class TestModel_ZoneSummary:
         Test serialization/deserialization for ZoneSummary
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         address_model = {}  # AddressIPAddress
         address_model['type'] = 'ipAddress'
@@ -2678,11 +2873,13 @@ class TestModel_ZoneSummary:
         zone_summary_model_json['last_modified_at'] = '2019-01-01T12:00:00Z'
         zone_summary_model_json['last_modified_by_id'] = 'testString'
 
-        # Construct a model instance of ZoneSummary by calling from_dict on the json representation
+        # Construct a model instance of ZoneSummary by calling from_dict on the
+        # json representation
         zone_summary_model = ZoneSummary.from_dict(zone_summary_model_json)
         assert zone_summary_model != False
 
-        # Construct a model instance of ZoneSummary by calling from_dict on the json representation
+        # Construct a model instance of ZoneSummary by calling from_dict on the
+        # json representation
         zone_summary_model_dict = ZoneSummary.from_dict(zone_summary_model_json).__dict__
         zone_summary_model2 = ZoneSummary(**zone_summary_model_dict)
 
@@ -2709,11 +2906,13 @@ class TestModel_AddressIPAddress:
         address_ip_address_model_json['type'] = 'ipAddress'
         address_ip_address_model_json['value'] = 'testString'
 
-        # Construct a model instance of AddressIPAddress by calling from_dict on the json representation
+        # Construct a model instance of AddressIPAddress by calling from_dict
+        # on the json representation
         address_ip_address_model = AddressIPAddress.from_dict(address_ip_address_model_json)
         assert address_ip_address_model != False
 
-        # Construct a model instance of AddressIPAddress by calling from_dict on the json representation
+        # Construct a model instance of AddressIPAddress by calling from_dict
+        # on the json representation
         address_ip_address_model_dict = AddressIPAddress.from_dict(address_ip_address_model_json).__dict__
         address_ip_address_model2 = AddressIPAddress(**address_ip_address_model_dict)
 
@@ -2740,11 +2939,13 @@ class TestModel_AddressIPAddressRange:
         address_ip_address_range_model_json['type'] = 'ipRange'
         address_ip_address_range_model_json['value'] = 'testString'
 
-        # Construct a model instance of AddressIPAddressRange by calling from_dict on the json representation
+        # Construct a model instance of AddressIPAddressRange by calling
+        # from_dict on the json representation
         address_ip_address_range_model = AddressIPAddressRange.from_dict(address_ip_address_range_model_json)
         assert address_ip_address_range_model != False
 
-        # Construct a model instance of AddressIPAddressRange by calling from_dict on the json representation
+        # Construct a model instance of AddressIPAddressRange by calling
+        # from_dict on the json representation
         address_ip_address_range_model_dict = AddressIPAddressRange.from_dict(
             address_ip_address_range_model_json
         ).__dict__
@@ -2768,7 +2969,8 @@ class TestModel_AddressServiceRef:
         Test serialization/deserialization for AddressServiceRef
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct dict forms of any model objects needed in order to build
+        # this model.
 
         service_ref_value_model = {}  # ServiceRefValue
         service_ref_value_model['account_id'] = 'testString'
@@ -2782,11 +2984,13 @@ class TestModel_AddressServiceRef:
         address_service_ref_model_json['type'] = 'serviceRef'
         address_service_ref_model_json['ref'] = service_ref_value_model
 
-        # Construct a model instance of AddressServiceRef by calling from_dict on the json representation
+        # Construct a model instance of AddressServiceRef by calling from_dict
+        # on the json representation
         address_service_ref_model = AddressServiceRef.from_dict(address_service_ref_model_json)
         assert address_service_ref_model != False
 
-        # Construct a model instance of AddressServiceRef by calling from_dict on the json representation
+        # Construct a model instance of AddressServiceRef by calling from_dict
+        # on the json representation
         address_service_ref_model_dict = AddressServiceRef.from_dict(address_service_ref_model_json).__dict__
         address_service_ref_model2 = AddressServiceRef(**address_service_ref_model_dict)
 
@@ -2813,11 +3017,13 @@ class TestModel_AddressSubnet:
         address_subnet_model_json['type'] = 'subnet'
         address_subnet_model_json['value'] = 'testString'
 
-        # Construct a model instance of AddressSubnet by calling from_dict on the json representation
+        # Construct a model instance of AddressSubnet by calling from_dict on
+        # the json representation
         address_subnet_model = AddressSubnet.from_dict(address_subnet_model_json)
         assert address_subnet_model != False
 
-        # Construct a model instance of AddressSubnet by calling from_dict on the json representation
+        # Construct a model instance of AddressSubnet by calling from_dict on
+        # the json representation
         address_subnet_model_dict = AddressSubnet.from_dict(address_subnet_model_json).__dict__
         address_subnet_model2 = AddressSubnet(**address_subnet_model_dict)
 
@@ -2844,11 +3050,13 @@ class TestModel_AddressVPC:
         address_vpc_model_json['type'] = 'vpc'
         address_vpc_model_json['value'] = 'testString'
 
-        # Construct a model instance of AddressVPC by calling from_dict on the json representation
+        # Construct a model instance of AddressVPC by calling from_dict on the
+        # json representation
         address_vpc_model = AddressVPC.from_dict(address_vpc_model_json)
         assert address_vpc_model != False
 
-        # Construct a model instance of AddressVPC by calling from_dict on the json representation
+        # Construct a model instance of AddressVPC by calling from_dict on the
+        # json representation
         address_vpc_model_dict = AddressVPC.from_dict(address_vpc_model_json).__dict__
         address_vpc_model2 = AddressVPC(**address_vpc_model_dict)
 

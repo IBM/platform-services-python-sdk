@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.81.0-c73a091c-20231026-215706
+# IBM OpenAPI SDK Code Generator Version: 3.86.0-bc6f14b3-20240221-193958
 
 """
 With the Context Based Restrictions API, you can:
@@ -509,6 +509,67 @@ class ContextBasedRestrictionsV1(BaseService):
             url=url,
             headers=headers,
             params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_serviceref_target(
+        self,
+        service_name: str,
+        *,
+        x_correlation_id: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get service reference target for a specified service name.
+
+        This operation gets the service reference target for a specified service name.
+
+        :param str service_name: The name of a service.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) Deprecated: The `Transaction-Id`
+               header behaves as the `X-Correlation-Id` header. It is supported for
+               backward compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ServiceRefTarget` object
+        """
+
+        if not service_name:
+            raise ValueError('service_name must be provided')
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_serviceref_target',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['service_name']
+        path_param_values = self.encode_path_vars(service_name)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/zones/serviceref_targets/{service_name}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
         )
 
         response = self.send(request, **kwargs)
@@ -1150,28 +1211,28 @@ class APIType:
     def from_dict(cls, _dict: Dict) -> 'APIType':
         """Initialize a APIType object from a json dictionary."""
         args = {}
-        if 'api_type_id' in _dict:
-            args['api_type_id'] = _dict.get('api_type_id')
+        if (api_type_id := _dict.get('api_type_id')) is not None:
+            args['api_type_id'] = api_type_id
         else:
             raise ValueError('Required property \'api_type_id\' not present in APIType JSON')
-        if 'display_name' in _dict:
-            args['display_name'] = _dict.get('display_name')
+        if (display_name := _dict.get('display_name')) is not None:
+            args['display_name'] = display_name
         else:
             raise ValueError('Required property \'display_name\' not present in APIType JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         else:
             raise ValueError('Required property \'description\' not present in APIType JSON')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in APIType JSON')
-        if 'actions' in _dict:
-            args['actions'] = [Action.from_dict(v) for v in _dict.get('actions')]
+        if (actions := _dict.get('actions')) is not None:
+            args['actions'] = [Action.from_dict(v) for v in actions]
         else:
             raise ValueError('Required property \'actions\' not present in APIType JSON')
-        if 'enforcement_modes' in _dict:
-            args['enforcement_modes'] = _dict.get('enforcement_modes')
+        if (enforcement_modes := _dict.get('enforcement_modes')) is not None:
+            args['enforcement_modes'] = enforcement_modes
         return cls(**args)
 
     @classmethod
@@ -1229,8 +1290,12 @@ class AccountSettings:
     :param str crn: The account settings CRN.
     :param int rule_count_limit: the max number of rules allowed for the account.
     :param int zone_count_limit: the max number of zones allowed for the account.
+    :param int tags_rule_count_limit: (optional) the max number of rules with tags
+          allowed for the account.
     :param int current_rule_count: the current number of rules used by the account.
     :param int current_zone_count: the current number of zones used by the account.
+    :param int current_tags_rule_count: (optional) the current number of rules with
+          tags used by the account.
     :param str href: The href link to the resource.
     :param datetime created_at: The time the resource was created.
     :param str created_by_id: IAM ID of the user or service which created the
@@ -1253,6 +1318,9 @@ class AccountSettings:
         created_by_id: str,
         last_modified_at: datetime,
         last_modified_by_id: str,
+        *,
+        tags_rule_count_limit: Optional[int] = None,
+        current_tags_rule_count: Optional[int] = None,
     ) -> None:
         """
         Initialize a AccountSettings object.
@@ -1274,13 +1342,19 @@ class AccountSettings:
         :param datetime last_modified_at: The last time the resource was modified.
         :param str last_modified_by_id: IAM ID of the user or service which
                modified the resource.
+        :param int tags_rule_count_limit: (optional) the max number of rules with
+               tags allowed for the account.
+        :param int current_tags_rule_count: (optional) the current number of rules
+               with tags used by the account.
         """
         self.id = id
         self.crn = crn
         self.rule_count_limit = rule_count_limit
         self.zone_count_limit = zone_count_limit
+        self.tags_rule_count_limit = tags_rule_count_limit
         self.current_rule_count = current_rule_count
         self.current_zone_count = current_zone_count
+        self.current_tags_rule_count = current_tags_rule_count
         self.href = href
         self.created_at = created_at
         self.created_by_id = created_by_id
@@ -1291,48 +1365,52 @@ class AccountSettings:
     def from_dict(cls, _dict: Dict) -> 'AccountSettings':
         """Initialize a AccountSettings object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in AccountSettings JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
         else:
             raise ValueError('Required property \'crn\' not present in AccountSettings JSON')
-        if 'rule_count_limit' in _dict:
-            args['rule_count_limit'] = _dict.get('rule_count_limit')
+        if (rule_count_limit := _dict.get('rule_count_limit')) is not None:
+            args['rule_count_limit'] = rule_count_limit
         else:
             raise ValueError('Required property \'rule_count_limit\' not present in AccountSettings JSON')
-        if 'zone_count_limit' in _dict:
-            args['zone_count_limit'] = _dict.get('zone_count_limit')
+        if (zone_count_limit := _dict.get('zone_count_limit')) is not None:
+            args['zone_count_limit'] = zone_count_limit
         else:
             raise ValueError('Required property \'zone_count_limit\' not present in AccountSettings JSON')
-        if 'current_rule_count' in _dict:
-            args['current_rule_count'] = _dict.get('current_rule_count')
+        if (tags_rule_count_limit := _dict.get('tags_rule_count_limit')) is not None:
+            args['tags_rule_count_limit'] = tags_rule_count_limit
+        if (current_rule_count := _dict.get('current_rule_count')) is not None:
+            args['current_rule_count'] = current_rule_count
         else:
             raise ValueError('Required property \'current_rule_count\' not present in AccountSettings JSON')
-        if 'current_zone_count' in _dict:
-            args['current_zone_count'] = _dict.get('current_zone_count')
+        if (current_zone_count := _dict.get('current_zone_count')) is not None:
+            args['current_zone_count'] = current_zone_count
         else:
             raise ValueError('Required property \'current_zone_count\' not present in AccountSettings JSON')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (current_tags_rule_count := _dict.get('current_tags_rule_count')) is not None:
+            args['current_tags_rule_count'] = current_tags_rule_count
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         else:
             raise ValueError('Required property \'href\' not present in AccountSettings JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in AccountSettings JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         else:
             raise ValueError('Required property \'created_by_id\' not present in AccountSettings JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
         else:
             raise ValueError('Required property \'last_modified_at\' not present in AccountSettings JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         else:
             raise ValueError('Required property \'last_modified_by_id\' not present in AccountSettings JSON')
         return cls(**args)
@@ -1353,10 +1431,14 @@ class AccountSettings:
             _dict['rule_count_limit'] = self.rule_count_limit
         if hasattr(self, 'zone_count_limit') and self.zone_count_limit is not None:
             _dict['zone_count_limit'] = self.zone_count_limit
+        if hasattr(self, 'tags_rule_count_limit') and self.tags_rule_count_limit is not None:
+            _dict['tags_rule_count_limit'] = self.tags_rule_count_limit
         if hasattr(self, 'current_rule_count') and self.current_rule_count is not None:
             _dict['current_rule_count'] = self.current_rule_count
         if hasattr(self, 'current_zone_count') and self.current_zone_count is not None:
             _dict['current_zone_count'] = self.current_zone_count
+        if hasattr(self, 'current_tags_rule_count') and self.current_tags_rule_count is not None:
+            _dict['current_tags_rule_count'] = self.current_tags_rule_count
         if hasattr(self, 'href') and self.href is not None:
             _dict['href'] = self.href
         if hasattr(self, 'created_at') and self.created_at is not None:
@@ -1414,12 +1496,12 @@ class Action:
     def from_dict(cls, _dict: Dict) -> 'Action':
         """Initialize a Action object from a json dictionary."""
         args = {}
-        if 'action_id' in _dict:
-            args['action_id'] = _dict.get('action_id')
+        if (action_id := _dict.get('action_id')) is not None:
+            args['action_id'] = action_id
         else:
             raise ValueError('Required property \'action_id\' not present in Action JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         else:
             raise ValueError('Required property \'description\' not present in Action JSON')
         return cls(**args)
@@ -1551,8 +1633,8 @@ class NewRuleOperations:
     def from_dict(cls, _dict: Dict) -> 'NewRuleOperations':
         """Initialize a NewRuleOperations object from a json dictionary."""
         args = {}
-        if 'api_types' in _dict:
-            args['api_types'] = [NewRuleOperationsApiTypesItem.from_dict(v) for v in _dict.get('api_types')]
+        if (api_types := _dict.get('api_types')) is not None:
+            args['api_types'] = [NewRuleOperationsApiTypesItem.from_dict(v) for v in api_types]
         else:
             raise ValueError('Required property \'api_types\' not present in NewRuleOperations JSON')
         return cls(**args)
@@ -1616,8 +1698,8 @@ class NewRuleOperationsApiTypesItem:
     def from_dict(cls, _dict: Dict) -> 'NewRuleOperationsApiTypesItem':
         """Initialize a NewRuleOperationsApiTypesItem object from a json dictionary."""
         args = {}
-        if 'api_type_id' in _dict:
-            args['api_type_id'] = _dict.get('api_type_id')
+        if (api_type_id := _dict.get('api_type_id')) is not None:
+            args['api_type_id'] = api_type_id
         else:
             raise ValueError('Required property \'api_type_id\' not present in NewRuleOperationsApiTypesItem JSON')
         return cls(**args)
@@ -1675,8 +1757,8 @@ class OperationsList:
     def from_dict(cls, _dict: Dict) -> 'OperationsList':
         """Initialize a OperationsList object from a json dictionary."""
         args = {}
-        if 'api_types' in _dict:
-            args['api_types'] = [APIType.from_dict(v) for v in _dict.get('api_types')]
+        if (api_types := _dict.get('api_types')) is not None:
+            args['api_types'] = [APIType.from_dict(v) for v in api_types]
         else:
             raise ValueError('Required property \'api_types\' not present in OperationsList JSON')
         return cls(**args)
@@ -1746,12 +1828,12 @@ class Resource:
     def from_dict(cls, _dict: Dict) -> 'Resource':
         """Initialize a Resource object from a json dictionary."""
         args = {}
-        if 'attributes' in _dict:
-            args['attributes'] = [ResourceAttribute.from_dict(v) for v in _dict.get('attributes')]
+        if (attributes := _dict.get('attributes')) is not None:
+            args['attributes'] = [ResourceAttribute.from_dict(v) for v in attributes]
         else:
             raise ValueError('Required property \'attributes\' not present in Resource JSON')
-        if 'tags' in _dict:
-            args['tags'] = [ResourceTagAttribute.from_dict(v) for v in _dict.get('tags')]
+        if (tags := _dict.get('tags')) is not None:
+            args['tags'] = [ResourceTagAttribute.from_dict(v) for v in tags]
         return cls(**args)
 
     @classmethod
@@ -1830,16 +1912,16 @@ class ResourceAttribute:
     def from_dict(cls, _dict: Dict) -> 'ResourceAttribute':
         """Initialize a ResourceAttribute object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in ResourceAttribute JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in ResourceAttribute JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         return cls(**args)
 
     @classmethod
@@ -1908,16 +1990,16 @@ class ResourceTagAttribute:
     def from_dict(cls, _dict: Dict) -> 'ResourceTagAttribute':
         """Initialize a ResourceTagAttribute object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in ResourceTagAttribute JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in ResourceTagAttribute JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         return cls(**args)
 
     @classmethod
@@ -2037,48 +2119,48 @@ class Rule:
     def from_dict(cls, _dict: Dict) -> 'Rule':
         """Initialize a Rule object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in Rule JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
         else:
             raise ValueError('Required property \'crn\' not present in Rule JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         else:
             raise ValueError('Required property \'description\' not present in Rule JSON')
-        if 'contexts' in _dict:
-            args['contexts'] = [RuleContext.from_dict(v) for v in _dict.get('contexts')]
+        if (contexts := _dict.get('contexts')) is not None:
+            args['contexts'] = [RuleContext.from_dict(v) for v in contexts]
         else:
             raise ValueError('Required property \'contexts\' not present in Rule JSON')
-        if 'resources' in _dict:
-            args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [Resource.from_dict(v) for v in resources]
         else:
             raise ValueError('Required property \'resources\' not present in Rule JSON')
-        if 'operations' in _dict:
-            args['operations'] = NewRuleOperations.from_dict(_dict.get('operations'))
-        if 'enforcement_mode' in _dict:
-            args['enforcement_mode'] = _dict.get('enforcement_mode')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (operations := _dict.get('operations')) is not None:
+            args['operations'] = NewRuleOperations.from_dict(operations)
+        if (enforcement_mode := _dict.get('enforcement_mode')) is not None:
+            args['enforcement_mode'] = enforcement_mode
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         else:
             raise ValueError('Required property \'href\' not present in Rule JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in Rule JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         else:
             raise ValueError('Required property \'created_by_id\' not present in Rule JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
         else:
             raise ValueError('Required property \'last_modified_at\' not present in Rule JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         else:
             raise ValueError('Required property \'last_modified_by_id\' not present in Rule JSON')
         return cls(**args)
@@ -2185,8 +2267,8 @@ class RuleContext:
     def from_dict(cls, _dict: Dict) -> 'RuleContext':
         """Initialize a RuleContext object from a json dictionary."""
         args = {}
-        if 'attributes' in _dict:
-            args['attributes'] = [RuleContextAttribute.from_dict(v) for v in _dict.get('attributes')]
+        if (attributes := _dict.get('attributes')) is not None:
+            args['attributes'] = [RuleContextAttribute.from_dict(v) for v in attributes]
         else:
             raise ValueError('Required property \'attributes\' not present in RuleContext JSON')
         return cls(**args)
@@ -2254,12 +2336,12 @@ class RuleContextAttribute:
     def from_dict(cls, _dict: Dict) -> 'RuleContextAttribute':
         """Initialize a RuleContextAttribute object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in RuleContextAttribute JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in RuleContextAttribute JSON')
         return cls(**args)
@@ -2323,12 +2405,12 @@ class RuleList:
     def from_dict(cls, _dict: Dict) -> 'RuleList':
         """Initialize a RuleList object from a json dictionary."""
         args = {}
-        if 'count' in _dict:
-            args['count'] = _dict.get('count')
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
         else:
             raise ValueError('Required property \'count\' not present in RuleList JSON')
-        if 'rules' in _dict:
-            args['rules'] = [Rule.from_dict(v) for v in _dict.get('rules')]
+        if (rules := _dict.get('rules')) is not None:
+            args['rules'] = [Rule.from_dict(v) for v in rules]
         else:
             raise ValueError('Required property \'rules\' not present in RuleList JSON')
         return cls(**args)
@@ -2405,14 +2487,14 @@ class ServiceRefTarget:
     def from_dict(cls, _dict: Dict) -> 'ServiceRefTarget':
         """Initialize a ServiceRefTarget object from a json dictionary."""
         args = {}
-        if 'service_name' in _dict:
-            args['service_name'] = _dict.get('service_name')
+        if (service_name := _dict.get('service_name')) is not None:
+            args['service_name'] = service_name
         else:
             raise ValueError('Required property \'service_name\' not present in ServiceRefTarget JSON')
-        if 'service_type' in _dict:
-            args['service_type'] = _dict.get('service_type')
-        if 'locations' in _dict:
-            args['locations'] = [ServiceRefTargetLocationsItem.from_dict(v) for v in _dict.get('locations')]
+        if (service_type := _dict.get('service_type')) is not None:
+            args['service_type'] = service_type
+        if (locations := _dict.get('locations')) is not None:
+            args['locations'] = [ServiceRefTargetLocationsItem.from_dict(v) for v in locations]
         return cls(**args)
 
     @classmethod
@@ -2483,12 +2565,12 @@ class ServiceRefTargetList:
     def from_dict(cls, _dict: Dict) -> 'ServiceRefTargetList':
         """Initialize a ServiceRefTargetList object from a json dictionary."""
         args = {}
-        if 'count' in _dict:
-            args['count'] = _dict.get('count')
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
         else:
             raise ValueError('Required property \'count\' not present in ServiceRefTargetList JSON')
-        if 'targets' in _dict:
-            args['targets'] = [ServiceRefTarget.from_dict(v) for v in _dict.get('targets')]
+        if (targets := _dict.get('targets')) is not None:
+            args['targets'] = [ServiceRefTarget.from_dict(v) for v in targets]
         else:
             raise ValueError('Required property \'targets\' not present in ServiceRefTargetList JSON')
         return cls(**args)
@@ -2536,26 +2618,39 @@ class ServiceRefTargetLocationsItem:
     """
     ServiceRefTargetLocationsItem.
 
+    :param str display_name: (optional) The location display name.
+    :param str kind: (optional) The location kind.
     :param str name: The location name.
     """
 
     def __init__(
         self,
         name: str,
+        *,
+        display_name: Optional[str] = None,
+        kind: Optional[str] = None,
     ) -> None:
         """
         Initialize a ServiceRefTargetLocationsItem object.
 
         :param str name: The location name.
+        :param str display_name: (optional) The location display name.
+        :param str kind: (optional) The location kind.
         """
+        self.display_name = display_name
+        self.kind = kind
         self.name = name
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ServiceRefTargetLocationsItem':
         """Initialize a ServiceRefTargetLocationsItem object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (display_name := _dict.get('display_name')) is not None:
+            args['display_name'] = display_name
+        if (kind := _dict.get('kind')) is not None:
+            args['kind'] = kind
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in ServiceRefTargetLocationsItem JSON')
         return cls(**args)
@@ -2568,6 +2663,10 @@ class ServiceRefTargetLocationsItem:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'display_name') and self.display_name is not None:
+            _dict['display_name'] = self.display_name
+        if hasattr(self, 'kind') and self.kind is not None:
+            _dict['kind'] = self.kind
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
         return _dict
@@ -2630,18 +2729,18 @@ class ServiceRefValue:
     def from_dict(cls, _dict: Dict) -> 'ServiceRefValue':
         """Initialize a ServiceRefValue object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in ServiceRefValue JSON')
-        if 'service_type' in _dict:
-            args['service_type'] = _dict.get('service_type')
-        if 'service_name' in _dict:
-            args['service_name'] = _dict.get('service_name')
-        if 'service_instance' in _dict:
-            args['service_instance'] = _dict.get('service_instance')
-        if 'location' in _dict:
-            args['location'] = _dict.get('location')
+        if (service_type := _dict.get('service_type')) is not None:
+            args['service_type'] = service_type
+        if (service_name := _dict.get('service_name')) is not None:
+            args['service_name'] = service_name
+        if (service_instance := _dict.get('service_instance')) is not None:
+            args['service_instance'] = service_instance
+        if (location := _dict.get('location')) is not None:
+            args['location'] = location
         return cls(**args)
 
     @classmethod
@@ -2764,60 +2863,60 @@ class Zone:
     def from_dict(cls, _dict: Dict) -> 'Zone':
         """Initialize a Zone object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in Zone JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
         else:
             raise ValueError('Required property \'crn\' not present in Zone JSON')
-        if 'address_count' in _dict:
-            args['address_count'] = _dict.get('address_count')
+        if (address_count := _dict.get('address_count')) is not None:
+            args['address_count'] = address_count
         else:
             raise ValueError('Required property \'address_count\' not present in Zone JSON')
-        if 'excluded_count' in _dict:
-            args['excluded_count'] = _dict.get('excluded_count')
+        if (excluded_count := _dict.get('excluded_count')) is not None:
+            args['excluded_count'] = excluded_count
         else:
             raise ValueError('Required property \'excluded_count\' not present in Zone JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in Zone JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in Zone JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         else:
             raise ValueError('Required property \'description\' not present in Zone JSON')
-        if 'addresses' in _dict:
-            args['addresses'] = [Address.from_dict(v) for v in _dict.get('addresses')]
+        if (addresses := _dict.get('addresses')) is not None:
+            args['addresses'] = [Address.from_dict(v) for v in addresses]
         else:
             raise ValueError('Required property \'addresses\' not present in Zone JSON')
-        if 'excluded' in _dict:
-            args['excluded'] = [Address.from_dict(v) for v in _dict.get('excluded')]
+        if (excluded := _dict.get('excluded')) is not None:
+            args['excluded'] = [Address.from_dict(v) for v in excluded]
         else:
             raise ValueError('Required property \'excluded\' not present in Zone JSON')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         else:
             raise ValueError('Required property \'href\' not present in Zone JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in Zone JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         else:
             raise ValueError('Required property \'created_by_id\' not present in Zone JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
         else:
             raise ValueError('Required property \'last_modified_at\' not present in Zone JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         else:
             raise ValueError('Required property \'last_modified_by_id\' not present in Zone JSON')
         return cls(**args)
@@ -2917,12 +3016,12 @@ class ZoneList:
     def from_dict(cls, _dict: Dict) -> 'ZoneList':
         """Initialize a ZoneList object from a json dictionary."""
         args = {}
-        if 'count' in _dict:
-            args['count'] = _dict.get('count')
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
         else:
             raise ValueError('Required property \'count\' not present in ZoneList JSON')
-        if 'zones' in _dict:
-            args['zones'] = [ZoneSummary.from_dict(v) for v in _dict.get('zones')]
+        if (zones := _dict.get('zones')) is not None:
+            args['zones'] = [ZoneSummary.from_dict(v) for v in zones]
         else:
             raise ValueError('Required property \'zones\' not present in ZoneList JSON')
         return cls(**args)
@@ -3039,50 +3138,50 @@ class ZoneSummary:
     def from_dict(cls, _dict: Dict) -> 'ZoneSummary':
         """Initialize a ZoneSummary object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in ZoneSummary JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
         else:
             raise ValueError('Required property \'crn\' not present in ZoneSummary JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in ZoneSummary JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'addresses_preview' in _dict:
-            args['addresses_preview'] = [Address.from_dict(v) for v in _dict.get('addresses_preview')]
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (addresses_preview := _dict.get('addresses_preview')) is not None:
+            args['addresses_preview'] = [Address.from_dict(v) for v in addresses_preview]
         else:
             raise ValueError('Required property \'addresses_preview\' not present in ZoneSummary JSON')
-        if 'address_count' in _dict:
-            args['address_count'] = _dict.get('address_count')
+        if (address_count := _dict.get('address_count')) is not None:
+            args['address_count'] = address_count
         else:
             raise ValueError('Required property \'address_count\' not present in ZoneSummary JSON')
-        if 'excluded_count' in _dict:
-            args['excluded_count'] = _dict.get('excluded_count')
+        if (excluded_count := _dict.get('excluded_count')) is not None:
+            args['excluded_count'] = excluded_count
         else:
             raise ValueError('Required property \'excluded_count\' not present in ZoneSummary JSON')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         else:
             raise ValueError('Required property \'href\' not present in ZoneSummary JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in ZoneSummary JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         else:
             raise ValueError('Required property \'created_by_id\' not present in ZoneSummary JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
         else:
             raise ValueError('Required property \'last_modified_at\' not present in ZoneSummary JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         else:
             raise ValueError('Required property \'last_modified_by_id\' not present in ZoneSummary JSON')
         return cls(**args)
@@ -3173,12 +3272,12 @@ class AddressIPAddress(Address):
     def from_dict(cls, _dict: Dict) -> 'AddressIPAddress':
         """Initialize a AddressIPAddress object from a json dictionary."""
         args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in AddressIPAddress JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressIPAddress JSON')
         return cls(**args)
@@ -3250,12 +3349,12 @@ class AddressIPAddressRange(Address):
     def from_dict(cls, _dict: Dict) -> 'AddressIPAddressRange':
         """Initialize a AddressIPAddressRange object from a json dictionary."""
         args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in AddressIPAddressRange JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressIPAddressRange JSON')
         return cls(**args)
@@ -3327,12 +3426,12 @@ class AddressServiceRef(Address):
     def from_dict(cls, _dict: Dict) -> 'AddressServiceRef':
         """Initialize a AddressServiceRef object from a json dictionary."""
         args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in AddressServiceRef JSON')
-        if 'ref' in _dict:
-            args['ref'] = ServiceRefValue.from_dict(_dict.get('ref'))
+        if (ref := _dict.get('ref')) is not None:
+            args['ref'] = ServiceRefValue.from_dict(ref)
         else:
             raise ValueError('Required property \'ref\' not present in AddressServiceRef JSON')
         return cls(**args)
@@ -3407,12 +3506,12 @@ class AddressSubnet(Address):
     def from_dict(cls, _dict: Dict) -> 'AddressSubnet':
         """Initialize a AddressSubnet object from a json dictionary."""
         args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in AddressSubnet JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressSubnet JSON')
         return cls(**args)
@@ -3484,12 +3583,12 @@ class AddressVPC(Address):
     def from_dict(cls, _dict: Dict) -> 'AddressVPC':
         """Initialize a AddressVPC object from a json dictionary."""
         args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in AddressVPC JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressVPC JSON')
         return cls(**args)
