@@ -1,3 +1,10 @@
+# [0.52.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.51.2...v0.52.0) (2024-03-08)
+
+
+### Features
+
+* **Context-Based Restrictions:** add Service Ref Target ([#247](https://github.com/IBM/platform-services-python-sdk/issues/247)) ([8c7742e](https://github.com/IBM/platform-services-python-sdk/commit/8c7742eb83184491b85ec3b998abab199d43b6e2))
+
 ## [0.51.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.51.1...v0.51.2) (2024-03-01)
 
 
