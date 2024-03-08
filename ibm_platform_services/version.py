@@ -2,4 +2,4 @@
 Version of platform_services
 """
 
-__version__ = '0.51.2'
+__version__ = '0.52.0'
