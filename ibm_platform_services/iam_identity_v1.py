@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -172,7 +172,10 @@ class IamIdentityV1(BaseService):
         account_id: str = None,
         apikey: str = None,
         store_value: bool = None,
+        support_sessions: bool = None,
+        action_when_leaked: str = None,
         entity_lock: str = None,
+        entity_disable: str = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -191,17 +194,24 @@ class IamIdentityV1(BaseService):
                during a create of an API key.
         :param str account_id: (optional) The account ID of the API key.
         :param str apikey: (optional) You can optionally passthrough the API key
-               value for this API key. If passed, NO validation of that apiKey value is
-               done, i.e. the value can be non-URL safe. If omitted, the API key
-               management will create an URL safe opaque API key value. The value of the
-               API key is checked for uniqueness. Ensure enough variations when passing in
-               this value.
+               value for this API key. If passed, a minimum length validation of 32
+               characters for that apiKey value is done, i.e. the value can contain any
+               characters and can even be non-URL safe, but the minimum length requirement
+               must be met. If omitted, the API key management will create an URL safe
+               opaque API key value. The value of the API key is checked for uniqueness.
+               Ensure enough variations when passing in this value.
         :param bool store_value: (optional) Send true or false to set whether the
                API key value is retrievable in the future by using the Get details of an
                API key request. If you create an API key for a user, you must specify
                `false` or omit the value. We don't allow storing of API keys for users.
+        :param bool support_sessions: (optional) Defines if the API key supports
+               sessions. Sessions are only supported for user apikeys.
+        :param str action_when_leaked: (optional) Defines the action to take when
+               API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param str entity_lock: (optional) Indicates if the API key is locked for
                further write operations. False by default.
+        :param str entity_disable: (optional) Indicates if the API key is disabled.
+               False by default.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ApiKey` object
@@ -213,6 +223,7 @@ class IamIdentityV1(BaseService):
             raise ValueError('iam_id must be provided')
         headers = {
             'Entity-Lock': entity_lock,
+            'Entity-Disable': entity_disable,
         }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -228,6 +239,8 @@ class IamIdentityV1(BaseService):
             'account_id': account_id,
             'apikey': apikey,
             'store_value': store_value,
+            'support_sessions': support_sessions,
+            'action_when_leaked': action_when_leaked,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -370,6 +383,8 @@ class IamIdentityV1(BaseService):
         *,
         name: str = None,
         description: str = None,
+        support_sessions: bool = None,
+        action_when_leaked: str = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -393,6 +408,10 @@ class IamIdentityV1(BaseService):
         :param str description: (optional) The description of the API key to
                update. If specified an empty description will clear the description of the
                API key. If a non empty value is provided the API key will be updated.
+        :param bool support_sessions: (optional) Defines if the API key supports
+               sessions. Sessions are only supported for user apikeys.
+        :param str action_when_leaked: (optional) Defines the action to take when
+               API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ApiKey` object
@@ -415,6 +434,8 @@ class IamIdentityV1(BaseService):
         data = {
             'name': name,
             'description': description,
+            'support_sessions': support_sessions,
+            'action_when_leaked': action_when_leaked,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -569,6 +590,94 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/apikeys/{id}/lock'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def disable_api_key(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        disable the API key.
+
+        Disable an API key. Users can manage user API keys for themself, or service ID API
+        keys for service IDs that are bound to an entity they have access to.
+
+        :param str id: Unique ID of the API key.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='disable_api_key',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/apikeys/{id}/disable'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def enable_api_key(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Enable the API key.
+
+        Enable an API key. Users can manage user API keys for themself, or service ID API
+        keys for service IDs that are bound to an entity they have access to.
+
+        :param str id: Unique ID of the API key.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='enable_api_key',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/apikeys/{id}/disable'.format(**path_param_dict)
         request = self.prepare_request(
             method='DELETE',
             url=url,
@@ -2789,7 +2898,7 @@ class IamIdentityV1(BaseService):
                identifying parallel usage of this API. Pass * to indicate to update any
                version available. This might result in stale updates.
         :param int template_version: Template version to be applied to the
-               assignment. To retry all failed assignemtns, provide the existing version.
+               assignment. To retry all failed assignments, provide the existing version.
                To migrate to a different version, provide the new version number.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -3817,7 +3926,7 @@ class IamIdentityV1(BaseService):
                identifying parallel usage of this API. Pass * to indicate to update any
                version available. This might result in stale updates.
         :param int template_version: Template version to be applied to the
-               assignment. To retry all failed assignemtns, provide the existing version.
+               assignment. To retry all failed assignments, provide the existing version.
                To migrate to a different version, provide the new version number.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -5977,6 +6086,8 @@ class ApiKey:
     :attr str crn: Cloud Resource Name of the item. Example Cloud Resource Name:
           'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::apikey:1234-9012-5678'.
     :attr bool locked: The API key cannot be changed if set to true.
+    :attr bool disabled: (optional) Defines if API key is disabled, API key cannot
+          be used if 'disabled' is set to true.
     :attr datetime created_at: (optional) If set contains a date time string of the
           creation date in ISO format.
     :attr str created_by: IAM ID of the user or service which created the API key.
@@ -5985,6 +6096,10 @@ class ApiKey:
     :attr str name: Name of the API key. The name is not checked for uniqueness.
           Therefore multiple names with the same value can exist. Access is done via the
           UUID of the API key.
+    :attr bool support_sessions: (optional) Defines if the API key supports
+          sessions. Sessions are only supported for user apikeys.
+    :attr str action_when_leaked: (optional) Defines the action to take when API key
+          is leaked, valid values are 'none', 'disable' and 'delete'.
     :attr str description: (optional) The optional description of the API key. The
           'description' property is only available if a description was provided during a
           create of an API key.
@@ -6013,8 +6128,11 @@ class ApiKey:
         *,
         context: 'ResponseContext' = None,
         entity_tag: str = None,
+        disabled: bool = None,
         created_at: datetime = None,
         modified_at: datetime = None,
+        support_sessions: bool = None,
+        action_when_leaked: str = None,
         description: str = None,
         history: List['EnityHistoryRecord'] = None,
         activity: 'Activity' = None,
@@ -6046,10 +6164,16 @@ class ApiKey:
         :param str entity_tag: (optional) Version of the API Key details object.
                You need to specify this value when updating the API key to avoid stale
                updates.
+        :param bool disabled: (optional) Defines if API key is disabled, API key
+               cannot be used if 'disabled' is set to true.
         :param datetime created_at: (optional) If set contains a date time string
                of the creation date in ISO format.
         :param datetime modified_at: (optional) If set contains a date time string
                of the last modification date in ISO format.
+        :param bool support_sessions: (optional) Defines if the API key supports
+               sessions. Sessions are only supported for user apikeys.
+        :param str action_when_leaked: (optional) Defines the action to take when
+               API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param str description: (optional) The optional description of the API key.
                The 'description' property is only available if a description was provided
                during a create of an API key.
@@ -6061,10 +6185,13 @@ class ApiKey:
         self.entity_tag = entity_tag
         self.crn = crn
         self.locked = locked
+        self.disabled = disabled
         self.created_at = created_at
         self.created_by = created_by
         self.modified_at = modified_at
         self.name = name
+        self.support_sessions = support_sessions
+        self.action_when_leaked = action_when_leaked
         self.description = description
         self.iam_id = iam_id
         self.account_id = account_id
@@ -6092,6 +6219,8 @@ class ApiKey:
             args['locked'] = _dict.get('locked')
         else:
             raise ValueError('Required property \'locked\' not present in ApiKey JSON')
+        if 'disabled' in _dict:
+            args['disabled'] = _dict.get('disabled')
         if 'created_at' in _dict:
             args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'created_by' in _dict:
@@ -6104,6 +6233,10 @@ class ApiKey:
             args['name'] = _dict.get('name')
         else:
             raise ValueError('Required property \'name\' not present in ApiKey JSON')
+        if 'support_sessions' in _dict:
+            args['support_sessions'] = _dict.get('support_sessions')
+        if 'action_when_leaked' in _dict:
+            args['action_when_leaked'] = _dict.get('action_when_leaked')
         if 'description' in _dict:
             args['description'] = _dict.get('description')
         if 'iam_id' in _dict:
@@ -6145,6 +6278,8 @@ class ApiKey:
             _dict['crn'] = self.crn
         if hasattr(self, 'locked') and self.locked is not None:
             _dict['locked'] = self.locked
+        if hasattr(self, 'disabled') and self.disabled is not None:
+            _dict['disabled'] = self.disabled
         if hasattr(self, 'created_at') and self.created_at is not None:
             _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'created_by') and self.created_by is not None:
@@ -6153,6 +6288,10 @@ class ApiKey:
             _dict['modified_at'] = datetime_to_string(self.modified_at)
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
+        if hasattr(self, 'support_sessions') and self.support_sessions is not None:
+            _dict['support_sessions'] = self.support_sessions
+        if hasattr(self, 'action_when_leaked') and self.action_when_leaked is not None:
+            _dict['action_when_leaked'] = self.action_when_leaked
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
         if hasattr(self, 'iam_id') and self.iam_id is not None:
@@ -6206,10 +6345,12 @@ class ApiKeyInsideCreateServiceIdRequest:
           'description' property is only available if a description was provided during a
           create of an API key.
     :attr str apikey: (optional) You can optionally passthrough the API key value
-          for this API key. If passed, NO validation of that apiKey value is done, i.e.
-          the value can be non-URL safe. If omitted, the API key management will create an
-          URL safe opaque API key value. The value of the API key is checked for
-          uniqueness. Please ensure enough variations when passing in this value.
+          for this API key. If passed, a minimum length validation of 32 characters for
+          that apiKey value is done, i.e. the value can contain any characters and can
+          even be non-URL safe, but the minimum length requirement must be met. If
+          omitted, the API key management will create an URL safe opaque API key value.
+          The value of the API key is checked for uniqueness. Ensure enough variations
+          when passing in this value.
     :attr bool store_value: (optional) Send true or false to set whether the API key
           value is retrievable in the future by using the Get details of an API key
           request. If you create an API key for a user, you must specify `false` or omit
@@ -6234,11 +6375,12 @@ class ApiKeyInsideCreateServiceIdRequest:
                The 'description' property is only available if a description was provided
                during a create of an API key.
         :param str apikey: (optional) You can optionally passthrough the API key
-               value for this API key. If passed, NO validation of that apiKey value is
-               done, i.e. the value can be non-URL safe. If omitted, the API key
-               management will create an URL safe opaque API key value. The value of the
-               API key is checked for uniqueness. Please ensure enough variations when
-               passing in this value.
+               value for this API key. If passed, a minimum length validation of 32
+               characters for that apiKey value is done, i.e. the value can contain any
+               characters and can even be non-URL safe, but the minimum length requirement
+               must be met. If omitted, the API key management will create an URL safe
+               opaque API key value. The value of the API key is checked for uniqueness.
+               Ensure enough variations when passing in this value.
         :param bool store_value: (optional) Send true or false to set whether the
                API key value is retrievable in the future by using the Get details of an
                API key request. If you create an API key for a user, you must specify
