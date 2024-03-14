@@ -318,6 +318,39 @@ class TestIamIdentityV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
+    def test_disable_api_key_example(self):
+        """
+        disable_api_key request example
+        """
+        try:
+            # begin-disable_api_key
+
+            response = iam_identity_service.disable_api_key(id=apikey_id)
+
+            # end-disable_api_key
+            print('\nlock_api_key() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_enable_api_key_example(self):
+        """
+        enable_api_key request example
+        """
+        try:
+            # begin-enable_api_key
+
+            response = iam_identity_service.enable_api_key(id=apikey_id)
+
+            # end-enable_api_key
+
+            print('\nunlock_api_key() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_delete_api_key_example(self):
         """
         delete_api_key request example

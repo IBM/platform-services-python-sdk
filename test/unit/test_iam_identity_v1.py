@@ -57,7 +57,7 @@ def preprocess_url(operation_path: str):
 
     # If the request url does NOT end with a /, then just return it as-is.
     # Otherwise, return a regular expression that matches one or more trailing /.
-    if re.fullmatch('.*/+', request_url) is None:
+    if not request_url.endswith('/'):
         return request_url
     return re.compile(request_url.rstrip('/') + '/+')
 
@@ -9956,9 +9956,9 @@ class TestModel_TemplateAssignmentListResponse:
         template_assignment_response_resource_model = {}  # TemplateAssignmentResponseResource
         template_assignment_response_resource_model['target'] = 'testString'
         template_assignment_response_resource_model['profile'] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model[
-            'account_settings'
-        ] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model['account_settings'] = (
+            template_assignment_response_resource_detail_model
+        )
         template_assignment_response_resource_model['policy_template_refs'] = [
             template_assignment_response_resource_detail_model
         ]
@@ -10138,9 +10138,9 @@ class TestModel_TemplateAssignmentResponse:
         template_assignment_response_resource_model = {}  # TemplateAssignmentResponseResource
         template_assignment_response_resource_model['target'] = 'testString'
         template_assignment_response_resource_model['profile'] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model[
-            'account_settings'
-        ] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model['account_settings'] = (
+            template_assignment_response_resource_detail_model
+        )
         template_assignment_response_resource_model['policy_template_refs'] = [
             template_assignment_response_resource_detail_model
         ]
@@ -10224,9 +10224,9 @@ class TestModel_TemplateAssignmentResponseResource:
         template_assignment_response_resource_model_json = {}
         template_assignment_response_resource_model_json['target'] = 'testString'
         template_assignment_response_resource_model_json['profile'] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model_json[
-            'account_settings'
-        ] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model_json['account_settings'] = (
+            template_assignment_response_resource_detail_model
+        )
         template_assignment_response_resource_model_json['policy_template_refs'] = [
             template_assignment_response_resource_detail_model
         ]
@@ -10279,9 +10279,9 @@ class TestModel_TemplateAssignmentResponseResourceDetail:
         template_assignment_response_resource_detail_model_json['id'] = 'testString'
         template_assignment_response_resource_detail_model_json['version'] = 'testString'
         template_assignment_response_resource_detail_model_json['resource_created'] = template_assignment_resource_model
-        template_assignment_response_resource_detail_model_json[
-            'error_message'
-        ] = template_assignment_resource_error_model
+        template_assignment_response_resource_detail_model_json['error_message'] = (
+            template_assignment_resource_error_model
+        )
         template_assignment_response_resource_detail_model_json['status'] = 'testString'
 
         # Construct a model instance of TemplateAssignmentResponseResourceDetail by calling from_dict on the json representation
