@@ -55,7 +55,7 @@ def preprocess_url(operation_path: str):
 
     # If the request url does NOT end with a /, then just return it as-is.
     # Otherwise, return a regular expression that matches one or more trailing /.
-    if re.fullmatch('.*/+', request_url) is None:
+    if not request_url.endswith('/'):
         return request_url
     return re.compile(request_url.rstrip('/') + '/+')
 

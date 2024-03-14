@@ -29,8 +29,34 @@ from ibm_platform_services.usage_metering_v4 import *
 
 service = UsageMeteringV4(authenticator=NoAuthAuthenticator())
 
-base_url = 'https://billing.cloud.ibm.com'
-service.set_service_url(base_url)
+_base_url = 'https://billing.cloud.ibm.com'
+service.set_service_url(_base_url)
+
+
+def preprocess_url(operation_path: str):
+    """
+    Returns the request url associated with the specified operation path.
+    This will be base_url concatenated with a quoted version of operation_path.
+    The returned request URL is used to register the mock response so it needs
+    to match the request URL that is formed by the requests library.
+    """
+    # First, unquote the path since it might have some quoted/escaped characters in it
+    # due to how the generator inserts the operation paths into the unit test code.
+    operation_path = urllib.parse.unquote(operation_path)
+
+    # Next, quote the path using urllib so that we approximate what will
+    # happen during request processing.
+    operation_path = urllib.parse.quote(operation_path, safe='/')
+
+    # Finally, form the request URL from the base URL and operation path.
+    request_url = _base_url + operation_path
+
+    # If the request url does NOT end with a /, then just return it as-is.
+    # Otherwise, return a regular expression that matches one or more trailing /.
+    if not request_url.endswith('/'):
+        return request_url
+    return re.compile(request_url.rstrip('/') + '/+')
+
 
 ##############################################################################
 # Start of Service: ResourceUsage
@@ -43,21 +69,13 @@ class TestReportResourceUsage:
     Test Class for report_resource_usage
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_report_resource_usage_all_params(self):
         """
         report_resource_usage()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v4/metering/resources/testString/usage')
+        url = preprocess_url('/v4/metering/resources/testString/usage')
         mock_response = '{"resources": [{"status": 6, "location": "location", "code": "code", "message": "message"}]}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
 
@@ -98,7 +116,7 @@ class TestReportResourceUsage:
         test_report_resource_usage_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v4/metering/resources/testString/usage')
+        url = preprocess_url('/v4/metering/resources/testString/usage')
         mock_response = '{"resources": [{"status": 6, "location": "location", "code": "code", "message": "message"}]}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
 
