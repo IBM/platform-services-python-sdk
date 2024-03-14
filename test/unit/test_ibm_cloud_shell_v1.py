@@ -32,6 +32,32 @@ _service = IbmCloudShellV1(authenticator=NoAuthAuthenticator())
 _base_url = 'https://api.shell.cloud.ibm.com'
 _service.set_service_url(_base_url)
 
+
+def preprocess_url(operation_path: str):
+    """
+    Returns the request url associated with the specified operation path.
+    This will be base_url concatenated with a quoted version of operation_path.
+    The returned request URL is used to register the mock response so it needs
+    to match the request URL that is formed by the requests library.
+    """
+    # First, unquote the path since it might have some quoted/escaped characters in it
+    # due to how the generator inserts the operation paths into the unit test code.
+    operation_path = urllib.parse.unquote(operation_path)
+
+    # Next, quote the path using urllib so that we approximate what will
+    # happen during request processing.
+    operation_path = urllib.parse.quote(operation_path, safe='/')
+
+    # Finally, form the request URL from the base URL and operation path.
+    request_url = _base_url + operation_path
+
+    # If the request url does NOT end with a /, then just return it as-is.
+    # Otherwise, return a regular expression that matches one or more trailing /.
+    if not request_url.endswith('/'):
+        return request_url
+    return re.compile(request_url.rstrip('/') + '/+')
+
+
 ##############################################################################
 # Start of Service: AccountSettings
 ##############################################################################
@@ -43,21 +69,13 @@ class TestGetAccountSettings:
     Test Class for get_account_settings
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_get_account_settings_all_params(self):
         """
         get_account_settings()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
+        url = preprocess_url('/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
         mock_response = '{"_id": "id", "_rev": "rev", "account_id": "account_id", "created_at": 10, "created_by": "created_by", "default_enable_new_features": false, "default_enable_new_regions": true, "enabled": false, "features": [{"enabled": false, "key": "key"}], "regions": [{"enabled": false, "key": "key"}], "type": "type", "updated_at": 10, "updated_by": "updated_by"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
@@ -77,7 +95,7 @@ class TestGetAccountSettings:
         test_get_account_settings_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
+        url = preprocess_url('/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
         mock_response = '{"_id": "id", "_rev": "rev", "account_id": "account_id", "created_at": 10, "created_by": "created_by", "default_enable_new_features": false, "default_enable_new_regions": true, "enabled": false, "features": [{"enabled": false, "key": "key"}], "regions": [{"enabled": false, "key": "key"}], "type": "type", "updated_at": 10, "updated_by": "updated_by"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
@@ -99,21 +117,13 @@ class TestUpdateAccountSettings:
     Test Class for update_account_settings
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_update_account_settings_all_params(self):
         """
         update_account_settings()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
+        url = preprocess_url('/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
         mock_response = '{"_id": "id", "_rev": "rev", "account_id": "account_id", "created_at": 10, "created_by": "created_by", "default_enable_new_features": false, "default_enable_new_regions": true, "enabled": false, "features": [{"enabled": false, "key": "key"}], "regions": [{"enabled": false, "key": "key"}], "type": "type", "updated_at": 10, "updated_by": "updated_by"}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
@@ -184,7 +194,7 @@ class TestUpdateAccountSettings:
         test_update_account_settings_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
+        url = preprocess_url('/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
         mock_response = '{"_id": "id", "_rev": "rev", "account_id": "account_id", "created_at": 10, "created_by": "created_by", "default_enable_new_features": false, "default_enable_new_regions": true, "enabled": false, "features": [{"enabled": false, "key": "key"}], "regions": [{"enabled": false, "key": "key"}], "type": "type", "updated_at": 10, "updated_by": "updated_by"}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
