@@ -30,8 +30,34 @@ from ibm_platform_services.open_service_broker_v1 import *
 
 service = OpenServiceBrokerV1(authenticator=NoAuthAuthenticator())
 
-base_url = 'https://fake'
-service.set_service_url(base_url)
+_base_url = 'https://fake'
+service.set_service_url(_base_url)
+
+
+def preprocess_url(operation_path: str):
+    """
+    Returns the request url associated with the specified operation path.
+    This will be base_url concatenated with a quoted version of operation_path.
+    The returned request URL is used to register the mock response so it needs
+    to match the request URL that is formed by the requests library.
+    """
+    # First, unquote the path since it might have some quoted/escaped characters in it
+    # due to how the generator inserts the operation paths into the unit test code.
+    operation_path = urllib.parse.unquote(operation_path)
+
+    # Next, quote the path using urllib so that we approximate what will
+    # happen during request processing.
+    operation_path = urllib.parse.quote(operation_path, safe='/')
+
+    # Finally, form the request URL from the base URL and operation path.
+    request_url = _base_url + operation_path
+
+    # If the request url does NOT end with a /, then just return it as-is.
+    # Otherwise, return a regular expression that matches one or more trailing /.
+    if not request_url.endswith('/'):
+        return request_url
+    return re.compile(request_url.rstrip('/') + '/+')
+
 
 ##############################################################################
 # Start of Service: EnableAndDisableInstances
@@ -44,21 +70,13 @@ class TestGetServiceInstanceState:
     Test Class for get_service_instance_state
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_get_service_instance_state_all_params(self):
         """
         get_service_instance_state()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/bluemix_v1/service_instances/testString')
+        url = preprocess_url('/bluemix_v1/service_instances/testString')
         mock_response = '{"active": true, "enabled": false, "last_active": 11}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
@@ -78,7 +96,7 @@ class TestGetServiceInstanceState:
         test_get_service_instance_state_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/bluemix_v1/service_instances/testString')
+        url = preprocess_url('/bluemix_v1/service_instances/testString')
         mock_response = '{"active": true, "enabled": false, "last_active": 11}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
@@ -100,21 +118,13 @@ class TestReplaceServiceInstanceState:
     Test Class for replace_service_instance_state
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_replace_service_instance_state_all_params(self):
         """
         replace_service_instance_state()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/bluemix_v1/service_instances/testString')
+        url = preprocess_url('/bluemix_v1/service_instances/testString')
         mock_response = '{"active": true, "enabled": false, "last_active": 11}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
@@ -144,7 +154,7 @@ class TestReplaceServiceInstanceState:
         test_replace_service_instance_state_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/bluemix_v1/service_instances/testString')
+        url = preprocess_url('/bluemix_v1/service_instances/testString')
         mock_response = '{"active": true, "enabled": false, "last_active": 11}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
@@ -164,7 +174,7 @@ class TestReplaceServiceInstanceState:
         test_replace_service_instance_state_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/bluemix_v1/service_instances/testString')
+        url = preprocess_url('/bluemix_v1/service_instances/testString')
         mock_response = '{"active": true, "enabled": false, "last_active": 11}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
@@ -197,21 +207,13 @@ class TestReplaceServiceInstance:
     Test Class for replace_service_instance
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_replace_service_instance_all_params(self):
         """
         replace_service_instance()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString')
+        url = preprocess_url('/v2/service_instances/testString')
         mock_response = '{"dashboard_url": "dashboard_url", "operation": "operation"}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
@@ -266,7 +268,7 @@ class TestReplaceServiceInstance:
         test_replace_service_instance_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString')
+        url = preprocess_url('/v2/service_instances/testString')
         mock_response = '{"dashboard_url": "dashboard_url", "operation": "operation"}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
@@ -286,7 +288,7 @@ class TestReplaceServiceInstance:
         test_replace_service_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString')
+        url = preprocess_url('/v2/service_instances/testString')
         mock_response = '{"dashboard_url": "dashboard_url", "operation": "operation"}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
@@ -308,21 +310,13 @@ class TestUpdateServiceInstance:
     Test Class for update_service_instance
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_update_service_instance_all_params(self):
         """
         update_service_instance()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString')
+        url = preprocess_url('/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
         responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
 
@@ -374,7 +368,7 @@ class TestUpdateServiceInstance:
         test_update_service_instance_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString')
+        url = preprocess_url('/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
         responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
 
@@ -394,7 +388,7 @@ class TestUpdateServiceInstance:
         test_update_service_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString')
+        url = preprocess_url('/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
         responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
 
@@ -416,21 +410,13 @@ class TestDeleteServiceInstance:
     Test Class for delete_service_instance
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_delete_service_instance_all_params(self):
         """
         delete_service_instance()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString')
+        url = preprocess_url('/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
         responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
 
@@ -461,7 +447,7 @@ class TestDeleteServiceInstance:
         test_delete_service_instance_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString')
+        url = preprocess_url('/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
         responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
 
@@ -488,7 +474,7 @@ class TestDeleteServiceInstance:
         test_delete_service_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString')
+        url = preprocess_url('/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
         responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
 
@@ -525,21 +511,13 @@ class TestListCatalog:
     Test Class for list_catalog
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_list_catalog_all_params(self):
         """
         list_catalog()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/catalog')
+        url = preprocess_url('/v2/catalog')
         mock_response = '{"services": [{"bindable": true, "description": "description", "id": "id", "name": "name", "plan_updateable": false, "plans": [{"description": "description", "free": true, "id": "id", "name": "name"}]}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
@@ -567,21 +545,13 @@ class TestGetLastOperation:
     Test Class for get_last_operation
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_get_last_operation_all_params(self):
         """
         get_last_operation()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString/last_operation')
+        url = preprocess_url('/v2/service_instances/testString/last_operation')
         mock_response = '{"description": "description", "state": "state"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
@@ -612,7 +582,7 @@ class TestGetLastOperation:
         test_get_last_operation_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString/last_operation')
+        url = preprocess_url('/v2/service_instances/testString/last_operation')
         mock_response = '{"description": "description", "state": "state"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
@@ -632,7 +602,7 @@ class TestGetLastOperation:
         test_get_last_operation_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString/last_operation')
+        url = preprocess_url('/v2/service_instances/testString/last_operation')
         mock_response = '{"description": "description", "state": "state"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
@@ -665,21 +635,13 @@ class TestReplaceServiceBinding:
     Test Class for replace_service_binding
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_replace_service_binding_all_params(self):
         """
         replace_service_binding()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString/service_bindings/testString')
+        url = preprocess_url('/v2/service_instances/testString/service_bindings/testString')
         mock_response = '{"credentials": {"anyKey": "anyValue"}, "syslog_drain_url": "syslog_drain_url", "route_service_url": "route_service_url", "volume_mounts": [{"driver": "driver", "container_dir": "container_dir", "mode": "mode", "device_type": "device_type", "device": "device"}]}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
@@ -726,7 +688,7 @@ class TestReplaceServiceBinding:
         test_replace_service_binding_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString/service_bindings/testString')
+        url = preprocess_url('/v2/service_instances/testString/service_bindings/testString')
         mock_response = '{"credentials": {"anyKey": "anyValue"}, "syslog_drain_url": "syslog_drain_url", "route_service_url": "route_service_url", "volume_mounts": [{"driver": "driver", "container_dir": "container_dir", "mode": "mode", "device_type": "device_type", "device": "device"}]}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
@@ -747,7 +709,7 @@ class TestReplaceServiceBinding:
         test_replace_service_binding_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString/service_bindings/testString')
+        url = preprocess_url('/v2/service_instances/testString/service_bindings/testString')
         mock_response = '{"credentials": {"anyKey": "anyValue"}, "syslog_drain_url": "syslog_drain_url", "route_service_url": "route_service_url", "volume_mounts": [{"driver": "driver", "container_dir": "container_dir", "mode": "mode", "device_type": "device_type", "device": "device"}]}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
@@ -771,21 +733,13 @@ class TestDeleteServiceBinding:
     Test Class for delete_service_binding
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_delete_service_binding_all_params(self):
         """
         delete_service_binding()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString/service_bindings/testString')
+        url = preprocess_url('/v2/service_instances/testString/service_bindings/testString')
         responses.add(responses.DELETE, url, status=200)
 
         # Set up parameter values
@@ -812,7 +766,7 @@ class TestDeleteServiceBinding:
         test_delete_service_binding_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/service_instances/testString/service_bindings/testString')
+        url = preprocess_url('/v2/service_instances/testString/service_bindings/testString')
         responses.add(responses.DELETE, url, status=200)
 
         # Set up parameter values
