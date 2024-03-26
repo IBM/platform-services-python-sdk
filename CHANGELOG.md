@@ -1,3 +1,10 @@
+# [0.53.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.52.0...v0.53.0) (2024-03-26)
+
+
+### Features
+
+* **IAM Identity:** add disable_api_key and enable_api_key operations ([#248](https://github.com/IBM/platform-services-python-sdk/issues/248)) ([b0b0ea8](https://github.com/IBM/platform-services-python-sdk/commit/b0b0ea82b758a4dccfd41a48965f9c60183f705f))
+
 # [0.52.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.51.2...v0.52.0) (2024-03-08)
 
 
