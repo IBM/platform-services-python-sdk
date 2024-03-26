@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -108,7 +108,7 @@ class TestListApiKeys:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "apikeys": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "apikeys": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
         responses.add(
             responses.GET,
             url,
@@ -174,7 +174,7 @@ class TestListApiKeys:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "apikeys": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "apikeys": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
         responses.add(
             responses.GET,
             url,
@@ -212,7 +212,7 @@ class TestCreateApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.POST,
             url,
@@ -228,7 +228,10 @@ class TestCreateApiKey:
         account_id = 'testString'
         apikey = 'testString'
         store_value = True
+        support_sessions = True
+        action_when_leaked = 'testString'
         entity_lock = 'false'
+        entity_disable = 'false'
 
         # Invoke method
         response = _service.create_api_key(
@@ -238,7 +241,10 @@ class TestCreateApiKey:
             account_id=account_id,
             apikey=apikey,
             store_value=store_value,
+            support_sessions=support_sessions,
+            action_when_leaked=action_when_leaked,
             entity_lock=entity_lock,
+            entity_disable=entity_disable,
             headers={},
         )
 
@@ -253,6 +259,8 @@ class TestCreateApiKey:
         assert req_body['account_id'] == 'testString'
         assert req_body['apikey'] == 'testString'
         assert req_body['store_value'] == True
+        assert req_body['support_sessions'] == True
+        assert req_body['action_when_leaked'] == 'testString'
 
     def test_create_api_key_all_params_with_retries(self):
         # Enable retries and run test_create_api_key_all_params.
@@ -270,7 +278,7 @@ class TestCreateApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.POST,
             url,
@@ -286,6 +294,8 @@ class TestCreateApiKey:
         account_id = 'testString'
         apikey = 'testString'
         store_value = True
+        support_sessions = True
+        action_when_leaked = 'testString'
 
         # Invoke method
         response = _service.create_api_key(
@@ -295,6 +305,8 @@ class TestCreateApiKey:
             account_id=account_id,
             apikey=apikey,
             store_value=store_value,
+            support_sessions=support_sessions,
+            action_when_leaked=action_when_leaked,
             headers={},
         )
 
@@ -309,6 +321,8 @@ class TestCreateApiKey:
         assert req_body['account_id'] == 'testString'
         assert req_body['apikey'] == 'testString'
         assert req_body['store_value'] == True
+        assert req_body['support_sessions'] == True
+        assert req_body['action_when_leaked'] == 'testString'
 
     def test_create_api_key_required_params_with_retries(self):
         # Enable retries and run test_create_api_key_required_params.
@@ -326,7 +340,7 @@ class TestCreateApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.POST,
             url,
@@ -342,6 +356,8 @@ class TestCreateApiKey:
         account_id = 'testString'
         apikey = 'testString'
         store_value = True
+        support_sessions = True
+        action_when_leaked = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -375,7 +391,7 @@ class TestGetApiKeysDetails:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/details')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -419,7 +435,7 @@ class TestGetApiKeysDetails:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/details')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -457,7 +473,7 @@ class TestGetApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -504,7 +520,7 @@ class TestGetApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -542,7 +558,7 @@ class TestGetApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -585,7 +601,7 @@ class TestUpdateApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.PUT,
             url,
@@ -599,6 +615,8 @@ class TestUpdateApiKey:
         if_match = 'testString'
         name = 'testString'
         description = 'testString'
+        support_sessions = True
+        action_when_leaked = 'testString'
 
         # Invoke method
         response = _service.update_api_key(
@@ -606,6 +624,8 @@ class TestUpdateApiKey:
             if_match,
             name=name,
             description=description,
+            support_sessions=support_sessions,
+            action_when_leaked=action_when_leaked,
             headers={},
         )
 
@@ -616,6 +636,8 @@ class TestUpdateApiKey:
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'testString'
         assert req_body['description'] == 'testString'
+        assert req_body['support_sessions'] == True
+        assert req_body['action_when_leaked'] == 'testString'
 
     def test_update_api_key_all_params_with_retries(self):
         # Enable retries and run test_update_api_key_all_params.
@@ -633,7 +655,7 @@ class TestUpdateApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.PUT,
             url,
@@ -647,6 +669,8 @@ class TestUpdateApiKey:
         if_match = 'testString'
         name = 'testString'
         description = 'testString'
+        support_sessions = True
+        action_when_leaked = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -893,6 +917,156 @@ class TestUnlockApiKey:
         self.test_unlock_api_key_value_error()
 
 
+class TestDisableApiKey:
+    """
+    Test Class for disable_api_key
+    """
+
+    @responses.activate
+    def test_disable_api_key_all_params(self):
+        """
+        disable_api_key()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/apikeys/testString/disable')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Invoke method
+        response = _service.disable_api_key(
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_disable_api_key_all_params_with_retries(self):
+        # Enable retries and run test_disable_api_key_all_params.
+        _service.enable_retries()
+        self.test_disable_api_key_all_params()
+
+        # Disable retries and run test_disable_api_key_all_params.
+        _service.disable_retries()
+        self.test_disable_api_key_all_params()
+
+    @responses.activate
+    def test_disable_api_key_value_error(self):
+        """
+        test_disable_api_key_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/apikeys/testString/disable')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.disable_api_key(**req_copy)
+
+    def test_disable_api_key_value_error_with_retries(self):
+        # Enable retries and run test_disable_api_key_value_error.
+        _service.enable_retries()
+        self.test_disable_api_key_value_error()
+
+        # Disable retries and run test_disable_api_key_value_error.
+        _service.disable_retries()
+        self.test_disable_api_key_value_error()
+
+
+class TestEnableApiKey:
+    """
+    Test Class for enable_api_key
+    """
+
+    @responses.activate
+    def test_enable_api_key_all_params(self):
+        """
+        enable_api_key()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/apikeys/testString/disable')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Invoke method
+        response = _service.enable_api_key(
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_enable_api_key_all_params_with_retries(self):
+        # Enable retries and run test_enable_api_key_all_params.
+        _service.enable_retries()
+        self.test_enable_api_key_all_params()
+
+        # Disable retries and run test_enable_api_key_all_params.
+        _service.disable_retries()
+        self.test_enable_api_key_all_params()
+
+    @responses.activate
+    def test_enable_api_key_value_error(self):
+        """
+        test_enable_api_key_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/apikeys/testString/disable')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.enable_api_key(**req_copy)
+
+    def test_enable_api_key_value_error_with_retries(self):
+        # Enable retries and run test_enable_api_key_value_error.
+        _service.enable_retries()
+        self.test_enable_api_key_value_error()
+
+        # Disable retries and run test_enable_api_key_value_error.
+        _service.disable_retries()
+        self.test_enable_api_key_value_error()
+
+
 # endregion
 ##############################################################################
 # End of Service: APIKeyOperations
@@ -944,7 +1118,7 @@ class TestListServiceIds:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "serviceids": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "serviceids": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
         responses.add(
             responses.GET,
             url,
@@ -1004,7 +1178,7 @@ class TestListServiceIds:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "serviceids": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "serviceids": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
         responses.add(
             responses.GET,
             url,
@@ -1042,7 +1216,7 @@ class TestCreateServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.POST,
             url,
@@ -1104,7 +1278,7 @@ class TestCreateServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.POST,
             url,
@@ -1164,7 +1338,7 @@ class TestCreateServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.POST,
             url,
@@ -1219,7 +1393,7 @@ class TestGetServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -1266,7 +1440,7 @@ class TestGetServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -1304,7 +1478,7 @@ class TestGetServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -1347,7 +1521,7 @@ class TestUpdateServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.PUT,
             url,
@@ -1398,7 +1572,7 @@ class TestUpdateServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.PUT,
             url,
@@ -8348,10 +8522,13 @@ class TestModel_ApiKey:
         api_key_model_json['entity_tag'] = 'testString'
         api_key_model_json['crn'] = 'testString'
         api_key_model_json['locked'] = True
+        api_key_model_json['disabled'] = True
         api_key_model_json['created_at'] = '2019-01-01T12:00:00Z'
         api_key_model_json['created_by'] = 'testString'
         api_key_model_json['modified_at'] = '2019-01-01T12:00:00Z'
         api_key_model_json['name'] = 'testString'
+        api_key_model_json['support_sessions'] = True
+        api_key_model_json['action_when_leaked'] = 'testString'
         api_key_model_json['description'] = 'testString'
         api_key_model_json['iam_id'] = 'testString'
         api_key_model_json['account_id'] = 'testString'
@@ -8459,10 +8636,13 @@ class TestModel_ApiKeyList:
         api_key_model['entity_tag'] = 'testString'
         api_key_model['crn'] = 'testString'
         api_key_model['locked'] = True
+        api_key_model['disabled'] = True
         api_key_model['created_at'] = '2019-01-01T12:00:00Z'
         api_key_model['created_by'] = 'testString'
         api_key_model['modified_at'] = '2019-01-01T12:00:00Z'
         api_key_model['name'] = 'testString'
+        api_key_model['support_sessions'] = True
+        api_key_model['action_when_leaked'] = 'testString'
         api_key_model['description'] = 'testString'
         api_key_model['iam_id'] = 'testString'
         api_key_model['account_id'] = 'testString'
@@ -9584,10 +9764,13 @@ class TestModel_ServiceId:
         api_key_model['entity_tag'] = 'testString'
         api_key_model['crn'] = 'testString'
         api_key_model['locked'] = True
+        api_key_model['disabled'] = True
         api_key_model['created_at'] = '2019-01-01T12:00:00Z'
         api_key_model['created_by'] = 'testString'
         api_key_model['modified_at'] = '2019-01-01T12:00:00Z'
         api_key_model['name'] = 'testString'
+        api_key_model['support_sessions'] = True
+        api_key_model['action_when_leaked'] = 'testString'
         api_key_model['description'] = 'testString'
         api_key_model['iam_id'] = 'testString'
         api_key_model['account_id'] = 'testString'
@@ -9672,10 +9855,13 @@ class TestModel_ServiceIdList:
         api_key_model['entity_tag'] = 'testString'
         api_key_model['crn'] = 'testString'
         api_key_model['locked'] = True
+        api_key_model['disabled'] = True
         api_key_model['created_at'] = '2019-01-01T12:00:00Z'
         api_key_model['created_by'] = 'testString'
         api_key_model['modified_at'] = '2019-01-01T12:00:00Z'
         api_key_model['name'] = 'testString'
+        api_key_model['support_sessions'] = True
+        api_key_model['action_when_leaked'] = 'testString'
         api_key_model['description'] = 'testString'
         api_key_model['iam_id'] = 'testString'
         api_key_model['account_id'] = 'testString'

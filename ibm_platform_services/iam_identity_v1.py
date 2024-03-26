@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.80.0-29334a73-20230925-151553
+# IBM OpenAPI SDK Code Generator Version: 3.86.2-8b8592a4-20240313-204553
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -25,7 +25,7 @@ API Version: 1.0.0
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
@@ -80,15 +80,15 @@ class IamIdentityV1(BaseService):
     def list_api_keys(
         self,
         *,
-        account_id: str = None,
-        iam_id: str = None,
-        pagesize: int = None,
-        pagetoken: str = None,
-        scope: str = None,
-        type: str = None,
-        sort: str = None,
-        order: str = None,
-        include_history: bool = None,
+        account_id: Optional[str] = None,
+        iam_id: Optional[str] = None,
+        pagesize: Optional[int] = None,
+        pagetoken: Optional[str] = None,
+        scope: Optional[str] = None,
+        type: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -168,11 +168,14 @@ class IamIdentityV1(BaseService):
         name: str,
         iam_id: str,
         *,
-        description: str = None,
-        account_id: str = None,
-        apikey: str = None,
-        store_value: bool = None,
-        entity_lock: str = None,
+        description: Optional[str] = None,
+        account_id: Optional[str] = None,
+        apikey: Optional[str] = None,
+        store_value: Optional[bool] = None,
+        support_sessions: Optional[bool] = None,
+        action_when_leaked: Optional[str] = None,
+        entity_lock: Optional[str] = None,
+        entity_disable: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -191,17 +194,24 @@ class IamIdentityV1(BaseService):
                during a create of an API key.
         :param str account_id: (optional) The account ID of the API key.
         :param str apikey: (optional) You can optionally passthrough the API key
-               value for this API key. If passed, NO validation of that apiKey value is
-               done, i.e. the value can be non-URL safe. If omitted, the API key
-               management will create an URL safe opaque API key value. The value of the
-               API key is checked for uniqueness. Ensure enough variations when passing in
-               this value.
+               value for this API key. If passed, a minimum length validation of 32
+               characters for that apiKey value is done, i.e. the value can contain any
+               characters and can even be non-URL safe, but the minimum length requirement
+               must be met. If omitted, the API key management will create an URL safe
+               opaque API key value. The value of the API key is checked for uniqueness.
+               Ensure enough variations when passing in this value.
         :param bool store_value: (optional) Send true or false to set whether the
                API key value is retrievable in the future by using the Get details of an
                API key request. If you create an API key for a user, you must specify
                `false` or omit the value. We don't allow storing of API keys for users.
+        :param bool support_sessions: (optional) Defines if the API key supports
+               sessions. Sessions are only supported for user apikeys.
+        :param str action_when_leaked: (optional) Defines the action to take when
+               API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param str entity_lock: (optional) Indicates if the API key is locked for
                further write operations. False by default.
+        :param str entity_disable: (optional) Indicates if the API key is disabled.
+               False by default.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ApiKey` object
@@ -213,6 +223,7 @@ class IamIdentityV1(BaseService):
             raise ValueError('iam_id must be provided')
         headers = {
             'Entity-Lock': entity_lock,
+            'Entity-Disable': entity_disable,
         }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -228,6 +239,8 @@ class IamIdentityV1(BaseService):
             'account_id': account_id,
             'apikey': apikey,
             'store_value': store_value,
+            'support_sessions': support_sessions,
+            'action_when_leaked': action_when_leaked,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -252,8 +265,8 @@ class IamIdentityV1(BaseService):
     def get_api_keys_details(
         self,
         *,
-        iam_api_key: str = None,
-        include_history: bool = None,
+        iam_api_key: Optional[str] = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -305,8 +318,8 @@ class IamIdentityV1(BaseService):
         self,
         id: str,
         *,
-        include_history: bool = None,
-        include_activity: bool = None,
+        include_history: Optional[bool] = None,
+        include_activity: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -368,8 +381,10 @@ class IamIdentityV1(BaseService):
         id: str,
         if_match: str,
         *,
-        name: str = None,
-        description: str = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        support_sessions: Optional[bool] = None,
+        action_when_leaked: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -393,6 +408,10 @@ class IamIdentityV1(BaseService):
         :param str description: (optional) The description of the API key to
                update. If specified an empty description will clear the description of the
                API key. If a non empty value is provided the API key will be updated.
+        :param bool support_sessions: (optional) Defines if the API key supports
+               sessions. Sessions are only supported for user apikeys.
+        :param str action_when_leaked: (optional) Defines the action to take when
+               API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ApiKey` object
@@ -415,6 +434,8 @@ class IamIdentityV1(BaseService):
         data = {
             'name': name,
             'description': description,
+            'support_sessions': support_sessions,
+            'action_when_leaked': action_when_leaked,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -578,6 +599,94 @@ class IamIdentityV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    def disable_api_key(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        disable the API key.
+
+        Disable an API key. Users can manage user API keys for themself, or service ID API
+        keys for service IDs that are bound to an entity they have access to.
+
+        :param str id: Unique ID of the API key.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='disable_api_key',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/apikeys/{id}/disable'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def enable_api_key(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Enable the API key.
+
+        Enable an API key. Users can manage user API keys for themself, or service ID API
+        keys for service IDs that are bound to an entity they have access to.
+
+        :param str id: Unique ID of the API key.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='enable_api_key',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/apikeys/{id}/disable'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
     #########################
     # Service ID operations
     #########################
@@ -585,13 +694,13 @@ class IamIdentityV1(BaseService):
     def list_service_ids(
         self,
         *,
-        account_id: str = None,
-        name: str = None,
-        pagesize: int = None,
-        pagetoken: str = None,
-        sort: str = None,
-        order: str = None,
-        include_history: bool = None,
+        account_id: Optional[str] = None,
+        name: Optional[str] = None,
+        pagesize: Optional[int] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -661,10 +770,10 @@ class IamIdentityV1(BaseService):
         account_id: str,
         name: str,
         *,
-        description: str = None,
-        unique_instance_crns: List[str] = None,
-        apikey: 'ApiKeyInsideCreateServiceIdRequest' = None,
-        entity_lock: str = None,
+        description: Optional[str] = None,
+        unique_instance_crns: Optional[List[str]] = None,
+        apikey: Optional['ApiKeyInsideCreateServiceIdRequest'] = None,
+        entity_lock: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -739,8 +848,8 @@ class IamIdentityV1(BaseService):
         self,
         id: str,
         *,
-        include_history: bool = None,
-        include_activity: bool = None,
+        include_history: Optional[bool] = None,
+        include_activity: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -801,9 +910,9 @@ class IamIdentityV1(BaseService):
         id: str,
         if_match: str,
         *,
-        name: str = None,
-        description: str = None,
-        unique_instance_crns: List[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        unique_instance_crns: Optional[List[str]] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1031,7 +1140,7 @@ class IamIdentityV1(BaseService):
         name: str,
         account_id: str,
         *,
-        description: str = None,
+        description: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1092,12 +1201,12 @@ class IamIdentityV1(BaseService):
         self,
         account_id: str,
         *,
-        name: str = None,
-        pagesize: int = None,
-        sort: str = None,
-        order: str = None,
-        include_history: bool = None,
-        pagetoken: str = None,
+        name: Optional[str] = None,
+        pagesize: Optional[int] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[bool] = None,
+        pagetoken: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1164,7 +1273,7 @@ class IamIdentityV1(BaseService):
         self,
         profile_id: str,
         *,
-        include_activity: bool = None,
+        include_activity: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1221,8 +1330,8 @@ class IamIdentityV1(BaseService):
         profile_id: str,
         if_match: str,
         *,
-        name: str = None,
-        description: str = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1340,11 +1449,11 @@ class IamIdentityV1(BaseService):
         type: str,
         conditions: List['ProfileClaimRuleConditions'],
         *,
-        context: 'ResponseContext' = None,
-        name: str = None,
-        realm_name: str = None,
-        cr_type: str = None,
-        expiration: int = None,
+        context: Optional['ResponseContext'] = None,
+        name: Optional[str] = None,
+        realm_name: Optional[str] = None,
+        cr_type: Optional[str] = None,
+        expiration: Optional[int] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1525,11 +1634,11 @@ class IamIdentityV1(BaseService):
         type: str,
         conditions: List['ProfileClaimRuleConditions'],
         *,
-        context: 'ResponseContext' = None,
-        name: str = None,
-        realm_name: str = None,
-        cr_type: str = None,
-        expiration: int = None,
+        context: Optional['ResponseContext'] = None,
+        name: Optional[str] = None,
+        realm_name: Optional[str] = None,
+        cr_type: Optional[str] = None,
+        expiration: Optional[int] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1674,7 +1783,7 @@ class IamIdentityV1(BaseService):
         cr_type: str,
         link: 'CreateProfileLinkRequestLink',
         *,
-        name: str = None,
+        name: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1925,7 +2034,7 @@ class IamIdentityV1(BaseService):
         profile_id: str,
         if_match: str,
         *,
-        identities: List['ProfileIdentityRequest'] = None,
+        identities: Optional[List['ProfileIdentityRequest']] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1994,8 +2103,8 @@ class IamIdentityV1(BaseService):
         identifier: str,
         type: str,
         *,
-        accounts: List[str] = None,
-        description: str = None,
+        accounts: Optional[List[str]] = None,
+        description: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2182,7 +2291,7 @@ class IamIdentityV1(BaseService):
         self,
         account_id: str,
         *,
-        include_history: bool = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2236,16 +2345,16 @@ class IamIdentityV1(BaseService):
         if_match: str,
         account_id: str,
         *,
-        restrict_create_service_id: str = None,
-        restrict_create_platform_apikey: str = None,
-        allowed_ip_addresses: str = None,
-        mfa: str = None,
-        user_mfa: List['AccountSettingsUserMFA'] = None,
-        session_expiration_in_seconds: str = None,
-        session_invalidation_in_seconds: str = None,
-        max_sessions_per_identity: str = None,
-        system_access_token_expiration_in_seconds: str = None,
-        system_refresh_token_expiration_in_seconds: str = None,
+        restrict_create_service_id: Optional[str] = None,
+        restrict_create_platform_apikey: Optional[str] = None,
+        allowed_ip_addresses: Optional[str] = None,
+        mfa: Optional[str] = None,
+        user_mfa: Optional[List['AccountSettingsUserMFA']] = None,
+        session_expiration_in_seconds: Optional[str] = None,
+        session_invalidation_in_seconds: Optional[str] = None,
+        max_sessions_per_identity: Optional[str] = None,
+        system_access_token_expiration_in_seconds: Optional[str] = None,
+        system_refresh_token_expiration_in_seconds: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2425,7 +2534,7 @@ class IamIdentityV1(BaseService):
         self,
         account_id: str,
         *,
-        type: str = None,
+        type: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2533,16 +2642,16 @@ class IamIdentityV1(BaseService):
     def list_account_settings_assignments(
         self,
         *,
-        account_id: str = None,
-        template_id: str = None,
-        template_version: str = None,
-        target: str = None,
-        target_type: str = None,
-        limit: int = None,
-        pagetoken: str = None,
-        sort: str = None,
-        order: str = None,
-        include_history: bool = None,
+        account_id: Optional[str] = None,
+        template_id: Optional[str] = None,
+        template_version: Optional[str] = None,
+        target: Optional[str] = None,
+        target_type: Optional[str] = None,
+        limit: Optional[int] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2676,7 +2785,7 @@ class IamIdentityV1(BaseService):
         self,
         assignment_id: str,
         *,
-        include_history: bool = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2789,7 +2898,7 @@ class IamIdentityV1(BaseService):
                identifying parallel usage of this API. Pass * to indicate to update any
                version available. This might result in stale updates.
         :param int template_version: Template version to be applied to the
-               assignment. To retry all failed assignemtns, provide the existing version.
+               assignment. To retry all failed assignments, provide the existing version.
                To migrate to a different version, provide the new version number.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -2845,12 +2954,12 @@ class IamIdentityV1(BaseService):
     def list_account_settings_templates(
         self,
         *,
-        account_id: str = None,
-        limit: str = None,
-        pagetoken: str = None,
-        sort: str = None,
-        order: str = None,
-        include_history: str = None,
+        account_id: Optional[str] = None,
+        limit: Optional[str] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2909,10 +3018,10 @@ class IamIdentityV1(BaseService):
     def create_account_settings_template(
         self,
         *,
-        account_id: str = None,
-        name: str = None,
-        description: str = None,
-        account_settings: 'AccountSettingsComponent' = None,
+        account_id: Optional[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        account_settings: Optional['AccountSettingsComponent'] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2972,7 +3081,7 @@ class IamIdentityV1(BaseService):
         self,
         template_id: str,
         *,
-        include_history: bool = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -3070,11 +3179,11 @@ class IamIdentityV1(BaseService):
         self,
         template_id: str,
         *,
-        limit: str = None,
-        pagetoken: str = None,
-        sort: str = None,
-        order: str = None,
-        include_history: str = None,
+        limit: Optional[str] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -3138,10 +3247,10 @@ class IamIdentityV1(BaseService):
         self,
         template_id: str,
         *,
-        account_id: str = None,
-        name: str = None,
-        description: str = None,
-        account_settings: 'AccountSettingsComponent' = None,
+        account_id: Optional[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        account_settings: Optional['AccountSettingsComponent'] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -3208,7 +3317,7 @@ class IamIdentityV1(BaseService):
         template_id: str,
         version: str,
         *,
-        include_history: bool = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -3266,10 +3375,10 @@ class IamIdentityV1(BaseService):
         template_id: str,
         version: str,
         *,
-        account_id: str = None,
-        name: str = None,
-        description: str = None,
-        account_settings: 'AccountSettingsComponent' = None,
+        account_id: Optional[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        account_settings: Optional['AccountSettingsComponent'] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -3448,8 +3557,8 @@ class IamIdentityV1(BaseService):
         self,
         account_id: str,
         *,
-        type: str = None,
-        duration: str = None,
+        type: Optional[str] = None,
+        duration: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -3561,16 +3670,16 @@ class IamIdentityV1(BaseService):
     def list_trusted_profile_assignments(
         self,
         *,
-        account_id: str = None,
-        template_id: str = None,
-        template_version: str = None,
-        target: str = None,
-        target_type: str = None,
-        limit: int = None,
-        pagetoken: str = None,
-        sort: str = None,
-        order: str = None,
-        include_history: bool = None,
+        account_id: Optional[str] = None,
+        template_id: Optional[str] = None,
+        template_version: Optional[str] = None,
+        target: Optional[str] = None,
+        target_type: Optional[str] = None,
+        limit: Optional[int] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -3704,7 +3813,7 @@ class IamIdentityV1(BaseService):
         self,
         assignment_id: str,
         *,
-        include_history: bool = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -3817,7 +3926,7 @@ class IamIdentityV1(BaseService):
                identifying parallel usage of this API. Pass * to indicate to update any
                version available. This might result in stale updates.
         :param int template_version: Template version to be applied to the
-               assignment. To retry all failed assignemtns, provide the existing version.
+               assignment. To retry all failed assignments, provide the existing version.
                To migrate to a different version, provide the new version number.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -3873,12 +3982,12 @@ class IamIdentityV1(BaseService):
     def list_profile_templates(
         self,
         *,
-        account_id: str = None,
-        limit: str = None,
-        pagetoken: str = None,
-        sort: str = None,
-        order: str = None,
-        include_history: str = None,
+        account_id: Optional[str] = None,
+        limit: Optional[str] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -3937,11 +4046,11 @@ class IamIdentityV1(BaseService):
     def create_profile_template(
         self,
         *,
-        account_id: str = None,
-        name: str = None,
-        description: str = None,
-        profile: 'TemplateProfileComponentRequest' = None,
-        policy_template_references: List['PolicyTemplateReference'] = None,
+        account_id: Optional[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        profile: Optional['TemplateProfileComponentRequest'] = None,
+        policy_template_references: Optional[List['PolicyTemplateReference']] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -4010,7 +4119,7 @@ class IamIdentityV1(BaseService):
         self,
         template_id: str,
         *,
-        include_history: bool = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -4107,11 +4216,11 @@ class IamIdentityV1(BaseService):
         self,
         template_id: str,
         *,
-        limit: str = None,
-        pagetoken: str = None,
-        sort: str = None,
-        order: str = None,
-        include_history: str = None,
+        limit: Optional[str] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -4174,11 +4283,11 @@ class IamIdentityV1(BaseService):
         self,
         template_id: str,
         *,
-        account_id: str = None,
-        name: str = None,
-        description: str = None,
-        profile: 'TemplateProfileComponentRequest' = None,
-        policy_template_references: List['PolicyTemplateReference'] = None,
+        account_id: Optional[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        profile: Optional['TemplateProfileComponentRequest'] = None,
+        policy_template_references: Optional[List['PolicyTemplateReference']] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -4254,7 +4363,7 @@ class IamIdentityV1(BaseService):
         template_id: str,
         version: str,
         *,
-        include_history: bool = None,
+        include_history: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -4312,11 +4421,11 @@ class IamIdentityV1(BaseService):
         template_id: str,
         version: str,
         *,
-        account_id: str = None,
-        name: str = None,
-        description: str = None,
-        profile: 'TemplateProfileComponentRequest' = None,
-        policy_template_references: List['PolicyTemplateReference'] = None,
+        account_id: Optional[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        profile: Optional['TemplateProfileComponentRequest'] = None,
+        policy_template_references: Optional[List['PolicyTemplateReference']] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -4769,10 +4878,10 @@ class AccountBasedMfaEnrollment:
     """
     AccountBasedMfaEnrollment.
 
-    :attr MfaEnrollmentTypeStatus security_questions:
-    :attr MfaEnrollmentTypeStatus totp:
-    :attr MfaEnrollmentTypeStatus verisign:
-    :attr bool complies: The enrollment complies to the effective requirement.
+    :param MfaEnrollmentTypeStatus security_questions:
+    :param MfaEnrollmentTypeStatus totp:
+    :param MfaEnrollmentTypeStatus verisign:
+    :param bool complies: The enrollment complies to the effective requirement.
     """
 
     def __init__(
@@ -4799,20 +4908,20 @@ class AccountBasedMfaEnrollment:
     def from_dict(cls, _dict: Dict) -> 'AccountBasedMfaEnrollment':
         """Initialize a AccountBasedMfaEnrollment object from a json dictionary."""
         args = {}
-        if 'security_questions' in _dict:
-            args['security_questions'] = MfaEnrollmentTypeStatus.from_dict(_dict.get('security_questions'))
+        if (security_questions := _dict.get('security_questions')) is not None:
+            args['security_questions'] = MfaEnrollmentTypeStatus.from_dict(security_questions)
         else:
             raise ValueError('Required property \'security_questions\' not present in AccountBasedMfaEnrollment JSON')
-        if 'totp' in _dict:
-            args['totp'] = MfaEnrollmentTypeStatus.from_dict(_dict.get('totp'))
+        if (totp := _dict.get('totp')) is not None:
+            args['totp'] = MfaEnrollmentTypeStatus.from_dict(totp)
         else:
             raise ValueError('Required property \'totp\' not present in AccountBasedMfaEnrollment JSON')
-        if 'verisign' in _dict:
-            args['verisign'] = MfaEnrollmentTypeStatus.from_dict(_dict.get('verisign'))
+        if (verisign := _dict.get('verisign')) is not None:
+            args['verisign'] = MfaEnrollmentTypeStatus.from_dict(verisign)
         else:
             raise ValueError('Required property \'verisign\' not present in AccountBasedMfaEnrollment JSON')
-        if 'complies' in _dict:
-            args['complies'] = _dict.get('complies')
+        if (complies := _dict.get('complies')) is not None:
+            args['complies'] = complies
         else:
             raise ValueError('Required property \'complies\' not present in AccountBasedMfaEnrollment JSON')
         return cls(**args)
@@ -4867,20 +4976,20 @@ class AccountSettingsComponent:
     """
     AccountSettingsComponent.
 
-    :attr str restrict_create_service_id: (optional) Defines whether or not creating
-          a service ID is access controlled. Valid values:
+    :param str restrict_create_service_id: (optional) Defines whether or not
+          creating a service ID is access controlled. Valid values:
             * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
           Identity Service can create service IDs, including the account owner
             * NOT_RESTRICTED - all members of an account can create service IDs
             * NOT_SET - to 'unset' a previous set value.
-    :attr str restrict_create_platform_apikey: (optional) Defines whether or not
+    :param str restrict_create_platform_apikey: (optional) Defines whether or not
           creating platform API keys is access controlled. Valid values:
             * RESTRICTED - to apply access control
             * NOT_RESTRICTED - to remove access control
             * NOT_SET - to 'unset' a previous set value.
-    :attr str allowed_ip_addresses: (optional) Defines the IP addresses and subnets
+    :param str allowed_ip_addresses: (optional) Defines the IP addresses and subnets
           from which IAM tokens can be created for the account.
-    :attr str mfa: (optional) Defines the MFA trait for the account. Valid values:
+    :param str mfa: (optional) Defines the MFA trait for the account. Valid values:
             * NONE - No MFA trait set
             * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
             * TOTP - For all non-federated IBMId users
@@ -4888,26 +4997,26 @@ class AccountSettingsComponent:
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
             * LEVEL3 - U2F MFA for all users.
-    :attr List[AccountSettingsUserMFA] user_mfa: (optional) List of users that are
+    :param List[AccountSettingsUserMFA] user_mfa: (optional) List of users that are
           exempted from the MFA requirement of the account.
-    :attr str session_expiration_in_seconds: (optional) Defines the session
+    :param str session_expiration_in_seconds: (optional) Defines the session
           expiration in seconds for the account. Valid values:
             * Any whole number between between '900' and '86400'
             * NOT_SET - To unset account setting and use service default.
-    :attr str session_invalidation_in_seconds: (optional) Defines the period of time
-          in seconds in which a session will be invalidated due to inactivity. Valid
+    :param str session_invalidation_in_seconds: (optional) Defines the period of
+          time in seconds in which a session will be invalidated due to inactivity. Valid
           values:
             * Any whole number between '900' and '7200'
             * NOT_SET - To unset account setting and use service default.
-    :attr str max_sessions_per_identity: (optional) Defines the max allowed sessions
-          per identity required by the account. Valid values:
+    :param str max_sessions_per_identity: (optional) Defines the max allowed
+          sessions per identity required by the account. Valid values:
             * Any whole number greater than 0
             * NOT_SET - To unset account setting and use service default.
-    :attr str system_access_token_expiration_in_seconds: (optional) Defines the
+    :param str system_access_token_expiration_in_seconds: (optional) Defines the
           access token expiration in seconds. Valid values:
             * Any whole number between '900' and '3600'
             * NOT_SET - To unset account setting and use service default.
-    :attr str system_refresh_token_expiration_in_seconds: (optional) Defines the
+    :param str system_refresh_token_expiration_in_seconds: (optional) Defines the
           refresh token expiration in seconds. Valid values:
             * Any whole number between '900' and '259200'
             * NOT_SET - To unset account setting and use service default.
@@ -4916,16 +5025,16 @@ class AccountSettingsComponent:
     def __init__(
         self,
         *,
-        restrict_create_service_id: str = None,
-        restrict_create_platform_apikey: str = None,
-        allowed_ip_addresses: str = None,
-        mfa: str = None,
-        user_mfa: List['AccountSettingsUserMFA'] = None,
-        session_expiration_in_seconds: str = None,
-        session_invalidation_in_seconds: str = None,
-        max_sessions_per_identity: str = None,
-        system_access_token_expiration_in_seconds: str = None,
-        system_refresh_token_expiration_in_seconds: str = None,
+        restrict_create_service_id: Optional[str] = None,
+        restrict_create_platform_apikey: Optional[str] = None,
+        allowed_ip_addresses: Optional[str] = None,
+        mfa: Optional[str] = None,
+        user_mfa: Optional[List['AccountSettingsUserMFA']] = None,
+        session_expiration_in_seconds: Optional[str] = None,
+        session_invalidation_in_seconds: Optional[str] = None,
+        max_sessions_per_identity: Optional[str] = None,
+        system_access_token_expiration_in_seconds: Optional[str] = None,
+        system_refresh_token_expiration_in_seconds: Optional[str] = None,
     ) -> None:
         """
         Initialize a AccountSettingsComponent object.
@@ -4991,26 +5100,30 @@ class AccountSettingsComponent:
     def from_dict(cls, _dict: Dict) -> 'AccountSettingsComponent':
         """Initialize a AccountSettingsComponent object from a json dictionary."""
         args = {}
-        if 'restrict_create_service_id' in _dict:
-            args['restrict_create_service_id'] = _dict.get('restrict_create_service_id')
-        if 'restrict_create_platform_apikey' in _dict:
-            args['restrict_create_platform_apikey'] = _dict.get('restrict_create_platform_apikey')
-        if 'allowed_ip_addresses' in _dict:
-            args['allowed_ip_addresses'] = _dict.get('allowed_ip_addresses')
-        if 'mfa' in _dict:
-            args['mfa'] = _dict.get('mfa')
-        if 'user_mfa' in _dict:
-            args['user_mfa'] = [AccountSettingsUserMFA.from_dict(v) for v in _dict.get('user_mfa')]
-        if 'session_expiration_in_seconds' in _dict:
-            args['session_expiration_in_seconds'] = _dict.get('session_expiration_in_seconds')
-        if 'session_invalidation_in_seconds' in _dict:
-            args['session_invalidation_in_seconds'] = _dict.get('session_invalidation_in_seconds')
-        if 'max_sessions_per_identity' in _dict:
-            args['max_sessions_per_identity'] = _dict.get('max_sessions_per_identity')
-        if 'system_access_token_expiration_in_seconds' in _dict:
-            args['system_access_token_expiration_in_seconds'] = _dict.get('system_access_token_expiration_in_seconds')
-        if 'system_refresh_token_expiration_in_seconds' in _dict:
-            args['system_refresh_token_expiration_in_seconds'] = _dict.get('system_refresh_token_expiration_in_seconds')
+        if (restrict_create_service_id := _dict.get('restrict_create_service_id')) is not None:
+            args['restrict_create_service_id'] = restrict_create_service_id
+        if (restrict_create_platform_apikey := _dict.get('restrict_create_platform_apikey')) is not None:
+            args['restrict_create_platform_apikey'] = restrict_create_platform_apikey
+        if (allowed_ip_addresses := _dict.get('allowed_ip_addresses')) is not None:
+            args['allowed_ip_addresses'] = allowed_ip_addresses
+        if (mfa := _dict.get('mfa')) is not None:
+            args['mfa'] = mfa
+        if (user_mfa := _dict.get('user_mfa')) is not None:
+            args['user_mfa'] = [AccountSettingsUserMFA.from_dict(v) for v in user_mfa]
+        if (session_expiration_in_seconds := _dict.get('session_expiration_in_seconds')) is not None:
+            args['session_expiration_in_seconds'] = session_expiration_in_seconds
+        if (session_invalidation_in_seconds := _dict.get('session_invalidation_in_seconds')) is not None:
+            args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
+        if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
+            args['max_sessions_per_identity'] = max_sessions_per_identity
+        if (
+            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
+        ) is not None:
+            args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
+        if (
+            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
+        ) is not None:
+            args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         return cls(**args)
 
     @classmethod
@@ -5124,24 +5237,24 @@ class AccountSettingsResponse:
     """
     Response body format for Account Settings REST requests.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr str account_id: Unique ID of the account.
-    :attr str restrict_create_service_id: Defines whether or not creating a service
+    :param str account_id: Unique ID of the account.
+    :param str restrict_create_service_id: Defines whether or not creating a service
           ID is access controlled. Valid values:
             * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
           Identity Service can create service IDs, including the account owner
             * NOT_RESTRICTED - all members of an account can create service IDs
             * NOT_SET - to 'unset' a previous set value.
-    :attr str restrict_create_platform_apikey: Defines whether or not creating
+    :param str restrict_create_platform_apikey: Defines whether or not creating
           platform API keys is access controlled. Valid values:
             * RESTRICTED - to apply access control
             * NOT_RESTRICTED - to remove access control
             * NOT_SET - to 'unset' a previous set value.
-    :attr str allowed_ip_addresses: Defines the IP addresses and subnets from which
+    :param str allowed_ip_addresses: Defines the IP addresses and subnets from which
           IAM tokens can be created for the account.
-    :attr str entity_tag: Version of the account settings.
-    :attr str mfa: Defines the MFA trait for the account. Valid values:
+    :param str entity_tag: Version of the account settings.
+    :param str mfa: Defines the MFA trait for the account. Valid values:
             * NONE - No MFA trait set
             * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
             * TOTP - For all non-federated IBMId users
@@ -5149,27 +5262,27 @@ class AccountSettingsResponse:
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
             * LEVEL3 - U2F MFA for all users.
-    :attr List[AccountSettingsUserMFA] user_mfa: List of users that are exempted
+    :param List[AccountSettingsUserMFA] user_mfa: List of users that are exempted
           from the MFA requirement of the account.
-    :attr List[EnityHistoryRecord] history: (optional) History of the Account
+    :param List[EnityHistoryRecord] history: (optional) History of the Account
           Settings.
-    :attr str session_expiration_in_seconds: Defines the session expiration in
+    :param str session_expiration_in_seconds: Defines the session expiration in
           seconds for the account. Valid values:
             * Any whole number between between '900' and '86400'
             * NOT_SET - To unset account setting and use service default.
-    :attr str session_invalidation_in_seconds: Defines the period of time in seconds
-          in which a session will be invalidated due to inactivity. Valid values:
+    :param str session_invalidation_in_seconds: Defines the period of time in
+          seconds in which a session will be invalidated due to inactivity. Valid values:
             * Any whole number between '900' and '7200'
             * NOT_SET - To unset account setting and use service default.
-    :attr str max_sessions_per_identity: Defines the max allowed sessions per
+    :param str max_sessions_per_identity: Defines the max allowed sessions per
           identity required by the account. Valid values:
             * Any whole number greater than 0
             * NOT_SET - To unset account setting and use service default.
-    :attr str system_access_token_expiration_in_seconds: Defines the access token
+    :param str system_access_token_expiration_in_seconds: Defines the access token
           expiration in seconds. Valid values:
             * Any whole number between '900' and '3600'
             * NOT_SET - To unset account setting and use service default.
-    :attr str system_refresh_token_expiration_in_seconds: Defines the refresh token
+    :param str system_refresh_token_expiration_in_seconds: Defines the refresh token
           expiration in seconds. Valid values:
             * Any whole number between '900' and '259200'
             * NOT_SET - To unset account setting and use service default.
@@ -5190,8 +5303,8 @@ class AccountSettingsResponse:
         system_access_token_expiration_in_seconds: str,
         system_refresh_token_expiration_in_seconds: str,
         *,
-        context: 'ResponseContext' = None,
-        history: List['EnityHistoryRecord'] = None,
+        context: Optional['ResponseContext'] = None,
+        history: Optional[List['EnityHistoryRecord']] = None,
     ) -> None:
         """
         Initialize a AccountSettingsResponse object.
@@ -5266,68 +5379,72 @@ class AccountSettingsResponse:
     def from_dict(cls, _dict: Dict) -> 'AccountSettingsResponse':
         """Initialize a AccountSettingsResponse object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in AccountSettingsResponse JSON')
-        if 'restrict_create_service_id' in _dict:
-            args['restrict_create_service_id'] = _dict.get('restrict_create_service_id')
+        if (restrict_create_service_id := _dict.get('restrict_create_service_id')) is not None:
+            args['restrict_create_service_id'] = restrict_create_service_id
         else:
             raise ValueError(
                 'Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON'
             )
-        if 'restrict_create_platform_apikey' in _dict:
-            args['restrict_create_platform_apikey'] = _dict.get('restrict_create_platform_apikey')
+        if (restrict_create_platform_apikey := _dict.get('restrict_create_platform_apikey')) is not None:
+            args['restrict_create_platform_apikey'] = restrict_create_platform_apikey
         else:
             raise ValueError(
                 'Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON'
             )
-        if 'allowed_ip_addresses' in _dict:
-            args['allowed_ip_addresses'] = _dict.get('allowed_ip_addresses')
+        if (allowed_ip_addresses := _dict.get('allowed_ip_addresses')) is not None:
+            args['allowed_ip_addresses'] = allowed_ip_addresses
         else:
             raise ValueError('Required property \'allowed_ip_addresses\' not present in AccountSettingsResponse JSON')
-        if 'entity_tag' in _dict:
-            args['entity_tag'] = _dict.get('entity_tag')
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
         else:
             raise ValueError('Required property \'entity_tag\' not present in AccountSettingsResponse JSON')
-        if 'mfa' in _dict:
-            args['mfa'] = _dict.get('mfa')
+        if (mfa := _dict.get('mfa')) is not None:
+            args['mfa'] = mfa
         else:
             raise ValueError('Required property \'mfa\' not present in AccountSettingsResponse JSON')
-        if 'user_mfa' in _dict:
-            args['user_mfa'] = [AccountSettingsUserMFA.from_dict(v) for v in _dict.get('user_mfa')]
+        if (user_mfa := _dict.get('user_mfa')) is not None:
+            args['user_mfa'] = [AccountSettingsUserMFA.from_dict(v) for v in user_mfa]
         else:
             raise ValueError('Required property \'user_mfa\' not present in AccountSettingsResponse JSON')
-        if 'history' in _dict:
-            args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
-        if 'session_expiration_in_seconds' in _dict:
-            args['session_expiration_in_seconds'] = _dict.get('session_expiration_in_seconds')
+        if (history := _dict.get('history')) is not None:
+            args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
+        if (session_expiration_in_seconds := _dict.get('session_expiration_in_seconds')) is not None:
+            args['session_expiration_in_seconds'] = session_expiration_in_seconds
         else:
             raise ValueError(
                 'Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
             )
-        if 'session_invalidation_in_seconds' in _dict:
-            args['session_invalidation_in_seconds'] = _dict.get('session_invalidation_in_seconds')
+        if (session_invalidation_in_seconds := _dict.get('session_invalidation_in_seconds')) is not None:
+            args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         else:
             raise ValueError(
                 'Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON'
             )
-        if 'max_sessions_per_identity' in _dict:
-            args['max_sessions_per_identity'] = _dict.get('max_sessions_per_identity')
+        if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
+            args['max_sessions_per_identity'] = max_sessions_per_identity
         else:
             raise ValueError(
                 'Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON'
             )
-        if 'system_access_token_expiration_in_seconds' in _dict:
-            args['system_access_token_expiration_in_seconds'] = _dict.get('system_access_token_expiration_in_seconds')
+        if (
+            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
+        ) is not None:
+            args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
         else:
             raise ValueError(
                 'Required property \'system_access_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
             )
-        if 'system_refresh_token_expiration_in_seconds' in _dict:
-            args['system_refresh_token_expiration_in_seconds'] = _dict.get('system_refresh_token_expiration_in_seconds')
+        if (
+            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
+        ) is not None:
+            args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         else:
             raise ValueError(
                 'Required property \'system_refresh_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
@@ -5462,16 +5579,16 @@ class AccountSettingsTemplateList:
     """
     AccountSettingsTemplateList.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr int offset: (optional) The offset of the current page.
-    :attr int limit: (optional) Optional size of a single page.
-    :attr str first: (optional) Link to the first page.
-    :attr str previous: (optional) Link to the previous available page. If
+    :param int offset: (optional) The offset of the current page.
+    :param int limit: (optional) Optional size of a single page.
+    :param str first: (optional) Link to the first page.
+    :param str previous: (optional) Link to the previous available page. If
           'previous' property is not part of the response no previous page is available.
-    :attr str next: (optional) Link to the next available page. If 'next' property
+    :param str next: (optional) Link to the next available page. If 'next' property
           is not part of the response no next page is available.
-    :attr List[AccountSettingsTemplateResponse] account_settings_templates: List of
+    :param List[AccountSettingsTemplateResponse] account_settings_templates: List of
           account settings templates based on the query paramters and the page size. The
           account_settings_templates array is always part of the response but might be
           empty depending on the query parameter values provided.
@@ -5481,12 +5598,12 @@ class AccountSettingsTemplateList:
         self,
         account_settings_templates: List['AccountSettingsTemplateResponse'],
         *,
-        context: 'ResponseContext' = None,
-        offset: int = None,
-        limit: int = None,
-        first: str = None,
-        previous: str = None,
-        next: str = None,
+        context: Optional['ResponseContext'] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+        first: Optional[str] = None,
+        previous: Optional[str] = None,
+        next: Optional[str] = None,
     ) -> None:
         """
         Initialize a AccountSettingsTemplateList object.
@@ -5519,21 +5636,21 @@ class AccountSettingsTemplateList:
     def from_dict(cls, _dict: Dict) -> 'AccountSettingsTemplateList':
         """Initialize a AccountSettingsTemplateList object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
-        if 'first' in _dict:
-            args['first'] = _dict.get('first')
-        if 'previous' in _dict:
-            args['previous'] = _dict.get('previous')
-        if 'next' in _dict:
-            args['next'] = _dict.get('next')
-        if 'account_settings_templates' in _dict:
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = first
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = previous
+        if (next := _dict.get('next')) is not None:
+            args['next'] = next
+        if (account_settings_templates := _dict.get('account_settings_templates')) is not None:
             args['account_settings_templates'] = [
-                AccountSettingsTemplateResponse.from_dict(v) for v in _dict.get('account_settings_templates')
+                AccountSettingsTemplateResponse.from_dict(v) for v in account_settings_templates
             ]
         else:
             raise ValueError(
@@ -5597,23 +5714,23 @@ class AccountSettingsTemplateResponse:
     """
     Response body format for account settings template REST requests.
 
-    :attr str id: ID of the the template.
-    :attr int version: Version of the the template.
-    :attr str account_id: ID of the account where the template resides.
-    :attr str name: The name of the trusted profile template. This is visible only
+    :param str id: ID of the the template.
+    :param int version: Version of the the template.
+    :param str account_id: ID of the account where the template resides.
+    :param str name: The name of the trusted profile template. This is visible only
           in the enterprise account.
-    :attr str description: (optional) The description of the trusted profile
+    :param str description: (optional) The description of the trusted profile
           template. Describe the template for enterprise account users.
-    :attr bool committed: Committed flag determines if the template is ready for
+    :param bool committed: Committed flag determines if the template is ready for
           assignment.
-    :attr AccountSettingsComponent account_settings:
-    :attr List[EnityHistoryRecord] history: (optional) History of the Template.
-    :attr str entity_tag: Entity tag for this templateId-version combination.
-    :attr str crn: Cloud resource name.
-    :attr str created_at: (optional) Template Created At.
-    :attr str created_by_id: (optional) IAMid of the creator.
-    :attr str last_modified_at: (optional) Template last modified at.
-    :attr str last_modified_by_id: (optional) IAMid of the identity that made the
+    :param AccountSettingsComponent account_settings:
+    :param List[EnityHistoryRecord] history: (optional) History of the Template.
+    :param str entity_tag: Entity tag for this templateId-version combination.
+    :param str crn: Cloud resource name.
+    :param str created_at: (optional) Template Created At.
+    :param str created_by_id: (optional) IAMid of the creator.
+    :param str last_modified_at: (optional) Template last modified at.
+    :param str last_modified_by_id: (optional) IAMid of the identity that made the
           latest modification.
     """
 
@@ -5628,12 +5745,12 @@ class AccountSettingsTemplateResponse:
         entity_tag: str,
         crn: str,
         *,
-        description: str = None,
-        history: List['EnityHistoryRecord'] = None,
-        created_at: str = None,
-        created_by_id: str = None,
-        last_modified_at: str = None,
-        last_modified_by_id: str = None,
+        description: Optional[str] = None,
+        history: Optional[List['EnityHistoryRecord']] = None,
+        created_at: Optional[str] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[str] = None,
+        last_modified_by_id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AccountSettingsTemplateResponse object.
@@ -5677,52 +5794,52 @@ class AccountSettingsTemplateResponse:
     def from_dict(cls, _dict: Dict) -> 'AccountSettingsTemplateResponse':
         """Initialize a AccountSettingsTemplateResponse object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in AccountSettingsTemplateResponse JSON')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
         else:
             raise ValueError('Required property \'version\' not present in AccountSettingsTemplateResponse JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in AccountSettingsTemplateResponse JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in AccountSettingsTemplateResponse JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'committed' in _dict:
-            args['committed'] = _dict.get('committed')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (committed := _dict.get('committed')) is not None:
+            args['committed'] = committed
         else:
             raise ValueError('Required property \'committed\' not present in AccountSettingsTemplateResponse JSON')
-        if 'account_settings' in _dict:
-            args['account_settings'] = AccountSettingsComponent.from_dict(_dict.get('account_settings'))
+        if (account_settings := _dict.get('account_settings')) is not None:
+            args['account_settings'] = AccountSettingsComponent.from_dict(account_settings)
         else:
             raise ValueError(
                 'Required property \'account_settings\' not present in AccountSettingsTemplateResponse JSON'
             )
-        if 'history' in _dict:
-            args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
-        if 'entity_tag' in _dict:
-            args['entity_tag'] = _dict.get('entity_tag')
+        if (history := _dict.get('history')) is not None:
+            args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
         else:
             raise ValueError('Required property \'entity_tag\' not present in AccountSettingsTemplateResponse JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
         else:
             raise ValueError('Required property \'crn\' not present in AccountSettingsTemplateResponse JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = _dict.get('last_modified_at')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = created_at
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = last_modified_at
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         return cls(**args)
 
     @classmethod
@@ -5795,8 +5912,8 @@ class AccountSettingsUserMFA:
     """
     AccountSettingsUserMFA.
 
-    :attr str iam_id: The iam_id of the user.
-    :attr str mfa: Defines the MFA requirement for the user. Valid values:
+    :param str iam_id: The iam_id of the user.
+    :param str mfa: Defines the MFA requirement for the user. Valid values:
             * NONE - No MFA trait set
             * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
             * TOTP - For all non-federated IBMId users
@@ -5831,12 +5948,12 @@ class AccountSettingsUserMFA:
     def from_dict(cls, _dict: Dict) -> 'AccountSettingsUserMFA':
         """Initialize a AccountSettingsUserMFA object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
         else:
             raise ValueError('Required property \'iam_id\' not present in AccountSettingsUserMFA JSON')
-        if 'mfa' in _dict:
-            args['mfa'] = _dict.get('mfa')
+        if (mfa := _dict.get('mfa')) is not None:
+            args['mfa'] = mfa
         else:
             raise ValueError('Required property \'mfa\' not present in AccountSettingsUserMFA JSON')
         return cls(**args)
@@ -5898,8 +6015,8 @@ class Activity:
     """
     Activity.
 
-    :attr str last_authn: (optional) Time when the entity was last authenticated.
-    :attr int authn_count: Authentication count, number of times the entity was
+    :param str last_authn: (optional) Time when the entity was last authenticated.
+    :param int authn_count: Authentication count, number of times the entity was
           authenticated.
     """
 
@@ -5907,7 +6024,7 @@ class Activity:
         self,
         authn_count: int,
         *,
-        last_authn: str = None,
+        last_authn: Optional[str] = None,
     ) -> None:
         """
         Initialize a Activity object.
@@ -5924,10 +6041,10 @@ class Activity:
     def from_dict(cls, _dict: Dict) -> 'Activity':
         """Initialize a Activity object from a json dictionary."""
         args = {}
-        if 'last_authn' in _dict:
-            args['last_authn'] = _dict.get('last_authn')
-        if 'authn_count' in _dict:
-            args['authn_count'] = _dict.get('authn_count')
+        if (last_authn := _dict.get('last_authn')) is not None:
+            args['last_authn'] = last_authn
+        if (authn_count := _dict.get('authn_count')) is not None:
+            args['authn_count'] = authn_count
         else:
             raise ValueError('Required property \'authn_count\' not present in Activity JSON')
         return cls(**args)
@@ -5969,35 +6086,41 @@ class ApiKey:
     """
     Response body format for API key V1 REST requests.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr str id: Unique identifier of this API Key.
-    :attr str entity_tag: (optional) Version of the API Key details object. You need
-          to specify this value when updating the API key to avoid stale updates.
-    :attr str crn: Cloud Resource Name of the item. Example Cloud Resource Name:
+    :param str id: Unique identifier of this API Key.
+    :param str entity_tag: (optional) Version of the API Key details object. You
+          need to specify this value when updating the API key to avoid stale updates.
+    :param str crn: Cloud Resource Name of the item. Example Cloud Resource Name:
           'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::apikey:1234-9012-5678'.
-    :attr bool locked: The API key cannot be changed if set to true.
-    :attr datetime created_at: (optional) If set contains a date time string of the
+    :param bool locked: The API key cannot be changed if set to true.
+    :param bool disabled: (optional) Defines if API key is disabled, API key cannot
+          be used if 'disabled' is set to true.
+    :param datetime created_at: (optional) If set contains a date time string of the
           creation date in ISO format.
-    :attr str created_by: IAM ID of the user or service which created the API key.
-    :attr datetime modified_at: (optional) If set contains a date time string of the
-          last modification date in ISO format.
-    :attr str name: Name of the API key. The name is not checked for uniqueness.
+    :param str created_by: IAM ID of the user or service which created the API key.
+    :param datetime modified_at: (optional) If set contains a date time string of
+          the last modification date in ISO format.
+    :param str name: Name of the API key. The name is not checked for uniqueness.
           Therefore multiple names with the same value can exist. Access is done via the
           UUID of the API key.
-    :attr str description: (optional) The optional description of the API key. The
+    :param bool support_sessions: (optional) Defines if the API key supports
+          sessions. Sessions are only supported for user apikeys.
+    :param str action_when_leaked: (optional) Defines the action to take when API
+          key is leaked, valid values are 'none', 'disable' and 'delete'.
+    :param str description: (optional) The optional description of the API key. The
           'description' property is only available if a description was provided during a
           create of an API key.
-    :attr str iam_id: The iam_id that this API key authenticates.
-    :attr str account_id: ID of the account that this API key authenticates for.
-    :attr str apikey: The API key value. This property only contains the API key
+    :param str iam_id: The iam_id that this API key authenticates.
+    :param str account_id: ID of the account that this API key authenticates for.
+    :param str apikey: The API key value. This property only contains the API key
           value for the following cases: create an API key, update a service ID API key
           that stores the API key value as retrievable, or get a service ID API key that
           stores the API key value as retrievable. All other operations don't return the
           API key value, for example all user API key related operations, except for
           create, don't contain the API key value.
-    :attr List[EnityHistoryRecord] history: (optional) History of the API key.
-    :attr Activity activity: (optional)
+    :param List[EnityHistoryRecord] history: (optional) History of the API key.
+    :param Activity activity: (optional)
     """
 
     def __init__(
@@ -6011,13 +6134,16 @@ class ApiKey:
         account_id: str,
         apikey: str,
         *,
-        context: 'ResponseContext' = None,
-        entity_tag: str = None,
-        created_at: datetime = None,
-        modified_at: datetime = None,
-        description: str = None,
-        history: List['EnityHistoryRecord'] = None,
-        activity: 'Activity' = None,
+        context: Optional['ResponseContext'] = None,
+        entity_tag: Optional[str] = None,
+        disabled: Optional[bool] = None,
+        created_at: Optional[datetime] = None,
+        modified_at: Optional[datetime] = None,
+        support_sessions: Optional[bool] = None,
+        action_when_leaked: Optional[str] = None,
+        description: Optional[str] = None,
+        history: Optional[List['EnityHistoryRecord']] = None,
+        activity: Optional['Activity'] = None,
     ) -> None:
         """
         Initialize a ApiKey object.
@@ -6046,10 +6172,16 @@ class ApiKey:
         :param str entity_tag: (optional) Version of the API Key details object.
                You need to specify this value when updating the API key to avoid stale
                updates.
+        :param bool disabled: (optional) Defines if API key is disabled, API key
+               cannot be used if 'disabled' is set to true.
         :param datetime created_at: (optional) If set contains a date time string
                of the creation date in ISO format.
         :param datetime modified_at: (optional) If set contains a date time string
                of the last modification date in ISO format.
+        :param bool support_sessions: (optional) Defines if the API key supports
+               sessions. Sessions are only supported for user apikeys.
+        :param str action_when_leaked: (optional) Defines the action to take when
+               API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param str description: (optional) The optional description of the API key.
                The 'description' property is only available if a description was provided
                during a create of an API key.
@@ -6061,10 +6193,13 @@ class ApiKey:
         self.entity_tag = entity_tag
         self.crn = crn
         self.locked = locked
+        self.disabled = disabled
         self.created_at = created_at
         self.created_by = created_by
         self.modified_at = modified_at
         self.name = name
+        self.support_sessions = support_sessions
+        self.action_when_leaked = action_when_leaked
         self.description = description
         self.iam_id = iam_id
         self.account_id = account_id
@@ -6076,52 +6211,58 @@ class ApiKey:
     def from_dict(cls, _dict: Dict) -> 'ApiKey':
         """Initialize a ApiKey object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in ApiKey JSON')
-        if 'entity_tag' in _dict:
-            args['entity_tag'] = _dict.get('entity_tag')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
         else:
             raise ValueError('Required property \'crn\' not present in ApiKey JSON')
-        if 'locked' in _dict:
-            args['locked'] = _dict.get('locked')
+        if (locked := _dict.get('locked')) is not None:
+            args['locked'] = locked
         else:
             raise ValueError('Required property \'locked\' not present in ApiKey JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
+        if (disabled := _dict.get('disabled')) is not None:
+            args['disabled'] = disabled
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
         else:
             raise ValueError('Required property \'created_by\' not present in ApiKey JSON')
-        if 'modified_at' in _dict:
-            args['modified_at'] = string_to_datetime(_dict.get('modified_at'))
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (modified_at := _dict.get('modified_at')) is not None:
+            args['modified_at'] = string_to_datetime(modified_at)
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in ApiKey JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
+        if (support_sessions := _dict.get('support_sessions')) is not None:
+            args['support_sessions'] = support_sessions
+        if (action_when_leaked := _dict.get('action_when_leaked')) is not None:
+            args['action_when_leaked'] = action_when_leaked
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
         else:
             raise ValueError('Required property \'iam_id\' not present in ApiKey JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in ApiKey JSON')
-        if 'apikey' in _dict:
-            args['apikey'] = _dict.get('apikey')
+        if (apikey := _dict.get('apikey')) is not None:
+            args['apikey'] = apikey
         else:
             raise ValueError('Required property \'apikey\' not present in ApiKey JSON')
-        if 'history' in _dict:
-            args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
-        if 'activity' in _dict:
-            args['activity'] = Activity.from_dict(_dict.get('activity'))
+        if (history := _dict.get('history')) is not None:
+            args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
+        if (activity := _dict.get('activity')) is not None:
+            args['activity'] = Activity.from_dict(activity)
         return cls(**args)
 
     @classmethod
@@ -6145,6 +6286,8 @@ class ApiKey:
             _dict['crn'] = self.crn
         if hasattr(self, 'locked') and self.locked is not None:
             _dict['locked'] = self.locked
+        if hasattr(self, 'disabled') and self.disabled is not None:
+            _dict['disabled'] = self.disabled
         if hasattr(self, 'created_at') and self.created_at is not None:
             _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'created_by') and self.created_by is not None:
@@ -6153,6 +6296,10 @@ class ApiKey:
             _dict['modified_at'] = datetime_to_string(self.modified_at)
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
+        if hasattr(self, 'support_sessions') and self.support_sessions is not None:
+            _dict['support_sessions'] = self.support_sessions
+        if hasattr(self, 'action_when_leaked') and self.action_when_leaked is not None:
+            _dict['action_when_leaked'] = self.action_when_leaked
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
         if hasattr(self, 'iam_id') and self.iam_id is not None:
@@ -6199,19 +6346,21 @@ class ApiKeyInsideCreateServiceIdRequest:
     """
     Parameters for the API key in the Create service Id V1 REST request.
 
-    :attr str name: Name of the API key. The name is not checked for uniqueness.
+    :param str name: Name of the API key. The name is not checked for uniqueness.
           Therefore multiple names with the same value can exist. Access is done via the
           UUID of the API key.
-    :attr str description: (optional) The optional description of the API key. The
+    :param str description: (optional) The optional description of the API key. The
           'description' property is only available if a description was provided during a
           create of an API key.
-    :attr str apikey: (optional) You can optionally passthrough the API key value
-          for this API key. If passed, NO validation of that apiKey value is done, i.e.
-          the value can be non-URL safe. If omitted, the API key management will create an
-          URL safe opaque API key value. The value of the API key is checked for
-          uniqueness. Please ensure enough variations when passing in this value.
-    :attr bool store_value: (optional) Send true or false to set whether the API key
-          value is retrievable in the future by using the Get details of an API key
+    :param str apikey: (optional) You can optionally passthrough the API key value
+          for this API key. If passed, a minimum length validation of 32 characters for
+          that apiKey value is done, i.e. the value can contain any characters and can
+          even be non-URL safe, but the minimum length requirement must be met. If
+          omitted, the API key management will create an URL safe opaque API key value.
+          The value of the API key is checked for uniqueness. Ensure enough variations
+          when passing in this value.
+    :param bool store_value: (optional) Send true or false to set whether the API
+          key value is retrievable in the future by using the Get details of an API key
           request. If you create an API key for a user, you must specify `false` or omit
           the value. We don't allow storing of API keys for users.
     """
@@ -6220,9 +6369,9 @@ class ApiKeyInsideCreateServiceIdRequest:
         self,
         name: str,
         *,
-        description: str = None,
-        apikey: str = None,
-        store_value: bool = None,
+        description: Optional[str] = None,
+        apikey: Optional[str] = None,
+        store_value: Optional[bool] = None,
     ) -> None:
         """
         Initialize a ApiKeyInsideCreateServiceIdRequest object.
@@ -6234,11 +6383,12 @@ class ApiKeyInsideCreateServiceIdRequest:
                The 'description' property is only available if a description was provided
                during a create of an API key.
         :param str apikey: (optional) You can optionally passthrough the API key
-               value for this API key. If passed, NO validation of that apiKey value is
-               done, i.e. the value can be non-URL safe. If omitted, the API key
-               management will create an URL safe opaque API key value. The value of the
-               API key is checked for uniqueness. Please ensure enough variations when
-               passing in this value.
+               value for this API key. If passed, a minimum length validation of 32
+               characters for that apiKey value is done, i.e. the value can contain any
+               characters and can even be non-URL safe, but the minimum length requirement
+               must be met. If omitted, the API key management will create an URL safe
+               opaque API key value. The value of the API key is checked for uniqueness.
+               Ensure enough variations when passing in this value.
         :param bool store_value: (optional) Send true or false to set whether the
                API key value is retrievable in the future by using the Get details of an
                API key request. If you create an API key for a user, you must specify
@@ -6253,16 +6403,16 @@ class ApiKeyInsideCreateServiceIdRequest:
     def from_dict(cls, _dict: Dict) -> 'ApiKeyInsideCreateServiceIdRequest':
         """Initialize a ApiKeyInsideCreateServiceIdRequest object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in ApiKeyInsideCreateServiceIdRequest JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'apikey' in _dict:
-            args['apikey'] = _dict.get('apikey')
-        if 'store_value' in _dict:
-            args['store_value'] = _dict.get('store_value')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (apikey := _dict.get('apikey')) is not None:
+            args['apikey'] = apikey
+        if (store_value := _dict.get('store_value')) is not None:
+            args['store_value'] = store_value
         return cls(**args)
 
     @classmethod
@@ -6306,17 +6456,17 @@ class ApiKeyList:
     """
     Response body format for the List API keys V1 REST request.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr int offset: (optional) The offset of the current page.
-    :attr int limit: (optional) Optional size of a single page. Default is 20 items
+    :param int offset: (optional) The offset of the current page.
+    :param int limit: (optional) Optional size of a single page. Default is 20 items
           per page. Valid range is 1 to 100.
-    :attr str first: (optional) Link to the first page.
-    :attr str previous: (optional) Link to the previous available page. If
+    :param str first: (optional) Link to the first page.
+    :param str previous: (optional) Link to the previous available page. If
           'previous' property is not part of the response no previous page is available.
-    :attr str next: (optional) Link to the next available page. If 'next' property
+    :param str next: (optional) Link to the next available page. If 'next' property
           is not part of the response no next page is available.
-    :attr List[ApiKey] apikeys: List of API keys based on the query paramters and
+    :param List[ApiKey] apikeys: List of API keys based on the query paramters and
           the page size. The apikeys array is always part of the response but might be
           empty depending on the query parameters values provided.
     """
@@ -6325,12 +6475,12 @@ class ApiKeyList:
         self,
         apikeys: List['ApiKey'],
         *,
-        context: 'ResponseContext' = None,
-        offset: int = None,
-        limit: int = None,
-        first: str = None,
-        previous: str = None,
-        next: str = None,
+        context: Optional['ResponseContext'] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+        first: Optional[str] = None,
+        previous: Optional[str] = None,
+        next: Optional[str] = None,
     ) -> None:
         """
         Initialize a ApiKeyList object.
@@ -6362,20 +6512,20 @@ class ApiKeyList:
     def from_dict(cls, _dict: Dict) -> 'ApiKeyList':
         """Initialize a ApiKeyList object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
-        if 'first' in _dict:
-            args['first'] = _dict.get('first')
-        if 'previous' in _dict:
-            args['previous'] = _dict.get('previous')
-        if 'next' in _dict:
-            args['next'] = _dict.get('next')
-        if 'apikeys' in _dict:
-            args['apikeys'] = [ApiKey.from_dict(v) for v in _dict.get('apikeys')]
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = first
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = previous
+        if (next := _dict.get('next')) is not None:
+            args['next'] = next
+        if (apikeys := _dict.get('apikeys')) is not None:
+            args['apikeys'] = [ApiKey.from_dict(v) for v in apikeys]
         else:
             raise ValueError('Required property \'apikeys\' not present in ApiKeyList JSON')
         return cls(**args)
@@ -6436,14 +6586,15 @@ class ApikeyActivity:
     """
     Apikeys activity details.
 
-    :attr str id: Unique id of the apikey.
-    :attr str name: (optional) Name provided during creation of the apikey.
-    :attr str type: Type of the apikey. Supported values are `serviceid` and `user`.
-    :attr ApikeyActivityServiceid serviceid: (optional) serviceid details will be
+    :param str id: Unique id of the apikey.
+    :param str name: (optional) Name provided during creation of the apikey.
+    :param str type: Type of the apikey. Supported values are `serviceid` and
+          `user`.
+    :param ApikeyActivityServiceid serviceid: (optional) serviceid details will be
           present if type is `serviceid`.
-    :attr ApikeyActivityUser user: (optional) user details will be present if type
+    :param ApikeyActivityUser user: (optional) user details will be present if type
           is `user`.
-    :attr str last_authn: (optional) Time when the apikey was last authenticated.
+    :param str last_authn: (optional) Time when the apikey was last authenticated.
     """
 
     def __init__(
@@ -6451,10 +6602,10 @@ class ApikeyActivity:
         id: str,
         type: str,
         *,
-        name: str = None,
-        serviceid: 'ApikeyActivityServiceid' = None,
-        user: 'ApikeyActivityUser' = None,
-        last_authn: str = None,
+        name: Optional[str] = None,
+        serviceid: Optional['ApikeyActivityServiceid'] = None,
+        user: Optional['ApikeyActivityUser'] = None,
+        last_authn: Optional[str] = None,
     ) -> None:
         """
         Initialize a ApikeyActivity object.
@@ -6481,22 +6632,22 @@ class ApikeyActivity:
     def from_dict(cls, _dict: Dict) -> 'ApikeyActivity':
         """Initialize a ApikeyActivity object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in ApikeyActivity JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in ApikeyActivity JSON')
-        if 'serviceid' in _dict:
-            args['serviceid'] = ApikeyActivityServiceid.from_dict(_dict.get('serviceid'))
-        if 'user' in _dict:
-            args['user'] = ApikeyActivityUser.from_dict(_dict.get('user'))
-        if 'last_authn' in _dict:
-            args['last_authn'] = _dict.get('last_authn')
+        if (serviceid := _dict.get('serviceid')) is not None:
+            args['serviceid'] = ApikeyActivityServiceid.from_dict(serviceid)
+        if (user := _dict.get('user')) is not None:
+            args['user'] = ApikeyActivityUser.from_dict(user)
+        if (last_authn := _dict.get('last_authn')) is not None:
+            args['last_authn'] = last_authn
         return cls(**args)
 
     @classmethod
@@ -6550,15 +6701,15 @@ class ApikeyActivityServiceid:
     """
     serviceid details will be present if type is `serviceid`.
 
-    :attr str id: (optional) Unique identifier of this Service Id.
-    :attr str name: (optional) Name provided during creation of the serviceid.
+    :param str id: (optional) Unique identifier of this Service Id.
+    :param str name: (optional) Name provided during creation of the serviceid.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
-        name: str = None,
+        id: Optional[str] = None,
+        name: Optional[str] = None,
     ) -> None:
         """
         Initialize a ApikeyActivityServiceid object.
@@ -6573,10 +6724,10 @@ class ApikeyActivityServiceid:
     def from_dict(cls, _dict: Dict) -> 'ApikeyActivityServiceid':
         """Initialize a ApikeyActivityServiceid object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         return cls(**args)
 
     @classmethod
@@ -6616,19 +6767,19 @@ class ApikeyActivityUser:
     """
     user details will be present if type is `user`.
 
-    :attr str iam_id: (optional) IAMid of the user.
-    :attr str name: (optional) Name of the user.
-    :attr str username: (optional) Username of the user.
-    :attr str email: (optional) Email of the user.
+    :param str iam_id: (optional) IAMid of the user.
+    :param str name: (optional) Name of the user.
+    :param str username: (optional) Username of the user.
+    :param str email: (optional) Email of the user.
     """
 
     def __init__(
         self,
         *,
-        iam_id: str = None,
-        name: str = None,
-        username: str = None,
-        email: str = None,
+        iam_id: Optional[str] = None,
+        name: Optional[str] = None,
+        username: Optional[str] = None,
+        email: Optional[str] = None,
     ) -> None:
         """
         Initialize a ApikeyActivityUser object.
@@ -6647,14 +6798,14 @@ class ApikeyActivityUser:
     def from_dict(cls, _dict: Dict) -> 'ApikeyActivityUser':
         """Initialize a ApikeyActivityUser object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'username' in _dict:
-            args['username'] = _dict.get('username')
-        if 'email' in _dict:
-            args['email'] = _dict.get('email')
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (username := _dict.get('username')) is not None:
+            args['username'] = username
+        if (email := _dict.get('email')) is not None:
+            args['email'] = email
         return cls(**args)
 
     @classmethod
@@ -6698,10 +6849,10 @@ class CreateProfileLinkRequestLink:
     """
     Link details.
 
-    :attr str crn: The CRN of the compute resource.
-    :attr str namespace: The compute resource namespace, only required if cr_type is
-          IKS_SA or ROKS_SA.
-    :attr str name: (optional) Name of the compute resource, only required if
+    :param str crn: The CRN of the compute resource.
+    :param str namespace: The compute resource namespace, only required if cr_type
+          is IKS_SA or ROKS_SA.
+    :param str name: (optional) Name of the compute resource, only required if
           cr_type is IKS_SA or ROKS_SA.
     """
 
@@ -6710,7 +6861,7 @@ class CreateProfileLinkRequestLink:
         crn: str,
         namespace: str,
         *,
-        name: str = None,
+        name: Optional[str] = None,
     ) -> None:
         """
         Initialize a CreateProfileLinkRequestLink object.
@@ -6729,16 +6880,16 @@ class CreateProfileLinkRequestLink:
     def from_dict(cls, _dict: Dict) -> 'CreateProfileLinkRequestLink':
         """Initialize a CreateProfileLinkRequestLink object from a json dictionary."""
         args = {}
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
         else:
             raise ValueError('Required property \'crn\' not present in CreateProfileLinkRequestLink JSON')
-        if 'namespace' in _dict:
-            args['namespace'] = _dict.get('namespace')
+        if (namespace := _dict.get('namespace')) is not None:
+            args['namespace'] = namespace
         else:
             raise ValueError('Required property \'namespace\' not present in CreateProfileLinkRequestLink JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         return cls(**args)
 
     @classmethod
@@ -6780,12 +6931,12 @@ class EnityHistoryRecord:
     """
     Response body format for an entity history record.
 
-    :attr str timestamp: Timestamp when the action was triggered.
-    :attr str iam_id: IAM ID of the identity which triggered the action.
-    :attr str iam_id_account: Account of the identity which triggered the action.
-    :attr str action: Action of the history entry.
-    :attr List[str] params: Params of the history entry.
-    :attr str message: Message which summarizes the executed action.
+    :param str timestamp: Timestamp when the action was triggered.
+    :param str iam_id: IAM ID of the identity which triggered the action.
+    :param str iam_id_account: Account of the identity which triggered the action.
+    :param str action: Action of the history entry.
+    :param List[str] params: Params of the history entry.
+    :param str message: Message which summarizes the executed action.
     """
 
     def __init__(
@@ -6819,28 +6970,28 @@ class EnityHistoryRecord:
     def from_dict(cls, _dict: Dict) -> 'EnityHistoryRecord':
         """Initialize a EnityHistoryRecord object from a json dictionary."""
         args = {}
-        if 'timestamp' in _dict:
-            args['timestamp'] = _dict.get('timestamp')
+        if (timestamp := _dict.get('timestamp')) is not None:
+            args['timestamp'] = timestamp
         else:
             raise ValueError('Required property \'timestamp\' not present in EnityHistoryRecord JSON')
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
         else:
             raise ValueError('Required property \'iam_id\' not present in EnityHistoryRecord JSON')
-        if 'iam_id_account' in _dict:
-            args['iam_id_account'] = _dict.get('iam_id_account')
+        if (iam_id_account := _dict.get('iam_id_account')) is not None:
+            args['iam_id_account'] = iam_id_account
         else:
             raise ValueError('Required property \'iam_id_account\' not present in EnityHistoryRecord JSON')
-        if 'action' in _dict:
-            args['action'] = _dict.get('action')
+        if (action := _dict.get('action')) is not None:
+            args['action'] = action
         else:
             raise ValueError('Required property \'action\' not present in EnityHistoryRecord JSON')
-        if 'params' in _dict:
-            args['params'] = _dict.get('params')
+        if (params := _dict.get('params')) is not None:
+            args['params'] = params
         else:
             raise ValueError('Required property \'params\' not present in EnityHistoryRecord JSON')
-        if 'message' in _dict:
-            args['message'] = _dict.get('message')
+        if (message := _dict.get('message')) is not None:
+            args['message'] = message
         else:
             raise ValueError('Required property \'message\' not present in EnityHistoryRecord JSON')
         return cls(**args)
@@ -6890,17 +7041,17 @@ class EntityActivity:
     """
     EntityActivity.
 
-    :attr str id: Unique id of the entity.
-    :attr str name: (optional) Name provided during creation of the entity.
-    :attr str last_authn: (optional) Time when the entity was last authenticated.
+    :param str id: Unique id of the entity.
+    :param str name: (optional) Name provided during creation of the entity.
+    :param str last_authn: (optional) Time when the entity was last authenticated.
     """
 
     def __init__(
         self,
         id: str,
         *,
-        name: str = None,
-        last_authn: str = None,
+        name: Optional[str] = None,
+        last_authn: Optional[str] = None,
     ) -> None:
         """
         Initialize a EntityActivity object.
@@ -6918,14 +7069,14 @@ class EntityActivity:
     def from_dict(cls, _dict: Dict) -> 'EntityActivity':
         """Initialize a EntityActivity object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in EntityActivity JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'last_authn' in _dict:
-            args['last_authn'] = _dict.get('last_authn')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (last_authn := _dict.get('last_authn')) is not None:
+            args['last_authn'] = last_authn
         return cls(**args)
 
     @classmethod
@@ -6967,13 +7118,13 @@ class Error:
     """
     Error information.
 
-    :attr str code: Error code of the REST Exception.
-    :attr str message_code: Error message code of the REST Exception.
-    :attr str message: Error message of the REST Exception. Error messages are
+    :param str code: Error code of the REST Exception.
+    :param str message_code: Error message code of the REST Exception.
+    :param str message: Error message of the REST Exception. Error messages are
           derived base on the input locale of the REST request and the available Message
           catalogs. Dynamic fallback to 'us-english' is happening if no message catalog is
           available for the provided input locale.
-    :attr str details: (optional) Error details of the REST Exception.
+    :param str details: (optional) Error details of the REST Exception.
     """
 
     def __init__(
@@ -6982,7 +7133,7 @@ class Error:
         message_code: str,
         message: str,
         *,
-        details: str = None,
+        details: Optional[str] = None,
     ) -> None:
         """
         Initialize a Error object.
@@ -7004,20 +7155,20 @@ class Error:
     def from_dict(cls, _dict: Dict) -> 'Error':
         """Initialize a Error object from a json dictionary."""
         args = {}
-        if 'code' in _dict:
-            args['code'] = _dict.get('code')
+        if (code := _dict.get('code')) is not None:
+            args['code'] = code
         else:
             raise ValueError('Required property \'code\' not present in Error JSON')
-        if 'message_code' in _dict:
-            args['message_code'] = _dict.get('message_code')
+        if (message_code := _dict.get('message_code')) is not None:
+            args['message_code'] = message_code
         else:
             raise ValueError('Required property \'message_code\' not present in Error JSON')
-        if 'message' in _dict:
-            args['message'] = _dict.get('message')
+        if (message := _dict.get('message')) is not None:
+            args['message'] = message
         else:
             raise ValueError('Required property \'message\' not present in Error JSON')
-        if 'details' in _dict:
-            args['details'] = _dict.get('details')
+        if (details := _dict.get('details')) is not None:
+            args['details'] = details
         return cls(**args)
 
     @classmethod
@@ -7061,11 +7212,11 @@ class ExceptionResponse:
     """
     Response body parameters in case of error situations.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr str status_code: Error message code of the REST Exception.
-    :attr List[Error] errors: List of errors that occured.
-    :attr str trace: (optional) Unique ID of the requst.
+    :param str status_code: Error message code of the REST Exception.
+    :param List[Error] errors: List of errors that occured.
+    :param str trace: (optional) Unique ID of the requst.
     """
 
     def __init__(
@@ -7073,8 +7224,8 @@ class ExceptionResponse:
         status_code: str,
         errors: List['Error'],
         *,
-        context: 'ResponseContext' = None,
-        trace: str = None,
+        context: Optional['ResponseContext'] = None,
+        trace: Optional[str] = None,
     ) -> None:
         """
         Initialize a ExceptionResponse object.
@@ -7094,18 +7245,18 @@ class ExceptionResponse:
     def from_dict(cls, _dict: Dict) -> 'ExceptionResponse':
         """Initialize a ExceptionResponse object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'status_code' in _dict:
-            args['status_code'] = _dict.get('status_code')
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (status_code := _dict.get('status_code')) is not None:
+            args['status_code'] = status_code
         else:
             raise ValueError('Required property \'status_code\' not present in ExceptionResponse JSON')
-        if 'errors' in _dict:
-            args['errors'] = [Error.from_dict(v) for v in _dict.get('errors')]
+        if (errors := _dict.get('errors')) is not None:
+            args['errors'] = [Error.from_dict(v) for v in errors]
         else:
             raise ValueError('Required property \'errors\' not present in ExceptionResponse JSON')
-        if 'trace' in _dict:
-            args['trace'] = _dict.get('trace')
+        if (trace := _dict.get('trace')) is not None:
+            args['trace'] = trace
         return cls(**args)
 
     @classmethod
@@ -7158,7 +7309,7 @@ class IdBasedMfaEnrollment:
     """
     IdBasedMfaEnrollment.
 
-    :attr str trait_account_default: Defines the MFA trait for the account. Valid
+    :param str trait_account_default: Defines the MFA trait for the account. Valid
           values:
             * NONE - No MFA trait set
             * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
@@ -7167,8 +7318,8 @@ class IdBasedMfaEnrollment:
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
             * LEVEL3 - U2F MFA for all users.
-    :attr str trait_user_specific: (optional) Defines the MFA trait for the account.
-          Valid values:
+    :param str trait_user_specific: (optional) Defines the MFA trait for the
+          account. Valid values:
             * NONE - No MFA trait set
             * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
             * TOTP - For all non-federated IBMId users
@@ -7176,7 +7327,7 @@ class IdBasedMfaEnrollment:
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
             * LEVEL3 - U2F MFA for all users.
-    :attr str trait_effective: Defines the MFA trait for the account. Valid values:
+    :param str trait_effective: Defines the MFA trait for the account. Valid values:
             * NONE - No MFA trait set
             * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
             * TOTP - For all non-federated IBMId users
@@ -7184,8 +7335,8 @@ class IdBasedMfaEnrollment:
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
             * LEVEL3 - U2F MFA for all users.
-    :attr bool complies: The enrollment complies to the effective requirement.
-    :attr str comply_state: (optional) Defines comply state for the account. Valid
+    :param bool complies: The enrollment complies to the effective requirement.
+    :param str comply_state: (optional) Defines comply state for the account. Valid
           values:
             * NO - User does not comply in the given account.
             * ACCOUNT- User complies in the given account, but does not comply in at least
@@ -7200,8 +7351,8 @@ class IdBasedMfaEnrollment:
         trait_effective: str,
         complies: bool,
         *,
-        trait_user_specific: str = None,
-        comply_state: str = None,
+        trait_user_specific: Optional[str] = None,
+        comply_state: Optional[str] = None,
     ) -> None:
         """
         Initialize a IdBasedMfaEnrollment object.
@@ -7252,22 +7403,22 @@ class IdBasedMfaEnrollment:
     def from_dict(cls, _dict: Dict) -> 'IdBasedMfaEnrollment':
         """Initialize a IdBasedMfaEnrollment object from a json dictionary."""
         args = {}
-        if 'trait_account_default' in _dict:
-            args['trait_account_default'] = _dict.get('trait_account_default')
+        if (trait_account_default := _dict.get('trait_account_default')) is not None:
+            args['trait_account_default'] = trait_account_default
         else:
             raise ValueError('Required property \'trait_account_default\' not present in IdBasedMfaEnrollment JSON')
-        if 'trait_user_specific' in _dict:
-            args['trait_user_specific'] = _dict.get('trait_user_specific')
-        if 'trait_effective' in _dict:
-            args['trait_effective'] = _dict.get('trait_effective')
+        if (trait_user_specific := _dict.get('trait_user_specific')) is not None:
+            args['trait_user_specific'] = trait_user_specific
+        if (trait_effective := _dict.get('trait_effective')) is not None:
+            args['trait_effective'] = trait_effective
         else:
             raise ValueError('Required property \'trait_effective\' not present in IdBasedMfaEnrollment JSON')
-        if 'complies' in _dict:
-            args['complies'] = _dict.get('complies')
+        if (complies := _dict.get('complies')) is not None:
+            args['complies'] = complies
         else:
             raise ValueError('Required property \'complies\' not present in IdBasedMfaEnrollment JSON')
-        if 'comply_state' in _dict:
-            args['comply_state'] = _dict.get('comply_state')
+        if (comply_state := _dict.get('comply_state')) is not None:
+            args['comply_state'] = comply_state
         return cls(**args)
 
     @classmethod
@@ -7387,8 +7538,8 @@ class MfaEnrollmentTypeStatus:
     """
     MfaEnrollmentTypeStatus.
 
-    :attr bool required: Describes whether the enrollment type is required.
-    :attr bool enrolled: Describes whether the enrollment type is enrolled.
+    :param bool required: Describes whether the enrollment type is required.
+    :param bool enrolled: Describes whether the enrollment type is enrolled.
     """
 
     def __init__(
@@ -7409,12 +7560,12 @@ class MfaEnrollmentTypeStatus:
     def from_dict(cls, _dict: Dict) -> 'MfaEnrollmentTypeStatus':
         """Initialize a MfaEnrollmentTypeStatus object from a json dictionary."""
         args = {}
-        if 'required' in _dict:
-            args['required'] = _dict.get('required')
+        if (required := _dict.get('required')) is not None:
+            args['required'] = required
         else:
             raise ValueError('Required property \'required\' not present in MfaEnrollmentTypeStatus JSON')
-        if 'enrolled' in _dict:
-            args['enrolled'] = _dict.get('enrolled')
+        if (enrolled := _dict.get('enrolled')) is not None:
+            args['enrolled'] = enrolled
         else:
             raise ValueError('Required property \'enrolled\' not present in MfaEnrollmentTypeStatus JSON')
         return cls(**args)
@@ -7456,18 +7607,18 @@ class MfaEnrollments:
     """
     MfaEnrollments.
 
-    :attr str effective_mfa_type: currently effective mfa type i.e. id_based_mfa or
+    :param str effective_mfa_type: currently effective mfa type i.e. id_based_mfa or
           account_based_mfa.
-    :attr IdBasedMfaEnrollment id_based_mfa: (optional)
-    :attr AccountBasedMfaEnrollment account_based_mfa: (optional)
+    :param IdBasedMfaEnrollment id_based_mfa: (optional)
+    :param AccountBasedMfaEnrollment account_based_mfa: (optional)
     """
 
     def __init__(
         self,
         effective_mfa_type: str,
         *,
-        id_based_mfa: 'IdBasedMfaEnrollment' = None,
-        account_based_mfa: 'AccountBasedMfaEnrollment' = None,
+        id_based_mfa: Optional['IdBasedMfaEnrollment'] = None,
+        account_based_mfa: Optional['AccountBasedMfaEnrollment'] = None,
     ) -> None:
         """
         Initialize a MfaEnrollments object.
@@ -7485,14 +7636,14 @@ class MfaEnrollments:
     def from_dict(cls, _dict: Dict) -> 'MfaEnrollments':
         """Initialize a MfaEnrollments object from a json dictionary."""
         args = {}
-        if 'effective_mfa_type' in _dict:
-            args['effective_mfa_type'] = _dict.get('effective_mfa_type')
+        if (effective_mfa_type := _dict.get('effective_mfa_type')) is not None:
+            args['effective_mfa_type'] = effective_mfa_type
         else:
             raise ValueError('Required property \'effective_mfa_type\' not present in MfaEnrollments JSON')
-        if 'id_based_mfa' in _dict:
-            args['id_based_mfa'] = IdBasedMfaEnrollment.from_dict(_dict.get('id_based_mfa'))
-        if 'account_based_mfa' in _dict:
-            args['account_based_mfa'] = AccountBasedMfaEnrollment.from_dict(_dict.get('account_based_mfa'))
+        if (id_based_mfa := _dict.get('id_based_mfa')) is not None:
+            args['id_based_mfa'] = IdBasedMfaEnrollment.from_dict(id_based_mfa)
+        if (account_based_mfa := _dict.get('account_based_mfa')) is not None:
+            args['account_based_mfa'] = AccountBasedMfaEnrollment.from_dict(account_based_mfa)
         return cls(**args)
 
     @classmethod
@@ -7540,8 +7691,8 @@ class PolicyTemplateReference:
     """
     Metadata for external access policy.
 
-    :attr str id: ID of Access Policy Template.
-    :attr str version: Version of Access Policy Template.
+    :param str id: ID of Access Policy Template.
+    :param str version: Version of Access Policy Template.
     """
 
     def __init__(
@@ -7562,12 +7713,12 @@ class PolicyTemplateReference:
     def from_dict(cls, _dict: Dict) -> 'PolicyTemplateReference':
         """Initialize a PolicyTemplateReference object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in PolicyTemplateReference JSON')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
         else:
             raise ValueError('Required property \'version\' not present in PolicyTemplateReference JSON')
         return cls(**args)
@@ -7609,20 +7760,20 @@ class ProfileClaimRule:
     """
     ProfileClaimRule.
 
-    :attr str id: the unique identifier of the claim rule.
-    :attr str entity_tag: version of the claim rule.
-    :attr datetime created_at: If set contains a date time string of the creation
+    :param str id: the unique identifier of the claim rule.
+    :param str entity_tag: version of the claim rule.
+    :param datetime created_at: If set contains a date time string of the creation
           date in ISO format.
-    :attr datetime modified_at: (optional) If set contains a date time string of the
-          last modification date in ISO format.
-    :attr str name: (optional) The optional claim rule name.
-    :attr str type: Type of the claim rule, either 'Profile-SAML' or 'Profile-CR'.
-    :attr str realm_name: (optional) The realm name of the Idp this claim rule
+    :param datetime modified_at: (optional) If set contains a date time string of
+          the last modification date in ISO format.
+    :param str name: (optional) The optional claim rule name.
+    :param str type: Type of the claim rule, either 'Profile-SAML' or 'Profile-CR'.
+    :param str realm_name: (optional) The realm name of the Idp this claim rule
           applies to.
-    :attr int expiration: Session expiration in seconds.
-    :attr str cr_type: (optional) The compute resource type. Not required if type is
-          Profile-SAML. Valid values are VSI, IKS_SA, ROKS_SA.
-    :attr List[ProfileClaimRuleConditions] conditions: Conditions of this claim
+    :param int expiration: Session expiration in seconds.
+    :param str cr_type: (optional) The compute resource type. Not required if type
+          is Profile-SAML. Valid values are VSI, IKS_SA, ROKS_SA.
+    :param List[ProfileClaimRuleConditions] conditions: Conditions of this claim
           rule.
     """
 
@@ -7635,10 +7786,10 @@ class ProfileClaimRule:
         expiration: int,
         conditions: List['ProfileClaimRuleConditions'],
         *,
-        modified_at: datetime = None,
-        name: str = None,
-        realm_name: str = None,
-        cr_type: str = None,
+        modified_at: Optional[datetime] = None,
+        name: Optional[str] = None,
+        realm_name: Optional[str] = None,
+        cr_type: Optional[str] = None,
     ) -> None:
         """
         Initialize a ProfileClaimRule object.
@@ -7675,36 +7826,36 @@ class ProfileClaimRule:
     def from_dict(cls, _dict: Dict) -> 'ProfileClaimRule':
         """Initialize a ProfileClaimRule object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in ProfileClaimRule JSON')
-        if 'entity_tag' in _dict:
-            args['entity_tag'] = _dict.get('entity_tag')
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
         else:
             raise ValueError('Required property \'entity_tag\' not present in ProfileClaimRule JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in ProfileClaimRule JSON')
-        if 'modified_at' in _dict:
-            args['modified_at'] = string_to_datetime(_dict.get('modified_at'))
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (modified_at := _dict.get('modified_at')) is not None:
+            args['modified_at'] = string_to_datetime(modified_at)
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in ProfileClaimRule JSON')
-        if 'realm_name' in _dict:
-            args['realm_name'] = _dict.get('realm_name')
-        if 'expiration' in _dict:
-            args['expiration'] = _dict.get('expiration')
+        if (realm_name := _dict.get('realm_name')) is not None:
+            args['realm_name'] = realm_name
+        if (expiration := _dict.get('expiration')) is not None:
+            args['expiration'] = expiration
         else:
             raise ValueError('Required property \'expiration\' not present in ProfileClaimRule JSON')
-        if 'cr_type' in _dict:
-            args['cr_type'] = _dict.get('cr_type')
-        if 'conditions' in _dict:
-            args['conditions'] = [ProfileClaimRuleConditions.from_dict(v) for v in _dict.get('conditions')]
+        if (cr_type := _dict.get('cr_type')) is not None:
+            args['cr_type'] = cr_type
+        if (conditions := _dict.get('conditions')) is not None:
+            args['conditions'] = [ProfileClaimRuleConditions.from_dict(v) for v in conditions]
         else:
             raise ValueError('Required property \'conditions\' not present in ProfileClaimRule JSON')
         return cls(**args)
@@ -7768,11 +7919,11 @@ class ProfileClaimRuleConditions:
     """
     ProfileClaimRuleConditions.
 
-    :attr str claim: The claim to evaluate against. [Learn
+    :param str claim: The claim to evaluate against. [Learn
           more](/docs/account?topic=account-iam-condition-properties&interface=ui#cr-attribute-names).
-    :attr str operator: The operation to perform on the claim. valid values are
+    :param str operator: The operation to perform on the claim. valid values are
           EQUALS, NOT_EQUALS, EQUALS_IGNORE_CASE, NOT_EQUALS_IGNORE_CASE, CONTAINS, IN.
-    :attr str value: The stringified JSON value that the claim is compared to using
+    :param str value: The stringified JSON value that the claim is compared to using
           the operator.
     """
 
@@ -7801,16 +7952,16 @@ class ProfileClaimRuleConditions:
     def from_dict(cls, _dict: Dict) -> 'ProfileClaimRuleConditions':
         """Initialize a ProfileClaimRuleConditions object from a json dictionary."""
         args = {}
-        if 'claim' in _dict:
-            args['claim'] = _dict.get('claim')
+        if (claim := _dict.get('claim')) is not None:
+            args['claim'] = claim
         else:
             raise ValueError('Required property \'claim\' not present in ProfileClaimRuleConditions JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         else:
             raise ValueError('Required property \'operator\' not present in ProfileClaimRuleConditions JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in ProfileClaimRuleConditions JSON')
         return cls(**args)
@@ -7854,16 +8005,16 @@ class ProfileClaimRuleList:
     """
     ProfileClaimRuleList.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr List[ProfileClaimRule] rules: List of claim rules.
+    :param List[ProfileClaimRule] rules: List of claim rules.
     """
 
     def __init__(
         self,
         rules: List['ProfileClaimRule'],
         *,
-        context: 'ResponseContext' = None,
+        context: Optional['ResponseContext'] = None,
     ) -> None:
         """
         Initialize a ProfileClaimRuleList object.
@@ -7879,10 +8030,10 @@ class ProfileClaimRuleList:
     def from_dict(cls, _dict: Dict) -> 'ProfileClaimRuleList':
         """Initialize a ProfileClaimRuleList object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'rules' in _dict:
-            args['rules'] = [ProfileClaimRule.from_dict(v) for v in _dict.get('rules')]
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (rules := _dict.get('rules')) is not None:
+            args['rules'] = [ProfileClaimRule.from_dict(v) for v in rules]
         else:
             raise ValueError('Required property \'rules\' not present in ProfileClaimRuleList JSON')
         return cls(**args)
@@ -7933,15 +8084,15 @@ class ProfileIdentitiesResponse:
     """
     ProfileIdentitiesResponse.
 
-    :attr str entity_tag: (optional) Entity tag of the profile identities response.
-    :attr List[ProfileIdentityResponse] identities: (optional) List of identities.
+    :param str entity_tag: (optional) Entity tag of the profile identities response.
+    :param List[ProfileIdentityResponse] identities: (optional) List of identities.
     """
 
     def __init__(
         self,
         *,
-        entity_tag: str = None,
-        identities: List['ProfileIdentityResponse'] = None,
+        entity_tag: Optional[str] = None,
+        identities: Optional[List['ProfileIdentityResponse']] = None,
     ) -> None:
         """
         Initialize a ProfileIdentitiesResponse object.
@@ -7958,10 +8109,10 @@ class ProfileIdentitiesResponse:
     def from_dict(cls, _dict: Dict) -> 'ProfileIdentitiesResponse':
         """Initialize a ProfileIdentitiesResponse object from a json dictionary."""
         args = {}
-        if 'entity_tag' in _dict:
-            args['entity_tag'] = _dict.get('entity_tag')
-        if 'identities' in _dict:
-            args['identities'] = [ProfileIdentityResponse.from_dict(v) for v in _dict.get('identities')]
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
+        if (identities := _dict.get('identities')) is not None:
+            args['identities'] = [ProfileIdentityResponse.from_dict(v) for v in identities]
         return cls(**args)
 
     @classmethod
@@ -8007,14 +8158,14 @@ class ProfileIdentityRequest:
     """
     ProfileIdentityRequest.
 
-    :attr str identifier: Identifier of the identity that can assume the trusted
+    :param str identifier: Identifier of the identity that can assume the trusted
           profiles. This can be a user identifier (IAM id), serviceid or crn. Internally
           it uses account id of the service id for the identifier 'serviceid' and for the
           identifier 'crn' it uses account id contained in the CRN.
-    :attr str type: Type of the identity.
-    :attr List[str] accounts: (optional) Only valid for the type user. Accounts from
-          which a user can assume the trusted profile.
-    :attr str description: (optional) Description of the identity that can assume
+    :param str type: Type of the identity.
+    :param List[str] accounts: (optional) Only valid for the type user. Accounts
+          from which a user can assume the trusted profile.
+    :param str description: (optional) Description of the identity that can assume
           the trusted profile. This is optional field for all the types of identities.
           When this field is not set for the identity type 'serviceid' then the
           description of the service id is used. Description is recommended for the
@@ -8026,8 +8177,8 @@ class ProfileIdentityRequest:
         identifier: str,
         type: str,
         *,
-        accounts: List[str] = None,
-        description: str = None,
+        accounts: Optional[List[str]] = None,
+        description: Optional[str] = None,
     ) -> None:
         """
         Initialize a ProfileIdentityRequest object.
@@ -8056,18 +8207,18 @@ class ProfileIdentityRequest:
     def from_dict(cls, _dict: Dict) -> 'ProfileIdentityRequest':
         """Initialize a ProfileIdentityRequest object from a json dictionary."""
         args = {}
-        if 'identifier' in _dict:
-            args['identifier'] = _dict.get('identifier')
+        if (identifier := _dict.get('identifier')) is not None:
+            args['identifier'] = identifier
         else:
             raise ValueError('Required property \'identifier\' not present in ProfileIdentityRequest JSON')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in ProfileIdentityRequest JSON')
-        if 'accounts' in _dict:
-            args['accounts'] = _dict.get('accounts')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (accounts := _dict.get('accounts')) is not None:
+            args['accounts'] = accounts
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         return cls(**args)
 
     @classmethod
@@ -8120,15 +8271,15 @@ class ProfileIdentityResponse:
     """
     ProfileIdentityResponse.
 
-    :attr str iam_id: IAM ID of the identity.
-    :attr str identifier: Identifier of the identity that can assume the trusted
+    :param str iam_id: IAM ID of the identity.
+    :param str identifier: Identifier of the identity that can assume the trusted
           profiles. This can be a user identifier (IAM id), serviceid or crn. Internally
           it uses account id of the service id for the identifier 'serviceid' and for the
           identifier 'crn' it uses account id contained in the CRN.
-    :attr str type: Type of the identity.
-    :attr List[str] accounts: (optional) Only valid for the type user. Accounts from
-          which a user can assume the trusted profile.
-    :attr str description: (optional) Description of the identity that can assume
+    :param str type: Type of the identity.
+    :param List[str] accounts: (optional) Only valid for the type user. Accounts
+          from which a user can assume the trusted profile.
+    :param str description: (optional) Description of the identity that can assume
           the trusted profile. This is optional field for all the types of identities.
           When this field is not set for the identity type 'serviceid' then the
           description of the service id is used. Description is recommended for the
@@ -8141,8 +8292,8 @@ class ProfileIdentityResponse:
         identifier: str,
         type: str,
         *,
-        accounts: List[str] = None,
-        description: str = None,
+        accounts: Optional[List[str]] = None,
+        description: Optional[str] = None,
     ) -> None:
         """
         Initialize a ProfileIdentityResponse object.
@@ -8173,22 +8324,22 @@ class ProfileIdentityResponse:
     def from_dict(cls, _dict: Dict) -> 'ProfileIdentityResponse':
         """Initialize a ProfileIdentityResponse object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
         else:
             raise ValueError('Required property \'iam_id\' not present in ProfileIdentityResponse JSON')
-        if 'identifier' in _dict:
-            args['identifier'] = _dict.get('identifier')
+        if (identifier := _dict.get('identifier')) is not None:
+            args['identifier'] = identifier
         else:
             raise ValueError('Required property \'identifier\' not present in ProfileIdentityResponse JSON')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in ProfileIdentityResponse JSON')
-        if 'accounts' in _dict:
-            args['accounts'] = _dict.get('accounts')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (accounts := _dict.get('accounts')) is not None:
+            args['accounts'] = accounts
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         return cls(**args)
 
     @classmethod
@@ -8243,16 +8394,16 @@ class ProfileLink:
     """
     Link details.
 
-    :attr str id: the unique identifier of the link.
-    :attr str entity_tag: version of the link.
-    :attr datetime created_at: If set contains a date time string of the creation
+    :param str id: the unique identifier of the link.
+    :param str entity_tag: version of the link.
+    :param datetime created_at: If set contains a date time string of the creation
           date in ISO format.
-    :attr datetime modified_at: If set contains a date time string of the last
+    :param datetime modified_at: If set contains a date time string of the last
           modification date in ISO format.
-    :attr str name: (optional) Optional name of the Link.
-    :attr str cr_type: The compute resource type. Valid values are VSI, IKS_SA,
+    :param str name: (optional) Optional name of the Link.
+    :param str cr_type: The compute resource type. Valid values are VSI, IKS_SA,
           ROKS_SA.
-    :attr ProfileLinkLink link:
+    :param ProfileLinkLink link:
     """
 
     def __init__(
@@ -8264,7 +8415,7 @@ class ProfileLink:
         cr_type: str,
         link: 'ProfileLinkLink',
         *,
-        name: str = None,
+        name: Optional[str] = None,
     ) -> None:
         """
         Initialize a ProfileLink object.
@@ -8292,30 +8443,30 @@ class ProfileLink:
     def from_dict(cls, _dict: Dict) -> 'ProfileLink':
         """Initialize a ProfileLink object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in ProfileLink JSON')
-        if 'entity_tag' in _dict:
-            args['entity_tag'] = _dict.get('entity_tag')
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
         else:
             raise ValueError('Required property \'entity_tag\' not present in ProfileLink JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in ProfileLink JSON')
-        if 'modified_at' in _dict:
-            args['modified_at'] = string_to_datetime(_dict.get('modified_at'))
+        if (modified_at := _dict.get('modified_at')) is not None:
+            args['modified_at'] = string_to_datetime(modified_at)
         else:
             raise ValueError('Required property \'modified_at\' not present in ProfileLink JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'cr_type' in _dict:
-            args['cr_type'] = _dict.get('cr_type')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (cr_type := _dict.get('cr_type')) is not None:
+            args['cr_type'] = cr_type
         else:
             raise ValueError('Required property \'cr_type\' not present in ProfileLink JSON')
-        if 'link' in _dict:
-            args['link'] = ProfileLinkLink.from_dict(_dict.get('link'))
+        if (link := _dict.get('link')) is not None:
+            args['link'] = ProfileLinkLink.from_dict(link)
         else:
             raise ValueError('Required property \'link\' not present in ProfileLink JSON')
         return cls(**args)
@@ -8370,19 +8521,19 @@ class ProfileLinkLink:
     """
     ProfileLinkLink.
 
-    :attr str crn: (optional) The CRN of the compute resource.
-    :attr str namespace: (optional) The compute resource namespace, only required if
-          cr_type is IKS_SA or ROKS_SA.
-    :attr str name: (optional) Name of the compute resource, only required if
+    :param str crn: (optional) The CRN of the compute resource.
+    :param str namespace: (optional) The compute resource namespace, only required
+          if cr_type is IKS_SA or ROKS_SA.
+    :param str name: (optional) Name of the compute resource, only required if
           cr_type is IKS_SA or ROKS_SA.
     """
 
     def __init__(
         self,
         *,
-        crn: str = None,
-        namespace: str = None,
-        name: str = None,
+        crn: Optional[str] = None,
+        namespace: Optional[str] = None,
+        name: Optional[str] = None,
     ) -> None:
         """
         Initialize a ProfileLinkLink object.
@@ -8401,12 +8552,12 @@ class ProfileLinkLink:
     def from_dict(cls, _dict: Dict) -> 'ProfileLinkLink':
         """Initialize a ProfileLinkLink object from a json dictionary."""
         args = {}
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'namespace' in _dict:
-            args['namespace'] = _dict.get('namespace')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        if (namespace := _dict.get('namespace')) is not None:
+            args['namespace'] = namespace
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         return cls(**args)
 
     @classmethod
@@ -8448,7 +8599,7 @@ class ProfileLinkList:
     """
     ProfileLinkList.
 
-    :attr List[ProfileLink] links: List of links to a trusted profile.
+    :param List[ProfileLink] links: List of links to a trusted profile.
     """
 
     def __init__(
@@ -8466,8 +8617,8 @@ class ProfileLinkList:
     def from_dict(cls, _dict: Dict) -> 'ProfileLinkList':
         """Initialize a ProfileLinkList object from a json dictionary."""
         args = {}
-        if 'links' in _dict:
-            args['links'] = [ProfileLink.from_dict(v) for v in _dict.get('links')]
+        if (links := _dict.get('links')) is not None:
+            args['links'] = [ProfileLink.from_dict(v) for v in links]
         else:
             raise ValueError('Required property \'links\' not present in ProfileLinkList JSON')
         return cls(**args)
@@ -8513,15 +8664,15 @@ class Report:
     """
     Report.
 
-    :attr str created_by: IAMid of the user who triggered the report.
-    :attr str reference: Unique reference used to generate the report.
-    :attr str report_duration: Duration in hours for which the report is generated.
-    :attr str report_start_time: Start time of the report.
-    :attr str report_end_time: End time of the report.
-    :attr List[UserActivity] users: (optional) List of users.
-    :attr List[ApikeyActivity] apikeys: (optional) List of apikeys.
-    :attr List[EntityActivity] serviceids: (optional) List of serviceids.
-    :attr List[EntityActivity] profiles: (optional) List of profiles.
+    :param str created_by: IAMid of the user who triggered the report.
+    :param str reference: Unique reference used to generate the report.
+    :param str report_duration: Duration in hours for which the report is generated.
+    :param str report_start_time: Start time of the report.
+    :param str report_end_time: End time of the report.
+    :param List[UserActivity] users: (optional) List of users.
+    :param List[ApikeyActivity] apikeys: (optional) List of apikeys.
+    :param List[EntityActivity] serviceids: (optional) List of serviceids.
+    :param List[EntityActivity] profiles: (optional) List of profiles.
     """
 
     def __init__(
@@ -8532,10 +8683,10 @@ class Report:
         report_start_time: str,
         report_end_time: str,
         *,
-        users: List['UserActivity'] = None,
-        apikeys: List['ApikeyActivity'] = None,
-        serviceids: List['EntityActivity'] = None,
-        profiles: List['EntityActivity'] = None,
+        users: Optional[List['UserActivity']] = None,
+        apikeys: Optional[List['ApikeyActivity']] = None,
+        serviceids: Optional[List['EntityActivity']] = None,
+        profiles: Optional[List['EntityActivity']] = None,
     ) -> None:
         """
         Initialize a Report object.
@@ -8565,34 +8716,34 @@ class Report:
     def from_dict(cls, _dict: Dict) -> 'Report':
         """Initialize a Report object from a json dictionary."""
         args = {}
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
         else:
             raise ValueError('Required property \'created_by\' not present in Report JSON')
-        if 'reference' in _dict:
-            args['reference'] = _dict.get('reference')
+        if (reference := _dict.get('reference')) is not None:
+            args['reference'] = reference
         else:
             raise ValueError('Required property \'reference\' not present in Report JSON')
-        if 'report_duration' in _dict:
-            args['report_duration'] = _dict.get('report_duration')
+        if (report_duration := _dict.get('report_duration')) is not None:
+            args['report_duration'] = report_duration
         else:
             raise ValueError('Required property \'report_duration\' not present in Report JSON')
-        if 'report_start_time' in _dict:
-            args['report_start_time'] = _dict.get('report_start_time')
+        if (report_start_time := _dict.get('report_start_time')) is not None:
+            args['report_start_time'] = report_start_time
         else:
             raise ValueError('Required property \'report_start_time\' not present in Report JSON')
-        if 'report_end_time' in _dict:
-            args['report_end_time'] = _dict.get('report_end_time')
+        if (report_end_time := _dict.get('report_end_time')) is not None:
+            args['report_end_time'] = report_end_time
         else:
             raise ValueError('Required property \'report_end_time\' not present in Report JSON')
-        if 'users' in _dict:
-            args['users'] = [UserActivity.from_dict(v) for v in _dict.get('users')]
-        if 'apikeys' in _dict:
-            args['apikeys'] = [ApikeyActivity.from_dict(v) for v in _dict.get('apikeys')]
-        if 'serviceids' in _dict:
-            args['serviceids'] = [EntityActivity.from_dict(v) for v in _dict.get('serviceids')]
-        if 'profiles' in _dict:
-            args['profiles'] = [EntityActivity.from_dict(v) for v in _dict.get('profiles')]
+        if (users := _dict.get('users')) is not None:
+            args['users'] = [UserActivity.from_dict(v) for v in users]
+        if (apikeys := _dict.get('apikeys')) is not None:
+            args['apikeys'] = [ApikeyActivity.from_dict(v) for v in apikeys]
+        if (serviceids := _dict.get('serviceids')) is not None:
+            args['serviceids'] = [EntityActivity.from_dict(v) for v in serviceids]
+        if (profiles := _dict.get('profiles')) is not None:
+            args['profiles'] = [EntityActivity.from_dict(v) for v in profiles]
         return cls(**args)
 
     @classmethod
@@ -8670,14 +8821,14 @@ class ReportMfaEnrollmentStatus:
     """
     ReportMfaEnrollmentStatus.
 
-    :attr str created_by: IAMid of the user who triggered the report.
-    :attr str reference: Unique reference used to generate the report.
-    :attr str report_time: Date time at which report is generated. Date is in ISO
+    :param str created_by: IAMid of the user who triggered the report.
+    :param str reference: Unique reference used to generate the report.
+    :param str report_time: Date time at which report is generated. Date is in ISO
           format.
-    :attr str account_id: BSS account id of the user who triggered the report.
-    :attr str ims_account_id: (optional) IMS account id of the user who triggered
+    :param str account_id: BSS account id of the user who triggered the report.
+    :param str ims_account_id: (optional) IMS account id of the user who triggered
           the report.
-    :attr List[UserReportMfaEnrollmentStatus] users: (optional) List of users.
+    :param List[UserReportMfaEnrollmentStatus] users: (optional) List of users.
     """
 
     def __init__(
@@ -8687,8 +8838,8 @@ class ReportMfaEnrollmentStatus:
         report_time: str,
         account_id: str,
         *,
-        ims_account_id: str = None,
-        users: List['UserReportMfaEnrollmentStatus'] = None,
+        ims_account_id: Optional[str] = None,
+        users: Optional[List['UserReportMfaEnrollmentStatus']] = None,
     ) -> None:
         """
         Initialize a ReportMfaEnrollmentStatus object.
@@ -8713,26 +8864,26 @@ class ReportMfaEnrollmentStatus:
     def from_dict(cls, _dict: Dict) -> 'ReportMfaEnrollmentStatus':
         """Initialize a ReportMfaEnrollmentStatus object from a json dictionary."""
         args = {}
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
         else:
             raise ValueError('Required property \'created_by\' not present in ReportMfaEnrollmentStatus JSON')
-        if 'reference' in _dict:
-            args['reference'] = _dict.get('reference')
+        if (reference := _dict.get('reference')) is not None:
+            args['reference'] = reference
         else:
             raise ValueError('Required property \'reference\' not present in ReportMfaEnrollmentStatus JSON')
-        if 'report_time' in _dict:
-            args['report_time'] = _dict.get('report_time')
+        if (report_time := _dict.get('report_time')) is not None:
+            args['report_time'] = report_time
         else:
             raise ValueError('Required property \'report_time\' not present in ReportMfaEnrollmentStatus JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in ReportMfaEnrollmentStatus JSON')
-        if 'ims_account_id' in _dict:
-            args['ims_account_id'] = _dict.get('ims_account_id')
-        if 'users' in _dict:
-            args['users'] = [UserReportMfaEnrollmentStatus.from_dict(v) for v in _dict.get('users')]
+        if (ims_account_id := _dict.get('ims_account_id')) is not None:
+            args['ims_account_id'] = ims_account_id
+        if (users := _dict.get('users')) is not None:
+            args['users'] = [UserReportMfaEnrollmentStatus.from_dict(v) for v in users]
         return cls(**args)
 
     @classmethod
@@ -8786,7 +8937,7 @@ class ReportReference:
     """
     ReportReference.
 
-    :attr str reference: Reference for the report to be generated.
+    :param str reference: Reference for the report to be generated.
     """
 
     def __init__(
@@ -8804,8 +8955,8 @@ class ReportReference:
     def from_dict(cls, _dict: Dict) -> 'ReportReference':
         """Initialize a ReportReference object from a json dictionary."""
         args = {}
-        if 'reference' in _dict:
-            args['reference'] = _dict.get('reference')
+        if (reference := _dict.get('reference')) is not None:
+            args['reference'] = reference
         else:
             raise ValueError('Required property \'reference\' not present in ReportReference JSON')
         return cls(**args)
@@ -8845,37 +8996,37 @@ class ResponseContext:
     """
     Context with key properties for problem determination.
 
-    :attr str transaction_id: (optional) The transaction ID of the inbound REST
+    :param str transaction_id: (optional) The transaction ID of the inbound REST
           request.
-    :attr str operation: (optional) The operation of the inbound REST request.
-    :attr str user_agent: (optional) The user agent of the inbound REST request.
-    :attr str url: (optional) The URL of that cluster.
-    :attr str instance_id: (optional) The instance ID of the server instance
+    :param str operation: (optional) The operation of the inbound REST request.
+    :param str user_agent: (optional) The user agent of the inbound REST request.
+    :param str url: (optional) The URL of that cluster.
+    :param str instance_id: (optional) The instance ID of the server instance
           processing the request.
-    :attr str thread_id: (optional) The thread ID of the server instance processing
+    :param str thread_id: (optional) The thread ID of the server instance processing
           the request.
-    :attr str host: (optional) The host of the server instance processing the
+    :param str host: (optional) The host of the server instance processing the
           request.
-    :attr str start_time: (optional) The start time of the request.
-    :attr str end_time: (optional) The finish time of the request.
-    :attr str elapsed_time: (optional) The elapsed time in msec.
-    :attr str cluster_name: (optional) The cluster name.
+    :param str start_time: (optional) The start time of the request.
+    :param str end_time: (optional) The finish time of the request.
+    :param str elapsed_time: (optional) The elapsed time in msec.
+    :param str cluster_name: (optional) The cluster name.
     """
 
     def __init__(
         self,
         *,
-        transaction_id: str = None,
-        operation: str = None,
-        user_agent: str = None,
-        url: str = None,
-        instance_id: str = None,
-        thread_id: str = None,
-        host: str = None,
-        start_time: str = None,
-        end_time: str = None,
-        elapsed_time: str = None,
-        cluster_name: str = None,
+        transaction_id: Optional[str] = None,
+        operation: Optional[str] = None,
+        user_agent: Optional[str] = None,
+        url: Optional[str] = None,
+        instance_id: Optional[str] = None,
+        thread_id: Optional[str] = None,
+        host: Optional[str] = None,
+        start_time: Optional[str] = None,
+        end_time: Optional[str] = None,
+        elapsed_time: Optional[str] = None,
+        cluster_name: Optional[str] = None,
     ) -> None:
         """
         Initialize a ResponseContext object.
@@ -8913,28 +9064,28 @@ class ResponseContext:
     def from_dict(cls, _dict: Dict) -> 'ResponseContext':
         """Initialize a ResponseContext object from a json dictionary."""
         args = {}
-        if 'transaction_id' in _dict:
-            args['transaction_id'] = _dict.get('transaction_id')
-        if 'operation' in _dict:
-            args['operation'] = _dict.get('operation')
-        if 'user_agent' in _dict:
-            args['user_agent'] = _dict.get('user_agent')
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'instance_id' in _dict:
-            args['instance_id'] = _dict.get('instance_id')
-        if 'thread_id' in _dict:
-            args['thread_id'] = _dict.get('thread_id')
-        if 'host' in _dict:
-            args['host'] = _dict.get('host')
-        if 'start_time' in _dict:
-            args['start_time'] = _dict.get('start_time')
-        if 'end_time' in _dict:
-            args['end_time'] = _dict.get('end_time')
-        if 'elapsed_time' in _dict:
-            args['elapsed_time'] = _dict.get('elapsed_time')
-        if 'cluster_name' in _dict:
-            args['cluster_name'] = _dict.get('cluster_name')
+        if (transaction_id := _dict.get('transaction_id')) is not None:
+            args['transaction_id'] = transaction_id
+        if (operation := _dict.get('operation')) is not None:
+            args['operation'] = operation
+        if (user_agent := _dict.get('user_agent')) is not None:
+            args['user_agent'] = user_agent
+        if (url := _dict.get('url')) is not None:
+            args['url'] = url
+        if (instance_id := _dict.get('instance_id')) is not None:
+            args['instance_id'] = instance_id
+        if (thread_id := _dict.get('thread_id')) is not None:
+            args['thread_id'] = thread_id
+        if (host := _dict.get('host')) is not None:
+            args['host'] = host
+        if (start_time := _dict.get('start_time')) is not None:
+            args['start_time'] = start_time
+        if (end_time := _dict.get('end_time')) is not None:
+            args['end_time'] = end_time
+        if (elapsed_time := _dict.get('elapsed_time')) is not None:
+            args['elapsed_time'] = elapsed_time
+        if (cluster_name := _dict.get('cluster_name')) is not None:
+            args['cluster_name'] = cluster_name
         return cls(**args)
 
     @classmethod
@@ -8992,32 +9143,32 @@ class ServiceId:
     """
     Response body format for service ID V1 REST requests.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr str id: Unique identifier of this Service Id.
-    :attr str iam_id: Cloud wide identifier for identities of this service ID.
-    :attr str entity_tag: Version of the service ID details object. You need to
+    :param str id: Unique identifier of this Service Id.
+    :param str iam_id: Cloud wide identifier for identities of this service ID.
+    :param str entity_tag: Version of the service ID details object. You need to
           specify this value when updating the service ID to avoid stale updates.
-    :attr str crn: Cloud Resource Name of the item. Example Cloud Resource Name:
+    :param str crn: Cloud Resource Name of the item. Example Cloud Resource Name:
           'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::serviceid:1234-5678-9012'.
-    :attr bool locked: The service ID cannot be changed if set to true.
-    :attr datetime created_at: If set contains a date time string of the creation
+    :param bool locked: The service ID cannot be changed if set to true.
+    :param datetime created_at: If set contains a date time string of the creation
           date in ISO format.
-    :attr datetime modified_at: If set contains a date time string of the last
+    :param datetime modified_at: If set contains a date time string of the last
           modification date in ISO format.
-    :attr str account_id: ID of the account the service ID belongs to.
-    :attr str name: Name of the Service Id. The name is not checked for uniqueness.
+    :param str account_id: ID of the account the service ID belongs to.
+    :param str name: Name of the Service Id. The name is not checked for uniqueness.
           Therefore multiple names with the same value can exist. Access is done via the
           UUID of the Service Id.
-    :attr str description: (optional) The optional description of the Service Id.
+    :param str description: (optional) The optional description of the Service Id.
           The 'description' property is only available if a description was provided
           during a create of a Service Id.
-    :attr List[str] unique_instance_crns: (optional) Optional list of CRNs (string
+    :param List[str] unique_instance_crns: (optional) Optional list of CRNs (string
           array) which point to the services connected to the service ID.
-    :attr List[EnityHistoryRecord] history: (optional) History of the Service ID.
-    :attr ApiKey apikey: (optional) Response body format for API key V1 REST
+    :param List[EnityHistoryRecord] history: (optional) History of the Service ID.
+    :param ApiKey apikey: (optional) Response body format for API key V1 REST
           requests.
-    :attr Activity activity: (optional)
+    :param Activity activity: (optional)
     """
 
     def __init__(
@@ -9032,12 +9183,12 @@ class ServiceId:
         account_id: str,
         name: str,
         *,
-        context: 'ResponseContext' = None,
-        description: str = None,
-        unique_instance_crns: List[str] = None,
-        history: List['EnityHistoryRecord'] = None,
-        apikey: 'ApiKey' = None,
-        activity: 'Activity' = None,
+        context: Optional['ResponseContext'] = None,
+        description: Optional[str] = None,
+        unique_instance_crns: Optional[List[str]] = None,
+        history: Optional[List['EnityHistoryRecord']] = None,
+        apikey: Optional['ApiKey'] = None,
+        activity: Optional['Activity'] = None,
     ) -> None:
         """
         Initialize a ServiceId object.
@@ -9091,54 +9242,54 @@ class ServiceId:
     def from_dict(cls, _dict: Dict) -> 'ServiceId':
         """Initialize a ServiceId object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in ServiceId JSON')
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
         else:
             raise ValueError('Required property \'iam_id\' not present in ServiceId JSON')
-        if 'entity_tag' in _dict:
-            args['entity_tag'] = _dict.get('entity_tag')
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
         else:
             raise ValueError('Required property \'entity_tag\' not present in ServiceId JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
         else:
             raise ValueError('Required property \'crn\' not present in ServiceId JSON')
-        if 'locked' in _dict:
-            args['locked'] = _dict.get('locked')
+        if (locked := _dict.get('locked')) is not None:
+            args['locked'] = locked
         else:
             raise ValueError('Required property \'locked\' not present in ServiceId JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in ServiceId JSON')
-        if 'modified_at' in _dict:
-            args['modified_at'] = string_to_datetime(_dict.get('modified_at'))
+        if (modified_at := _dict.get('modified_at')) is not None:
+            args['modified_at'] = string_to_datetime(modified_at)
         else:
             raise ValueError('Required property \'modified_at\' not present in ServiceId JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in ServiceId JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in ServiceId JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'unique_instance_crns' in _dict:
-            args['unique_instance_crns'] = _dict.get('unique_instance_crns')
-        if 'history' in _dict:
-            args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
-        if 'apikey' in _dict:
-            args['apikey'] = ApiKey.from_dict(_dict.get('apikey'))
-        if 'activity' in _dict:
-            args['activity'] = Activity.from_dict(_dict.get('activity'))
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (unique_instance_crns := _dict.get('unique_instance_crns')) is not None:
+            args['unique_instance_crns'] = unique_instance_crns
+        if (history := _dict.get('history')) is not None:
+            args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
+        if (apikey := _dict.get('apikey')) is not None:
+            args['apikey'] = ApiKey.from_dict(apikey)
+        if (activity := _dict.get('activity')) is not None:
+            args['activity'] = Activity.from_dict(activity)
         return cls(**args)
 
     @classmethod
@@ -9219,17 +9370,17 @@ class ServiceIdList:
     """
     Response body format for the list service ID V1 REST request.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr int offset: (optional) The offset of the current page.
-    :attr int limit: (optional) Optional size of a single page. Default is 20 items
+    :param int offset: (optional) The offset of the current page.
+    :param int limit: (optional) Optional size of a single page. Default is 20 items
           per page. Valid range is 1 to 100.
-    :attr str first: (optional) Link to the first page.
-    :attr str previous: (optional) Link to the previous available page. If
+    :param str first: (optional) Link to the first page.
+    :param str previous: (optional) Link to the previous available page. If
           'previous' property is not part of the response no previous page is available.
-    :attr str next: (optional) Link to the next available page. If 'next' property
+    :param str next: (optional) Link to the next available page. If 'next' property
           is not part of the response no next page is available.
-    :attr List[ServiceId] serviceids: List of service IDs based on the query
+    :param List[ServiceId] serviceids: List of service IDs based on the query
           paramters and the page size. The service IDs array is always part of the
           response but might be empty depending on the query parameter values provided.
     """
@@ -9238,12 +9389,12 @@ class ServiceIdList:
         self,
         serviceids: List['ServiceId'],
         *,
-        context: 'ResponseContext' = None,
-        offset: int = None,
-        limit: int = None,
-        first: str = None,
-        previous: str = None,
-        next: str = None,
+        context: Optional['ResponseContext'] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+        first: Optional[str] = None,
+        previous: Optional[str] = None,
+        next: Optional[str] = None,
     ) -> None:
         """
         Initialize a ServiceIdList object.
@@ -9276,20 +9427,20 @@ class ServiceIdList:
     def from_dict(cls, _dict: Dict) -> 'ServiceIdList':
         """Initialize a ServiceIdList object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
-        if 'first' in _dict:
-            args['first'] = _dict.get('first')
-        if 'previous' in _dict:
-            args['previous'] = _dict.get('previous')
-        if 'next' in _dict:
-            args['next'] = _dict.get('next')
-        if 'serviceids' in _dict:
-            args['serviceids'] = [ServiceId.from_dict(v) for v in _dict.get('serviceids')]
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = first
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = previous
+        if (next := _dict.get('next')) is not None:
+            args['next'] = next
+        if (serviceids := _dict.get('serviceids')) is not None:
+            args['serviceids'] = [ServiceId.from_dict(v) for v in serviceids]
         else:
             raise ValueError('Required property \'serviceids\' not present in ServiceIdList JSON')
         return cls(**args)
@@ -9350,19 +9501,19 @@ class TemplateAssignmentListResponse:
     """
     List Response body format for Template Assignments Records.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr int offset: (optional) The offset of the current page.
-    :attr int limit: (optional) Optional size of a single page. Default is 20 items
+    :param int offset: (optional) The offset of the current page.
+    :param int limit: (optional) Optional size of a single page. Default is 20 items
           per page. Valid range is 1 to 100.
-    :attr str first: (optional) Link to the first page.
-    :attr str previous: (optional) Link to the previous available page. If
+    :param str first: (optional) Link to the first page.
+    :param str previous: (optional) Link to the previous available page. If
           'previous' property is not part of the response no previous page is available.
-    :attr str next: (optional) Link to the next available page. If 'next' property
+    :param str next: (optional) Link to the next available page. If 'next' property
           is not part of the response no next page is available.
-    :attr List[TemplateAssignmentResponse] assignments: List of Assignments based on
-          the query paramters and the page size. The assignments array is always part of
-          the response but might be empty depending on the query parameter values
+    :param List[TemplateAssignmentResponse] assignments: List of Assignments based
+          on the query paramters and the page size. The assignments array is always part
+          of the response but might be empty depending on the query parameter values
           provided.
     """
 
@@ -9370,12 +9521,12 @@ class TemplateAssignmentListResponse:
         self,
         assignments: List['TemplateAssignmentResponse'],
         *,
-        context: 'ResponseContext' = None,
-        offset: int = None,
-        limit: int = None,
-        first: str = None,
-        previous: str = None,
-        next: str = None,
+        context: Optional['ResponseContext'] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+        first: Optional[str] = None,
+        previous: Optional[str] = None,
+        next: Optional[str] = None,
     ) -> None:
         """
         Initialize a TemplateAssignmentListResponse object.
@@ -9408,20 +9559,20 @@ class TemplateAssignmentListResponse:
     def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentListResponse':
         """Initialize a TemplateAssignmentListResponse object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
-        if 'first' in _dict:
-            args['first'] = _dict.get('first')
-        if 'previous' in _dict:
-            args['previous'] = _dict.get('previous')
-        if 'next' in _dict:
-            args['next'] = _dict.get('next')
-        if 'assignments' in _dict:
-            args['assignments'] = [TemplateAssignmentResponse.from_dict(v) for v in _dict.get('assignments')]
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = first
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = previous
+        if (next := _dict.get('next')) is not None:
+            args['next'] = next
+        if (assignments := _dict.get('assignments')) is not None:
+            args['assignments'] = [TemplateAssignmentResponse.from_dict(v) for v in assignments]
         else:
             raise ValueError('Required property \'assignments\' not present in TemplateAssignmentListResponse JSON')
         return cls(**args)
@@ -9482,13 +9633,13 @@ class TemplateAssignmentResource:
     """
     Body parameters for created resource.
 
-    :attr str id: (optional) Id of the created resource.
+    :param str id: (optional) Id of the created resource.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
+        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a TemplateAssignmentResource object.
@@ -9501,8 +9652,8 @@ class TemplateAssignmentResource:
     def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResource':
         """Initialize a TemplateAssignmentResource object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -9540,19 +9691,19 @@ class TemplateAssignmentResourceError:
     """
     Body parameters for assignment error.
 
-    :attr str name: (optional) Name of the error.
-    :attr str error_code: (optional) Internal error code.
-    :attr str message: (optional) Error message detailing the nature of the error.
-    :attr str status_code: (optional) Internal status code for the error.
+    :param str name: (optional) Name of the error.
+    :param str error_code: (optional) Internal error code.
+    :param str message: (optional) Error message detailing the nature of the error.
+    :param str status_code: (optional) Internal status code for the error.
     """
 
     def __init__(
         self,
         *,
-        name: str = None,
-        error_code: str = None,
-        message: str = None,
-        status_code: str = None,
+        name: Optional[str] = None,
+        error_code: Optional[str] = None,
+        message: Optional[str] = None,
+        status_code: Optional[str] = None,
     ) -> None:
         """
         Initialize a TemplateAssignmentResourceError object.
@@ -9572,14 +9723,14 @@ class TemplateAssignmentResourceError:
     def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResourceError':
         """Initialize a TemplateAssignmentResourceError object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'errorCode' in _dict:
-            args['error_code'] = _dict.get('errorCode')
-        if 'message' in _dict:
-            args['message'] = _dict.get('message')
-        if 'statusCode' in _dict:
-            args['status_code'] = _dict.get('statusCode')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (error_code := _dict.get('errorCode')) is not None:
+            args['error_code'] = error_code
+        if (message := _dict.get('message')) is not None:
+            args['message'] = message
+        if (status_code := _dict.get('statusCode')) is not None:
+            args['status_code'] = status_code
         return cls(**args)
 
     @classmethod
@@ -9623,28 +9774,28 @@ class TemplateAssignmentResponse:
     """
     Response body format for Template Assignment Record.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr str id: Assignment record Id.
-    :attr str account_id: Enterprise account Id.
-    :attr str template_id: Template Id.
-    :attr int template_version: Template version.
-    :attr str target_type: Assignment target type.
-    :attr str target: Assignment target.
-    :attr str status: Assignment status.
-    :attr List[TemplateAssignmentResponseResource] resources: (optional) Status
+    :param str id: Assignment record Id.
+    :param str account_id: Enterprise account Id.
+    :param str template_id: Template Id.
+    :param int template_version: Template version.
+    :param str target_type: Assignment target type.
+    :param str target: Assignment target.
+    :param str status: Assignment status.
+    :param List[TemplateAssignmentResponseResource] resources: (optional) Status
           breakdown per target account of IAM resources created or errors encountered in
           attempting to create those IAM resources. IAM resources are only included in the
           response providing the assignment is not in progress. IAM resources are also
           only included when getting a single assignment, and excluded by list APIs.
-    :attr List[EnityHistoryRecord] history: (optional) Assignment history.
-    :attr str href: (optional) Href.
-    :attr str created_at: Assignment created at.
-    :attr str created_by_id: IAMid of the identity that created the assignment.
-    :attr str last_modified_at: Assignment modified at.
-    :attr str last_modified_by_id: IAMid of the identity that last modified the
+    :param List[EnityHistoryRecord] history: (optional) Assignment history.
+    :param str href: (optional) Href.
+    :param str created_at: Assignment created at.
+    :param str created_by_id: IAMid of the identity that created the assignment.
+    :param str last_modified_at: Assignment modified at.
+    :param str last_modified_by_id: IAMid of the identity that last modified the
           assignment.
-    :attr str entity_tag: Entity tag for this assignment record.
+    :param str entity_tag: Entity tag for this assignment record.
     """
 
     def __init__(
@@ -9662,10 +9813,10 @@ class TemplateAssignmentResponse:
         last_modified_by_id: str,
         entity_tag: str,
         *,
-        context: 'ResponseContext' = None,
-        resources: List['TemplateAssignmentResponseResource'] = None,
-        history: List['EnityHistoryRecord'] = None,
-        href: str = None,
+        context: Optional['ResponseContext'] = None,
+        resources: Optional[List['TemplateAssignmentResponseResource']] = None,
+        history: Optional[List['EnityHistoryRecord']] = None,
+        href: Optional[str] = None,
     ) -> None:
         """
         Initialize a TemplateAssignmentResponse object.
@@ -9716,60 +9867,60 @@ class TemplateAssignmentResponse:
     def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResponse':
         """Initialize a TemplateAssignmentResponse object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in TemplateAssignmentResponse JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in TemplateAssignmentResponse JSON')
-        if 'template_id' in _dict:
-            args['template_id'] = _dict.get('template_id')
+        if (template_id := _dict.get('template_id')) is not None:
+            args['template_id'] = template_id
         else:
             raise ValueError('Required property \'template_id\' not present in TemplateAssignmentResponse JSON')
-        if 'template_version' in _dict:
-            args['template_version'] = _dict.get('template_version')
+        if (template_version := _dict.get('template_version')) is not None:
+            args['template_version'] = template_version
         else:
             raise ValueError('Required property \'template_version\' not present in TemplateAssignmentResponse JSON')
-        if 'target_type' in _dict:
-            args['target_type'] = _dict.get('target_type')
+        if (target_type := _dict.get('target_type')) is not None:
+            args['target_type'] = target_type
         else:
             raise ValueError('Required property \'target_type\' not present in TemplateAssignmentResponse JSON')
-        if 'target' in _dict:
-            args['target'] = _dict.get('target')
+        if (target := _dict.get('target')) is not None:
+            args['target'] = target
         else:
             raise ValueError('Required property \'target\' not present in TemplateAssignmentResponse JSON')
-        if 'status' in _dict:
-            args['status'] = _dict.get('status')
+        if (status := _dict.get('status')) is not None:
+            args['status'] = status
         else:
             raise ValueError('Required property \'status\' not present in TemplateAssignmentResponse JSON')
-        if 'resources' in _dict:
-            args['resources'] = [TemplateAssignmentResponseResource.from_dict(v) for v in _dict.get('resources')]
-        if 'history' in _dict:
-            args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [TemplateAssignmentResponseResource.from_dict(v) for v in resources]
+        if (history := _dict.get('history')) is not None:
+            args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = created_at
         else:
             raise ValueError('Required property \'created_at\' not present in TemplateAssignmentResponse JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         else:
             raise ValueError('Required property \'created_by_id\' not present in TemplateAssignmentResponse JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = _dict.get('last_modified_at')
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = last_modified_at
         else:
             raise ValueError('Required property \'last_modified_at\' not present in TemplateAssignmentResponse JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         else:
             raise ValueError('Required property \'last_modified_by_id\' not present in TemplateAssignmentResponse JSON')
-        if 'entity_tag' in _dict:
-            args['entity_tag'] = _dict.get('entity_tag')
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
         else:
             raise ValueError('Required property \'entity_tag\' not present in TemplateAssignmentResponse JSON')
         return cls(**args)
@@ -9854,10 +10005,10 @@ class TemplateAssignmentResponseResource:
     """
     Overview of resources assignment per target account.
 
-    :attr str target: Target account where the IAM resource is created.
-    :attr TemplateAssignmentResponseResourceDetail profile: (optional)
-    :attr TemplateAssignmentResponseResourceDetail account_settings: (optional)
-    :attr List[TemplateAssignmentResponseResourceDetail] policy_template_refs:
+    :param str target: Target account where the IAM resource is created.
+    :param TemplateAssignmentResponseResourceDetail profile: (optional)
+    :param TemplateAssignmentResponseResourceDetail account_settings: (optional)
+    :param List[TemplateAssignmentResponseResourceDetail] policy_template_refs:
           (optional) Policy resource(s) included only for trusted profile assignments with
           policy references.
     """
@@ -9866,9 +10017,9 @@ class TemplateAssignmentResponseResource:
         self,
         target: str,
         *,
-        profile: 'TemplateAssignmentResponseResourceDetail' = None,
-        account_settings: 'TemplateAssignmentResponseResourceDetail' = None,
-        policy_template_refs: List['TemplateAssignmentResponseResourceDetail'] = None,
+        profile: Optional['TemplateAssignmentResponseResourceDetail'] = None,
+        account_settings: Optional['TemplateAssignmentResponseResourceDetail'] = None,
+        policy_template_refs: Optional[List['TemplateAssignmentResponseResourceDetail']] = None,
     ) -> None:
         """
         Initialize a TemplateAssignmentResponseResource object.
@@ -9890,17 +10041,17 @@ class TemplateAssignmentResponseResource:
     def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResponseResource':
         """Initialize a TemplateAssignmentResponseResource object from a json dictionary."""
         args = {}
-        if 'target' in _dict:
-            args['target'] = _dict.get('target')
+        if (target := _dict.get('target')) is not None:
+            args['target'] = target
         else:
             raise ValueError('Required property \'target\' not present in TemplateAssignmentResponseResource JSON')
-        if 'profile' in _dict:
-            args['profile'] = TemplateAssignmentResponseResourceDetail.from_dict(_dict.get('profile'))
-        if 'account_settings' in _dict:
-            args['account_settings'] = TemplateAssignmentResponseResourceDetail.from_dict(_dict.get('account_settings'))
-        if 'policy_template_refs' in _dict:
+        if (profile := _dict.get('profile')) is not None:
+            args['profile'] = TemplateAssignmentResponseResourceDetail.from_dict(profile)
+        if (account_settings := _dict.get('account_settings')) is not None:
+            args['account_settings'] = TemplateAssignmentResponseResourceDetail.from_dict(account_settings)
+        if (policy_template_refs := _dict.get('policy_template_refs')) is not None:
             args['policy_template_refs'] = [
-                TemplateAssignmentResponseResourceDetail.from_dict(v) for v in _dict.get('policy_template_refs')
+                TemplateAssignmentResponseResourceDetail.from_dict(v) for v in policy_template_refs
             ]
         return cls(**args)
 
@@ -9957,25 +10108,25 @@ class TemplateAssignmentResponseResourceDetail:
     """
     TemplateAssignmentResponseResourceDetail.
 
-    :attr str id: (optional) Policy Template Id, only returned for a profile
+    :param str id: (optional) Policy Template Id, only returned for a profile
           assignment with policy references.
-    :attr str version: (optional) Policy version, only returned for a profile
+    :param str version: (optional) Policy version, only returned for a profile
           assignment with policy references.
-    :attr TemplateAssignmentResource resource_created: (optional) Body parameters
+    :param TemplateAssignmentResource resource_created: (optional) Body parameters
           for created resource.
-    :attr TemplateAssignmentResourceError error_message: (optional) Body parameters
+    :param TemplateAssignmentResourceError error_message: (optional) Body parameters
           for assignment error.
-    :attr str status: Status for the target account's assignment.
+    :param str status: Status for the target account's assignment.
     """
 
     def __init__(
         self,
         status: str,
         *,
-        id: str = None,
-        version: str = None,
-        resource_created: 'TemplateAssignmentResource' = None,
-        error_message: 'TemplateAssignmentResourceError' = None,
+        id: Optional[str] = None,
+        version: Optional[str] = None,
+        resource_created: Optional['TemplateAssignmentResource'] = None,
+        error_message: Optional['TemplateAssignmentResourceError'] = None,
     ) -> None:
         """
         Initialize a TemplateAssignmentResponseResourceDetail object.
@@ -10000,16 +10151,16 @@ class TemplateAssignmentResponseResourceDetail:
     def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResponseResourceDetail':
         """Initialize a TemplateAssignmentResponseResourceDetail object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
-        if 'resource_created' in _dict:
-            args['resource_created'] = TemplateAssignmentResource.from_dict(_dict.get('resource_created'))
-        if 'error_message' in _dict:
-            args['error_message'] = TemplateAssignmentResourceError.from_dict(_dict.get('error_message'))
-        if 'status' in _dict:
-            args['status'] = _dict.get('status')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
+        if (resource_created := _dict.get('resource_created')) is not None:
+            args['resource_created'] = TemplateAssignmentResource.from_dict(resource_created)
+        if (error_message := _dict.get('error_message')) is not None:
+            args['error_message'] = TemplateAssignmentResourceError.from_dict(error_message)
+        if (status := _dict.get('status')) is not None:
+            args['status'] = status
         else:
             raise ValueError(
                 'Required property \'status\' not present in TemplateAssignmentResponseResourceDetail JSON'
@@ -10065,11 +10216,11 @@ class TemplateProfileComponentRequest:
     """
     Input body parameters for the TemplateProfileComponent.
 
-    :attr str name: Name of the Profile.
-    :attr str description: (optional) Description of the Profile.
-    :attr List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for the
+    :param str name: Name of the Profile.
+    :param str description: (optional) Description of the Profile.
+    :param List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for the
           Profile.
-    :attr List[ProfileIdentityRequest] identities: (optional) Identities for the
+    :param List[ProfileIdentityRequest] identities: (optional) Identities for the
           Profile.
     """
 
@@ -10077,9 +10228,9 @@ class TemplateProfileComponentRequest:
         self,
         name: str,
         *,
-        description: str = None,
-        rules: List['TrustedProfileTemplateClaimRule'] = None,
-        identities: List['ProfileIdentityRequest'] = None,
+        description: Optional[str] = None,
+        rules: Optional[List['TrustedProfileTemplateClaimRule']] = None,
+        identities: Optional[List['ProfileIdentityRequest']] = None,
     ) -> None:
         """
         Initialize a TemplateProfileComponentRequest object.
@@ -10100,16 +10251,16 @@ class TemplateProfileComponentRequest:
     def from_dict(cls, _dict: Dict) -> 'TemplateProfileComponentRequest':
         """Initialize a TemplateProfileComponentRequest object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in TemplateProfileComponentRequest JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'rules' in _dict:
-            args['rules'] = [TrustedProfileTemplateClaimRule.from_dict(v) for v in _dict.get('rules')]
-        if 'identities' in _dict:
-            args['identities'] = [ProfileIdentityRequest.from_dict(v) for v in _dict.get('identities')]
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (rules := _dict.get('rules')) is not None:
+            args['rules'] = [TrustedProfileTemplateClaimRule.from_dict(v) for v in rules]
+        if (identities := _dict.get('identities')) is not None:
+            args['identities'] = [ProfileIdentityRequest.from_dict(v) for v in identities]
         return cls(**args)
 
     @classmethod
@@ -10165,11 +10316,11 @@ class TemplateProfileComponentResponse:
     """
     Input body parameters for the TemplateProfileComponent.
 
-    :attr str name: Name of the Profile.
-    :attr str description: (optional) Description of the Profile.
-    :attr List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for the
+    :param str name: Name of the Profile.
+    :param str description: (optional) Description of the Profile.
+    :param List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for the
           Profile.
-    :attr List[ProfileIdentityResponse] identities: (optional) Identities for the
+    :param List[ProfileIdentityResponse] identities: (optional) Identities for the
           Profile.
     """
 
@@ -10177,9 +10328,9 @@ class TemplateProfileComponentResponse:
         self,
         name: str,
         *,
-        description: str = None,
-        rules: List['TrustedProfileTemplateClaimRule'] = None,
-        identities: List['ProfileIdentityResponse'] = None,
+        description: Optional[str] = None,
+        rules: Optional[List['TrustedProfileTemplateClaimRule']] = None,
+        identities: Optional[List['ProfileIdentityResponse']] = None,
     ) -> None:
         """
         Initialize a TemplateProfileComponentResponse object.
@@ -10200,16 +10351,16 @@ class TemplateProfileComponentResponse:
     def from_dict(cls, _dict: Dict) -> 'TemplateProfileComponentResponse':
         """Initialize a TemplateProfileComponentResponse object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in TemplateProfileComponentResponse JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'rules' in _dict:
-            args['rules'] = [TrustedProfileTemplateClaimRule.from_dict(v) for v in _dict.get('rules')]
-        if 'identities' in _dict:
-            args['identities'] = [ProfileIdentityResponse.from_dict(v) for v in _dict.get('identities')]
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (rules := _dict.get('rules')) is not None:
+            args['rules'] = [TrustedProfileTemplateClaimRule.from_dict(v) for v in rules]
+        if (identities := _dict.get('identities')) is not None:
+            args['identities'] = [ProfileIdentityResponse.from_dict(v) for v in identities]
         return cls(**args)
 
     @classmethod
@@ -10265,39 +10416,39 @@ class TrustedProfile:
     """
     Response body format for trusted profile V1 REST requests.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr str id: the unique identifier of the trusted profile.
+    :param str id: the unique identifier of the trusted profile.
           Example:'Profile-94497d0d-2ac3-41bf-a993-a49d1b14627c'.
-    :attr str entity_tag: Version of the trusted profile details object. You need to
-          specify this value when updating the trusted profile to avoid stale updates.
-    :attr str crn: Cloud Resource Name of the item. Example Cloud Resource Name:
+    :param str entity_tag: Version of the trusted profile details object. You need
+          to specify this value when updating the trusted profile to avoid stale updates.
+    :param str crn: Cloud Resource Name of the item. Example Cloud Resource Name:
           'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::profile:Profile-94497d0d-2ac3-41bf-a993-a49d1b14627c'.
-    :attr str name: Name of the trusted profile. The name is checked for uniqueness.
-          Therefore trusted profiles with the same names can not exist in the same
-          account.
-    :attr str description: (optional) The optional description of the trusted
+    :param str name: Name of the trusted profile. The name is checked for
+          uniqueness. Therefore trusted profiles with the same names can not exist in the
+          same account.
+    :param str description: (optional) The optional description of the trusted
           profile. The 'description' property is only available if a description was
           provided during a create of a trusted profile.
-    :attr datetime created_at: (optional) If set contains a date time string of the
+    :param datetime created_at: (optional) If set contains a date time string of the
           creation date in ISO format.
-    :attr datetime modified_at: (optional) If set contains a date time string of the
-          last modification date in ISO format.
-    :attr str iam_id: The iam_id of this trusted profile.
-    :attr str account_id: ID of the account that this trusted profile belong to.
-    :attr str template_id: (optional) ID of the IAM template that was used to create
-          an enterprise-managed trusted profile in your account. When returned, this
-          indicates that the trusted profile is created from and managed by a template in
-          the root enterprise account.
-    :attr str assignment_id: (optional) ID of the assignment that was used to create
-          an enterprise-managed trusted profile in your account. When returned, this
-          indicates that the trusted profile is created from and managed by a template in
-          the root enterprise account.
-    :attr int ims_account_id: (optional) IMS acount ID of the trusted profile.
-    :attr int ims_user_id: (optional) IMS user ID of the trusted profile.
-    :attr List[EnityHistoryRecord] history: (optional) History of the trusted
+    :param datetime modified_at: (optional) If set contains a date time string of
+          the last modification date in ISO format.
+    :param str iam_id: The iam_id of this trusted profile.
+    :param str account_id: ID of the account that this trusted profile belong to.
+    :param str template_id: (optional) ID of the IAM template that was used to
+          create an enterprise-managed trusted profile in your account. When returned,
+          this indicates that the trusted profile is created from and managed by a
+          template in the root enterprise account.
+    :param str assignment_id: (optional) ID of the assignment that was used to
+          create an enterprise-managed trusted profile in your account. When returned,
+          this indicates that the trusted profile is created from and managed by a
+          template in the root enterprise account.
+    :param int ims_account_id: (optional) IMS acount ID of the trusted profile.
+    :param int ims_user_id: (optional) IMS user ID of the trusted profile.
+    :param List[EnityHistoryRecord] history: (optional) History of the trusted
           profile.
-    :attr Activity activity: (optional)
+    :param Activity activity: (optional)
     """
 
     def __init__(
@@ -10309,16 +10460,16 @@ class TrustedProfile:
         iam_id: str,
         account_id: str,
         *,
-        context: 'ResponseContext' = None,
-        description: str = None,
-        created_at: datetime = None,
-        modified_at: datetime = None,
-        template_id: str = None,
-        assignment_id: str = None,
-        ims_account_id: int = None,
-        ims_user_id: int = None,
-        history: List['EnityHistoryRecord'] = None,
-        activity: 'Activity' = None,
+        context: Optional['ResponseContext'] = None,
+        description: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        modified_at: Optional[datetime] = None,
+        template_id: Optional[str] = None,
+        assignment_id: Optional[str] = None,
+        ims_account_id: Optional[int] = None,
+        ims_user_id: Optional[int] = None,
+        history: Optional[List['EnityHistoryRecord']] = None,
+        activity: Optional['Activity'] = None,
     ) -> None:
         """
         Initialize a TrustedProfile object.
@@ -10381,50 +10532,50 @@ class TrustedProfile:
     def from_dict(cls, _dict: Dict) -> 'TrustedProfile':
         """Initialize a TrustedProfile object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in TrustedProfile JSON')
-        if 'entity_tag' in _dict:
-            args['entity_tag'] = _dict.get('entity_tag')
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
         else:
             raise ValueError('Required property \'entity_tag\' not present in TrustedProfile JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
         else:
             raise ValueError('Required property \'crn\' not present in TrustedProfile JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in TrustedProfile JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'modified_at' in _dict:
-            args['modified_at'] = string_to_datetime(_dict.get('modified_at'))
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (modified_at := _dict.get('modified_at')) is not None:
+            args['modified_at'] = string_to_datetime(modified_at)
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
         else:
             raise ValueError('Required property \'iam_id\' not present in TrustedProfile JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in TrustedProfile JSON')
-        if 'template_id' in _dict:
-            args['template_id'] = _dict.get('template_id')
-        if 'assignment_id' in _dict:
-            args['assignment_id'] = _dict.get('assignment_id')
-        if 'ims_account_id' in _dict:
-            args['ims_account_id'] = _dict.get('ims_account_id')
-        if 'ims_user_id' in _dict:
-            args['ims_user_id'] = _dict.get('ims_user_id')
-        if 'history' in _dict:
-            args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
-        if 'activity' in _dict:
-            args['activity'] = Activity.from_dict(_dict.get('activity'))
+        if (template_id := _dict.get('template_id')) is not None:
+            args['template_id'] = template_id
+        if (assignment_id := _dict.get('assignment_id')) is not None:
+            args['assignment_id'] = assignment_id
+        if (ims_account_id := _dict.get('ims_account_id')) is not None:
+            args['ims_account_id'] = ims_account_id
+        if (ims_user_id := _dict.get('ims_user_id')) is not None:
+            args['ims_user_id'] = ims_user_id
+        if (history := _dict.get('history')) is not None:
+            args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
+        if (activity := _dict.get('activity')) is not None:
+            args['activity'] = Activity.from_dict(activity)
         return cls(**args)
 
     @classmethod
@@ -10504,14 +10655,14 @@ class TrustedProfileTemplateClaimRule:
     """
     TrustedProfileTemplateClaimRule.
 
-    :attr str name: (optional) Name of the claim rule to be created or updated.
-    :attr str type: Type of the claim rule.
-    :attr str realm_name: (optional) The realm name of the Idp this claim rule
+    :param str name: (optional) Name of the claim rule to be created or updated.
+    :param str type: Type of the claim rule.
+    :param str realm_name: (optional) The realm name of the Idp this claim rule
           applies to. This field is required only if the type is specified as
           'Profile-SAML'.
-    :attr int expiration: (optional) Session expiration in seconds, only required if
-          type is 'Profile-SAML'.
-    :attr List[ProfileClaimRuleConditions] conditions: Conditions of this claim
+    :param int expiration: (optional) Session expiration in seconds, only required
+          if type is 'Profile-SAML'.
+    :param List[ProfileClaimRuleConditions] conditions: Conditions of this claim
           rule.
     """
 
@@ -10520,9 +10671,9 @@ class TrustedProfileTemplateClaimRule:
         type: str,
         conditions: List['ProfileClaimRuleConditions'],
         *,
-        name: str = None,
-        realm_name: str = None,
-        expiration: int = None,
+        name: Optional[str] = None,
+        realm_name: Optional[str] = None,
+        expiration: Optional[int] = None,
     ) -> None:
         """
         Initialize a TrustedProfileTemplateClaimRule object.
@@ -10548,18 +10699,18 @@ class TrustedProfileTemplateClaimRule:
     def from_dict(cls, _dict: Dict) -> 'TrustedProfileTemplateClaimRule':
         """Initialize a TrustedProfileTemplateClaimRule object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in TrustedProfileTemplateClaimRule JSON')
-        if 'realm_name' in _dict:
-            args['realm_name'] = _dict.get('realm_name')
-        if 'expiration' in _dict:
-            args['expiration'] = _dict.get('expiration')
-        if 'conditions' in _dict:
-            args['conditions'] = [ProfileClaimRuleConditions.from_dict(v) for v in _dict.get('conditions')]
+        if (realm_name := _dict.get('realm_name')) is not None:
+            args['realm_name'] = realm_name
+        if (expiration := _dict.get('expiration')) is not None:
+            args['expiration'] = expiration
+        if (conditions := _dict.get('conditions')) is not None:
+            args['conditions'] = [ProfileClaimRuleConditions.from_dict(v) for v in conditions]
         else:
             raise ValueError('Required property \'conditions\' not present in TrustedProfileTemplateClaimRule JSON')
         return cls(**args)
@@ -10620,16 +10771,16 @@ class TrustedProfileTemplateList:
     """
     TrustedProfileTemplateList.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr int offset: (optional) The offset of the current page.
-    :attr int limit: (optional) Optional size of a single page.
-    :attr str first: (optional) Link to the first page.
-    :attr str previous: (optional) Link to the previous available page. If
+    :param int offset: (optional) The offset of the current page.
+    :param int limit: (optional) Optional size of a single page.
+    :param str first: (optional) Link to the first page.
+    :param str previous: (optional) Link to the previous available page. If
           'previous' property is not part of the response no previous page is available.
-    :attr str next: (optional) Link to the next available page. If 'next' property
+    :param str next: (optional) Link to the next available page. If 'next' property
           is not part of the response no next page is available.
-    :attr List[TrustedProfileTemplateResponse] profile_templates: List of Profile
+    :param List[TrustedProfileTemplateResponse] profile_templates: List of Profile
           Templates based on the query paramters and the page size. The profile_templates
           array is always part of the response but might be empty depending on the query
           parameter values provided.
@@ -10639,12 +10790,12 @@ class TrustedProfileTemplateList:
         self,
         profile_templates: List['TrustedProfileTemplateResponse'],
         *,
-        context: 'ResponseContext' = None,
-        offset: int = None,
-        limit: int = None,
-        first: str = None,
-        previous: str = None,
-        next: str = None,
+        context: Optional['ResponseContext'] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+        first: Optional[str] = None,
+        previous: Optional[str] = None,
+        next: Optional[str] = None,
     ) -> None:
         """
         Initialize a TrustedProfileTemplateList object.
@@ -10676,22 +10827,20 @@ class TrustedProfileTemplateList:
     def from_dict(cls, _dict: Dict) -> 'TrustedProfileTemplateList':
         """Initialize a TrustedProfileTemplateList object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
-        if 'first' in _dict:
-            args['first'] = _dict.get('first')
-        if 'previous' in _dict:
-            args['previous'] = _dict.get('previous')
-        if 'next' in _dict:
-            args['next'] = _dict.get('next')
-        if 'profile_templates' in _dict:
-            args['profile_templates'] = [
-                TrustedProfileTemplateResponse.from_dict(v) for v in _dict.get('profile_templates')
-            ]
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = first
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = previous
+        if (next := _dict.get('next')) is not None:
+            args['next'] = next
+        if (profile_templates := _dict.get('profile_templates')) is not None:
+            args['profile_templates'] = [TrustedProfileTemplateResponse.from_dict(v) for v in profile_templates]
         else:
             raise ValueError('Required property \'profile_templates\' not present in TrustedProfileTemplateList JSON')
         return cls(**args)
@@ -10752,30 +10901,30 @@ class TrustedProfileTemplateResponse:
     """
     Response body format for Trusted Profile Template REST requests.
 
-    :attr str id: ID of the the template.
-    :attr int version: Version of the the template.
-    :attr str account_id: ID of the account where the template resides.
-    :attr str name: The name of the trusted profile template. This is visible only
+    :param str id: ID of the the template.
+    :param int version: Version of the the template.
+    :param str account_id: ID of the account where the template resides.
+    :param str name: The name of the trusted profile template. This is visible only
           in the enterprise account.
-    :attr str description: (optional) The description of the trusted profile
+    :param str description: (optional) The description of the trusted profile
           template. Describe the template for enterprise account users.
-    :attr bool committed: (optional) Committed flag determines if the template is
+    :param bool committed: (optional) Committed flag determines if the template is
           ready for assignment.
-    :attr TemplateProfileComponentResponse profile: (optional) Input body parameters
-          for the TemplateProfileComponent.
-    :attr List[PolicyTemplateReference] policy_template_references: (optional)
+    :param TemplateProfileComponentResponse profile: (optional) Input body
+          parameters for the TemplateProfileComponent.
+    :param List[PolicyTemplateReference] policy_template_references: (optional)
           Existing policy templates that you can reference to assign access in the trusted
           profile component.
-    :attr List[EnityHistoryRecord] history: (optional) History of the trusted
+    :param List[EnityHistoryRecord] history: (optional) History of the trusted
           profile template.
-    :attr str entity_tag: (optional) Entity tag for this templateId-version
+    :param str entity_tag: (optional) Entity tag for this templateId-version
           combination.
-    :attr str crn: (optional) Cloud resource name.
-    :attr str created_at: (optional) Timestamp of when the template was created.
-    :attr str created_by_id: (optional) IAMid of the creator.
-    :attr str last_modified_at: (optional) Timestamp of when the template was last
+    :param str crn: (optional) Cloud resource name.
+    :param str created_at: (optional) Timestamp of when the template was created.
+    :param str created_by_id: (optional) IAMid of the creator.
+    :param str last_modified_at: (optional) Timestamp of when the template was last
           modified.
-    :attr str last_modified_by_id: (optional) IAMid of the identity that made the
+    :param str last_modified_by_id: (optional) IAMid of the identity that made the
           latest modification.
     """
 
@@ -10786,17 +10935,17 @@ class TrustedProfileTemplateResponse:
         account_id: str,
         name: str,
         *,
-        description: str = None,
-        committed: bool = None,
-        profile: 'TemplateProfileComponentResponse' = None,
-        policy_template_references: List['PolicyTemplateReference'] = None,
-        history: List['EnityHistoryRecord'] = None,
-        entity_tag: str = None,
-        crn: str = None,
-        created_at: str = None,
-        created_by_id: str = None,
-        last_modified_at: str = None,
-        last_modified_by_id: str = None,
+        description: Optional[str] = None,
+        committed: Optional[bool] = None,
+        profile: Optional['TemplateProfileComponentResponse'] = None,
+        policy_template_references: Optional[List['PolicyTemplateReference']] = None,
+        history: Optional[List['EnityHistoryRecord']] = None,
+        entity_tag: Optional[str] = None,
+        crn: Optional[str] = None,
+        created_at: Optional[str] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[str] = None,
+        last_modified_by_id: Optional[str] = None,
     ) -> None:
         """
         Initialize a TrustedProfileTemplateResponse object.
@@ -10848,46 +10997,46 @@ class TrustedProfileTemplateResponse:
     def from_dict(cls, _dict: Dict) -> 'TrustedProfileTemplateResponse':
         """Initialize a TrustedProfileTemplateResponse object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in TrustedProfileTemplateResponse JSON')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
         else:
             raise ValueError('Required property \'version\' not present in TrustedProfileTemplateResponse JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in TrustedProfileTemplateResponse JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in TrustedProfileTemplateResponse JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'committed' in _dict:
-            args['committed'] = _dict.get('committed')
-        if 'profile' in _dict:
-            args['profile'] = TemplateProfileComponentResponse.from_dict(_dict.get('profile'))
-        if 'policy_template_references' in _dict:
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (committed := _dict.get('committed')) is not None:
+            args['committed'] = committed
+        if (profile := _dict.get('profile')) is not None:
+            args['profile'] = TemplateProfileComponentResponse.from_dict(profile)
+        if (policy_template_references := _dict.get('policy_template_references')) is not None:
             args['policy_template_references'] = [
-                PolicyTemplateReference.from_dict(v) for v in _dict.get('policy_template_references')
+                PolicyTemplateReference.from_dict(v) for v in policy_template_references
             ]
-        if 'history' in _dict:
-            args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
-        if 'entity_tag' in _dict:
-            args['entity_tag'] = _dict.get('entity_tag')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = _dict.get('last_modified_at')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (history := _dict.get('history')) is not None:
+            args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = created_at
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = last_modified_at
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         return cls(**args)
 
     @classmethod
@@ -10968,29 +11117,29 @@ class TrustedProfilesList:
     """
     Response body format for the List trusted profiles V1 REST request.
 
-    :attr ResponseContext context: (optional) Context with key properties for
+    :param ResponseContext context: (optional) Context with key properties for
           problem determination.
-    :attr int offset: (optional) The offset of the current page.
-    :attr int limit: (optional) Optional size of a single page. Default is 20 items
+    :param int offset: (optional) The offset of the current page.
+    :param int limit: (optional) Optional size of a single page. Default is 20 items
           per page. Valid range is 1 to 100.
-    :attr str first: (optional) Link to the first page.
-    :attr str previous: (optional) Link to the previous available page. If
+    :param str first: (optional) Link to the first page.
+    :param str previous: (optional) Link to the previous available page. If
           'previous' property is not part of the response no previous page is available.
-    :attr str next: (optional) Link to the next available page. If 'next' property
+    :param str next: (optional) Link to the next available page. If 'next' property
           is not part of the response no next page is available.
-    :attr List[TrustedProfile] profiles: List of trusted profiles.
+    :param List[TrustedProfile] profiles: List of trusted profiles.
     """
 
     def __init__(
         self,
         profiles: List['TrustedProfile'],
         *,
-        context: 'ResponseContext' = None,
-        offset: int = None,
-        limit: int = None,
-        first: str = None,
-        previous: str = None,
-        next: str = None,
+        context: Optional['ResponseContext'] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+        first: Optional[str] = None,
+        previous: Optional[str] = None,
+        next: Optional[str] = None,
     ) -> None:
         """
         Initialize a TrustedProfilesList object.
@@ -11020,20 +11169,20 @@ class TrustedProfilesList:
     def from_dict(cls, _dict: Dict) -> 'TrustedProfilesList':
         """Initialize a TrustedProfilesList object from a json dictionary."""
         args = {}
-        if 'context' in _dict:
-            args['context'] = ResponseContext.from_dict(_dict.get('context'))
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
-        if 'first' in _dict:
-            args['first'] = _dict.get('first')
-        if 'previous' in _dict:
-            args['previous'] = _dict.get('previous')
-        if 'next' in _dict:
-            args['next'] = _dict.get('next')
-        if 'profiles' in _dict:
-            args['profiles'] = [TrustedProfile.from_dict(v) for v in _dict.get('profiles')]
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = first
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = previous
+        if (next := _dict.get('next')) is not None:
+            args['next'] = next
+        if (profiles := _dict.get('profiles')) is not None:
+            args['profiles'] = [TrustedProfile.from_dict(v) for v in profiles]
         else:
             raise ValueError('Required property \'profiles\' not present in TrustedProfilesList JSON')
         return cls(**args)
@@ -11094,11 +11243,11 @@ class UserActivity:
     """
     UserActivity.
 
-    :attr str iam_id: IAMid of the user.
-    :attr str name: (optional) Name of the user.
-    :attr str username: Username of the user.
-    :attr str email: (optional) Email of the user.
-    :attr str last_authn: (optional) Time when the user was last authenticated.
+    :param str iam_id: IAMid of the user.
+    :param str name: (optional) Name of the user.
+    :param str username: Username of the user.
+    :param str email: (optional) Email of the user.
+    :param str last_authn: (optional) Time when the user was last authenticated.
     """
 
     def __init__(
@@ -11106,9 +11255,9 @@ class UserActivity:
         iam_id: str,
         username: str,
         *,
-        name: str = None,
-        email: str = None,
-        last_authn: str = None,
+        name: Optional[str] = None,
+        email: Optional[str] = None,
+        last_authn: Optional[str] = None,
     ) -> None:
         """
         Initialize a UserActivity object.
@@ -11130,20 +11279,20 @@ class UserActivity:
     def from_dict(cls, _dict: Dict) -> 'UserActivity':
         """Initialize a UserActivity object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
         else:
             raise ValueError('Required property \'iam_id\' not present in UserActivity JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'username' in _dict:
-            args['username'] = _dict.get('username')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (username := _dict.get('username')) is not None:
+            args['username'] = username
         else:
             raise ValueError('Required property \'username\' not present in UserActivity JSON')
-        if 'email' in _dict:
-            args['email'] = _dict.get('email')
-        if 'last_authn' in _dict:
-            args['last_authn'] = _dict.get('last_authn')
+        if (email := _dict.get('email')) is not None:
+            args['email'] = email
+        if (last_authn := _dict.get('last_authn')) is not None:
+            args['last_authn'] = last_authn
         return cls(**args)
 
     @classmethod
@@ -11189,20 +11338,20 @@ class UserMfaEnrollments:
     """
     UserMfaEnrollments.
 
-    :attr str iam_id: IAMid of the user.
-    :attr str effective_mfa_type: (optional) currently effective mfa type i.e.
+    :param str iam_id: IAMid of the user.
+    :param str effective_mfa_type: (optional) currently effective mfa type i.e.
           id_based_mfa or account_based_mfa.
-    :attr IdBasedMfaEnrollment id_based_mfa: (optional)
-    :attr AccountBasedMfaEnrollment account_based_mfa: (optional)
+    :param IdBasedMfaEnrollment id_based_mfa: (optional)
+    :param AccountBasedMfaEnrollment account_based_mfa: (optional)
     """
 
     def __init__(
         self,
         iam_id: str,
         *,
-        effective_mfa_type: str = None,
-        id_based_mfa: 'IdBasedMfaEnrollment' = None,
-        account_based_mfa: 'AccountBasedMfaEnrollment' = None,
+        effective_mfa_type: Optional[str] = None,
+        id_based_mfa: Optional['IdBasedMfaEnrollment'] = None,
+        account_based_mfa: Optional['AccountBasedMfaEnrollment'] = None,
     ) -> None:
         """
         Initialize a UserMfaEnrollments object.
@@ -11222,16 +11371,16 @@ class UserMfaEnrollments:
     def from_dict(cls, _dict: Dict) -> 'UserMfaEnrollments':
         """Initialize a UserMfaEnrollments object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
         else:
             raise ValueError('Required property \'iam_id\' not present in UserMfaEnrollments JSON')
-        if 'effective_mfa_type' in _dict:
-            args['effective_mfa_type'] = _dict.get('effective_mfa_type')
-        if 'id_based_mfa' in _dict:
-            args['id_based_mfa'] = IdBasedMfaEnrollment.from_dict(_dict.get('id_based_mfa'))
-        if 'account_based_mfa' in _dict:
-            args['account_based_mfa'] = AccountBasedMfaEnrollment.from_dict(_dict.get('account_based_mfa'))
+        if (effective_mfa_type := _dict.get('effective_mfa_type')) is not None:
+            args['effective_mfa_type'] = effective_mfa_type
+        if (id_based_mfa := _dict.get('id_based_mfa')) is not None:
+            args['id_based_mfa'] = IdBasedMfaEnrollment.from_dict(id_based_mfa)
+        if (account_based_mfa := _dict.get('account_based_mfa')) is not None:
+            args['account_based_mfa'] = AccountBasedMfaEnrollment.from_dict(account_based_mfa)
         return cls(**args)
 
     @classmethod
@@ -11281,11 +11430,11 @@ class UserReportMfaEnrollmentStatus:
     """
     UserReportMfaEnrollmentStatus.
 
-    :attr str iam_id: IAMid of the user.
-    :attr str name: (optional) Name of the user.
-    :attr str username: Username of the user.
-    :attr str email: (optional) Email of the user.
-    :attr MfaEnrollments enrollments:
+    :param str iam_id: IAMid of the user.
+    :param str name: (optional) Name of the user.
+    :param str username: Username of the user.
+    :param str email: (optional) Email of the user.
+    :param MfaEnrollments enrollments:
     """
 
     def __init__(
@@ -11294,8 +11443,8 @@ class UserReportMfaEnrollmentStatus:
         username: str,
         enrollments: 'MfaEnrollments',
         *,
-        name: str = None,
-        email: str = None,
+        name: Optional[str] = None,
+        email: Optional[str] = None,
     ) -> None:
         """
         Initialize a UserReportMfaEnrollmentStatus object.
@@ -11316,20 +11465,20 @@ class UserReportMfaEnrollmentStatus:
     def from_dict(cls, _dict: Dict) -> 'UserReportMfaEnrollmentStatus':
         """Initialize a UserReportMfaEnrollmentStatus object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
         else:
             raise ValueError('Required property \'iam_id\' not present in UserReportMfaEnrollmentStatus JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'username' in _dict:
-            args['username'] = _dict.get('username')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (username := _dict.get('username')) is not None:
+            args['username'] = username
         else:
             raise ValueError('Required property \'username\' not present in UserReportMfaEnrollmentStatus JSON')
-        if 'email' in _dict:
-            args['email'] = _dict.get('email')
-        if 'enrollments' in _dict:
-            args['enrollments'] = MfaEnrollments.from_dict(_dict.get('enrollments'))
+        if (email := _dict.get('email')) is not None:
+            args['email'] = email
+        if (enrollments := _dict.get('enrollments')) is not None:
+            args['enrollments'] = MfaEnrollments.from_dict(enrollments)
         else:
             raise ValueError('Required property \'enrollments\' not present in UserReportMfaEnrollmentStatus JSON')
         return cls(**args)

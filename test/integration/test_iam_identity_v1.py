@@ -370,7 +370,10 @@ class TestIamIdentityV1:
         assert api_key['created_by'] == self.iam_id
         assert api_key['created_at'] is not None
         assert api_key['locked'] == False
+        assert api_key['disabled'] == False
         assert api_key['crn'] is not None
+        assert api_key['support_sessions'] == False
+        assert api_key['action_when_leaked'] is not None
 
         global apikey_etag1
         apikey_etag1 = get_api_key_response.get_headers()['Etag']
@@ -460,6 +463,32 @@ class TestIamIdentityV1:
         assert api_key is not None
         assert api_key['id'] == apikey_id1
         assert api_key['locked'] == False
+
+    @needscredentials
+    def test_disable_api_key(self):
+        assert apikey_id1 is not None
+
+        disable_api_key_response = self.iam_identity_service.disable_api_key(id=apikey_id1)
+
+        assert disable_api_key_response.get_status_code() == 204
+
+        api_key = self.get_api_key(self.iam_identity_service, apikey_id1)
+        assert api_key is not None
+        assert api_key['id'] == apikey_id1
+        assert api_key['disabled'] == True
+
+    @needscredentials
+    def test_enable_api_key(self):
+        assert apikey_id1 is not None
+
+        enable_api_key_response = self.iam_identity_service.enable_api_key(id=apikey_id1)
+
+        assert enable_api_key_response.get_status_code() == 204
+
+        api_key = self.get_api_key(self.iam_identity_service, apikey_id1)
+        assert api_key is not None
+        assert api_key['id'] == apikey_id1
+        assert api_key['disabled'] == False
 
     @needscredentials
     def test_delete_api_key1(self):
