@@ -38,6 +38,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class EnterpriseManagementV1(BaseService):
     """The Enterprise Management V1 service."""
 
@@ -45,23 +46,23 @@ class EnterpriseManagementV1(BaseService):
     DEFAULT_SERVICE_NAME = 'enterprise_management'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'EnterpriseManagementV1':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'EnterpriseManagementV1':
         """
         Return a new client for the Enterprise Management service using the
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the Enterprise Management service.
 
@@ -69,23 +70,14 @@ class EnterpriseManagementV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Enterprise Operations
     #########################
 
-
-    def create_enterprise(self,
-        source_account_id: str,
-        name: str,
-        primary_contact_iam_id: str,
-        *,
-        domain: str = None,
-        **kwargs
+    def create_enterprise(
+        self, source_account_id: str, name: str, primary_contact_iam_id: str, *, domain: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Create an enterprise.
@@ -120,9 +112,9 @@ class EnterpriseManagementV1(BaseService):
         if primary_contact_iam_id is None:
             raise ValueError('primary_contact_iam_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_enterprise')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_enterprise'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -141,23 +133,20 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/enterprises'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_enterprises(self,
+    def list_enterprises(
+        self,
         *,
         enterprise_account_id: str = None,
         account_group_id: str = None,
         account_id: str = None,
         next_docid: str = None,
         limit: int = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         List enterprises.
@@ -192,9 +181,9 @@ class EnterpriseManagementV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_enterprises')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_enterprises'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -211,19 +200,12 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/enterprises'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_enterprise(self,
-        enterprise_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_enterprise(self, enterprise_id: str, **kwargs) -> DetailedResponse:
         """
         Get enterprise by ID.
 
@@ -239,9 +221,9 @@ class EnterpriseManagementV1(BaseService):
         if not enterprise_id:
             raise ValueError('enterprise_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_enterprise')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_enterprise'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -253,21 +235,13 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(enterprise_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_enterprise(self,
-        enterprise_id: str,
-        *,
-        name: str = None,
-        domain: str = None,
-        primary_contact_iam_id: str = None,
-        **kwargs
+    def update_enterprise(
+        self, enterprise_id: str, *, name: str = None, domain: str = None, primary_contact_iam_id: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Update an enterprise.
@@ -291,9 +265,9 @@ class EnterpriseManagementV1(BaseService):
         if not enterprise_id:
             raise ValueError('enterprise_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_enterprise')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_enterprise'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -313,10 +287,7 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(enterprise_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
@@ -325,14 +296,8 @@ class EnterpriseManagementV1(BaseService):
     # Account Operations
     #########################
 
-
-    def import_account_to_enterprise(self,
-        enterprise_id: str,
-        account_id: str,
-        *,
-        parent: str = None,
-        billing_unit_id: str = None,
-        **kwargs
+    def import_account_to_enterprise(
+        self, enterprise_id: str, account_id: str, *, parent: str = None, billing_unit_id: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Import an account into an enterprise.
@@ -368,9 +333,9 @@ class EnterpriseManagementV1(BaseService):
         if not account_id:
             raise ValueError('account_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='import_account_to_enterprise')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='import_account_to_enterprise'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -389,23 +354,20 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(enterprise_id, account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/enterprises/{enterprise_id}/import/accounts/{account_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_account(self,
+    def create_account(
+        self,
         parent: str,
         name: str,
         owner_iam_id: str,
         *,
         traits: 'CreateAccountRequestTraits' = None,
         options: 'CreateAccountRequestOptions' = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create a new account in an enterprise.
@@ -448,9 +410,9 @@ class EnterpriseManagementV1(BaseService):
         if options is not None:
             options = convert_model(options)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_account')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_account'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -470,16 +432,13 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/accounts'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_accounts(self,
+    def list_accounts(
+        self,
         *,
         enterprise_id: str = None,
         account_group_id: str = None,
@@ -487,7 +446,7 @@ class EnterpriseManagementV1(BaseService):
         parent: str = None,
         limit: int = None,
         include_deleted: bool = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         List accounts.
@@ -527,9 +486,9 @@ class EnterpriseManagementV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_accounts')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_accounts'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -547,19 +506,12 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/accounts'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_account(self,
-        account_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_account(self, account_id: str, **kwargs) -> DetailedResponse:
         """
         Get account by ID.
 
@@ -575,9 +527,9 @@ class EnterpriseManagementV1(BaseService):
         if not account_id:
             raise ValueError('account_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_account')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_account'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -589,19 +541,12 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/accounts/{account_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_account(self,
-        account_id: str,
-        parent: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def update_account(self, account_id: str, parent: str, **kwargs) -> DetailedResponse:
         """
         Move an account within the enterprise.
 
@@ -619,9 +564,9 @@ class EnterpriseManagementV1(BaseService):
         if parent is None:
             raise ValueError('parent must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_account')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_account'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -639,19 +584,12 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/accounts/{account_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_account(self,
-        account_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_account(self, account_id: str, **kwargs) -> DetailedResponse:
         """
         Remove an account from its enterprise.
 
@@ -667,9 +605,9 @@ class EnterpriseManagementV1(BaseService):
         if not account_id:
             raise ValueError('account_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_account')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_account'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -680,9 +618,7 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/accounts/{account_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -691,13 +627,7 @@ class EnterpriseManagementV1(BaseService):
     # Account Group Operations
     #########################
 
-
-    def create_account_group(self,
-        parent: str,
-        name: str,
-        primary_contact_iam_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def create_account_group(self, parent: str, name: str, primary_contact_iam_id: str, **kwargs) -> DetailedResponse:
         """
         Create an account group.
 
@@ -726,9 +656,9 @@ class EnterpriseManagementV1(BaseService):
         if primary_contact_iam_id is None:
             raise ValueError('primary_contact_iam_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_account_group')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_account_group'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -746,16 +676,13 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/account-groups'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_account_groups(self,
+    def list_account_groups(
+        self,
         *,
         enterprise_id: str = None,
         parent_account_group_id: str = None,
@@ -763,7 +690,7 @@ class EnterpriseManagementV1(BaseService):
         parent: str = None,
         limit: int = None,
         include_deleted: bool = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         List account groups.
@@ -805,9 +732,9 @@ class EnterpriseManagementV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_account_groups')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_account_groups'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -825,19 +752,12 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/account-groups'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_account_group(self,
-        account_group_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_account_group(self, account_group_id: str, **kwargs) -> DetailedResponse:
         """
         Get account group by ID.
 
@@ -854,9 +774,9 @@ class EnterpriseManagementV1(BaseService):
         if not account_group_id:
             raise ValueError('account_group_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_account_group')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_account_group'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -868,20 +788,13 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/account-groups/{account_group_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_account_group(self,
-        account_group_id: str,
-        *,
-        name: str = None,
-        primary_contact_iam_id: str = None,
-        **kwargs
+    def update_account_group(
+        self, account_group_id: str, *, name: str = None, primary_contact_iam_id: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Update an account group.
@@ -902,9 +815,9 @@ class EnterpriseManagementV1(BaseService):
         if not account_group_id:
             raise ValueError('account_group_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_account_group')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_account_group'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -923,19 +836,12 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/account-groups/{account_group_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_account_group(self,
-        account_group_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_account_group(self, account_group_id: str, **kwargs) -> DetailedResponse:
         """
         Delete an account group from the enterprise.
 
@@ -953,9 +859,9 @@ class EnterpriseManagementV1(BaseService):
         if not account_group_id:
             raise ValueError('account_group_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_account_group')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_account_group'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -966,9 +872,7 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/account-groups/{account_group_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -979,7 +883,7 @@ class EnterpriseManagementV1(BaseService):
 ##############################################################################
 
 
-class Account():
+class Account:
     """
     An account resource.
 
@@ -1009,25 +913,27 @@ class Account():
           the account.
     """
 
-    def __init__(self,
-                 *,
-                 url: str = None,
-                 id: str = None,
-                 crn: str = None,
-                 parent: str = None,
-                 enterprise_account_id: str = None,
-                 enterprise_id: str = None,
-                 enterprise_path: str = None,
-                 name: str = None,
-                 state: str = None,
-                 owner_iam_id: str = None,
-                 paid: bool = None,
-                 owner_email: str = None,
-                 is_enterprise_account: bool = None,
-                 created_at: datetime = None,
-                 created_by: str = None,
-                 updated_at: datetime = None,
-                 updated_by: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        url: str = None,
+        id: str = None,
+        crn: str = None,
+        parent: str = None,
+        enterprise_account_id: str = None,
+        enterprise_id: str = None,
+        enterprise_path: str = None,
+        name: str = None,
+        state: str = None,
+        owner_iam_id: str = None,
+        paid: bool = None,
+        owner_email: str = None,
+        is_enterprise_account: bool = None,
+        created_at: datetime = None,
+        created_by: str = None,
+        updated_at: datetime = None,
+        updated_by: str = None,
+    ) -> None:
         """
         Initialize a Account object.
 
@@ -1178,7 +1084,8 @@ class Account():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class AccountGroup():
+
+class AccountGroup:
     """
     An account group resource.
 
@@ -1207,23 +1114,25 @@ class AccountGroup():
           the account group.
     """
 
-    def __init__(self,
-                 *,
-                 url: str = None,
-                 id: str = None,
-                 crn: str = None,
-                 parent: str = None,
-                 enterprise_account_id: str = None,
-                 enterprise_id: str = None,
-                 enterprise_path: str = None,
-                 name: str = None,
-                 state: str = None,
-                 primary_contact_iam_id: str = None,
-                 primary_contact_email: str = None,
-                 created_at: datetime = None,
-                 created_by: str = None,
-                 updated_at: datetime = None,
-                 updated_by: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        url: str = None,
+        id: str = None,
+        crn: str = None,
+        parent: str = None,
+        enterprise_account_id: str = None,
+        enterprise_id: str = None,
+        enterprise_path: str = None,
+        name: str = None,
+        state: str = None,
+        primary_contact_iam_id: str = None,
+        primary_contact_email: str = None,
+        created_at: datetime = None,
+        created_by: str = None,
+        updated_at: datetime = None,
+        updated_by: str = None,
+    ) -> None:
         """
         Initialize a AccountGroup object.
 
@@ -1362,7 +1271,8 @@ class AccountGroup():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CreateAccountGroupResponse():
+
+class CreateAccountGroupResponse:
     """
     A newly-created account group.
 
@@ -1370,9 +1280,7 @@ class CreateAccountGroupResponse():
           was created.
     """
 
-    def __init__(self,
-                 *,
-                 account_group_id: str = None) -> None:
+    def __init__(self, *, account_group_id: str = None) -> None:
         """
         Initialize a CreateAccountGroupResponse object.
 
@@ -1419,7 +1327,8 @@ class CreateAccountGroupResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CreateAccountRequestOptions():
+
+class CreateAccountRequestOptions:
     """
     The options object can be used to set properties on child accounts of an enterprise.
     You can pass a field to to create IAM service id with IAM api keyg when creating a
@@ -1433,9 +1342,7 @@ class CreateAccountRequestOptions():
           This is an optional field.
     """
 
-    def __init__(self,
-                 *,
-                 create_iam_service_id_with_apikey_and_owner_policies: bool = None) -> None:
+    def __init__(self, *, create_iam_service_id_with_apikey_and_owner_policies: bool = None) -> None:
         """
         Initialize a CreateAccountRequestOptions object.
 
@@ -1453,7 +1360,9 @@ class CreateAccountRequestOptions():
         """Initialize a CreateAccountRequestOptions object from a json dictionary."""
         args = {}
         if 'create_iam_service_id_with_apikey_and_owner_policies' in _dict:
-            args['create_iam_service_id_with_apikey_and_owner_policies'] = _dict.get('create_iam_service_id_with_apikey_and_owner_policies')
+            args['create_iam_service_id_with_apikey_and_owner_policies'] = _dict.get(
+                'create_iam_service_id_with_apikey_and_owner_policies'
+            )
         return cls(**args)
 
     @classmethod
@@ -1464,8 +1373,13 @@ class CreateAccountRequestOptions():
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'create_iam_service_id_with_apikey_and_owner_policies') and self.create_iam_service_id_with_apikey_and_owner_policies is not None:
-            _dict['create_iam_service_id_with_apikey_and_owner_policies'] = self.create_iam_service_id_with_apikey_and_owner_policies
+        if (
+            hasattr(self, 'create_iam_service_id_with_apikey_and_owner_policies')
+            and self.create_iam_service_id_with_apikey_and_owner_policies is not None
+        ):
+            _dict['create_iam_service_id_with_apikey_and_owner_policies'] = (
+                self.create_iam_service_id_with_apikey_and_owner_policies
+            )
         return _dict
 
     def _to_dict(self):
@@ -1486,7 +1400,8 @@ class CreateAccountRequestOptions():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CreateAccountRequestTraits():
+
+class CreateAccountRequestTraits:
     """
     The traits object can be used to set properties on child accounts of an enterprise.
     You can pass a field to opt-out of the default multi-factor authentication setting or
@@ -1503,10 +1418,7 @@ class CreateAccountRequestTraits():
           profiles, and account settings, to the child account. This is an optional field.
     """
 
-    def __init__(self,
-                 *,
-                 mfa: str = None,
-                 enterprise_iam_managed: bool = None) -> None:
+    def __init__(self, *, mfa: str = None, enterprise_iam_managed: bool = None) -> None:
         """
         Initialize a CreateAccountRequestTraits object.
 
@@ -1566,16 +1478,15 @@ class CreateAccountRequestTraits():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CreateAccountResponse():
+
+class CreateAccountResponse:
     """
     A newly-created account.
 
     :attr str account_id: (optional) The ID of the account entity that was created.
     """
 
-    def __init__(self,
-                 *,
-                 account_id: str = None) -> None:
+    def __init__(self, *, account_id: str = None) -> None:
         """
         Initialize a CreateAccountResponse object.
 
@@ -1622,7 +1533,8 @@ class CreateAccountResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CreateEnterpriseResponse():
+
+class CreateEnterpriseResponse:
     """
     The response from calling create enterprise.
 
@@ -1633,10 +1545,7 @@ class CreateEnterpriseResponse():
           the enterprise management.
     """
 
-    def __init__(self,
-                 *,
-                 enterprise_id: str = None,
-                 enterprise_account_id: str = None) -> None:
+    def __init__(self, *, enterprise_id: str = None, enterprise_account_id: str = None) -> None:
         """
         Initialize a CreateEnterpriseResponse object.
 
@@ -1691,7 +1600,8 @@ class CreateEnterpriseResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Enterprise():
+
+class Enterprise:
     """
     An enterprise resource.
 
@@ -1718,22 +1628,24 @@ class Enterprise():
           the enterprise.
     """
 
-    def __init__(self,
-                 *,
-                 url: str = None,
-                 id: str = None,
-                 enterprise_account_id: str = None,
-                 crn: str = None,
-                 name: str = None,
-                 domain: str = None,
-                 state: str = None,
-                 primary_contact_iam_id: str = None,
-                 primary_contact_email: str = None,
-                 source_account_id: str = None,
-                 created_at: datetime = None,
-                 created_by: str = None,
-                 updated_at: datetime = None,
-                 updated_by: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        url: str = None,
+        id: str = None,
+        enterprise_account_id: str = None,
+        crn: str = None,
+        name: str = None,
+        domain: str = None,
+        state: str = None,
+        primary_contact_iam_id: str = None,
+        primary_contact_email: str = None,
+        source_account_id: str = None,
+        created_at: datetime = None,
+        created_by: str = None,
+        updated_at: datetime = None,
+        updated_by: str = None,
+    ) -> None:
         """
         Initialize a Enterprise object.
 
@@ -1864,7 +1776,8 @@ class Enterprise():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ListAccountGroupsResponse():
+
+class ListAccountGroupsResponse:
     """
     The list_account_groups operation response.
 
@@ -1875,11 +1788,7 @@ class ListAccountGroupsResponse():
     :attr List[AccountGroup] resources: (optional) A list of account groups.
     """
 
-    def __init__(self,
-                 *,
-                 rows_count: int = None,
-                 next_url: str = None,
-                 resources: List['AccountGroup'] = None) -> None:
+    def __init__(self, *, rows_count: int = None, next_url: str = None, resources: List['AccountGroup'] = None) -> None:
         """
         Initialize a ListAccountGroupsResponse object.
 
@@ -1945,7 +1854,8 @@ class ListAccountGroupsResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ListAccountsResponse():
+
+class ListAccountsResponse:
     """
     The list_accounts operation response.
 
@@ -1956,11 +1866,7 @@ class ListAccountsResponse():
     :attr List[Account] resources: (optional) A list of accounts.
     """
 
-    def __init__(self,
-                 *,
-                 rows_count: int = None,
-                 next_url: str = None,
-                 resources: List['Account'] = None) -> None:
+    def __init__(self, *, rows_count: int = None, next_url: str = None, resources: List['Account'] = None) -> None:
         """
         Initialize a ListAccountsResponse object.
 
@@ -2026,7 +1932,8 @@ class ListAccountsResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ListEnterprisesResponse():
+
+class ListEnterprisesResponse:
     """
     The response from calling list enterprises.
 
@@ -2037,11 +1944,7 @@ class ListEnterprisesResponse():
     :attr List[Enterprise] resources: (optional) A list of enterprise objects.
     """
 
-    def __init__(self,
-                 *,
-                 rows_count: int = None,
-                 next_url: str = None,
-                 resources: List['Enterprise'] = None) -> None:
+    def __init__(self, *, rows_count: int = None, next_url: str = None, resources: List['Enterprise'] = None) -> None:
         """
         Initialize a ListEnterprisesResponse object.
 
@@ -2107,22 +2010,25 @@ class ListEnterprisesResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
 ##############################################################################
 # Pagers
 ##############################################################################
 
-class EnterprisesPager():
+
+class EnterprisesPager:
     """
     EnterprisesPager can be used to simplify the use of the "list_enterprises" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: EnterpriseManagementV1,
-                 enterprise_account_id: str = None,
-                 account_group_id: str = None,
-                 account_id: str = None,
-                 limit: int = None,
+    def __init__(
+        self,
+        *,
+        client: EnterpriseManagementV1,
+        enterprise_account_id: str = None,
+        account_group_id: str = None,
+        account_id: str = None,
+        limit: int = None,
     ) -> None:
         """
         Initialize a EnterprisesPager object.
@@ -2136,7 +2042,7 @@ class EnterprisesPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._enterprise_account_id = enterprise_account_id
         self._account_group_id = account_group_id
         self._account_id = account_id
@@ -2188,19 +2094,21 @@ class EnterprisesPager():
             results.extend(next_page)
         return results
 
-class AccountsPager():
+
+class AccountsPager:
     """
     AccountsPager can be used to simplify the use of the "list_accounts" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: EnterpriseManagementV1,
-                 enterprise_id: str = None,
-                 account_group_id: str = None,
-                 parent: str = None,
-                 limit: int = None,
-                 include_deleted: bool = None,
+    def __init__(
+        self,
+        *,
+        client: EnterpriseManagementV1,
+        enterprise_id: str = None,
+        account_group_id: str = None,
+        parent: str = None,
+        limit: int = None,
+        include_deleted: bool = None,
     ) -> None:
         """
         Initialize a AccountsPager object.
@@ -2218,7 +2126,7 @@ class AccountsPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._enterprise_id = enterprise_id
         self._account_group_id = account_group_id
         self._parent = parent
@@ -2272,19 +2180,21 @@ class AccountsPager():
             results.extend(next_page)
         return results
 
-class AccountGroupsPager():
+
+class AccountGroupsPager:
     """
     AccountGroupsPager can be used to simplify the use of the "list_account_groups" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: EnterpriseManagementV1,
-                 enterprise_id: str = None,
-                 parent_account_group_id: str = None,
-                 parent: str = None,
-                 limit: int = None,
-                 include_deleted: bool = None,
+    def __init__(
+        self,
+        *,
+        client: EnterpriseManagementV1,
+        enterprise_id: str = None,
+        parent_account_group_id: str = None,
+        parent: str = None,
+        limit: int = None,
+        include_deleted: bool = None,
     ) -> None:
         """
         Initialize a AccountGroupsPager object.
@@ -2303,7 +2213,7 @@ class AccountGroupsPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._enterprise_id = enterprise_id
         self._parent_account_group_id = parent_account_group_id
         self._parent = parent
