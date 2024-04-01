@@ -57,10 +57,9 @@ def preprocess_url(operation_path: str):
 
     # If the request url does NOT end with a /, then just return it as-is.
     # Otherwise, return a regular expression that matches one or more trailing /.
-    if re.fullmatch('.*/+', request_url) is None:
+    if not request_url.endswith('/'):
         return request_url
-    else:
-        return re.compile(request_url.rstrip('/') + '/+')
+    return re.compile(request_url.rstrip('/') + '/+')
 
 
 ##############################################################################
@@ -110,7 +109,13 @@ class TestCreateEnterprise:
         # Set up mock
         url = preprocess_url('/enterprises')
         mock_response = '{"enterprise_id": "enterprise_id", "enterprise_account_id": "enterprise_account_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         source_account_id = 'testString'
@@ -120,7 +125,11 @@ class TestCreateEnterprise:
 
         # Invoke method
         response = _service.create_enterprise(
-            source_account_id, name, primary_contact_iam_id, domain=domain, headers={}
+            source_account_id,
+            name,
+            primary_contact_iam_id,
+            domain=domain,
+            headers={},
         )
 
         # Check for correct operation
@@ -150,7 +159,13 @@ class TestCreateEnterprise:
         # Set up mock
         url = preprocess_url('/enterprises')
         mock_response = '{"enterprise_id": "enterprise_id", "enterprise_account_id": "enterprise_account_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         source_account_id = 'testString'
@@ -192,7 +207,13 @@ class TestListEnterprises:
         # Set up mock
         url = preprocess_url('/enterprises')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "source_account_id": "source_account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         enterprise_account_id = 'testString'
@@ -240,7 +261,13 @@ class TestListEnterprises:
         # Set up mock
         url = preprocess_url('/enterprises')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "source_account_id": "source_account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Invoke method
         response = _service.list_enterprises()
@@ -267,8 +294,20 @@ class TestListEnterprises:
         url = preprocess_url('/enterprises')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","enterprise_account_id":"enterprise_account_id","crn":"crn","name":"name","domain":"domain","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","source_account_id":"source_account_id","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","enterprise_account_id":"enterprise_account_id","crn":"crn","name":"name","domain":"domain","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","source_account_id":"source_account_id","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         all_results = []
@@ -294,8 +333,20 @@ class TestListEnterprises:
         url = preprocess_url('/enterprises')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","enterprise_account_id":"enterprise_account_id","crn":"crn","name":"name","domain":"domain","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","source_account_id":"source_account_id","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","enterprise_account_id":"enterprise_account_id","crn":"crn","name":"name","domain":"domain","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","source_account_id":"source_account_id","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         pager = EnterprisesPager(
@@ -323,13 +374,22 @@ class TestGetEnterprise:
         # Set up mock
         url = preprocess_url('/enterprises/testString')
         mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "source_account_id": "source_account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         enterprise_id = 'testString'
 
         # Invoke method
-        response = _service.get_enterprise(enterprise_id, headers={})
+        response = _service.get_enterprise(
+            enterprise_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -352,7 +412,13 @@ class TestGetEnterprise:
         # Set up mock
         url = preprocess_url('/enterprises/testString')
         mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "source_account_id": "source_account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         enterprise_id = 'testString'
@@ -388,7 +454,11 @@ class TestUpdateEnterprise:
         """
         # Set up mock
         url = preprocess_url('/enterprises/testString')
-        responses.add(responses.PATCH, url, status=204)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         enterprise_id = 'testString'
@@ -398,7 +468,11 @@ class TestUpdateEnterprise:
 
         # Invoke method
         response = _service.update_enterprise(
-            enterprise_id, name=name, domain=domain, primary_contact_iam_id=primary_contact_iam_id, headers={}
+            enterprise_id,
+            name=name,
+            domain=domain,
+            primary_contact_iam_id=primary_contact_iam_id,
+            headers={},
         )
 
         # Check for correct operation
@@ -426,7 +500,11 @@ class TestUpdateEnterprise:
         """
         # Set up mock
         url = preprocess_url('/enterprises/testString')
-        responses.add(responses.PATCH, url, status=204)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         enterprise_id = 'testString'
@@ -504,7 +582,11 @@ class TestImportAccountToEnterprise:
         """
         # Set up mock
         url = preprocess_url('/enterprises/testString/import/accounts/testString')
-        responses.add(responses.PUT, url, status=202)
+        responses.add(
+            responses.PUT,
+            url,
+            status=202,
+        )
 
         # Set up parameter values
         enterprise_id = 'testString'
@@ -514,7 +596,11 @@ class TestImportAccountToEnterprise:
 
         # Invoke method
         response = _service.import_account_to_enterprise(
-            enterprise_id, account_id, parent=parent, billing_unit_id=billing_unit_id, headers={}
+            enterprise_id,
+            account_id,
+            parent=parent,
+            billing_unit_id=billing_unit_id,
+            headers={},
         )
 
         # Check for correct operation
@@ -541,14 +627,22 @@ class TestImportAccountToEnterprise:
         """
         # Set up mock
         url = preprocess_url('/enterprises/testString/import/accounts/testString')
-        responses.add(responses.PUT, url, status=202)
+        responses.add(
+            responses.PUT,
+            url,
+            status=202,
+        )
 
         # Set up parameter values
         enterprise_id = 'testString'
         account_id = 'testString'
 
         # Invoke method
-        response = _service.import_account_to_enterprise(enterprise_id, account_id, headers={})
+        response = _service.import_account_to_enterprise(
+            enterprise_id,
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -570,7 +664,11 @@ class TestImportAccountToEnterprise:
         """
         # Set up mock
         url = preprocess_url('/enterprises/testString/import/accounts/testString')
-        responses.add(responses.PUT, url, status=202)
+        responses.add(
+            responses.PUT,
+            url,
+            status=202,
+        )
 
         # Set up parameter values
         enterprise_id = 'testString'
@@ -609,11 +707,17 @@ class TestCreateAccount:
         # Set up mock
         url = preprocess_url('/accounts')
         mock_response = '{"account_id": "account_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Construct a dict representation of a CreateAccountRequestTraits model
         create_account_request_traits_model = {}
-        create_account_request_traits_model['mfa'] = 'testString'
+        create_account_request_traits_model['mfa'] = 'NONE'
         create_account_request_traits_model['enterprise_iam_managed'] = True
 
         # Construct a dict representation of a CreateAccountRequestOptions model
@@ -628,7 +732,14 @@ class TestCreateAccount:
         options = create_account_request_options_model
 
         # Invoke method
-        response = _service.create_account(parent, name, owner_iam_id, traits=traits, options=options, headers={})
+        response = _service.create_account(
+            parent,
+            name,
+            owner_iam_id,
+            traits=traits,
+            options=options,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -658,7 +769,13 @@ class TestCreateAccount:
         # Set up mock
         url = preprocess_url('/accounts')
         mock_response = '{"account_id": "account_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Construct a dict representation of a CreateAccountRequestTraits model
         create_account_request_traits_model = {}
@@ -710,7 +827,13 @@ class TestListAccounts:
         # Set up mock
         url = preprocess_url('/accounts')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         enterprise_id = 'testString'
@@ -761,7 +884,13 @@ class TestListAccounts:
         # Set up mock
         url = preprocess_url('/accounts')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Invoke method
         response = _service.list_accounts()
@@ -788,8 +917,20 @@ class TestListAccounts:
         url = preprocess_url('/accounts')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","owner_iam_id":"owner_iam_id","paid":true,"owner_email":"owner_email","is_enterprise_account":false,"created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","owner_iam_id":"owner_iam_id","paid":true,"owner_email":"owner_email","is_enterprise_account":false,"created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         all_results = []
@@ -816,8 +957,20 @@ class TestListAccounts:
         url = preprocess_url('/accounts')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","owner_iam_id":"owner_iam_id","paid":true,"owner_email":"owner_email","is_enterprise_account":false,"created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","owner_iam_id":"owner_iam_id","paid":true,"owner_email":"owner_email","is_enterprise_account":false,"created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         pager = AccountsPager(
@@ -846,13 +999,22 @@ class TestGetAccount:
         # Set up mock
         url = preprocess_url('/accounts/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.get_account(account_id, headers={})
+        response = _service.get_account(
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -875,7 +1037,13 @@ class TestGetAccount:
         # Set up mock
         url = preprocess_url('/accounts/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -911,14 +1079,22 @@ class TestUpdateAccount:
         """
         # Set up mock
         url = preprocess_url('/accounts/testString')
-        responses.add(responses.PATCH, url, status=202)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         parent = 'testString'
 
         # Invoke method
-        response = _service.update_account(account_id, parent, headers={})
+        response = _service.update_account(
+            account_id,
+            parent,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -943,7 +1119,11 @@ class TestUpdateAccount:
         """
         # Set up mock
         url = preprocess_url('/accounts/testString')
-        responses.add(responses.PATCH, url, status=202)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -981,13 +1161,20 @@ class TestDeleteAccount:
         """
         # Set up mock
         url = preprocess_url('/accounts/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.delete_account(account_id, headers={})
+        response = _service.delete_account(
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1009,7 +1196,11 @@ class TestDeleteAccount:
         """
         # Set up mock
         url = preprocess_url('/accounts/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -1085,7 +1276,13 @@ class TestCreateAccountGroup:
         # Set up mock
         url = preprocess_url('/account-groups')
         mock_response = '{"account_group_id": "account_group_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         parent = 'testString'
@@ -1093,7 +1290,12 @@ class TestCreateAccountGroup:
         primary_contact_iam_id = 'testString'
 
         # Invoke method
-        response = _service.create_account_group(parent, name, primary_contact_iam_id, headers={})
+        response = _service.create_account_group(
+            parent,
+            name,
+            primary_contact_iam_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1121,7 +1323,13 @@ class TestCreateAccountGroup:
         # Set up mock
         url = preprocess_url('/account-groups')
         mock_response = '{"account_group_id": "account_group_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         parent = 'testString'
@@ -1162,7 +1370,13 @@ class TestListAccountGroups:
         # Set up mock
         url = preprocess_url('/account-groups')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         enterprise_id = 'testString'
@@ -1213,7 +1427,13 @@ class TestListAccountGroups:
         # Set up mock
         url = preprocess_url('/account-groups')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Invoke method
         response = _service.list_account_groups()
@@ -1240,8 +1460,20 @@ class TestListAccountGroups:
         url = preprocess_url('/account-groups')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         all_results = []
@@ -1268,8 +1500,20 @@ class TestListAccountGroups:
         url = preprocess_url('/account-groups')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         pager = AccountGroupsPager(
@@ -1298,13 +1542,22 @@ class TestGetAccountGroup:
         # Set up mock
         url = preprocess_url('/account-groups/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_group_id = 'testString'
 
         # Invoke method
-        response = _service.get_account_group(account_group_id, headers={})
+        response = _service.get_account_group(
+            account_group_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1327,7 +1580,13 @@ class TestGetAccountGroup:
         # Set up mock
         url = preprocess_url('/account-groups/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_group_id = 'testString'
@@ -1363,7 +1622,11 @@ class TestUpdateAccountGroup:
         """
         # Set up mock
         url = preprocess_url('/account-groups/testString')
-        responses.add(responses.PATCH, url, status=204)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_group_id = 'testString'
@@ -1372,7 +1635,10 @@ class TestUpdateAccountGroup:
 
         # Invoke method
         response = _service.update_account_group(
-            account_group_id, name=name, primary_contact_iam_id=primary_contact_iam_id, headers={}
+            account_group_id,
+            name=name,
+            primary_contact_iam_id=primary_contact_iam_id,
+            headers={},
         )
 
         # Check for correct operation
@@ -1399,7 +1665,11 @@ class TestUpdateAccountGroup:
         """
         # Set up mock
         url = preprocess_url('/account-groups/testString')
-        responses.add(responses.PATCH, url, status=204)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_group_id = 'testString'
@@ -1437,13 +1707,20 @@ class TestDeleteAccountGroup:
         """
         # Set up mock
         url = preprocess_url('/account-groups/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_group_id = 'testString'
 
         # Invoke method
-        response = _service.delete_account_group(account_group_id, headers={})
+        response = _service.delete_account_group(
+            account_group_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1465,7 +1742,11 @@ class TestDeleteAccountGroup:
         """
         # Set up mock
         url = preprocess_url('/account-groups/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_group_id = 'testString'
@@ -1499,6 +1780,8 @@ class TestDeleteAccountGroup:
 # Start of Model Tests
 ##############################################################################
 # region
+
+
 class TestModel_Account:
     """
     Test Class for Account
