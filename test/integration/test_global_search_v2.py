@@ -25,8 +25,6 @@ from ibm_platform_services.global_search_v2 import *
 # Config file name
 config_file = 'global_search.env'
 
-transaction_id = str(uuid.uuid4())
-
 
 class TestGlobalSearchV2:
     """
@@ -55,7 +53,7 @@ class TestGlobalSearchV2:
 
         while more_results:
             search_response = self.global_search_service.search(
-                query='GST-sdk-*', fields=['*'], search_cursor=search_cursor, transaction_id=transaction_id, limit=1
+                query='GST-sdk-*', fields=['*'], search_cursor=search_cursor, limit=1
             )
 
             assert search_response.get_status_code() == 200
