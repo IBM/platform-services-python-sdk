@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.global_search_v2 import *
 
 
-_service = GlobalSearchV2(authenticator=NoAuthAuthenticator())
+_service = GlobalSearchV2(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://api.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -121,7 +123,6 @@ class TestSearch:
         search_cursor = 'testString'
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         account_id = 'testString'
         limit = 10
         timeout = 0
@@ -139,7 +140,6 @@ class TestSearch:
             search_cursor=search_cursor,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             account_id=account_id,
             limit=limit,
             timeout=timeout,

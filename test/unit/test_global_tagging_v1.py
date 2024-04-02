@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.global_tagging_v1 import *
 
 
-_service = GlobalTaggingV1(authenticator=NoAuthAuthenticator())
+_service = GlobalTaggingV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://tags.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -118,7 +120,6 @@ class TestListTags:
         # Set up parameter values
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         account_id = 'testString'
         tag_type = 'user'
         full_data = False
@@ -134,7 +135,6 @@ class TestListTags:
         response = _service.list_tags(
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             account_id=account_id,
             tag_type=tag_type,
             full_data=full_data,
@@ -232,7 +232,6 @@ class TestCreateTag:
         tag_names = ['testString']
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         account_id = 'testString'
         tag_type = 'access'
 
@@ -241,7 +240,6 @@ class TestCreateTag:
             tag_names,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             account_id=account_id,
             tag_type=tag_type,
             headers={},
@@ -371,7 +369,6 @@ class TestDeleteTagAll:
         # Set up parameter values
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         providers = 'ghost'
         account_id = 'testString'
         tag_type = 'user'
@@ -380,7 +377,6 @@ class TestDeleteTagAll:
         response = _service.delete_tag_all(
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             providers=providers,
             account_id=account_id,
             tag_type=tag_type,
@@ -464,7 +460,6 @@ class TestDeleteTag:
         tag_name = 'testString'
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         providers = ['ghost']
         account_id = 'testString'
         tag_type = 'user'
@@ -474,7 +469,6 @@ class TestDeleteTag:
             tag_name,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             providers=providers,
             account_id=account_id,
             tag_type=tag_type,
@@ -608,7 +602,6 @@ class TestAttachTag:
         tag_names = ['testString']
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         account_id = 'testString'
         tag_type = 'user'
         replace = False
@@ -620,7 +613,6 @@ class TestAttachTag:
             tag_names=tag_names,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             account_id=account_id,
             tag_type=tag_type,
             replace=replace,
@@ -780,7 +772,6 @@ class TestDetachTag:
         tag_names = ['testString']
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -791,7 +782,6 @@ class TestDetachTag:
             tag_names=tag_names,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             account_id=account_id,
             tag_type=tag_type,
             headers={},
@@ -981,18 +971,12 @@ class TestModel_CreateTagResultsResultsItem:
         create_tag_results_results_item_model_json['is_error'] = True
 
         # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
-        create_tag_results_results_item_model = CreateTagResultsResultsItem.from_dict(
-            create_tag_results_results_item_model_json
-        )
+        create_tag_results_results_item_model = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json)
         assert create_tag_results_results_item_model != False
 
         # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
-        create_tag_results_results_item_model_dict = CreateTagResultsResultsItem.from_dict(
-            create_tag_results_results_item_model_json
-        ).__dict__
-        create_tag_results_results_item_model2 = CreateTagResultsResultsItem(
-            **create_tag_results_results_item_model_dict
-        )
+        create_tag_results_results_item_model_dict = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json).__dict__
+        create_tag_results_results_item_model2 = CreateTagResultsResultsItem(**create_tag_results_results_item_model_dict)
 
         # Verify the model instances are equivalent
         assert create_tag_results_results_item_model == create_tag_results_results_item_model2
@@ -1262,9 +1246,7 @@ class TestModel_TagResults:
         # Construct dict forms of any model objects needed in order to build this model.
 
         tag_results_item_model = {}  # TagResultsItem
-        tag_results_item_model['resource_id'] = (
-            'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
-        )
+        tag_results_item_model['resource_id'] = 'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
         tag_results_item_model['is_error'] = False
 
         # Construct a json representation of a TagResults model
