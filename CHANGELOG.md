@@ -1,3 +1,10 @@
+## [0.53.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.0...v0.53.1) (2024-04-02)
+
+
+### Bug Fixes
+
+* **Enterprise Management:** add options property to create_account payload ([#250](https://github.com/IBM/platform-services-python-sdk/issues/250)) ([4aeff97](https://github.com/IBM/platform-services-python-sdk/commit/4aeff975a910f99f4ca7e5d58de10e2a1b7c5976))
+
 # [0.53.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.52.0...v0.53.0) (2024-03-26)
 
 

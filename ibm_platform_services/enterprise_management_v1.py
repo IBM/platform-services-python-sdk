@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
+# IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
 
 """
 The Enterprise Management API enables you to create and manage an enterprise, account
@@ -24,7 +24,7 @@ API Version: 1.0
 """
 
 from datetime import datetime
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
@@ -77,7 +77,13 @@ class EnterpriseManagementV1(BaseService):
     #########################
 
     def create_enterprise(
-        self, source_account_id: str, name: str, primary_contact_iam_id: str, *, domain: str = None, **kwargs
+        self,
+        source_account_id: str,
+        name: str,
+        primary_contact_iam_id: str,
+        *,
+        domain: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create an enterprise.
@@ -113,7 +119,9 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('primary_contact_iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_enterprise'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_enterprise',
         )
         headers.update(sdk_headers)
 
@@ -133,7 +141,12 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/enterprises'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -141,11 +154,11 @@ class EnterpriseManagementV1(BaseService):
     def list_enterprises(
         self,
         *,
-        enterprise_account_id: str = None,
-        account_group_id: str = None,
-        account_id: str = None,
-        next_docid: str = None,
-        limit: int = None,
+        enterprise_account_id: Optional[str] = None,
+        account_group_id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        next_docid: Optional[str] = None,
+        limit: Optional[int] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -182,7 +195,9 @@ class EnterpriseManagementV1(BaseService):
 
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_enterprises'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_enterprises',
         )
         headers.update(sdk_headers)
 
@@ -200,12 +215,21 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/enterprises'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_enterprise(self, enterprise_id: str, **kwargs) -> DetailedResponse:
+    def get_enterprise(
+        self,
+        enterprise_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Get enterprise by ID.
 
@@ -222,7 +246,9 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('enterprise_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_enterprise'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_enterprise',
         )
         headers.update(sdk_headers)
 
@@ -235,13 +261,23 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(enterprise_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def update_enterprise(
-        self, enterprise_id: str, *, name: str = None, domain: str = None, primary_contact_iam_id: str = None, **kwargs
+        self,
+        enterprise_id: str,
+        *,
+        name: Optional[str] = None,
+        domain: Optional[str] = None,
+        primary_contact_iam_id: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update an enterprise.
@@ -266,7 +302,9 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('enterprise_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_enterprise'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_enterprise',
         )
         headers.update(sdk_headers)
 
@@ -287,7 +325,12 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(enterprise_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -297,7 +340,13 @@ class EnterpriseManagementV1(BaseService):
     #########################
 
     def import_account_to_enterprise(
-        self, enterprise_id: str, account_id: str, *, parent: str = None, billing_unit_id: str = None, **kwargs
+        self,
+        enterprise_id: str,
+        account_id: str,
+        *,
+        parent: Optional[str] = None,
+        billing_unit_id: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Import an account into an enterprise.
@@ -334,7 +383,9 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('account_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='import_account_to_enterprise'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='import_account_to_enterprise',
         )
         headers.update(sdk_headers)
 
@@ -354,13 +405,25 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(enterprise_id, account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/enterprises/{enterprise_id}/import/accounts/{account_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def create_account(
-        self, parent: str, name: str, owner_iam_id: str, *, traits: 'CreateAccountRequestTraits' = None, **kwargs
+        self,
+        parent: str,
+        name: str,
+        owner_iam_id: str,
+        *,
+        traits: Optional['CreateAccountRequestTraits'] = None,
+        options: Optional['CreateAccountRequestOptions'] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create a new account in an enterprise.
@@ -380,9 +443,13 @@ class EnterpriseManagementV1(BaseService):
                `IBMid-0123ABC`. The IAM ID must already exist.
         :param CreateAccountRequestTraits traits: (optional) The traits object can
                be used to set properties on child accounts of an enterprise. You can pass
-               a field to opt-out of Multi-Factor Authentication setting or setup
-               enterprise IAM settings when creating a child account in the enterprise.
-               This is an optional field.
+               a field to opt-out of the default multi-factor authentication setting or
+               enable enterprise-managed IAM when creating a child account in the
+               enterprise. This is an optional field.
+        :param CreateAccountRequestOptions options: (optional) The options object
+               can be used to set properties on child accounts of an enterprise. You can
+               pass a field to to create IAM service id with IAM api keyg when creating a
+               child account in the enterprise. This is an optional field.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CreateAccountResponse` object
@@ -396,9 +463,13 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('owner_iam_id must be provided')
         if traits is not None:
             traits = convert_model(traits)
+        if options is not None:
+            options = convert_model(options)
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_account'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_account',
         )
         headers.update(sdk_headers)
 
@@ -407,6 +478,7 @@ class EnterpriseManagementV1(BaseService):
             'name': name,
             'owner_iam_id': owner_iam_id,
             'traits': traits,
+            'options': options,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -418,7 +490,12 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/accounts'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -426,12 +503,12 @@ class EnterpriseManagementV1(BaseService):
     def list_accounts(
         self,
         *,
-        enterprise_id: str = None,
-        account_group_id: str = None,
-        next_docid: str = None,
-        parent: str = None,
-        limit: int = None,
-        include_deleted: bool = None,
+        enterprise_id: Optional[str] = None,
+        account_group_id: Optional[str] = None,
+        next_docid: Optional[str] = None,
+        parent: Optional[str] = None,
+        limit: Optional[int] = None,
+        include_deleted: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -473,7 +550,9 @@ class EnterpriseManagementV1(BaseService):
 
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_accounts'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_accounts',
         )
         headers.update(sdk_headers)
 
@@ -492,12 +571,21 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/accounts'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_account(self, account_id: str, **kwargs) -> DetailedResponse:
+    def get_account(
+        self,
+        account_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Get account by ID.
 
@@ -514,7 +602,9 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('account_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_account'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_account',
         )
         headers.update(sdk_headers)
 
@@ -527,12 +617,21 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/accounts/{account_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def update_account(self, account_id: str, parent: str, **kwargs) -> DetailedResponse:
+    def update_account(
+        self,
+        account_id: str,
+        parent: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Move an account within the enterprise.
 
@@ -551,7 +650,9 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('parent must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_account'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_account',
         )
         headers.update(sdk_headers)
 
@@ -570,12 +671,21 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/accounts/{account_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def delete_account(self, account_id: str, **kwargs) -> DetailedResponse:
+    def delete_account(
+        self,
+        account_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Remove an account from its enterprise.
 
@@ -592,7 +702,9 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('account_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_account'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_account',
         )
         headers.update(sdk_headers)
 
@@ -604,7 +716,11 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/accounts/{account_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -613,7 +729,13 @@ class EnterpriseManagementV1(BaseService):
     # Account Group Operations
     #########################
 
-    def create_account_group(self, parent: str, name: str, primary_contact_iam_id: str, **kwargs) -> DetailedResponse:
+    def create_account_group(
+        self,
+        parent: str,
+        name: str,
+        primary_contact_iam_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Create an account group.
 
@@ -643,7 +765,9 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('primary_contact_iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_account_group'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_account_group',
         )
         headers.update(sdk_headers)
 
@@ -662,7 +786,12 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/account-groups'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -670,12 +799,12 @@ class EnterpriseManagementV1(BaseService):
     def list_account_groups(
         self,
         *,
-        enterprise_id: str = None,
-        parent_account_group_id: str = None,
-        next_docid: str = None,
-        parent: str = None,
-        limit: int = None,
-        include_deleted: bool = None,
+        enterprise_id: Optional[str] = None,
+        parent_account_group_id: Optional[str] = None,
+        next_docid: Optional[str] = None,
+        parent: Optional[str] = None,
+        limit: Optional[int] = None,
+        include_deleted: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -719,7 +848,9 @@ class EnterpriseManagementV1(BaseService):
 
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_account_groups'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_account_groups',
         )
         headers.update(sdk_headers)
 
@@ -738,12 +869,21 @@ class EnterpriseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/account-groups'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_account_group(self, account_group_id: str, **kwargs) -> DetailedResponse:
+    def get_account_group(
+        self,
+        account_group_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Get account group by ID.
 
@@ -761,7 +901,9 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('account_group_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_account_group'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_account_group',
         )
         headers.update(sdk_headers)
 
@@ -774,13 +916,22 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/account-groups/{account_group_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def update_account_group(
-        self, account_group_id: str, *, name: str = None, primary_contact_iam_id: str = None, **kwargs
+        self,
+        account_group_id: str,
+        *,
+        name: Optional[str] = None,
+        primary_contact_iam_id: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update an account group.
@@ -802,7 +953,9 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('account_group_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_account_group'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_account_group',
         )
         headers.update(sdk_headers)
 
@@ -822,12 +975,21 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/account-groups/{account_group_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def delete_account_group(self, account_group_id: str, **kwargs) -> DetailedResponse:
+    def delete_account_group(
+        self,
+        account_group_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Delete an account group from the enterprise.
 
@@ -846,7 +1008,9 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('account_group_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_account_group'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_account_group',
         )
         headers.update(sdk_headers)
 
@@ -858,7 +1022,11 @@ class EnterpriseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/account-groups/{account_group_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -873,52 +1041,53 @@ class Account:
     """
     An account resource.
 
-    :attr str url: (optional) The URL of the account.
-    :attr str id: (optional) The account ID.
-    :attr str crn: (optional) The Cloud Resource Name (CRN) of the account.
-    :attr str parent: (optional) The CRN of the parent of the account.
-    :attr str enterprise_account_id: (optional) The enterprise account ID.
-    :attr str enterprise_id: (optional) The enterprise ID that the account is a part
-          of.
-    :attr str enterprise_path: (optional) The path from the enterprise to this
+    :param str url: (optional) The URL of the account.
+    :param str id: (optional) The account ID.
+    :param str crn: (optional) The Cloud Resource Name (CRN) of the account.
+    :param str parent: (optional) The CRN of the parent of the account.
+    :param str enterprise_account_id: (optional) The enterprise account ID.
+    :param str enterprise_id: (optional) The enterprise ID that the account is a
+          part of.
+    :param str enterprise_path: (optional) The path from the enterprise to this
           particular account.
-    :attr str name: (optional) The name of the account.
-    :attr str state: (optional) The state of the account.
-    :attr str owner_iam_id: (optional) The IAM ID of the owner of the account.
-    :attr bool paid: (optional) The type of account - whether it is free or paid.
-    :attr str owner_email: (optional) The email address of the owner of the account.
-    :attr bool is_enterprise_account: (optional) The flag to indicate whether the
+    :param str name: (optional) The name of the account.
+    :param str state: (optional) The state of the account.
+    :param str owner_iam_id: (optional) The IAM ID of the owner of the account.
+    :param bool paid: (optional) The type of account - whether it is free or paid.
+    :param str owner_email: (optional) The email address of the owner of the
+          account.
+    :param bool is_enterprise_account: (optional) The flag to indicate whether the
           account is an enterprise account or not.
-    :attr datetime created_at: (optional) The time stamp at which the account was
+    :param datetime created_at: (optional) The time stamp at which the account was
           created.
-    :attr str created_by: (optional) The IAM ID of the user or service that created
+    :param str created_by: (optional) The IAM ID of the user or service that created
           the account.
-    :attr datetime updated_at: (optional) The time stamp at which the account was
+    :param datetime updated_at: (optional) The time stamp at which the account was
           last updated.
-    :attr str updated_by: (optional) The IAM ID of the user or service that updated
+    :param str updated_by: (optional) The IAM ID of the user or service that updated
           the account.
     """
 
     def __init__(
         self,
         *,
-        url: str = None,
-        id: str = None,
-        crn: str = None,
-        parent: str = None,
-        enterprise_account_id: str = None,
-        enterprise_id: str = None,
-        enterprise_path: str = None,
-        name: str = None,
-        state: str = None,
-        owner_iam_id: str = None,
-        paid: bool = None,
-        owner_email: str = None,
-        is_enterprise_account: bool = None,
-        created_at: datetime = None,
-        created_by: str = None,
-        updated_at: datetime = None,
-        updated_by: str = None,
+        url: Optional[str] = None,
+        id: Optional[str] = None,
+        crn: Optional[str] = None,
+        parent: Optional[str] = None,
+        enterprise_account_id: Optional[str] = None,
+        enterprise_id: Optional[str] = None,
+        enterprise_path: Optional[str] = None,
+        name: Optional[str] = None,
+        state: Optional[str] = None,
+        owner_iam_id: Optional[str] = None,
+        paid: Optional[bool] = None,
+        owner_email: Optional[str] = None,
+        is_enterprise_account: Optional[bool] = None,
+        created_at: Optional[datetime] = None,
+        created_by: Optional[str] = None,
+        updated_at: Optional[datetime] = None,
+        updated_by: Optional[str] = None,
     ) -> None:
         """
         Initialize a Account object.
@@ -972,40 +1141,40 @@ class Account:
     def from_dict(cls, _dict: Dict) -> 'Account':
         """Initialize a Account object from a json dictionary."""
         args = {}
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'parent' in _dict:
-            args['parent'] = _dict.get('parent')
-        if 'enterprise_account_id' in _dict:
-            args['enterprise_account_id'] = _dict.get('enterprise_account_id')
-        if 'enterprise_id' in _dict:
-            args['enterprise_id'] = _dict.get('enterprise_id')
-        if 'enterprise_path' in _dict:
-            args['enterprise_path'] = _dict.get('enterprise_path')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'owner_iam_id' in _dict:
-            args['owner_iam_id'] = _dict.get('owner_iam_id')
-        if 'paid' in _dict:
-            args['paid'] = _dict.get('paid')
-        if 'owner_email' in _dict:
-            args['owner_email'] = _dict.get('owner_email')
-        if 'is_enterprise_account' in _dict:
-            args['is_enterprise_account'] = _dict.get('is_enterprise_account')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_at' in _dict:
-            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
+        if (url := _dict.get('url')) is not None:
+            args['url'] = url
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        if (parent := _dict.get('parent')) is not None:
+            args['parent'] = parent
+        if (enterprise_account_id := _dict.get('enterprise_account_id')) is not None:
+            args['enterprise_account_id'] = enterprise_account_id
+        if (enterprise_id := _dict.get('enterprise_id')) is not None:
+            args['enterprise_id'] = enterprise_id
+        if (enterprise_path := _dict.get('enterprise_path')) is not None:
+            args['enterprise_path'] = enterprise_path
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (owner_iam_id := _dict.get('owner_iam_id')) is not None:
+            args['owner_iam_id'] = owner_iam_id
+        if (paid := _dict.get('paid')) is not None:
+            args['paid'] = paid
+        if (owner_email := _dict.get('owner_email')) is not None:
+            args['owner_email'] = owner_email
+        if (is_enterprise_account := _dict.get('is_enterprise_account')) is not None:
+            args['is_enterprise_account'] = is_enterprise_account
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
+        if (updated_at := _dict.get('updated_at')) is not None:
+            args['updated_at'] = string_to_datetime(updated_at)
+        if (updated_by := _dict.get('updated_by')) is not None:
+            args['updated_by'] = updated_by
         return cls(**args)
 
     @classmethod
@@ -1075,49 +1244,49 @@ class AccountGroup:
     """
     An account group resource.
 
-    :attr str url: (optional) The URL of the account group.
-    :attr str id: (optional) The account group ID.
-    :attr str crn: (optional) The Cloud Resource Name (CRN) of the account group.
-    :attr str parent: (optional) The CRN of the parent of the account group.
-    :attr str enterprise_account_id: (optional) The enterprise account ID.
-    :attr str enterprise_id: (optional) The enterprise ID that the account group is
+    :param str url: (optional) The URL of the account group.
+    :param str id: (optional) The account group ID.
+    :param str crn: (optional) The Cloud Resource Name (CRN) of the account group.
+    :param str parent: (optional) The CRN of the parent of the account group.
+    :param str enterprise_account_id: (optional) The enterprise account ID.
+    :param str enterprise_id: (optional) The enterprise ID that the account group is
           a part of.
-    :attr str enterprise_path: (optional) The path from the enterprise to this
+    :param str enterprise_path: (optional) The path from the enterprise to this
           particular account group.
-    :attr str name: (optional) The name of the account group.
-    :attr str state: (optional) The state of the account group.
-    :attr str primary_contact_iam_id: (optional) The IAM ID of the primary contact
+    :param str name: (optional) The name of the account group.
+    :param str state: (optional) The state of the account group.
+    :param str primary_contact_iam_id: (optional) The IAM ID of the primary contact
           of the account group.
-    :attr str primary_contact_email: (optional) The email address of the primary
+    :param str primary_contact_email: (optional) The email address of the primary
           contact of the account group.
-    :attr datetime created_at: (optional) The time stamp at which the account group
+    :param datetime created_at: (optional) The time stamp at which the account group
           was created.
-    :attr str created_by: (optional) The IAM ID of the user or service that created
+    :param str created_by: (optional) The IAM ID of the user or service that created
           the account group.
-    :attr datetime updated_at: (optional) The time stamp at which the account group
+    :param datetime updated_at: (optional) The time stamp at which the account group
           was last updated.
-    :attr str updated_by: (optional) The IAM ID of the user or service that updated
+    :param str updated_by: (optional) The IAM ID of the user or service that updated
           the account group.
     """
 
     def __init__(
         self,
         *,
-        url: str = None,
-        id: str = None,
-        crn: str = None,
-        parent: str = None,
-        enterprise_account_id: str = None,
-        enterprise_id: str = None,
-        enterprise_path: str = None,
-        name: str = None,
-        state: str = None,
-        primary_contact_iam_id: str = None,
-        primary_contact_email: str = None,
-        created_at: datetime = None,
-        created_by: str = None,
-        updated_at: datetime = None,
-        updated_by: str = None,
+        url: Optional[str] = None,
+        id: Optional[str] = None,
+        crn: Optional[str] = None,
+        parent: Optional[str] = None,
+        enterprise_account_id: Optional[str] = None,
+        enterprise_id: Optional[str] = None,
+        enterprise_path: Optional[str] = None,
+        name: Optional[str] = None,
+        state: Optional[str] = None,
+        primary_contact_iam_id: Optional[str] = None,
+        primary_contact_email: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by: Optional[str] = None,
+        updated_at: Optional[datetime] = None,
+        updated_by: Optional[str] = None,
     ) -> None:
         """
         Initialize a AccountGroup object.
@@ -1167,36 +1336,36 @@ class AccountGroup:
     def from_dict(cls, _dict: Dict) -> 'AccountGroup':
         """Initialize a AccountGroup object from a json dictionary."""
         args = {}
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'parent' in _dict:
-            args['parent'] = _dict.get('parent')
-        if 'enterprise_account_id' in _dict:
-            args['enterprise_account_id'] = _dict.get('enterprise_account_id')
-        if 'enterprise_id' in _dict:
-            args['enterprise_id'] = _dict.get('enterprise_id')
-        if 'enterprise_path' in _dict:
-            args['enterprise_path'] = _dict.get('enterprise_path')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'primary_contact_iam_id' in _dict:
-            args['primary_contact_iam_id'] = _dict.get('primary_contact_iam_id')
-        if 'primary_contact_email' in _dict:
-            args['primary_contact_email'] = _dict.get('primary_contact_email')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_at' in _dict:
-            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
+        if (url := _dict.get('url')) is not None:
+            args['url'] = url
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        if (parent := _dict.get('parent')) is not None:
+            args['parent'] = parent
+        if (enterprise_account_id := _dict.get('enterprise_account_id')) is not None:
+            args['enterprise_account_id'] = enterprise_account_id
+        if (enterprise_id := _dict.get('enterprise_id')) is not None:
+            args['enterprise_id'] = enterprise_id
+        if (enterprise_path := _dict.get('enterprise_path')) is not None:
+            args['enterprise_path'] = enterprise_path
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (primary_contact_iam_id := _dict.get('primary_contact_iam_id')) is not None:
+            args['primary_contact_iam_id'] = primary_contact_iam_id
+        if (primary_contact_email := _dict.get('primary_contact_email')) is not None:
+            args['primary_contact_email'] = primary_contact_email
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
+        if (updated_at := _dict.get('updated_at')) is not None:
+            args['updated_at'] = string_to_datetime(updated_at)
+        if (updated_by := _dict.get('updated_by')) is not None:
+            args['updated_by'] = updated_by
         return cls(**args)
 
     @classmethod
@@ -1262,11 +1431,15 @@ class CreateAccountGroupResponse:
     """
     A newly-created account group.
 
-    :attr str account_group_id: (optional) The ID of the account group entity that
+    :param str account_group_id: (optional) The ID of the account group entity that
           was created.
     """
 
-    def __init__(self, *, account_group_id: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        account_group_id: Optional[str] = None,
+    ) -> None:
         """
         Initialize a CreateAccountGroupResponse object.
 
@@ -1279,8 +1452,8 @@ class CreateAccountGroupResponse:
     def from_dict(cls, _dict: Dict) -> 'CreateAccountGroupResponse':
         """Initialize a CreateAccountGroupResponse object from a json dictionary."""
         args = {}
-        if 'account_group_id' in _dict:
-            args['account_group_id'] = _dict.get('account_group_id')
+        if (account_group_id := _dict.get('account_group_id')) is not None:
+            args['account_group_id'] = account_group_id
         return cls(**args)
 
     @classmethod
@@ -1314,33 +1487,123 @@ class CreateAccountGroupResponse:
         return not self == other
 
 
+class CreateAccountRequestOptions:
+    """
+    The options object can be used to set properties on child accounts of an enterprise.
+    You can pass a field to to create IAM service id with IAM api keyg when creating a
+    child account in the enterprise. This is an optional field.
+
+    :param bool create_iam_service_id_with_apikey_and_owner_policies: (optional) By
+          default create_iam_service_id_with_apikey_and_owner_policies is turned off for a
+          newly created child account. You can enable this property by passing 'true' in
+          this boolean field. IAM service id has account owner IAM policies and the API
+          key associated with it can generate a token and setup resources in the account.
+          This is an optional field.
+    """
+
+    def __init__(
+        self,
+        *,
+        create_iam_service_id_with_apikey_and_owner_policies: Optional[bool] = None,
+    ) -> None:
+        """
+        Initialize a CreateAccountRequestOptions object.
+
+        :param bool create_iam_service_id_with_apikey_and_owner_policies:
+               (optional) By default create_iam_service_id_with_apikey_and_owner_policies
+               is turned off for a newly created child account. You can enable this
+               property by passing 'true' in this boolean field. IAM service id has
+               account owner IAM policies and the API key associated with it can generate
+               a token and setup resources in the account. This is an optional field.
+        """
+        self.create_iam_service_id_with_apikey_and_owner_policies = create_iam_service_id_with_apikey_and_owner_policies
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateAccountRequestOptions':
+        """Initialize a CreateAccountRequestOptions object from a json dictionary."""
+        args = {}
+        if (
+            create_iam_service_id_with_apikey_and_owner_policies := _dict.get(
+                'create_iam_service_id_with_apikey_and_owner_policies'
+            )
+        ) is not None:
+            args['create_iam_service_id_with_apikey_and_owner_policies'] = (
+                create_iam_service_id_with_apikey_and_owner_policies
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateAccountRequestOptions object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if (
+            hasattr(self, 'create_iam_service_id_with_apikey_and_owner_policies')
+            and self.create_iam_service_id_with_apikey_and_owner_policies is not None
+        ):
+            _dict['create_iam_service_id_with_apikey_and_owner_policies'] = (
+                self.create_iam_service_id_with_apikey_and_owner_policies
+            )
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateAccountRequestOptions object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateAccountRequestOptions') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateAccountRequestOptions') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class CreateAccountRequestTraits:
     """
     The traits object can be used to set properties on child accounts of an enterprise.
-    You can pass a field to opt-out of Multi-Factor Authentication setting or setup
-    enterprise IAM settings when creating a child account in the enterprise. This is an
-    optional field.
+    You can pass a field to opt-out of the default multi-factor authentication setting or
+    enable enterprise-managed IAM when creating a child account in the enterprise. This is
+    an optional field.
 
-    :attr str mfa: (optional) By default MFA will be enabled on a child account. To
-          opt out, pass the traits object with the mfa field set to empty string. This is
-          an optional field.
-    :attr bool enterprise_iam_managed: (optional) The Enterprise IAM settings
-          property will be turned off for a newly created child account by default. You
-          can enable this property by passing 'true' in this boolean field. This is an
-          optional field.
+    :param str mfa: (optional) By default MFA is set to `NONE_NO_ROPC` on a child
+          account, which disables CLI logins with only a password. To opt out, pass the
+          traits object with the mfa field set to empty string. This is an optional field.
+    :param bool enterprise_iam_managed: (optional) By default enterprise-managed IAM
+          is turned off for a newly created child account. You can enable this property by
+          passing 'true' in this boolean field. Enabling enterprise-managed IAM allows the
+          enterprise account to assign IAM resources, like access groups, trusted
+          profiles, and account settings, to the child account. This is an optional field.
     """
 
-    def __init__(self, *, mfa: str = None, enterprise_iam_managed: bool = None) -> None:
+    def __init__(
+        self,
+        *,
+        mfa: Optional[str] = None,
+        enterprise_iam_managed: Optional[bool] = None,
+    ) -> None:
         """
         Initialize a CreateAccountRequestTraits object.
 
-        :param str mfa: (optional) By default MFA will be enabled on a child
-               account. To opt out, pass the traits object with the mfa field set to empty
-               string. This is an optional field.
-        :param bool enterprise_iam_managed: (optional) The Enterprise IAM settings
-               property will be turned off for a newly created child account by default.
-               You can enable this property by passing 'true' in this boolean field. This
-               is an optional field.
+        :param str mfa: (optional) By default MFA is set to `NONE_NO_ROPC` on a
+               child account, which disables CLI logins with only a password. To opt out,
+               pass the traits object with the mfa field set to empty string. This is an
+               optional field.
+        :param bool enterprise_iam_managed: (optional) By default
+               enterprise-managed IAM is turned off for a newly created child account. You
+               can enable this property by passing 'true' in this boolean field. Enabling
+               enterprise-managed IAM allows the enterprise account to assign IAM
+               resources, like access groups, trusted profiles, and account settings, to
+               the child account. This is an optional field.
         """
         self.mfa = mfa
         self.enterprise_iam_managed = enterprise_iam_managed
@@ -1349,10 +1612,10 @@ class CreateAccountRequestTraits:
     def from_dict(cls, _dict: Dict) -> 'CreateAccountRequestTraits':
         """Initialize a CreateAccountRequestTraits object from a json dictionary."""
         args = {}
-        if 'mfa' in _dict:
-            args['mfa'] = _dict.get('mfa')
-        if 'enterprise_iam_managed' in _dict:
-            args['enterprise_iam_managed'] = _dict.get('enterprise_iam_managed')
+        if (mfa := _dict.get('mfa')) is not None:
+            args['mfa'] = mfa
+        if (enterprise_iam_managed := _dict.get('enterprise_iam_managed')) is not None:
+            args['enterprise_iam_managed'] = enterprise_iam_managed
         return cls(**args)
 
     @classmethod
@@ -1392,10 +1655,14 @@ class CreateAccountResponse:
     """
     A newly-created account.
 
-    :attr str account_id: (optional) The ID of the account entity that was created.
+    :param str account_id: (optional) The ID of the account entity that was created.
     """
 
-    def __init__(self, *, account_id: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        account_id: Optional[str] = None,
+    ) -> None:
         """
         Initialize a CreateAccountResponse object.
 
@@ -1408,8 +1675,8 @@ class CreateAccountResponse:
     def from_dict(cls, _dict: Dict) -> 'CreateAccountResponse':
         """Initialize a CreateAccountResponse object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         return cls(**args)
 
     @classmethod
@@ -1447,14 +1714,19 @@ class CreateEnterpriseResponse:
     """
     The response from calling create enterprise.
 
-    :attr str enterprise_id: (optional) The ID of the enterprise entity that was
+    :param str enterprise_id: (optional) The ID of the enterprise entity that was
           created. This entity is the root of the hierarchy.
-    :attr str enterprise_account_id: (optional) The ID of the enterprise account
+    :param str enterprise_account_id: (optional) The ID of the enterprise account
           that was created. The enterprise account is used to manage billing and access to
           the enterprise management.
     """
 
-    def __init__(self, *, enterprise_id: str = None, enterprise_account_id: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        enterprise_id: Optional[str] = None,
+        enterprise_account_id: Optional[str] = None,
+    ) -> None:
         """
         Initialize a CreateEnterpriseResponse object.
 
@@ -1471,10 +1743,10 @@ class CreateEnterpriseResponse:
     def from_dict(cls, _dict: Dict) -> 'CreateEnterpriseResponse':
         """Initialize a CreateEnterpriseResponse object from a json dictionary."""
         args = {}
-        if 'enterprise_id' in _dict:
-            args['enterprise_id'] = _dict.get('enterprise_id')
-        if 'enterprise_account_id' in _dict:
-            args['enterprise_account_id'] = _dict.get('enterprise_account_id')
+        if (enterprise_id := _dict.get('enterprise_id')) is not None:
+            args['enterprise_id'] = enterprise_id
+        if (enterprise_account_id := _dict.get('enterprise_account_id')) is not None:
+            args['enterprise_account_id'] = enterprise_account_id
         return cls(**args)
 
     @classmethod
@@ -1514,43 +1786,46 @@ class Enterprise:
     """
     An enterprise resource.
 
-    :attr str url: (optional) The URL of the enterprise.
-    :attr str id: (optional) The enterprise ID.
-    :attr str enterprise_account_id: (optional) The enterprise account ID.
-    :attr str crn: (optional) The Cloud Resource Name (CRN) of the enterprise.
-    :attr str name: (optional) The name of the enterprise.
-    :attr str domain: (optional) The domain of the enterprise.
-    :attr str state: (optional) The state of the enterprise.
-    :attr str primary_contact_iam_id: (optional) The IAM ID of the primary contact
+    :param str url: (optional) The URL of the enterprise.
+    :param str id: (optional) The enterprise ID.
+    :param str enterprise_account_id: (optional) The enterprise account ID.
+    :param str crn: (optional) The Cloud Resource Name (CRN) of the enterprise.
+    :param str name: (optional) The name of the enterprise.
+    :param str domain: (optional) The domain of the enterprise.
+    :param str state: (optional) The state of the enterprise.
+    :param str primary_contact_iam_id: (optional) The IAM ID of the primary contact
           of the enterprise, such as `IBMid-0123ABC`.
-    :attr str primary_contact_email: (optional) The email of the primary contact of
+    :param str primary_contact_email: (optional) The email of the primary contact of
           the enterprise.
-    :attr datetime created_at: (optional) The time stamp at which the enterprise was
-          created.
-    :attr str created_by: (optional) The IAM ID of the user or service that created
+    :param str source_account_id: (optional) The ID of the account that is used to
+          create the enterprise.
+    :param datetime created_at: (optional) The time stamp at which the enterprise
+          was created.
+    :param str created_by: (optional) The IAM ID of the user or service that created
           the enterprise.
-    :attr datetime updated_at: (optional) The time stamp at which the enterprise was
-          last updated.
-    :attr str updated_by: (optional) The IAM ID of the user or service that updated
+    :param datetime updated_at: (optional) The time stamp at which the enterprise
+          was last updated.
+    :param str updated_by: (optional) The IAM ID of the user or service that updated
           the enterprise.
     """
 
     def __init__(
         self,
         *,
-        url: str = None,
-        id: str = None,
-        enterprise_account_id: str = None,
-        crn: str = None,
-        name: str = None,
-        domain: str = None,
-        state: str = None,
-        primary_contact_iam_id: str = None,
-        primary_contact_email: str = None,
-        created_at: datetime = None,
-        created_by: str = None,
-        updated_at: datetime = None,
-        updated_by: str = None,
+        url: Optional[str] = None,
+        id: Optional[str] = None,
+        enterprise_account_id: Optional[str] = None,
+        crn: Optional[str] = None,
+        name: Optional[str] = None,
+        domain: Optional[str] = None,
+        state: Optional[str] = None,
+        primary_contact_iam_id: Optional[str] = None,
+        primary_contact_email: Optional[str] = None,
+        source_account_id: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by: Optional[str] = None,
+        updated_at: Optional[datetime] = None,
+        updated_by: Optional[str] = None,
     ) -> None:
         """
         Initialize a Enterprise object.
@@ -1566,6 +1841,8 @@ class Enterprise:
                contact of the enterprise, such as `IBMid-0123ABC`.
         :param str primary_contact_email: (optional) The email of the primary
                contact of the enterprise.
+        :param str source_account_id: (optional) The ID of the account that is used
+               to create the enterprise.
         :param datetime created_at: (optional) The time stamp at which the
                enterprise was created.
         :param str created_by: (optional) The IAM ID of the user or service that
@@ -1584,6 +1861,7 @@ class Enterprise:
         self.state = state
         self.primary_contact_iam_id = primary_contact_iam_id
         self.primary_contact_email = primary_contact_email
+        self.source_account_id = source_account_id
         self.created_at = created_at
         self.created_by = created_by
         self.updated_at = updated_at
@@ -1593,32 +1871,34 @@ class Enterprise:
     def from_dict(cls, _dict: Dict) -> 'Enterprise':
         """Initialize a Enterprise object from a json dictionary."""
         args = {}
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'enterprise_account_id' in _dict:
-            args['enterprise_account_id'] = _dict.get('enterprise_account_id')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'domain' in _dict:
-            args['domain'] = _dict.get('domain')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'primary_contact_iam_id' in _dict:
-            args['primary_contact_iam_id'] = _dict.get('primary_contact_iam_id')
-        if 'primary_contact_email' in _dict:
-            args['primary_contact_email'] = _dict.get('primary_contact_email')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_at' in _dict:
-            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
+        if (url := _dict.get('url')) is not None:
+            args['url'] = url
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (enterprise_account_id := _dict.get('enterprise_account_id')) is not None:
+            args['enterprise_account_id'] = enterprise_account_id
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (domain := _dict.get('domain')) is not None:
+            args['domain'] = domain
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (primary_contact_iam_id := _dict.get('primary_contact_iam_id')) is not None:
+            args['primary_contact_iam_id'] = primary_contact_iam_id
+        if (primary_contact_email := _dict.get('primary_contact_email')) is not None:
+            args['primary_contact_email'] = primary_contact_email
+        if (source_account_id := _dict.get('source_account_id')) is not None:
+            args['source_account_id'] = source_account_id
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
+        if (updated_at := _dict.get('updated_at')) is not None:
+            args['updated_at'] = string_to_datetime(updated_at)
+        if (updated_by := _dict.get('updated_by')) is not None:
+            args['updated_by'] = updated_by
         return cls(**args)
 
     @classmethod
@@ -1647,6 +1927,8 @@ class Enterprise:
             _dict['primary_contact_iam_id'] = self.primary_contact_iam_id
         if hasattr(self, 'primary_contact_email') and self.primary_contact_email is not None:
             _dict['primary_contact_email'] = self.primary_contact_email
+        if hasattr(self, 'source_account_id') and self.source_account_id is not None:
+            _dict['source_account_id'] = self.source_account_id
         if hasattr(self, 'created_at') and self.created_at is not None:
             _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'created_by') and self.created_by is not None:
@@ -1680,14 +1962,20 @@ class ListAccountGroupsResponse:
     """
     The list_account_groups operation response.
 
-    :attr int rows_count: (optional) The number of enterprises returned from calling
-          list account groups.
-    :attr str next_url: (optional) A string that represents the link to the next
+    :param int rows_count: (optional) The number of enterprises returned from
+          calling list account groups.
+    :param str next_url: (optional) A string that represents the link to the next
           page of results.
-    :attr List[AccountGroup] resources: (optional) A list of account groups.
+    :param List[AccountGroup] resources: (optional) A list of account groups.
     """
 
-    def __init__(self, *, rows_count: int = None, next_url: str = None, resources: List['AccountGroup'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        rows_count: Optional[int] = None,
+        next_url: Optional[str] = None,
+        resources: Optional[List['AccountGroup']] = None,
+    ) -> None:
         """
         Initialize a ListAccountGroupsResponse object.
 
@@ -1705,12 +1993,12 @@ class ListAccountGroupsResponse:
     def from_dict(cls, _dict: Dict) -> 'ListAccountGroupsResponse':
         """Initialize a ListAccountGroupsResponse object from a json dictionary."""
         args = {}
-        if 'rows_count' in _dict:
-            args['rows_count'] = _dict.get('rows_count')
-        if 'next_url' in _dict:
-            args['next_url'] = _dict.get('next_url')
-        if 'resources' in _dict:
-            args['resources'] = [AccountGroup.from_dict(v) for v in _dict.get('resources')]
+        if (rows_count := _dict.get('rows_count')) is not None:
+            args['rows_count'] = rows_count
+        if (next_url := _dict.get('next_url')) is not None:
+            args['next_url'] = next_url
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [AccountGroup.from_dict(v) for v in resources]
         return cls(**args)
 
     @classmethod
@@ -1758,14 +2046,20 @@ class ListAccountsResponse:
     """
     The list_accounts operation response.
 
-    :attr int rows_count: (optional) The number of enterprises returned from calling
-          list accounts.
-    :attr str next_url: (optional) A string that represents the link to the next
+    :param int rows_count: (optional) The number of enterprises returned from
+          calling list accounts.
+    :param str next_url: (optional) A string that represents the link to the next
           page of results.
-    :attr List[Account] resources: (optional) A list of accounts.
+    :param List[Account] resources: (optional) A list of accounts.
     """
 
-    def __init__(self, *, rows_count: int = None, next_url: str = None, resources: List['Account'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        rows_count: Optional[int] = None,
+        next_url: Optional[str] = None,
+        resources: Optional[List['Account']] = None,
+    ) -> None:
         """
         Initialize a ListAccountsResponse object.
 
@@ -1783,12 +2077,12 @@ class ListAccountsResponse:
     def from_dict(cls, _dict: Dict) -> 'ListAccountsResponse':
         """Initialize a ListAccountsResponse object from a json dictionary."""
         args = {}
-        if 'rows_count' in _dict:
-            args['rows_count'] = _dict.get('rows_count')
-        if 'next_url' in _dict:
-            args['next_url'] = _dict.get('next_url')
-        if 'resources' in _dict:
-            args['resources'] = [Account.from_dict(v) for v in _dict.get('resources')]
+        if (rows_count := _dict.get('rows_count')) is not None:
+            args['rows_count'] = rows_count
+        if (next_url := _dict.get('next_url')) is not None:
+            args['next_url'] = next_url
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [Account.from_dict(v) for v in resources]
         return cls(**args)
 
     @classmethod
@@ -1836,14 +2130,20 @@ class ListEnterprisesResponse:
     """
     The response from calling list enterprises.
 
-    :attr int rows_count: (optional) The number of enterprises returned from calling
-          list enterprise.
-    :attr str next_url: (optional) A string that represents the link to the next
+    :param int rows_count: (optional) The number of enterprises returned from
+          calling list enterprise.
+    :param str next_url: (optional) A string that represents the link to the next
           page of results.
-    :attr List[Enterprise] resources: (optional) A list of enterprise objects.
+    :param List[Enterprise] resources: (optional) A list of enterprise objects.
     """
 
-    def __init__(self, *, rows_count: int = None, next_url: str = None, resources: List['Enterprise'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        rows_count: Optional[int] = None,
+        next_url: Optional[str] = None,
+        resources: Optional[List['Enterprise']] = None,
+    ) -> None:
         """
         Initialize a ListEnterprisesResponse object.
 
@@ -1861,12 +2161,12 @@ class ListEnterprisesResponse:
     def from_dict(cls, _dict: Dict) -> 'ListEnterprisesResponse':
         """Initialize a ListEnterprisesResponse object from a json dictionary."""
         args = {}
-        if 'rows_count' in _dict:
-            args['rows_count'] = _dict.get('rows_count')
-        if 'next_url' in _dict:
-            args['next_url'] = _dict.get('next_url')
-        if 'resources' in _dict:
-            args['resources'] = [Enterprise.from_dict(v) for v in _dict.get('resources')]
+        if (rows_count := _dict.get('rows_count')) is not None:
+            args['rows_count'] = rows_count
+        if (next_url := _dict.get('next_url')) is not None:
+            args['next_url'] = next_url
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [Enterprise.from_dict(v) for v in resources]
         return cls(**args)
 
     @classmethod
