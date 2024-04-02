@@ -118,7 +118,6 @@ class TestListTags:
         # Set up parameter values
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         account_id = 'testString'
         tag_type = 'user'
         full_data = False
@@ -134,7 +133,6 @@ class TestListTags:
         response = _service.list_tags(
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             account_id=account_id,
             tag_type=tag_type,
             full_data=full_data,
@@ -232,7 +230,6 @@ class TestCreateTag:
         tag_names = ['testString']
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         account_id = 'testString'
         tag_type = 'access'
 
@@ -241,7 +238,6 @@ class TestCreateTag:
             tag_names,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             account_id=account_id,
             tag_type=tag_type,
             headers={},
@@ -371,7 +367,6 @@ class TestDeleteTagAll:
         # Set up parameter values
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         providers = 'ghost'
         account_id = 'testString'
         tag_type = 'user'
@@ -380,7 +375,6 @@ class TestDeleteTagAll:
         response = _service.delete_tag_all(
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             providers=providers,
             account_id=account_id,
             tag_type=tag_type,
@@ -464,7 +458,6 @@ class TestDeleteTag:
         tag_name = 'testString'
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         providers = ['ghost']
         account_id = 'testString'
         tag_type = 'user'
@@ -474,7 +467,6 @@ class TestDeleteTag:
             tag_name,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             providers=providers,
             account_id=account_id,
             tag_type=tag_type,
@@ -608,7 +600,6 @@ class TestAttachTag:
         tag_names = ['testString']
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         account_id = 'testString'
         tag_type = 'user'
         replace = False
@@ -620,7 +611,6 @@ class TestAttachTag:
             tag_names=tag_names,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             account_id=account_id,
             tag_type=tag_type,
             replace=replace,
@@ -780,7 +770,6 @@ class TestDetachTag:
         tag_names = ['testString']
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -791,7 +780,6 @@ class TestDetachTag:
             tag_names=tag_names,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             account_id=account_id,
             tag_type=tag_type,
             headers={},

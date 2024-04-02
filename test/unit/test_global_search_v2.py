@@ -121,7 +121,6 @@ class TestSearch:
         search_cursor = 'testString'
         x_request_id = 'testString'
         x_correlation_id = 'testString'
-        transaction_id = 'testString'
         account_id = 'testString'
         limit = 10
         timeout = 0
@@ -139,7 +138,6 @@ class TestSearch:
             search_cursor=search_cursor,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
-            transaction_id=transaction_id,
             account_id=account_id,
             limit=limit,
             timeout=timeout,

@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.86.0-bc6f14b3-20240221-193958
+# IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
 
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete, or
@@ -87,7 +87,6 @@ class GlobalTaggingV1(BaseService):
         *,
         x_request_id: Optional[str] = None,
         x_correlation_id: Optional[str] = None,
-        transaction_id: Optional[str] = None,
         account_id: Optional[str] = None,
         tag_type: Optional[str] = None,
         full_data: Optional[bool] = None,
@@ -123,9 +122,6 @@ class GlobalTaggingV1(BaseService):
                value includes any other character or is longer than 1024 bytes or is fewer
                than 8 characters. If not specified or invalid, it is automatically
                replaced by a random (version 4) UUID.
-        :param str transaction_id: (optional) Deprecated: An alphanumeric string
-               that can be used to trace a request across services. If not specified, it
-               automatically generated with the prefix "gst-".
         :param str account_id: (optional) The ID of the billing account to list the
                tags for. If it is not set, then it is taken from the authorization token.
                This parameter is required if `tag_type` is set to `service`.
@@ -163,7 +159,6 @@ class GlobalTaggingV1(BaseService):
         headers = {
             'x-request-id': x_request_id,
             'x-correlation-id': x_correlation_id,
-            'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -207,7 +202,6 @@ class GlobalTaggingV1(BaseService):
         *,
         x_request_id: Optional[str] = None,
         x_correlation_id: Optional[str] = None,
-        transaction_id: Optional[str] = None,
         account_id: Optional[str] = None,
         tag_type: Optional[str] = None,
         **kwargs,
@@ -239,9 +233,6 @@ class GlobalTaggingV1(BaseService):
                value includes any other character or is longer than 1024 bytes or is fewer
                than 8 characters. If not specified or invalid, it is automatically
                replaced by a random (version 4) UUID.
-        :param str transaction_id: (optional) Deprecated: An alphanumeric string
-               that can be used to trace a request across services. If not specified, it
-               automatically generated with the prefix "gst-".
         :param str account_id: (optional) The ID of the billing account where the
                tag must be created.
         :param str tag_type: (optional) The type of the tags you want to create.
@@ -256,7 +247,6 @@ class GlobalTaggingV1(BaseService):
         headers = {
             'x-request-id': x_request_id,
             'x-correlation-id': x_correlation_id,
-            'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -299,7 +289,6 @@ class GlobalTaggingV1(BaseService):
         *,
         x_request_id: Optional[str] = None,
         x_correlation_id: Optional[str] = None,
-        transaction_id: Optional[str] = None,
         providers: Optional[str] = None,
         account_id: Optional[str] = None,
         tag_type: Optional[str] = None,
@@ -327,9 +316,6 @@ class GlobalTaggingV1(BaseService):
                value includes any other character or is longer than 1024 bytes or is fewer
                than 8 characters. If not specified or invalid, it is automatically
                replaced by a random (version 4) UUID.
-        :param str transaction_id: (optional) Deprecated: An alphanumeric string
-               that can be used to trace a request across services. If not specified, it
-               automatically generated with the prefix "gst-".
         :param str providers: (optional) Select a provider. Supported values are
                `ghost` and `ims`.
         :param str account_id: (optional) The ID of the billing account to delete
@@ -346,7 +332,6 @@ class GlobalTaggingV1(BaseService):
         headers = {
             'x-request-id': x_request_id,
             'x-correlation-id': x_correlation_id,
-            'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -383,7 +368,6 @@ class GlobalTaggingV1(BaseService):
         *,
         x_request_id: Optional[str] = None,
         x_correlation_id: Optional[str] = None,
-        transaction_id: Optional[str] = None,
         providers: Optional[List[str]] = None,
         account_id: Optional[str] = None,
         tag_type: Optional[str] = None,
@@ -413,9 +397,6 @@ class GlobalTaggingV1(BaseService):
                value includes any other character or is longer than 1024 bytes or is fewer
                than 8 characters. If not specified or invalid, it is automatically
                replaced by a random (version 4) UUID.
-        :param str transaction_id: (optional) Deprecated: An alphanumeric string
-               that can be used to trace a request across services. If not specified, it
-               automatically generated with the prefix "gst-".
         :param List[str] providers: (optional) Select a provider. Supported values
                are `ghost` and `ims`. To delete tags both in Global Search and Tagging and
                in IMS, use `ghost,ims`.
@@ -435,7 +416,6 @@ class GlobalTaggingV1(BaseService):
         headers = {
             'x-request-id': x_request_id,
             'x-correlation-id': x_correlation_id,
-            'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -477,7 +457,6 @@ class GlobalTaggingV1(BaseService):
         tag_names: Optional[List[str]] = None,
         x_request_id: Optional[str] = None,
         x_correlation_id: Optional[str] = None,
-        transaction_id: Optional[str] = None,
         account_id: Optional[str] = None,
         tag_type: Optional[str] = None,
         replace: Optional[bool] = None,
@@ -511,9 +490,6 @@ class GlobalTaggingV1(BaseService):
                value includes any other character or is longer than 1024 bytes or is fewer
                than 8 characters. If not specified or invalid, it is automatically
                replaced by a random (version 4) UUID.
-        :param str transaction_id: (optional) Deprecated: An alphanumeric string
-               that can be used to trace a request across services. If not specified, it
-               automatically generated with the prefix "gst-".
         :param str account_id: (optional) The ID of the billing account of the
                tagged resource. It is a required parameter if `tag_type` is set to
                `service`. Otherwise, it is inferred from the authorization IAM token.
@@ -534,7 +510,6 @@ class GlobalTaggingV1(BaseService):
         headers = {
             'x-request-id': x_request_id,
             'x-correlation-id': x_correlation_id,
-            'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -583,7 +558,6 @@ class GlobalTaggingV1(BaseService):
         tag_names: Optional[List[str]] = None,
         x_request_id: Optional[str] = None,
         x_correlation_id: Optional[str] = None,
-        transaction_id: Optional[str] = None,
         account_id: Optional[str] = None,
         tag_type: Optional[str] = None,
         **kwargs,
@@ -614,9 +588,6 @@ class GlobalTaggingV1(BaseService):
                value includes any other character or is longer than 1024 bytes or is fewer
                than 8 characters. If not specified or invalid, it is automatically
                replaced by a random (version 4) UUID.
-        :param str transaction_id: (optional) Deprecated: An alphanumeric string
-               that can be used to trace a request across services. If not specified, it
-               automatically generated with the prefix "gst-".
         :param str account_id: (optional) The ID of the billing account of the
                untagged resource. It is a required parameter if `tag_type` is set to
                `service`, otherwise it is inferred from the authorization IAM token.
@@ -634,7 +605,6 @@ class GlobalTaggingV1(BaseService):
         headers = {
             'x-request-id': x_request_id,
             'x-correlation-id': x_correlation_id,
-            'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
