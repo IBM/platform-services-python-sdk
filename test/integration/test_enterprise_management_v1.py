@@ -181,6 +181,17 @@ class TestEnterpriseManagementV1:
 
         assert first_example_account_group_id is not None
 
+        # Construct a dict representation of a CreateAccountRequestTraits model
+        create_account_request_traits_model = {
+            'mfa': 'NONE',
+            'enterprise_iam_managed': True,
+        }
+
+        # Construct a dict representation of a CreateAccountRequestOptions model
+        create_account_request_options_model = {
+            'create_iam_service_id_with_apikey_and_owner_policies': True,
+        }
+
         parent = (
             'crn:v1:bluemix:public:enterprise::a/'
             + self.account_id
@@ -192,6 +203,8 @@ class TestEnterpriseManagementV1:
             parent=parent,
             name=example_account_name,
             owner_iam_id=self.account_iam_id,
+            traits=create_account_request_traits_model,
+            options=create_account_request_options_model,
         )
 
         assert create_account_response.get_status_code() == 202
