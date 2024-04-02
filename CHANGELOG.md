@@ -1,3 +1,10 @@
+## [0.53.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.1...v0.53.2) (2024-04-02)
+
+
+### Bug Fixes
+
+* **Global Search & Tagging:** re-gen services with latest API definition ([#251](https://github.com/IBM/platform-services-python-sdk/issues/251)) ([4356255](https://github.com/IBM/platform-services-python-sdk/commit/4356255c7315897d8540333f623950928e47ca6e))
+
 ## [0.53.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.0...v0.53.1) (2024-04-02)
 
 
