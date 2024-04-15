@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.75.0-726bc7e3-20230713-221716
+# IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
 
 """
 Usage reports for IBM Cloud accounts
@@ -24,7 +24,7 @@ API Version: 4.0.6
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
@@ -76,7 +76,12 @@ class UsageReportsV4(BaseService):
     # Account operations
     #########################
 
-    def get_account_summary(self, account_id: str, billingmonth: str, **kwargs) -> DetailedResponse:
+    def get_account_summary(
+        self,
+        account_id: str,
+        billingmonth: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Get account summary.
 
@@ -97,7 +102,9 @@ class UsageReportsV4(BaseService):
             raise ValueError('billingmonth must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_account_summary'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V4',
+            operation_id='get_account_summary',
         )
         headers.update(sdk_headers)
 
@@ -110,13 +117,23 @@ class UsageReportsV4(BaseService):
         path_param_values = self.encode_path_vars(account_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v4/accounts/{account_id}/summary/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def get_account_usage(
-        self, account_id: str, billingmonth: str, *, names: bool = None, accept_language: str = None, **kwargs
+        self,
+        account_id: str,
+        billingmonth: str,
+        *,
+        names: Optional[bool] = None,
+        accept_language: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get account usage.
@@ -144,7 +161,9 @@ class UsageReportsV4(BaseService):
             'Accept-Language': accept_language,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_account_usage'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V4',
+            operation_id='get_account_usage',
         )
         headers.update(sdk_headers)
 
@@ -161,7 +180,12 @@ class UsageReportsV4(BaseService):
         path_param_values = self.encode_path_vars(account_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v4/accounts/{account_id}/usage/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -176,8 +200,8 @@ class UsageReportsV4(BaseService):
         resource_group_id: str,
         billingmonth: str,
         *,
-        names: bool = None,
-        accept_language: str = None,
+        names: Optional[bool] = None,
+        accept_language: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -211,7 +235,9 @@ class UsageReportsV4(BaseService):
             'Accept-Language': accept_language,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_resource_group_usage'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V4',
+            operation_id='get_resource_group_usage',
         )
         headers.update(sdk_headers)
 
@@ -230,7 +256,12 @@ class UsageReportsV4(BaseService):
         url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/usage/{billingmonth}'.format(
             **path_param_dict
         )
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -240,16 +271,17 @@ class UsageReportsV4(BaseService):
         account_id: str,
         billingmonth: str,
         *,
-        names: bool = None,
-        accept_language: str = None,
-        limit: int = None,
-        start: str = None,
-        resource_group_id: str = None,
-        organization_id: str = None,
-        resource_instance_id: str = None,
-        resource_id: str = None,
-        plan_id: str = None,
-        region: str = None,
+        names: Optional[bool] = None,
+        tags: Optional[bool] = None,
+        accept_language: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        organization_id: Optional[str] = None,
+        resource_instance_id: Optional[str] = None,
+        resource_id: Optional[str] = None,
+        plan_id: Optional[str] = None,
+        region: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -263,6 +295,8 @@ class UsageReportsV4(BaseService):
                requested.  Format is yyyy-mm.
         :param bool names: (optional) Include the name of every resource, plan,
                resource instance, organization, and resource group.
+        :param bool tags: (optional) Include the tags associated with every
+               resource instance. By default it is always `true`.
         :param str accept_language: (optional) Prioritize the names returned in the
                order of the specified languages. Language will default to English.
         :param int limit: (optional) Number of usage records returned. The default
@@ -289,12 +323,15 @@ class UsageReportsV4(BaseService):
             'Accept-Language': accept_language,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_resource_usage_account'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V4',
+            operation_id='get_resource_usage_account',
         )
         headers.update(sdk_headers)
 
         params = {
             '_names': names,
+            '_tags': tags,
             '_limit': limit,
             '_start': start,
             'resource_group_id': resource_group_id,
@@ -314,7 +351,12 @@ class UsageReportsV4(BaseService):
         path_param_values = self.encode_path_vars(account_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v4/accounts/{account_id}/resource_instances/usage/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -325,14 +367,15 @@ class UsageReportsV4(BaseService):
         resource_group_id: str,
         billingmonth: str,
         *,
-        names: bool = None,
-        accept_language: str = None,
-        limit: int = None,
-        start: str = None,
-        resource_instance_id: str = None,
-        resource_id: str = None,
-        plan_id: str = None,
-        region: str = None,
+        names: Optional[bool] = None,
+        tags: Optional[bool] = None,
+        accept_language: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        resource_instance_id: Optional[str] = None,
+        resource_id: Optional[str] = None,
+        plan_id: Optional[str] = None,
+        region: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -349,6 +392,8 @@ class UsageReportsV4(BaseService):
                requested.  Format is yyyy-mm.
         :param bool names: (optional) Include the name of every resource, plan,
                resource instance, organization, and resource group.
+        :param bool tags: (optional) Include the tags associated with every
+               resource instance. By default it is always `true`.
         :param str accept_language: (optional) Prioritize the names returned in the
                order of the specified languages. Language will default to English.
         :param int limit: (optional) Number of usage records returned. The default
@@ -383,6 +428,7 @@ class UsageReportsV4(BaseService):
 
         params = {
             '_names': names,
+            '_tags': tags,
             '_limit': limit,
             '_start': start,
             'resource_instance_id': resource_instance_id,
@@ -402,7 +448,12 @@ class UsageReportsV4(BaseService):
         url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/resource_instances/usage/{billingmonth}'.format(
             **path_param_dict
         )
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -413,14 +464,15 @@ class UsageReportsV4(BaseService):
         organization_id: str,
         billingmonth: str,
         *,
-        names: bool = None,
-        accept_language: str = None,
-        limit: int = None,
-        start: str = None,
-        resource_instance_id: str = None,
-        resource_id: str = None,
-        plan_id: str = None,
-        region: str = None,
+        names: Optional[bool] = None,
+        tags: Optional[bool] = None,
+        accept_language: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        resource_instance_id: Optional[str] = None,
+        resource_id: Optional[str] = None,
+        plan_id: Optional[str] = None,
+        region: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -436,6 +488,8 @@ class UsageReportsV4(BaseService):
                requested.  Format is yyyy-mm.
         :param bool names: (optional) Include the name of every resource, plan,
                resource instance, organization, and resource group.
+        :param bool tags: (optional) Include the tags associated with every
+               resource instance. By default it is always `true`.
         :param str accept_language: (optional) Prioritize the names returned in the
                order of the specified languages. Language will default to English.
         :param int limit: (optional) Number of usage records returned. The default
@@ -462,12 +516,15 @@ class UsageReportsV4(BaseService):
             'Accept-Language': accept_language,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_resource_usage_org'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V4',
+            operation_id='get_resource_usage_org',
         )
         headers.update(sdk_headers)
 
         params = {
             '_names': names,
+            '_tags': tags,
             '_limit': limit,
             '_start': start,
             'resource_instance_id': resource_instance_id,
@@ -489,7 +546,12 @@ class UsageReportsV4(BaseService):
                 **path_param_dict
             )
         )
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -504,8 +566,8 @@ class UsageReportsV4(BaseService):
         organization_id: str,
         billingmonth: str,
         *,
-        names: bool = None,
-        accept_language: str = None,
+        names: Optional[bool] = None,
+        accept_language: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -538,7 +600,9 @@ class UsageReportsV4(BaseService):
             'Accept-Language': accept_language,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_org_usage'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V4',
+            operation_id='get_org_usage',
         )
         headers.update(sdk_headers)
 
@@ -555,7 +619,12 @@ class UsageReportsV4(BaseService):
         path_param_values = self.encode_path_vars(account_id, organization_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v4/accounts/{account_id}/organizations/{organization_id}/usage/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -571,9 +640,9 @@ class UsageReportsV4(BaseService):
         cos_bucket: str,
         cos_location: str,
         *,
-        cos_reports_folder: str = None,
-        report_types: List[str] = None,
-        versioning: str = None,
+        cos_reports_folder: Optional[str] = None,
+        report_types: Optional[List[str]] = None,
+        versioning: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -700,12 +769,12 @@ class UsageReportsV4(BaseService):
         self,
         account_id: str,
         *,
-        interval: str = None,
-        cos_bucket: str = None,
-        cos_location: str = None,
-        cos_reports_folder: str = None,
-        report_types: List[str] = None,
-        versioning: str = None,
+        interval: Optional[str] = None,
+        cos_bucket: Optional[str] = None,
+        cos_location: Optional[str] = None,
+        cos_reports_folder: Optional[str] = None,
+        report_types: Optional[List[str]] = None,
+        versioning: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -979,21 +1048,21 @@ class AccountSummary:
     """
     A summary of charges and credits for an account.
 
-    :attr str account_id: The ID of the account.
-    :attr List[Resource] account_resources: (optional) The list of account resources
-          for the month.
-    :attr str month: The month in which usages were incurred. Represented in yyyy-mm
-          format.
-    :attr str billing_country_code: Country.
-    :attr str billing_currency_code: The currency in which the account is billed.
-    :attr ResourcesSummary resources: Charges related to cloud resources.
-    :attr List[Offer] offers: The list of offers applicable for the account for the
+    :param str account_id: The ID of the account.
+    :param List[Resource] account_resources: (optional) The list of account
+          resources for the month.
+    :param str month: The month in which usages were incurred. Represented in
+          yyyy-mm format.
+    :param str billing_country_code: Country.
+    :param str billing_currency_code: The currency in which the account is billed.
+    :param ResourcesSummary resources: Charges related to cloud resources.
+    :param List[Offer] offers: The list of offers applicable for the account for the
           month.
-    :attr List[SupportSummary] support: Support-related charges.
-    :attr List[object] support_resources: (optional) The list of support resources
+    :param List[SupportSummary] support: Support-related charges.
+    :param List[object] support_resources: (optional) The list of support resources
           for the month.
-    :attr SubscriptionSummary subscription: A summary of charges and credits related
-          to a subscription.
+    :param SubscriptionSummary subscription: A summary of charges and credits
+          related to a subscription.
     """
 
     def __init__(
@@ -1007,8 +1076,8 @@ class AccountSummary:
         support: List['SupportSummary'],
         subscription: 'SubscriptionSummary',
         *,
-        account_resources: List['Resource'] = None,
-        support_resources: List[object] = None,
+        account_resources: Optional[List['Resource']] = None,
+        support_resources: Optional[List[object]] = None,
     ) -> None:
         """
         Initialize a AccountSummary object.
@@ -1045,40 +1114,40 @@ class AccountSummary:
     def from_dict(cls, _dict: Dict) -> 'AccountSummary':
         """Initialize a AccountSummary object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in AccountSummary JSON')
-        if 'account_resources' in _dict:
-            args['account_resources'] = [Resource.from_dict(v) for v in _dict.get('account_resources')]
-        if 'month' in _dict:
-            args['month'] = _dict.get('month')
+        if (account_resources := _dict.get('account_resources')) is not None:
+            args['account_resources'] = [Resource.from_dict(v) for v in account_resources]
+        if (month := _dict.get('month')) is not None:
+            args['month'] = month
         else:
             raise ValueError('Required property \'month\' not present in AccountSummary JSON')
-        if 'billing_country_code' in _dict:
-            args['billing_country_code'] = _dict.get('billing_country_code')
+        if (billing_country_code := _dict.get('billing_country_code')) is not None:
+            args['billing_country_code'] = billing_country_code
         else:
             raise ValueError('Required property \'billing_country_code\' not present in AccountSummary JSON')
-        if 'billing_currency_code' in _dict:
-            args['billing_currency_code'] = _dict.get('billing_currency_code')
+        if (billing_currency_code := _dict.get('billing_currency_code')) is not None:
+            args['billing_currency_code'] = billing_currency_code
         else:
             raise ValueError('Required property \'billing_currency_code\' not present in AccountSummary JSON')
-        if 'resources' in _dict:
-            args['resources'] = ResourcesSummary.from_dict(_dict.get('resources'))
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = ResourcesSummary.from_dict(resources)
         else:
             raise ValueError('Required property \'resources\' not present in AccountSummary JSON')
-        if 'offers' in _dict:
-            args['offers'] = [Offer.from_dict(v) for v in _dict.get('offers')]
+        if (offers := _dict.get('offers')) is not None:
+            args['offers'] = [Offer.from_dict(v) for v in offers]
         else:
             raise ValueError('Required property \'offers\' not present in AccountSummary JSON')
-        if 'support' in _dict:
-            args['support'] = [SupportSummary.from_dict(v) for v in _dict.get('support')]
+        if (support := _dict.get('support')) is not None:
+            args['support'] = [SupportSummary.from_dict(v) for v in support]
         else:
             raise ValueError('Required property \'support\' not present in AccountSummary JSON')
-        if 'support_resources' in _dict:
-            args['support_resources'] = _dict.get('support_resources')
-        if 'subscription' in _dict:
-            args['subscription'] = SubscriptionSummary.from_dict(_dict.get('subscription'))
+        if (support_resources := _dict.get('support_resources')) is not None:
+            args['support_resources'] = support_resources
+        if (subscription := _dict.get('subscription')) is not None:
+            args['subscription'] = SubscriptionSummary.from_dict(subscription)
         else:
             raise ValueError('Required property \'subscription\' not present in AccountSummary JSON')
         return cls(**args)
@@ -1160,13 +1229,13 @@ class AccountUsage:
     """
     The aggregated usage and charges for all the plans in the account.
 
-    :attr str account_id: The ID of the account.
-    :attr str pricing_country: The target country pricing that should be used.
-    :attr str currency_code: The currency for the cost fields in the resources,
+    :param str account_id: The ID of the account.
+    :param str pricing_country: The target country pricing that should be used.
+    :param str currency_code: The currency for the cost fields in the resources,
           plans and metrics.
-    :attr str month: The month.
-    :attr List[Resource] resources: All the resource used in the account.
-    :attr float currency_rate: (optional) The value of the account's currency in
+    :param str month: The month.
+    :param List[Resource] resources: All the resource used in the account.
+    :param float currency_rate: (optional) The value of the account's currency in
           USD.
     """
 
@@ -1178,7 +1247,7 @@ class AccountUsage:
         month: str,
         resources: List['Resource'],
         *,
-        currency_rate: float = None,
+        currency_rate: Optional[float] = None,
     ) -> None:
         """
         Initialize a AccountUsage object.
@@ -1203,28 +1272,28 @@ class AccountUsage:
     def from_dict(cls, _dict: Dict) -> 'AccountUsage':
         """Initialize a AccountUsage object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in AccountUsage JSON')
-        if 'pricing_country' in _dict:
-            args['pricing_country'] = _dict.get('pricing_country')
+        if (pricing_country := _dict.get('pricing_country')) is not None:
+            args['pricing_country'] = pricing_country
         else:
             raise ValueError('Required property \'pricing_country\' not present in AccountUsage JSON')
-        if 'currency_code' in _dict:
-            args['currency_code'] = _dict.get('currency_code')
+        if (currency_code := _dict.get('currency_code')) is not None:
+            args['currency_code'] = currency_code
         else:
             raise ValueError('Required property \'currency_code\' not present in AccountUsage JSON')
-        if 'month' in _dict:
-            args['month'] = _dict.get('month')
+        if (month := _dict.get('month')) is not None:
+            args['month'] = month
         else:
             raise ValueError('Required property \'month\' not present in AccountUsage JSON')
-        if 'resources' in _dict:
-            args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [Resource.from_dict(v) for v in resources]
         else:
             raise ValueError('Required property \'resources\' not present in AccountUsage JSON')
-        if 'currency_rate' in _dict:
-            args['currency_rate'] = _dict.get('currency_rate')
+        if (currency_rate := _dict.get('currency_rate')) is not None:
+            args['currency_rate'] = currency_rate
         return cls(**args)
 
     @classmethod
@@ -1278,13 +1347,20 @@ class Discount:
     """
     Information about a discount that is associated with a metric.
 
-    :attr str ref: The reference ID of the discount.
-    :attr str name: (optional) The name of the discount indicating category.
-    :attr str display_name: (optional) The name of the discount.
-    :attr float discount: The discount percentage.
+    :param str ref: The reference ID of the discount.
+    :param str name: (optional) The name of the discount indicating category.
+    :param str display_name: (optional) The name of the discount.
+    :param float discount: The discount percentage.
     """
 
-    def __init__(self, ref: str, discount: float, *, name: str = None, display_name: str = None) -> None:
+    def __init__(
+        self,
+        ref: str,
+        discount: float,
+        *,
+        name: Optional[str] = None,
+        display_name: Optional[str] = None,
+    ) -> None:
         """
         Initialize a Discount object.
 
@@ -1302,16 +1378,16 @@ class Discount:
     def from_dict(cls, _dict: Dict) -> 'Discount':
         """Initialize a Discount object from a json dictionary."""
         args = {}
-        if 'ref' in _dict:
-            args['ref'] = _dict.get('ref')
+        if (ref := _dict.get('ref')) is not None:
+            args['ref'] = ref
         else:
             raise ValueError('Required property \'ref\' not present in Discount JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'display_name' in _dict:
-            args['display_name'] = _dict.get('display_name')
-        if 'discount' in _dict:
-            args['discount'] = _dict.get('discount')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (display_name := _dict.get('display_name')) is not None:
+            args['display_name'] = display_name
+        if (discount := _dict.get('discount')) is not None:
+            args['discount'] = discount
         else:
             raise ValueError('Required property \'discount\' not present in Discount JSON')
         return cls(**args)
@@ -1357,34 +1433,43 @@ class InstanceUsage:
     """
     The aggregated usage and charges for an instance.
 
-    :attr str account_id: The ID of the account.
-    :attr str resource_instance_id: The ID of the resource instance.
-    :attr str resource_instance_name: (optional) The name of the resource instance.
-    :attr str resource_id: The ID of the resource.
-    :attr str resource_name: (optional) The name of the resource.
-    :attr str resource_group_id: (optional) The ID of the resource group.
-    :attr str resource_group_name: (optional) The name of the resource group.
-    :attr str organization_id: (optional) The ID of the organization.
-    :attr str organization_name: (optional) The name of the organization.
-    :attr str space_id: (optional) The ID of the space.
-    :attr str space_name: (optional) The name of the space.
-    :attr str consumer_id: (optional) The ID of the consumer.
-    :attr str region: (optional) The region where instance was provisioned.
-    :attr str pricing_region: (optional) The pricing region where the usage that was
-          submitted was rated.
-    :attr str pricing_country: The target country pricing that should be used.
-    :attr str currency_code: The currency for the cost fields in the resources,
+    :param str account_id: The ID of the account.
+    :param str resource_instance_id: The ID of the resource instance.
+    :param str resource_instance_name: (optional) The name of the resource instance.
+    :param str resource_id: The ID of the resource.
+    :param str catalog_id: (optional) The catalog ID of the resource.
+    :param str resource_name: (optional) The name of the resource.
+    :param str resource_group_id: (optional) The ID of the resource group.
+    :param str resource_group_name: (optional) The name of the resource group.
+    :param str organization_id: (optional) The ID of the organization.
+    :param str organization_name: (optional) The name of the organization.
+    :param str space_id: (optional) The ID of the space.
+    :param str space_name: (optional) The name of the space.
+    :param str consumer_id: (optional) The ID of the consumer.
+    :param str region: (optional) The region where instance was provisioned.
+    :param str pricing_region: (optional) The pricing region where the usage that
+          was submitted was rated.
+    :param str pricing_country: The target country pricing that should be used.
+    :param str currency_code: The currency for the cost fields in the resources,
           plans and metrics.
-    :attr bool billable: Is the cost charged to the account.
-    :attr str plan_id: The ID of the plan where the instance was provisioned and
+    :param bool billable: Is the cost charged to the account.
+    :param str parent_resource_instance_id: (optional) The resource instance id of
+          the parent resource associated with this instance.
+    :param str plan_id: The ID of the plan where the instance was provisioned and
           rated.
-    :attr str plan_name: (optional) The name of the plan where the instance was
+    :param str plan_name: (optional) The name of the plan where the instance was
           provisioned and rated.
-    :attr str month: The month.
-    :attr List[Metric] usage: All the resource used in the account.
-    :attr bool pending: (optional) Pending charge from classic infrastructure.
-    :attr float currency_rate: (optional) The value of the account's currency in
+    :param str pricing_plan_id: (optional) The ID of the pricing plan used to rate
+          the usage.
+    :param str month: The month.
+    :param List[Metric] usage: All the resource used in the account.
+    :param bool pending: (optional) Pending charge from classic infrastructure.
+    :param float currency_rate: (optional) The value of the account's currency in
           USD.
+    :param List[object] tags: (optional) The user tags associated with a resource
+          instance.
+    :param List[object] service_tags: (optional) The service tags associated with a
+          resource instance.
     """
 
     def __init__(
@@ -1399,20 +1484,25 @@ class InstanceUsage:
         month: str,
         usage: List['Metric'],
         *,
-        resource_instance_name: str = None,
-        resource_name: str = None,
-        resource_group_id: str = None,
-        resource_group_name: str = None,
-        organization_id: str = None,
-        organization_name: str = None,
-        space_id: str = None,
-        space_name: str = None,
-        consumer_id: str = None,
-        region: str = None,
-        pricing_region: str = None,
-        plan_name: str = None,
-        pending: bool = None,
-        currency_rate: float = None,
+        resource_instance_name: Optional[str] = None,
+        catalog_id: Optional[str] = None,
+        resource_name: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        resource_group_name: Optional[str] = None,
+        organization_id: Optional[str] = None,
+        organization_name: Optional[str] = None,
+        space_id: Optional[str] = None,
+        space_name: Optional[str] = None,
+        consumer_id: Optional[str] = None,
+        region: Optional[str] = None,
+        pricing_region: Optional[str] = None,
+        parent_resource_instance_id: Optional[str] = None,
+        plan_name: Optional[str] = None,
+        pricing_plan_id: Optional[str] = None,
+        pending: Optional[bool] = None,
+        currency_rate: Optional[float] = None,
+        tags: Optional[List[object]] = None,
+        service_tags: Optional[List[object]] = None,
     ) -> None:
         """
         Initialize a InstanceUsage object.
@@ -1430,6 +1520,7 @@ class InstanceUsage:
         :param List[Metric] usage: All the resource used in the account.
         :param str resource_instance_name: (optional) The name of the resource
                instance.
+        :param str catalog_id: (optional) The catalog ID of the resource.
         :param str resource_name: (optional) The name of the resource.
         :param str resource_group_id: (optional) The ID of the resource group.
         :param str resource_group_name: (optional) The name of the resource group.
@@ -1441,16 +1532,25 @@ class InstanceUsage:
         :param str region: (optional) The region where instance was provisioned.
         :param str pricing_region: (optional) The pricing region where the usage
                that was submitted was rated.
+        :param str parent_resource_instance_id: (optional) The resource instance id
+               of the parent resource associated with this instance.
         :param str plan_name: (optional) The name of the plan where the instance
                was provisioned and rated.
+        :param str pricing_plan_id: (optional) The ID of the pricing plan used to
+               rate the usage.
         :param bool pending: (optional) Pending charge from classic infrastructure.
         :param float currency_rate: (optional) The value of the account's currency
                in USD.
+        :param List[object] tags: (optional) The user tags associated with a
+               resource instance.
+        :param List[object] service_tags: (optional) The service tags associated
+               with a resource instance.
         """
         self.account_id = account_id
         self.resource_instance_id = resource_instance_id
         self.resource_instance_name = resource_instance_name
         self.resource_id = resource_id
+        self.catalog_id = catalog_id
         self.resource_name = resource_name
         self.resource_group_id = resource_group_id
         self.resource_group_name = resource_group_name
@@ -1464,81 +1564,95 @@ class InstanceUsage:
         self.pricing_country = pricing_country
         self.currency_code = currency_code
         self.billable = billable
+        self.parent_resource_instance_id = parent_resource_instance_id
         self.plan_id = plan_id
         self.plan_name = plan_name
+        self.pricing_plan_id = pricing_plan_id
         self.month = month
         self.usage = usage
         self.pending = pending
         self.currency_rate = currency_rate
+        self.tags = tags
+        self.service_tags = service_tags
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'InstanceUsage':
         """Initialize a InstanceUsage object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in InstanceUsage JSON')
-        if 'resource_instance_id' in _dict:
-            args['resource_instance_id'] = _dict.get('resource_instance_id')
+        if (resource_instance_id := _dict.get('resource_instance_id')) is not None:
+            args['resource_instance_id'] = resource_instance_id
         else:
             raise ValueError('Required property \'resource_instance_id\' not present in InstanceUsage JSON')
-        if 'resource_instance_name' in _dict:
-            args['resource_instance_name'] = _dict.get('resource_instance_name')
-        if 'resource_id' in _dict:
-            args['resource_id'] = _dict.get('resource_id')
+        if (resource_instance_name := _dict.get('resource_instance_name')) is not None:
+            args['resource_instance_name'] = resource_instance_name
+        if (resource_id := _dict.get('resource_id')) is not None:
+            args['resource_id'] = resource_id
         else:
             raise ValueError('Required property \'resource_id\' not present in InstanceUsage JSON')
-        if 'resource_name' in _dict:
-            args['resource_name'] = _dict.get('resource_name')
-        if 'resource_group_id' in _dict:
-            args['resource_group_id'] = _dict.get('resource_group_id')
-        if 'resource_group_name' in _dict:
-            args['resource_group_name'] = _dict.get('resource_group_name')
-        if 'organization_id' in _dict:
-            args['organization_id'] = _dict.get('organization_id')
-        if 'organization_name' in _dict:
-            args['organization_name'] = _dict.get('organization_name')
-        if 'space_id' in _dict:
-            args['space_id'] = _dict.get('space_id')
-        if 'space_name' in _dict:
-            args['space_name'] = _dict.get('space_name')
-        if 'consumer_id' in _dict:
-            args['consumer_id'] = _dict.get('consumer_id')
-        if 'region' in _dict:
-            args['region'] = _dict.get('region')
-        if 'pricing_region' in _dict:
-            args['pricing_region'] = _dict.get('pricing_region')
-        if 'pricing_country' in _dict:
-            args['pricing_country'] = _dict.get('pricing_country')
+        if (catalog_id := _dict.get('catalog_id')) is not None:
+            args['catalog_id'] = catalog_id
+        if (resource_name := _dict.get('resource_name')) is not None:
+            args['resource_name'] = resource_name
+        if (resource_group_id := _dict.get('resource_group_id')) is not None:
+            args['resource_group_id'] = resource_group_id
+        if (resource_group_name := _dict.get('resource_group_name')) is not None:
+            args['resource_group_name'] = resource_group_name
+        if (organization_id := _dict.get('organization_id')) is not None:
+            args['organization_id'] = organization_id
+        if (organization_name := _dict.get('organization_name')) is not None:
+            args['organization_name'] = organization_name
+        if (space_id := _dict.get('space_id')) is not None:
+            args['space_id'] = space_id
+        if (space_name := _dict.get('space_name')) is not None:
+            args['space_name'] = space_name
+        if (consumer_id := _dict.get('consumer_id')) is not None:
+            args['consumer_id'] = consumer_id
+        if (region := _dict.get('region')) is not None:
+            args['region'] = region
+        if (pricing_region := _dict.get('pricing_region')) is not None:
+            args['pricing_region'] = pricing_region
+        if (pricing_country := _dict.get('pricing_country')) is not None:
+            args['pricing_country'] = pricing_country
         else:
             raise ValueError('Required property \'pricing_country\' not present in InstanceUsage JSON')
-        if 'currency_code' in _dict:
-            args['currency_code'] = _dict.get('currency_code')
+        if (currency_code := _dict.get('currency_code')) is not None:
+            args['currency_code'] = currency_code
         else:
             raise ValueError('Required property \'currency_code\' not present in InstanceUsage JSON')
-        if 'billable' in _dict:
-            args['billable'] = _dict.get('billable')
+        if (billable := _dict.get('billable')) is not None:
+            args['billable'] = billable
         else:
             raise ValueError('Required property \'billable\' not present in InstanceUsage JSON')
-        if 'plan_id' in _dict:
-            args['plan_id'] = _dict.get('plan_id')
+        if (parent_resource_instance_id := _dict.get('parent_resource_instance_id')) is not None:
+            args['parent_resource_instance_id'] = parent_resource_instance_id
+        if (plan_id := _dict.get('plan_id')) is not None:
+            args['plan_id'] = plan_id
         else:
             raise ValueError('Required property \'plan_id\' not present in InstanceUsage JSON')
-        if 'plan_name' in _dict:
-            args['plan_name'] = _dict.get('plan_name')
-        if 'month' in _dict:
-            args['month'] = _dict.get('month')
+        if (plan_name := _dict.get('plan_name')) is not None:
+            args['plan_name'] = plan_name
+        if (pricing_plan_id := _dict.get('pricing_plan_id')) is not None:
+            args['pricing_plan_id'] = pricing_plan_id
+        if (month := _dict.get('month')) is not None:
+            args['month'] = month
         else:
             raise ValueError('Required property \'month\' not present in InstanceUsage JSON')
-        if 'usage' in _dict:
-            args['usage'] = [Metric.from_dict(v) for v in _dict.get('usage')]
+        if (usage := _dict.get('usage')) is not None:
+            args['usage'] = [Metric.from_dict(v) for v in usage]
         else:
             raise ValueError('Required property \'usage\' not present in InstanceUsage JSON')
-        if 'pending' in _dict:
-            args['pending'] = _dict.get('pending')
-        if 'currency_rate' in _dict:
-            args['currency_rate'] = _dict.get('currency_rate')
+        if (pending := _dict.get('pending')) is not None:
+            args['pending'] = pending
+        if (currency_rate := _dict.get('currency_rate')) is not None:
+            args['currency_rate'] = currency_rate
+        if (tags := _dict.get('tags')) is not None:
+            args['tags'] = tags
+        if (service_tags := _dict.get('service_tags')) is not None:
+            args['service_tags'] = service_tags
         return cls(**args)
 
     @classmethod
@@ -1557,6 +1671,8 @@ class InstanceUsage:
             _dict['resource_instance_name'] = self.resource_instance_name
         if hasattr(self, 'resource_id') and self.resource_id is not None:
             _dict['resource_id'] = self.resource_id
+        if hasattr(self, 'catalog_id') and self.catalog_id is not None:
+            _dict['catalog_id'] = self.catalog_id
         if hasattr(self, 'resource_name') and self.resource_name is not None:
             _dict['resource_name'] = self.resource_name
         if hasattr(self, 'resource_group_id') and self.resource_group_id is not None:
@@ -1583,10 +1699,14 @@ class InstanceUsage:
             _dict['currency_code'] = self.currency_code
         if hasattr(self, 'billable') and self.billable is not None:
             _dict['billable'] = self.billable
+        if hasattr(self, 'parent_resource_instance_id') and self.parent_resource_instance_id is not None:
+            _dict['parent_resource_instance_id'] = self.parent_resource_instance_id
         if hasattr(self, 'plan_id') and self.plan_id is not None:
             _dict['plan_id'] = self.plan_id
         if hasattr(self, 'plan_name') and self.plan_name is not None:
             _dict['plan_name'] = self.plan_name
+        if hasattr(self, 'pricing_plan_id') and self.pricing_plan_id is not None:
+            _dict['pricing_plan_id'] = self.pricing_plan_id
         if hasattr(self, 'month') and self.month is not None:
             _dict['month'] = self.month
         if hasattr(self, 'usage') and self.usage is not None:
@@ -1601,6 +1721,10 @@ class InstanceUsage:
             _dict['pending'] = self.pending
         if hasattr(self, 'currency_rate') and self.currency_rate is not None:
             _dict['currency_rate'] = self.currency_rate
+        if hasattr(self, 'tags') and self.tags is not None:
+            _dict['tags'] = self.tags
+        if hasattr(self, 'service_tags') and self.service_tags is not None:
+            _dict['service_tags'] = self.service_tags
         return _dict
 
     def _to_dict(self):
@@ -1626,10 +1750,14 @@ class InstancesUsageFirst:
     """
     The link to the first page of the search query.
 
-    :attr str href: (optional) A link to a page of query results.
+    :param str href: (optional) A link to a page of query results.
     """
 
-    def __init__(self, *, href: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        href: Optional[str] = None,
+    ) -> None:
         """
         Initialize a InstancesUsageFirst object.
 
@@ -1641,8 +1769,8 @@ class InstancesUsageFirst:
     def from_dict(cls, _dict: Dict) -> 'InstancesUsageFirst':
         """Initialize a InstancesUsageFirst object from a json dictionary."""
         args = {}
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         return cls(**args)
 
     @classmethod
@@ -1680,12 +1808,17 @@ class InstancesUsageNext:
     """
     The link to the next page of the search query.
 
-    :attr str href: (optional) A link to a page of query results.
-    :attr str offset: (optional) The value of the `_start` query parameter to fetch
+    :param str href: (optional) A link to a page of query results.
+    :param str offset: (optional) The value of the `_start` query parameter to fetch
           the next page.
     """
 
-    def __init__(self, *, href: str = None, offset: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        href: Optional[str] = None,
+        offset: Optional[str] = None,
+    ) -> None:
         """
         Initialize a InstancesUsageNext object.
 
@@ -1700,10 +1833,10 @@ class InstancesUsageNext:
     def from_dict(cls, _dict: Dict) -> 'InstancesUsageNext':
         """Initialize a InstancesUsageNext object from a json dictionary."""
         args = {}
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
         return cls(**args)
 
     @classmethod
@@ -1743,24 +1876,24 @@ class InstancesUsage:
     """
     The list of instance usage reports.
 
-    :attr int limit: (optional) The max number of reports in the response.
-    :attr int count: (optional) The number of reports in the response.
-    :attr InstancesUsageFirst first: (optional) The link to the first page of the
+    :param int limit: (optional) The max number of reports in the response.
+    :param int count: (optional) The number of reports in the response.
+    :param InstancesUsageFirst first: (optional) The link to the first page of the
           search query.
-    :attr InstancesUsageNext next: (optional) The link to the next page of the
+    :param InstancesUsageNext next: (optional) The link to the next page of the
           search query.
-    :attr List[InstanceUsage] resources: (optional) The list of instance usage
+    :param List[InstanceUsage] resources: (optional) The list of instance usage
           reports.
     """
 
     def __init__(
         self,
         *,
-        limit: int = None,
-        count: int = None,
-        first: 'InstancesUsageFirst' = None,
-        next: 'InstancesUsageNext' = None,
-        resources: List['InstanceUsage'] = None,
+        limit: Optional[int] = None,
+        count: Optional[int] = None,
+        first: Optional['InstancesUsageFirst'] = None,
+        next: Optional['InstancesUsageNext'] = None,
+        resources: Optional[List['InstanceUsage']] = None,
     ) -> None:
         """
         Initialize a InstancesUsage object.
@@ -1784,16 +1917,16 @@ class InstancesUsage:
     def from_dict(cls, _dict: Dict) -> 'InstancesUsage':
         """Initialize a InstancesUsage object from a json dictionary."""
         args = {}
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
-        if 'count' in _dict:
-            args['count'] = _dict.get('count')
-        if 'first' in _dict:
-            args['first'] = InstancesUsageFirst.from_dict(_dict.get('first'))
-        if 'next' in _dict:
-            args['next'] = InstancesUsageNext.from_dict(_dict.get('next'))
-        if 'resources' in _dict:
-            args['resources'] = [InstanceUsage.from_dict(v) for v in _dict.get('resources')]
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
+        if (first := _dict.get('first')) is not None:
+            args['first'] = InstancesUsageFirst.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = InstancesUsageNext.from_dict(next)
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [InstanceUsage.from_dict(v) for v in resources]
         return cls(**args)
 
     @classmethod
@@ -1851,20 +1984,20 @@ class Metric:
     """
     Information about a metric.
 
-    :attr str metric: The ID of the metric.
-    :attr str metric_name: (optional) The name of the metric.
-    :attr float quantity: The aggregated value for the metric.
-    :attr float rateable_quantity: (optional) The quantity that is used for
+    :param str metric: The ID of the metric.
+    :param str metric_name: (optional) The name of the metric.
+    :param float quantity: The aggregated value for the metric.
+    :param float rateable_quantity: (optional) The quantity that is used for
           calculating charges.
-    :attr float cost: The cost incurred by the metric.
-    :attr float rated_cost: Pre-discounted cost incurred by the metric.
-    :attr List[object] price: (optional) The price with which the cost was
+    :param float cost: The cost incurred by the metric.
+    :param float rated_cost: Pre-discounted cost incurred by the metric.
+    :param List[object] price: (optional) The price with which the cost was
           calculated.
-    :attr str unit: (optional) The unit that qualifies the quantity.
-    :attr str unit_name: (optional) The name of the unit.
-    :attr bool non_chargeable: (optional) When set to `true`, the cost is for
+    :param str unit: (optional) The unit that qualifies the quantity.
+    :param str unit_name: (optional) The name of the unit.
+    :param bool non_chargeable: (optional) When set to `true`, the cost is for
           informational purpose and is not included while calculating the plan charges.
-    :attr List[Discount] discounts: All the discounts applicable to the metric.
+    :param List[Discount] discounts: All the discounts applicable to the metric.
     """
 
     def __init__(
@@ -1875,12 +2008,12 @@ class Metric:
         rated_cost: float,
         discounts: List['Discount'],
         *,
-        metric_name: str = None,
-        rateable_quantity: float = None,
-        price: List[object] = None,
-        unit: str = None,
-        unit_name: str = None,
-        non_chargeable: bool = None,
+        metric_name: Optional[str] = None,
+        rateable_quantity: Optional[float] = None,
+        price: Optional[List[object]] = None,
+        unit: Optional[str] = None,
+        unit_name: Optional[str] = None,
+        non_chargeable: Optional[bool] = None,
     ) -> None:
         """
         Initialize a Metric object.
@@ -1918,36 +2051,36 @@ class Metric:
     def from_dict(cls, _dict: Dict) -> 'Metric':
         """Initialize a Metric object from a json dictionary."""
         args = {}
-        if 'metric' in _dict:
-            args['metric'] = _dict.get('metric')
+        if (metric := _dict.get('metric')) is not None:
+            args['metric'] = metric
         else:
             raise ValueError('Required property \'metric\' not present in Metric JSON')
-        if 'metric_name' in _dict:
-            args['metric_name'] = _dict.get('metric_name')
-        if 'quantity' in _dict:
-            args['quantity'] = _dict.get('quantity')
+        if (metric_name := _dict.get('metric_name')) is not None:
+            args['metric_name'] = metric_name
+        if (quantity := _dict.get('quantity')) is not None:
+            args['quantity'] = quantity
         else:
             raise ValueError('Required property \'quantity\' not present in Metric JSON')
-        if 'rateable_quantity' in _dict:
-            args['rateable_quantity'] = _dict.get('rateable_quantity')
-        if 'cost' in _dict:
-            args['cost'] = _dict.get('cost')
+        if (rateable_quantity := _dict.get('rateable_quantity')) is not None:
+            args['rateable_quantity'] = rateable_quantity
+        if (cost := _dict.get('cost')) is not None:
+            args['cost'] = cost
         else:
             raise ValueError('Required property \'cost\' not present in Metric JSON')
-        if 'rated_cost' in _dict:
-            args['rated_cost'] = _dict.get('rated_cost')
+        if (rated_cost := _dict.get('rated_cost')) is not None:
+            args['rated_cost'] = rated_cost
         else:
             raise ValueError('Required property \'rated_cost\' not present in Metric JSON')
-        if 'price' in _dict:
-            args['price'] = _dict.get('price')
-        if 'unit' in _dict:
-            args['unit'] = _dict.get('unit')
-        if 'unit_name' in _dict:
-            args['unit_name'] = _dict.get('unit_name')
-        if 'non_chargeable' in _dict:
-            args['non_chargeable'] = _dict.get('non_chargeable')
-        if 'discounts' in _dict:
-            args['discounts'] = [Discount.from_dict(v) for v in _dict.get('discounts')]
+        if (price := _dict.get('price')) is not None:
+            args['price'] = price
+        if (unit := _dict.get('unit')) is not None:
+            args['unit'] = unit
+        if (unit_name := _dict.get('unit_name')) is not None:
+            args['unit_name'] = unit_name
+        if (non_chargeable := _dict.get('non_chargeable')) is not None:
+            args['non_chargeable'] = non_chargeable
+        if (discounts := _dict.get('discounts')) is not None:
+            args['discounts'] = [Discount.from_dict(v) for v in discounts]
         else:
             raise ValueError('Required property \'discounts\' not present in Metric JSON')
         return cls(**args)
@@ -2013,12 +2146,12 @@ class Offer:
     """
     Information about an individual offer.
 
-    :attr str offer_id: The ID of the offer.
-    :attr float credits_total: The total credits before applying the offer.
-    :attr str offer_template: The template with which the offer was generated.
-    :attr datetime valid_from: The date from which the offer is valid.
-    :attr datetime expires_on: The date until the offer is valid.
-    :attr OfferCredits credits: Credit information related to an offer.
+    :param str offer_id: The ID of the offer.
+    :param float credits_total: The total credits before applying the offer.
+    :param str offer_template: The template with which the offer was generated.
+    :param datetime valid_from: The date from which the offer is valid.
+    :param datetime expires_on: The date until the offer is valid.
+    :param OfferCredits credits: Credit information related to an offer.
     """
 
     def __init__(
@@ -2051,28 +2184,28 @@ class Offer:
     def from_dict(cls, _dict: Dict) -> 'Offer':
         """Initialize a Offer object from a json dictionary."""
         args = {}
-        if 'offer_id' in _dict:
-            args['offer_id'] = _dict.get('offer_id')
+        if (offer_id := _dict.get('offer_id')) is not None:
+            args['offer_id'] = offer_id
         else:
             raise ValueError('Required property \'offer_id\' not present in Offer JSON')
-        if 'credits_total' in _dict:
-            args['credits_total'] = _dict.get('credits_total')
+        if (credits_total := _dict.get('credits_total')) is not None:
+            args['credits_total'] = credits_total
         else:
             raise ValueError('Required property \'credits_total\' not present in Offer JSON')
-        if 'offer_template' in _dict:
-            args['offer_template'] = _dict.get('offer_template')
+        if (offer_template := _dict.get('offer_template')) is not None:
+            args['offer_template'] = offer_template
         else:
             raise ValueError('Required property \'offer_template\' not present in Offer JSON')
-        if 'valid_from' in _dict:
-            args['valid_from'] = string_to_datetime(_dict.get('valid_from'))
+        if (valid_from := _dict.get('valid_from')) is not None:
+            args['valid_from'] = string_to_datetime(valid_from)
         else:
             raise ValueError('Required property \'valid_from\' not present in Offer JSON')
-        if 'expires_on' in _dict:
-            args['expires_on'] = string_to_datetime(_dict.get('expires_on'))
+        if (expires_on := _dict.get('expires_on')) is not None:
+            args['expires_on'] = string_to_datetime(expires_on)
         else:
             raise ValueError('Required property \'expires_on\' not present in Offer JSON')
-        if 'credits' in _dict:
-            args['credits'] = OfferCredits.from_dict(_dict.get('credits'))
+        if (credits := _dict.get('credits')) is not None:
+            args['credits'] = OfferCredits.from_dict(credits)
         else:
             raise ValueError('Required property \'credits\' not present in Offer JSON')
         return cls(**args)
@@ -2125,13 +2258,18 @@ class OfferCredits:
     """
     Credit information related to an offer.
 
-    :attr float starting_balance: The available credits in the offer at the
+    :param float starting_balance: The available credits in the offer at the
           beginning of the month.
-    :attr float used: The credits used in this month.
-    :attr float balance: The remaining credits in the offer.
+    :param float used: The credits used in this month.
+    :param float balance: The remaining credits in the offer.
     """
 
-    def __init__(self, starting_balance: float, used: float, balance: float) -> None:
+    def __init__(
+        self,
+        starting_balance: float,
+        used: float,
+        balance: float,
+    ) -> None:
         """
         Initialize a OfferCredits object.
 
@@ -2148,16 +2286,16 @@ class OfferCredits:
     def from_dict(cls, _dict: Dict) -> 'OfferCredits':
         """Initialize a OfferCredits object from a json dictionary."""
         args = {}
-        if 'starting_balance' in _dict:
-            args['starting_balance'] = _dict.get('starting_balance')
+        if (starting_balance := _dict.get('starting_balance')) is not None:
+            args['starting_balance'] = starting_balance
         else:
             raise ValueError('Required property \'starting_balance\' not present in OfferCredits JSON')
-        if 'used' in _dict:
-            args['used'] = _dict.get('used')
+        if (used := _dict.get('used')) is not None:
+            args['used'] = used
         else:
             raise ValueError('Required property \'used\' not present in OfferCredits JSON')
-        if 'balance' in _dict:
-            args['balance'] = _dict.get('balance')
+        if (balance := _dict.get('balance')) is not None:
+            args['balance'] = balance
         else:
             raise ValueError('Required property \'balance\' not present in OfferCredits JSON')
         return cls(**args)
@@ -2201,15 +2339,15 @@ class OrgUsage:
     """
     The aggregated usage and charges for all the plans in the org.
 
-    :attr str account_id: The ID of the account.
-    :attr str organization_id: The ID of the organization.
-    :attr str organization_name: (optional) The name of the organization.
-    :attr str pricing_country: The target country pricing that should be used.
-    :attr str currency_code: The currency for the cost fields in the resources,
+    :param str account_id: The ID of the account.
+    :param str organization_id: The ID of the organization.
+    :param str organization_name: (optional) The name of the organization.
+    :param str pricing_country: The target country pricing that should be used.
+    :param str currency_code: The currency for the cost fields in the resources,
           plans and metrics.
-    :attr str month: The month.
-    :attr List[Resource] resources: All the resource used in the account.
-    :attr float currency_rate: (optional) The value of the account's currency in
+    :param str month: The month.
+    :param List[Resource] resources: All the resource used in the account.
+    :param float currency_rate: (optional) The value of the account's currency in
           USD.
     """
 
@@ -2222,8 +2360,8 @@ class OrgUsage:
         month: str,
         resources: List['Resource'],
         *,
-        organization_name: str = None,
-        currency_rate: float = None,
+        organization_name: Optional[str] = None,
+        currency_rate: Optional[float] = None,
     ) -> None:
         """
         Initialize a OrgUsage object.
@@ -2252,34 +2390,34 @@ class OrgUsage:
     def from_dict(cls, _dict: Dict) -> 'OrgUsage':
         """Initialize a OrgUsage object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in OrgUsage JSON')
-        if 'organization_id' in _dict:
-            args['organization_id'] = _dict.get('organization_id')
+        if (organization_id := _dict.get('organization_id')) is not None:
+            args['organization_id'] = organization_id
         else:
             raise ValueError('Required property \'organization_id\' not present in OrgUsage JSON')
-        if 'organization_name' in _dict:
-            args['organization_name'] = _dict.get('organization_name')
-        if 'pricing_country' in _dict:
-            args['pricing_country'] = _dict.get('pricing_country')
+        if (organization_name := _dict.get('organization_name')) is not None:
+            args['organization_name'] = organization_name
+        if (pricing_country := _dict.get('pricing_country')) is not None:
+            args['pricing_country'] = pricing_country
         else:
             raise ValueError('Required property \'pricing_country\' not present in OrgUsage JSON')
-        if 'currency_code' in _dict:
-            args['currency_code'] = _dict.get('currency_code')
+        if (currency_code := _dict.get('currency_code')) is not None:
+            args['currency_code'] = currency_code
         else:
             raise ValueError('Required property \'currency_code\' not present in OrgUsage JSON')
-        if 'month' in _dict:
-            args['month'] = _dict.get('month')
+        if (month := _dict.get('month')) is not None:
+            args['month'] = month
         else:
             raise ValueError('Required property \'month\' not present in OrgUsage JSON')
-        if 'resources' in _dict:
-            args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [Resource.from_dict(v) for v in resources]
         else:
             raise ValueError('Required property \'resources\' not present in OrgUsage JSON')
-        if 'currency_rate' in _dict:
-            args['currency_rate'] = _dict.get('currency_rate')
+        if (currency_rate := _dict.get('currency_rate')) is not None:
+            args['currency_rate'] = currency_rate
         return cls(**args)
 
     @classmethod
@@ -2337,16 +2475,17 @@ class Plan:
     """
     The aggregated values for the plan.
 
-    :attr str plan_id: The ID of the plan.
-    :attr str plan_name: (optional) The name of the plan.
-    :attr str pricing_region: (optional) The pricing region for the plan.
-    :attr str pricing_plan_id: (optional)
-    :attr bool billable: Indicates if the plan charges are billed to the customer.
-    :attr float cost: The total cost incurred by the plan.
-    :attr float rated_cost: Total pre-discounted cost incurred by the plan.
-    :attr List[Metric] usage: All the metrics in the plan.
-    :attr List[Discount] discounts: All the discounts applicable to the plan.
-    :attr bool pending: (optional) Pending charge from classic infrastructure.
+    :param str plan_id: The ID of the plan.
+    :param str plan_name: (optional) The name of the plan.
+    :param str pricing_region: (optional) The pricing region for the plan.
+    :param str pricing_plan_id: (optional) The ID of the pricing plan used to rate
+          the usage.
+    :param bool billable: Indicates if the plan charges are billed to the customer.
+    :param float cost: The total cost incurred by the plan.
+    :param float rated_cost: Total pre-discounted cost incurred by the plan.
+    :param List[Metric] usage: All the metrics in the plan.
+    :param List[Discount] discounts: All the discounts applicable to the plan.
+    :param bool pending: (optional) Pending charge from classic infrastructure.
     """
 
     def __init__(
@@ -2358,10 +2497,10 @@ class Plan:
         usage: List['Metric'],
         discounts: List['Discount'],
         *,
-        plan_name: str = None,
-        pricing_region: str = None,
-        pricing_plan_id: str = None,
-        pending: bool = None,
+        plan_name: Optional[str] = None,
+        pricing_region: Optional[str] = None,
+        pricing_plan_id: Optional[str] = None,
+        pending: Optional[bool] = None,
     ) -> None:
         """
         Initialize a Plan object.
@@ -2375,7 +2514,8 @@ class Plan:
         :param List[Discount] discounts: All the discounts applicable to the plan.
         :param str plan_name: (optional) The name of the plan.
         :param str pricing_region: (optional) The pricing region for the plan.
-        :param str pricing_plan_id: (optional)
+        :param str pricing_plan_id: (optional) The ID of the pricing plan used to
+               rate the usage.
         :param bool pending: (optional) Pending charge from classic infrastructure.
         """
         self.plan_id = plan_id
@@ -2393,38 +2533,38 @@ class Plan:
     def from_dict(cls, _dict: Dict) -> 'Plan':
         """Initialize a Plan object from a json dictionary."""
         args = {}
-        if 'plan_id' in _dict:
-            args['plan_id'] = _dict.get('plan_id')
+        if (plan_id := _dict.get('plan_id')) is not None:
+            args['plan_id'] = plan_id
         else:
             raise ValueError('Required property \'plan_id\' not present in Plan JSON')
-        if 'plan_name' in _dict:
-            args['plan_name'] = _dict.get('plan_name')
-        if 'pricing_region' in _dict:
-            args['pricing_region'] = _dict.get('pricing_region')
-        if 'pricing_plan_id' in _dict:
-            args['pricing_plan_id'] = _dict.get('pricing_plan_id')
-        if 'billable' in _dict:
-            args['billable'] = _dict.get('billable')
+        if (plan_name := _dict.get('plan_name')) is not None:
+            args['plan_name'] = plan_name
+        if (pricing_region := _dict.get('pricing_region')) is not None:
+            args['pricing_region'] = pricing_region
+        if (pricing_plan_id := _dict.get('pricing_plan_id')) is not None:
+            args['pricing_plan_id'] = pricing_plan_id
+        if (billable := _dict.get('billable')) is not None:
+            args['billable'] = billable
         else:
             raise ValueError('Required property \'billable\' not present in Plan JSON')
-        if 'cost' in _dict:
-            args['cost'] = _dict.get('cost')
+        if (cost := _dict.get('cost')) is not None:
+            args['cost'] = cost
         else:
             raise ValueError('Required property \'cost\' not present in Plan JSON')
-        if 'rated_cost' in _dict:
-            args['rated_cost'] = _dict.get('rated_cost')
+        if (rated_cost := _dict.get('rated_cost')) is not None:
+            args['rated_cost'] = rated_cost
         else:
             raise ValueError('Required property \'rated_cost\' not present in Plan JSON')
-        if 'usage' in _dict:
-            args['usage'] = [Metric.from_dict(v) for v in _dict.get('usage')]
+        if (usage := _dict.get('usage')) is not None:
+            args['usage'] = [Metric.from_dict(v) for v in usage]
         else:
             raise ValueError('Required property \'usage\' not present in Plan JSON')
-        if 'discounts' in _dict:
-            args['discounts'] = [Discount.from_dict(v) for v in _dict.get('discounts')]
+        if (discounts := _dict.get('discounts')) is not None:
+            args['discounts'] = [Discount.from_dict(v) for v in discounts]
         else:
             raise ValueError('Required property \'discounts\' not present in Plan JSON')
-        if 'pending' in _dict:
-            args['pending'] = _dict.get('pending')
+        if (pending := _dict.get('pending')) is not None:
+            args['pending'] = pending
         return cls(**args)
 
     @classmethod
@@ -2492,16 +2632,17 @@ class Resource:
     """
     The container for all the plans in the resource.
 
-    :attr str resource_id: The ID of the resource.
-    :attr str resource_name: (optional) The name of the resource.
-    :attr float billable_cost: The billable charges for the account.
-    :attr float billable_rated_cost: The pre-discounted billable charges for the
+    :param str resource_id: The ID of the resource.
+    :param str catalog_id: (optional) The catalog ID of the resource.
+    :param str resource_name: (optional) The name of the resource.
+    :param float billable_cost: The billable charges for the account.
+    :param float billable_rated_cost: The pre-discounted billable charges for the
           account.
-    :attr float non_billable_cost: The non-billable charges for the account.
-    :attr float non_billable_rated_cost: The pre-discounted non-billable charges for
-          the account.
-    :attr List[Plan] plans: All the plans in the resource.
-    :attr List[Discount] discounts: All the discounts applicable to the resource.
+    :param float non_billable_cost: The non-billable charges for the account.
+    :param float non_billable_rated_cost: The pre-discounted non-billable charges
+          for the account.
+    :param List[Plan] plans: All the plans in the resource.
+    :param List[Discount] discounts: All the discounts applicable to the resource.
     """
 
     def __init__(
@@ -2514,7 +2655,8 @@ class Resource:
         plans: List['Plan'],
         discounts: List['Discount'],
         *,
-        resource_name: str = None,
+        catalog_id: Optional[str] = None,
+        resource_name: Optional[str] = None,
     ) -> None:
         """
         Initialize a Resource object.
@@ -2529,9 +2671,11 @@ class Resource:
         :param List[Plan] plans: All the plans in the resource.
         :param List[Discount] discounts: All the discounts applicable to the
                resource.
+        :param str catalog_id: (optional) The catalog ID of the resource.
         :param str resource_name: (optional) The name of the resource.
         """
         self.resource_id = resource_id
+        self.catalog_id = catalog_id
         self.resource_name = resource_name
         self.billable_cost = billable_cost
         self.billable_rated_cost = billable_rated_cost
@@ -2544,34 +2688,36 @@ class Resource:
     def from_dict(cls, _dict: Dict) -> 'Resource':
         """Initialize a Resource object from a json dictionary."""
         args = {}
-        if 'resource_id' in _dict:
-            args['resource_id'] = _dict.get('resource_id')
+        if (resource_id := _dict.get('resource_id')) is not None:
+            args['resource_id'] = resource_id
         else:
             raise ValueError('Required property \'resource_id\' not present in Resource JSON')
-        if 'resource_name' in _dict:
-            args['resource_name'] = _dict.get('resource_name')
-        if 'billable_cost' in _dict:
-            args['billable_cost'] = _dict.get('billable_cost')
+        if (catalog_id := _dict.get('catalog_id')) is not None:
+            args['catalog_id'] = catalog_id
+        if (resource_name := _dict.get('resource_name')) is not None:
+            args['resource_name'] = resource_name
+        if (billable_cost := _dict.get('billable_cost')) is not None:
+            args['billable_cost'] = billable_cost
         else:
             raise ValueError('Required property \'billable_cost\' not present in Resource JSON')
-        if 'billable_rated_cost' in _dict:
-            args['billable_rated_cost'] = _dict.get('billable_rated_cost')
+        if (billable_rated_cost := _dict.get('billable_rated_cost')) is not None:
+            args['billable_rated_cost'] = billable_rated_cost
         else:
             raise ValueError('Required property \'billable_rated_cost\' not present in Resource JSON')
-        if 'non_billable_cost' in _dict:
-            args['non_billable_cost'] = _dict.get('non_billable_cost')
+        if (non_billable_cost := _dict.get('non_billable_cost')) is not None:
+            args['non_billable_cost'] = non_billable_cost
         else:
             raise ValueError('Required property \'non_billable_cost\' not present in Resource JSON')
-        if 'non_billable_rated_cost' in _dict:
-            args['non_billable_rated_cost'] = _dict.get('non_billable_rated_cost')
+        if (non_billable_rated_cost := _dict.get('non_billable_rated_cost')) is not None:
+            args['non_billable_rated_cost'] = non_billable_rated_cost
         else:
             raise ValueError('Required property \'non_billable_rated_cost\' not present in Resource JSON')
-        if 'plans' in _dict:
-            args['plans'] = [Plan.from_dict(v) for v in _dict.get('plans')]
+        if (plans := _dict.get('plans')) is not None:
+            args['plans'] = [Plan.from_dict(v) for v in plans]
         else:
             raise ValueError('Required property \'plans\' not present in Resource JSON')
-        if 'discounts' in _dict:
-            args['discounts'] = [Discount.from_dict(v) for v in _dict.get('discounts')]
+        if (discounts := _dict.get('discounts')) is not None:
+            args['discounts'] = [Discount.from_dict(v) for v in discounts]
         else:
             raise ValueError('Required property \'discounts\' not present in Resource JSON')
         return cls(**args)
@@ -2586,6 +2732,8 @@ class Resource:
         _dict = {}
         if hasattr(self, 'resource_id') and self.resource_id is not None:
             _dict['resource_id'] = self.resource_id
+        if hasattr(self, 'catalog_id') and self.catalog_id is not None:
+            _dict['catalog_id'] = self.catalog_id
         if hasattr(self, 'resource_name') and self.resource_name is not None:
             _dict['resource_name'] = self.resource_name
         if hasattr(self, 'billable_cost') and self.billable_cost is not None:
@@ -2637,15 +2785,15 @@ class ResourceGroupUsage:
     """
     The aggregated usage and charges for all the plans in the resource group.
 
-    :attr str account_id: The ID of the account.
-    :attr str resource_group_id: The ID of the resource group.
-    :attr str resource_group_name: (optional) The name of the resource group.
-    :attr str pricing_country: The target country pricing that should be used.
-    :attr str currency_code: The currency for the cost fields in the resources,
+    :param str account_id: The ID of the account.
+    :param str resource_group_id: The ID of the resource group.
+    :param str resource_group_name: (optional) The name of the resource group.
+    :param str pricing_country: The target country pricing that should be used.
+    :param str currency_code: The currency for the cost fields in the resources,
           plans and metrics.
-    :attr str month: The month.
-    :attr List[Resource] resources: All the resource used in the account.
-    :attr float currency_rate: (optional) The value of the account's currency in
+    :param str month: The month.
+    :param List[Resource] resources: All the resource used in the account.
+    :param float currency_rate: (optional) The value of the account's currency in
           USD.
     """
 
@@ -2658,8 +2806,8 @@ class ResourceGroupUsage:
         month: str,
         resources: List['Resource'],
         *,
-        resource_group_name: str = None,
-        currency_rate: float = None,
+        resource_group_name: Optional[str] = None,
+        currency_rate: Optional[float] = None,
     ) -> None:
         """
         Initialize a ResourceGroupUsage object.
@@ -2688,34 +2836,34 @@ class ResourceGroupUsage:
     def from_dict(cls, _dict: Dict) -> 'ResourceGroupUsage':
         """Initialize a ResourceGroupUsage object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in ResourceGroupUsage JSON')
-        if 'resource_group_id' in _dict:
-            args['resource_group_id'] = _dict.get('resource_group_id')
+        if (resource_group_id := _dict.get('resource_group_id')) is not None:
+            args['resource_group_id'] = resource_group_id
         else:
             raise ValueError('Required property \'resource_group_id\' not present in ResourceGroupUsage JSON')
-        if 'resource_group_name' in _dict:
-            args['resource_group_name'] = _dict.get('resource_group_name')
-        if 'pricing_country' in _dict:
-            args['pricing_country'] = _dict.get('pricing_country')
+        if (resource_group_name := _dict.get('resource_group_name')) is not None:
+            args['resource_group_name'] = resource_group_name
+        if (pricing_country := _dict.get('pricing_country')) is not None:
+            args['pricing_country'] = pricing_country
         else:
             raise ValueError('Required property \'pricing_country\' not present in ResourceGroupUsage JSON')
-        if 'currency_code' in _dict:
-            args['currency_code'] = _dict.get('currency_code')
+        if (currency_code := _dict.get('currency_code')) is not None:
+            args['currency_code'] = currency_code
         else:
             raise ValueError('Required property \'currency_code\' not present in ResourceGroupUsage JSON')
-        if 'month' in _dict:
-            args['month'] = _dict.get('month')
+        if (month := _dict.get('month')) is not None:
+            args['month'] = month
         else:
             raise ValueError('Required property \'month\' not present in ResourceGroupUsage JSON')
-        if 'resources' in _dict:
-            args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [Resource.from_dict(v) for v in resources]
         else:
             raise ValueError('Required property \'resources\' not present in ResourceGroupUsage JSON')
-        if 'currency_rate' in _dict:
-            args['currency_rate'] = _dict.get('currency_rate')
+        if (currency_rate := _dict.get('currency_rate')) is not None:
+            args['currency_rate'] = currency_rate
         return cls(**args)
 
     @classmethod
@@ -2773,13 +2921,17 @@ class ResourcesSummary:
     """
     Charges related to cloud resources.
 
-    :attr float billable_cost: The billable charges for all cloud resources used in
+    :param float billable_cost: The billable charges for all cloud resources used in
           the account.
-    :attr float non_billable_cost: Non-billable charges for all cloud resources used
-          in the account.
+    :param float non_billable_cost: Non-billable charges for all cloud resources
+          used in the account.
     """
 
-    def __init__(self, billable_cost: float, non_billable_cost: float) -> None:
+    def __init__(
+        self,
+        billable_cost: float,
+        non_billable_cost: float,
+    ) -> None:
         """
         Initialize a ResourcesSummary object.
 
@@ -2795,12 +2947,12 @@ class ResourcesSummary:
     def from_dict(cls, _dict: Dict) -> 'ResourcesSummary':
         """Initialize a ResourcesSummary object from a json dictionary."""
         args = {}
-        if 'billable_cost' in _dict:
-            args['billable_cost'] = _dict.get('billable_cost')
+        if (billable_cost := _dict.get('billable_cost')) is not None:
+            args['billable_cost'] = billable_cost
         else:
             raise ValueError('Required property \'billable_cost\' not present in ResourcesSummary JSON')
-        if 'non_billable_cost' in _dict:
-            args['non_billable_cost'] = _dict.get('non_billable_cost')
+        if (non_billable_cost := _dict.get('non_billable_cost')) is not None:
+            args['non_billable_cost'] = non_billable_cost
         else:
             raise ValueError('Required property \'non_billable_cost\' not present in ResourcesSummary JSON')
         return cls(**args)
@@ -2842,61 +2994,61 @@ class SnapshotConfigHistoryItem:
     """
     SnapshotConfigHistoryItem.
 
-    :attr int start_time: (optional) Timestamp in milliseconds when the snapshot
+    :param float start_time: (optional) Timestamp in milliseconds when the snapshot
           configuration was created.
-    :attr int end_time: (optional) Timestamp in milliseconds when the snapshot
+    :param float end_time: (optional) Timestamp in milliseconds when the snapshot
           configuration ends.
-    :attr str updated_by: (optional) Account that updated the billing snapshot
+    :param str updated_by: (optional) Account that updated the billing snapshot
           configuration.
-    :attr str account_id: (optional) Account ID for which billing report snapshot is
-          configured.
-    :attr str state: (optional) Status of the billing snapshot configuration.
+    :param str account_id: (optional) Account ID for which billing report snapshot
+          is configured.
+    :param str state: (optional) Status of the billing snapshot configuration.
           Possible values are [enabled, disabled].
-    :attr str account_type: (optional) Type of account. Possible values [enterprise,
-          account].
-    :attr str interval: (optional) Frequency of taking the snapshot of the billing
+    :param str account_type: (optional) Type of account. Possible values
+          [enterprise, account].
+    :param str interval: (optional) Frequency of taking the snapshot of the billing
           reports.
-    :attr str versioning: (optional) A new version of report is created or the
+    :param str versioning: (optional) A new version of report is created or the
           existing report version is overwritten with every update.
-    :attr List[str] report_types: (optional) The type of billing reports to take
+    :param List[str] report_types: (optional) The type of billing reports to take
           snapshot of. Possible values are [account_summary, enterprise_summary,
           account_resource_instance_usage].
-    :attr str compression: (optional) Compression format of the snapshot report.
-    :attr str content_type: (optional) Type of content stored in snapshot report.
-    :attr str cos_reports_folder: (optional) The billing reports root folder to
+    :param str compression: (optional) Compression format of the snapshot report.
+    :param str content_type: (optional) Type of content stored in snapshot report.
+    :param str cos_reports_folder: (optional) The billing reports root folder to
           store the billing reports snapshots. Defaults to "IBMCloud-Billing-Reports".
-    :attr str cos_bucket: (optional) The name of the COS bucket to store the
+    :param str cos_bucket: (optional) The name of the COS bucket to store the
           snapshot of the billing reports.
-    :attr str cos_location: (optional) Region of the COS instance.
-    :attr str cos_endpoint: (optional) The endpoint of the COS instance.
+    :param str cos_location: (optional) Region of the COS instance.
+    :param str cos_endpoint: (optional) The endpoint of the COS instance.
     """
 
     def __init__(
         self,
         *,
-        start_time: int = None,
-        end_time: int = None,
-        updated_by: str = None,
-        account_id: str = None,
-        state: str = None,
-        account_type: str = None,
-        interval: str = None,
-        versioning: str = None,
-        report_types: List[str] = None,
-        compression: str = None,
-        content_type: str = None,
-        cos_reports_folder: str = None,
-        cos_bucket: str = None,
-        cos_location: str = None,
-        cos_endpoint: str = None,
+        start_time: Optional[float] = None,
+        end_time: Optional[float] = None,
+        updated_by: Optional[str] = None,
+        account_id: Optional[str] = None,
+        state: Optional[str] = None,
+        account_type: Optional[str] = None,
+        interval: Optional[str] = None,
+        versioning: Optional[str] = None,
+        report_types: Optional[List[str]] = None,
+        compression: Optional[str] = None,
+        content_type: Optional[str] = None,
+        cos_reports_folder: Optional[str] = None,
+        cos_bucket: Optional[str] = None,
+        cos_location: Optional[str] = None,
+        cos_endpoint: Optional[str] = None,
     ) -> None:
         """
         Initialize a SnapshotConfigHistoryItem object.
 
-        :param int start_time: (optional) Timestamp in milliseconds when the
+        :param float start_time: (optional) Timestamp in milliseconds when the
                snapshot configuration was created.
-        :param int end_time: (optional) Timestamp in milliseconds when the snapshot
-               configuration ends.
+        :param float end_time: (optional) Timestamp in milliseconds when the
+               snapshot configuration ends.
         :param str updated_by: (optional) Account that updated the billing snapshot
                configuration.
         :param str account_id: (optional) Account ID for which billing report
@@ -2944,36 +3096,36 @@ class SnapshotConfigHistoryItem:
     def from_dict(cls, _dict: Dict) -> 'SnapshotConfigHistoryItem':
         """Initialize a SnapshotConfigHistoryItem object from a json dictionary."""
         args = {}
-        if 'start_time' in _dict:
-            args['start_time'] = _dict.get('start_time')
-        if 'end_time' in _dict:
-            args['end_time'] = _dict.get('end_time')
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'account_type' in _dict:
-            args['account_type'] = _dict.get('account_type')
-        if 'interval' in _dict:
-            args['interval'] = _dict.get('interval')
-        if 'versioning' in _dict:
-            args['versioning'] = _dict.get('versioning')
-        if 'report_types' in _dict:
-            args['report_types'] = _dict.get('report_types')
-        if 'compression' in _dict:
-            args['compression'] = _dict.get('compression')
-        if 'content_type' in _dict:
-            args['content_type'] = _dict.get('content_type')
-        if 'cos_reports_folder' in _dict:
-            args['cos_reports_folder'] = _dict.get('cos_reports_folder')
-        if 'cos_bucket' in _dict:
-            args['cos_bucket'] = _dict.get('cos_bucket')
-        if 'cos_location' in _dict:
-            args['cos_location'] = _dict.get('cos_location')
-        if 'cos_endpoint' in _dict:
-            args['cos_endpoint'] = _dict.get('cos_endpoint')
+        if (start_time := _dict.get('start_time')) is not None:
+            args['start_time'] = start_time
+        if (end_time := _dict.get('end_time')) is not None:
+            args['end_time'] = end_time
+        if (updated_by := _dict.get('updated_by')) is not None:
+            args['updated_by'] = updated_by
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (account_type := _dict.get('account_type')) is not None:
+            args['account_type'] = account_type
+        if (interval := _dict.get('interval')) is not None:
+            args['interval'] = interval
+        if (versioning := _dict.get('versioning')) is not None:
+            args['versioning'] = versioning
+        if (report_types := _dict.get('report_types')) is not None:
+            args['report_types'] = report_types
+        if (compression := _dict.get('compression')) is not None:
+            args['compression'] = compression
+        if (content_type := _dict.get('content_type')) is not None:
+            args['content_type'] = content_type
+        if (cos_reports_folder := _dict.get('cos_reports_folder')) is not None:
+            args['cos_reports_folder'] = cos_reports_folder
+        if (cos_bucket := _dict.get('cos_bucket')) is not None:
+            args['cos_bucket'] = cos_bucket
+        if (cos_location := _dict.get('cos_location')) is not None:
+            args['cos_location'] = cos_location
+        if (cos_endpoint := _dict.get('cos_endpoint')) is not None:
+            args['cos_endpoint'] = cos_endpoint
         return cls(**args)
 
     @classmethod
@@ -3081,26 +3233,26 @@ class SnapshotList:
     """
     List of billing reports snapshots.
 
-    :attr int count: (optional) Number of total snapshots.
-    :attr SnapshotListFirst first: (optional) Reference to the first page of the
+    :param float count: (optional) Number of total snapshots.
+    :param SnapshotListFirst first: (optional) Reference to the first page of the
           search query.
-    :attr SnapshotListNext next: (optional) Reference to the next page of the search
-          query if any.
-    :attr List[SnapshotListSnapshotsItem] snapshots: (optional)
+    :param SnapshotListNext next: (optional) Reference to the next page of the
+          search query if any.
+    :param List[SnapshotListSnapshotsItem] snapshots: (optional)
     """
 
     def __init__(
         self,
         *,
-        count: int = None,
-        first: 'SnapshotListFirst' = None,
-        next: 'SnapshotListNext' = None,
-        snapshots: List['SnapshotListSnapshotsItem'] = None,
+        count: Optional[float] = None,
+        first: Optional['SnapshotListFirst'] = None,
+        next: Optional['SnapshotListNext'] = None,
+        snapshots: Optional[List['SnapshotListSnapshotsItem']] = None,
     ) -> None:
         """
         Initialize a SnapshotList object.
 
-        :param int count: (optional) Number of total snapshots.
+        :param float count: (optional) Number of total snapshots.
         :param SnapshotListFirst first: (optional) Reference to the first page of
                the search query.
         :param SnapshotListNext next: (optional) Reference to the next page of the
@@ -3116,14 +3268,14 @@ class SnapshotList:
     def from_dict(cls, _dict: Dict) -> 'SnapshotList':
         """Initialize a SnapshotList object from a json dictionary."""
         args = {}
-        if 'count' in _dict:
-            args['count'] = _dict.get('count')
-        if 'first' in _dict:
-            args['first'] = SnapshotListFirst.from_dict(_dict.get('first'))
-        if 'next' in _dict:
-            args['next'] = SnapshotListNext.from_dict(_dict.get('next'))
-        if 'snapshots' in _dict:
-            args['snapshots'] = [SnapshotListSnapshotsItem.from_dict(v) for v in _dict.get('snapshots')]
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
+        if (first := _dict.get('first')) is not None:
+            args['first'] = SnapshotListFirst.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = SnapshotListNext.from_dict(next)
+        if (snapshots := _dict.get('snapshots')) is not None:
+            args['snapshots'] = [SnapshotListSnapshotsItem.from_dict(v) for v in snapshots]
         return cls(**args)
 
     @classmethod
@@ -3179,13 +3331,13 @@ class SnapshotListFirst:
     """
     Reference to the first page of the search query.
 
-    :attr str href: (optional)
+    :param str href: (optional)
     """
 
     def __init__(
         self,
         *,
-        href: str = None,
+        href: Optional[str] = None,
     ) -> None:
         """
         Initialize a SnapshotListFirst object.
@@ -3198,8 +3350,8 @@ class SnapshotListFirst:
     def from_dict(cls, _dict: Dict) -> 'SnapshotListFirst':
         """Initialize a SnapshotListFirst object from a json dictionary."""
         args = {}
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         return cls(**args)
 
     @classmethod
@@ -3260,10 +3412,10 @@ class SnapshotListNext:
     def from_dict(cls, _dict: Dict) -> 'SnapshotListNext':
         """Initialize a SnapshotListNext object from a json dictionary."""
         args = {}
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
         return cls(**args)
 
     @classmethod
@@ -3303,50 +3455,50 @@ class SnapshotListSnapshotsItem:
     """
     Snapshot Schema.
 
-    :attr str account_id: (optional) Account ID for which billing report snapshot is
-          configured.
-    :attr str month: (optional) Month of captured snapshot.
-    :attr str account_type: (optional) Type of account. Possible values are
+    :param str account_id: (optional) Account ID for which billing report snapshot
+          is configured.
+    :param str month: (optional) Month of captured snapshot.
+    :param str account_type: (optional) Type of account. Possible values are
           [enterprise, account].
-    :attr int expected_processed_at: (optional) Timestamp of snapshot processed.
-    :attr str state: (optional) Status of the billing snapshot configuration.
+    :param float expected_processed_at: (optional) Timestamp of snapshot processed.
+    :param str state: (optional) Status of the billing snapshot configuration.
           Possible values are [enabled, disabled].
-    :attr SnapshotListSnapshotsItemBillingPeriod billing_period: (optional) Period
+    :param SnapshotListSnapshotsItemBillingPeriod billing_period: (optional) Period
           of billing in snapshot.
-    :attr str snapshot_id: (optional) Id of the snapshot captured.
-    :attr str charset: (optional) Character encoding used.
-    :attr str compression: (optional) Compression format of the snapshot report.
-    :attr str content_type: (optional) Type of content stored in snapshot report.
-    :attr str bucket: (optional) The name of the COS bucket to store the snapshot of
-          the billing reports.
-    :attr str version: (optional) Version of the snapshot.
-    :attr str created_on: (optional) Date and time of creation of snapshot.
-    :attr List[SnapshotListSnapshotsItemReportTypesItem] report_types: (optional)
+    :param str snapshot_id: (optional) Id of the snapshot captured.
+    :param str charset: (optional) Character encoding used.
+    :param str compression: (optional) Compression format of the snapshot report.
+    :param str content_type: (optional) Type of content stored in snapshot report.
+    :param str bucket: (optional) The name of the COS bucket to store the snapshot
+          of the billing reports.
+    :param str version: (optional) Version of the snapshot.
+    :param str created_on: (optional) Date and time of creation of snapshot.
+    :param List[SnapshotListSnapshotsItemReportTypesItem] report_types: (optional)
           List of report types configured for the snapshot.
-    :attr List[SnapshotListSnapshotsItemFilesItem] files: (optional) List of
+    :param List[SnapshotListSnapshotsItemFilesItem] files: (optional) List of
           location of reports.
-    :attr int processed_at: (optional) Timestamp at which snapshot is captured.
+    :param float processed_at: (optional) Timestamp at which snapshot is captured.
     """
 
     def __init__(
         self,
         *,
-        account_id: str = None,
-        month: str = None,
-        account_type: str = None,
-        expected_processed_at: int = None,
-        state: str = None,
-        billing_period: 'SnapshotListSnapshotsItemBillingPeriod' = None,
-        snapshot_id: str = None,
-        charset: str = None,
-        compression: str = None,
-        content_type: str = None,
-        bucket: str = None,
-        version: str = None,
-        created_on: str = None,
-        report_types: List['SnapshotListSnapshotsItemReportTypesItem'] = None,
-        files: List['SnapshotListSnapshotsItemFilesItem'] = None,
-        processed_at: int = None,
+        account_id: Optional[str] = None,
+        month: Optional[str] = None,
+        account_type: Optional[str] = None,
+        expected_processed_at: Optional[int] = None,
+        state: Optional[str] = None,
+        billing_period: Optional['SnapshotListSnapshotsItemBillingPeriod'] = None,
+        snapshot_id: Optional[str] = None,
+        charset: Optional[str] = None,
+        compression: Optional[str] = None,
+        content_type: Optional[str] = None,
+        bucket: Optional[str] = None,
+        version: Optional[str] = None,
+        created_on: Optional[str] = None,
+        report_types: Optional[List['SnapshotListSnapshotsItemReportTypesItem']] = None,
+        files: Optional[List['SnapshotListSnapshotsItemFilesItem']] = None,
+        processed_at: Optional[int] = None,
     ) -> None:
         """
         Initialize a SnapshotListSnapshotsItem object.
@@ -3400,40 +3552,38 @@ class SnapshotListSnapshotsItem:
     def from_dict(cls, _dict: Dict) -> 'SnapshotListSnapshotsItem':
         """Initialize a SnapshotListSnapshotsItem object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'month' in _dict:
-            args['month'] = _dict.get('month')
-        if 'account_type' in _dict:
-            args['account_type'] = _dict.get('account_type')
-        if 'expected_processed_at' in _dict:
-            args['expected_processed_at'] = _dict.get('expected_processed_at')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'billing_period' in _dict:
-            args['billing_period'] = SnapshotListSnapshotsItemBillingPeriod.from_dict(_dict.get('billing_period'))
-        if 'snapshot_id' in _dict:
-            args['snapshot_id'] = _dict.get('snapshot_id')
-        if 'charset' in _dict:
-            args['charset'] = _dict.get('charset')
-        if 'compression' in _dict:
-            args['compression'] = _dict.get('compression')
-        if 'content_type' in _dict:
-            args['content_type'] = _dict.get('content_type')
-        if 'bucket' in _dict:
-            args['bucket'] = _dict.get('bucket')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
-        if 'created_on' in _dict:
-            args['created_on'] = _dict.get('created_on')
-        if 'report_types' in _dict:
-            args['report_types'] = [
-                SnapshotListSnapshotsItemReportTypesItem.from_dict(v) for v in _dict.get('report_types')
-            ]
-        if 'files' in _dict:
-            args['files'] = [SnapshotListSnapshotsItemFilesItem.from_dict(v) for v in _dict.get('files')]
-        if 'processed_at' in _dict:
-            args['processed_at'] = _dict.get('processed_at')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (month := _dict.get('month')) is not None:
+            args['month'] = month
+        if (account_type := _dict.get('account_type')) is not None:
+            args['account_type'] = account_type
+        if (expected_processed_at := _dict.get('expected_processed_at')) is not None:
+            args['expected_processed_at'] = expected_processed_at
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (billing_period := _dict.get('billing_period')) is not None:
+            args['billing_period'] = SnapshotListSnapshotsItemBillingPeriod.from_dict(billing_period)
+        if (snapshot_id := _dict.get('snapshot_id')) is not None:
+            args['snapshot_id'] = snapshot_id
+        if (charset := _dict.get('charset')) is not None:
+            args['charset'] = charset
+        if (compression := _dict.get('compression')) is not None:
+            args['compression'] = compression
+        if (content_type := _dict.get('content_type')) is not None:
+            args['content_type'] = content_type
+        if (bucket := _dict.get('bucket')) is not None:
+            args['bucket'] = bucket
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
+        if (created_on := _dict.get('created_on')) is not None:
+            args['created_on'] = created_on
+        if (report_types := _dict.get('report_types')) is not None:
+            args['report_types'] = [SnapshotListSnapshotsItemReportTypesItem.from_dict(v) for v in report_types]
+        if (files := _dict.get('files')) is not None:
+            args['files'] = [SnapshotListSnapshotsItemFilesItem.from_dict(v) for v in files]
+        if (processed_at := _dict.get('processed_at')) is not None:
+            args['processed_at'] = processed_at
         return cls(**args)
 
     @classmethod
@@ -3533,17 +3683,17 @@ class SnapshotListSnapshotsItemBillingPeriod:
     """
     Period of billing in snapshot.
 
-    :attr str start: (optional) Date and time of start of billing in the respective
+    :param str start: (optional) Date and time of start of billing in the respective
           snapshot.
-    :attr str end: (optional) Date and time of end of billing in the respective
+    :param str end: (optional) Date and time of end of billing in the respective
           snapshot.
     """
 
     def __init__(
         self,
         *,
-        start: str = None,
-        end: str = None,
+        start: Optional[str] = None,
+        end: Optional[str] = None,
     ) -> None:
         """
         Initialize a SnapshotListSnapshotsItemBillingPeriod object.
@@ -3560,10 +3710,10 @@ class SnapshotListSnapshotsItemBillingPeriod:
     def from_dict(cls, _dict: Dict) -> 'SnapshotListSnapshotsItemBillingPeriod':
         """Initialize a SnapshotListSnapshotsItemBillingPeriod object from a json dictionary."""
         args = {}
-        if 'start' in _dict:
-            args['start'] = _dict.get('start')
-        if 'end' in _dict:
-            args['end'] = _dict.get('end')
+        if (start := _dict.get('start')) is not None:
+            args['start'] = start
+        if (end := _dict.get('end')) is not None:
+            args['end'] = end
         return cls(**args)
 
     @classmethod
@@ -3603,21 +3753,21 @@ class SnapshotListSnapshotsItemFilesItem:
     """
     SnapshotListSnapshotsItemFilesItem.
 
-    :attr str report_types: (optional) The type of billing report stored. Possible
+    :param str report_types: (optional) The type of billing report stored. Possible
           values are [account_summary, enterprise_summary,
           account_resource_instance_usage].
-    :attr str location: (optional) Absolute path of the billing report in the COS
+    :param str location: (optional) Absolute path of the billing report in the COS
           instance.
-    :attr str account_id: (optional) Account ID for which billing report is
+    :param str account_id: (optional) Account ID for which billing report is
           captured.
     """
 
     def __init__(
         self,
         *,
-        report_types: str = None,
-        location: str = None,
-        account_id: str = None,
+        report_types: Optional[str] = None,
+        location: Optional[str] = None,
+        account_id: Optional[str] = None,
     ) -> None:
         """
         Initialize a SnapshotListSnapshotsItemFilesItem object.
@@ -3638,12 +3788,12 @@ class SnapshotListSnapshotsItemFilesItem:
     def from_dict(cls, _dict: Dict) -> 'SnapshotListSnapshotsItemFilesItem':
         """Initialize a SnapshotListSnapshotsItemFilesItem object from a json dictionary."""
         args = {}
-        if 'report_types' in _dict:
-            args['report_types'] = _dict.get('report_types')
-        if 'location' in _dict:
-            args['location'] = _dict.get('location')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (report_types := _dict.get('report_types')) is not None:
+            args['report_types'] = report_types
+        if (location := _dict.get('location')) is not None:
+            args['location'] = location
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         return cls(**args)
 
     @classmethod
@@ -3695,17 +3845,17 @@ class SnapshotListSnapshotsItemReportTypesItem:
     """
     SnapshotListSnapshotsItemReportTypesItem.
 
-    :attr str type: (optional) The type of billing report of the snapshot. Possible
+    :param str type: (optional) The type of billing report of the snapshot. Possible
           values are [account_summary, enterprise_summary,
           account_resource_instance_usage].
-    :attr str version: (optional) Version of the snapshot.
+    :param str version: (optional) Version of the snapshot.
     """
 
     def __init__(
         self,
         *,
-        type: str = None,
-        version: str = None,
+        type: Optional[str] = None,
+        version: Optional[str] = None,
     ) -> None:
         """
         Initialize a SnapshotListSnapshotsItemReportTypesItem object.
@@ -3722,10 +3872,10 @@ class SnapshotListSnapshotsItemReportTypesItem:
     def from_dict(cls, _dict: Dict) -> 'SnapshotListSnapshotsItemReportTypesItem':
         """Initialize a SnapshotListSnapshotsItemReportTypesItem object from a json dictionary."""
         args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
         return cls(**args)
 
     @classmethod
@@ -3775,53 +3925,53 @@ class SnapshotConfig:
     """
     Billing reports snapshot configuration.
 
-    :attr str account_id: (optional) Account ID for which billing report snapshot is
-          configured.
-    :attr str state: (optional) Status of the billing snapshot configuration.
+    :param str account_id: (optional) Account ID for which billing report snapshot
+          is configured.
+    :param str state: (optional) Status of the billing snapshot configuration.
           Possible values are [enabled, disabled].
-    :attr str account_type: (optional) Type of account. Possible values are
+    :param str account_type: (optional) Type of account. Possible values are
           [enterprise, account].
-    :attr str interval: (optional) Frequency of taking the snapshot of the billing
+    :param str interval: (optional) Frequency of taking the snapshot of the billing
           reports.
-    :attr str versioning: (optional) A new version of report is created or the
+    :param str versioning: (optional) A new version of report is created or the
           existing report version is overwritten with every update.
-    :attr List[str] report_types: (optional) The type of billing reports to take
+    :param List[str] report_types: (optional) The type of billing reports to take
           snapshot of. Possible values are [account_summary, enterprise_summary,
           account_resource_instance_usage].
-    :attr str compression: (optional) Compression format of the snapshot report.
-    :attr str content_type: (optional) Type of content stored in snapshot report.
-    :attr str cos_reports_folder: (optional) The billing reports root folder to
+    :param str compression: (optional) Compression format of the snapshot report.
+    :param str content_type: (optional) Type of content stored in snapshot report.
+    :param str cos_reports_folder: (optional) The billing reports root folder to
           store the billing reports snapshots. Defaults to "IBMCloud-Billing-Reports".
-    :attr str cos_bucket: (optional) The name of the COS bucket to store the
+    :param str cos_bucket: (optional) The name of the COS bucket to store the
           snapshot of the billing reports.
-    :attr str cos_location: (optional) Region of the COS instance.
-    :attr str cos_endpoint: (optional) The endpoint of the COS instance.
-    :attr int created_at: (optional) Timestamp in milliseconds when the snapshot
+    :param str cos_location: (optional) Region of the COS instance.
+    :param str cos_endpoint: (optional) The endpoint of the COS instance.
+    :param float created_at: (optional) Timestamp in milliseconds when the snapshot
           configuration was created.
-    :attr int last_updated_at: (optional) Timestamp in milliseconds when the
+    :param float last_updated_at: (optional) Timestamp in milliseconds when the
           snapshot configuration was last updated.
-    :attr List[SnapshotConfigHistoryItem] history: (optional) List of previous
+    :param List[SnapshotConfigHistoryItem] history: (optional) List of previous
           versions of the snapshot configurations.
     """
 
     def __init__(
         self,
         *,
-        account_id: str = None,
-        state: str = None,
-        account_type: str = None,
-        interval: str = None,
-        versioning: str = None,
-        report_types: List[str] = None,
-        compression: str = None,
-        content_type: str = None,
-        cos_reports_folder: str = None,
-        cos_bucket: str = None,
-        cos_location: str = None,
-        cos_endpoint: str = None,
-        created_at: int = None,
-        last_updated_at: int = None,
-        history: List['SnapshotConfigHistoryItem'] = None,
+        account_id: Optional[str] = None,
+        state: Optional[str] = None,
+        account_type: Optional[str] = None,
+        interval: Optional[str] = None,
+        versioning: Optional[str] = None,
+        report_types: Optional[List[str]] = None,
+        compression: Optional[str] = None,
+        content_type: Optional[str] = None,
+        cos_reports_folder: Optional[str] = None,
+        cos_bucket: Optional[str] = None,
+        cos_location: Optional[str] = None,
+        cos_endpoint: Optional[str] = None,
+        created_at: Optional[int] = None,
+        last_updated_at: Optional[int] = None,
+        history: Optional[List['SnapshotConfigHistoryItem']] = None,
     ) -> None:
         """
         Initialize a SnapshotConfig object.
@@ -3877,36 +4027,36 @@ class SnapshotConfig:
     def from_dict(cls, _dict: Dict) -> 'SnapshotConfig':
         """Initialize a SnapshotConfig object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'account_type' in _dict:
-            args['account_type'] = _dict.get('account_type')
-        if 'interval' in _dict:
-            args['interval'] = _dict.get('interval')
-        if 'versioning' in _dict:
-            args['versioning'] = _dict.get('versioning')
-        if 'report_types' in _dict:
-            args['report_types'] = _dict.get('report_types')
-        if 'compression' in _dict:
-            args['compression'] = _dict.get('compression')
-        if 'content_type' in _dict:
-            args['content_type'] = _dict.get('content_type')
-        if 'cos_reports_folder' in _dict:
-            args['cos_reports_folder'] = _dict.get('cos_reports_folder')
-        if 'cos_bucket' in _dict:
-            args['cos_bucket'] = _dict.get('cos_bucket')
-        if 'cos_location' in _dict:
-            args['cos_location'] = _dict.get('cos_location')
-        if 'cos_endpoint' in _dict:
-            args['cos_endpoint'] = _dict.get('cos_endpoint')
-        if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
-        if 'last_updated_at' in _dict:
-            args['last_updated_at'] = _dict.get('last_updated_at')
-        if 'history' in _dict:
-            args['history'] = [SnapshotConfigHistoryItem.from_dict(v) for v in _dict.get('history')]
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (account_type := _dict.get('account_type')) is not None:
+            args['account_type'] = account_type
+        if (interval := _dict.get('interval')) is not None:
+            args['interval'] = interval
+        if (versioning := _dict.get('versioning')) is not None:
+            args['versioning'] = versioning
+        if (report_types := _dict.get('report_types')) is not None:
+            args['report_types'] = report_types
+        if (compression := _dict.get('compression')) is not None:
+            args['compression'] = compression
+        if (content_type := _dict.get('content_type')) is not None:
+            args['content_type'] = content_type
+        if (cos_reports_folder := _dict.get('cos_reports_folder')) is not None:
+            args['cos_reports_folder'] = cos_reports_folder
+        if (cos_bucket := _dict.get('cos_bucket')) is not None:
+            args['cos_bucket'] = cos_bucket
+        if (cos_location := _dict.get('cos_location')) is not None:
+            args['cos_location'] = cos_location
+        if (cos_endpoint := _dict.get('cos_endpoint')) is not None:
+            args['cos_endpoint'] = cos_endpoint
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = created_at
+        if (last_updated_at := _dict.get('last_updated_at')) is not None:
+            args['last_updated_at'] = last_updated_at
+        if (history := _dict.get('history')) is not None:
+            args['history'] = [SnapshotConfigHistoryItem.from_dict(v) for v in history]
         return cls(**args)
 
     @classmethod
@@ -4098,17 +4248,17 @@ class Subscription:
     """
     Subscription.
 
-    :attr str subscription_id: The ID of the subscription.
-    :attr str charge_agreement_number: The charge agreement number of the
+    :param str subscription_id: The ID of the subscription.
+    :param str charge_agreement_number: The charge agreement number of the
           subsciption.
-    :attr str type: Type of the subscription.
-    :attr float subscription_amount: The credits available in the subscription for
+    :param str type: Type of the subscription.
+    :param float subscription_amount: The credits available in the subscription for
           the month.
-    :attr datetime start: The date from which the subscription was active.
-    :attr datetime end: (optional) The date until which the subscription is active.
+    :param datetime start: The date from which the subscription was active.
+    :param datetime end: (optional) The date until which the subscription is active.
           End time is unavailable for PayGO accounts.
-    :attr float credits_total: The total credits available in the subscription.
-    :attr List[SubscriptionTerm] terms: The terms through which the subscription is
+    :param float credits_total: The total credits available in the subscription.
+    :param List[SubscriptionTerm] terms: The terms through which the subscription is
           split into.
     """
 
@@ -4122,7 +4272,7 @@ class Subscription:
         credits_total: float,
         terms: List['SubscriptionTerm'],
         *,
-        end: datetime = None,
+        end: Optional[datetime] = None,
     ) -> None:
         """
         Initialize a Subscription object.
@@ -4154,34 +4304,34 @@ class Subscription:
     def from_dict(cls, _dict: Dict) -> 'Subscription':
         """Initialize a Subscription object from a json dictionary."""
         args = {}
-        if 'subscription_id' in _dict:
-            args['subscription_id'] = _dict.get('subscription_id')
+        if (subscription_id := _dict.get('subscription_id')) is not None:
+            args['subscription_id'] = subscription_id
         else:
             raise ValueError('Required property \'subscription_id\' not present in Subscription JSON')
-        if 'charge_agreement_number' in _dict:
-            args['charge_agreement_number'] = _dict.get('charge_agreement_number')
+        if (charge_agreement_number := _dict.get('charge_agreement_number')) is not None:
+            args['charge_agreement_number'] = charge_agreement_number
         else:
             raise ValueError('Required property \'charge_agreement_number\' not present in Subscription JSON')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in Subscription JSON')
-        if 'subscription_amount' in _dict:
-            args['subscription_amount'] = _dict.get('subscription_amount')
+        if (subscription_amount := _dict.get('subscription_amount')) is not None:
+            args['subscription_amount'] = subscription_amount
         else:
             raise ValueError('Required property \'subscription_amount\' not present in Subscription JSON')
-        if 'start' in _dict:
-            args['start'] = string_to_datetime(_dict.get('start'))
+        if (start := _dict.get('start')) is not None:
+            args['start'] = string_to_datetime(start)
         else:
             raise ValueError('Required property \'start\' not present in Subscription JSON')
-        if 'end' in _dict:
-            args['end'] = string_to_datetime(_dict.get('end'))
-        if 'credits_total' in _dict:
-            args['credits_total'] = _dict.get('credits_total')
+        if (end := _dict.get('end')) is not None:
+            args['end'] = string_to_datetime(end)
+        if (credits_total := _dict.get('credits_total')) is not None:
+            args['credits_total'] = credits_total
         else:
             raise ValueError('Required property \'credits_total\' not present in Subscription JSON')
-        if 'terms' in _dict:
-            args['terms'] = [SubscriptionTerm.from_dict(v) for v in _dict.get('terms')]
+        if (terms := _dict.get('terms')) is not None:
+            args['terms'] = [SubscriptionTerm.from_dict(v) for v in terms]
         else:
             raise ValueError('Required property \'terms\' not present in Subscription JSON')
         return cls(**args)
@@ -4241,13 +4391,18 @@ class SubscriptionSummary:
     """
     A summary of charges and credits related to a subscription.
 
-    :attr float overage: (optional) The charges after exhausting subscription
+    :param float overage: (optional) The charges after exhausting subscription
           credits and offers credits.
-    :attr List[Subscription] subscriptions: (optional) The list of subscriptions
+    :param List[Subscription] subscriptions: (optional) The list of subscriptions
           applicable for the month.
     """
 
-    def __init__(self, *, overage: float = None, subscriptions: List['Subscription'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        overage: Optional[float] = None,
+        subscriptions: Optional[List['Subscription']] = None,
+    ) -> None:
         """
         Initialize a SubscriptionSummary object.
 
@@ -4263,10 +4418,10 @@ class SubscriptionSummary:
     def from_dict(cls, _dict: Dict) -> 'SubscriptionSummary':
         """Initialize a SubscriptionSummary object from a json dictionary."""
         args = {}
-        if 'overage' in _dict:
-            args['overage'] = _dict.get('overage')
-        if 'subscriptions' in _dict:
-            args['subscriptions'] = [Subscription.from_dict(v) for v in _dict.get('subscriptions')]
+        if (overage := _dict.get('overage')) is not None:
+            args['overage'] = overage
+        if (subscriptions := _dict.get('subscriptions')) is not None:
+            args['subscriptions'] = [Subscription.from_dict(v) for v in subscriptions]
         return cls(**args)
 
     @classmethod
@@ -4312,13 +4467,18 @@ class SubscriptionTerm:
     """
     SubscriptionTerm.
 
-    :attr datetime start: The start date of the term.
-    :attr datetime end: The end date of the term.
-    :attr SubscriptionTermCredits credits: Information about credits related to a
+    :param datetime start: The start date of the term.
+    :param datetime end: The end date of the term.
+    :param SubscriptionTermCredits credits: Information about credits related to a
           subscription.
     """
 
-    def __init__(self, start: datetime, end: datetime, credits: 'SubscriptionTermCredits') -> None:
+    def __init__(
+        self,
+        start: datetime,
+        end: datetime,
+        credits: 'SubscriptionTermCredits',
+    ) -> None:
         """
         Initialize a SubscriptionTerm object.
 
@@ -4335,16 +4495,16 @@ class SubscriptionTerm:
     def from_dict(cls, _dict: Dict) -> 'SubscriptionTerm':
         """Initialize a SubscriptionTerm object from a json dictionary."""
         args = {}
-        if 'start' in _dict:
-            args['start'] = string_to_datetime(_dict.get('start'))
+        if (start := _dict.get('start')) is not None:
+            args['start'] = string_to_datetime(start)
         else:
             raise ValueError('Required property \'start\' not present in SubscriptionTerm JSON')
-        if 'end' in _dict:
-            args['end'] = string_to_datetime(_dict.get('end'))
+        if (end := _dict.get('end')) is not None:
+            args['end'] = string_to_datetime(end)
         else:
             raise ValueError('Required property \'end\' not present in SubscriptionTerm JSON')
-        if 'credits' in _dict:
-            args['credits'] = SubscriptionTermCredits.from_dict(_dict.get('credits'))
+        if (credits := _dict.get('credits')) is not None:
+            args['credits'] = SubscriptionTermCredits.from_dict(credits)
         else:
             raise ValueError('Required property \'credits\' not present in SubscriptionTerm JSON')
         return cls(**args)
@@ -4391,14 +4551,20 @@ class SubscriptionTermCredits:
     """
     Information about credits related to a subscription.
 
-    :attr float total: The total credits available for the term.
-    :attr float starting_balance: The unused credits in the term at the beginning of
-          the month.
-    :attr float used: The credits used in this month.
-    :attr float balance: The remaining credits in this term.
+    :param float total: The total credits available for the term.
+    :param float starting_balance: The unused credits in the term at the beginning
+          of the month.
+    :param float used: The credits used in this month.
+    :param float balance: The remaining credits in this term.
     """
 
-    def __init__(self, total: float, starting_balance: float, used: float, balance: float) -> None:
+    def __init__(
+        self,
+        total: float,
+        starting_balance: float,
+        used: float,
+        balance: float,
+    ) -> None:
         """
         Initialize a SubscriptionTermCredits object.
 
@@ -4417,20 +4583,20 @@ class SubscriptionTermCredits:
     def from_dict(cls, _dict: Dict) -> 'SubscriptionTermCredits':
         """Initialize a SubscriptionTermCredits object from a json dictionary."""
         args = {}
-        if 'total' in _dict:
-            args['total'] = _dict.get('total')
+        if (total := _dict.get('total')) is not None:
+            args['total'] = total
         else:
             raise ValueError('Required property \'total\' not present in SubscriptionTermCredits JSON')
-        if 'starting_balance' in _dict:
-            args['starting_balance'] = _dict.get('starting_balance')
+        if (starting_balance := _dict.get('starting_balance')) is not None:
+            args['starting_balance'] = starting_balance
         else:
             raise ValueError('Required property \'starting_balance\' not present in SubscriptionTermCredits JSON')
-        if 'used' in _dict:
-            args['used'] = _dict.get('used')
+        if (used := _dict.get('used')) is not None:
+            args['used'] = used
         else:
             raise ValueError('Required property \'used\' not present in SubscriptionTermCredits JSON')
-        if 'balance' in _dict:
-            args['balance'] = _dict.get('balance')
+        if (balance := _dict.get('balance')) is not None:
+            args['balance'] = balance
         else:
             raise ValueError('Required property \'balance\' not present in SubscriptionTermCredits JSON')
         return cls(**args)
@@ -4476,12 +4642,17 @@ class SupportSummary:
     """
     SupportSummary.
 
-    :attr float cost: The monthly support cost.
-    :attr str type: The type of support.
-    :attr float overage: Additional support cost for the month.
+    :param float cost: The monthly support cost.
+    :param str type: The type of support.
+    :param float overage: Additional support cost for the month.
     """
 
-    def __init__(self, cost: float, type: str, overage: float) -> None:
+    def __init__(
+        self,
+        cost: float,
+        type: str,
+        overage: float,
+    ) -> None:
         """
         Initialize a SupportSummary object.
 
@@ -4497,16 +4668,16 @@ class SupportSummary:
     def from_dict(cls, _dict: Dict) -> 'SupportSummary':
         """Initialize a SupportSummary object from a json dictionary."""
         args = {}
-        if 'cost' in _dict:
-            args['cost'] = _dict.get('cost')
+        if (cost := _dict.get('cost')) is not None:
+            args['cost'] = cost
         else:
             raise ValueError('Required property \'cost\' not present in SupportSummary JSON')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in SupportSummary JSON')
-        if 'overage' in _dict:
-            args['overage'] = _dict.get('overage')
+        if (overage := _dict.get('overage')) is not None:
+            args['overage'] = overage
         else:
             raise ValueError('Required property \'overage\' not present in SupportSummary JSON')
         return cls(**args)
@@ -4563,6 +4734,7 @@ class GetResourceUsageAccountPager:
         account_id: str,
         billingmonth: str,
         names: bool = None,
+        tags: bool = None,
         accept_language: str = None,
         limit: int = None,
         resource_group_id: str = None,
@@ -4579,6 +4751,8 @@ class GetResourceUsageAccountPager:
                requested.  Format is yyyy-mm.
         :param bool names: (optional) Include the name of every resource, plan,
                resource instance, organization, and resource group.
+        :param bool tags: (optional) Include the tags associated with every
+               resource instance. By default it is always `true`.
         :param str accept_language: (optional) Prioritize the names returned in the
                order of the specified languages. Language will default to English.
         :param int limit: (optional) Number of usage records returned. The default
@@ -4597,6 +4771,7 @@ class GetResourceUsageAccountPager:
         self._account_id = account_id
         self._billingmonth = billingmonth
         self._names = names
+        self._tags = tags
         self._accept_language = accept_language
         self._limit = limit
         self._resource_group_id = resource_group_id
@@ -4625,6 +4800,7 @@ class GetResourceUsageAccountPager:
             account_id=self._account_id,
             billingmonth=self._billingmonth,
             names=self._names,
+            tags=self._tags,
             accept_language=self._accept_language,
             limit=self._limit,
             resource_group_id=self._resource_group_id,
@@ -4673,6 +4849,7 @@ class GetResourceUsageResourceGroupPager:
         resource_group_id: str,
         billingmonth: str,
         names: bool = None,
+        tags: bool = None,
         accept_language: str = None,
         limit: int = None,
         resource_instance_id: str = None,
@@ -4689,6 +4866,8 @@ class GetResourceUsageResourceGroupPager:
                requested.  Format is yyyy-mm.
         :param bool names: (optional) Include the name of every resource, plan,
                resource instance, organization, and resource group.
+        :param bool tags: (optional) Include the tags associated with every
+               resource instance. By default it is always `true`.
         :param str accept_language: (optional) Prioritize the names returned in the
                order of the specified languages. Language will default to English.
         :param int limit: (optional) Number of usage records returned. The default
@@ -4706,6 +4885,7 @@ class GetResourceUsageResourceGroupPager:
         self._resource_group_id = resource_group_id
         self._billingmonth = billingmonth
         self._names = names
+        self._tags = tags
         self._accept_language = accept_language
         self._limit = limit
         self._resource_instance_id = resource_instance_id
@@ -4733,6 +4913,7 @@ class GetResourceUsageResourceGroupPager:
             resource_group_id=self._resource_group_id,
             billingmonth=self._billingmonth,
             names=self._names,
+            tags=self._tags,
             accept_language=self._accept_language,
             limit=self._limit,
             resource_instance_id=self._resource_instance_id,
@@ -4779,6 +4960,7 @@ class GetResourceUsageOrgPager:
         organization_id: str,
         billingmonth: str,
         names: bool = None,
+        tags: bool = None,
         accept_language: str = None,
         limit: int = None,
         resource_instance_id: str = None,
@@ -4794,6 +4976,8 @@ class GetResourceUsageOrgPager:
                requested.  Format is yyyy-mm.
         :param bool names: (optional) Include the name of every resource, plan,
                resource instance, organization, and resource group.
+        :param bool tags: (optional) Include the tags associated with every
+               resource instance. By default it is always `true`.
         :param str accept_language: (optional) Prioritize the names returned in the
                order of the specified languages. Language will default to English.
         :param int limit: (optional) Number of usage records returned. The default
@@ -4811,6 +4995,7 @@ class GetResourceUsageOrgPager:
         self._organization_id = organization_id
         self._billingmonth = billingmonth
         self._names = names
+        self._tags = tags
         self._accept_language = accept_language
         self._limit = limit
         self._resource_instance_id = resource_instance_id
@@ -4838,6 +5023,7 @@ class GetResourceUsageOrgPager:
             organization_id=self._organization_id,
             billingmonth=self._billingmonth,
             names=self._names,
+            tags=self._tags,
             accept_language=self._accept_language,
             limit=self._limit,
             resource_instance_id=self._resource_instance_id,
