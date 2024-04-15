@@ -1,3 +1,10 @@
+## [0.53.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.2...v0.53.3) (2024-04-15)
+
+
+### Bug Fixes
+
+* **Usage Reports:** re-gen service after recent API changes ([#252](https://github.com/IBM/platform-services-python-sdk/issues/252)) ([67cad52](https://github.com/IBM/platform-services-python-sdk/commit/67cad5249fcfddc02496b442d9b771165ef736b3))
+
 ## [0.53.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.1...v0.53.2) (2024-04-02)
 
 
