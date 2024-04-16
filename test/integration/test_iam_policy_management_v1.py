@@ -51,6 +51,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert cls.config is not None
         cls.testAccountId = cls.config.get('TEST_ACCOUNT_ID')
         assert cls.testAccountId is not None
+        cls.testTargetAccountId = cls.config.get('TEST_TARGET_ACCOUNT_ID')
+        assert cls.testTargetAccountId is not None
 
         cls.etagHeader = "ETag"
         cls.testPolicyETag = ""
@@ -63,6 +65,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         cls.testServiceRoleCrn = "crn:v1:bluemix:public:iam-identity::::serviceRole:ServiceIdCreator"
         cls.testPolicySubject = PolicySubject(attributes=[SubjectAttribute(name='iam_id', value=cls.testUserId)])
         cls.testPolicyRole = PolicyRole(role_id=cls.testViewerRoleCrn)
+        cls.testPolicyAssignmentETag = ""
         resource_tag = ResourceTag(name='project', value='prototype', operator='stringEquals')
         cls.testPolicyResources = PolicyResource(
             attributes=[
@@ -122,6 +125,9 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         cls.testNewTemplateVersion = ""
         cls.testAssignmentId = ""
         cls.testAssignmentPolicyId = ""
+        cls.testS2STemplateId = ""
+        cls.testS2SBaseTemplateVersion = ""
+        cls.testS2STemplateVersion = ""
         cls.testV2PolicyTemplateResource = V2PolicyResource(
             attributes=[
                 V2PolicyResourceAttribute(key='serviceName', value='watson', operator='stringEquals'),
@@ -740,10 +746,104 @@ class TestIamPolicyManagementV1(unittest.TestCase):
                 break
         assert foundTestTemplateVersion
 
-    def test_24_list_policy_assignments(self):
+    def test_24_create_policy_s2s_template(self):
+        response = self.service.create_policy_template(
+            name="S2STest",
+            account_id=self.testAccountId,
+            policy=TemplatePolicy(
+            type='authorization',
+            control=Control(grant=Grant(roles=[PolicyRole(role_id="crn:v1:bluemix:public:iam::::serviceRole:Writer")])),
+            resource=V2PolicyResource(
+            attributes=[
+                V2PolicyResourceAttribute(key='serviceName', value='cloud-object-storage', operator='stringEquals'),
+            ],
+            ),
+            subject=V2PolicySubject(
+            attributes=[
+                V2PolicySubjectAttribute(key='serviceName', value='compliance', operator='stringEquals'),
+            ],
+            ),
+             description='SDK Test Policy',
+        ),
+            description='SDK Test Policy S2S Template',
+            committed=True,
+        )
+        assert response is not None
+
+        assert response.get_status_code() == 201
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyTemplate.from_dict(result_dict)
+        print("Policy S2S Template : ", result)
+        assert result is not None
+
+        self.__class__.testS2STemplateId = result.id
+        self.__class__.testS2SBaseTemplateVersion = result.version
+        assert result.state == "active"
+    
+    def test_25_create_policy_s2s_template_version(self):
+        response = self.service.create_policy_template_version(
+            policy=TemplatePolicy(
+            type='authorization',
+            control=Control(grant=Grant(roles=[PolicyRole(role_id="crn:v1:bluemix:public:iam::::serviceRole:Reader")])),
+            resource=V2PolicyResource(
+            attributes=[
+                V2PolicyResourceAttribute(key='serviceName', value='kms', operator='stringEquals'),
+            ],
+            ),
+            subject=V2PolicySubject(
+            attributes=[
+                V2PolicySubjectAttribute(key='serviceName', value='compliance', operator='stringEquals'),
+            ],
+            ),
+             description='SDK Test Policy',
+        ),
+            description='SDK Test Policy S2S Template',
+            committed=True,
+            policy_template_id=self.testS2STemplateId,
+        )
+        assert response is not None
+
+        assert response.get_status_code() == 201
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyTemplate.from_dict(result_dict)
+        print("Policy S2S Template Version: ", result)
+        assert result is not None
+
+        self.__class__.testS2STemplateVersion = result.version
+        assert result.state == "active"
+
+    def test_26_create_policy_assignment(self):
+        response=self.service.create_policy_template_assignment(
+        version="1.0",
+        target=AssignmentTargetDetails(
+            type="Account",
+            id=self.testTargetAccountId,
+        ),
+        options=PolicyAssignmentV1Options(root=PolicyAssignmentV1OptionsRoot(requester_id="test_sdk", assignment_id="test")),
+        templates=[AssignmentTemplateDetails(id=self.testS2STemplateId, version=self.testS2SBaseTemplateVersion)],
+         )
+        assert response.get_status_code() == 201
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyAssignmentV1Collection.from_dict(result_dict)
+        print("Policy Assignment Creation: ", result)
+        assert result is not None
+        self.__class__.testAssignmentId=result.assignments[0].id
+        self.__class__.testAssignmentPolicyId=result.assignments[0].resources[0].policy.resource_created.id
+        self.__class__.testPolicyAssignmentETag = response.get_headers().get(self.etagHeader)
+
+    def test_27_list_policy_assignments(self):
         response = self.service.list_policy_assignments(
             account_id=self.testAccountId,
             accept_language='default',
+            version="1.0",
         )
 
         assert response.get_status_code() == 200
@@ -752,23 +852,42 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result = PolicyTemplateAssignmentCollection.from_dict(result_dict)
         assert result is not None
 
-        self.__class__.testAssignmentId = result.assignments[0].id
-
-    def test_25_get_policy_assignment(self):
+    def test_28_get_policy_assignment(self):
+        assert self.testAssignmentId
+        print("Assignment ID: ", self.testAssignmentId)
         response = self.service.get_policy_assignment(
             assignment_id=self.testAssignmentId,
+            version="1.0",
         )
 
         assert response.get_status_code() == 200
         result_dict = response.get_result()
         assert result_dict is not None
 
-        result = PolicyAssignment.from_dict(result_dict)
+        result = PolicyAssignmentV1.from_dict(result_dict)
         assert result is not None
         assert result.id == self.testAssignmentId
-        self.__class__.testAssignmentPolicyId = result.resources[0].policy.resource_created.id
 
-    def test_26_get_v2_assignment_policy(self):
+    def test_29_update_policy_assignment(self):
+        assert self.testAssignmentId
+        assert self.testPolicyAssignmentETag
+        print("Assignment ID: ", self.testAssignmentId)
+        response = self.service.update_policy_assignment(
+            assignment_id=self.testAssignmentId,
+            version="1.0",
+            if_match=self.testPolicyAssignmentETag,
+            template_version=self.testS2STemplateVersion,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyAssignmentV1.from_dict(result_dict)
+        assert result is not None
+        print("Policy Assignment Update: ", result)
+
+    def test_29_get_v2_assignment_policy(self):
         assert self.testAssignmentPolicyId
         print("Assignment Policy ID: ", self.testAssignmentPolicyId)
 
@@ -782,3 +901,15 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result = V2PolicyTemplateMetaData.from_dict(result_dict)
         assert result is not None
         assert result.template is not None
+    
+    def test_30_delete_policy_assignment(self):
+        response = self.service.delete_policy_assignment(
+            assignment_id=self.testAssignmentId,
+        )
+        assert response.get_status_code() == 204
+
+    def test_31_delete_policy_template(self):
+        response = self.service.delete_policy_template(
+            policy_template_id=self.testS2STemplateId,
+        )
+        assert response.get_status_code() == 204

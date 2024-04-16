@@ -2432,7 +2432,7 @@ class TestListPolicyTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -2445,12 +2445,22 @@ class TestListPolicyTemplates:
         account_id = 'testString'
         accept_language = 'default'
         state = 'active'
+        name = 'testString'
+        policy_service_type = 'service'
+        policy_service_name = 'testString'
+        policy_service_group_id = 'testString'
+        policy_type = 'access'
 
         # Invoke method
         response = _service.list_policy_templates(
             account_id,
             accept_language=accept_language,
             state=state,
+            name=name,
+            policy_service_type=policy_service_type,
+            policy_service_name=policy_service_name,
+            policy_service_group_id=policy_service_group_id,
+            policy_type=policy_type,
             headers={},
         )
 
@@ -2462,6 +2472,11 @@ class TestListPolicyTemplates:
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'state={}'.format(state) in query_string
+        assert 'name={}'.format(name) in query_string
+        assert 'policy_service_type={}'.format(policy_service_type) in query_string
+        assert 'policy_service_name={}'.format(policy_service_name) in query_string
+        assert 'policy_service_group_id={}'.format(policy_service_group_id) in query_string
+        assert 'policy_type={}'.format(policy_type) in query_string
 
     def test_list_policy_templates_all_params_with_retries(self):
         # Enable retries and run test_list_policy_templates_all_params.
@@ -2479,7 +2494,7 @@ class TestListPolicyTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -2521,7 +2536,7 @@ class TestListPolicyTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -2564,7 +2579,7 @@ class TestCreatePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -2590,6 +2605,16 @@ class TestCreatePolicyTemplate:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         # Construct a dict representation of a V2PolicyRuleRuleAttribute model
         v2_policy_rule_model = {}
         v2_policy_rule_model['key'] = 'testString'
@@ -2613,6 +2638,7 @@ class TestCreatePolicyTemplate:
         template_policy_model['type'] = 'access'
         template_policy_model['description'] = 'testString'
         template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['subject'] = v2_policy_subject_model
         template_policy_model['pattern'] = 'testString'
         template_policy_model['rule'] = v2_policy_rule_model
         template_policy_model['control'] = control_model
@@ -2663,7 +2689,7 @@ class TestCreatePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -2689,6 +2715,16 @@ class TestCreatePolicyTemplate:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         # Construct a dict representation of a V2PolicyRuleRuleAttribute model
         v2_policy_rule_model = {}
         v2_policy_rule_model['key'] = 'testString'
@@ -2712,6 +2748,7 @@ class TestCreatePolicyTemplate:
         template_policy_model['type'] = 'access'
         template_policy_model['description'] = 'testString'
         template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['subject'] = v2_policy_subject_model
         template_policy_model['pattern'] = 'testString'
         template_policy_model['rule'] = v2_policy_rule_model
         template_policy_model['control'] = control_model
@@ -2760,7 +2797,7 @@ class TestCreatePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -2786,6 +2823,16 @@ class TestCreatePolicyTemplate:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         # Construct a dict representation of a V2PolicyRuleRuleAttribute model
         v2_policy_rule_model = {}
         v2_policy_rule_model['key'] = 'testString'
@@ -2809,6 +2856,7 @@ class TestCreatePolicyTemplate:
         template_policy_model['type'] = 'access'
         template_policy_model['description'] = 'testString'
         template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['subject'] = v2_policy_subject_model
         template_policy_model['pattern'] = 'testString'
         template_policy_model['rule'] = v2_policy_rule_model
         template_policy_model['control'] = control_model
@@ -2853,7 +2901,7 @@ class TestGetPolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -2897,7 +2945,7 @@ class TestGetPolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -2935,7 +2983,7 @@ class TestGetPolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -3053,7 +3101,7 @@ class TestCreatePolicyTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -3079,6 +3127,16 @@ class TestCreatePolicyTemplateVersion:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         # Construct a dict representation of a V2PolicyRuleRuleAttribute model
         v2_policy_rule_model = {}
         v2_policy_rule_model['key'] = 'testString'
@@ -3102,6 +3160,7 @@ class TestCreatePolicyTemplateVersion:
         template_policy_model['type'] = 'access'
         template_policy_model['description'] = 'testString'
         template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['subject'] = v2_policy_subject_model
         template_policy_model['pattern'] = 'testString'
         template_policy_model['rule'] = v2_policy_rule_model
         template_policy_model['control'] = control_model
@@ -3149,7 +3208,7 @@ class TestCreatePolicyTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -3175,6 +3234,16 @@ class TestCreatePolicyTemplateVersion:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         # Construct a dict representation of a V2PolicyRuleRuleAttribute model
         v2_policy_rule_model = {}
         v2_policy_rule_model['key'] = 'testString'
@@ -3198,6 +3267,7 @@ class TestCreatePolicyTemplateVersion:
         template_policy_model['type'] = 'access'
         template_policy_model['description'] = 'testString'
         template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['subject'] = v2_policy_subject_model
         template_policy_model['pattern'] = 'testString'
         template_policy_model['rule'] = v2_policy_rule_model
         template_policy_model['control'] = control_model
@@ -3241,7 +3311,7 @@ class TestListPolicyTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3285,7 +3355,7 @@ class TestListPolicyTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3323,7 +3393,7 @@ class TestListPolicyTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3366,7 +3436,7 @@ class TestReplacePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.PUT,
             url,
@@ -3392,6 +3462,16 @@ class TestReplacePolicyTemplate:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         # Construct a dict representation of a V2PolicyRuleRuleAttribute model
         v2_policy_rule_model = {}
         v2_policy_rule_model['key'] = 'testString'
@@ -3415,6 +3495,7 @@ class TestReplacePolicyTemplate:
         template_policy_model['type'] = 'access'
         template_policy_model['description'] = 'testString'
         template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['subject'] = v2_policy_subject_model
         template_policy_model['pattern'] = 'testString'
         template_policy_model['rule'] = v2_policy_rule_model
         template_policy_model['control'] = control_model
@@ -3466,7 +3547,7 @@ class TestReplacePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.PUT,
             url,
@@ -3492,6 +3573,16 @@ class TestReplacePolicyTemplate:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         # Construct a dict representation of a V2PolicyRuleRuleAttribute model
         v2_policy_rule_model = {}
         v2_policy_rule_model['key'] = 'testString'
@@ -3515,6 +3606,7 @@ class TestReplacePolicyTemplate:
         template_policy_model['type'] = 'access'
         template_policy_model['description'] = 'testString'
         template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['subject'] = v2_policy_subject_model
         template_policy_model['pattern'] = 'testString'
         template_policy_model['rule'] = v2_policy_rule_model
         template_policy_model['control'] = control_model
@@ -3641,7 +3733,7 @@ class TestGetPolicyTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -3681,7 +3773,7 @@ class TestGetPolicyTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -3844,7 +3936,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
+        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "options": {"root": {"requester_id": "requester_id", "assignment_id": "assignment_id", "template": {"id": "id", "version": "version"}}}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"id": "id", "version": "version"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3854,6 +3946,7 @@ class TestListPolicyAssignments:
         )
 
         # Set up parameter values
+        version = '1.0'
         account_id = 'testString'
         accept_language = 'default'
         template_id = 'testString'
@@ -3861,6 +3954,7 @@ class TestListPolicyAssignments:
 
         # Invoke method
         response = _service.list_policy_assignments(
+            version,
             account_id,
             accept_language=accept_language,
             template_id=template_id,
@@ -3874,6 +3968,7 @@ class TestListPolicyAssignments:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
+        assert 'version={}'.format(version) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'template_id={}'.format(template_id) in query_string
         assert 'template_version={}'.format(template_version) in query_string
@@ -3894,7 +3989,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
+        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "options": {"root": {"requester_id": "requester_id", "assignment_id": "assignment_id", "template": {"id": "id", "version": "version"}}}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"id": "id", "version": "version"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3904,10 +3999,12 @@ class TestListPolicyAssignments:
         )
 
         # Set up parameter values
+        version = '1.0'
         account_id = 'testString'
 
         # Invoke method
         response = _service.list_policy_assignments(
+            version,
             account_id,
             headers={},
         )
@@ -3918,6 +4015,7 @@ class TestListPolicyAssignments:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
+        assert 'version={}'.format(version) in query_string
         assert 'account_id={}'.format(account_id) in query_string
 
     def test_list_policy_assignments_required_params_with_retries(self):
@@ -3936,7 +4034,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
+        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "options": {"root": {"requester_id": "requester_id", "assignment_id": "assignment_id", "template": {"id": "id", "version": "version"}}}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"id": "id", "version": "version"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3946,10 +4044,12 @@ class TestListPolicyAssignments:
         )
 
         # Set up parameter values
+        version = '1.0'
         account_id = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
+            "version": version,
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
@@ -3967,6 +4067,238 @@ class TestListPolicyAssignments:
         self.test_list_policy_assignments_value_error()
 
 
+class TestCreatePolicyTemplateAssignment:
+    """
+    Test Class for create_policy_template_assignment
+    """
+
+    @responses.activate
+    def test_create_policy_template_assignment_all_params(self):
+        """
+        create_policy_template_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/policy_assignments')
+        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "options": {"root": {"requester_id": "requester_id", "assignment_id": "assignment_id", "template": {"id": "id", "version": "version"}}}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"id": "id", "version": "version"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AssignmentTargetDetails model
+        assignment_target_details_model = {}
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        # Construct a dict representation of a PolicyAssignmentV1OptionsRootTemplate model
+        policy_assignment_v1_options_root_template_model = {}
+        policy_assignment_v1_options_root_template_model['id'] = 'testString'
+        policy_assignment_v1_options_root_template_model['version'] = 'testString'
+
+        # Construct a dict representation of a PolicyAssignmentV1OptionsRoot model
+        policy_assignment_v1_options_root_model = {}
+        policy_assignment_v1_options_root_model['requester_id'] = 'testString'
+        policy_assignment_v1_options_root_model['assignment_id'] = 'testString'
+        policy_assignment_v1_options_root_model['template'] = policy_assignment_v1_options_root_template_model
+
+        # Construct a dict representation of a PolicyAssignmentV1Options model
+        policy_assignment_v1_options_model = {}
+        policy_assignment_v1_options_model['root'] = policy_assignment_v1_options_root_model
+
+        # Construct a dict representation of a AssignmentTemplateDetails model
+        assignment_template_details_model = {}
+        assignment_template_details_model['id'] = 'testString'
+        assignment_template_details_model['version'] = 'testString'
+
+        # Set up parameter values
+        version = '1.0'
+        target = assignment_target_details_model
+        options = policy_assignment_v1_options_model
+        templates = [assignment_template_details_model]
+        accept_language = 'default'
+
+        # Invoke method
+        response = _service.create_policy_template_assignment(
+            version,
+            target,
+            options,
+            templates,
+            accept_language=accept_language,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'version={}'.format(version) in query_string
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['target'] == assignment_target_details_model
+        assert req_body['options'] == policy_assignment_v1_options_model
+        assert req_body['templates'] == [assignment_template_details_model]
+
+    def test_create_policy_template_assignment_all_params_with_retries(self):
+        # Enable retries and run test_create_policy_template_assignment_all_params.
+        _service.enable_retries()
+        self.test_create_policy_template_assignment_all_params()
+
+        # Disable retries and run test_create_policy_template_assignment_all_params.
+        _service.disable_retries()
+        self.test_create_policy_template_assignment_all_params()
+
+    @responses.activate
+    def test_create_policy_template_assignment_required_params(self):
+        """
+        test_create_policy_template_assignment_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/policy_assignments')
+        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "options": {"root": {"requester_id": "requester_id", "assignment_id": "assignment_id", "template": {"id": "id", "version": "version"}}}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"id": "id", "version": "version"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AssignmentTargetDetails model
+        assignment_target_details_model = {}
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        # Construct a dict representation of a PolicyAssignmentV1OptionsRootTemplate model
+        policy_assignment_v1_options_root_template_model = {}
+        policy_assignment_v1_options_root_template_model['id'] = 'testString'
+        policy_assignment_v1_options_root_template_model['version'] = 'testString'
+
+        # Construct a dict representation of a PolicyAssignmentV1OptionsRoot model
+        policy_assignment_v1_options_root_model = {}
+        policy_assignment_v1_options_root_model['requester_id'] = 'testString'
+        policy_assignment_v1_options_root_model['assignment_id'] = 'testString'
+        policy_assignment_v1_options_root_model['template'] = policy_assignment_v1_options_root_template_model
+
+        # Construct a dict representation of a PolicyAssignmentV1Options model
+        policy_assignment_v1_options_model = {}
+        policy_assignment_v1_options_model['root'] = policy_assignment_v1_options_root_model
+
+        # Construct a dict representation of a AssignmentTemplateDetails model
+        assignment_template_details_model = {}
+        assignment_template_details_model['id'] = 'testString'
+        assignment_template_details_model['version'] = 'testString'
+
+        # Set up parameter values
+        version = '1.0'
+        target = assignment_target_details_model
+        options = policy_assignment_v1_options_model
+        templates = [assignment_template_details_model]
+
+        # Invoke method
+        response = _service.create_policy_template_assignment(
+            version,
+            target,
+            options,
+            templates,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'version={}'.format(version) in query_string
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['target'] == assignment_target_details_model
+        assert req_body['options'] == policy_assignment_v1_options_model
+        assert req_body['templates'] == [assignment_template_details_model]
+
+    def test_create_policy_template_assignment_required_params_with_retries(self):
+        # Enable retries and run test_create_policy_template_assignment_required_params.
+        _service.enable_retries()
+        self.test_create_policy_template_assignment_required_params()
+
+        # Disable retries and run test_create_policy_template_assignment_required_params.
+        _service.disable_retries()
+        self.test_create_policy_template_assignment_required_params()
+
+    @responses.activate
+    def test_create_policy_template_assignment_value_error(self):
+        """
+        test_create_policy_template_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/policy_assignments')
+        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "options": {"root": {"requester_id": "requester_id", "assignment_id": "assignment_id", "template": {"id": "id", "version": "version"}}}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"id": "id", "version": "version"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AssignmentTargetDetails model
+        assignment_target_details_model = {}
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        # Construct a dict representation of a PolicyAssignmentV1OptionsRootTemplate model
+        policy_assignment_v1_options_root_template_model = {}
+        policy_assignment_v1_options_root_template_model['id'] = 'testString'
+        policy_assignment_v1_options_root_template_model['version'] = 'testString'
+
+        # Construct a dict representation of a PolicyAssignmentV1OptionsRoot model
+        policy_assignment_v1_options_root_model = {}
+        policy_assignment_v1_options_root_model['requester_id'] = 'testString'
+        policy_assignment_v1_options_root_model['assignment_id'] = 'testString'
+        policy_assignment_v1_options_root_model['template'] = policy_assignment_v1_options_root_template_model
+
+        # Construct a dict representation of a PolicyAssignmentV1Options model
+        policy_assignment_v1_options_model = {}
+        policy_assignment_v1_options_model['root'] = policy_assignment_v1_options_root_model
+
+        # Construct a dict representation of a AssignmentTemplateDetails model
+        assignment_template_details_model = {}
+        assignment_template_details_model['id'] = 'testString'
+        assignment_template_details_model['version'] = 'testString'
+
+        # Set up parameter values
+        version = '1.0'
+        target = assignment_target_details_model
+        options = policy_assignment_v1_options_model
+        templates = [assignment_template_details_model]
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "version": version,
+            "target": target,
+            "options": options,
+            "templates": templates,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_policy_template_assignment(**req_copy)
+
+    def test_create_policy_template_assignment_value_error_with_retries(self):
+        # Enable retries and run test_create_policy_template_assignment_value_error.
+        _service.enable_retries()
+        self.test_create_policy_template_assignment_value_error()
+
+        # Disable retries and run test_create_policy_template_assignment_value_error.
+        _service.disable_retries()
+        self.test_create_policy_template_assignment_value_error()
+
+
 class TestGetPolicyAssignment:
     """
     Test Class for get_policy_assignment
@@ -3979,7 +4311,7 @@ class TestGetPolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}'
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "options": {"root": {"requester_id": "requester_id", "assignment_id": "assignment_id", "template": {"id": "id", "version": "version"}}}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"id": "id", "version": "version"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
         responses.add(
             responses.GET,
             url,
@@ -3990,16 +4322,22 @@ class TestGetPolicyAssignment:
 
         # Set up parameter values
         assignment_id = 'testString'
+        version = '1.0'
 
         # Invoke method
         response = _service.get_policy_assignment(
             assignment_id,
+            version,
             headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'version={}'.format(version) in query_string
 
     def test_get_policy_assignment_all_params_with_retries(self):
         # Enable retries and run test_get_policy_assignment_all_params.
@@ -4017,7 +4355,7 @@ class TestGetPolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}'
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "options": {"root": {"requester_id": "requester_id", "assignment_id": "assignment_id", "template": {"id": "id", "version": "version"}}}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"id": "id", "version": "version"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
         responses.add(
             responses.GET,
             url,
@@ -4028,10 +4366,12 @@ class TestGetPolicyAssignment:
 
         # Set up parameter values
         assignment_id = 'testString'
+        version = '1.0'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
             "assignment_id": assignment_id,
+            "version": version,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
@@ -4046,6 +4386,181 @@ class TestGetPolicyAssignment:
         # Disable retries and run test_get_policy_assignment_value_error.
         _service.disable_retries()
         self.test_get_policy_assignment_value_error()
+
+
+class TestUpdatePolicyAssignment:
+    """
+    Test Class for update_policy_assignment
+    """
+
+    @responses.activate
+    def test_update_policy_assignment_all_params(self):
+        """
+        update_policy_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/policy_assignments/testString')
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "options": {"root": {"requester_id": "requester_id", "assignment_id": "assignment_id", "template": {"id": "id", "version": "version"}}}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"id": "id", "version": "version"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        version = '1.0'
+        if_match = 'testString'
+        template_version = 'testString'
+
+        # Invoke method
+        response = _service.update_policy_assignment(
+            assignment_id,
+            version,
+            if_match,
+            template_version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'version={}'.format(version) in query_string
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['template_version'] == 'testString'
+
+    def test_update_policy_assignment_all_params_with_retries(self):
+        # Enable retries and run test_update_policy_assignment_all_params.
+        _service.enable_retries()
+        self.test_update_policy_assignment_all_params()
+
+        # Disable retries and run test_update_policy_assignment_all_params.
+        _service.disable_retries()
+        self.test_update_policy_assignment_all_params()
+
+    @responses.activate
+    def test_update_policy_assignment_value_error(self):
+        """
+        test_update_policy_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/policy_assignments/testString')
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "options": {"root": {"requester_id": "requester_id", "assignment_id": "assignment_id", "template": {"id": "id", "version": "version"}}}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"id": "id", "version": "version"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        version = '1.0'
+        if_match = 'testString'
+        template_version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+            "version": version,
+            "if_match": if_match,
+            "template_version": template_version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_policy_assignment(**req_copy)
+
+    def test_update_policy_assignment_value_error_with_retries(self):
+        # Enable retries and run test_update_policy_assignment_value_error.
+        _service.enable_retries()
+        self.test_update_policy_assignment_value_error()
+
+        # Disable retries and run test_update_policy_assignment_value_error.
+        _service.disable_retries()
+        self.test_update_policy_assignment_value_error()
+
+
+class TestDeletePolicyAssignment:
+    """
+    Test Class for delete_policy_assignment
+    """
+
+    @responses.activate
+    def test_delete_policy_assignment_all_params(self):
+        """
+        delete_policy_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/policy_assignments/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_policy_assignment(
+            assignment_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_policy_assignment_all_params_with_retries(self):
+        # Enable retries and run test_delete_policy_assignment_all_params.
+        _service.enable_retries()
+        self.test_delete_policy_assignment_all_params()
+
+        # Disable retries and run test_delete_policy_assignment_all_params.
+        _service.disable_retries()
+        self.test_delete_policy_assignment_all_params()
+
+    @responses.activate
+    def test_delete_policy_assignment_value_error(self):
+        """
+        test_delete_policy_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/policy_assignments/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_policy_assignment(**req_copy)
+
+    def test_delete_policy_assignment_value_error_with_retries(self):
+        # Enable retries and run test_delete_policy_assignment_value_error.
+        _service.enable_retries()
+        self.test_delete_policy_assignment_value_error()
+
+        # Disable retries and run test_delete_policy_assignment_value_error.
+        _service.disable_retries()
+        self.test_delete_policy_assignment_value_error()
 
 
 # endregion
@@ -4090,6 +4605,72 @@ class TestModel_AssignmentResourceCreated:
         # Convert model instance back to dict and verify no loss of data
         assignment_resource_created_model_json2 = assignment_resource_created_model.to_dict()
         assert assignment_resource_created_model_json2 == assignment_resource_created_model_json
+
+
+class TestModel_AssignmentTargetDetails:
+    """
+    Test Class for AssignmentTargetDetails
+    """
+
+    def test_assignment_target_details_serialization(self):
+        """
+        Test serialization/deserialization for AssignmentTargetDetails
+        """
+
+        # Construct a json representation of a AssignmentTargetDetails model
+        assignment_target_details_model_json = {}
+        assignment_target_details_model_json['type'] = 'Account'
+        assignment_target_details_model_json['id'] = 'testString'
+
+        # Construct a model instance of AssignmentTargetDetails by calling from_dict on the json representation
+        assignment_target_details_model = AssignmentTargetDetails.from_dict(assignment_target_details_model_json)
+        assert assignment_target_details_model != False
+
+        # Construct a model instance of AssignmentTargetDetails by calling from_dict on the json representation
+        assignment_target_details_model_dict = AssignmentTargetDetails.from_dict(
+            assignment_target_details_model_json
+        ).__dict__
+        assignment_target_details_model2 = AssignmentTargetDetails(**assignment_target_details_model_dict)
+
+        # Verify the model instances are equivalent
+        assert assignment_target_details_model == assignment_target_details_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        assignment_target_details_model_json2 = assignment_target_details_model.to_dict()
+        assert assignment_target_details_model_json2 == assignment_target_details_model_json
+
+
+class TestModel_AssignmentTemplateDetails:
+    """
+    Test Class for AssignmentTemplateDetails
+    """
+
+    def test_assignment_template_details_serialization(self):
+        """
+        Test serialization/deserialization for AssignmentTemplateDetails
+        """
+
+        # Construct a json representation of a AssignmentTemplateDetails model
+        assignment_template_details_model_json = {}
+        assignment_template_details_model_json['id'] = 'testString'
+        assignment_template_details_model_json['version'] = 'testString'
+
+        # Construct a model instance of AssignmentTemplateDetails by calling from_dict on the json representation
+        assignment_template_details_model = AssignmentTemplateDetails.from_dict(assignment_template_details_model_json)
+        assert assignment_template_details_model != False
+
+        # Construct a model instance of AssignmentTemplateDetails by calling from_dict on the json representation
+        assignment_template_details_model_dict = AssignmentTemplateDetails.from_dict(
+            assignment_template_details_model_json
+        ).__dict__
+        assignment_template_details_model2 = AssignmentTemplateDetails(**assignment_template_details_model_dict)
+
+        # Verify the model instances are equivalent
+        assert assignment_template_details_model == assignment_template_details_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        assignment_template_details_model_json2 = assignment_template_details_model.to_dict()
+        assert assignment_template_details_model_json2 == assignment_template_details_model_json
 
 
 class TestModel_ConflictsWith:
@@ -4363,6 +4944,55 @@ class TestModel_ErrorResponse:
         assert error_response_model_json2 == error_response_model_json
 
 
+class TestModel_GetPolicyAssignmentResponsePolicyAssignmentV1Subject:
+    """
+    Test Class for GetPolicyAssignmentResponsePolicyAssignmentV1Subject
+    """
+
+    def test_get_policy_assignment_response_policy_assignment_v1_subject_serialization(self):
+        """
+        Test serialization/deserialization for GetPolicyAssignmentResponsePolicyAssignmentV1Subject
+        """
+
+        # Construct a json representation of a GetPolicyAssignmentResponsePolicyAssignmentV1Subject model
+        get_policy_assignment_response_policy_assignment_v1_subject_model_json = {}
+
+        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignmentV1Subject by calling from_dict on the json representation
+        get_policy_assignment_response_policy_assignment_v1_subject_model = (
+            GetPolicyAssignmentResponsePolicyAssignmentV1Subject.from_dict(
+                get_policy_assignment_response_policy_assignment_v1_subject_model_json
+            )
+        )
+        assert get_policy_assignment_response_policy_assignment_v1_subject_model != False
+
+        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignmentV1Subject by calling from_dict on the json representation
+        get_policy_assignment_response_policy_assignment_v1_subject_model_dict = (
+            GetPolicyAssignmentResponsePolicyAssignmentV1Subject.from_dict(
+                get_policy_assignment_response_policy_assignment_v1_subject_model_json
+            ).__dict__
+        )
+        get_policy_assignment_response_policy_assignment_v1_subject_model2 = (
+            GetPolicyAssignmentResponsePolicyAssignmentV1Subject(
+                **get_policy_assignment_response_policy_assignment_v1_subject_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            get_policy_assignment_response_policy_assignment_v1_subject_model
+            == get_policy_assignment_response_policy_assignment_v1_subject_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        get_policy_assignment_response_policy_assignment_v1_subject_model_json2 = (
+            get_policy_assignment_response_policy_assignment_v1_subject_model.to_dict()
+        )
+        assert (
+            get_policy_assignment_response_policy_assignment_v1_subject_model_json2
+            == get_policy_assignment_response_policy_assignment_v1_subject_model_json
+        )
+
+
 class TestModel_Grant:
     """
     Test Class for Grant
@@ -4531,83 +5161,6 @@ class TestModel_Policy:
         assert policy_model_json2 == policy_model_json
 
 
-class TestModel_PolicyAssignment:
-    """
-    Test Class for PolicyAssignment
-    """
-
-    def test_policy_assignment_serialization(self):
-        """
-        Test serialization/deserialization for PolicyAssignment
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        policy_assignment_options_model = {}  # PolicyAssignmentOptions
-        policy_assignment_options_model['subject_type'] = 'iam_id'
-        policy_assignment_options_model['subject_id'] = 'testString'
-        policy_assignment_options_model['root_requester_id'] = 'testString'
-        policy_assignment_options_model['root_template_id'] = 'testString'
-        policy_assignment_options_model['root_template_version'] = 'testString'
-
-        assignment_resource_created_model = {}  # AssignmentResourceCreated
-        assignment_resource_created_model['id'] = 'testString'
-
-        conflicts_with_model = {}  # ConflictsWith
-        conflicts_with_model['etag'] = 'testString'
-        conflicts_with_model['role'] = 'testString'
-        conflicts_with_model['policy'] = 'testString'
-
-        error_details_model = {}  # ErrorDetails
-        error_details_model['conflicts_with'] = conflicts_with_model
-
-        error_object_model = {}  # ErrorObject
-        error_object_model['code'] = 'insufficent_permissions'
-        error_object_model['message'] = 'testString'
-        error_object_model['details'] = error_details_model
-        error_object_model['more_info'] = 'testString'
-
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
-
-        policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
-        policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
-        policy_assignment_resource_policy_model['status'] = 'testString'
-        policy_assignment_resource_policy_model['error_message'] = error_response_model
-
-        policy_assignment_resources_model = {}  # PolicyAssignmentResources
-        policy_assignment_resources_model['target'] = 'testString'
-        policy_assignment_resources_model['policy'] = policy_assignment_resource_policy_model
-
-        # Construct a json representation of a PolicyAssignment model
-        policy_assignment_model_json = {}
-        policy_assignment_model_json['template_id'] = 'testString'
-        policy_assignment_model_json['template_version'] = 'testString'
-        policy_assignment_model_json['assignment_id'] = 'testString'
-        policy_assignment_model_json['target_type'] = 'Account'
-        policy_assignment_model_json['target'] = 'testString'
-        policy_assignment_model_json['options'] = [policy_assignment_options_model]
-        policy_assignment_model_json['resources'] = [policy_assignment_resources_model]
-        policy_assignment_model_json['status'] = 'in_progress'
-
-        # Construct a model instance of PolicyAssignment by calling from_dict on the json representation
-        policy_assignment_model = PolicyAssignment.from_dict(policy_assignment_model_json)
-        assert policy_assignment_model != False
-
-        # Construct a model instance of PolicyAssignment by calling from_dict on the json representation
-        policy_assignment_model_dict = PolicyAssignment.from_dict(policy_assignment_model_json).__dict__
-        policy_assignment_model2 = PolicyAssignment(**policy_assignment_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_assignment_model == policy_assignment_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_assignment_model_json2 = policy_assignment_model.to_dict()
-        assert policy_assignment_model_json2 == policy_assignment_model_json
-
-
 class TestModel_PolicyAssignmentOptions:
     """
     Test Class for PolicyAssignmentOptions
@@ -4766,6 +5319,427 @@ class TestModel_PolicyAssignmentResources:
         # Convert model instance back to dict and verify no loss of data
         policy_assignment_resources_model_json2 = policy_assignment_resources_model.to_dict()
         assert policy_assignment_resources_model_json2 == policy_assignment_resources_model_json
+
+
+class TestModel_PolicyAssignmentV1:
+    """
+    Test Class for PolicyAssignmentV1
+    """
+
+    def test_policy_assignment_v1_serialization(self):
+        """
+        Test serialization/deserialization for PolicyAssignmentV1
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        assignment_target_details_model = {}  # AssignmentTargetDetails
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        policy_assignment_v1_options_root_template_model = {}  # PolicyAssignmentV1OptionsRootTemplate
+        policy_assignment_v1_options_root_template_model['id'] = 'testString'
+        policy_assignment_v1_options_root_template_model['version'] = 'testString'
+
+        policy_assignment_v1_options_root_model = {}  # PolicyAssignmentV1OptionsRoot
+        policy_assignment_v1_options_root_model['requester_id'] = 'testString'
+        policy_assignment_v1_options_root_model['assignment_id'] = 'testString'
+        policy_assignment_v1_options_root_model['template'] = policy_assignment_v1_options_root_template_model
+
+        policy_assignment_v1_options_model = {}  # PolicyAssignmentV1Options
+        policy_assignment_v1_options_model['root'] = policy_assignment_v1_options_root_model
+
+        assignment_template_details_model = {}  # AssignmentTemplateDetails
+        assignment_template_details_model['id'] = 'testString'
+        assignment_template_details_model['version'] = 'testString'
+
+        assignment_resource_created_model = {}  # AssignmentResourceCreated
+        assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 38
+
+        policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
+        policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
+        policy_assignment_resource_policy_model['status'] = 'testString'
+        policy_assignment_resource_policy_model['error_message'] = error_response_model
+
+        policy_assignment_v1_resources_model = {}  # PolicyAssignmentV1Resources
+        policy_assignment_v1_resources_model['target'] = assignment_template_details_model
+        policy_assignment_v1_resources_model['policy'] = policy_assignment_resource_policy_model
+
+        policy_assignment_v1_subject_model = {}  # PolicyAssignmentV1Subject
+
+        # Construct a json representation of a PolicyAssignmentV1 model
+        policy_assignment_v1_model_json = {}
+        policy_assignment_v1_model_json['target'] = assignment_target_details_model
+        policy_assignment_v1_model_json['options'] = policy_assignment_v1_options_model
+        policy_assignment_v1_model_json['resources'] = [policy_assignment_v1_resources_model]
+        policy_assignment_v1_model_json['subject'] = policy_assignment_v1_subject_model
+        policy_assignment_v1_model_json['template'] = assignment_template_details_model
+        policy_assignment_v1_model_json['status'] = 'in_progress'
+
+        # Construct a model instance of PolicyAssignmentV1 by calling from_dict on the json representation
+        policy_assignment_v1_model = PolicyAssignmentV1.from_dict(policy_assignment_v1_model_json)
+        assert policy_assignment_v1_model != False
+
+        # Construct a model instance of PolicyAssignmentV1 by calling from_dict on the json representation
+        policy_assignment_v1_model_dict = PolicyAssignmentV1.from_dict(policy_assignment_v1_model_json).__dict__
+        policy_assignment_v1_model2 = PolicyAssignmentV1(**policy_assignment_v1_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_v1_model == policy_assignment_v1_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_v1_model_json2 = policy_assignment_v1_model.to_dict()
+        assert policy_assignment_v1_model_json2 == policy_assignment_v1_model_json
+
+
+class TestModel_PolicyAssignmentV1Collection:
+    """
+    Test Class for PolicyAssignmentV1Collection
+    """
+
+    def test_policy_assignment_v1_collection_serialization(self):
+        """
+        Test serialization/deserialization for PolicyAssignmentV1Collection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        assignment_target_details_model = {}  # AssignmentTargetDetails
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        policy_assignment_v1_options_root_template_model = {}  # PolicyAssignmentV1OptionsRootTemplate
+        policy_assignment_v1_options_root_template_model['id'] = 'testString'
+        policy_assignment_v1_options_root_template_model['version'] = 'testString'
+
+        policy_assignment_v1_options_root_model = {}  # PolicyAssignmentV1OptionsRoot
+        policy_assignment_v1_options_root_model['requester_id'] = 'testString'
+        policy_assignment_v1_options_root_model['assignment_id'] = 'testString'
+        policy_assignment_v1_options_root_model['template'] = policy_assignment_v1_options_root_template_model
+
+        policy_assignment_v1_options_model = {}  # PolicyAssignmentV1Options
+        policy_assignment_v1_options_model['root'] = policy_assignment_v1_options_root_model
+
+        assignment_template_details_model = {}  # AssignmentTemplateDetails
+        assignment_template_details_model['id'] = 'testString'
+        assignment_template_details_model['version'] = 'testString'
+
+        assignment_resource_created_model = {}  # AssignmentResourceCreated
+        assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 38
+
+        policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
+        policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
+        policy_assignment_resource_policy_model['status'] = 'testString'
+        policy_assignment_resource_policy_model['error_message'] = error_response_model
+
+        policy_assignment_v1_resources_model = {}  # PolicyAssignmentV1Resources
+        policy_assignment_v1_resources_model['target'] = assignment_template_details_model
+        policy_assignment_v1_resources_model['policy'] = policy_assignment_resource_policy_model
+
+        policy_assignment_v1_subject_model = {}  # PolicyAssignmentV1Subject
+
+        policy_assignment_v1_model = {}  # PolicyAssignmentV1
+        policy_assignment_v1_model['target'] = assignment_target_details_model
+        policy_assignment_v1_model['options'] = policy_assignment_v1_options_model
+        policy_assignment_v1_model['resources'] = [policy_assignment_v1_resources_model]
+        policy_assignment_v1_model['subject'] = policy_assignment_v1_subject_model
+        policy_assignment_v1_model['template'] = assignment_template_details_model
+        policy_assignment_v1_model['status'] = 'in_progress'
+
+        # Construct a json representation of a PolicyAssignmentV1Collection model
+        policy_assignment_v1_collection_model_json = {}
+        policy_assignment_v1_collection_model_json['assignments'] = [policy_assignment_v1_model]
+
+        # Construct a model instance of PolicyAssignmentV1Collection by calling from_dict on the json representation
+        policy_assignment_v1_collection_model = PolicyAssignmentV1Collection.from_dict(
+            policy_assignment_v1_collection_model_json
+        )
+        assert policy_assignment_v1_collection_model != False
+
+        # Construct a model instance of PolicyAssignmentV1Collection by calling from_dict on the json representation
+        policy_assignment_v1_collection_model_dict = PolicyAssignmentV1Collection.from_dict(
+            policy_assignment_v1_collection_model_json
+        ).__dict__
+        policy_assignment_v1_collection_model2 = PolicyAssignmentV1Collection(
+            **policy_assignment_v1_collection_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_v1_collection_model == policy_assignment_v1_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_v1_collection_model_json2 = policy_assignment_v1_collection_model.to_dict()
+        assert policy_assignment_v1_collection_model_json2 == policy_assignment_v1_collection_model_json
+
+
+class TestModel_PolicyAssignmentV1Options:
+    """
+    Test Class for PolicyAssignmentV1Options
+    """
+
+    def test_policy_assignment_v1_options_serialization(self):
+        """
+        Test serialization/deserialization for PolicyAssignmentV1Options
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        policy_assignment_v1_options_root_template_model = {}  # PolicyAssignmentV1OptionsRootTemplate
+        policy_assignment_v1_options_root_template_model['id'] = 'testString'
+        policy_assignment_v1_options_root_template_model['version'] = 'testString'
+
+        policy_assignment_v1_options_root_model = {}  # PolicyAssignmentV1OptionsRoot
+        policy_assignment_v1_options_root_model['requester_id'] = 'testString'
+        policy_assignment_v1_options_root_model['assignment_id'] = 'testString'
+        policy_assignment_v1_options_root_model['template'] = policy_assignment_v1_options_root_template_model
+
+        # Construct a json representation of a PolicyAssignmentV1Options model
+        policy_assignment_v1_options_model_json = {}
+        policy_assignment_v1_options_model_json['root'] = policy_assignment_v1_options_root_model
+
+        # Construct a model instance of PolicyAssignmentV1Options by calling from_dict on the json representation
+        policy_assignment_v1_options_model = PolicyAssignmentV1Options.from_dict(
+            policy_assignment_v1_options_model_json
+        )
+        assert policy_assignment_v1_options_model != False
+
+        # Construct a model instance of PolicyAssignmentV1Options by calling from_dict on the json representation
+        policy_assignment_v1_options_model_dict = PolicyAssignmentV1Options.from_dict(
+            policy_assignment_v1_options_model_json
+        ).__dict__
+        policy_assignment_v1_options_model2 = PolicyAssignmentV1Options(**policy_assignment_v1_options_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_v1_options_model == policy_assignment_v1_options_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_v1_options_model_json2 = policy_assignment_v1_options_model.to_dict()
+        assert policy_assignment_v1_options_model_json2 == policy_assignment_v1_options_model_json
+
+
+class TestModel_PolicyAssignmentV1OptionsRoot:
+    """
+    Test Class for PolicyAssignmentV1OptionsRoot
+    """
+
+    def test_policy_assignment_v1_options_root_serialization(self):
+        """
+        Test serialization/deserialization for PolicyAssignmentV1OptionsRoot
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        policy_assignment_v1_options_root_template_model = {}  # PolicyAssignmentV1OptionsRootTemplate
+        policy_assignment_v1_options_root_template_model['id'] = 'testString'
+        policy_assignment_v1_options_root_template_model['version'] = 'testString'
+
+        # Construct a json representation of a PolicyAssignmentV1OptionsRoot model
+        policy_assignment_v1_options_root_model_json = {}
+        policy_assignment_v1_options_root_model_json['requester_id'] = 'testString'
+        policy_assignment_v1_options_root_model_json['assignment_id'] = 'testString'
+        policy_assignment_v1_options_root_model_json['template'] = policy_assignment_v1_options_root_template_model
+
+        # Construct a model instance of PolicyAssignmentV1OptionsRoot by calling from_dict on the json representation
+        policy_assignment_v1_options_root_model = PolicyAssignmentV1OptionsRoot.from_dict(
+            policy_assignment_v1_options_root_model_json
+        )
+        assert policy_assignment_v1_options_root_model != False
+
+        # Construct a model instance of PolicyAssignmentV1OptionsRoot by calling from_dict on the json representation
+        policy_assignment_v1_options_root_model_dict = PolicyAssignmentV1OptionsRoot.from_dict(
+            policy_assignment_v1_options_root_model_json
+        ).__dict__
+        policy_assignment_v1_options_root_model2 = PolicyAssignmentV1OptionsRoot(
+            **policy_assignment_v1_options_root_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_v1_options_root_model == policy_assignment_v1_options_root_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_v1_options_root_model_json2 = policy_assignment_v1_options_root_model.to_dict()
+        assert policy_assignment_v1_options_root_model_json2 == policy_assignment_v1_options_root_model_json
+
+
+class TestModel_PolicyAssignmentV1OptionsRootTemplate:
+    """
+    Test Class for PolicyAssignmentV1OptionsRootTemplate
+    """
+
+    def test_policy_assignment_v1_options_root_template_serialization(self):
+        """
+        Test serialization/deserialization for PolicyAssignmentV1OptionsRootTemplate
+        """
+
+        # Construct a json representation of a PolicyAssignmentV1OptionsRootTemplate model
+        policy_assignment_v1_options_root_template_model_json = {}
+        policy_assignment_v1_options_root_template_model_json['id'] = 'testString'
+        policy_assignment_v1_options_root_template_model_json['version'] = 'testString'
+
+        # Construct a model instance of PolicyAssignmentV1OptionsRootTemplate by calling from_dict on the json representation
+        policy_assignment_v1_options_root_template_model = PolicyAssignmentV1OptionsRootTemplate.from_dict(
+            policy_assignment_v1_options_root_template_model_json
+        )
+        assert policy_assignment_v1_options_root_template_model != False
+
+        # Construct a model instance of PolicyAssignmentV1OptionsRootTemplate by calling from_dict on the json representation
+        policy_assignment_v1_options_root_template_model_dict = PolicyAssignmentV1OptionsRootTemplate.from_dict(
+            policy_assignment_v1_options_root_template_model_json
+        ).__dict__
+        policy_assignment_v1_options_root_template_model2 = PolicyAssignmentV1OptionsRootTemplate(
+            **policy_assignment_v1_options_root_template_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_v1_options_root_template_model == policy_assignment_v1_options_root_template_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_v1_options_root_template_model_json2 = (
+            policy_assignment_v1_options_root_template_model.to_dict()
+        )
+        assert (
+            policy_assignment_v1_options_root_template_model_json2
+            == policy_assignment_v1_options_root_template_model_json
+        )
+
+
+class TestModel_PolicyAssignmentV1Resources:
+    """
+    Test Class for PolicyAssignmentV1Resources
+    """
+
+    def test_policy_assignment_v1_resources_serialization(self):
+        """
+        Test serialization/deserialization for PolicyAssignmentV1Resources
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        assignment_template_details_model = {}  # AssignmentTemplateDetails
+        assignment_template_details_model['id'] = 'testString'
+        assignment_template_details_model['version'] = 'testString'
+
+        assignment_resource_created_model = {}  # AssignmentResourceCreated
+        assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 38
+
+        policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
+        policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
+        policy_assignment_resource_policy_model['status'] = 'testString'
+        policy_assignment_resource_policy_model['error_message'] = error_response_model
+
+        # Construct a json representation of a PolicyAssignmentV1Resources model
+        policy_assignment_v1_resources_model_json = {}
+        policy_assignment_v1_resources_model_json['target'] = assignment_template_details_model
+        policy_assignment_v1_resources_model_json['policy'] = policy_assignment_resource_policy_model
+
+        # Construct a model instance of PolicyAssignmentV1Resources by calling from_dict on the json representation
+        policy_assignment_v1_resources_model = PolicyAssignmentV1Resources.from_dict(
+            policy_assignment_v1_resources_model_json
+        )
+        assert policy_assignment_v1_resources_model != False
+
+        # Construct a model instance of PolicyAssignmentV1Resources by calling from_dict on the json representation
+        policy_assignment_v1_resources_model_dict = PolicyAssignmentV1Resources.from_dict(
+            policy_assignment_v1_resources_model_json
+        ).__dict__
+        policy_assignment_v1_resources_model2 = PolicyAssignmentV1Resources(**policy_assignment_v1_resources_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_v1_resources_model == policy_assignment_v1_resources_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_v1_resources_model_json2 = policy_assignment_v1_resources_model.to_dict()
+        assert policy_assignment_v1_resources_model_json2 == policy_assignment_v1_resources_model_json
+
+
+class TestModel_PolicyAssignmentV1Subject:
+    """
+    Test Class for PolicyAssignmentV1Subject
+    """
+
+    def test_policy_assignment_v1_subject_serialization(self):
+        """
+        Test serialization/deserialization for PolicyAssignmentV1Subject
+        """
+
+        # Construct a json representation of a PolicyAssignmentV1Subject model
+        policy_assignment_v1_subject_model_json = {}
+
+        # Construct a model instance of PolicyAssignmentV1Subject by calling from_dict on the json representation
+        policy_assignment_v1_subject_model = PolicyAssignmentV1Subject.from_dict(
+            policy_assignment_v1_subject_model_json
+        )
+        assert policy_assignment_v1_subject_model != False
+
+        # Construct a model instance of PolicyAssignmentV1Subject by calling from_dict on the json representation
+        policy_assignment_v1_subject_model_dict = PolicyAssignmentV1Subject.from_dict(
+            policy_assignment_v1_subject_model_json
+        ).__dict__
+        policy_assignment_v1_subject_model2 = PolicyAssignmentV1Subject(**policy_assignment_v1_subject_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_v1_subject_model == policy_assignment_v1_subject_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_v1_subject_model_json2 = policy_assignment_v1_subject_model.to_dict()
+        assert policy_assignment_v1_subject_model_json2 == policy_assignment_v1_subject_model_json
 
 
 class TestModel_PolicyCollection:
@@ -4975,6 +5949,14 @@ class TestModel_PolicyTemplate:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        v2_policy_subject_model = {}  # V2PolicySubject
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
         v2_policy_rule_model['key'] = 'testString'
         v2_policy_rule_model['operator'] = 'stringEquals'
@@ -4993,6 +5975,7 @@ class TestModel_PolicyTemplate:
         template_policy_model['type'] = 'access'
         template_policy_model['description'] = 'testString'
         template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['subject'] = v2_policy_subject_model
         template_policy_model['pattern'] = 'testString'
         template_policy_model['rule'] = v2_policy_rule_model
         template_policy_model['control'] = control_model
@@ -5035,12 +6018,25 @@ class TestModel_PolicyTemplateAssignmentCollection:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        policy_assignment_options_model = {}  # PolicyAssignmentOptions
-        policy_assignment_options_model['subject_type'] = 'iam_id'
-        policy_assignment_options_model['subject_id'] = 'testString'
-        policy_assignment_options_model['root_requester_id'] = 'testString'
-        policy_assignment_options_model['root_template_id'] = 'testString'
-        policy_assignment_options_model['root_template_version'] = 'testString'
+        assignment_target_details_model = {}  # AssignmentTargetDetails
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        policy_assignment_v1_options_root_template_model = {}  # PolicyAssignmentV1OptionsRootTemplate
+        policy_assignment_v1_options_root_template_model['id'] = 'testString'
+        policy_assignment_v1_options_root_template_model['version'] = 'testString'
+
+        policy_assignment_v1_options_root_model = {}  # PolicyAssignmentV1OptionsRoot
+        policy_assignment_v1_options_root_model['requester_id'] = 'testString'
+        policy_assignment_v1_options_root_model['assignment_id'] = 'testString'
+        policy_assignment_v1_options_root_model['template'] = policy_assignment_v1_options_root_template_model
+
+        policy_assignment_v1_options_model = {}  # PolicyAssignmentV1Options
+        policy_assignment_v1_options_model['root'] = policy_assignment_v1_options_root_model
+
+        assignment_template_details_model = {}  # AssignmentTemplateDetails
+        assignment_template_details_model['id'] = 'testString'
+        assignment_template_details_model['version'] = 'testString'
 
         assignment_resource_created_model = {}  # AssignmentResourceCreated
         assignment_resource_created_model['id'] = 'testString'
@@ -5069,23 +6065,23 @@ class TestModel_PolicyTemplateAssignmentCollection:
         policy_assignment_resource_policy_model['status'] = 'testString'
         policy_assignment_resource_policy_model['error_message'] = error_response_model
 
-        policy_assignment_resources_model = {}  # PolicyAssignmentResources
-        policy_assignment_resources_model['target'] = 'testString'
-        policy_assignment_resources_model['policy'] = policy_assignment_resource_policy_model
+        policy_assignment_v1_resources_model = {}  # PolicyAssignmentV1Resources
+        policy_assignment_v1_resources_model['target'] = assignment_template_details_model
+        policy_assignment_v1_resources_model['policy'] = policy_assignment_resource_policy_model
 
-        policy_assignment_model = {}  # PolicyAssignment
-        policy_assignment_model['template_id'] = 'testString'
-        policy_assignment_model['template_version'] = 'testString'
-        policy_assignment_model['assignment_id'] = 'testString'
-        policy_assignment_model['target_type'] = 'Account'
-        policy_assignment_model['target'] = 'testString'
-        policy_assignment_model['options'] = [policy_assignment_options_model]
-        policy_assignment_model['resources'] = [policy_assignment_resources_model]
-        policy_assignment_model['status'] = 'in_progress'
+        policy_assignment_v1_subject_model = {}  # PolicyAssignmentV1Subject
+
+        policy_template_assignment_items_model = {}  # PolicyTemplateAssignmentItemsPolicyAssignmentV1
+        policy_template_assignment_items_model['target'] = assignment_target_details_model
+        policy_template_assignment_items_model['options'] = policy_assignment_v1_options_model
+        policy_template_assignment_items_model['resources'] = [policy_assignment_v1_resources_model]
+        policy_template_assignment_items_model['subject'] = policy_assignment_v1_subject_model
+        policy_template_assignment_items_model['template'] = assignment_template_details_model
+        policy_template_assignment_items_model['status'] = 'in_progress'
 
         # Construct a json representation of a PolicyTemplateAssignmentCollection model
         policy_template_assignment_collection_model_json = {}
-        policy_template_assignment_collection_model_json['assignments'] = [policy_assignment_model]
+        policy_template_assignment_collection_model_json['assignments'] = [policy_template_assignment_items_model]
 
         # Construct a model instance of PolicyTemplateAssignmentCollection by calling from_dict on the json representation
         policy_template_assignment_collection_model = PolicyTemplateAssignmentCollection.from_dict(
@@ -5135,6 +6131,14 @@ class TestModel_PolicyTemplateCollection:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        v2_policy_subject_model = {}  # V2PolicySubject
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
         v2_policy_rule_model['key'] = 'testString'
         v2_policy_rule_model['operator'] = 'stringEquals'
@@ -5153,6 +6157,7 @@ class TestModel_PolicyTemplateCollection:
         template_policy_model['type'] = 'access'
         template_policy_model['description'] = 'testString'
         template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['subject'] = v2_policy_subject_model
         template_policy_model['pattern'] = 'testString'
         template_policy_model['rule'] = v2_policy_rule_model
         template_policy_model['control'] = control_model
@@ -5214,6 +6219,14 @@ class TestModel_PolicyTemplateLimitData:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        v2_policy_subject_model = {}  # V2PolicySubject
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
         v2_policy_rule_model['key'] = 'testString'
         v2_policy_rule_model['operator'] = 'stringEquals'
@@ -5232,6 +6245,7 @@ class TestModel_PolicyTemplateLimitData:
         template_policy_model['type'] = 'access'
         template_policy_model['description'] = 'testString'
         template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['subject'] = v2_policy_subject_model
         template_policy_model['pattern'] = 'testString'
         template_policy_model['rule'] = v2_policy_rule_model
         template_policy_model['control'] = control_model
@@ -5368,6 +6382,14 @@ class TestModel_PolicyTemplateVersionsCollection:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        v2_policy_subject_model = {}  # V2PolicySubject
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
         v2_policy_rule_model['key'] = 'testString'
         v2_policy_rule_model['operator'] = 'stringEquals'
@@ -5386,6 +6408,7 @@ class TestModel_PolicyTemplateVersionsCollection:
         template_policy_model['type'] = 'access'
         template_policy_model['description'] = 'testString'
         template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['subject'] = v2_policy_subject_model
         template_policy_model['pattern'] = 'testString'
         template_policy_model['rule'] = v2_policy_rule_model
         template_policy_model['control'] = control_model
@@ -5788,6 +6811,14 @@ class TestModel_TemplatePolicy:
         v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
         v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
 
+        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        v2_policy_subject_model = {}  # V2PolicySubject
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
         v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
         v2_policy_rule_model['key'] = 'testString'
         v2_policy_rule_model['operator'] = 'stringEquals'
@@ -5807,6 +6838,7 @@ class TestModel_TemplatePolicy:
         template_policy_model_json['type'] = 'access'
         template_policy_model_json['description'] = 'testString'
         template_policy_model_json['resource'] = v2_policy_resource_model
+        template_policy_model_json['subject'] = v2_policy_subject_model
         template_policy_model_json['pattern'] = 'testString'
         template_policy_model_json['rule'] = v2_policy_rule_model
         template_policy_model_json['control'] = control_model
@@ -6356,6 +7388,213 @@ class TestModel_ControlResponseControlWithEnrichedRoles:
         )
 
 
+class TestModel_GetPolicyAssignmentResponsePolicyAssignment:
+    """
+    Test Class for GetPolicyAssignmentResponsePolicyAssignment
+    """
+
+    def test_get_policy_assignment_response_policy_assignment_serialization(self):
+        """
+        Test serialization/deserialization for GetPolicyAssignmentResponsePolicyAssignment
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        policy_assignment_options_model = {}  # PolicyAssignmentOptions
+        policy_assignment_options_model['subject_type'] = 'iam_id'
+        policy_assignment_options_model['subject_id'] = 'testString'
+        policy_assignment_options_model['root_requester_id'] = 'testString'
+        policy_assignment_options_model['root_template_id'] = 'testString'
+        policy_assignment_options_model['root_template_version'] = 'testString'
+
+        assignment_resource_created_model = {}  # AssignmentResourceCreated
+        assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 38
+
+        policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
+        policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
+        policy_assignment_resource_policy_model['status'] = 'testString'
+        policy_assignment_resource_policy_model['error_message'] = error_response_model
+
+        policy_assignment_resources_model = {}  # PolicyAssignmentResources
+        policy_assignment_resources_model['target'] = 'testString'
+        policy_assignment_resources_model['policy'] = policy_assignment_resource_policy_model
+
+        # Construct a json representation of a GetPolicyAssignmentResponsePolicyAssignment model
+        get_policy_assignment_response_policy_assignment_model_json = {}
+        get_policy_assignment_response_policy_assignment_model_json['template_id'] = 'testString'
+        get_policy_assignment_response_policy_assignment_model_json['template_version'] = 'testString'
+        get_policy_assignment_response_policy_assignment_model_json['assignment_id'] = 'testString'
+        get_policy_assignment_response_policy_assignment_model_json['target_type'] = 'Account'
+        get_policy_assignment_response_policy_assignment_model_json['target'] = 'testString'
+        get_policy_assignment_response_policy_assignment_model_json['options'] = [policy_assignment_options_model]
+        get_policy_assignment_response_policy_assignment_model_json['resources'] = [policy_assignment_resources_model]
+        get_policy_assignment_response_policy_assignment_model_json['status'] = 'in_progress'
+
+        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignment by calling from_dict on the json representation
+        get_policy_assignment_response_policy_assignment_model = GetPolicyAssignmentResponsePolicyAssignment.from_dict(
+            get_policy_assignment_response_policy_assignment_model_json
+        )
+        assert get_policy_assignment_response_policy_assignment_model != False
+
+        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignment by calling from_dict on the json representation
+        get_policy_assignment_response_policy_assignment_model_dict = (
+            GetPolicyAssignmentResponsePolicyAssignment.from_dict(
+                get_policy_assignment_response_policy_assignment_model_json
+            ).__dict__
+        )
+        get_policy_assignment_response_policy_assignment_model2 = GetPolicyAssignmentResponsePolicyAssignment(
+            **get_policy_assignment_response_policy_assignment_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            get_policy_assignment_response_policy_assignment_model
+            == get_policy_assignment_response_policy_assignment_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        get_policy_assignment_response_policy_assignment_model_json2 = (
+            get_policy_assignment_response_policy_assignment_model.to_dict()
+        )
+        assert (
+            get_policy_assignment_response_policy_assignment_model_json2
+            == get_policy_assignment_response_policy_assignment_model_json
+        )
+
+
+class TestModel_GetPolicyAssignmentResponsePolicyAssignmentV1:
+    """
+    Test Class for GetPolicyAssignmentResponsePolicyAssignmentV1
+    """
+
+    def test_get_policy_assignment_response_policy_assignment_v1_serialization(self):
+        """
+        Test serialization/deserialization for GetPolicyAssignmentResponsePolicyAssignmentV1
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        assignment_target_details_model = {}  # AssignmentTargetDetails
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        policy_assignment_v1_options_root_template_model = {}  # PolicyAssignmentV1OptionsRootTemplate
+        policy_assignment_v1_options_root_template_model['id'] = 'testString'
+        policy_assignment_v1_options_root_template_model['version'] = 'testString'
+
+        policy_assignment_v1_options_root_model = {}  # PolicyAssignmentV1OptionsRoot
+        policy_assignment_v1_options_root_model['requester_id'] = 'testString'
+        policy_assignment_v1_options_root_model['assignment_id'] = 'testString'
+        policy_assignment_v1_options_root_model['template'] = policy_assignment_v1_options_root_template_model
+
+        policy_assignment_v1_options_model = {}  # PolicyAssignmentV1Options
+        policy_assignment_v1_options_model['root'] = policy_assignment_v1_options_root_model
+
+        assignment_template_details_model = {}  # AssignmentTemplateDetails
+        assignment_template_details_model['id'] = 'testString'
+        assignment_template_details_model['version'] = 'testString'
+
+        assignment_resource_created_model = {}  # AssignmentResourceCreated
+        assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 38
+
+        policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
+        policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
+        policy_assignment_resource_policy_model['status'] = 'testString'
+        policy_assignment_resource_policy_model['error_message'] = error_response_model
+
+        policy_assignment_v1_resources_model = {}  # PolicyAssignmentV1Resources
+        policy_assignment_v1_resources_model['target'] = assignment_template_details_model
+        policy_assignment_v1_resources_model['policy'] = policy_assignment_resource_policy_model
+
+        get_policy_assignment_response_policy_assignment_v1_subject_model = (
+            {}
+        )  # GetPolicyAssignmentResponsePolicyAssignmentV1Subject
+
+        # Construct a json representation of a GetPolicyAssignmentResponsePolicyAssignmentV1 model
+        get_policy_assignment_response_policy_assignment_v1_model_json = {}
+        get_policy_assignment_response_policy_assignment_v1_model_json['target'] = assignment_target_details_model
+        get_policy_assignment_response_policy_assignment_v1_model_json['options'] = policy_assignment_v1_options_model
+        get_policy_assignment_response_policy_assignment_v1_model_json['resources'] = [
+            policy_assignment_v1_resources_model
+        ]
+        get_policy_assignment_response_policy_assignment_v1_model_json['subject'] = (
+            get_policy_assignment_response_policy_assignment_v1_subject_model
+        )
+        get_policy_assignment_response_policy_assignment_v1_model_json['template'] = assignment_template_details_model
+        get_policy_assignment_response_policy_assignment_v1_model_json['status'] = 'in_progress'
+
+        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignmentV1 by calling from_dict on the json representation
+        get_policy_assignment_response_policy_assignment_v1_model = (
+            GetPolicyAssignmentResponsePolicyAssignmentV1.from_dict(
+                get_policy_assignment_response_policy_assignment_v1_model_json
+            )
+        )
+        assert get_policy_assignment_response_policy_assignment_v1_model != False
+
+        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignmentV1 by calling from_dict on the json representation
+        get_policy_assignment_response_policy_assignment_v1_model_dict = (
+            GetPolicyAssignmentResponsePolicyAssignmentV1.from_dict(
+                get_policy_assignment_response_policy_assignment_v1_model_json
+            ).__dict__
+        )
+        get_policy_assignment_response_policy_assignment_v1_model2 = GetPolicyAssignmentResponsePolicyAssignmentV1(
+            **get_policy_assignment_response_policy_assignment_v1_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            get_policy_assignment_response_policy_assignment_v1_model
+            == get_policy_assignment_response_policy_assignment_v1_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        get_policy_assignment_response_policy_assignment_v1_model_json2 = (
+            get_policy_assignment_response_policy_assignment_v1_model.to_dict()
+        )
+        assert (
+            get_policy_assignment_response_policy_assignment_v1_model_json2
+            == get_policy_assignment_response_policy_assignment_v1_model_json
+        )
+
+
 class TestModel_NestedConditionRuleAttribute:
     """
     Test Class for NestedConditionRuleAttribute
@@ -6436,6 +7675,211 @@ class TestModel_NestedConditionRuleWithConditions:
         # Convert model instance back to dict and verify no loss of data
         nested_condition_rule_with_conditions_model_json2 = nested_condition_rule_with_conditions_model.to_dict()
         assert nested_condition_rule_with_conditions_model_json2 == nested_condition_rule_with_conditions_model_json
+
+
+class TestModel_PolicyTemplateAssignmentItemsPolicyAssignment:
+    """
+    Test Class for PolicyTemplateAssignmentItemsPolicyAssignment
+    """
+
+    def test_policy_template_assignment_items_policy_assignment_serialization(self):
+        """
+        Test serialization/deserialization for PolicyTemplateAssignmentItemsPolicyAssignment
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        policy_assignment_options_model = {}  # PolicyAssignmentOptions
+        policy_assignment_options_model['subject_type'] = 'iam_id'
+        policy_assignment_options_model['subject_id'] = 'testString'
+        policy_assignment_options_model['root_requester_id'] = 'testString'
+        policy_assignment_options_model['root_template_id'] = 'testString'
+        policy_assignment_options_model['root_template_version'] = 'testString'
+
+        assignment_resource_created_model = {}  # AssignmentResourceCreated
+        assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 38
+
+        policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
+        policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
+        policy_assignment_resource_policy_model['status'] = 'testString'
+        policy_assignment_resource_policy_model['error_message'] = error_response_model
+
+        policy_assignment_resources_model = {}  # PolicyAssignmentResources
+        policy_assignment_resources_model['target'] = 'testString'
+        policy_assignment_resources_model['policy'] = policy_assignment_resource_policy_model
+
+        # Construct a json representation of a PolicyTemplateAssignmentItemsPolicyAssignment model
+        policy_template_assignment_items_policy_assignment_model_json = {}
+        policy_template_assignment_items_policy_assignment_model_json['template_id'] = 'testString'
+        policy_template_assignment_items_policy_assignment_model_json['template_version'] = 'testString'
+        policy_template_assignment_items_policy_assignment_model_json['assignment_id'] = 'testString'
+        policy_template_assignment_items_policy_assignment_model_json['target_type'] = 'Account'
+        policy_template_assignment_items_policy_assignment_model_json['target'] = 'testString'
+        policy_template_assignment_items_policy_assignment_model_json['options'] = [policy_assignment_options_model]
+        policy_template_assignment_items_policy_assignment_model_json['resources'] = [policy_assignment_resources_model]
+        policy_template_assignment_items_policy_assignment_model_json['status'] = 'in_progress'
+
+        # Construct a model instance of PolicyTemplateAssignmentItemsPolicyAssignment by calling from_dict on the json representation
+        policy_template_assignment_items_policy_assignment_model = (
+            PolicyTemplateAssignmentItemsPolicyAssignment.from_dict(
+                policy_template_assignment_items_policy_assignment_model_json
+            )
+        )
+        assert policy_template_assignment_items_policy_assignment_model != False
+
+        # Construct a model instance of PolicyTemplateAssignmentItemsPolicyAssignment by calling from_dict on the json representation
+        policy_template_assignment_items_policy_assignment_model_dict = (
+            PolicyTemplateAssignmentItemsPolicyAssignment.from_dict(
+                policy_template_assignment_items_policy_assignment_model_json
+            ).__dict__
+        )
+        policy_template_assignment_items_policy_assignment_model2 = PolicyTemplateAssignmentItemsPolicyAssignment(
+            **policy_template_assignment_items_policy_assignment_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            policy_template_assignment_items_policy_assignment_model
+            == policy_template_assignment_items_policy_assignment_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_template_assignment_items_policy_assignment_model_json2 = (
+            policy_template_assignment_items_policy_assignment_model.to_dict()
+        )
+        assert (
+            policy_template_assignment_items_policy_assignment_model_json2
+            == policy_template_assignment_items_policy_assignment_model_json
+        )
+
+
+class TestModel_PolicyTemplateAssignmentItemsPolicyAssignmentV1:
+    """
+    Test Class for PolicyTemplateAssignmentItemsPolicyAssignmentV1
+    """
+
+    def test_policy_template_assignment_items_policy_assignment_v1_serialization(self):
+        """
+        Test serialization/deserialization for PolicyTemplateAssignmentItemsPolicyAssignmentV1
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        assignment_target_details_model = {}  # AssignmentTargetDetails
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        policy_assignment_v1_options_root_template_model = {}  # PolicyAssignmentV1OptionsRootTemplate
+        policy_assignment_v1_options_root_template_model['id'] = 'testString'
+        policy_assignment_v1_options_root_template_model['version'] = 'testString'
+
+        policy_assignment_v1_options_root_model = {}  # PolicyAssignmentV1OptionsRoot
+        policy_assignment_v1_options_root_model['requester_id'] = 'testString'
+        policy_assignment_v1_options_root_model['assignment_id'] = 'testString'
+        policy_assignment_v1_options_root_model['template'] = policy_assignment_v1_options_root_template_model
+
+        policy_assignment_v1_options_model = {}  # PolicyAssignmentV1Options
+        policy_assignment_v1_options_model['root'] = policy_assignment_v1_options_root_model
+
+        assignment_template_details_model = {}  # AssignmentTemplateDetails
+        assignment_template_details_model['id'] = 'testString'
+        assignment_template_details_model['version'] = 'testString'
+
+        assignment_resource_created_model = {}  # AssignmentResourceCreated
+        assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 38
+
+        policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
+        policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
+        policy_assignment_resource_policy_model['status'] = 'testString'
+        policy_assignment_resource_policy_model['error_message'] = error_response_model
+
+        policy_assignment_v1_resources_model = {}  # PolicyAssignmentV1Resources
+        policy_assignment_v1_resources_model['target'] = assignment_template_details_model
+        policy_assignment_v1_resources_model['policy'] = policy_assignment_resource_policy_model
+
+        policy_assignment_v1_subject_model = {}  # PolicyAssignmentV1Subject
+
+        # Construct a json representation of a PolicyTemplateAssignmentItemsPolicyAssignmentV1 model
+        policy_template_assignment_items_policy_assignment_v1_model_json = {}
+        policy_template_assignment_items_policy_assignment_v1_model_json['target'] = assignment_target_details_model
+        policy_template_assignment_items_policy_assignment_v1_model_json['options'] = policy_assignment_v1_options_model
+        policy_template_assignment_items_policy_assignment_v1_model_json['resources'] = [
+            policy_assignment_v1_resources_model
+        ]
+        policy_template_assignment_items_policy_assignment_v1_model_json['subject'] = policy_assignment_v1_subject_model
+        policy_template_assignment_items_policy_assignment_v1_model_json['template'] = assignment_template_details_model
+        policy_template_assignment_items_policy_assignment_v1_model_json['status'] = 'in_progress'
+
+        # Construct a model instance of PolicyTemplateAssignmentItemsPolicyAssignmentV1 by calling from_dict on the json representation
+        policy_template_assignment_items_policy_assignment_v1_model = (
+            PolicyTemplateAssignmentItemsPolicyAssignmentV1.from_dict(
+                policy_template_assignment_items_policy_assignment_v1_model_json
+            )
+        )
+        assert policy_template_assignment_items_policy_assignment_v1_model != False
+
+        # Construct a model instance of PolicyTemplateAssignmentItemsPolicyAssignmentV1 by calling from_dict on the json representation
+        policy_template_assignment_items_policy_assignment_v1_model_dict = (
+            PolicyTemplateAssignmentItemsPolicyAssignmentV1.from_dict(
+                policy_template_assignment_items_policy_assignment_v1_model_json
+            ).__dict__
+        )
+        policy_template_assignment_items_policy_assignment_v1_model2 = PolicyTemplateAssignmentItemsPolicyAssignmentV1(
+            **policy_template_assignment_items_policy_assignment_v1_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            policy_template_assignment_items_policy_assignment_v1_model
+            == policy_template_assignment_items_policy_assignment_v1_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_template_assignment_items_policy_assignment_v1_model_json2 = (
+            policy_template_assignment_items_policy_assignment_v1_model.to_dict()
+        )
+        assert (
+            policy_template_assignment_items_policy_assignment_v1_model_json2
+            == policy_template_assignment_items_policy_assignment_v1_model_json
+        )
 
 
 class TestModel_V2PolicyRuleRuleAttribute:
