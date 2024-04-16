@@ -1,3 +1,10 @@
+## [0.53.4](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.3...v0.53.4) (2024-04-16)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** S2S support for enterprise accounts ([#253](https://github.com/IBM/platform-services-python-sdk/issues/253)) ([c5c2f84](https://github.com/IBM/platform-services-python-sdk/commit/c5c2f8466fc57c7f2fc6042da43bffd6364e8db3))
+
 ## [0.53.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.2...v0.53.3) (2024-04-15)
 
 
