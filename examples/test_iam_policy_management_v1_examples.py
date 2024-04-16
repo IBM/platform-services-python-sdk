@@ -847,7 +847,6 @@ class TestIamPolicyManagementV1Examples:
         except ApiException as e:
             pytest.fail(str(e))
 
-    
     @needscredentials
     def test_create_policy_assignment_example(self):
         """
@@ -856,15 +855,17 @@ class TestIamPolicyManagementV1Examples:
         try:
             print('\ncreate_policy_template_assignment() result:')
             # begin-create_policy_template_assignment
-            response=iam_policy_management_service.create_policy_template_assignment(
-            version="1.0",
-            target=AssignmentTargetDetails(
-                type="Account",
-                id=example_target_account_id,
-            ),
-            options=PolicyAssignmentV1Options(root=PolicyAssignmentV1OptionsRoot(requester_id="test_sdk", assignment_id="test")),
-            templates=[AssignmentTemplateDetails(id=example_template_id, version=example_basic_template_version)],
-         )
+            response = iam_policy_management_service.create_policy_template_assignment(
+                version="1.0",
+                target=AssignmentTargetDetails(
+                    type="Account",
+                    id=example_target_account_id,
+                ),
+                options=PolicyAssignmentV1Options(
+                    root=PolicyAssignmentV1OptionsRoot(requester_id="test_sdk", assignment_id="test")
+                ),
+                templates=[AssignmentTemplateDetails(id=example_template_id, version=example_basic_template_version)],
+            )
             result = response.get_result()
             assert result is not None
 
@@ -878,7 +879,7 @@ class TestIamPolicyManagementV1Examples:
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_update_policy_assignment_example(self):
         """
@@ -978,8 +979,8 @@ class TestIamPolicyManagementV1Examples:
             # begin-delete_policy_assignment
 
             response = iam_policy_management_service.delete_policy_assignment(
-            assignment_id=example_assignment_id,
-        )
+                assignment_id=example_assignment_id,
+            )
 
             # end-delete_policy_assignment
             print('\ndelete_policy_assignment() response status code: ', response.get_status_code())

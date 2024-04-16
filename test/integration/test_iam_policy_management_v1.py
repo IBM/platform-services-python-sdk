@@ -751,20 +751,24 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             name="S2STest",
             account_id=self.testAccountId,
             policy=TemplatePolicy(
-            type='authorization',
-            control=Control(grant=Grant(roles=[PolicyRole(role_id="crn:v1:bluemix:public:iam::::serviceRole:Writer")])),
-            resource=V2PolicyResource(
-            attributes=[
-                V2PolicyResourceAttribute(key='serviceName', value='cloud-object-storage', operator='stringEquals'),
-            ],
+                type='authorization',
+                control=Control(
+                    grant=Grant(roles=[PolicyRole(role_id="crn:v1:bluemix:public:iam::::serviceRole:Writer")])
+                ),
+                resource=V2PolicyResource(
+                    attributes=[
+                        V2PolicyResourceAttribute(
+                            key='serviceName', value='cloud-object-storage', operator='stringEquals'
+                        ),
+                    ],
+                ),
+                subject=V2PolicySubject(
+                    attributes=[
+                        V2PolicySubjectAttribute(key='serviceName', value='compliance', operator='stringEquals'),
+                    ],
+                ),
+                description='SDK Test Policy',
             ),
-            subject=V2PolicySubject(
-            attributes=[
-                V2PolicySubjectAttribute(key='serviceName', value='compliance', operator='stringEquals'),
-            ],
-            ),
-             description='SDK Test Policy',
-        ),
             description='SDK Test Policy S2S Template',
             committed=True,
         )
@@ -782,24 +786,26 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         self.__class__.testS2STemplateId = result.id
         self.__class__.testS2SBaseTemplateVersion = result.version
         assert result.state == "active"
-    
+
     def test_25_create_policy_s2s_template_version(self):
         response = self.service.create_policy_template_version(
             policy=TemplatePolicy(
-            type='authorization',
-            control=Control(grant=Grant(roles=[PolicyRole(role_id="crn:v1:bluemix:public:iam::::serviceRole:Reader")])),
-            resource=V2PolicyResource(
-            attributes=[
-                V2PolicyResourceAttribute(key='serviceName', value='kms', operator='stringEquals'),
-            ],
+                type='authorization',
+                control=Control(
+                    grant=Grant(roles=[PolicyRole(role_id="crn:v1:bluemix:public:iam::::serviceRole:Reader")])
+                ),
+                resource=V2PolicyResource(
+                    attributes=[
+                        V2PolicyResourceAttribute(key='serviceName', value='kms', operator='stringEquals'),
+                    ],
+                ),
+                subject=V2PolicySubject(
+                    attributes=[
+                        V2PolicySubjectAttribute(key='serviceName', value='compliance', operator='stringEquals'),
+                    ],
+                ),
+                description='SDK Test Policy',
             ),
-            subject=V2PolicySubject(
-            attributes=[
-                V2PolicySubjectAttribute(key='serviceName', value='compliance', operator='stringEquals'),
-            ],
-            ),
-             description='SDK Test Policy',
-        ),
             description='SDK Test Policy S2S Template',
             committed=True,
             policy_template_id=self.testS2STemplateId,
@@ -819,15 +825,17 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result.state == "active"
 
     def test_26_create_policy_assignment(self):
-        response=self.service.create_policy_template_assignment(
-        version="1.0",
-        target=AssignmentTargetDetails(
-            type="Account",
-            id=self.testTargetAccountId,
-        ),
-        options=PolicyAssignmentV1Options(root=PolicyAssignmentV1OptionsRoot(requester_id="test_sdk", assignment_id="test")),
-        templates=[AssignmentTemplateDetails(id=self.testS2STemplateId, version=self.testS2SBaseTemplateVersion)],
-         )
+        response = self.service.create_policy_template_assignment(
+            version="1.0",
+            target=AssignmentTargetDetails(
+                type="Account",
+                id=self.testTargetAccountId,
+            ),
+            options=PolicyAssignmentV1Options(
+                root=PolicyAssignmentV1OptionsRoot(requester_id="test_sdk", assignment_id="test")
+            ),
+            templates=[AssignmentTemplateDetails(id=self.testS2STemplateId, version=self.testS2SBaseTemplateVersion)],
+        )
         assert response.get_status_code() == 201
         result_dict = response.get_result()
         assert result_dict is not None
@@ -835,8 +843,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result = PolicyAssignmentV1Collection.from_dict(result_dict)
         print("Policy Assignment Creation: ", result)
         assert result is not None
-        self.__class__.testAssignmentId=result.assignments[0].id
-        self.__class__.testAssignmentPolicyId=result.assignments[0].resources[0].policy.resource_created.id
+        self.__class__.testAssignmentId = result.assignments[0].id
+        self.__class__.testAssignmentPolicyId = result.assignments[0].resources[0].policy.resource_created.id
         self.__class__.testPolicyAssignmentETag = response.get_headers().get(self.etagHeader)
 
     def test_27_list_policy_assignments(self):
@@ -901,7 +909,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result = V2PolicyTemplateMetaData.from_dict(result_dict)
         assert result is not None
         assert result.template is not None
-    
+
     def test_30_delete_policy_assignment(self):
         response = self.service.delete_policy_assignment(
             assignment_id=self.testAssignmentId,
