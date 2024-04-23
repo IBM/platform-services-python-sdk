@@ -1664,12 +1664,9 @@ class CreateAccountResponse:
           iam policies that was created.
     """
 
-    def __init__(self,
-                 *,
-                 account_id: str = None,
-                 iam_service_id: str = None,
-                 iam_apikey_id: str = None,
-                 iam_apikey: str = None) -> None:
+    def __init__(
+        self, *, account_id: str = None, iam_service_id: str = None, iam_apikey_id: str = None, iam_apikey: str = None
+    ) -> None:
         """
         Initialize a CreateAccountResponse object.
 
