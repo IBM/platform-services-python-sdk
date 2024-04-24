@@ -1,3 +1,10 @@
+## [0.53.5](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.4...v0.53.5) (2024-04-24)
+
+
+### Bug Fixes
+
+* **Enterprise Management:** update create_account response payload ([#254](https://github.com/IBM/platform-services-python-sdk/issues/254)) ([c3b0df3](https://github.com/IBM/platform-services-python-sdk/commit/c3b0df388bf591d175b3df8a7760a5fbf4103635))
+
 ## [0.53.4](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.3...v0.53.4) (2024-04-16)
 
 
