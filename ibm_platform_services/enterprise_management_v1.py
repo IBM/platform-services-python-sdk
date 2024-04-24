@@ -1655,28 +1655,47 @@ class CreateAccountResponse:
     """
     A newly-created account.
 
-    :param str account_id: (optional) The ID of the account entity that was created.
+    :attr str account_id: (optional) The ID of the account entity that was created.
+    :attr str iam_service_id: (optional) The iam_service_id of the account entity
+          that was created.
+    :attr str iam_apikey_id: (optional) The iam_apikey_id of the account entity that
+          was created.
+    :attr str iam_apikey: (optional) The iam_apikey of the account entity with owner
+          iam policies that was created.
     """
 
     def __init__(
-        self,
-        *,
-        account_id: Optional[str] = None,
+        self, *, account_id: str = None, iam_service_id: str = None, iam_apikey_id: str = None, iam_apikey: str = None
     ) -> None:
         """
         Initialize a CreateAccountResponse object.
 
         :param str account_id: (optional) The ID of the account entity that was
                created.
+        :param str iam_service_id: (optional) The iam_service_id of the account
+               entity that was created.
+        :param str iam_apikey_id: (optional) The iam_apikey_id of the account
+               entity that was created.
+        :param str iam_apikey: (optional) The iam_apikey of the account entity with
+               owner iam policies that was created.
         """
         self.account_id = account_id
+        self.iam_service_id = iam_service_id
+        self.iam_apikey_id = iam_apikey_id
+        self.iam_apikey = iam_apikey
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'CreateAccountResponse':
         """Initialize a CreateAccountResponse object from a json dictionary."""
         args = {}
-        if (account_id := _dict.get('account_id')) is not None:
-            args['account_id'] = account_id
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        if 'iam_service_id' in _dict:
+            args['iam_service_id'] = _dict.get('iam_service_id')
+        if 'iam_apikey_id' in _dict:
+            args['iam_apikey_id'] = _dict.get('iam_apikey_id')
+        if 'iam_apikey' in _dict:
+            args['iam_apikey'] = _dict.get('iam_apikey')
         return cls(**args)
 
     @classmethod
@@ -1689,6 +1708,12 @@ class CreateAccountResponse:
         _dict = {}
         if hasattr(self, 'account_id') and self.account_id is not None:
             _dict['account_id'] = self.account_id
+        if hasattr(self, 'iam_service_id') and self.iam_service_id is not None:
+            _dict['iam_service_id'] = self.iam_service_id
+        if hasattr(self, 'iam_apikey_id') and self.iam_apikey_id is not None:
+            _dict['iam_apikey_id'] = self.iam_apikey_id
+        if hasattr(self, 'iam_apikey') and self.iam_apikey is not None:
+            _dict['iam_apikey'] = self.iam_apikey
         return _dict
 
     def _to_dict(self):
