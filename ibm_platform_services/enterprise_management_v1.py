@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
+# IBM OpenAPI SDK Code Generator Version: 3.89.1-ed9d96f4-20240417-193115
 
 """
 The Enterprise Management API enables you to create and manage an enterprise, account
@@ -1655,17 +1655,22 @@ class CreateAccountResponse:
     """
     A newly-created account.
 
-    :attr str account_id: (optional) The ID of the account entity that was created.
-    :attr str iam_service_id: (optional) The iam_service_id of the account entity
+    :param str account_id: (optional) The ID of the account entity that was created.
+    :param str iam_service_id: (optional) The iam_service_id of the account entity
           that was created.
-    :attr str iam_apikey_id: (optional) The iam_apikey_id of the account entity that
-          was created.
-    :attr str iam_apikey: (optional) The iam_apikey of the account entity with owner
-          iam policies that was created.
+    :param str iam_apikey_id: (optional) The iam_apikey_id of the account entity
+          that was created.
+    :param str iam_apikey: (optional) The iam_apikey of the account entity with
+          owner iam policies that was created.
     """
 
     def __init__(
-        self, *, account_id: str = None, iam_service_id: str = None, iam_apikey_id: str = None, iam_apikey: str = None
+        self,
+        *,
+        account_id: Optional[str] = None,
+        iam_service_id: Optional[str] = None,
+        iam_apikey_id: Optional[str] = None,
+        iam_apikey: Optional[str] = None,
     ) -> None:
         """
         Initialize a CreateAccountResponse object.
@@ -1688,14 +1693,14 @@ class CreateAccountResponse:
     def from_dict(cls, _dict: Dict) -> 'CreateAccountResponse':
         """Initialize a CreateAccountResponse object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'iam_service_id' in _dict:
-            args['iam_service_id'] = _dict.get('iam_service_id')
-        if 'iam_apikey_id' in _dict:
-            args['iam_apikey_id'] = _dict.get('iam_apikey_id')
-        if 'iam_apikey' in _dict:
-            args['iam_apikey'] = _dict.get('iam_apikey')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (iam_service_id := _dict.get('iam_service_id')) is not None:
+            args['iam_service_id'] = iam_service_id
+        if (iam_apikey_id := _dict.get('iam_apikey_id')) is not None:
+            args['iam_apikey_id'] = iam_apikey_id
+        if (iam_apikey := _dict.get('iam_apikey')) is not None:
+            args['iam_apikey'] = iam_apikey
         return cls(**args)
 
     @classmethod
