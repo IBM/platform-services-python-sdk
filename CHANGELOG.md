@@ -1,3 +1,10 @@
+## [0.53.6](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.5...v0.53.6) (2024-04-25)
+
+
+### Bug Fixes
+
+* **Enterprise Management:** re-gen service after recent create_account api response changes ([#255](https://github.com/IBM/platform-services-python-sdk/issues/255)) ([40d7ae5](https://github.com/IBM/platform-services-python-sdk/commit/40d7ae5285021d6c2e32741d79cb7e439eb656d1))
+
 ## [0.53.5](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.4...v0.53.5) (2024-04-24)
 
 
