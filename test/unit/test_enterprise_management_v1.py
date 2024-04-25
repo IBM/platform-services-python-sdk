@@ -706,7 +706,7 @@ class TestCreateAccount:
         """
         # Set up mock
         url = preprocess_url('/accounts')
-        mock_response = '{"account_id": "account_id"}'
+        mock_response = '{"account_id": "account_id", "iam_service_id": "iam_service_id", "iam_apikey_id": "iam_apikey_id", "iam_apikey": "iam_apikey"}'
         responses.add(
             responses.POST,
             url,
@@ -768,7 +768,7 @@ class TestCreateAccount:
         """
         # Set up mock
         url = preprocess_url('/accounts')
-        mock_response = '{"account_id": "account_id"}'
+        mock_response = '{"account_id": "account_id", "iam_service_id": "iam_service_id", "iam_apikey_id": "iam_apikey_id", "iam_apikey": "iam_apikey"}'
         responses.add(
             responses.POST,
             url,
@@ -1988,6 +1988,9 @@ class TestModel_CreateAccountResponse:
         # Construct a json representation of a CreateAccountResponse model
         create_account_response_model_json = {}
         create_account_response_model_json['account_id'] = 'testString'
+        create_account_response_model_json['iam_service_id'] = 'testString'
+        create_account_response_model_json['iam_apikey_id'] = 'testString'
+        create_account_response_model_json['iam_apikey'] = 'testString'
 
         # Construct a model instance of CreateAccountResponse by calling from_dict on the json representation
         create_account_response_model = CreateAccountResponse.from_dict(create_account_response_model_json)
