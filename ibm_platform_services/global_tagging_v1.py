@@ -61,7 +61,9 @@ class GlobalTaggingV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -659,7 +661,6 @@ class ListTagsEnums:
         USER = 'user'
         SERVICE = 'service'
         ACCESS = 'access'
-
     class Providers(str, Enum):
         """
         Select a provider. Supported values are `ghost` and `ims`. To list both Global
@@ -670,7 +671,6 @@ class ListTagsEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class OrderByName(str, Enum):
         """
         Order the output by tag name.
@@ -705,7 +705,6 @@ class DeleteTagAllEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -731,7 +730,6 @@ class DeleteTagEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -1082,6 +1080,7 @@ class DeleteTagResultsItem:
 
         GHOST = 'ghost'
         IMS = 'ims'
+
 
 
 class DeleteTagsResult:

@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.global_search_v2 import *
 
 
-_service = GlobalSearchV2(authenticator=NoAuthAuthenticator())
+_service = GlobalSearchV2(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://api.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -130,6 +132,7 @@ class TestSearch:
         is_public = 'false'
         impersonate_user = 'testString'
         can_tag = 'false'
+        is_project_resource = 'false'
 
         # Invoke method
         response = _service.search(
@@ -147,6 +150,7 @@ class TestSearch:
             is_public=is_public,
             impersonate_user=impersonate_user,
             can_tag=can_tag,
+            is_project_resource=is_project_resource,
             headers={},
         )
 
@@ -165,6 +169,7 @@ class TestSearch:
         assert 'is_public={}'.format(is_public) in query_string
         assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'can_tag={}'.format(can_tag) in query_string
+        assert 'is_project_resource={}'.format(is_project_resource) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['query'] == 'testString'

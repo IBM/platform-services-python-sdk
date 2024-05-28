@@ -61,7 +61,9 @@ class GlobalSearchV2(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -99,6 +101,7 @@ class GlobalSearchV2(BaseService):
         is_public: Optional[str] = None,
         impersonate_user: Optional[str] = None,
         can_tag: Optional[str] = None,
+        is_project_resource: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -181,6 +184,13 @@ class GlobalSearchV2(BaseService):
                (only a GhoST admin can use this parameter). If false (default), only
                resources user can view are returned; if true, only resources that user has
                permissions for tagging are returned (_for administrators only_).
+        :param str is_project_resource: (optional) Determines if documents
+               belonging to Project family should be included in result set or not.
+               Possible values are false (default), true or any. If false, documents
+               belonging to all families except Project are returned; if true, only
+               documents belonging to Project family are returned; if any, documents of
+               any family are returned. Only authorized ServiceIds can use this query
+               parameter.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ScanResult` object
@@ -207,6 +217,7 @@ class GlobalSearchV2(BaseService):
             'is_public': is_public,
             'impersonate_user': impersonate_user,
             'can_tag': can_tag,
+            'is_project_resource': is_project_resource,
         }
 
         data = {
@@ -252,7 +263,6 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
-
     class IsReclaimed(str, Enum):
         """
         Determines if reclaimed documents should be included in result set or not.
@@ -264,7 +274,6 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
-
     class IsPublic(str, Enum):
         """
         Determines if public resources should be included in result set or not. Possible
@@ -275,7 +284,6 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
-
     class CanTag(str, Enum):
         """
         Determines if the result set must return the resources that the user can tag or
@@ -287,6 +295,18 @@ class SearchEnums:
 
         TRUE = 'true'
         FALSE = 'false'
+    class IsProjectResource(str, Enum):
+        """
+        Determines if documents belonging to Project family should be included in result
+        set or not. Possible values are false (default), true or any. If false, documents
+        belonging to all families except Project are returned; if true, only documents
+        belonging to Project family are returned; if any, documents of any family are
+        returned. Only authorized ServiceIds can use this query parameter.
+        """
+
+        TRUE = 'true'
+        FALSE = 'false'
+        ANY = 'any'
 
 
 ##############################################################################
