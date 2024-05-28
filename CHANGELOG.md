@@ -1,3 +1,10 @@
+## [0.53.7](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.6...v0.53.7) (2024-05-28)
+
+
+### Bug Fixes
+
+* **Global Search:** add support for is_project_resource query param ([62773e5](https://github.com/IBM/platform-services-python-sdk/commit/62773e566b20859cc8a6d240f15a873504c9b951))
+
 ## [0.53.6](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.5...v0.53.6) (2024-04-25)
 
 
