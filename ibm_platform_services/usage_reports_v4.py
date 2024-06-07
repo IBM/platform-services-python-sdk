@@ -2046,6 +2046,8 @@ class Metric:
         self.unit_name = unit_name
         self.non_chargeable = non_chargeable
         self.discounts = discounts
+        self.volume_discount = volume_discount
+        self.volume_cost = volume_cost
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Metric':
@@ -2083,6 +2085,10 @@ class Metric:
             args['discounts'] = [Discount.from_dict(v) for v in discounts]
         else:
             raise ValueError('Required property \'discounts\' not present in Metric JSON')
+        if (volume_discount := _dict.get('volume_discount')) is not None:
+            args['volume_discount'] = volume_discount
+        if (volume_cost := _dict.get('volume_cost')) is not None:
+            args['volume_cost'] = volume_cost
         return cls(**args)
 
     @classmethod
@@ -2121,6 +2127,10 @@ class Metric:
                 else:
                     discounts_list.append(v.to_dict())
             _dict['discounts'] = discounts_list
+        if hasattr(self, 'volume_discount') and self.volume_discount is not None:
+            _dict['volume_discount'] = self.volume_discount
+        if hasattr(self, 'volume_cost') and self.volume_cost is not None:
+            _dict['volume_cost'] = self.volume_cost
         return _dict
 
     def _to_dict(self):
