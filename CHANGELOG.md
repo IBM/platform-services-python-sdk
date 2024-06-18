@@ -1,3 +1,10 @@
+# [0.54.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.7...v0.54.0) (2024-06-18)
+
+
+### Features
+
+* **Usage Reports:** re-gen service to pickup changes to Instance Reports ([#258](https://github.com/IBM/platform-services-python-sdk/issues/258)) ([87a3e6f](https://github.com/IBM/platform-services-python-sdk/commit/87a3e6f287a203c370734e925f350ef3416b4e92))
+
 ## [0.53.7](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.6...v0.53.7) (2024-05-28)
 
 
