@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 Examples for UsageReportsV4
 """
 
+from ibm_cloud_sdk_core import ApiException, read_external_sources
 import os
 import pytest
-from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.usage_reports_v4 import *
 
 #
@@ -54,12 +54,11 @@ cos_location = None
 snapshot_date_from = None
 snapshot_date_to = None
 
+
 ##############################################################################
 # Start of Examples for Service: UsageReportsV4
 ##############################################################################
 # region
-
-
 class TestUsageReportsV4Examples:
     """
     Example Test Class for UsageReportsV4
@@ -129,11 +128,14 @@ class TestUsageReportsV4Examples:
         """
         try:
             print('\nget_account_summary() result:')
+
             # begin-get_account_summary
 
-            account_summary = usage_reports_service.get_account_summary(
-                account_id=account_id, billingmonth=billing_month
-            ).get_result()
+            response = usage_reports_service.get_account_summary(
+                account_id=account_id,
+                billingmonth=billing_month,
+            )
+            account_summary = response.get_result()
 
             print(json.dumps(account_summary, indent=2))
 
@@ -149,11 +151,14 @@ class TestUsageReportsV4Examples:
         """
         try:
             print('\nget_account_usage() result:')
+
             # begin-get_account_usage
 
-            account_usage = usage_reports_service.get_account_usage(
-                account_id=account_id, billingmonth=billing_month
-            ).get_result()
+            response = usage_reports_service.get_account_usage(
+                account_id=account_id,
+                billingmonth=billing_month,
+            )
+            account_usage = response.get_result()
 
             print(json.dumps(account_usage, indent=2))
 
@@ -169,16 +174,103 @@ class TestUsageReportsV4Examples:
         """
         try:
             print('\nget_resource_group_usage() result:')
+
             # begin-get_resource_group_usage
 
-            resource_group_usage = usage_reports_service.get_resource_group_usage(
-                account_id=account_id, resource_group_id=resource_group_id, billingmonth=billing_month
-            ).get_result()
+            response = usage_reports_service.get_resource_group_usage(
+                account_id=account_id,
+                resource_group_id=resource_group_id,
+                billingmonth=billing_month,
+            )
+            resource_group_usage = response.get_result()
 
             print(json.dumps(resource_group_usage, indent=2))
 
             # end-get_resource_group_usage
 
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_resource_usage_account_example(self):
+        """
+        get_resource_usage_account request example
+        """
+        try:
+            print('\nget_resource_usage_account() result:')
+
+            # begin-get_resource_usage_account
+
+            all_results = []
+            pager = GetResourceUsageAccountPager(
+                client=usage_reports_service,
+                account_id=account_id,
+                billingmonth=billing_month,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
+
+            print(json.dumps(all_results, indent=2))
+
+            # end-get_resource_usage_account
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_resource_usage_resource_group_example(self):
+        """
+        get_resource_usage_resource_group request example
+        """
+        try:
+            print('\nget_resource_usage_resource_group() result:')
+
+            # begin-get_resource_usage_resource_group
+
+            all_results = []
+            pager = GetResourceUsageResourceGroupPager(
+                client=usage_reports_service,
+                account_id=account_id,
+                resource_group_id=resource_group_id,
+                billingmonth=billing_month,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
+
+            print(json.dumps(all_results, indent=2))
+
+            # end-get_resource_usage_resource_group
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_resource_usage_org_example(self):
+        """
+        get_resource_usage_org request example
+        """
+        try:
+            print('\nget_resource_usage_org() result:')
+
+            # begin-get_resource_usage_org
+
+            all_results = []
+            pager = GetResourceUsageOrgPager(
+                client=usage_reports_service,
+                account_id=account_id,
+                organization_id=org_id,
+                billingmonth=billing_month,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
+
+            print(json.dumps(all_results, indent=2))
+
+            # end-get_resource_usage_org
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -203,72 +295,13 @@ class TestUsageReportsV4Examples:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_get_resource_usage_account_example(self):
-        """
-        get_resource_usage_account request example
-        """
-        try:
-            print('\nget_resource_usage_account() result:')
-            # begin-get_resource_usage_account
-
-            instances_usage = usage_reports_service.get_resource_usage_account(
-                account_id=account_id, billingmonth=billing_month
-            ).get_result()
-
-            print(json.dumps(instances_usage, indent=2))
-
-            # end-get_resource_usage_account
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_get_resource_usage_resource_group_example(self):
-        """
-        get_resource_usage_resource_group request example
-        """
-        try:
-            print('\nget_resource_usage_resource_group() result:')
-            # begin-get_resource_usage_resource_group
-
-            instances_usage = usage_reports_service.get_resource_usage_resource_group(
-                account_id=account_id, resource_group_id=resource_group_id, billingmonth=billing_month
-            ).get_result()
-
-            print(json.dumps(instances_usage, indent=2))
-
-            # end-get_resource_usage_resource_group
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_get_resource_usage_org_example(self):
-        """
-        get_resource_usage_org request example
-        """
-        try:
-            print('\nget_resource_usage_org() result:')
-            # begin-get_resource_usage_org
-
-            instances_usage = usage_reports_service.get_resource_usage_org(
-                account_id=account_id, organization_id=org_id, billingmonth=billing_month
-            ).get_result()
-
-            print(json.dumps(instances_usage, indent=2))
-
-            # end-get_resource_usage_org
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
     def test_create_reports_snapshot_config_example(self):
         """
         create_reports_snapshot_config request example
         """
         try:
             print('\ncreate_reports_snapshot_config() result:')
+
             # begin-create_reports_snapshot_config
 
             response = usage_reports_service.create_reports_snapshot_config(
@@ -293,6 +326,7 @@ class TestUsageReportsV4Examples:
         """
         try:
             print('\nget_reports_snapshot_config() result:')
+
             # begin-get_reports_snapshot_config
 
             response = usage_reports_service.get_reports_snapshot_config(
@@ -314,10 +348,12 @@ class TestUsageReportsV4Examples:
         """
         try:
             print('\nupdate_reports_snapshot_config() result:')
+
             # begin-update_reports_snapshot_config
 
             response = usage_reports_service.update_reports_snapshot_config(
-                account_id=account_id, report_types=["account_summary", "enterprise_summary"]
+                account_id=account_id,
+                report_types=["account_summary", "enterprise_summary"],
             )
             snapshot_config = response.get_result()
 
@@ -335,6 +371,7 @@ class TestUsageReportsV4Examples:
         """
         try:
             print('\nvalidate_reports_snapshot_config() result:')
+
             # begin-validate_reports_snapshot_config
 
             response = usage_reports_service.validate_reports_snapshot_config(
@@ -359,7 +396,9 @@ class TestUsageReportsV4Examples:
         """
         try:
             print('\nget_reports_snapshot() result:')
+
             # begin-get_reports_snapshot
+
             all_results = []
             pager = GetReportsSnapshotPager(
                 client=usage_reports_service,
@@ -377,7 +416,6 @@ class TestUsageReportsV4Examples:
             print(json.dumps(all_results, indent=2))
 
             # end-get_reports_snapshot
-
         except ApiException as e:
             pytest.fail(str(e))
 
