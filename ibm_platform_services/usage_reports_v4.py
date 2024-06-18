@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
+# IBM OpenAPI SDK Code Generator Version: 3.89.0-f33c767b-20240410-144451
 
 """
 Usage reports for IBM Cloud accounts
@@ -892,12 +892,12 @@ class UsageReportsV4(BaseService):
         self,
         account_id: str,
         *,
-        interval: str = None,
-        cos_bucket: str = None,
-        cos_location: str = None,
-        cos_reports_folder: str = None,
-        report_types: List[str] = None,
-        versioning: str = None,
+        interval: Optional[str] = None,
+        cos_bucket: Optional[str] = None,
+        cos_location: Optional[str] = None,
+        cos_reports_folder: Optional[str] = None,
+        report_types: Optional[List[str]] = None,
+        versioning: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -972,10 +972,10 @@ class UsageReportsV4(BaseService):
         account_id: str,
         month: str,
         *,
-        date_from: int = None,
-        date_to: int = None,
-        limit: int = None,
-        start: str = None,
+        date_from: Optional[int] = None,
+        date_to: Optional[int] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1998,6 +1998,10 @@ class Metric:
     :param bool non_chargeable: (optional) When set to `true`, the cost is for
           informational purpose and is not included while calculating the plan charges.
     :param List[Discount] discounts: All the discounts applicable to the metric.
+    :param float volume_discount: (optional) This percentage reflects the reduction
+          to the original cost that you receive under a volume based pricing structure.
+    :param float volume_cost: (optional) The original cost adjusted for volume based
+          discounts that are applied at the account level.
     """
 
     def __init__(
@@ -2014,6 +2018,8 @@ class Metric:
         unit: Optional[str] = None,
         unit_name: Optional[str] = None,
         non_chargeable: Optional[bool] = None,
+        volume_discount: Optional[float] = None,
+        volume_cost: Optional[float] = None,
     ) -> None:
         """
         Initialize a Metric object.
@@ -2034,6 +2040,11 @@ class Metric:
         :param bool non_chargeable: (optional) When set to `true`, the cost is for
                informational purpose and is not included while calculating the plan
                charges.
+        :param float volume_discount: (optional) This percentage reflects the
+               reduction to the original cost that you receive under a volume based
+               pricing structure.
+        :param float volume_cost: (optional) The original cost adjusted for volume
+               based discounts that are applied at the account level.
         """
         self.metric = metric
         self.metric_name = metric_name
@@ -3399,21 +3410,23 @@ class SnapshotListNext:
     """
     Reference to the next page of the search query if any.
 
-    :attr str href: (optional)
-    :attr str offset: (optional)
+    :param str href: (optional)
+    :param str offset: (optional) The value of the `_start` query parameter to fetch
+          the next page.
     """
 
     def __init__(
         self,
         *,
-        href: str = None,
-        offset: str = None,
+        href: Optional[str] = None,
+        offset: Optional[str] = None,
     ) -> None:
         """
         Initialize a SnapshotListNext object.
 
         :param str href: (optional)
-        :param str offset: (optional)
+        :param str offset: (optional) The value of the `_start` query parameter to
+               fetch the next page.
         """
         self.href = href
         self.offset = offset
@@ -3470,7 +3483,7 @@ class SnapshotListSnapshotsItem:
     :param str month: (optional) Month of captured snapshot.
     :param str account_type: (optional) Type of account. Possible values are
           [enterprise, account].
-    :param float expected_processed_at: (optional) Timestamp of snapshot processed.
+    :param int expected_processed_at: (optional) Timestamp of snapshot processed.
     :param str state: (optional) Status of the billing snapshot configuration.
           Possible values are [enabled, disabled].
     :param SnapshotListSnapshotsItemBillingPeriod billing_period: (optional) Period
@@ -4180,19 +4193,19 @@ class SnapshotConfigValidateResponse:
     """
     Validated billing service to COS bucket authorization.
 
-    :attr str account_id: (optional) Account ID for which billing report snapshot is
-          configured.
-    :attr str cos_bucket: (optional) The name of the COS bucket to store the
+    :param str account_id: (optional) Account ID for which billing report snapshot
+          is configured.
+    :param str cos_bucket: (optional) The name of the COS bucket to store the
           snapshot of the billing reports.
-    :attr str cos_location: (optional) Region of the COS instance.
+    :param str cos_location: (optional) Region of the COS instance.
     """
 
     def __init__(
         self,
         *,
-        account_id: str = None,
-        cos_bucket: str = None,
-        cos_location: str = None,
+        account_id: Optional[str] = None,
+        cos_bucket: Optional[str] = None,
+        cos_location: Optional[str] = None,
     ) -> None:
         """
         Initialize a SnapshotConfigValidateResponse object.
@@ -4211,12 +4224,12 @@ class SnapshotConfigValidateResponse:
     def from_dict(cls, _dict: Dict) -> 'SnapshotConfigValidateResponse':
         """Initialize a SnapshotConfigValidateResponse object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'cos_bucket' in _dict:
-            args['cos_bucket'] = _dict.get('cos_bucket')
-        if 'cos_location' in _dict:
-            args['cos_location'] = _dict.get('cos_location')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (cos_bucket := _dict.get('cos_bucket')) is not None:
+            args['cos_bucket'] = cos_bucket
+        if (cos_location := _dict.get('cos_location')) is not None:
+            args['cos_location'] = cos_location
         return cls(**args)
 
     @classmethod
