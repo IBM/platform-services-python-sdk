@@ -603,6 +603,7 @@ class TestAttachTag:
         account_id = 'testString'
         tag_type = 'user'
         replace = False
+        update = False
 
         # Invoke method
         response = _service.attach_tag(
@@ -614,6 +615,7 @@ class TestAttachTag:
             account_id=account_id,
             tag_type=tag_type,
             replace=replace,
+            update=update,
             headers={},
         )
 
@@ -626,6 +628,7 @@ class TestAttachTag:
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         assert 'replace={}'.format('true' if replace else 'false') in query_string
+        assert 'update={}'.format('true' if update else 'false') in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['resources'] == [resource_model]
