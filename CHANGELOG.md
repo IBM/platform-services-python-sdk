@@ -1,3 +1,10 @@
+## [0.54.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.54.0...v0.54.1) (2024-06-21)
+
+
+### Bug Fixes
+
+* **Global Tagging:** add 'update' option to attach_tag operation ([#259](https://github.com/IBM/platform-services-python-sdk/issues/259)) ([47324d5](https://github.com/IBM/platform-services-python-sdk/commit/47324d5c24556e91d977d8430f01e5ddc539c0db))
+
 # [0.54.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.53.7...v0.54.0) (2024-06-18)
 
 
