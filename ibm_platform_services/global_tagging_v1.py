@@ -24,7 +24,9 @@ unique within a billing account. You can create tags in two formats: `key:value`
 `service` tags cannot be attached to IMS resources. `service` tags must be in the form
 `service_prefix:tag_label` where `service_prefix` identifies the Service owning the tag.
 `access` tags cannot be attached to IMS and Cloud Foundry resources. They must be in the
-form `key:value`.
+form `key:value`. You can replace all resource's tags using the `replace` query parameter
+in the attach operation. You can update the `value` of a resource's tag in the format
+`key:value`, using the `update` query parameter in the attach operation.
 
 API Version: 1.2.0
 """
@@ -61,7 +63,9 @@ class GlobalTaggingV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -460,6 +464,7 @@ class GlobalTaggingV1(BaseService):
         account_id: Optional[str] = None,
         tag_type: Optional[str] = None,
         replace: Optional[bool] = None,
+        update: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -497,8 +502,17 @@ class GlobalTaggingV1(BaseService):
                `user`, `service` and `access`. `service` and `access` are not supported
                for IMS resources.
         :param bool replace: (optional) Flag to request replacement of all attached
-               tags. Set 'true' if you want to replace all the list of tags attached to
-               the resource. Default value is false.
+               tags. Set `true` if you want to replace all tags attached to the resource
+               with the current ones. Default value is false.
+        :param bool update: (optional) Flag to request update of attached tags in
+               the format `key:value`. Here's how it works for each tag in the request
+               body: If the tag to attach is in the format `key:value`, the System will
+               atomically detach all existing tags starting with `key:` and attach the new
+               `key:value` tag. If no such tags exist, a new `key:value` tag will be
+               attached. If the tag is not in the `key:value` format (e.g., a simple
+               label), the System will attach the label as usual. The update query
+               parameter is available for user and access management tags, but not for
+               service tags.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TagResults` object
@@ -522,6 +536,7 @@ class GlobalTaggingV1(BaseService):
             'account_id': account_id,
             'tag_type': tag_type,
             'replace': replace,
+            'update': update,
         }
 
         data = {
@@ -659,7 +674,6 @@ class ListTagsEnums:
         USER = 'user'
         SERVICE = 'service'
         ACCESS = 'access'
-
     class Providers(str, Enum):
         """
         Select a provider. Supported values are `ghost` and `ims`. To list both Global
@@ -670,7 +684,6 @@ class ListTagsEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class OrderByName(str, Enum):
         """
         Order the output by tag name.
@@ -705,7 +718,6 @@ class DeleteTagAllEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -731,7 +743,6 @@ class DeleteTagEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -1082,6 +1093,7 @@ class DeleteTagResultsItem:
 
         GHOST = 'ghost'
         IMS = 'ims'
+
 
 
 class DeleteTagsResult:

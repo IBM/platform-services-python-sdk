@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.global_tagging_v1 import *
 
 
-_service = GlobalTaggingV1(authenticator=NoAuthAuthenticator())
+_service = GlobalTaggingV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://tags.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -603,6 +605,7 @@ class TestAttachTag:
         account_id = 'testString'
         tag_type = 'user'
         replace = False
+        update = False
 
         # Invoke method
         response = _service.attach_tag(
@@ -614,6 +617,7 @@ class TestAttachTag:
             account_id=account_id,
             tag_type=tag_type,
             replace=replace,
+            update=update,
             headers={},
         )
 
@@ -626,6 +630,7 @@ class TestAttachTag:
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         assert 'replace={}'.format('true' if replace else 'false') in query_string
+        assert 'update={}'.format('true' if update else 'false') in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['resources'] == [resource_model]
@@ -969,18 +974,12 @@ class TestModel_CreateTagResultsResultsItem:
         create_tag_results_results_item_model_json['is_error'] = True
 
         # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
-        create_tag_results_results_item_model = CreateTagResultsResultsItem.from_dict(
-            create_tag_results_results_item_model_json
-        )
+        create_tag_results_results_item_model = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json)
         assert create_tag_results_results_item_model != False
 
         # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
-        create_tag_results_results_item_model_dict = CreateTagResultsResultsItem.from_dict(
-            create_tag_results_results_item_model_json
-        ).__dict__
-        create_tag_results_results_item_model2 = CreateTagResultsResultsItem(
-            **create_tag_results_results_item_model_dict
-        )
+        create_tag_results_results_item_model_dict = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json).__dict__
+        create_tag_results_results_item_model2 = CreateTagResultsResultsItem(**create_tag_results_results_item_model_dict)
 
         # Verify the model instances are equivalent
         assert create_tag_results_results_item_model == create_tag_results_results_item_model2
@@ -1250,9 +1249,7 @@ class TestModel_TagResults:
         # Construct dict forms of any model objects needed in order to build this model.
 
         tag_results_item_model = {}  # TagResultsItem
-        tag_results_item_model['resource_id'] = (
-            'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
-        )
+        tag_results_item_model['resource_id'] = 'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
         tag_results_item_model['is_error'] = False
 
         # Construct a json representation of a TagResults model
