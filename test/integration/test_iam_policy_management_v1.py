@@ -831,9 +831,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
                 type="Account",
                 id=self.testTargetAccountId,
             ),
-            options=PolicyAssignmentV1Options(
-                root=PolicyAssignmentV1OptionsRoot(requester_id="test_sdk", assignment_id="test")
-            ),
             templates=[AssignmentTemplateDetails(id=self.testS2STemplateId, version=self.testS2SBaseTemplateVersion)],
         )
         assert response.get_status_code() == 201
