@@ -861,9 +861,6 @@ class TestIamPolicyManagementV1Examples:
                     type="Account",
                     id=example_target_account_id,
                 ),
-                options=PolicyAssignmentV1Options(
-                    root=PolicyAssignmentV1OptionsRoot(requester_id="test_sdk", assignment_id="test")
-                ),
                 templates=[AssignmentTemplateDetails(id=example_template_id, version=example_basic_template_version)],
             )
             result = response.get_result()
