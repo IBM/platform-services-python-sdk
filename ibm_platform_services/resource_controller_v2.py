@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-f381b8c9-20221101-115055
+# IBM OpenAPI SDK Code Generator Version: 3.92.1-44330004-20240620-143510
 
 """
 Manage lifecycle of your Cloud resources using Resource Controller APIs. Resources are
@@ -26,7 +26,7 @@ API Version: 2.0
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
@@ -81,18 +81,18 @@ class ResourceControllerV2(BaseService):
     def list_resource_instances(
         self,
         *,
-        guid: str = None,
-        name: str = None,
-        resource_group_id: str = None,
-        resource_id: str = None,
-        resource_plan_id: str = None,
-        type: str = None,
-        sub_type: str = None,
-        limit: int = None,
-        start: str = None,
-        state: str = None,
-        updated_from: str = None,
-        updated_to: str = None,
+        guid: Optional[str] = None,
+        name: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        resource_id: Optional[str] = None,
+        resource_plan_id: Optional[str] = None,
+        type: Optional[str] = None,
+        sub_type: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        state: Optional[str] = None,
+        updated_from: Optional[str] = None,
+        updated_to: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -131,7 +131,9 @@ class ResourceControllerV2(BaseService):
 
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_resource_instances'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_resource_instances',
         )
         headers.update(sdk_headers)
 
@@ -156,7 +158,12 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_instances'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -168,10 +175,10 @@ class ResourceControllerV2(BaseService):
         resource_group: str,
         resource_plan_id: str,
         *,
-        tags: List[str] = None,
-        allow_cleanup: bool = None,
-        parameters: dict = None,
-        entity_lock: bool = None,
+        tags: Optional[List[str]] = None,
+        allow_cleanup: Optional[bool] = None,
+        parameters: Optional[dict] = None,
+        entity_lock: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -195,7 +202,10 @@ class ResourceControllerV2(BaseService):
                resource instance should be deleted (cleaned up) during the processing of a
                region instance delete call.
         :param dict parameters: (optional) Configuration options represented as
-               key-value pairs that are passed through to the target resource brokers.
+               key-value pairs that are passed through to the target resource brokers. Set
+               the `onetime_credentials` property to specify whether newly created
+               resource key credentials can be retrieved by using get resource key or get
+               a list of all of the resource keys requests.
         :param bool entity_lock: (optional) Indicates if the resource instance is
                locked for further update or delete operations. It does not affect actions
                performed on child resources like aliases, bindings or keys. False by
@@ -213,9 +223,13 @@ class ResourceControllerV2(BaseService):
             raise ValueError('resource_group must be provided')
         if resource_plan_id is None:
             raise ValueError('resource_plan_id must be provided')
-        headers = {'Entity-Lock': entity_lock}
+        headers = {
+            'Entity-Lock': entity_lock,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='create_resource_instance'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='create_resource_instance',
         )
         headers.update(sdk_headers)
 
@@ -238,12 +252,21 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_instances'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_resource_instance(self, id: str, **kwargs) -> DetailedResponse:
+    def get_resource_instance(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Get a resource instance.
 
@@ -260,7 +283,9 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_resource_instance'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='get_resource_instance',
         )
         headers.update(sdk_headers)
 
@@ -273,12 +298,22 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def delete_resource_instance(self, id: str, *, recursive: bool = None, **kwargs) -> DetailedResponse:
+    def delete_resource_instance(
+        self,
+        id: str,
+        *,
+        recursive: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Delete a resource instance.
 
@@ -298,11 +333,15 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='delete_resource_instance'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='delete_resource_instance',
         )
         headers.update(sdk_headers)
 
-        params = {'recursive': recursive}
+        params = {
+            'recursive': recursive,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -312,7 +351,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -321,10 +365,10 @@ class ResourceControllerV2(BaseService):
         self,
         id: str,
         *,
-        name: str = None,
-        parameters: dict = None,
-        resource_plan_id: str = None,
-        allow_cleanup: bool = None,
+        name: Optional[str] = None,
+        parameters: Optional[dict] = None,
+        resource_plan_id: Optional[str] = None,
+        allow_cleanup: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -338,7 +382,9 @@ class ResourceControllerV2(BaseService):
                characters or less and cannot include any special characters other than
                `(space) - . _ :`.
         :param dict parameters: (optional) The new configuration options for the
-               instance.
+               instance. Set the `onetime_credentials` property to specify whether newly
+               created resource key credentials can be retrieved by using get resource key
+               or get a list of all of the resource keys requests.
         :param str resource_plan_id: (optional) The unique ID of the plan
                associated with the offering. This value is provided by and stored in the
                global catalog.
@@ -354,7 +400,9 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='update_resource_instance'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='update_resource_instance',
         )
         headers.update(sdk_headers)
 
@@ -377,13 +425,23 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def list_resource_aliases_for_instance(
-        self, id: str, *, limit: int = None, start: str = None, **kwargs
+        self,
+        id: str,
+        *,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a list of all resource aliases for the instance.
@@ -413,7 +471,10 @@ class ResourceControllerV2(BaseService):
         )
         headers.update(sdk_headers)
 
-        params = {'limit': limit, 'start': start}
+        params = {
+            'limit': limit,
+            'start': start,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -424,13 +485,23 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}/resource_aliases'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def list_resource_keys_for_instance(
-        self, id: str, *, limit: int = None, start: str = None, **kwargs
+        self,
+        id: str,
+        *,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a list of all the resource keys for the instance.
@@ -454,11 +525,16 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_resource_keys_for_instance'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_resource_keys_for_instance',
         )
         headers.update(sdk_headers)
 
-        params = {'limit': limit, 'start': start}
+        params = {
+            'limit': limit,
+            'start': start,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -469,12 +545,21 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}/resource_keys'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def lock_resource_instance(self, id: str, **kwargs) -> DetailedResponse:
+    def lock_resource_instance(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Lock a resource instance.
 
@@ -492,7 +577,9 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='lock_resource_instance'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='lock_resource_instance',
         )
         headers.update(sdk_headers)
 
@@ -505,12 +592,20 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}/lock'.format(**path_param_dict)
-        request = self.prepare_request(method='POST', url=url, headers=headers)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def unlock_resource_instance(self, id: str, **kwargs) -> DetailedResponse:
+    def unlock_resource_instance(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Unlock a resource instance.
 
@@ -527,7 +622,9 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='unlock_resource_instance'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='unlock_resource_instance',
         )
         headers.update(sdk_headers)
 
@@ -540,12 +637,20 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}/lock'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def cancel_lastop_resource_instance(self, id: str, **kwargs) -> DetailedResponse:
+    def cancel_lastop_resource_instance(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Cancel the in progress last operation of the resource instance.
 
@@ -562,7 +667,9 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='cancel_lastop_resource_instance'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='cancel_lastop_resource_instance',
         )
         headers.update(sdk_headers)
 
@@ -575,7 +682,11 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}/last_operation'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -587,14 +698,14 @@ class ResourceControllerV2(BaseService):
     def list_resource_keys(
         self,
         *,
-        guid: str = None,
-        name: str = None,
-        resource_group_id: str = None,
-        resource_id: str = None,
-        limit: int = None,
-        start: str = None,
-        updated_from: str = None,
-        updated_to: str = None,
+        guid: Optional[str] = None,
+        name: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        resource_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        updated_from: Optional[str] = None,
+        updated_to: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -622,7 +733,9 @@ class ResourceControllerV2(BaseService):
 
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_resource_keys'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_resource_keys',
         )
         headers.update(sdk_headers)
 
@@ -643,13 +756,24 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_keys'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def create_resource_key(
-        self, name: str, source: str, *, parameters: 'ResourceKeyPostParameters' = None, role: str = None, **kwargs
+        self,
+        name: str,
+        source: str,
+        *,
+        parameters: Optional['ResourceKeyPostParameters'] = None,
+        role: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create a new resource key.
@@ -679,11 +803,18 @@ class ResourceControllerV2(BaseService):
             parameters = convert_model(parameters)
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='create_resource_key'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='create_resource_key',
         )
         headers.update(sdk_headers)
 
-        data = {'name': name, 'source': source, 'parameters': parameters, 'role': role}
+        data = {
+            'name': name,
+            'source': source,
+            'parameters': parameters,
+            'role': role,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -694,12 +825,21 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_keys'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_resource_key(self, id: str, **kwargs) -> DetailedResponse:
+    def get_resource_key(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Get resource key.
 
@@ -716,7 +856,9 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_resource_key'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='get_resource_key',
         )
         headers.update(sdk_headers)
 
@@ -729,12 +871,20 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_keys/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def delete_resource_key(self, id: str, **kwargs) -> DetailedResponse:
+    def delete_resource_key(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Delete a resource key.
 
@@ -751,7 +901,9 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='delete_resource_key'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='delete_resource_key',
         )
         headers.update(sdk_headers)
 
@@ -763,12 +915,21 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_keys/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def update_resource_key(self, id: str, name: str, **kwargs) -> DetailedResponse:
+    def update_resource_key(
+        self,
+        id: str,
+        name: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Update a resource key.
 
@@ -788,11 +949,15 @@ class ResourceControllerV2(BaseService):
             raise ValueError('name must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='update_resource_key'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='update_resource_key',
         )
         headers.update(sdk_headers)
 
-        data = {'name': name}
+        data = {
+            'name': name,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -806,7 +971,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_keys/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -818,15 +988,15 @@ class ResourceControllerV2(BaseService):
     def list_resource_bindings(
         self,
         *,
-        guid: str = None,
-        name: str = None,
-        resource_group_id: str = None,
-        resource_id: str = None,
-        region_binding_id: str = None,
-        limit: int = None,
-        start: str = None,
-        updated_from: str = None,
-        updated_to: str = None,
+        guid: Optional[str] = None,
+        name: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        resource_id: Optional[str] = None,
+        region_binding_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        updated_from: Optional[str] = None,
+        updated_to: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -857,7 +1027,9 @@ class ResourceControllerV2(BaseService):
 
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_resource_bindings'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_resource_bindings',
         )
         headers.update(sdk_headers)
 
@@ -879,7 +1051,12 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_bindings'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -889,9 +1066,9 @@ class ResourceControllerV2(BaseService):
         source: str,
         target: str,
         *,
-        name: str = None,
-        parameters: 'ResourceBindingPostParameters' = None,
-        role: str = None,
+        name: Optional[str] = None,
+        parameters: Optional['ResourceBindingPostParameters'] = None,
+        role: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -926,11 +1103,19 @@ class ResourceControllerV2(BaseService):
             parameters = convert_model(parameters)
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='create_resource_binding'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='create_resource_binding',
         )
         headers.update(sdk_headers)
 
-        data = {'source': source, 'target': target, 'name': name, 'parameters': parameters, 'role': role}
+        data = {
+            'source': source,
+            'target': target,
+            'name': name,
+            'parameters': parameters,
+            'role': role,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -941,12 +1126,21 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_bindings'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_resource_binding(self, id: str, **kwargs) -> DetailedResponse:
+    def get_resource_binding(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Get a resource binding.
 
@@ -963,7 +1157,9 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_resource_binding'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='get_resource_binding',
         )
         headers.update(sdk_headers)
 
@@ -976,12 +1172,20 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_bindings/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def delete_resource_binding(self, id: str, **kwargs) -> DetailedResponse:
+    def delete_resource_binding(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Delete a resource binding.
 
@@ -998,7 +1202,9 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='delete_resource_binding'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='delete_resource_binding',
         )
         headers.update(sdk_headers)
 
@@ -1010,12 +1216,21 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_bindings/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def update_resource_binding(self, id: str, name: str, **kwargs) -> DetailedResponse:
+    def update_resource_binding(
+        self,
+        id: str,
+        name: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Update a resource binding.
 
@@ -1036,11 +1251,15 @@ class ResourceControllerV2(BaseService):
             raise ValueError('name must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='update_resource_binding'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='update_resource_binding',
         )
         headers.update(sdk_headers)
 
-        data = {'name': name}
+        data = {
+            'name': name,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1054,7 +1273,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_bindings/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -1066,16 +1290,16 @@ class ResourceControllerV2(BaseService):
     def list_resource_aliases(
         self,
         *,
-        guid: str = None,
-        name: str = None,
-        resource_instance_id: str = None,
-        region_instance_id: str = None,
-        resource_id: str = None,
-        resource_group_id: str = None,
-        limit: int = None,
-        start: str = None,
-        updated_from: str = None,
-        updated_to: str = None,
+        guid: Optional[str] = None,
+        name: Optional[str] = None,
+        resource_instance_id: Optional[str] = None,
+        region_instance_id: Optional[str] = None,
+        resource_id: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        updated_from: Optional[str] = None,
+        updated_to: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1108,7 +1332,9 @@ class ResourceControllerV2(BaseService):
 
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_resource_aliases'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_resource_aliases',
         )
         headers.update(sdk_headers)
 
@@ -1131,12 +1357,23 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_aliases'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def create_resource_alias(self, name: str, source: str, target: str, **kwargs) -> DetailedResponse:
+    def create_resource_alias(
+        self,
+        name: str,
+        source: str,
+        target: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Create a new resource alias.
 
@@ -1160,11 +1397,17 @@ class ResourceControllerV2(BaseService):
             raise ValueError('target must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='create_resource_alias'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='create_resource_alias',
         )
         headers.update(sdk_headers)
 
-        data = {'name': name, 'source': source, 'target': target}
+        data = {
+            'name': name,
+            'source': source,
+            'target': target,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1175,12 +1418,21 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_aliases'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_resource_alias(self, id: str, **kwargs) -> DetailedResponse:
+    def get_resource_alias(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Get a resource alias.
 
@@ -1197,7 +1449,9 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_resource_alias'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='get_resource_alias',
         )
         headers.update(sdk_headers)
 
@@ -1210,12 +1464,22 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_aliases/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def delete_resource_alias(self, id: str, *, recursive: bool = None, **kwargs) -> DetailedResponse:
+    def delete_resource_alias(
+        self,
+        id: str,
+        *,
+        recursive: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Delete a resource alias.
 
@@ -1235,11 +1499,15 @@ class ResourceControllerV2(BaseService):
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='delete_resource_alias'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='delete_resource_alias',
         )
         headers.update(sdk_headers)
 
-        params = {'recursive': recursive}
+        params = {
+            'recursive': recursive,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1249,12 +1517,22 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_aliases/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def update_resource_alias(self, id: str, name: str, **kwargs) -> DetailedResponse:
+    def update_resource_alias(
+        self,
+        id: str,
+        name: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Update a resource alias.
 
@@ -1274,11 +1552,15 @@ class ResourceControllerV2(BaseService):
             raise ValueError('name must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='update_resource_alias'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='update_resource_alias',
         )
         headers.update(sdk_headers)
 
-        data = {'name': name}
+        data = {
+            'name': name,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1292,13 +1574,23 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_aliases/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def list_resource_bindings_for_alias(
-        self, id: str, *, limit: int = None, start: str = None, **kwargs
+        self,
+        id: str,
+        *,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a list of all resource bindings for the alias.
@@ -1327,7 +1619,10 @@ class ResourceControllerV2(BaseService):
         )
         headers.update(sdk_headers)
 
-        params = {'limit': limit, 'start': start}
+        params = {
+            'limit': limit,
+            'start': start,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1338,7 +1633,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_aliases/{id}/resource_bindings'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -1348,7 +1648,12 @@ class ResourceControllerV2(BaseService):
     #########################
 
     def list_reclamations(
-        self, *, account_id: str = None, resource_instance_id: str = None, **kwargs
+        self,
+        *,
+        account_id: Optional[str] = None,
+        resource_instance_id: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a list of all reclamations.
@@ -1359,6 +1664,7 @@ class ResourceControllerV2(BaseService):
                account ID.
         :param str resource_instance_id: (optional) The GUID of the resource
                instance.
+        :param str resource_group_id: (optional) The ID of the resource group.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ReclamationsList` object
@@ -1366,11 +1672,17 @@ class ResourceControllerV2(BaseService):
 
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_reclamations'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_reclamations',
         )
         headers.update(sdk_headers)
 
-        params = {'account_id': account_id, 'resource_instance_id': resource_instance_id}
+        params = {
+            'account_id': account_id,
+            'resource_instance_id': resource_instance_id,
+            'resource_group_id': resource_group_id,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1378,13 +1690,24 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/reclamations'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def run_reclamation_action(
-        self, id: str, action_name: str, *, request_by: str = None, comment: str = None, **kwargs
+        self,
+        id: str,
+        action_name: str,
+        *,
+        request_by: Optional[str] = None,
+        comment: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Perform a reclamation action.
@@ -1409,11 +1732,16 @@ class ResourceControllerV2(BaseService):
             raise ValueError('action_name must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='run_reclamation_action'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='run_reclamation_action',
         )
         headers.update(sdk_headers)
 
-        data = {'request_by': request_by, 'comment': comment}
+        data = {
+            'request_by': request_by,
+            'comment': comment,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1427,7 +1755,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id, action_name)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/reclamations/{id}/actions/{action_name}'.format(**path_param_dict)
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -1462,18 +1795,18 @@ class Credentials:
     """
     The credentials for a resource.
 
-    :attr str redacted: (optional) If present, the user doesn't have the correct
+    :param str redacted: (optional) If present, the user doesn't have the correct
           access to view the credentials and the details are redacted.  The string value
           identifies the level of access that's required to view the credential. For
           additional information, see [viewing a
           credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&interface=ui#viewing-credentials-ui).
-    :attr str apikey: (optional) The API key for the credentials.
-    :attr str iam_apikey_description: (optional) The optional description of the API
-          key.
-    :attr str iam_apikey_name: (optional) The name of the API key.
-    :attr str iam_role_crn: (optional) The Cloud Resource Name for the role of the
+    :param str apikey: (optional) The API key for the credentials.
+    :param str iam_apikey_description: (optional) The optional description of the
+          API key.
+    :param str iam_apikey_name: (optional) The name of the API key.
+    :param str iam_role_crn: (optional) The Cloud Resource Name for the role of the
           credentials.
-    :attr str iam_serviceid_crn: (optional) The Cloud Resource Name for the service
+    :param str iam_serviceid_crn: (optional) The Cloud Resource Name for the service
           ID of the credentials.
     """
 
@@ -1493,12 +1826,12 @@ class Credentials:
     def __init__(
         self,
         *,
-        redacted: str = None,
-        apikey: str = None,
-        iam_apikey_description: str = None,
-        iam_apikey_name: str = None,
-        iam_role_crn: str = None,
-        iam_serviceid_crn: str = None,
+        redacted: Optional[str] = None,
+        apikey: Optional[str] = None,
+        iam_apikey_description: Optional[str] = None,
+        iam_apikey_name: Optional[str] = None,
+        iam_role_crn: Optional[str] = None,
+        iam_serviceid_crn: Optional[str] = None,
         **kwargs,
     ) -> None:
         """
@@ -1532,18 +1865,18 @@ class Credentials:
     def from_dict(cls, _dict: Dict) -> 'Credentials':
         """Initialize a Credentials object from a json dictionary."""
         args = {}
-        if 'REDACTED' in _dict:
-            args['redacted'] = _dict.get('REDACTED')
-        if 'apikey' in _dict:
-            args['apikey'] = _dict.get('apikey')
-        if 'iam_apikey_description' in _dict:
-            args['iam_apikey_description'] = _dict.get('iam_apikey_description')
-        if 'iam_apikey_name' in _dict:
-            args['iam_apikey_name'] = _dict.get('iam_apikey_name')
-        if 'iam_role_crn' in _dict:
-            args['iam_role_crn'] = _dict.get('iam_role_crn')
-        if 'iam_serviceid_crn' in _dict:
-            args['iam_serviceid_crn'] = _dict.get('iam_serviceid_crn')
+        if (redacted := _dict.get('REDACTED')) is not None:
+            args['redacted'] = redacted
+        if (apikey := _dict.get('apikey')) is not None:
+            args['apikey'] = apikey
+        if (iam_apikey_description := _dict.get('iam_apikey_description')) is not None:
+            args['iam_apikey_description'] = iam_apikey_description
+        if (iam_apikey_name := _dict.get('iam_apikey_name')) is not None:
+            args['iam_apikey_name'] = iam_apikey_name
+        if (iam_role_crn := _dict.get('iam_role_crn')) is not None:
+            args['iam_role_crn'] = iam_role_crn
+        if (iam_serviceid_crn := _dict.get('iam_serviceid_crn')) is not None:
+            args['iam_serviceid_crn'] = iam_serviceid_crn
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -1622,13 +1955,19 @@ class PlanHistoryItem:
     """
     An element of the plan history of the instance.
 
-    :attr str resource_plan_id: The unique ID of the plan associated with the
+    :param str resource_plan_id: The unique ID of the plan associated with the
           offering. This value is provided by and stored in the global catalog.
-    :attr datetime start_date: The date on which the plan was changed.
-    :attr str requestor_id: (optional) The subject who made the plan change.
+    :param datetime start_date: The date on which the plan was changed.
+    :param str requestor_id: (optional) The subject who made the plan change.
     """
 
-    def __init__(self, resource_plan_id: str, start_date: datetime, *, requestor_id: str = None) -> None:
+    def __init__(
+        self,
+        resource_plan_id: str,
+        start_date: datetime,
+        *,
+        requestor_id: Optional[str] = None,
+    ) -> None:
         """
         Initialize a PlanHistoryItem object.
 
@@ -1645,16 +1984,16 @@ class PlanHistoryItem:
     def from_dict(cls, _dict: Dict) -> 'PlanHistoryItem':
         """Initialize a PlanHistoryItem object from a json dictionary."""
         args = {}
-        if 'resource_plan_id' in _dict:
-            args['resource_plan_id'] = _dict.get('resource_plan_id')
+        if (resource_plan_id := _dict.get('resource_plan_id')) is not None:
+            args['resource_plan_id'] = resource_plan_id
         else:
             raise ValueError('Required property \'resource_plan_id\' not present in PlanHistoryItem JSON')
-        if 'start_date' in _dict:
-            args['start_date'] = string_to_datetime(_dict.get('start_date'))
+        if (start_date := _dict.get('start_date')) is not None:
+            args['start_date'] = string_to_datetime(start_date)
         else:
             raise ValueError('Required property \'start_date\' not present in PlanHistoryItem JSON')
-        if 'requestor_id' in _dict:
-            args['requestor_id'] = _dict.get('requestor_id')
+        if (requestor_id := _dict.get('requestor_id')) is not None:
+            args['requestor_id'] = requestor_id
         return cls(**args)
 
     @classmethod
@@ -1696,48 +2035,49 @@ class Reclamation:
     """
     A reclamation.
 
-    :attr str id: (optional) The ID associated with the reclamation.
-    :attr str entity_id: (optional) The ID of the entity for the reclamation.
-    :attr str entity_type_id: (optional) The ID of the entity type for the
+    :param str id: (optional) The ID associated with the reclamation.
+    :param str entity_id: (optional) The ID of the entity for the reclamation.
+    :param str entity_type_id: (optional) The ID of the entity type for the
           reclamation.
-    :attr str entity_crn: (optional) The full Cloud Resource Name (CRN) associated
+    :param str entity_crn: (optional) The full Cloud Resource Name (CRN) associated
           with the binding. For more information about this format, see [Cloud Resource
           Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-    :attr str resource_instance_id: (optional) The ID of the resource instance.
-    :attr str resource_group_id: (optional) The ID of the resource group.
-    :attr str account_id: (optional) An alpha-numeric value identifying the account
+    :param str resource_instance_id: (optional) The ID of the resource instance.
+    :param str resource_group_id: (optional) The ID of the resource group.
+    :param str account_id: (optional) An alpha-numeric value identifying the account
           ID.
-    :attr str policy_id: (optional) The ID of policy for the reclamation.
-    :attr str state: (optional) The state of the reclamation.
-    :attr str target_time: (optional) The target time that the reclamation retention
-          period end.
-    :attr dict custom_properties: (optional) The custom properties of the
+    :param str policy_id: (optional) The ID of policy for the reclamation.
+    :param str state: (optional) The state of the reclamation.
+    :param str target_time: (optional) The target time that the reclamation
+          retention period end.
+    :param dict custom_properties: (optional) The custom properties of the
           reclamation.
-    :attr datetime created_at: (optional) The date when the reclamation was created.
-    :attr str created_by: (optional) The subject who created the reclamation.
-    :attr datetime updated_at: (optional) The date when the reclamation was last
+    :param datetime created_at: (optional) The date when the reclamation was
+          created.
+    :param str created_by: (optional) The subject who created the reclamation.
+    :param datetime updated_at: (optional) The date when the reclamation was last
           updated.
-    :attr str updated_by: (optional) The subject who updated the reclamation.
+    :param str updated_by: (optional) The subject who updated the reclamation.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
-        entity_id: str = None,
-        entity_type_id: str = None,
-        entity_crn: str = None,
-        resource_instance_id: str = None,
-        resource_group_id: str = None,
-        account_id: str = None,
-        policy_id: str = None,
-        state: str = None,
-        target_time: str = None,
-        custom_properties: dict = None,
-        created_at: datetime = None,
-        created_by: str = None,
-        updated_at: datetime = None,
-        updated_by: str = None,
+        id: Optional[str] = None,
+        entity_id: Optional[str] = None,
+        entity_type_id: Optional[str] = None,
+        entity_crn: Optional[str] = None,
+        resource_instance_id: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        policy_id: Optional[str] = None,
+        state: Optional[str] = None,
+        target_time: Optional[str] = None,
+        custom_properties: Optional[dict] = None,
+        created_at: Optional[datetime] = None,
+        created_by: Optional[str] = None,
+        updated_at: Optional[datetime] = None,
+        updated_by: Optional[str] = None,
     ) -> None:
         """
         Initialize a Reclamation object.
@@ -1788,36 +2128,36 @@ class Reclamation:
     def from_dict(cls, _dict: Dict) -> 'Reclamation':
         """Initialize a Reclamation object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'entity_id' in _dict:
-            args['entity_id'] = _dict.get('entity_id')
-        if 'entity_type_id' in _dict:
-            args['entity_type_id'] = _dict.get('entity_type_id')
-        if 'entity_crn' in _dict:
-            args['entity_crn'] = _dict.get('entity_crn')
-        if 'resource_instance_id' in _dict:
-            args['resource_instance_id'] = _dict.get('resource_instance_id')
-        if 'resource_group_id' in _dict:
-            args['resource_group_id'] = _dict.get('resource_group_id')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'policy_id' in _dict:
-            args['policy_id'] = _dict.get('policy_id')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'target_time' in _dict:
-            args['target_time'] = _dict.get('target_time')
-        if 'custom_properties' in _dict:
-            args['custom_properties'] = _dict.get('custom_properties')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_at' in _dict:
-            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (entity_id := _dict.get('entity_id')) is not None:
+            args['entity_id'] = entity_id
+        if (entity_type_id := _dict.get('entity_type_id')) is not None:
+            args['entity_type_id'] = entity_type_id
+        if (entity_crn := _dict.get('entity_crn')) is not None:
+            args['entity_crn'] = entity_crn
+        if (resource_instance_id := _dict.get('resource_instance_id')) is not None:
+            args['resource_instance_id'] = resource_instance_id
+        if (resource_group_id := _dict.get('resource_group_id')) is not None:
+            args['resource_group_id'] = resource_group_id
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (policy_id := _dict.get('policy_id')) is not None:
+            args['policy_id'] = policy_id
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (target_time := _dict.get('target_time')) is not None:
+            args['target_time'] = target_time
+        if (custom_properties := _dict.get('custom_properties')) is not None:
+            args['custom_properties'] = custom_properties
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
+        if (updated_at := _dict.get('updated_at')) is not None:
+            args['updated_at'] = string_to_datetime(updated_at)
+        if (updated_by := _dict.get('updated_by')) is not None:
+            args['updated_by'] = updated_by
         return cls(**args)
 
     @classmethod
@@ -1883,10 +2223,14 @@ class ReclamationsList:
     """
     A list of reclamations.
 
-    :attr List[Reclamation] resources: (optional) A list of reclamations.
+    :param List[Reclamation] resources: (optional) A list of reclamations.
     """
 
-    def __init__(self, *, resources: List['Reclamation'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        resources: Optional[List['Reclamation']] = None,
+    ) -> None:
         """
         Initialize a ReclamationsList object.
 
@@ -1898,8 +2242,8 @@ class ReclamationsList:
     def from_dict(cls, _dict: Dict) -> 'ReclamationsList':
         """Initialize a ReclamationsList object from a json dictionary."""
         args = {}
-        if 'resources' in _dict:
-            args['resources'] = [Reclamation.from_dict(v) for v in _dict.get('resources')]
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [Reclamation.from_dict(v) for v in resources]
         return cls(**args)
 
     @classmethod
@@ -1943,71 +2287,71 @@ class ResourceAlias:
     """
     A resource alias.
 
-    :attr str id: (optional) The ID associated with the alias.
-    :attr str guid: (optional) The GUID of the alias.
-    :attr str url: (optional) When you created a new alias, a relative URL path is
+    :param str id: (optional) The ID associated with the alias.
+    :param str guid: (optional) The GUID of the alias.
+    :param str url: (optional) When you created a new alias, a relative URL path is
           created identifying the location of the alias.
-    :attr datetime created_at: (optional) The date when the alias was created.
-    :attr datetime updated_at: (optional) The date when the alias was last updated.
-    :attr datetime deleted_at: (optional) The date when the alias was deleted.
-    :attr str created_by: (optional) The subject who created the alias.
-    :attr str updated_by: (optional) The subject who updated the alias.
-    :attr str deleted_by: (optional) The subject who deleted the alias.
-    :attr str name: (optional) The human-readable name of the alias.
-    :attr str resource_instance_id: (optional) The ID of the resource instance that
+    :param datetime created_at: (optional) The date when the alias was created.
+    :param datetime updated_at: (optional) The date when the alias was last updated.
+    :param datetime deleted_at: (optional) The date when the alias was deleted.
+    :param str created_by: (optional) The subject who created the alias.
+    :param str updated_by: (optional) The subject who updated the alias.
+    :param str deleted_by: (optional) The subject who deleted the alias.
+    :param str name: (optional) The human-readable name of the alias.
+    :param str resource_instance_id: (optional) The ID of the resource instance that
           is being aliased.
-    :attr str target_crn: (optional) The CRN of the target namespace in the specific
-          environment.
-    :attr str account_id: (optional) An alpha-numeric value identifying the account
+    :param str target_crn: (optional) The CRN of the target namespace in the
+          specific environment.
+    :param str account_id: (optional) An alpha-numeric value identifying the account
           ID.
-    :attr str resource_id: (optional) The unique ID of the offering. This value is
+    :param str resource_id: (optional) The unique ID of the offering. This value is
           provided by and stored in the global catalog.
-    :attr str resource_group_id: (optional) The ID of the resource group.
-    :attr str crn: (optional) The CRN of the alias. For more information about this
+    :param str resource_group_id: (optional) The ID of the resource group.
+    :param str crn: (optional) The CRN of the alias. For more information about this
           format, see [Cloud Resource
           Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-    :attr str region_instance_id: (optional) The ID of the instance in the target
+    :param str region_instance_id: (optional) The ID of the instance in the target
           environment. For example, `service_instance_id` in a given IBM Cloud
           environment.
-    :attr str region_instance_crn: (optional) The CRN of the instance in the target
+    :param str region_instance_crn: (optional) The CRN of the instance in the target
           environment.
-    :attr str state: (optional) The state of the alias.
-    :attr bool migrated: (optional) A boolean that dictates if the alias was
+    :param str state: (optional) The state of the alias.
+    :param bool migrated: (optional) A boolean that dictates if the alias was
           migrated from a previous CF instance.
-    :attr str resource_instance_url: (optional) The relative path to the resource
+    :param str resource_instance_url: (optional) The relative path to the resource
           instance.
-    :attr str resource_bindings_url: (optional) The relative path to the resource
+    :param str resource_bindings_url: (optional) The relative path to the resource
           bindings for the alias.
-    :attr str resource_keys_url: (optional) The relative path to the resource keys
+    :param str resource_keys_url: (optional) The relative path to the resource keys
           for the alias.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
-        guid: str = None,
-        url: str = None,
-        created_at: datetime = None,
-        updated_at: datetime = None,
-        deleted_at: datetime = None,
-        created_by: str = None,
-        updated_by: str = None,
-        deleted_by: str = None,
-        name: str = None,
-        resource_instance_id: str = None,
-        target_crn: str = None,
-        account_id: str = None,
-        resource_id: str = None,
-        resource_group_id: str = None,
-        crn: str = None,
-        region_instance_id: str = None,
-        region_instance_crn: str = None,
-        state: str = None,
-        migrated: bool = None,
-        resource_instance_url: str = None,
-        resource_bindings_url: str = None,
-        resource_keys_url: str = None,
+        id: Optional[str] = None,
+        guid: Optional[str] = None,
+        url: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        updated_at: Optional[datetime] = None,
+        deleted_at: Optional[datetime] = None,
+        created_by: Optional[str] = None,
+        updated_by: Optional[str] = None,
+        deleted_by: Optional[str] = None,
+        name: Optional[str] = None,
+        resource_instance_id: Optional[str] = None,
+        target_crn: Optional[str] = None,
+        account_id: Optional[str] = None,
+        resource_id: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        crn: Optional[str] = None,
+        region_instance_id: Optional[str] = None,
+        region_instance_crn: Optional[str] = None,
+        state: Optional[str] = None,
+        migrated: Optional[bool] = None,
+        resource_instance_url: Optional[str] = None,
+        resource_bindings_url: Optional[str] = None,
+        resource_keys_url: Optional[str] = None,
     ) -> None:
         """
         Initialize a ResourceAlias object.
@@ -2079,52 +2423,52 @@ class ResourceAlias:
     def from_dict(cls, _dict: Dict) -> 'ResourceAlias':
         """Initialize a ResourceAlias object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'guid' in _dict:
-            args['guid'] = _dict.get('guid')
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'updated_at' in _dict:
-            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
-        if 'deleted_at' in _dict:
-            args['deleted_at'] = string_to_datetime(_dict.get('deleted_at'))
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
-        if 'deleted_by' in _dict:
-            args['deleted_by'] = _dict.get('deleted_by')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'resource_instance_id' in _dict:
-            args['resource_instance_id'] = _dict.get('resource_instance_id')
-        if 'target_crn' in _dict:
-            args['target_crn'] = _dict.get('target_crn')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'resource_id' in _dict:
-            args['resource_id'] = _dict.get('resource_id')
-        if 'resource_group_id' in _dict:
-            args['resource_group_id'] = _dict.get('resource_group_id')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'region_instance_id' in _dict:
-            args['region_instance_id'] = _dict.get('region_instance_id')
-        if 'region_instance_crn' in _dict:
-            args['region_instance_crn'] = _dict.get('region_instance_crn')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'migrated' in _dict:
-            args['migrated'] = _dict.get('migrated')
-        if 'resource_instance_url' in _dict:
-            args['resource_instance_url'] = _dict.get('resource_instance_url')
-        if 'resource_bindings_url' in _dict:
-            args['resource_bindings_url'] = _dict.get('resource_bindings_url')
-        if 'resource_keys_url' in _dict:
-            args['resource_keys_url'] = _dict.get('resource_keys_url')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (guid := _dict.get('guid')) is not None:
+            args['guid'] = guid
+        if (url := _dict.get('url')) is not None:
+            args['url'] = url
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (updated_at := _dict.get('updated_at')) is not None:
+            args['updated_at'] = string_to_datetime(updated_at)
+        if (deleted_at := _dict.get('deleted_at')) is not None:
+            args['deleted_at'] = string_to_datetime(deleted_at)
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
+        if (updated_by := _dict.get('updated_by')) is not None:
+            args['updated_by'] = updated_by
+        if (deleted_by := _dict.get('deleted_by')) is not None:
+            args['deleted_by'] = deleted_by
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (resource_instance_id := _dict.get('resource_instance_id')) is not None:
+            args['resource_instance_id'] = resource_instance_id
+        if (target_crn := _dict.get('target_crn')) is not None:
+            args['target_crn'] = target_crn
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (resource_id := _dict.get('resource_id')) is not None:
+            args['resource_id'] = resource_id
+        if (resource_group_id := _dict.get('resource_group_id')) is not None:
+            args['resource_group_id'] = resource_group_id
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        if (region_instance_id := _dict.get('region_instance_id')) is not None:
+            args['region_instance_id'] = region_instance_id
+        if (region_instance_crn := _dict.get('region_instance_crn')) is not None:
+            args['region_instance_crn'] = region_instance_crn
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (migrated := _dict.get('migrated')) is not None:
+            args['migrated'] = migrated
+        if (resource_instance_url := _dict.get('resource_instance_url')) is not None:
+            args['resource_instance_url'] = resource_instance_url
+        if (resource_bindings_url := _dict.get('resource_bindings_url')) is not None:
+            args['resource_bindings_url'] = resource_bindings_url
+        if (resource_keys_url := _dict.get('resource_keys_url')) is not None:
+            args['resource_keys_url'] = resource_keys_url
         return cls(**args)
 
     @classmethod
@@ -2206,12 +2550,17 @@ class ResourceAliasesList:
     """
     A list of resource aliases.
 
-    :attr int rows_count: The number of resource aliases in `resources`.
-    :attr str next_url: The URL for requesting the next page of results.
-    :attr List[ResourceAlias] resources: A list of resource aliases.
+    :param int rows_count: The number of resource aliases in `resources`.
+    :param str next_url: The URL for requesting the next page of results.
+    :param List[ResourceAlias] resources: A list of resource aliases.
     """
 
-    def __init__(self, rows_count: int, next_url: str, resources: List['ResourceAlias']) -> None:
+    def __init__(
+        self,
+        rows_count: int,
+        next_url: str,
+        resources: List['ResourceAlias'],
+    ) -> None:
         """
         Initialize a ResourceAliasesList object.
 
@@ -2227,16 +2576,16 @@ class ResourceAliasesList:
     def from_dict(cls, _dict: Dict) -> 'ResourceAliasesList':
         """Initialize a ResourceAliasesList object from a json dictionary."""
         args = {}
-        if 'rows_count' in _dict:
-            args['rows_count'] = _dict.get('rows_count')
+        if (rows_count := _dict.get('rows_count')) is not None:
+            args['rows_count'] = rows_count
         else:
             raise ValueError('Required property \'rows_count\' not present in ResourceAliasesList JSON')
-        if 'next_url' in _dict:
-            args['next_url'] = _dict.get('next_url')
+        if (next_url := _dict.get('next_url')) is not None:
+            args['next_url'] = next_url
         else:
             raise ValueError('Required property \'next_url\' not present in ResourceAliasesList JSON')
-        if 'resources' in _dict:
-            args['resources'] = [ResourceAlias.from_dict(v) for v in _dict.get('resources')]
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [ResourceAlias.from_dict(v) for v in resources]
         else:
             raise ValueError('Required property \'resources\' not present in ResourceAliasesList JSON')
         return cls(**args)
@@ -2286,34 +2635,34 @@ class ResourceBinding:
     """
     A resource binding.
 
-    :attr str id: (optional) The ID associated with the binding.
-    :attr str guid: (optional) The GUID of the binding.
-    :attr str url: (optional) When you provision a new binding, a relative URL path
+    :param str id: (optional) The ID associated with the binding.
+    :param str guid: (optional) The GUID of the binding.
+    :param str url: (optional) When you provision a new binding, a relative URL path
           is created identifying the location of the binding.
-    :attr datetime created_at: (optional) The date when the binding was created.
-    :attr datetime updated_at: (optional) The date when the binding was last
+    :param datetime created_at: (optional) The date when the binding was created.
+    :param datetime updated_at: (optional) The date when the binding was last
           updated.
-    :attr datetime deleted_at: (optional) The date when the binding was deleted.
-    :attr str created_by: (optional) The subject who created the binding.
-    :attr str updated_by: (optional) The subject who updated the binding.
-    :attr str deleted_by: (optional) The subject who deleted the binding.
-    :attr str source_crn: (optional) The CRN of resource alias associated to the
+    :param datetime deleted_at: (optional) The date when the binding was deleted.
+    :param str created_by: (optional) The subject who created the binding.
+    :param str updated_by: (optional) The subject who updated the binding.
+    :param str deleted_by: (optional) The subject who deleted the binding.
+    :param str source_crn: (optional) The CRN of resource alias associated to the
           binding.
-    :attr str target_crn: (optional) The CRN of target resource, for example,
+    :param str target_crn: (optional) The CRN of target resource, for example,
           application, in a specific environment.
-    :attr str crn: (optional) The full Cloud Resource Name (CRN) associated with the
-          binding. For more information about this format, see [Cloud Resource
+    :param str crn: (optional) The full Cloud Resource Name (CRN) associated with
+          the binding. For more information about this format, see [Cloud Resource
           Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-    :attr str region_binding_id: (optional) The ID of the binding in the target
+    :param str region_binding_id: (optional) The ID of the binding in the target
           environment. For example, `service_binding_id` in a given IBM Cloud environment.
-    :attr str region_binding_crn: (optional) The CRN of the binding in the target
+    :param str region_binding_crn: (optional) The CRN of the binding in the target
           environment.
-    :attr str name: (optional) The human-readable name of the binding.
-    :attr str account_id: (optional) An alpha-numeric value identifying the account
+    :param str name: (optional) The human-readable name of the binding.
+    :param str account_id: (optional) An alpha-numeric value identifying the account
           ID.
-    :attr str resource_group_id: (optional) The ID of the resource group.
-    :attr str state: (optional) The state of the binding.
-    :attr Credentials credentials: (optional) The credentials for the binding.
+    :param str resource_group_id: (optional) The ID of the resource group.
+    :param str state: (optional) The state of the binding.
+    :param Credentials credentials: (optional) The credentials for the binding.
           Additional key-value pairs are passed through from the resource brokers. After a
           credential is created for a service, it can be viewed at any time for users that
           need the API key value. However, all users must have the correct level of access
@@ -2321,42 +2670,42 @@ class ResourceBinding:
           additional details, see [viewing a
           credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&interface=ui#viewing-credentials-ui)
           or the service’s documentation.
-    :attr bool iam_compatible: (optional) Specifies whether the binding’s
+    :param bool iam_compatible: (optional) Specifies whether the binding’s
           credentials support IAM.
-    :attr str resource_id: (optional) The unique ID of the offering. This value is
+    :param str resource_id: (optional) The unique ID of the offering. This value is
           provided by and stored in the global catalog.
-    :attr bool migrated: (optional) A boolean that dictates if the alias was
+    :param bool migrated: (optional) A boolean that dictates if the alias was
           migrated from a previous CF instance.
-    :attr str resource_alias_url: (optional) The relative path to the resource alias
-          that this binding is associated with.
+    :param str resource_alias_url: (optional) The relative path to the resource
+          alias that this binding is associated with.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
-        guid: str = None,
-        url: str = None,
-        created_at: datetime = None,
-        updated_at: datetime = None,
-        deleted_at: datetime = None,
-        created_by: str = None,
-        updated_by: str = None,
-        deleted_by: str = None,
-        source_crn: str = None,
-        target_crn: str = None,
-        crn: str = None,
-        region_binding_id: str = None,
-        region_binding_crn: str = None,
-        name: str = None,
-        account_id: str = None,
-        resource_group_id: str = None,
-        state: str = None,
-        credentials: 'Credentials' = None,
-        iam_compatible: bool = None,
-        resource_id: str = None,
-        migrated: bool = None,
-        resource_alias_url: str = None,
+        id: Optional[str] = None,
+        guid: Optional[str] = None,
+        url: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        updated_at: Optional[datetime] = None,
+        deleted_at: Optional[datetime] = None,
+        created_by: Optional[str] = None,
+        updated_by: Optional[str] = None,
+        deleted_by: Optional[str] = None,
+        source_crn: Optional[str] = None,
+        target_crn: Optional[str] = None,
+        crn: Optional[str] = None,
+        region_binding_id: Optional[str] = None,
+        region_binding_crn: Optional[str] = None,
+        name: Optional[str] = None,
+        account_id: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        state: Optional[str] = None,
+        credentials: Optional['Credentials'] = None,
+        iam_compatible: Optional[bool] = None,
+        resource_id: Optional[str] = None,
+        migrated: Optional[bool] = None,
+        resource_alias_url: Optional[str] = None,
     ) -> None:
         """
         Initialize a ResourceBinding object.
@@ -2436,52 +2785,52 @@ class ResourceBinding:
     def from_dict(cls, _dict: Dict) -> 'ResourceBinding':
         """Initialize a ResourceBinding object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'guid' in _dict:
-            args['guid'] = _dict.get('guid')
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'updated_at' in _dict:
-            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
-        if 'deleted_at' in _dict:
-            args['deleted_at'] = string_to_datetime(_dict.get('deleted_at'))
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
-        if 'deleted_by' in _dict:
-            args['deleted_by'] = _dict.get('deleted_by')
-        if 'source_crn' in _dict:
-            args['source_crn'] = _dict.get('source_crn')
-        if 'target_crn' in _dict:
-            args['target_crn'] = _dict.get('target_crn')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'region_binding_id' in _dict:
-            args['region_binding_id'] = _dict.get('region_binding_id')
-        if 'region_binding_crn' in _dict:
-            args['region_binding_crn'] = _dict.get('region_binding_crn')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'resource_group_id' in _dict:
-            args['resource_group_id'] = _dict.get('resource_group_id')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'credentials' in _dict:
-            args['credentials'] = Credentials.from_dict(_dict.get('credentials'))
-        if 'iam_compatible' in _dict:
-            args['iam_compatible'] = _dict.get('iam_compatible')
-        if 'resource_id' in _dict:
-            args['resource_id'] = _dict.get('resource_id')
-        if 'migrated' in _dict:
-            args['migrated'] = _dict.get('migrated')
-        if 'resource_alias_url' in _dict:
-            args['resource_alias_url'] = _dict.get('resource_alias_url')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (guid := _dict.get('guid')) is not None:
+            args['guid'] = guid
+        if (url := _dict.get('url')) is not None:
+            args['url'] = url
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (updated_at := _dict.get('updated_at')) is not None:
+            args['updated_at'] = string_to_datetime(updated_at)
+        if (deleted_at := _dict.get('deleted_at')) is not None:
+            args['deleted_at'] = string_to_datetime(deleted_at)
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
+        if (updated_by := _dict.get('updated_by')) is not None:
+            args['updated_by'] = updated_by
+        if (deleted_by := _dict.get('deleted_by')) is not None:
+            args['deleted_by'] = deleted_by
+        if (source_crn := _dict.get('source_crn')) is not None:
+            args['source_crn'] = source_crn
+        if (target_crn := _dict.get('target_crn')) is not None:
+            args['target_crn'] = target_crn
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        if (region_binding_id := _dict.get('region_binding_id')) is not None:
+            args['region_binding_id'] = region_binding_id
+        if (region_binding_crn := _dict.get('region_binding_crn')) is not None:
+            args['region_binding_crn'] = region_binding_crn
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (resource_group_id := _dict.get('resource_group_id')) is not None:
+            args['resource_group_id'] = resource_group_id
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (credentials := _dict.get('credentials')) is not None:
+            args['credentials'] = Credentials.from_dict(credentials)
+        if (iam_compatible := _dict.get('iam_compatible')) is not None:
+            args['iam_compatible'] = iam_compatible
+        if (resource_id := _dict.get('resource_id')) is not None:
+            args['resource_id'] = resource_id
+        if (migrated := _dict.get('migrated')) is not None:
+            args['migrated'] = migrated
+        if (resource_alias_url := _dict.get('resource_alias_url')) is not None:
+            args['resource_alias_url'] = resource_alias_url
         return cls(**args)
 
     @classmethod
@@ -2568,14 +2917,19 @@ class ResourceBindingPostParameters:
     passed through to the target resource brokers, whereas platform defined options are
     not.
 
-    :attr str serviceid_crn: (optional) An optional platform defined option to reuse
-          an existing IAM serviceId for the role assignment.
+    :param str serviceid_crn: (optional) An optional platform defined option to
+          reuse an existing IAM serviceId for the role assignment.
     """
 
     # The set of defined properties for the class
     _properties = frozenset(['serviceid_crn'])
 
-    def __init__(self, *, serviceid_crn: str = None, **kwargs) -> None:
+    def __init__(
+        self,
+        *,
+        serviceid_crn: Optional[str] = None,
+        **kwargs,
+    ) -> None:
         """
         Initialize a ResourceBindingPostParameters object.
 
@@ -2591,8 +2945,8 @@ class ResourceBindingPostParameters:
     def from_dict(cls, _dict: Dict) -> 'ResourceBindingPostParameters':
         """Initialize a ResourceBindingPostParameters object from a json dictionary."""
         args = {}
-        if 'serviceid_crn' in _dict:
-            args['serviceid_crn'] = _dict.get('serviceid_crn')
+        if (serviceid_crn := _dict.get('serviceid_crn')) is not None:
+            args['serviceid_crn'] = serviceid_crn
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -2650,12 +3004,17 @@ class ResourceBindingsList:
     """
     A list of resource bindings.
 
-    :attr int rows_count: The number of resource bindings in `resources`.
-    :attr str next_url: The URL for requesting the next page of results.
-    :attr List[ResourceBinding] resources: A list of resource bindings.
+    :param int rows_count: The number of resource bindings in `resources`.
+    :param str next_url: The URL for requesting the next page of results.
+    :param List[ResourceBinding] resources: A list of resource bindings.
     """
 
-    def __init__(self, rows_count: int, next_url: str, resources: List['ResourceBinding']) -> None:
+    def __init__(
+        self,
+        rows_count: int,
+        next_url: str,
+        resources: List['ResourceBinding'],
+    ) -> None:
         """
         Initialize a ResourceBindingsList object.
 
@@ -2671,16 +3030,16 @@ class ResourceBindingsList:
     def from_dict(cls, _dict: Dict) -> 'ResourceBindingsList':
         """Initialize a ResourceBindingsList object from a json dictionary."""
         args = {}
-        if 'rows_count' in _dict:
-            args['rows_count'] = _dict.get('rows_count')
+        if (rows_count := _dict.get('rows_count')) is not None:
+            args['rows_count'] = rows_count
         else:
             raise ValueError('Required property \'rows_count\' not present in ResourceBindingsList JSON')
-        if 'next_url' in _dict:
-            args['next_url'] = _dict.get('next_url')
+        if (next_url := _dict.get('next_url')) is not None:
+            args['next_url'] = next_url
         else:
             raise ValueError('Required property \'next_url\' not present in ResourceBindingsList JSON')
-        if 'resources' in _dict:
-            args['resources'] = [ResourceBinding.from_dict(v) for v in _dict.get('resources')]
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [ResourceBinding.from_dict(v) for v in resources]
         else:
             raise ValueError('Required property \'resources\' not present in ResourceBindingsList JSON')
         return cls(**args)
@@ -2730,117 +3089,121 @@ class ResourceInstance:
     """
     A resource instance.
 
-    :attr str id: (optional) The ID associated with the instance.
-    :attr str guid: (optional) The GUID of the instance.
-    :attr str url: (optional) When you provision a new resource, a relative URL path
-          is created identifying the location of the instance.
-    :attr datetime created_at: (optional) The date when the instance was created.
-    :attr datetime updated_at: (optional) The date when the instance was last
+    :param str id: (optional) The ID associated with the instance.
+    :param str guid: (optional) The GUID of the instance.
+    :param str url: (optional) When you provision a new resource, a relative URL
+          path is created identifying the location of the instance.
+    :param datetime created_at: (optional) The date when the instance was created.
+    :param datetime updated_at: (optional) The date when the instance was last
           updated.
-    :attr datetime deleted_at: (optional) The date when the instance was deleted.
-    :attr str created_by: (optional) The subject who created the instance.
-    :attr str updated_by: (optional) The subject who updated the instance.
-    :attr str deleted_by: (optional) The subject who deleted the instance.
-    :attr datetime scheduled_reclaim_at: (optional) The date when the instance was
+    :param datetime deleted_at: (optional) The date when the instance was deleted.
+    :param str created_by: (optional) The subject who created the instance.
+    :param str updated_by: (optional) The subject who updated the instance.
+    :param str deleted_by: (optional) The subject who deleted the instance.
+    :param datetime scheduled_reclaim_at: (optional) The date when the instance was
           scheduled for reclamation.
-    :attr datetime restored_at: (optional) The date when the instance under
+    :param datetime restored_at: (optional) The date when the instance under
           reclamation was restored.
-    :attr str restored_by: (optional) The subject who restored the instance back
+    :param str restored_by: (optional) The subject who restored the instance back
           from reclamation.
-    :attr str scheduled_reclaim_by: (optional) The subject who initiated the
+    :param str scheduled_reclaim_by: (optional) The subject who initiated the
           instance reclamation.
-    :attr str name: (optional) The human-readable name of the instance.
-    :attr str region_id: (optional) The deployment location where the instance was
+    :param str name: (optional) The human-readable name of the instance.
+    :param str region_id: (optional) The deployment location where the instance was
           provisioned.
-    :attr str account_id: (optional) An alpha-numeric value identifying the account
+    :param str account_id: (optional) An alpha-numeric value identifying the account
           ID.
-    :attr str reseller_channel_id: (optional) The unique ID of the reseller channel
+    :param str reseller_channel_id: (optional) The unique ID of the reseller channel
           where the instance was provisioned from.
-    :attr str resource_plan_id: (optional) The unique ID of the plan associated with
-          the offering. This value is provided by and stored in the global catalog.
-    :attr str resource_group_id: (optional) The ID of the resource group.
-    :attr str resource_group_crn: (optional) The CRN of the resource group.
-    :attr str target_crn: (optional) The deployment CRN as defined in the global
+    :param str resource_plan_id: (optional) The unique ID of the plan associated
+          with the offering. This value is provided by and stored in the global catalog.
+    :param str resource_group_id: (optional) The ID of the resource group.
+    :param str resource_group_crn: (optional) The CRN of the resource group.
+    :param str target_crn: (optional) The deployment CRN as defined in the global
           catalog. The Cloud Resource Name (CRN) of the deployment location where the
           instance is provisioned.
-    :attr dict parameters: (optional) The current configuration parameters of the
+    :param bool onetime_credentials: (optional) Whether newly created resource key
+          credentials can be retrieved by using get resource key or get a list of all of
+          the resource keys requests.
+    :param dict parameters: (optional) The current configuration parameters of the
           instance.
-    :attr bool allow_cleanup: (optional) A boolean that dictates if the resource
+    :param bool allow_cleanup: (optional) A boolean that dictates if the resource
           instance should be deleted (cleaned up) during the processing of a region
           instance delete call.
-    :attr str crn: (optional) The full Cloud Resource Name (CRN) associated with the
-          instance. For more information about this format, see [Cloud Resource
+    :param str crn: (optional) The full Cloud Resource Name (CRN) associated with
+          the instance. For more information about this format, see [Cloud Resource
           Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-    :attr str state: (optional) The current state of the instance. For example, if
+    :param str state: (optional) The current state of the instance. For example, if
           the instance is deleted, it will return removed.
-    :attr str type: (optional) The type of the instance, for example,
+    :param str type: (optional) The type of the instance, for example,
           `service_instance`.
-    :attr str sub_type: (optional) The sub-type of instance, for example, `cfaas`.
-    :attr str resource_id: (optional) The unique ID of the offering. This value is
+    :param str sub_type: (optional) The sub-type of instance, for example, `cfaas`.
+    :param str resource_id: (optional) The unique ID of the offering. This value is
           provided by and stored in the global catalog.
-    :attr str dashboard_url: (optional) The resource-broker-provided URL to access
+    :param str dashboard_url: (optional) The resource-broker-provided URL to access
           administrative features of the instance.
-    :attr ResourceInstanceLastOperation last_operation: (optional) The status of the
-          last operation requested on the instance.
-    :attr str resource_aliases_url: (optional) The relative path to the resource
+    :param ResourceInstanceLastOperation last_operation: (optional) The status of
+          the last operation requested on the instance.
+    :param str resource_aliases_url: (optional) The relative path to the resource
           aliases for the instance.
-    :attr str resource_bindings_url: (optional) The relative path to the resource
+    :param str resource_bindings_url: (optional) The relative path to the resource
           bindings for the instance.
-    :attr str resource_keys_url: (optional) The relative path to the resource keys
+    :param str resource_keys_url: (optional) The relative path to the resource keys
           for the instance.
-    :attr List[PlanHistoryItem] plan_history: (optional) The plan history of the
+    :param List[PlanHistoryItem] plan_history: (optional) The plan history of the
           instance.
-    :attr bool migrated: (optional) A boolean that dictates if the resource instance
-          was migrated from a previous CF instance.
-    :attr dict extensions: (optional) Additional instance properties, contributed by
-          the service and/or platform, are represented as key-value pairs.
-    :attr str controlled_by: (optional) The CRN of the resource that has control of
+    :param bool migrated: (optional) A boolean that dictates if the resource
+          instance was migrated from a previous CF instance.
+    :param dict extensions: (optional) Additional instance properties, contributed
+          by the service and/or platform, are represented as key-value pairs.
+    :param str controlled_by: (optional) The CRN of the resource that has control of
           the instance.
-    :attr bool locked: (optional) A boolean that dictates if the resource instance
+    :param bool locked: (optional) A boolean that dictates if the resource instance
           is locked or not.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
-        guid: str = None,
-        url: str = None,
-        created_at: datetime = None,
-        updated_at: datetime = None,
-        deleted_at: datetime = None,
-        created_by: str = None,
-        updated_by: str = None,
-        deleted_by: str = None,
-        scheduled_reclaim_at: datetime = None,
-        restored_at: datetime = None,
-        restored_by: str = None,
-        scheduled_reclaim_by: str = None,
-        name: str = None,
-        region_id: str = None,
-        account_id: str = None,
-        reseller_channel_id: str = None,
-        resource_plan_id: str = None,
-        resource_group_id: str = None,
-        resource_group_crn: str = None,
-        target_crn: str = None,
-        parameters: dict = None,
-        allow_cleanup: bool = None,
-        crn: str = None,
-        state: str = None,
-        type: str = None,
-        sub_type: str = None,
-        resource_id: str = None,
-        dashboard_url: str = None,
-        last_operation: 'ResourceInstanceLastOperation' = None,
-        resource_aliases_url: str = None,
-        resource_bindings_url: str = None,
-        resource_keys_url: str = None,
-        plan_history: List['PlanHistoryItem'] = None,
-        migrated: bool = None,
-        extensions: dict = None,
-        controlled_by: str = None,
-        locked: bool = None,
+        id: Optional[str] = None,
+        guid: Optional[str] = None,
+        url: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        updated_at: Optional[datetime] = None,
+        deleted_at: Optional[datetime] = None,
+        created_by: Optional[str] = None,
+        updated_by: Optional[str] = None,
+        deleted_by: Optional[str] = None,
+        scheduled_reclaim_at: Optional[datetime] = None,
+        restored_at: Optional[datetime] = None,
+        restored_by: Optional[str] = None,
+        scheduled_reclaim_by: Optional[str] = None,
+        name: Optional[str] = None,
+        region_id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        reseller_channel_id: Optional[str] = None,
+        resource_plan_id: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        resource_group_crn: Optional[str] = None,
+        target_crn: Optional[str] = None,
+        onetime_credentials: Optional[bool] = None,
+        parameters: Optional[dict] = None,
+        allow_cleanup: Optional[bool] = None,
+        crn: Optional[str] = None,
+        state: Optional[str] = None,
+        type: Optional[str] = None,
+        sub_type: Optional[str] = None,
+        resource_id: Optional[str] = None,
+        dashboard_url: Optional[str] = None,
+        last_operation: Optional['ResourceInstanceLastOperation'] = None,
+        resource_aliases_url: Optional[str] = None,
+        resource_bindings_url: Optional[str] = None,
+        resource_keys_url: Optional[str] = None,
+        plan_history: Optional[List['PlanHistoryItem']] = None,
+        migrated: Optional[bool] = None,
+        extensions: Optional[dict] = None,
+        controlled_by: Optional[str] = None,
+        locked: Optional[bool] = None,
     ) -> None:
         """
         Initialize a ResourceInstance object.
@@ -2881,6 +3244,9 @@ class ResourceInstance:
         :param str target_crn: (optional) The deployment CRN as defined in the
                global catalog. The Cloud Resource Name (CRN) of the deployment location
                where the instance is provisioned.
+        :param bool onetime_credentials: (optional) Whether newly created resource
+               key credentials can be retrieved by using get resource key or get a list of
+               all of the resource keys requests.
         :param dict parameters: (optional) The current configuration parameters of
                the instance.
         :param bool allow_cleanup: (optional) A boolean that dictates if the
@@ -2940,6 +3306,7 @@ class ResourceInstance:
         self.resource_group_id = resource_group_id
         self.resource_group_crn = resource_group_crn
         self.target_crn = target_crn
+        self.onetime_credentials = onetime_credentials
         self.parameters = parameters
         self.allow_cleanup = allow_cleanup
         self.crn = crn
@@ -2962,82 +3329,84 @@ class ResourceInstance:
     def from_dict(cls, _dict: Dict) -> 'ResourceInstance':
         """Initialize a ResourceInstance object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'guid' in _dict:
-            args['guid'] = _dict.get('guid')
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'updated_at' in _dict:
-            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
-        if 'deleted_at' in _dict:
-            args['deleted_at'] = string_to_datetime(_dict.get('deleted_at'))
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
-        if 'deleted_by' in _dict:
-            args['deleted_by'] = _dict.get('deleted_by')
-        if 'scheduled_reclaim_at' in _dict:
-            args['scheduled_reclaim_at'] = string_to_datetime(_dict.get('scheduled_reclaim_at'))
-        if 'restored_at' in _dict:
-            args['restored_at'] = string_to_datetime(_dict.get('restored_at'))
-        if 'restored_by' in _dict:
-            args['restored_by'] = _dict.get('restored_by')
-        if 'scheduled_reclaim_by' in _dict:
-            args['scheduled_reclaim_by'] = _dict.get('scheduled_reclaim_by')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'region_id' in _dict:
-            args['region_id'] = _dict.get('region_id')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'reseller_channel_id' in _dict:
-            args['reseller_channel_id'] = _dict.get('reseller_channel_id')
-        if 'resource_plan_id' in _dict:
-            args['resource_plan_id'] = _dict.get('resource_plan_id')
-        if 'resource_group_id' in _dict:
-            args['resource_group_id'] = _dict.get('resource_group_id')
-        if 'resource_group_crn' in _dict:
-            args['resource_group_crn'] = _dict.get('resource_group_crn')
-        if 'target_crn' in _dict:
-            args['target_crn'] = _dict.get('target_crn')
-        if 'parameters' in _dict:
-            args['parameters'] = _dict.get('parameters')
-        if 'allow_cleanup' in _dict:
-            args['allow_cleanup'] = _dict.get('allow_cleanup')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
-        if 'sub_type' in _dict:
-            args['sub_type'] = _dict.get('sub_type')
-        if 'resource_id' in _dict:
-            args['resource_id'] = _dict.get('resource_id')
-        if 'dashboard_url' in _dict:
-            args['dashboard_url'] = _dict.get('dashboard_url')
-        if 'last_operation' in _dict:
-            args['last_operation'] = ResourceInstanceLastOperation.from_dict(_dict.get('last_operation'))
-        if 'resource_aliases_url' in _dict:
-            args['resource_aliases_url'] = _dict.get('resource_aliases_url')
-        if 'resource_bindings_url' in _dict:
-            args['resource_bindings_url'] = _dict.get('resource_bindings_url')
-        if 'resource_keys_url' in _dict:
-            args['resource_keys_url'] = _dict.get('resource_keys_url')
-        if 'plan_history' in _dict:
-            args['plan_history'] = [PlanHistoryItem.from_dict(v) for v in _dict.get('plan_history')]
-        if 'migrated' in _dict:
-            args['migrated'] = _dict.get('migrated')
-        if 'extensions' in _dict:
-            args['extensions'] = _dict.get('extensions')
-        if 'controlled_by' in _dict:
-            args['controlled_by'] = _dict.get('controlled_by')
-        if 'locked' in _dict:
-            args['locked'] = _dict.get('locked')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (guid := _dict.get('guid')) is not None:
+            args['guid'] = guid
+        if (url := _dict.get('url')) is not None:
+            args['url'] = url
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (updated_at := _dict.get('updated_at')) is not None:
+            args['updated_at'] = string_to_datetime(updated_at)
+        if (deleted_at := _dict.get('deleted_at')) is not None:
+            args['deleted_at'] = string_to_datetime(deleted_at)
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
+        if (updated_by := _dict.get('updated_by')) is not None:
+            args['updated_by'] = updated_by
+        if (deleted_by := _dict.get('deleted_by')) is not None:
+            args['deleted_by'] = deleted_by
+        if (scheduled_reclaim_at := _dict.get('scheduled_reclaim_at')) is not None:
+            args['scheduled_reclaim_at'] = string_to_datetime(scheduled_reclaim_at)
+        if (restored_at := _dict.get('restored_at')) is not None:
+            args['restored_at'] = string_to_datetime(restored_at)
+        if (restored_by := _dict.get('restored_by')) is not None:
+            args['restored_by'] = restored_by
+        if (scheduled_reclaim_by := _dict.get('scheduled_reclaim_by')) is not None:
+            args['scheduled_reclaim_by'] = scheduled_reclaim_by
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (region_id := _dict.get('region_id')) is not None:
+            args['region_id'] = region_id
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (reseller_channel_id := _dict.get('reseller_channel_id')) is not None:
+            args['reseller_channel_id'] = reseller_channel_id
+        if (resource_plan_id := _dict.get('resource_plan_id')) is not None:
+            args['resource_plan_id'] = resource_plan_id
+        if (resource_group_id := _dict.get('resource_group_id')) is not None:
+            args['resource_group_id'] = resource_group_id
+        if (resource_group_crn := _dict.get('resource_group_crn')) is not None:
+            args['resource_group_crn'] = resource_group_crn
+        if (target_crn := _dict.get('target_crn')) is not None:
+            args['target_crn'] = target_crn
+        if (onetime_credentials := _dict.get('onetime_credentials')) is not None:
+            args['onetime_credentials'] = onetime_credentials
+        if (parameters := _dict.get('parameters')) is not None:
+            args['parameters'] = parameters
+        if (allow_cleanup := _dict.get('allow_cleanup')) is not None:
+            args['allow_cleanup'] = allow_cleanup
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        if (sub_type := _dict.get('sub_type')) is not None:
+            args['sub_type'] = sub_type
+        if (resource_id := _dict.get('resource_id')) is not None:
+            args['resource_id'] = resource_id
+        if (dashboard_url := _dict.get('dashboard_url')) is not None:
+            args['dashboard_url'] = dashboard_url
+        if (last_operation := _dict.get('last_operation')) is not None:
+            args['last_operation'] = ResourceInstanceLastOperation.from_dict(last_operation)
+        if (resource_aliases_url := _dict.get('resource_aliases_url')) is not None:
+            args['resource_aliases_url'] = resource_aliases_url
+        if (resource_bindings_url := _dict.get('resource_bindings_url')) is not None:
+            args['resource_bindings_url'] = resource_bindings_url
+        if (resource_keys_url := _dict.get('resource_keys_url')) is not None:
+            args['resource_keys_url'] = resource_keys_url
+        if (plan_history := _dict.get('plan_history')) is not None:
+            args['plan_history'] = [PlanHistoryItem.from_dict(v) for v in plan_history]
+        if (migrated := _dict.get('migrated')) is not None:
+            args['migrated'] = migrated
+        if (extensions := _dict.get('extensions')) is not None:
+            args['extensions'] = extensions
+        if (controlled_by := _dict.get('controlled_by')) is not None:
+            args['controlled_by'] = controlled_by
+        if (locked := _dict.get('locked')) is not None:
+            args['locked'] = locked
         return cls(**args)
 
     @classmethod
@@ -3090,6 +3459,8 @@ class ResourceInstance:
             _dict['resource_group_crn'] = self.resource_group_crn
         if hasattr(self, 'target_crn') and self.target_crn is not None:
             _dict['target_crn'] = self.target_crn
+        if hasattr(self, 'onetime_credentials') and self.onetime_credentials is not None:
+            _dict['onetime_credentials'] = self.onetime_credentials
         if hasattr(self, 'parameters') and self.parameters is not None:
             _dict['parameters'] = self.parameters
         if hasattr(self, 'allow_cleanup') and self.allow_cleanup is not None:
@@ -3173,21 +3544,21 @@ class ResourceInstanceLastOperation:
     """
     The status of the last operation requested on the instance.
 
-    :attr str type: The last operation type of the resource instance.
-    :attr str state: The last operation state of the resoure instance. This
+    :param str type: The last operation type of the resource instance.
+    :param str state: The last operation state of the resoure instance. This
           indicates if the resource's last operation is in progress, succeeded or failed.
-    :attr str sub_type: (optional) The last operation sub type of the resoure
+    :param str sub_type: (optional) The last operation sub type of the resoure
           instance.
-    :attr bool async_: A boolean that indicates if the resource is provisioned
+    :param bool async_: A boolean that indicates if the resource is provisioned
           asynchronously or not.
-    :attr str description: The description of the status of last operation.
-    :attr str reason_code: (optional) Optional string that states the reason code
+    :param str description: The description of the status of last operation.
+    :param str reason_code: (optional) Optional string that states the reason code
           for the last operation state change.
-    :attr float poll_after: (optional) A field which indicates the time after which
+    :param float poll_after: (optional) A field which indicates the time after which
           the instance's last operation is to be polled.
-    :attr bool cancelable: A boolean that indicates if the resource's last operation
-          is cancelable or not.
-    :attr bool poll: A boolean that indicates if the resource broker's last
+    :param bool cancelable: A boolean that indicates if the resource's last
+          operation is cancelable or not.
+    :param bool poll: A boolean that indicates if the resource broker's last
           operation can be polled or not.
     """
 
@@ -3216,9 +3587,9 @@ class ResourceInstanceLastOperation:
         cancelable: bool,
         poll: bool,
         *,
-        sub_type: str = None,
-        reason_code: str = None,
-        poll_after: float = None,
+        sub_type: Optional[str] = None,
+        reason_code: Optional[str] = None,
+        poll_after: Optional[float] = None,
         **kwargs,
     ) -> None:
         """
@@ -3259,34 +3630,34 @@ class ResourceInstanceLastOperation:
     def from_dict(cls, _dict: Dict) -> 'ResourceInstanceLastOperation':
         """Initialize a ResourceInstanceLastOperation object from a json dictionary."""
         args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in ResourceInstanceLastOperation JSON')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
         else:
             raise ValueError('Required property \'state\' not present in ResourceInstanceLastOperation JSON')
-        if 'sub_type' in _dict:
-            args['sub_type'] = _dict.get('sub_type')
-        if 'async' in _dict:
-            args['async_'] = _dict.get('async')
+        if (sub_type := _dict.get('sub_type')) is not None:
+            args['sub_type'] = sub_type
+        if (async_ := _dict.get('async')) is not None:
+            args['async_'] = async_
         else:
             raise ValueError('Required property \'async\' not present in ResourceInstanceLastOperation JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         else:
             raise ValueError('Required property \'description\' not present in ResourceInstanceLastOperation JSON')
-        if 'reason_code' in _dict:
-            args['reason_code'] = _dict.get('reason_code')
-        if 'poll_after' in _dict:
-            args['poll_after'] = _dict.get('poll_after')
-        if 'cancelable' in _dict:
-            args['cancelable'] = _dict.get('cancelable')
+        if (reason_code := _dict.get('reason_code')) is not None:
+            args['reason_code'] = reason_code
+        if (poll_after := _dict.get('poll_after')) is not None:
+            args['poll_after'] = poll_after
+        if (cancelable := _dict.get('cancelable')) is not None:
+            args['cancelable'] = cancelable
         else:
             raise ValueError('Required property \'cancelable\' not present in ResourceInstanceLastOperation JSON')
-        if 'poll' in _dict:
-            args['poll'] = _dict.get('poll')
+        if (poll := _dict.get('poll')) is not None:
+            args['poll'] = poll
         else:
             raise ValueError('Required property \'poll\' not present in ResourceInstanceLastOperation JSON')
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
@@ -3372,12 +3743,17 @@ class ResourceInstancesList:
     """
     A list of resource instances.
 
-    :attr int rows_count: The number of resource instances in `resources`.
-    :attr str next_url: The URL for requesting the next page of results.
-    :attr List[ResourceInstance] resources: A list of resource instances.
+    :param int rows_count: The number of resource instances in `resources`.
+    :param str next_url: The URL for requesting the next page of results.
+    :param List[ResourceInstance] resources: A list of resource instances.
     """
 
-    def __init__(self, rows_count: int, next_url: str, resources: List['ResourceInstance']) -> None:
+    def __init__(
+        self,
+        rows_count: int,
+        next_url: str,
+        resources: List['ResourceInstance'],
+    ) -> None:
         """
         Initialize a ResourceInstancesList object.
 
@@ -3393,16 +3769,16 @@ class ResourceInstancesList:
     def from_dict(cls, _dict: Dict) -> 'ResourceInstancesList':
         """Initialize a ResourceInstancesList object from a json dictionary."""
         args = {}
-        if 'rows_count' in _dict:
-            args['rows_count'] = _dict.get('rows_count')
+        if (rows_count := _dict.get('rows_count')) is not None:
+            args['rows_count'] = rows_count
         else:
             raise ValueError('Required property \'rows_count\' not present in ResourceInstancesList JSON')
-        if 'next_url' in _dict:
-            args['next_url'] = _dict.get('next_url')
+        if (next_url := _dict.get('next_url')) is not None:
+            args['next_url'] = next_url
         else:
             raise ValueError('Required property \'next_url\' not present in ResourceInstancesList JSON')
-        if 'resources' in _dict:
-            args['resources'] = [ResourceInstance.from_dict(v) for v in _dict.get('resources')]
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [ResourceInstance.from_dict(v) for v in resources]
         else:
             raise ValueError('Required property \'resources\' not present in ResourceInstancesList JSON')
         return cls(**args)
@@ -3452,29 +3828,32 @@ class ResourceKey:
     """
     A resource key.
 
-    :attr str id: (optional) The ID associated with the key.
-    :attr str guid: (optional) The GUID of the key.
-    :attr str url: (optional) When you created a new key, a relative URL path is
+    :param str id: (optional) The ID associated with the key.
+    :param str guid: (optional) The GUID of the key.
+    :param str url: (optional) When you created a new key, a relative URL path is
           created identifying the location of the key.
-    :attr datetime created_at: (optional) The date when the key was created.
-    :attr datetime updated_at: (optional) The date when the key was last updated.
-    :attr datetime deleted_at: (optional) The date when the key was deleted.
-    :attr str created_by: (optional) The subject who created the key.
-    :attr str updated_by: (optional) The subject who updated the key.
-    :attr str deleted_by: (optional) The subject who deleted the key.
-    :attr str source_crn: (optional) The CRN of resource instance or alias
+    :param datetime created_at: (optional) The date when the key was created.
+    :param datetime updated_at: (optional) The date when the key was last updated.
+    :param datetime deleted_at: (optional) The date when the key was deleted.
+    :param str created_by: (optional) The subject who created the key.
+    :param str updated_by: (optional) The subject who updated the key.
+    :param str deleted_by: (optional) The subject who deleted the key.
+    :param str source_crn: (optional) The CRN of resource instance or alias
           associated to the key.
-    :attr str name: (optional) The human-readable name of the key.
-    :attr str crn: (optional) The full Cloud Resource Name (CRN) associated with the
-          key. For more information about this format, see [Cloud Resource
+    :param str name: (optional) The human-readable name of the key.
+    :param str crn: (optional) The full Cloud Resource Name (CRN) associated with
+          the key. For more information about this format, see [Cloud Resource
           Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-    :attr str state: (optional) The state of the key.
-    :attr str account_id: (optional) An alpha-numeric value identifying the account
+    :param str state: (optional) The state of the key.
+    :param str account_id: (optional) An alpha-numeric value identifying the account
           ID.
-    :attr str resource_group_id: (optional) The ID of the resource group.
-    :attr str resource_id: (optional) The unique ID of the offering. This value is
+    :param str resource_group_id: (optional) The ID of the resource group.
+    :param str resource_id: (optional) The unique ID of the offering. This value is
           provided by and stored in the global catalog.
-    :attr Credentials credentials: (optional) The credentials for the key.
+    :param bool onetime_credentials: (optional) Whether newly created resource key
+          credentials can be retrieved by using get resource key or get a list of all of
+          the resource keys requests.
+    :param Credentials credentials: (optional) The credentials for the key.
           Additional key-value pairs are passed through from the resource brokers. After a
           credential is created for a service, it can be viewed at any time for users that
           need the API key value. However, all users must have the correct level of access
@@ -3482,39 +3861,40 @@ class ResourceKey:
           additional details, see [viewing a
           credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&interface=ui#viewing-credentials-ui)
           or the service’s documentation.
-    :attr bool iam_compatible: (optional) Specifies whether the key’s credentials
+    :param bool iam_compatible: (optional) Specifies whether the key’s credentials
           support IAM.
-    :attr bool migrated: (optional) A boolean that dictates if the alias was
+    :param bool migrated: (optional) A boolean that dictates if the alias was
           migrated from a previous CF instance.
-    :attr str resource_instance_url: (optional) The relative path to the resource.
-    :attr str resource_alias_url: (optional) The relative path to the resource alias
-          that this binding is associated with.
+    :param str resource_instance_url: (optional) The relative path to the resource.
+    :param str resource_alias_url: (optional) The relative path to the resource
+          alias that this binding is associated with.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
-        guid: str = None,
-        url: str = None,
-        created_at: datetime = None,
-        updated_at: datetime = None,
-        deleted_at: datetime = None,
-        created_by: str = None,
-        updated_by: str = None,
-        deleted_by: str = None,
-        source_crn: str = None,
-        name: str = None,
-        crn: str = None,
-        state: str = None,
-        account_id: str = None,
-        resource_group_id: str = None,
-        resource_id: str = None,
-        credentials: 'Credentials' = None,
-        iam_compatible: bool = None,
-        migrated: bool = None,
-        resource_instance_url: str = None,
-        resource_alias_url: str = None,
+        id: Optional[str] = None,
+        guid: Optional[str] = None,
+        url: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        updated_at: Optional[datetime] = None,
+        deleted_at: Optional[datetime] = None,
+        created_by: Optional[str] = None,
+        updated_by: Optional[str] = None,
+        deleted_by: Optional[str] = None,
+        source_crn: Optional[str] = None,
+        name: Optional[str] = None,
+        crn: Optional[str] = None,
+        state: Optional[str] = None,
+        account_id: Optional[str] = None,
+        resource_group_id: Optional[str] = None,
+        resource_id: Optional[str] = None,
+        onetime_credentials: Optional[bool] = None,
+        credentials: Optional['Credentials'] = None,
+        iam_compatible: Optional[bool] = None,
+        migrated: Optional[bool] = None,
+        resource_instance_url: Optional[str] = None,
+        resource_alias_url: Optional[str] = None,
     ) -> None:
         """
         Initialize a ResourceKey object.
@@ -3542,6 +3922,9 @@ class ResourceKey:
         :param str resource_group_id: (optional) The ID of the resource group.
         :param str resource_id: (optional) The unique ID of the offering. This
                value is provided by and stored in the global catalog.
+        :param bool onetime_credentials: (optional) Whether newly created resource
+               key credentials can be retrieved by using get resource key or get a list of
+               all of the resource keys requests.
         :param Credentials credentials: (optional) The credentials for the key.
                Additional key-value pairs are passed through from the resource brokers.
                After a credential is created for a service, it can be viewed at any time
@@ -3575,6 +3958,7 @@ class ResourceKey:
         self.account_id = account_id
         self.resource_group_id = resource_group_id
         self.resource_id = resource_id
+        self.onetime_credentials = onetime_credentials
         self.credentials = credentials
         self.iam_compatible = iam_compatible
         self.migrated = migrated
@@ -3585,48 +3969,50 @@ class ResourceKey:
     def from_dict(cls, _dict: Dict) -> 'ResourceKey':
         """Initialize a ResourceKey object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'guid' in _dict:
-            args['guid'] = _dict.get('guid')
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'updated_at' in _dict:
-            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
-        if 'deleted_at' in _dict:
-            args['deleted_at'] = string_to_datetime(_dict.get('deleted_at'))
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
-        if 'deleted_by' in _dict:
-            args['deleted_by'] = _dict.get('deleted_by')
-        if 'source_crn' in _dict:
-            args['source_crn'] = _dict.get('source_crn')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'resource_group_id' in _dict:
-            args['resource_group_id'] = _dict.get('resource_group_id')
-        if 'resource_id' in _dict:
-            args['resource_id'] = _dict.get('resource_id')
-        if 'credentials' in _dict:
-            args['credentials'] = Credentials.from_dict(_dict.get('credentials'))
-        if 'iam_compatible' in _dict:
-            args['iam_compatible'] = _dict.get('iam_compatible')
-        if 'migrated' in _dict:
-            args['migrated'] = _dict.get('migrated')
-        if 'resource_instance_url' in _dict:
-            args['resource_instance_url'] = _dict.get('resource_instance_url')
-        if 'resource_alias_url' in _dict:
-            args['resource_alias_url'] = _dict.get('resource_alias_url')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (guid := _dict.get('guid')) is not None:
+            args['guid'] = guid
+        if (url := _dict.get('url')) is not None:
+            args['url'] = url
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (updated_at := _dict.get('updated_at')) is not None:
+            args['updated_at'] = string_to_datetime(updated_at)
+        if (deleted_at := _dict.get('deleted_at')) is not None:
+            args['deleted_at'] = string_to_datetime(deleted_at)
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
+        if (updated_by := _dict.get('updated_by')) is not None:
+            args['updated_by'] = updated_by
+        if (deleted_by := _dict.get('deleted_by')) is not None:
+            args['deleted_by'] = deleted_by
+        if (source_crn := _dict.get('source_crn')) is not None:
+            args['source_crn'] = source_crn
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (resource_group_id := _dict.get('resource_group_id')) is not None:
+            args['resource_group_id'] = resource_group_id
+        if (resource_id := _dict.get('resource_id')) is not None:
+            args['resource_id'] = resource_id
+        if (onetime_credentials := _dict.get('onetime_credentials')) is not None:
+            args['onetime_credentials'] = onetime_credentials
+        if (credentials := _dict.get('credentials')) is not None:
+            args['credentials'] = Credentials.from_dict(credentials)
+        if (iam_compatible := _dict.get('iam_compatible')) is not None:
+            args['iam_compatible'] = iam_compatible
+        if (migrated := _dict.get('migrated')) is not None:
+            args['migrated'] = migrated
+        if (resource_instance_url := _dict.get('resource_instance_url')) is not None:
+            args['resource_instance_url'] = resource_instance_url
+        if (resource_alias_url := _dict.get('resource_alias_url')) is not None:
+            args['resource_alias_url'] = resource_alias_url
         return cls(**args)
 
     @classmethod
@@ -3669,6 +4055,8 @@ class ResourceKey:
             _dict['resource_group_id'] = self.resource_group_id
         if hasattr(self, 'resource_id') and self.resource_id is not None:
             _dict['resource_id'] = self.resource_id
+        if hasattr(self, 'onetime_credentials') and self.onetime_credentials is not None:
+            _dict['onetime_credentials'] = self.onetime_credentials
         if hasattr(self, 'credentials') and self.credentials is not None:
             if isinstance(self.credentials, dict):
                 _dict['credentials'] = self.credentials
@@ -3709,14 +4097,19 @@ class ResourceKeyPostParameters:
     passed through to the target resource brokers, whereas platform defined options are
     not.
 
-    :attr str serviceid_crn: (optional) An optional platform defined option to reuse
-          an existing IAM serviceId for the role assignment.
+    :param str serviceid_crn: (optional) An optional platform defined option to
+          reuse an existing IAM serviceId for the role assignment.
     """
 
     # The set of defined properties for the class
     _properties = frozenset(['serviceid_crn'])
 
-    def __init__(self, *, serviceid_crn: str = None, **kwargs) -> None:
+    def __init__(
+        self,
+        *,
+        serviceid_crn: Optional[str] = None,
+        **kwargs,
+    ) -> None:
         """
         Initialize a ResourceKeyPostParameters object.
 
@@ -3732,8 +4125,8 @@ class ResourceKeyPostParameters:
     def from_dict(cls, _dict: Dict) -> 'ResourceKeyPostParameters':
         """Initialize a ResourceKeyPostParameters object from a json dictionary."""
         args = {}
-        if 'serviceid_crn' in _dict:
-            args['serviceid_crn'] = _dict.get('serviceid_crn')
+        if (serviceid_crn := _dict.get('serviceid_crn')) is not None:
+            args['serviceid_crn'] = serviceid_crn
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -3791,12 +4184,17 @@ class ResourceKeysList:
     """
     A list of resource keys.
 
-    :attr int rows_count: The number of resource keys in `resources`.
-    :attr str next_url: The URL for requesting the next page of results.
-    :attr List[ResourceKey] resources: A list of resource keys.
+    :param int rows_count: The number of resource keys in `resources`.
+    :param str next_url: The URL for requesting the next page of results.
+    :param List[ResourceKey] resources: A list of resource keys.
     """
 
-    def __init__(self, rows_count: int, next_url: str, resources: List['ResourceKey']) -> None:
+    def __init__(
+        self,
+        rows_count: int,
+        next_url: str,
+        resources: List['ResourceKey'],
+    ) -> None:
         """
         Initialize a ResourceKeysList object.
 
@@ -3812,16 +4210,16 @@ class ResourceKeysList:
     def from_dict(cls, _dict: Dict) -> 'ResourceKeysList':
         """Initialize a ResourceKeysList object from a json dictionary."""
         args = {}
-        if 'rows_count' in _dict:
-            args['rows_count'] = _dict.get('rows_count')
+        if (rows_count := _dict.get('rows_count')) is not None:
+            args['rows_count'] = rows_count
         else:
             raise ValueError('Required property \'rows_count\' not present in ResourceKeysList JSON')
-        if 'next_url' in _dict:
-            args['next_url'] = _dict.get('next_url')
+        if (next_url := _dict.get('next_url')) is not None:
+            args['next_url'] = next_url
         else:
             raise ValueError('Required property \'next_url\' not present in ResourceKeysList JSON')
-        if 'resources' in _dict:
-            args['resources'] = [ResourceKey.from_dict(v) for v in _dict.get('resources')]
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [ResourceKey.from_dict(v) for v in resources]
         else:
             raise ValueError('Required property \'resources\' not present in ResourceKeysList JSON')
         return cls(**args)

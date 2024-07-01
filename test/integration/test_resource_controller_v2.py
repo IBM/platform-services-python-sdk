@@ -148,6 +148,7 @@ class TestResourceControllerV2(unittest.TestCase):
 
         result = response.get_result()
         assert result is not None
+        assert result.get('onetime_credentials') is not None
         assert result.get('id') == self.testInstanceCrn
         assert result.get('guid') == self.testInstanceGuid
         assert result.get('crn') == self.testInstanceCrn
@@ -756,6 +757,7 @@ class TestResourceControllerV2(unittest.TestCase):
 
         result = response.get_result()
         assert result is not None
+        assert result.get('onetime_credentials') is not None
         assert result.get('id') == self.testInstanceKeyCrn
         assert result.get('name') == self.keyNames['update']
         assert result.get('state') == "active"
