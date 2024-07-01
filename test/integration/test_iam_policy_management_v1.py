@@ -833,7 +833,9 @@ class TestIamPolicyManagementV1(unittest.TestCase):
                     type="Enterprise",
                     id=self.testTargetEnterpriseAccountId,
                 ),
-                templates=[AssignmentTemplateDetails(id=self.testS2STemplateId, version=self.testS2SBaseTemplateVersion)],
+                templates=[
+                    AssignmentTemplateDetails(id=self.testS2STemplateId, version=self.testS2SBaseTemplateVersion)
+                ],
             )
         except ApiException as e:
             assert (
@@ -860,7 +862,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         self.__class__.testAssignmentId = result.assignments[0].id
         self.__class__.testAssignmentPolicyId = result.assignments[0].resources[0].policy.resource_created.id
         self.__class__.testPolicyAssignmentETag = response.get_headers().get(self.etagHeader)
-
 
     def test_28_list_policy_assignments(self):
         response = self.service.list_policy_assignments(
