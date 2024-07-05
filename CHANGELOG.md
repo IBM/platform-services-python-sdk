@@ -1,3 +1,10 @@
+## [0.54.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.54.1...v0.54.2) (2024-07-05)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** remove `options` property from PolicyAssignment ([#262](https://github.com/IBM/platform-services-python-sdk/issues/262)) ([3283f3b](https://github.com/IBM/platform-services-python-sdk/commit/3283f3b8c0c8bed078464ea9c8cd4c9bd12a6f9c))
+
 ## [0.54.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.54.0...v0.54.1) (2024-06-21)
 
 
