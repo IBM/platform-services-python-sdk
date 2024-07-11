@@ -1,3 +1,10 @@
+## [0.55.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.55.0...v0.55.1) (2024-07-11)
+
+
+### Bug Fixes
+
+* **build:** add python 3.12 tag to setup.py ([#265](https://github.com/IBM/platform-services-python-sdk/issues/265)) ([02f3f8c](https://github.com/IBM/platform-services-python-sdk/commit/02f3f8ca050a96a62449eeecff533f0f3a827ed7))
+
 # [0.55.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.54.2...v0.55.0) (2024-07-11)
 
 
