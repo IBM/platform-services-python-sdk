@@ -1,3 +1,10 @@
+# [0.55.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.54.2...v0.55.0) (2024-07-11)
+
+
+### Features
+
+* **Resource Controller:** add "onetime_credentials" property in ResourceInstance and ResourceKey schemas ([#263](https://github.com/IBM/platform-services-python-sdk/issues/263)) ([e3bc46c](https://github.com/IBM/platform-services-python-sdk/commit/e3bc46c3e4f89468a6791031695a80029c681b50))
+
 ## [0.54.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.54.1...v0.54.2) (2024-07-05)
 
 
