@@ -1,0 +1,19 @@
+[tool.bumpversion]
+current_version = "0.55.1"
+commit = true
+message = "Update version {current_version} -> {new_version}"
+
+[[tool.bumpversion.files]]
+filename = "ibm_platform_services/version.py"
+search = "__version__ = '{current_version}'"
+replace = "__version__ = '{new_version}'"
+
+[[tool.bumpversion.files]]
+filename = "setup.py"
+search = "__version__ = '{current_version}'"
+replace = "__version__ = '{new_version}'"
+
+[[tool.bumpversion.files]]
+filename = "README.md"
+search = "{current_version}"
+replace = "{new_version}"
