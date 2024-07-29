@@ -1,3 +1,10 @@
+## [0.55.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.55.1...v0.55.2) (2024-07-29)
+
+
+### Bug Fixes
+
+* remove unused setuptools import ([#269](https://github.com/IBM/platform-services-python-sdk/issues/269)) ([0d52373](https://github.com/IBM/platform-services-python-sdk/commit/0d52373dba79adef2aa37ebc06799aa40b5727c9))
+
 ## [0.55.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.55.0...v0.55.1) (2024-07-11)
 
 
