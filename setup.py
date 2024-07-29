@@ -14,7 +14,6 @@
 # limitations under the License.
 
 from setuptools import setup
-from setuptools.command.test import test as TestCommand
 import os
 import sys
 import pkg_resources
