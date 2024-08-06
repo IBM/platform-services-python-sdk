@@ -201,7 +201,7 @@ class OpenServiceBrokerV1(BaseService):
         context: 'Context' = None,
         parameters: dict = None,
         accepts_incomplete: bool = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create (provision) a service instance.
@@ -307,7 +307,7 @@ class OpenServiceBrokerV1(BaseService):
         plan_id: str = None,
         previous_values: dict = None,
         accepts_incomplete: bool = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update a service instance.
@@ -559,7 +559,7 @@ class OpenServiceBrokerV1(BaseService):
         service_id: str = None,
         bind_resource: 'BindResource' = None,
         parameters: dict = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Bind a service instance to another resource.
@@ -991,7 +991,7 @@ class Resp2079876Root:
         credentials: object = None,
         syslog_drain_url: str = None,
         route_service_url: str = None,
-        volume_mounts: List['VolumeMount'] = None
+        volume_mounts: List['VolumeMount'] = None,
     ) -> None:
         """
         Initialize a Resp2079876Root object.
@@ -1240,7 +1240,7 @@ class BindResource:
         serviceid_crn: str = None,
         target_crn: str = None,
         app_guid: str = None,
-        route: str = None
+        route: str = None,
     ) -> None:
         """
         Initialize a BindResource object.
@@ -1552,7 +1552,7 @@ class Services:
         name: str,
         plans: List['Plans'],
         *,
-        plan_updateable: bool = None
+        plan_updateable: bool = None,
     ) -> None:
         """
         Initialize a Services object.

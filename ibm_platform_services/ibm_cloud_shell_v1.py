@@ -120,7 +120,7 @@ class IbmCloudShellV1(BaseService):
         enabled: bool = None,
         features: List['Feature'] = None,
         regions: List['RegionSetting'] = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update account settings.
@@ -237,7 +237,7 @@ class AccountSettings:
         regions: List['RegionSetting'] = None,
         type: str = None,
         updated_at: int = None,
-        updated_by: str = None
+        updated_by: str = None,
     ) -> None:
         """
         Initialize a AccountSettings object.

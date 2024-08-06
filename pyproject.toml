@@ -1,3 +1,63 @@
+[project]
+name = "ibm-platform-services"
+version = "0.55.2"
+authors = [
+    { name="IBM", email="devxsdk@us.ibm.com" }
+]
+description = "Python client library for IBM Cloud Platform Services"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+keywords=["ibm", "cloud", "ibm cloud services", "ibm cloud platform services"]
+dependencies = [
+    "ibm_cloud_sdk_core>=3.20.6,<4.0.0",
+]
+
+[project.urls]
+Repository = "https://github.com/IBM/platform-services-python-sdk"
+Documentation = "https://github.com/IBM/platform-services-python-sdk/blob/main/README.md"
+Issues = "https://github.com/IBM/platform-services-python-sdk/issues"
+Changelog = "https://github.com/IBM/platform-services-python-sdk/blob/main/CHANGELOG.md"
+Contributing = "https://github.com/IBM/platform-services-python-sdk/blob/main/CONTRIBUTING.md"
+License = "https://github.com/IBM/platform-services-python-sdk/blob/main/LICENSE"
+
+[project.optional-dependencies]
+dev = [
+    "coverage>=7.3.2,<8.0.0",
+    "pylint>=3.0.0,<4.0.0",
+    "pytest>=7.4.2,<8.0.0",
+    "pytest-cov>=4.1.0,<5.0.0",
+    "responses>=0.23.3,<1.0.0",
+    "black>=24.0.0,<25.0.0",
+]
+publish = [
+    "build",
+    "twine"
+]
+
+[build-system]
+requires = ["setuptools>=67.7.2"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["ibm_platform_services"]
+
 [tool.black]
 line-length = 120
 skip-string-normalization = true
