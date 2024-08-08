@@ -1,3 +1,10 @@
+## [0.55.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.55.2...v0.55.3) (2024-08-08)
+
+
+### Bug Fixes
+
+* **build:** migrate from setup.py to pyproject.toml ([#271](https://github.com/IBM/platform-services-python-sdk/issues/271)) ([be63d03](https://github.com/IBM/platform-services-python-sdk/commit/be63d03ed3101f60e836aaec3addb816bb97535d))
+
 ## [0.55.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.55.1...v0.55.2) (2024-07-29)
 
 
