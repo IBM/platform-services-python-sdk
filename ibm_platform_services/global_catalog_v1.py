@@ -93,7 +93,7 @@ class GlobalCatalogV1(BaseService):
         complete: bool = None,
         offset: int = None,
         limit: int = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Returns parent catalog entries.
@@ -192,7 +192,7 @@ class GlobalCatalogV1(BaseService):
         active: bool = None,
         metadata: 'ObjectMetadataSet' = None,
         account: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create a catalog entry.
@@ -301,7 +301,7 @@ class GlobalCatalogV1(BaseService):
         languages: str = None,
         complete: bool = None,
         depth: int = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a specific catalog object.
@@ -380,7 +380,7 @@ class GlobalCatalogV1(BaseService):
         metadata: 'ObjectMetadataSet' = None,
         account: str = None,
         move: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update a catalog entry.
@@ -545,7 +545,7 @@ class GlobalCatalogV1(BaseService):
         complete: bool = None,
         offset: int = None,
         limit: int = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get child catalog entries of a specific kind.
@@ -717,7 +717,7 @@ class GlobalCatalogV1(BaseService):
         include: 'VisibilityDetail' = None,
         exclude: 'VisibilityDetail' = None,
         account: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update visibility.
@@ -829,7 +829,7 @@ class GlobalCatalogV1(BaseService):
         startat: str = None,
         offset: int = None,
         limit: int = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get the audit logs for an object.
@@ -975,7 +975,7 @@ class GlobalCatalogV1(BaseService):
         artifact: BinaryIO = None,
         content_type: str = None,
         account: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Upload artifact.
@@ -1381,7 +1381,7 @@ class AuditSearchResult:
         last: str = None,
         prev: str = None,
         next: str = None,
-        resources: List['Message'] = None
+        resources: List['Message'] = None,
     ) -> None:
         """
         Initialize a AuditSearchResult object.
@@ -1671,7 +1671,7 @@ class CFMetaData:
         service_check_enabled: bool = None,
         test_check_interval: int = None,
         service_key_supported: bool = None,
-        cf_guid: dict = None
+        cf_guid: dict = None,
     ) -> None:
         """
         Initialize a CFMetaData object.
@@ -1841,7 +1841,7 @@ class Callbacks:
         dashboard_detail_tab_ext_url: str = None,
         service_monitor_api: str = None,
         service_monitor_app: str = None,
-        api_endpoint: dict = None
+        api_endpoint: dict = None,
     ) -> None:
         """
         Initialize a Callbacks object.
@@ -2006,7 +2006,7 @@ class CatalogEntry:
         geo_tags: List[str] = None,
         pricing_tags: List[str] = None,
         created: datetime = None,
-        updated: datetime = None
+        updated: datetime = None,
     ) -> None:
         """
         Initialize a CatalogEntry object.
@@ -2232,7 +2232,7 @@ class CatalogEntryMetadata:
         version: str = None,
         other: dict = None,
         pricing: 'CatalogEntryMetadataPricing' = None,
-        deployment: 'CatalogEntryMetadataDeployment' = None
+        deployment: 'CatalogEntryMetadataDeployment' = None,
     ) -> None:
         """
         Initialize a CatalogEntryMetadata object.
@@ -2395,7 +2395,7 @@ class CatalogEntryMetadataDeployment:
         mccp_id: str = None,
         broker: 'Broker' = None,
         supports_rc_migration: bool = None,
-        target_network: str = None
+        target_network: str = None,
     ) -> None:
         """
         Initialize a CatalogEntryMetadataDeployment object.
@@ -2513,7 +2513,7 @@ class CatalogEntryMetadataPricing:
         type: str = None,
         origin: str = None,
         starting_price: 'StartingPrice' = None,
-        metrics: List['Metrics'] = None
+        metrics: List['Metrics'] = None,
     ) -> None:
         """
         Initialize a CatalogEntryMetadataPricing object.
@@ -2676,7 +2676,7 @@ class DeploymentBase:
         mccp_id: str = None,
         broker: 'Broker' = None,
         supports_rc_migration: bool = None,
-        target_network: str = None
+        target_network: str = None,
     ) -> None:
         """
         Initialize a DeploymentBase object.
@@ -2810,7 +2810,7 @@ class EntrySearchResult:
         last: str = None,
         prev: str = None,
         next: str = None,
-        resources: List['CatalogEntry'] = None
+        resources: List['CatalogEntry'] = None,
     ) -> None:
         """
         Initialize a EntrySearchResult object.
@@ -3026,7 +3026,7 @@ class Message:
         gid: str = None,
         type: str = None,
         message: str = None,
-        data: dict = None
+        data: dict = None,
     ) -> None:
         """
         Initialize a Message object.
@@ -3171,7 +3171,7 @@ class Metrics:
         display_cap: int = None,
         effective_from: datetime = None,
         effective_until: datetime = None,
-        amounts: List['Amount'] = None
+        amounts: List['Amount'] = None,
     ) -> None:
         """
         Initialize a Metrics object.
@@ -3332,7 +3332,7 @@ class ObjectMetadataSet:
         version: str = None,
         other: dict = None,
         pricing: 'PricingSet' = None,
-        deployment: 'DeploymentBase' = None
+        deployment: 'DeploymentBase' = None,
     ) -> None:
         """
         Initialize a ObjectMetadataSet object.
@@ -3582,7 +3582,7 @@ class PlanMetaData:
         test_check_interval: int = None,
         single_scope_instance: str = None,
         service_check_enabled: bool = None,
-        cf_guid: dict = None
+        cf_guid: dict = None,
     ) -> None:
         """
         Initialize a PlanMetaData object.
@@ -3765,7 +3765,7 @@ class PricingGet:
         type: str = None,
         origin: str = None,
         starting_price: 'StartingPrice' = None,
-        metrics: List['Metrics'] = None
+        metrics: List['Metrics'] = None,
     ) -> None:
         """
         Initialize a PricingGet object.
@@ -4015,7 +4015,7 @@ class SLAMetaData:
         tenancy: str = None,
         provisioning: str = None,
         responsiveness: str = None,
-        dr: 'DRMetaData' = None
+        dr: 'DRMetaData' = None,
     ) -> None:
         """
         Initialize a SLAMetaData object.
@@ -4266,7 +4266,7 @@ class Strings:
         not_creatable_robot_msg: str = None,
         deprecation_warning: str = None,
         popup_warning_message: str = None,
-        instruction: str = None
+        instruction: str = None,
     ) -> None:
         """
         Initialize a Strings object.
@@ -4384,7 +4384,7 @@ class TemplateMetaData:
         template_id: str = None,
         executable_file: str = None,
         buildpack: str = None,
-        environment_variables: dict = None
+        environment_variables: dict = None,
     ) -> None:
         """
         Initialize a TemplateMetaData object.
@@ -4535,7 +4535,7 @@ class UIMetaData:
         end_of_service_time: datetime = None,
         hidden: bool = None,
         hide_lite_metering: bool = None,
-        no_upgrade_next_step: bool = None
+        no_upgrade_next_step: bool = None,
     ) -> None:
         """
         Initialize a UIMetaData object.
@@ -4685,7 +4685,7 @@ class UIMetaMedia:
         thumbnail_url: str = None,
         type: str = None,
         url: str = None,
-        source: 'Bullets' = None
+        source: 'Bullets' = None,
     ) -> None:
         """
         Initialize a UIMetaMedia object.
@@ -4791,7 +4791,7 @@ class URLS:
         deprecation_doc_url: str = None,
         dashboard_url: str = None,
         registration_url: str = None,
-        apidocsurl: str = None
+        apidocsurl: str = None,
     ) -> None:
         """
         Initialize a URLS object.
@@ -4936,7 +4936,7 @@ class Visibility:
         extendable: bool = None,
         include: 'VisibilityDetail' = None,
         exclude: 'VisibilityDetail' = None,
-        approved: bool = None
+        approved: bool = None,
     ) -> None:
         """
         Initialize a Visibility object.

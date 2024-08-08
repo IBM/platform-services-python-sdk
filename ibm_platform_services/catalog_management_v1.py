@@ -252,7 +252,7 @@ class CatalogManagementV1(BaseService):
         catalog_filters: 'Filters' = None,
         syndication_settings: 'SyndicationResource' = None,
         kind: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create a catalog.
@@ -377,7 +377,7 @@ class CatalogManagementV1(BaseService):
         catalog_filters: 'Filters' = None,
         syndication_settings: 'SyndicationResource' = None,
         kind: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update catalog.
@@ -535,7 +535,7 @@ class CatalogManagementV1(BaseService):
         include_hidden: bool = None,
         limit: int = None,
         offset: int = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get consumption offerings.
@@ -599,7 +599,7 @@ class CatalogManagementV1(BaseService):
         offset: int = None,
         name: str = None,
         sort: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get list of offerings.
@@ -688,7 +688,7 @@ class CatalogManagementV1(BaseService):
         repo_info: 'RepoInfo' = None,
         support: 'Support' = None,
         media: List['MediaItem'] = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create offering.
@@ -850,7 +850,7 @@ class CatalogManagementV1(BaseService):
         include_config: bool = None,
         is_vsi: bool = None,
         repo_type: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Import offering version.
@@ -931,7 +931,7 @@ class CatalogManagementV1(BaseService):
         is_vsi: bool = None,
         repo_type: str = None,
         x_auth_token: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Import offering.
@@ -1011,7 +1011,7 @@ class CatalogManagementV1(BaseService):
         content: bytes = None,
         zipurl: str = None,
         repo_type: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Reload offering.
@@ -1154,7 +1154,7 @@ class CatalogManagementV1(BaseService):
         repo_info: 'RepoInfo' = None,
         support: 'Support' = None,
         media: List['MediaItem'] = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update offering.
@@ -1313,7 +1313,7 @@ class CatalogManagementV1(BaseService):
         if_match: str,
         *,
         updates: List['JsonPatchOperation'] = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update offering.
@@ -1537,7 +1537,7 @@ class CatalogManagementV1(BaseService):
         *,
         description: str = None,
         days_until_deprecate: int = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Allows offering to be deprecated.
@@ -1602,7 +1602,7 @@ class CatalogManagementV1(BaseService):
         channel: str = None,
         namespaces: List[str] = None,
         all_namespaces: bool = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get version updates.
@@ -1689,7 +1689,7 @@ class CatalogManagementV1(BaseService):
         id: str = None,
         kind: str = None,
         channel: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get offering source.
@@ -2056,7 +2056,7 @@ class CatalogManagementV1(BaseService):
         tags: List[str] = None,
         target_kinds: List[str] = None,
         content: bytes = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Copy version to new target kind.
@@ -2253,7 +2253,7 @@ class CatalogManagementV1(BaseService):
         *,
         limit: int = None,
         offset: int = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get cluster namespaces.
@@ -2307,7 +2307,7 @@ class CatalogManagementV1(BaseService):
         namespaces: List[str] = None,
         all_namespaces: bool = None,
         version_locator_id: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Deploy operators.
@@ -2409,7 +2409,7 @@ class CatalogManagementV1(BaseService):
         namespaces: List[str] = None,
         all_namespaces: bool = None,
         version_locator_id: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update operators.
@@ -2520,7 +2520,7 @@ class CatalogManagementV1(BaseService):
         vcenter_password: str = None,
         vcenter_location: str = None,
         vcenter_datastore: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Install version.
@@ -2617,7 +2617,7 @@ class CatalogManagementV1(BaseService):
         vcenter_password: str = None,
         vcenter_location: str = None,
         vcenter_datastore: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Pre-install version.
@@ -2703,7 +2703,7 @@ class CatalogManagementV1(BaseService):
         cluster_id: str = None,
         region: str = None,
         namespace: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get version pre-install status.
@@ -2765,7 +2765,7 @@ class CatalogManagementV1(BaseService):
         vcenter_password: str = None,
         vcenter_location: str = None,
         vcenter_datastore: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Validate offering.
@@ -2968,7 +2968,7 @@ class CatalogManagementV1(BaseService):
         offset: int = None,
         name: str = None,
         sort: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         List objects within a catalog.
@@ -3037,7 +3037,7 @@ class CatalogManagementV1(BaseService):
         catalog_id: str = None,
         catalog_name: str = None,
         data: dict = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create catalog object.
@@ -3190,7 +3190,7 @@ class CatalogManagementV1(BaseService):
         catalog_id: str = None,
         catalog_name: str = None,
         data: dict = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update catalog object.
@@ -3784,7 +3784,7 @@ class CatalogManagementV1(BaseService):
         channel: str = None,
         metadata: dict = None,
         last_operation: 'OfferingInstanceLastOperation' = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create an offering resource instance.
@@ -3931,7 +3931,7 @@ class CatalogManagementV1(BaseService):
         channel: str = None,
         metadata: dict = None,
         last_operation: 'OfferingInstanceLastOperation' = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update Offering Instance.
@@ -4300,7 +4300,7 @@ class AccumulatedFilters:
         self,
         *,
         account_filters: List['Filters'] = None,
-        catalog_filters: List['AccumulatedFiltersCatalogFiltersItem'] = None
+        catalog_filters: List['AccumulatedFiltersCatalogFiltersItem'] = None,
     ) -> None:
         """
         Initialize a AccumulatedFilters object.
@@ -4639,7 +4639,7 @@ class AuditRecord:
         target_type: str = None,
         target_id: str = None,
         who_delegate_email: str = None,
-        message: str = None
+        message: str = None,
     ) -> None:
         """
         Initialize a AuditRecord object.
@@ -4776,7 +4776,7 @@ class Catalog:
         owning_account: str = None,
         catalog_filters: 'Filters' = None,
         syndication_settings: 'SyndicationResource' = None,
-        kind: str = None
+        kind: str = None,
     ) -> None:
         """
         Initialize a Catalog object.
@@ -4978,7 +4978,7 @@ class CatalogObject:
         state: 'State' = None,
         catalog_id: str = None,
         catalog_name: str = None,
-        data: dict = None
+        data: dict = None,
     ) -> None:
         """
         Initialize a CatalogObject object.
@@ -5286,7 +5286,7 @@ class ClusterInfo:
         resource_group_name: str = None,
         id: str = None,
         name: str = None,
-        region: str = None
+        region: str = None,
     ) -> None:
         """
         Initialize a ClusterInfo object.
@@ -5385,7 +5385,7 @@ class Configuration:
         description: str = None,
         required: bool = None,
         options: List[object] = None,
-        hidden: bool = None
+        hidden: bool = None,
     ) -> None:
         """
         Initialize a Configuration object.
@@ -5585,7 +5585,7 @@ class Deployment:
         metadata: dict = None,
         tags: List[str] = None,
         created: datetime = None,
-        updated: datetime = None
+        updated: datetime = None,
     ) -> None:
         """
         Initialize a Deployment object.
@@ -6079,7 +6079,7 @@ class InstallStatus:
         *,
         metadata: 'InstallStatusMetadata' = None,
         release: 'InstallStatusRelease' = None,
-        content_mgmt: 'InstallStatusContentMgmt' = None
+        content_mgmt: 'InstallStatusContentMgmt' = None,
     ) -> None:
         """
         Initialize a InstallStatus object.
@@ -6220,7 +6220,7 @@ class InstallStatusMetadata:
         region: str = None,
         namespace: str = None,
         workspace_id: str = None,
-        workspace_name: str = None
+        workspace_name: str = None,
     ) -> None:
         """
         Initialize a InstallStatusMetadata object.
@@ -6310,7 +6310,7 @@ class InstallStatusRelease:
         replicasets: List[dict] = None,
         statefulsets: List[dict] = None,
         pods: List[dict] = None,
-        errors: List[dict] = None
+        errors: List[dict] = None,
     ) -> None:
         """
         Initialize a InstallStatusRelease object.
@@ -6511,7 +6511,7 @@ class Kind:
         created: datetime = None,
         updated: datetime = None,
         versions: List['Version'] = None,
-        plans: List['Plan'] = None
+        plans: List['Plan'] = None,
     ) -> None:
         """
         Initialize a Kind object.
@@ -6815,7 +6815,7 @@ class NamespaceSearchResult:
         last: str = None,
         prev: str = None,
         next: str = None,
-        resources: List[str] = None
+        resources: List[str] = None,
     ) -> None:
         """
         Initialize a NamespaceSearchResult object.
@@ -6941,7 +6941,7 @@ class ObjectAccess:
         account: str = None,
         catalog_id: str = None,
         target_id: str = None,
-        create: datetime = None
+        create: datetime = None,
     ) -> None:
         """
         Initialize a ObjectAccess object.
@@ -7045,7 +7045,7 @@ class ObjectAccessListResult:
         last: str = None,
         prev: str = None,
         next: str = None,
-        resources: List['ObjectAccess'] = None
+        resources: List['ObjectAccess'] = None,
     ) -> None:
         """
         Initialize a ObjectAccessListResult object.
@@ -7185,7 +7185,7 @@ class ObjectListResult:
         last: str = None,
         prev: str = None,
         next: str = None,
-        resources: List['CatalogObject'] = None
+        resources: List['CatalogObject'] = None,
     ) -> None:
         """
         Initialize a ObjectListResult object.
@@ -7325,7 +7325,7 @@ class ObjectSearchResult:
         last: str = None,
         prev: str = None,
         next: str = None,
-        resources: List['CatalogObject'] = None
+        resources: List['CatalogObject'] = None,
     ) -> None:
         """
         Initialize a ObjectSearchResult object.
@@ -7528,7 +7528,7 @@ class Offering:
         provider_info: 'ProviderInfo' = None,
         repo_info: 'RepoInfo' = None,
         support: 'Support' = None,
-        media: List['MediaItem'] = None
+        media: List['MediaItem'] = None,
     ) -> None:
         """
         Initialize a Offering object.
@@ -7858,7 +7858,7 @@ class OfferingInstance:
         install_plan: str = None,
         channel: str = None,
         metadata: dict = None,
-        last_operation: 'OfferingInstanceLastOperation' = None
+        last_operation: 'OfferingInstanceLastOperation' = None,
     ) -> None:
         """
         Initialize a OfferingInstance object.
@@ -8045,7 +8045,7 @@ class OfferingInstanceLastOperation:
         state: str = None,
         message: str = None,
         transaction_id: str = None,
-        updated: str = None
+        updated: str = None,
     ) -> None:
         """
         Initialize a OfferingInstanceLastOperation object.
@@ -8151,7 +8151,7 @@ class OfferingSearchResult:
         last: str = None,
         prev: str = None,
         next: str = None,
-        resources: List['Offering'] = None
+        resources: List['Offering'] = None,
     ) -> None:
         """
         Initialize a OfferingSearchResult object.
@@ -8283,7 +8283,7 @@ class OperatorDeployResult:
         version: str = None,
         namespace: str = None,
         package_name: str = None,
-        catalog_id: str = None
+        catalog_id: str = None,
     ) -> None:
         """
         Initialize a OperatorDeployResult object.
@@ -8406,7 +8406,7 @@ class Plan:
         additional_features: List['Feature'] = None,
         created: datetime = None,
         updated: datetime = None,
-        deployments: List['Deployment'] = None
+        deployments: List['Deployment'] = None,
     ) -> None:
         """
         Initialize a Plan object.
@@ -8602,7 +8602,7 @@ class PublishObject:
         ibm_approved: bool = None,
         public_approved: bool = None,
         portal_approval_record: str = None,
-        portal_url: str = None
+        portal_url: str = None,
     ) -> None:
         """
         Initialize a PublishObject object.
@@ -8694,7 +8694,7 @@ class Rating:
         one_star_count: int = None,
         two_star_count: int = None,
         three_star_count: int = None,
-        four_star_count: int = None
+        four_star_count: int = None,
     ) -> None:
         """
         Initialize a Rating object.
@@ -8918,7 +8918,7 @@ class Script:
         script: str = None,
         script_permission: str = None,
         delete_script: str = None,
-        scope: str = None
+        scope: str = None,
     ) -> None:
         """
         Initialize a Script object.
@@ -9017,7 +9017,7 @@ class State:
         current_entered: datetime = None,
         pending: str = None,
         pending_requested: datetime = None,
-        previous: str = None
+        previous: str = None,
     ) -> None:
         """
         Initialize a State object.
@@ -9249,7 +9249,7 @@ class SyndicationCluster:
         resource_group_name: str = None,
         type: str = None,
         namespaces: List[str] = None,
-        all_namespaces: bool = None
+        all_namespaces: bool = None,
     ) -> None:
         """
         Initialize a SyndicationCluster object.
@@ -9422,7 +9422,7 @@ class SyndicationResource:
         remove_related_components: bool = None,
         clusters: List['SyndicationCluster'] = None,
         history: 'SyndicationHistory' = None,
-        authorization: 'SyndicationAuthorization' = None
+        authorization: 'SyndicationAuthorization' = None,
     ) -> None:
         """
         Initialize a SyndicationResource object.
@@ -9513,7 +9513,7 @@ class Validation:
         requested: datetime = None,
         state: str = None,
         last_operation: str = None,
-        target: dict = None
+        target: dict = None,
     ) -> None:
         """
         Initialize a Validation object.
@@ -9669,7 +9669,7 @@ class Version:
         version_locator: str = None,
         console_url: str = None,
         long_description: str = None,
-        whitelisted_accounts: List[str] = None
+        whitelisted_accounts: List[str] = None,
     ) -> None:
         """
         Initialize a Version object.
@@ -9929,7 +9929,7 @@ class VersionEntitlement:
         provider_id: str = None,
         product_id: str = None,
         part_numbers: List[str] = None,
-        image_repo_name: str = None
+        image_repo_name: str = None,
     ) -> None:
         """
         Initialize a VersionEntitlement object.
@@ -10031,7 +10031,7 @@ class VersionUpdateDescriptor:
         package_version: str = None,
         sha: str = None,
         can_update: bool = None,
-        messages: dict = None
+        messages: dict = None,
     ) -> None:
         """
         Initialize a VersionUpdateDescriptor object.

@@ -83,7 +83,7 @@ class ResourceManagerV2(BaseService):
         name: str = None,
         default: bool = None,
         include_deleted: bool = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a list of all resource groups.
@@ -423,7 +423,7 @@ class QuotaDefinition:
         vsi_limit: float = None,
         resource_quotas: List['ResourceQuota'] = None,
         created_at: datetime = None,
-        updated_at: datetime = None
+        updated_at: datetime = None,
     ) -> None:
         """
         Initialize a QuotaDefinition object.
@@ -719,7 +719,7 @@ class ResourceGroup:
         resource_linkages: List[object] = None,
         teams_url: str = None,
         created_at: datetime = None,
-        updated_at: datetime = None
+        updated_at: datetime = None,
     ) -> None:
         """
         Initialize a ResourceGroup object.

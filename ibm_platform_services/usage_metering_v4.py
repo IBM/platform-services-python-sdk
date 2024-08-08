@@ -228,7 +228,7 @@ class ResourceInstanceUsage:
         measured_usage: List['MeasureAndQuantity'],
         *,
         region: str = None,
-        consumer_id: str = None
+        consumer_id: str = None,
     ) -> None:
         """
         Initialize a ResourceInstanceUsage object.
