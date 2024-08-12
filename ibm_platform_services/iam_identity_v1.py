@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.86.2-8b8592a4-20240313-204553
+# IBM OpenAPI SDK Code Generator Version: 3.93.0-c40121e6-20240729-182103
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -56,7 +56,9 @@ class IamIdentityV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -514,10 +516,7 @@ class IamIdentityV1(BaseService):
         Lock the API key.
 
         Locks an API key by ID. Users can manage user API keys for themself, or service ID
-        API keys for service IDs that are bound to an entity they have access to. In case
-        of service IDs and their API keys, a user must be either an account owner, a IBM
-        Cloud org manager or IBM Cloud space developer in order to manage service IDs of
-        the entity.
+        API keys for service IDs they have access to.
 
         :param str id: Unique ID of the API key.
         :param dict headers: A `dict` containing the request headers
@@ -3664,6 +3663,67 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
+    # effectiveAccountSettings
+    #########################
+
+    def get_effective_account_settings(
+        self,
+        account_id: str,
+        *,
+        include_history: Optional[bool] = None,
+        resolve_user_mfa: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get effective account settings configuration.
+
+        Returns effective account settings for given account ID.
+
+        :param str account_id: Unique ID of the account.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param bool resolve_user_mfa: (optional) Enrich MFA exemptions with user
+               information.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `EffectiveAccountSettingsResponse` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_effective_account_settings',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+            'resolve_user_mfa': resolve_user_mfa,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/accounts/{account_id}/effective_settings/identity'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
     # trustedProfileAssignments
     #########################
 
@@ -4051,6 +4111,7 @@ class IamIdentityV1(BaseService):
         description: Optional[str] = None,
         profile: Optional['TemplateProfileComponentRequest'] = None,
         policy_template_references: Optional[List['PolicyTemplateReference']] = None,
+        action_controls: Optional['ActionControls'] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -4071,6 +4132,7 @@ class IamIdentityV1(BaseService):
         :param List[PolicyTemplateReference] policy_template_references: (optional)
                Existing policy templates that you can reference to assign access in the
                trusted profile component.
+        :param ActionControls action_controls: (optional)
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TrustedProfileTemplateResponse` object
@@ -4080,6 +4142,8 @@ class IamIdentityV1(BaseService):
             profile = convert_model(profile)
         if policy_template_references is not None:
             policy_template_references = [convert_model(x) for x in policy_template_references]
+        if action_controls is not None:
+            action_controls = convert_model(action_controls)
         headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -4094,6 +4158,7 @@ class IamIdentityV1(BaseService):
             'description': description,
             'profile': profile,
             'policy_template_references': policy_template_references,
+            'action_controls': action_controls,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -4288,6 +4353,7 @@ class IamIdentityV1(BaseService):
         description: Optional[str] = None,
         profile: Optional['TemplateProfileComponentRequest'] = None,
         policy_template_references: Optional[List['PolicyTemplateReference']] = None,
+        action_controls: Optional['ActionControls'] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -4309,6 +4375,7 @@ class IamIdentityV1(BaseService):
         :param List[PolicyTemplateReference] policy_template_references: (optional)
                Existing policy templates that you can reference to assign access in the
                trusted profile component.
+        :param ActionControls action_controls: (optional)
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TrustedProfileTemplateResponse` object
@@ -4320,6 +4387,8 @@ class IamIdentityV1(BaseService):
             profile = convert_model(profile)
         if policy_template_references is not None:
             policy_template_references = [convert_model(x) for x in policy_template_references]
+        if action_controls is not None:
+            action_controls = convert_model(action_controls)
         headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -4334,6 +4403,7 @@ class IamIdentityV1(BaseService):
             'description': description,
             'profile': profile,
             'policy_template_references': policy_template_references,
+            'action_controls': action_controls,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -4426,6 +4496,7 @@ class IamIdentityV1(BaseService):
         description: Optional[str] = None,
         profile: Optional['TemplateProfileComponentRequest'] = None,
         policy_template_references: Optional[List['PolicyTemplateReference']] = None,
+        action_controls: Optional['ActionControls'] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -4452,6 +4523,7 @@ class IamIdentityV1(BaseService):
         :param List[PolicyTemplateReference] policy_template_references: (optional)
                Existing policy templates that you can reference to assign access in the
                trusted profile component.
+        :param ActionControls action_controls: (optional)
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TrustedProfileTemplateResponse` object
@@ -4467,6 +4539,8 @@ class IamIdentityV1(BaseService):
             profile = convert_model(profile)
         if policy_template_references is not None:
             policy_template_references = [convert_model(x) for x in policy_template_references]
+        if action_controls is not None:
+            action_controls = convert_model(action_controls)
         headers = {
             'If-Match': if_match,
         }
@@ -4483,6 +4557,7 @@ class IamIdentityV1(BaseService):
             'description': description,
             'profile': profile,
             'policy_template_references': policy_template_references,
+            'action_controls': action_controls,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -4619,7 +4694,6 @@ class ListApiKeysEnums:
 
         ENTITY = 'entity'
         ACCOUNT = 'account'
-
     class Type(str, Enum):
         """
         Optional parameter to filter the type of the queried API keys. Can be 'user' or
@@ -4628,7 +4702,6 @@ class ListApiKeysEnums:
 
         USER = 'user'
         SERVICEID = 'serviceid'
-
     class Order(str, Enum):
         """
         Optional sort order, valid values are asc and desc. Default: asc.
@@ -4723,7 +4796,6 @@ class ListAccountSettingsAssignmentsEnums:
 
         ACCOUNT = 'Account'
         ACCOUNTGROUP = 'AccountGroup'
-
     class Sort(str, Enum):
         """
         If specified, the items are sorted by the value of this property.
@@ -4732,7 +4804,6 @@ class ListAccountSettingsAssignmentsEnums:
         TEMPLATE_ID = 'template_id'
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
-
     class Order(str, Enum):
         """
         Sort order.
@@ -4756,7 +4827,6 @@ class ListAccountSettingsTemplatesEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -4780,7 +4850,6 @@ class ListVersionsOfAccountSettingsTemplateEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -4802,7 +4871,6 @@ class ListTrustedProfileAssignmentsEnums:
 
         ACCOUNT = 'Account'
         ACCOUNTGROUP = 'AccountGroup'
-
     class Sort(str, Enum):
         """
         If specified, the items are sorted by the value of this property.
@@ -4811,7 +4879,6 @@ class ListTrustedProfileAssignmentsEnums:
         TEMPLATE_ID = 'template_id'
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
-
     class Order(str, Enum):
         """
         Sort order.
@@ -4835,7 +4902,6 @@ class ListProfileTemplatesEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -4859,7 +4925,6 @@ class ListVersionsOfProfileTemplateEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -4970,6 +5035,564 @@ class AccountBasedMfaEnrollment:
     def __ne__(self, other: 'AccountBasedMfaEnrollment') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+class AccountSettingsAccountSection:
+    """
+    AccountSettingsAccountSection.
+
+    :param str account_id: (optional) Unique ID of the account.
+    :param str restrict_create_service_id: (optional) Defines whether or not
+          creating a service ID is access controlled. Valid values:
+            * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
+          Identity Service can create service IDs, including the account owner
+            * NOT_RESTRICTED - all members of an account can create service IDs
+            * NOT_SET - to 'unset' a previous set value.
+    :param str restrict_create_platform_apikey: (optional) Defines whether or not
+          creating platform API keys is access controlled. Valid values:
+            * RESTRICTED - to apply access control
+            * NOT_RESTRICTED - to remove access control
+            * NOT_SET - to 'unset' a previous set value.
+    :param str allowed_ip_addresses: (optional) Defines the IP addresses and subnets
+          from which IAM tokens can be created for the account.
+    :param str mfa: (optional) Defines the MFA requirement for the user. Valid
+          values:
+            * NONE - No MFA trait set
+            * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+            * TOTP - For all non-federated IBMId users
+            * TOTP4ALL - For all users
+            * LEVEL1 - Email-based MFA for all users
+            * LEVEL2 - TOTP-based MFA for all users
+            * LEVEL3 - U2F MFA for all users.
+    :param List[EffectiveAccountSettingsUserMFA] user_mfa: (optional) List of users
+          that are exempted from the MFA requirement of the account.
+    :param List[EnityHistoryRecord] history: (optional) History of the Account
+          Settings.
+    :param str session_expiration_in_seconds: (optional) Defines the session
+          expiration in seconds for the account. Valid values:
+            * Any whole number between between '900' and '86400'
+            * NOT_SET - To unset account setting and use service default.
+    :param str session_invalidation_in_seconds: (optional) Defines the period of
+          time in seconds in which a session will be invalidated due to inactivity. Valid
+          values:
+            * Any whole number between '900' and '7200'
+            * NOT_SET - To unset account setting and use service default.
+    :param str max_sessions_per_identity: (optional) Defines the max allowed
+          sessions per identity required by the account. Valid values:
+            * Any whole number greater than 0
+            * NOT_SET - To unset account setting and use service default.
+    :param str system_access_token_expiration_in_seconds: (optional) Defines the
+          access token expiration in seconds. Valid values:
+            * Any whole number between '900' and '3600'
+            * NOT_SET - To unset account setting and use service default.
+    :param str system_refresh_token_expiration_in_seconds: (optional) Defines the
+          refresh token expiration in seconds. Valid values:
+            * Any whole number between '900' and '259200'
+            * NOT_SET - To unset account setting and use service default.
+    """
+
+    def __init__(
+        self,
+        *,
+        account_id: Optional[str] = None,
+        restrict_create_service_id: Optional[str] = None,
+        restrict_create_platform_apikey: Optional[str] = None,
+        allowed_ip_addresses: Optional[str] = None,
+        mfa: Optional[str] = None,
+        user_mfa: Optional[List['EffectiveAccountSettingsUserMFA']] = None,
+        history: Optional[List['EnityHistoryRecord']] = None,
+        session_expiration_in_seconds: Optional[str] = None,
+        session_invalidation_in_seconds: Optional[str] = None,
+        max_sessions_per_identity: Optional[str] = None,
+        system_access_token_expiration_in_seconds: Optional[str] = None,
+        system_refresh_token_expiration_in_seconds: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a AccountSettingsAccountSection object.
+
+        :param str account_id: (optional) Unique ID of the account.
+        :param str restrict_create_service_id: (optional) Defines whether or not
+               creating a service ID is access controlled. Valid values:
+                 * RESTRICTED - only users assigned the 'Service ID creator' role on the
+               IAM Identity Service can create service IDs, including the account owner
+                 * NOT_RESTRICTED - all members of an account can create service IDs
+                 * NOT_SET - to 'unset' a previous set value.
+        :param str restrict_create_platform_apikey: (optional) Defines whether or
+               not creating platform API keys is access controlled. Valid values:
+                 * RESTRICTED - to apply access control
+                 * NOT_RESTRICTED - to remove access control
+                 * NOT_SET - to 'unset' a previous set value.
+        :param str allowed_ip_addresses: (optional) Defines the IP addresses and
+               subnets from which IAM tokens can be created for the account.
+        :param str mfa: (optional) Defines the MFA requirement for the user. Valid
+               values:
+                 * NONE - No MFA trait set
+                 * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+                 * TOTP - For all non-federated IBMId users
+                 * TOTP4ALL - For all users
+                 * LEVEL1 - Email-based MFA for all users
+                 * LEVEL2 - TOTP-based MFA for all users
+                 * LEVEL3 - U2F MFA for all users.
+        :param List[EffectiveAccountSettingsUserMFA] user_mfa: (optional) List of
+               users that are exempted from the MFA requirement of the account.
+        :param List[EnityHistoryRecord] history: (optional) History of the Account
+               Settings.
+        :param str session_expiration_in_seconds: (optional) Defines the session
+               expiration in seconds for the account. Valid values:
+                 * Any whole number between between '900' and '86400'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str session_invalidation_in_seconds: (optional) Defines the period
+               of time in seconds in which a session will be invalidated due to
+               inactivity. Valid values:
+                 * Any whole number between '900' and '7200'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str max_sessions_per_identity: (optional) Defines the max allowed
+               sessions per identity required by the account. Valid values:
+                 * Any whole number greater than 0
+                 * NOT_SET - To unset account setting and use service default.
+        :param str system_access_token_expiration_in_seconds: (optional) Defines
+               the access token expiration in seconds. Valid values:
+                 * Any whole number between '900' and '3600'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str system_refresh_token_expiration_in_seconds: (optional) Defines
+               the refresh token expiration in seconds. Valid values:
+                 * Any whole number between '900' and '259200'
+                 * NOT_SET - To unset account setting and use service default.
+        """
+        self.account_id = account_id
+        self.restrict_create_service_id = restrict_create_service_id
+        self.restrict_create_platform_apikey = restrict_create_platform_apikey
+        self.allowed_ip_addresses = allowed_ip_addresses
+        self.mfa = mfa
+        self.user_mfa = user_mfa
+        self.history = history
+        self.session_expiration_in_seconds = session_expiration_in_seconds
+        self.session_invalidation_in_seconds = session_invalidation_in_seconds
+        self.max_sessions_per_identity = max_sessions_per_identity
+        self.system_access_token_expiration_in_seconds = system_access_token_expiration_in_seconds
+        self.system_refresh_token_expiration_in_seconds = system_refresh_token_expiration_in_seconds
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountSettingsAccountSection':
+        """Initialize a AccountSettingsAccountSection object from a json dictionary."""
+        args = {}
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (restrict_create_service_id := _dict.get('restrict_create_service_id')) is not None:
+            args['restrict_create_service_id'] = restrict_create_service_id
+        if (restrict_create_platform_apikey := _dict.get('restrict_create_platform_apikey')) is not None:
+            args['restrict_create_platform_apikey'] = restrict_create_platform_apikey
+        if (allowed_ip_addresses := _dict.get('allowed_ip_addresses')) is not None:
+            args['allowed_ip_addresses'] = allowed_ip_addresses
+        if (mfa := _dict.get('mfa')) is not None:
+            args['mfa'] = mfa
+        if (user_mfa := _dict.get('user_mfa')) is not None:
+            args['user_mfa'] = [EffectiveAccountSettingsUserMFA.from_dict(v) for v in user_mfa]
+        if (history := _dict.get('history')) is not None:
+            args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
+        if (session_expiration_in_seconds := _dict.get('session_expiration_in_seconds')) is not None:
+            args['session_expiration_in_seconds'] = session_expiration_in_seconds
+        if (session_invalidation_in_seconds := _dict.get('session_invalidation_in_seconds')) is not None:
+            args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
+        if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
+            args['max_sessions_per_identity'] = max_sessions_per_identity
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
+            args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
+            args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountSettingsAccountSection object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'restrict_create_service_id') and self.restrict_create_service_id is not None:
+            _dict['restrict_create_service_id'] = self.restrict_create_service_id
+        if hasattr(self, 'restrict_create_platform_apikey') and self.restrict_create_platform_apikey is not None:
+            _dict['restrict_create_platform_apikey'] = self.restrict_create_platform_apikey
+        if hasattr(self, 'allowed_ip_addresses') and self.allowed_ip_addresses is not None:
+            _dict['allowed_ip_addresses'] = self.allowed_ip_addresses
+        if hasattr(self, 'mfa') and self.mfa is not None:
+            _dict['mfa'] = self.mfa
+        if hasattr(self, 'user_mfa') and self.user_mfa is not None:
+            user_mfa_list = []
+            for v in self.user_mfa:
+                if isinstance(v, dict):
+                    user_mfa_list.append(v)
+                else:
+                    user_mfa_list.append(v.to_dict())
+            _dict['user_mfa'] = user_mfa_list
+        if hasattr(self, 'history') and self.history is not None:
+            history_list = []
+            for v in self.history:
+                if isinstance(v, dict):
+                    history_list.append(v)
+                else:
+                    history_list.append(v.to_dict())
+            _dict['history'] = history_list
+        if hasattr(self, 'session_expiration_in_seconds') and self.session_expiration_in_seconds is not None:
+            _dict['session_expiration_in_seconds'] = self.session_expiration_in_seconds
+        if hasattr(self, 'session_invalidation_in_seconds') and self.session_invalidation_in_seconds is not None:
+            _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
+        if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
+            _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
+            _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
+            _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountSettingsAccountSection object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountSettingsAccountSection') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountSettingsAccountSection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class RestrictCreateServiceIdEnum(str, Enum):
+        """
+        Defines whether or not creating a service ID is access controlled. Valid values:
+          * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
+        Identity Service can create service IDs, including the account owner
+          * NOT_RESTRICTED - all members of an account can create service IDs
+          * NOT_SET - to 'unset' a previous set value.
+        """
+
+        RESTRICTED = 'RESTRICTED'
+        NOT_RESTRICTED = 'NOT_RESTRICTED'
+        NOT_SET = 'NOT_SET'
+
+
+    class RestrictCreatePlatformApikeyEnum(str, Enum):
+        """
+        Defines whether or not creating platform API keys is access controlled. Valid
+        values:
+          * RESTRICTED - to apply access control
+          * NOT_RESTRICTED - to remove access control
+          * NOT_SET - to 'unset' a previous set value.
+        """
+
+        RESTRICTED = 'RESTRICTED'
+        NOT_RESTRICTED = 'NOT_RESTRICTED'
+        NOT_SET = 'NOT_SET'
+
+
+    class MfaEnum(str, Enum):
+        """
+        Defines the MFA requirement for the user. Valid values:
+          * NONE - No MFA trait set
+          * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+          * TOTP - For all non-federated IBMId users
+          * TOTP4ALL - For all users
+          * LEVEL1 - Email-based MFA for all users
+          * LEVEL2 - TOTP-based MFA for all users
+          * LEVEL3 - U2F MFA for all users.
+        """
+
+        NONE = 'NONE'
+        NONE_NO_ROPC = 'NONE_NO_ROPC'
+        TOTP = 'TOTP'
+        TOTP4ALL = 'TOTP4ALL'
+        LEVEL1 = 'LEVEL1'
+        LEVEL2 = 'LEVEL2'
+        LEVEL3 = 'LEVEL3'
+
+
+
+class AccountSettingsAssignedTemplatesSection:
+    """
+    AccountSettingsAssignedTemplatesSection.
+
+    :param str template_id: (optional) Template Id.
+    :param int template_version: (optional) Template version.
+    :param str template_name: (optional) Template name.
+    :param str restrict_create_service_id: (optional) Defines whether or not
+          creating a service ID is access controlled. Valid values:
+            * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
+          Identity Service can create service IDs, including the account owner
+            * NOT_RESTRICTED - all members of an account can create service IDs
+            * NOT_SET - to 'unset' a previous set value.
+    :param str restrict_create_platform_apikey: (optional) Defines whether or not
+          creating platform API keys is access controlled. Valid values:
+            * RESTRICTED - to apply access control
+            * NOT_RESTRICTED - to remove access control
+            * NOT_SET - to 'unset' a previous set value.
+    :param str allowed_ip_addresses: (optional) Defines the IP addresses and subnets
+          from which IAM tokens can be created for the account.
+    :param str mfa: (optional) Defines the MFA requirement for the user. Valid
+          values:
+            * NONE - No MFA trait set
+            * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+            * TOTP - For all non-federated IBMId users
+            * TOTP4ALL - For all users
+            * LEVEL1 - Email-based MFA for all users
+            * LEVEL2 - TOTP-based MFA for all users
+            * LEVEL3 - U2F MFA for all users.
+    :param List[EffectiveAccountSettingsUserMFA] user_mfa: (optional) List of users
+          that are exempted from the MFA requirement of the account.
+    :param str session_expiration_in_seconds: (optional) Defines the session
+          expiration in seconds for the account. Valid values:
+            * Any whole number between between '900' and '86400'
+            * NOT_SET - To unset account setting and use service default.
+    :param str session_invalidation_in_seconds: (optional) Defines the period of
+          time in seconds in which a session will be invalidated due to inactivity. Valid
+          values:
+            * Any whole number between '900' and '7200'
+            * NOT_SET - To unset account setting and use service default.
+    :param str max_sessions_per_identity: (optional) Defines the max allowed
+          sessions per identity required by the account. Valid values:
+            * Any whole number greater than 0
+            * NOT_SET - To unset account setting and use service default.
+    :param str system_access_token_expiration_in_seconds: (optional) Defines the
+          access token expiration in seconds. Valid values:
+            * Any whole number between '900' and '3600'
+            * NOT_SET - To unset account setting and use service default.
+    :param str system_refresh_token_expiration_in_seconds: (optional) Defines the
+          refresh token expiration in seconds. Valid values:
+            * Any whole number between '900' and '259200'
+            * NOT_SET - To unset account setting and use service default.
+    """
+
+    def __init__(
+        self,
+        *,
+        template_id: Optional[str] = None,
+        template_version: Optional[int] = None,
+        template_name: Optional[str] = None,
+        restrict_create_service_id: Optional[str] = None,
+        restrict_create_platform_apikey: Optional[str] = None,
+        allowed_ip_addresses: Optional[str] = None,
+        mfa: Optional[str] = None,
+        user_mfa: Optional[List['EffectiveAccountSettingsUserMFA']] = None,
+        session_expiration_in_seconds: Optional[str] = None,
+        session_invalidation_in_seconds: Optional[str] = None,
+        max_sessions_per_identity: Optional[str] = None,
+        system_access_token_expiration_in_seconds: Optional[str] = None,
+        system_refresh_token_expiration_in_seconds: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a AccountSettingsAssignedTemplatesSection object.
+
+        :param str template_id: (optional) Template Id.
+        :param int template_version: (optional) Template version.
+        :param str template_name: (optional) Template name.
+        :param str restrict_create_service_id: (optional) Defines whether or not
+               creating a service ID is access controlled. Valid values:
+                 * RESTRICTED - only users assigned the 'Service ID creator' role on the
+               IAM Identity Service can create service IDs, including the account owner
+                 * NOT_RESTRICTED - all members of an account can create service IDs
+                 * NOT_SET - to 'unset' a previous set value.
+        :param str restrict_create_platform_apikey: (optional) Defines whether or
+               not creating platform API keys is access controlled. Valid values:
+                 * RESTRICTED - to apply access control
+                 * NOT_RESTRICTED - to remove access control
+                 * NOT_SET - to 'unset' a previous set value.
+        :param str allowed_ip_addresses: (optional) Defines the IP addresses and
+               subnets from which IAM tokens can be created for the account.
+        :param str mfa: (optional) Defines the MFA requirement for the user. Valid
+               values:
+                 * NONE - No MFA trait set
+                 * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+                 * TOTP - For all non-federated IBMId users
+                 * TOTP4ALL - For all users
+                 * LEVEL1 - Email-based MFA for all users
+                 * LEVEL2 - TOTP-based MFA for all users
+                 * LEVEL3 - U2F MFA for all users.
+        :param List[EffectiveAccountSettingsUserMFA] user_mfa: (optional) List of
+               users that are exempted from the MFA requirement of the account.
+        :param str session_expiration_in_seconds: (optional) Defines the session
+               expiration in seconds for the account. Valid values:
+                 * Any whole number between between '900' and '86400'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str session_invalidation_in_seconds: (optional) Defines the period
+               of time in seconds in which a session will be invalidated due to
+               inactivity. Valid values:
+                 * Any whole number between '900' and '7200'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str max_sessions_per_identity: (optional) Defines the max allowed
+               sessions per identity required by the account. Valid values:
+                 * Any whole number greater than 0
+                 * NOT_SET - To unset account setting and use service default.
+        :param str system_access_token_expiration_in_seconds: (optional) Defines
+               the access token expiration in seconds. Valid values:
+                 * Any whole number between '900' and '3600'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str system_refresh_token_expiration_in_seconds: (optional) Defines
+               the refresh token expiration in seconds. Valid values:
+                 * Any whole number between '900' and '259200'
+                 * NOT_SET - To unset account setting and use service default.
+        """
+        self.template_id = template_id
+        self.template_version = template_version
+        self.template_name = template_name
+        self.restrict_create_service_id = restrict_create_service_id
+        self.restrict_create_platform_apikey = restrict_create_platform_apikey
+        self.allowed_ip_addresses = allowed_ip_addresses
+        self.mfa = mfa
+        self.user_mfa = user_mfa
+        self.session_expiration_in_seconds = session_expiration_in_seconds
+        self.session_invalidation_in_seconds = session_invalidation_in_seconds
+        self.max_sessions_per_identity = max_sessions_per_identity
+        self.system_access_token_expiration_in_seconds = system_access_token_expiration_in_seconds
+        self.system_refresh_token_expiration_in_seconds = system_refresh_token_expiration_in_seconds
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountSettingsAssignedTemplatesSection':
+        """Initialize a AccountSettingsAssignedTemplatesSection object from a json dictionary."""
+        args = {}
+        if (template_id := _dict.get('template_id')) is not None:
+            args['template_id'] = template_id
+        if (template_version := _dict.get('template_version')) is not None:
+            args['template_version'] = template_version
+        if (template_name := _dict.get('template_name')) is not None:
+            args['template_name'] = template_name
+        if (restrict_create_service_id := _dict.get('restrict_create_service_id')) is not None:
+            args['restrict_create_service_id'] = restrict_create_service_id
+        if (restrict_create_platform_apikey := _dict.get('restrict_create_platform_apikey')) is not None:
+            args['restrict_create_platform_apikey'] = restrict_create_platform_apikey
+        if (allowed_ip_addresses := _dict.get('allowed_ip_addresses')) is not None:
+            args['allowed_ip_addresses'] = allowed_ip_addresses
+        if (mfa := _dict.get('mfa')) is not None:
+            args['mfa'] = mfa
+        if (user_mfa := _dict.get('user_mfa')) is not None:
+            args['user_mfa'] = [EffectiveAccountSettingsUserMFA.from_dict(v) for v in user_mfa]
+        if (session_expiration_in_seconds := _dict.get('session_expiration_in_seconds')) is not None:
+            args['session_expiration_in_seconds'] = session_expiration_in_seconds
+        if (session_invalidation_in_seconds := _dict.get('session_invalidation_in_seconds')) is not None:
+            args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
+        if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
+            args['max_sessions_per_identity'] = max_sessions_per_identity
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
+            args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
+            args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountSettingsAssignedTemplatesSection object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template_id') and self.template_id is not None:
+            _dict['template_id'] = self.template_id
+        if hasattr(self, 'template_version') and self.template_version is not None:
+            _dict['template_version'] = self.template_version
+        if hasattr(self, 'template_name') and self.template_name is not None:
+            _dict['template_name'] = self.template_name
+        if hasattr(self, 'restrict_create_service_id') and self.restrict_create_service_id is not None:
+            _dict['restrict_create_service_id'] = self.restrict_create_service_id
+        if hasattr(self, 'restrict_create_platform_apikey') and self.restrict_create_platform_apikey is not None:
+            _dict['restrict_create_platform_apikey'] = self.restrict_create_platform_apikey
+        if hasattr(self, 'allowed_ip_addresses') and self.allowed_ip_addresses is not None:
+            _dict['allowed_ip_addresses'] = self.allowed_ip_addresses
+        if hasattr(self, 'mfa') and self.mfa is not None:
+            _dict['mfa'] = self.mfa
+        if hasattr(self, 'user_mfa') and self.user_mfa is not None:
+            user_mfa_list = []
+            for v in self.user_mfa:
+                if isinstance(v, dict):
+                    user_mfa_list.append(v)
+                else:
+                    user_mfa_list.append(v.to_dict())
+            _dict['user_mfa'] = user_mfa_list
+        if hasattr(self, 'session_expiration_in_seconds') and self.session_expiration_in_seconds is not None:
+            _dict['session_expiration_in_seconds'] = self.session_expiration_in_seconds
+        if hasattr(self, 'session_invalidation_in_seconds') and self.session_invalidation_in_seconds is not None:
+            _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
+        if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
+            _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
+            _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
+            _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountSettingsAssignedTemplatesSection object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountSettingsAssignedTemplatesSection') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountSettingsAssignedTemplatesSection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class RestrictCreateServiceIdEnum(str, Enum):
+        """
+        Defines whether or not creating a service ID is access controlled. Valid values:
+          * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
+        Identity Service can create service IDs, including the account owner
+          * NOT_RESTRICTED - all members of an account can create service IDs
+          * NOT_SET - to 'unset' a previous set value.
+        """
+
+        RESTRICTED = 'RESTRICTED'
+        NOT_RESTRICTED = 'NOT_RESTRICTED'
+        NOT_SET = 'NOT_SET'
+
+
+    class RestrictCreatePlatformApikeyEnum(str, Enum):
+        """
+        Defines whether or not creating platform API keys is access controlled. Valid
+        values:
+          * RESTRICTED - to apply access control
+          * NOT_RESTRICTED - to remove access control
+          * NOT_SET - to 'unset' a previous set value.
+        """
+
+        RESTRICTED = 'RESTRICTED'
+        NOT_RESTRICTED = 'NOT_RESTRICTED'
+        NOT_SET = 'NOT_SET'
+
+
+    class MfaEnum(str, Enum):
+        """
+        Defines the MFA requirement for the user. Valid values:
+          * NONE - No MFA trait set
+          * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+          * TOTP - For all non-federated IBMId users
+          * TOTP4ALL - For all users
+          * LEVEL1 - Email-based MFA for all users
+          * LEVEL2 - TOTP-based MFA for all users
+          * LEVEL3 - U2F MFA for all users.
+        """
+
+        NONE = 'NONE'
+        NONE_NO_ROPC = 'NONE_NO_ROPC'
+        TOTP = 'TOTP'
+        TOTP4ALL = 'TOTP4ALL'
+        LEVEL1 = 'LEVEL1'
+        LEVEL2 = 'LEVEL2'
+        LEVEL3 = 'LEVEL3'
+
 
 
 class AccountSettingsComponent:
@@ -5116,13 +5739,9 @@ class AccountSettingsComponent:
             args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
             args['max_sessions_per_identity'] = max_sessions_per_identity
-        if (
-            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
-        ) is not None:
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
             args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
-        if (
-            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
-        ) is not None:
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
             args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         return cls(**args)
 
@@ -5156,15 +5775,9 @@ class AccountSettingsComponent:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         return _dict
 
@@ -5199,6 +5812,7 @@ class AccountSettingsComponent:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating platform API keys is access controlled. Valid
@@ -5211,6 +5825,7 @@ class AccountSettingsComponent:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -5231,6 +5846,262 @@ class AccountSettingsComponent:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
+
+
+class AccountSettingsEffectiveSection:
+    """
+    AccountSettingsEffectiveSection.
+
+    :param str restrict_create_service_id: (optional) Defines whether or not
+          creating a service ID is access controlled. Valid values:
+            * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
+          Identity Service can create service IDs, including the account owner
+            * NOT_RESTRICTED - all members of an account can create service IDs
+            * NOT_SET - to 'unset' a previous set value.
+    :param str restrict_create_platform_apikey: (optional) Defines whether or not
+          creating platform API keys is access controlled. Valid values:
+            * RESTRICTED - to apply access control
+            * NOT_RESTRICTED - to remove access control
+            * NOT_SET - to 'unset' a previous set value.
+    :param str allowed_ip_addresses: (optional) Defines the IP addresses and subnets
+          from which IAM tokens can be created for the account.
+    :param str mfa: (optional) Defines the MFA requirement for the user. Valid
+          values:
+            * NONE - No MFA trait set
+            * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+            * TOTP - For all non-federated IBMId users
+            * TOTP4ALL - For all users
+            * LEVEL1 - Email-based MFA for all users
+            * LEVEL2 - TOTP-based MFA for all users
+            * LEVEL3 - U2F MFA for all users.
+    :param List[EffectiveAccountSettingsUserMFA] user_mfa: (optional) List of users
+          that are exempted from the MFA requirement of the account.
+    :param str session_expiration_in_seconds: (optional) Defines the session
+          expiration in seconds for the account. Valid values:
+            * Any whole number between between '900' and '86400'
+            * NOT_SET - To unset account setting and use service default.
+    :param str session_invalidation_in_seconds: (optional) Defines the period of
+          time in seconds in which a session will be invalidated due to inactivity. Valid
+          values:
+            * Any whole number between '900' and '7200'
+            * NOT_SET - To unset account setting and use service default.
+    :param str max_sessions_per_identity: (optional) Defines the max allowed
+          sessions per identity required by the account. Valid values:
+            * Any whole number greater than 0
+            * NOT_SET - To unset account setting and use service default.
+    :param str system_access_token_expiration_in_seconds: (optional) Defines the
+          access token expiration in seconds. Valid values:
+            * Any whole number between '900' and '3600'
+            * NOT_SET - To unset account setting and use service default.
+    :param str system_refresh_token_expiration_in_seconds: (optional) Defines the
+          refresh token expiration in seconds. Valid values:
+            * Any whole number between '900' and '259200'
+            * NOT_SET - To unset account setting and use service default.
+    """
+
+    def __init__(
+        self,
+        *,
+        restrict_create_service_id: Optional[str] = None,
+        restrict_create_platform_apikey: Optional[str] = None,
+        allowed_ip_addresses: Optional[str] = None,
+        mfa: Optional[str] = None,
+        user_mfa: Optional[List['EffectiveAccountSettingsUserMFA']] = None,
+        session_expiration_in_seconds: Optional[str] = None,
+        session_invalidation_in_seconds: Optional[str] = None,
+        max_sessions_per_identity: Optional[str] = None,
+        system_access_token_expiration_in_seconds: Optional[str] = None,
+        system_refresh_token_expiration_in_seconds: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a AccountSettingsEffectiveSection object.
+
+        :param str restrict_create_service_id: (optional) Defines whether or not
+               creating a service ID is access controlled. Valid values:
+                 * RESTRICTED - only users assigned the 'Service ID creator' role on the
+               IAM Identity Service can create service IDs, including the account owner
+                 * NOT_RESTRICTED - all members of an account can create service IDs
+                 * NOT_SET - to 'unset' a previous set value.
+        :param str restrict_create_platform_apikey: (optional) Defines whether or
+               not creating platform API keys is access controlled. Valid values:
+                 * RESTRICTED - to apply access control
+                 * NOT_RESTRICTED - to remove access control
+                 * NOT_SET - to 'unset' a previous set value.
+        :param str allowed_ip_addresses: (optional) Defines the IP addresses and
+               subnets from which IAM tokens can be created for the account.
+        :param str mfa: (optional) Defines the MFA requirement for the user. Valid
+               values:
+                 * NONE - No MFA trait set
+                 * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+                 * TOTP - For all non-federated IBMId users
+                 * TOTP4ALL - For all users
+                 * LEVEL1 - Email-based MFA for all users
+                 * LEVEL2 - TOTP-based MFA for all users
+                 * LEVEL3 - U2F MFA for all users.
+        :param List[EffectiveAccountSettingsUserMFA] user_mfa: (optional) List of
+               users that are exempted from the MFA requirement of the account.
+        :param str session_expiration_in_seconds: (optional) Defines the session
+               expiration in seconds for the account. Valid values:
+                 * Any whole number between between '900' and '86400'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str session_invalidation_in_seconds: (optional) Defines the period
+               of time in seconds in which a session will be invalidated due to
+               inactivity. Valid values:
+                 * Any whole number between '900' and '7200'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str max_sessions_per_identity: (optional) Defines the max allowed
+               sessions per identity required by the account. Valid values:
+                 * Any whole number greater than 0
+                 * NOT_SET - To unset account setting and use service default.
+        :param str system_access_token_expiration_in_seconds: (optional) Defines
+               the access token expiration in seconds. Valid values:
+                 * Any whole number between '900' and '3600'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str system_refresh_token_expiration_in_seconds: (optional) Defines
+               the refresh token expiration in seconds. Valid values:
+                 * Any whole number between '900' and '259200'
+                 * NOT_SET - To unset account setting and use service default.
+        """
+        self.restrict_create_service_id = restrict_create_service_id
+        self.restrict_create_platform_apikey = restrict_create_platform_apikey
+        self.allowed_ip_addresses = allowed_ip_addresses
+        self.mfa = mfa
+        self.user_mfa = user_mfa
+        self.session_expiration_in_seconds = session_expiration_in_seconds
+        self.session_invalidation_in_seconds = session_invalidation_in_seconds
+        self.max_sessions_per_identity = max_sessions_per_identity
+        self.system_access_token_expiration_in_seconds = system_access_token_expiration_in_seconds
+        self.system_refresh_token_expiration_in_seconds = system_refresh_token_expiration_in_seconds
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountSettingsEffectiveSection':
+        """Initialize a AccountSettingsEffectiveSection object from a json dictionary."""
+        args = {}
+        if (restrict_create_service_id := _dict.get('restrict_create_service_id')) is not None:
+            args['restrict_create_service_id'] = restrict_create_service_id
+        if (restrict_create_platform_apikey := _dict.get('restrict_create_platform_apikey')) is not None:
+            args['restrict_create_platform_apikey'] = restrict_create_platform_apikey
+        if (allowed_ip_addresses := _dict.get('allowed_ip_addresses')) is not None:
+            args['allowed_ip_addresses'] = allowed_ip_addresses
+        if (mfa := _dict.get('mfa')) is not None:
+            args['mfa'] = mfa
+        if (user_mfa := _dict.get('user_mfa')) is not None:
+            args['user_mfa'] = [EffectiveAccountSettingsUserMFA.from_dict(v) for v in user_mfa]
+        if (session_expiration_in_seconds := _dict.get('session_expiration_in_seconds')) is not None:
+            args['session_expiration_in_seconds'] = session_expiration_in_seconds
+        if (session_invalidation_in_seconds := _dict.get('session_invalidation_in_seconds')) is not None:
+            args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
+        if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
+            args['max_sessions_per_identity'] = max_sessions_per_identity
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
+            args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
+            args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountSettingsEffectiveSection object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'restrict_create_service_id') and self.restrict_create_service_id is not None:
+            _dict['restrict_create_service_id'] = self.restrict_create_service_id
+        if hasattr(self, 'restrict_create_platform_apikey') and self.restrict_create_platform_apikey is not None:
+            _dict['restrict_create_platform_apikey'] = self.restrict_create_platform_apikey
+        if hasattr(self, 'allowed_ip_addresses') and self.allowed_ip_addresses is not None:
+            _dict['allowed_ip_addresses'] = self.allowed_ip_addresses
+        if hasattr(self, 'mfa') and self.mfa is not None:
+            _dict['mfa'] = self.mfa
+        if hasattr(self, 'user_mfa') and self.user_mfa is not None:
+            user_mfa_list = []
+            for v in self.user_mfa:
+                if isinstance(v, dict):
+                    user_mfa_list.append(v)
+                else:
+                    user_mfa_list.append(v.to_dict())
+            _dict['user_mfa'] = user_mfa_list
+        if hasattr(self, 'session_expiration_in_seconds') and self.session_expiration_in_seconds is not None:
+            _dict['session_expiration_in_seconds'] = self.session_expiration_in_seconds
+        if hasattr(self, 'session_invalidation_in_seconds') and self.session_invalidation_in_seconds is not None:
+            _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
+        if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
+            _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
+            _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
+            _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountSettingsEffectiveSection object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountSettingsEffectiveSection') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountSettingsEffectiveSection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class RestrictCreateServiceIdEnum(str, Enum):
+        """
+        Defines whether or not creating a service ID is access controlled. Valid values:
+          * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
+        Identity Service can create service IDs, including the account owner
+          * NOT_RESTRICTED - all members of an account can create service IDs
+          * NOT_SET - to 'unset' a previous set value.
+        """
+
+        RESTRICTED = 'RESTRICTED'
+        NOT_RESTRICTED = 'NOT_RESTRICTED'
+        NOT_SET = 'NOT_SET'
+
+
+    class RestrictCreatePlatformApikeyEnum(str, Enum):
+        """
+        Defines whether or not creating platform API keys is access controlled. Valid
+        values:
+          * RESTRICTED - to apply access control
+          * NOT_RESTRICTED - to remove access control
+          * NOT_SET - to 'unset' a previous set value.
+        """
+
+        RESTRICTED = 'RESTRICTED'
+        NOT_RESTRICTED = 'NOT_RESTRICTED'
+        NOT_SET = 'NOT_SET'
+
+
+    class MfaEnum(str, Enum):
+        """
+        Defines the MFA requirement for the user. Valid values:
+          * NONE - No MFA trait set
+          * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+          * TOTP - For all non-federated IBMId users
+          * TOTP4ALL - For all users
+          * LEVEL1 - Email-based MFA for all users
+          * LEVEL2 - TOTP-based MFA for all users
+          * LEVEL3 - U2F MFA for all users.
+        """
+
+        NONE = 'NONE'
+        NONE_NO_ROPC = 'NONE_NO_ROPC'
+        TOTP = 'TOTP'
+        TOTP4ALL = 'TOTP4ALL'
+        LEVEL1 = 'LEVEL1'
+        LEVEL2 = 'LEVEL2'
+        LEVEL3 = 'LEVEL3'
+
 
 
 class AccountSettingsResponse:
@@ -5388,15 +6259,11 @@ class AccountSettingsResponse:
         if (restrict_create_service_id := _dict.get('restrict_create_service_id')) is not None:
             args['restrict_create_service_id'] = restrict_create_service_id
         else:
-            raise ValueError(
-                'Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON')
         if (restrict_create_platform_apikey := _dict.get('restrict_create_platform_apikey')) is not None:
             args['restrict_create_platform_apikey'] = restrict_create_platform_apikey
         else:
-            raise ValueError(
-                'Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON')
         if (allowed_ip_addresses := _dict.get('allowed_ip_addresses')) is not None:
             args['allowed_ip_addresses'] = allowed_ip_addresses
         else:
@@ -5418,37 +6285,23 @@ class AccountSettingsResponse:
         if (session_expiration_in_seconds := _dict.get('session_expiration_in_seconds')) is not None:
             args['session_expiration_in_seconds'] = session_expiration_in_seconds
         else:
-            raise ValueError(
-                'Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
         if (session_invalidation_in_seconds := _dict.get('session_invalidation_in_seconds')) is not None:
             args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         else:
-            raise ValueError(
-                'Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON')
         if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
             args['max_sessions_per_identity'] = max_sessions_per_identity
         else:
-            raise ValueError(
-                'Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON'
-            )
-        if (
-            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
-        ) is not None:
+            raise ValueError('Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON')
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
             args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
         else:
-            raise ValueError(
-                'Required property \'system_access_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
-        if (
-            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
-        ) is not None:
+            raise ValueError('Required property \'system_access_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
             args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         else:
-            raise ValueError(
-                'Required property \'system_refresh_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'system_refresh_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
         return cls(**args)
 
     @classmethod
@@ -5498,15 +6351,9 @@ class AccountSettingsResponse:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         return _dict
 
@@ -5541,6 +6388,7 @@ class AccountSettingsResponse:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating platform API keys is access controlled. Valid
@@ -5553,6 +6401,7 @@ class AccountSettingsResponse:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -5573,6 +6422,7 @@ class AccountSettingsResponse:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class AccountSettingsTemplateList:
@@ -5649,13 +6499,9 @@ class AccountSettingsTemplateList:
         if (next := _dict.get('next')) is not None:
             args['next'] = next
         if (account_settings_templates := _dict.get('account_settings_templates')) is not None:
-            args['account_settings_templates'] = [
-                AccountSettingsTemplateResponse.from_dict(v) for v in account_settings_templates
-            ]
+            args['account_settings_templates'] = [AccountSettingsTemplateResponse.from_dict(v) for v in account_settings_templates]
         else:
-            raise ValueError(
-                'Required property \'account_settings_templates\' not present in AccountSettingsTemplateList JSON'
-            )
+            raise ValueError('Required property \'account_settings_templates\' not present in AccountSettingsTemplateList JSON')
         return cls(**args)
 
     @classmethod
@@ -5819,9 +6665,7 @@ class AccountSettingsTemplateResponse:
         if (account_settings := _dict.get('account_settings')) is not None:
             args['account_settings'] = AccountSettingsComponent.from_dict(account_settings)
         else:
-            raise ValueError(
-                'Required property \'account_settings\' not present in AccountSettingsTemplateResponse JSON'
-            )
+            raise ValueError('Required property \'account_settings\' not present in AccountSettingsTemplateResponse JSON')
         if (history := _dict.get('history')) is not None:
             args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
         if (entity_tag := _dict.get('entity_tag')) is not None:
@@ -6009,6 +6853,301 @@ class AccountSettingsUserMFA:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
+
+
+class ActionControls:
+    """
+    ActionControls.
+
+    :param ActionControlsIdentities identities: (optional)
+    :param ActionControlsRules rules:
+    :param ActionControlsPolicies policies:
+    """
+
+    def __init__(
+        self,
+        rules: 'ActionControlsRules',
+        policies: 'ActionControlsPolicies',
+        *,
+        identities: Optional['ActionControlsIdentities'] = None,
+    ) -> None:
+        """
+        Initialize a ActionControls object.
+
+        :param ActionControlsRules rules:
+        :param ActionControlsPolicies policies:
+        :param ActionControlsIdentities identities: (optional)
+        """
+        self.identities = identities
+        self.rules = rules
+        self.policies = policies
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControls':
+        """Initialize a ActionControls object from a json dictionary."""
+        args = {}
+        if (identities := _dict.get('identities')) is not None:
+            args['identities'] = ActionControlsIdentities.from_dict(identities)
+        if (rules := _dict.get('rules')) is not None:
+            args['rules'] = ActionControlsRules.from_dict(rules)
+        else:
+            raise ValueError('Required property \'rules\' not present in ActionControls JSON')
+        if (policies := _dict.get('policies')) is not None:
+            args['policies'] = ActionControlsPolicies.from_dict(policies)
+        else:
+            raise ValueError('Required property \'policies\' not present in ActionControls JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControls object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'identities') and self.identities is not None:
+            if isinstance(self.identities, dict):
+                _dict['identities'] = self.identities
+            else:
+                _dict['identities'] = self.identities.to_dict()
+        if hasattr(self, 'rules') and self.rules is not None:
+            if isinstance(self.rules, dict):
+                _dict['rules'] = self.rules
+            else:
+                _dict['rules'] = self.rules.to_dict()
+        if hasattr(self, 'policies') and self.policies is not None:
+            if isinstance(self.policies, dict):
+                _dict['policies'] = self.policies
+            else:
+                _dict['policies'] = self.policies.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControls object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControls') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControls') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ActionControlsIdentities:
+    """
+    ActionControlsIdentities.
+
+    :param bool add:
+    :param bool remove:
+    """
+
+    def __init__(
+        self,
+        add: bool,
+        remove: bool,
+    ) -> None:
+        """
+        Initialize a ActionControlsIdentities object.
+
+        :param bool add:
+        :param bool remove:
+        """
+        self.add = add
+        self.remove = remove
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlsIdentities':
+        """Initialize a ActionControlsIdentities object from a json dictionary."""
+        args = {}
+        if (add := _dict.get('add')) is not None:
+            args['add'] = add
+        else:
+            raise ValueError('Required property \'add\' not present in ActionControlsIdentities JSON')
+        if (remove := _dict.get('remove')) is not None:
+            args['remove'] = remove
+        else:
+            raise ValueError('Required property \'remove\' not present in ActionControlsIdentities JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlsIdentities object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'add') and self.add is not None:
+            _dict['add'] = self.add
+        if hasattr(self, 'remove') and self.remove is not None:
+            _dict['remove'] = self.remove
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlsIdentities object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlsIdentities') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlsIdentities') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ActionControlsPolicies:
+    """
+    ActionControlsPolicies.
+
+    :param bool add:
+    :param bool remove:
+    """
+
+    def __init__(
+        self,
+        add: bool,
+        remove: bool,
+    ) -> None:
+        """
+        Initialize a ActionControlsPolicies object.
+
+        :param bool add:
+        :param bool remove:
+        """
+        self.add = add
+        self.remove = remove
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlsPolicies':
+        """Initialize a ActionControlsPolicies object from a json dictionary."""
+        args = {}
+        if (add := _dict.get('add')) is not None:
+            args['add'] = add
+        else:
+            raise ValueError('Required property \'add\' not present in ActionControlsPolicies JSON')
+        if (remove := _dict.get('remove')) is not None:
+            args['remove'] = remove
+        else:
+            raise ValueError('Required property \'remove\' not present in ActionControlsPolicies JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlsPolicies object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'add') and self.add is not None:
+            _dict['add'] = self.add
+        if hasattr(self, 'remove') and self.remove is not None:
+            _dict['remove'] = self.remove
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlsPolicies object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlsPolicies') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlsPolicies') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ActionControlsRules:
+    """
+    ActionControlsRules.
+
+    :param bool add:
+    :param bool remove:
+    """
+
+    def __init__(
+        self,
+        add: bool,
+        remove: bool,
+    ) -> None:
+        """
+        Initialize a ActionControlsRules object.
+
+        :param bool add:
+        :param bool remove:
+        """
+        self.add = add
+        self.remove = remove
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlsRules':
+        """Initialize a ActionControlsRules object from a json dictionary."""
+        args = {}
+        if (add := _dict.get('add')) is not None:
+            args['add'] = add
+        else:
+            raise ValueError('Required property \'add\' not present in ActionControlsRules JSON')
+        if (remove := _dict.get('remove')) is not None:
+            args['remove'] = remove
+        else:
+            raise ValueError('Required property \'remove\' not present in ActionControlsRules JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlsRules object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'add') and self.add is not None:
+            _dict['add'] = self.add
+        if hasattr(self, 'remove') and self.remove is not None:
+            _dict['remove'] = self.remove
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlsRules object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlsRules') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlsRules') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class Activity:
@@ -6927,6 +8066,258 @@ class CreateProfileLinkRequestLink:
         return not self == other
 
 
+class EffectiveAccountSettingsResponse:
+    """
+    Response body format for Account Settings REST requests.
+
+    :param ResponseContext context: (optional) Context with key properties for
+          problem determination.
+    :param str account_id: Unique ID of the account.
+    :param AccountSettingsEffectiveSection effective:
+    :param AccountSettingsAccountSection account:
+    :param List[AccountSettingsAssignedTemplatesSection] assigned_templates:
+          (optional) assigned template section.
+    """
+
+    def __init__(
+        self,
+        account_id: str,
+        effective: 'AccountSettingsEffectiveSection',
+        account: 'AccountSettingsAccountSection',
+        *,
+        context: Optional['ResponseContext'] = None,
+        assigned_templates: Optional[List['AccountSettingsAssignedTemplatesSection']] = None,
+    ) -> None:
+        """
+        Initialize a EffectiveAccountSettingsResponse object.
+
+        :param str account_id: Unique ID of the account.
+        :param AccountSettingsEffectiveSection effective:
+        :param AccountSettingsAccountSection account:
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        :param List[AccountSettingsAssignedTemplatesSection] assigned_templates:
+               (optional) assigned template section.
+        """
+        self.context = context
+        self.account_id = account_id
+        self.effective = effective
+        self.account = account
+        self.assigned_templates = assigned_templates
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'EffectiveAccountSettingsResponse':
+        """Initialize a EffectiveAccountSettingsResponse object from a json dictionary."""
+        args = {}
+        if (context := _dict.get('context')) is not None:
+            args['context'] = ResponseContext.from_dict(context)
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        else:
+            raise ValueError('Required property \'account_id\' not present in EffectiveAccountSettingsResponse JSON')
+        if (effective := _dict.get('effective')) is not None:
+            args['effective'] = AccountSettingsEffectiveSection.from_dict(effective)
+        else:
+            raise ValueError('Required property \'effective\' not present in EffectiveAccountSettingsResponse JSON')
+        if (account := _dict.get('account')) is not None:
+            args['account'] = AccountSettingsAccountSection.from_dict(account)
+        else:
+            raise ValueError('Required property \'account\' not present in EffectiveAccountSettingsResponse JSON')
+        if (assigned_templates := _dict.get('assigned_templates')) is not None:
+            args['assigned_templates'] = [AccountSettingsAssignedTemplatesSection.from_dict(v) for v in assigned_templates]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a EffectiveAccountSettingsResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'context') and self.context is not None:
+            if isinstance(self.context, dict):
+                _dict['context'] = self.context
+            else:
+                _dict['context'] = self.context.to_dict()
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'effective') and self.effective is not None:
+            if isinstance(self.effective, dict):
+                _dict['effective'] = self.effective
+            else:
+                _dict['effective'] = self.effective.to_dict()
+        if hasattr(self, 'account') and self.account is not None:
+            if isinstance(self.account, dict):
+                _dict['account'] = self.account
+            else:
+                _dict['account'] = self.account.to_dict()
+        if hasattr(self, 'assigned_templates') and self.assigned_templates is not None:
+            assigned_templates_list = []
+            for v in self.assigned_templates:
+                if isinstance(v, dict):
+                    assigned_templates_list.append(v)
+                else:
+                    assigned_templates_list.append(v.to_dict())
+            _dict['assigned_templates'] = assigned_templates_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this EffectiveAccountSettingsResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'EffectiveAccountSettingsResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'EffectiveAccountSettingsResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class EffectiveAccountSettingsUserMFA:
+    """
+    EffectiveAccountSettingsUserMFA.
+
+    :param str iam_id: The iam_id of the user.
+    :param str mfa: Defines the MFA requirement for the user. Valid values:
+            * NONE - No MFA trait set
+            * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+            * TOTP - For all non-federated IBMId users
+            * TOTP4ALL - For all users
+            * LEVEL1 - Email-based MFA for all users
+            * LEVEL2 - TOTP-based MFA for all users
+            * LEVEL3 - U2F MFA for all users.
+    :param str name: (optional) name of the user account.
+    :param str user_name: (optional) userName of the user.
+    :param str email: (optional) email of the user.
+    :param str description: (optional) optional description.
+    """
+
+    def __init__(
+        self,
+        iam_id: str,
+        mfa: str,
+        *,
+        name: Optional[str] = None,
+        user_name: Optional[str] = None,
+        email: Optional[str] = None,
+        description: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a EffectiveAccountSettingsUserMFA object.
+
+        :param str iam_id: The iam_id of the user.
+        :param str mfa: Defines the MFA requirement for the user. Valid values:
+                 * NONE - No MFA trait set
+                 * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+                 * TOTP - For all non-federated IBMId users
+                 * TOTP4ALL - For all users
+                 * LEVEL1 - Email-based MFA for all users
+                 * LEVEL2 - TOTP-based MFA for all users
+                 * LEVEL3 - U2F MFA for all users.
+        :param str name: (optional) name of the user account.
+        :param str user_name: (optional) userName of the user.
+        :param str email: (optional) email of the user.
+        :param str description: (optional) optional description.
+        """
+        self.iam_id = iam_id
+        self.mfa = mfa
+        self.name = name
+        self.user_name = user_name
+        self.email = email
+        self.description = description
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'EffectiveAccountSettingsUserMFA':
+        """Initialize a EffectiveAccountSettingsUserMFA object from a json dictionary."""
+        args = {}
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
+        else:
+            raise ValueError('Required property \'iam_id\' not present in EffectiveAccountSettingsUserMFA JSON')
+        if (mfa := _dict.get('mfa')) is not None:
+            args['mfa'] = mfa
+        else:
+            raise ValueError('Required property \'mfa\' not present in EffectiveAccountSettingsUserMFA JSON')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (user_name := _dict.get('userName')) is not None:
+            args['user_name'] = user_name
+        if (email := _dict.get('email')) is not None:
+            args['email'] = email
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a EffectiveAccountSettingsUserMFA object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'iam_id') and self.iam_id is not None:
+            _dict['iam_id'] = self.iam_id
+        if hasattr(self, 'mfa') and self.mfa is not None:
+            _dict['mfa'] = self.mfa
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'user_name') and self.user_name is not None:
+            _dict['userName'] = self.user_name
+        if hasattr(self, 'email') and self.email is not None:
+            _dict['email'] = self.email
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this EffectiveAccountSettingsUserMFA object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'EffectiveAccountSettingsUserMFA') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'EffectiveAccountSettingsUserMFA') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class MfaEnum(str, Enum):
+        """
+        Defines the MFA requirement for the user. Valid values:
+          * NONE - No MFA trait set
+          * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
+          * TOTP - For all non-federated IBMId users
+          * TOTP4ALL - For all users
+          * LEVEL1 - Email-based MFA for all users
+          * LEVEL2 - TOTP-based MFA for all users
+          * LEVEL3 - U2F MFA for all users.
+        """
+
+        NONE = 'NONE'
+        NONE_NO_ROPC = 'NONE_NO_ROPC'
+        TOTP = 'TOTP'
+        TOTP4ALL = 'TOTP4ALL'
+        LEVEL1 = 'LEVEL1'
+        LEVEL2 = 'LEVEL2'
+        LEVEL3 = 'LEVEL3'
+
+
+
 class EnityHistoryRecord:
     """
     Response body format for an entity history record.
@@ -7479,6 +8870,7 @@ class IdBasedMfaEnrollment:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
+
     class TraitUserSpecificEnum(str, Enum):
         """
         Defines the MFA trait for the account. Valid values:
@@ -7498,6 +8890,7 @@ class IdBasedMfaEnrollment:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
     class TraitEffectiveEnum(str, Enum):
         """
@@ -7519,6 +8912,7 @@ class IdBasedMfaEnrollment:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
+
     class ComplyStateEnum(str, Enum):
         """
         Defines comply state for the account. Valid values:
@@ -7532,6 +8926,7 @@ class IdBasedMfaEnrollment:
         NO = 'NO'
         ACCOUNT = 'ACCOUNT'
         CROSS_ACCOUNT = 'CROSS_ACCOUNT'
+
 
 
 class MfaEnrollmentTypeStatus:
@@ -8267,6 +9662,7 @@ class ProfileIdentityRequest:
         CRN = 'crn'
 
 
+
 class ProfileIdentityResponse:
     """
     ProfileIdentityResponse.
@@ -8388,6 +9784,7 @@ class ProfileIdentityResponse:
         USER = 'user'
         SERVICEID = 'serviceid'
         CRN = 'crn'
+
 
 
 class ProfileLink:
@@ -10050,9 +11447,7 @@ class TemplateAssignmentResponseResource:
         if (account_settings := _dict.get('account_settings')) is not None:
             args['account_settings'] = TemplateAssignmentResponseResourceDetail.from_dict(account_settings)
         if (policy_template_refs := _dict.get('policy_template_refs')) is not None:
-            args['policy_template_refs'] = [
-                TemplateAssignmentResponseResourceDetail.from_dict(v) for v in policy_template_refs
-            ]
+            args['policy_template_refs'] = [TemplateAssignmentResponseResourceDetail.from_dict(v) for v in policy_template_refs]
         return cls(**args)
 
     @classmethod
@@ -10162,9 +11557,7 @@ class TemplateAssignmentResponseResourceDetail:
         if (status := _dict.get('status')) is not None:
             args['status'] = status
         else:
-            raise ValueError(
-                'Required property \'status\' not present in TemplateAssignmentResponseResourceDetail JSON'
-            )
+            raise ValueError('Required property \'status\' not present in TemplateAssignmentResponseResourceDetail JSON')
         return cls(**args)
 
     @classmethod
@@ -10767,6 +12160,7 @@ class TrustedProfileTemplateClaimRule:
         PROFILE_SAML = 'Profile-SAML'
 
 
+
 class TrustedProfileTemplateList:
     """
     TrustedProfileTemplateList.
@@ -10915,6 +12309,7 @@ class TrustedProfileTemplateResponse:
     :param List[PolicyTemplateReference] policy_template_references: (optional)
           Existing policy templates that you can reference to assign access in the trusted
           profile component.
+    :param ActionControls action_controls: (optional)
     :param List[EnityHistoryRecord] history: (optional) History of the trusted
           profile template.
     :param str entity_tag: (optional) Entity tag for this templateId-version
@@ -10939,6 +12334,7 @@ class TrustedProfileTemplateResponse:
         committed: Optional[bool] = None,
         profile: Optional['TemplateProfileComponentResponse'] = None,
         policy_template_references: Optional[List['PolicyTemplateReference']] = None,
+        action_controls: Optional['ActionControls'] = None,
         history: Optional[List['EnityHistoryRecord']] = None,
         entity_tag: Optional[str] = None,
         crn: Optional[str] = None,
@@ -10964,6 +12360,7 @@ class TrustedProfileTemplateResponse:
         :param List[PolicyTemplateReference] policy_template_references: (optional)
                Existing policy templates that you can reference to assign access in the
                trusted profile component.
+        :param ActionControls action_controls: (optional)
         :param List[EnityHistoryRecord] history: (optional) History of the trusted
                profile template.
         :param str entity_tag: (optional) Entity tag for this templateId-version
@@ -10985,6 +12382,7 @@ class TrustedProfileTemplateResponse:
         self.committed = committed
         self.profile = profile
         self.policy_template_references = policy_template_references
+        self.action_controls = action_controls
         self.history = history
         self.entity_tag = entity_tag
         self.crn = crn
@@ -11020,9 +12418,9 @@ class TrustedProfileTemplateResponse:
         if (profile := _dict.get('profile')) is not None:
             args['profile'] = TemplateProfileComponentResponse.from_dict(profile)
         if (policy_template_references := _dict.get('policy_template_references')) is not None:
-            args['policy_template_references'] = [
-                PolicyTemplateReference.from_dict(v) for v in policy_template_references
-            ]
+            args['policy_template_references'] = [PolicyTemplateReference.from_dict(v) for v in policy_template_references]
+        if (action_controls := _dict.get('action_controls')) is not None:
+            args['action_controls'] = ActionControls.from_dict(action_controls)
         if (history := _dict.get('history')) is not None:
             args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
         if (entity_tag := _dict.get('entity_tag')) is not None:
@@ -11072,6 +12470,11 @@ class TrustedProfileTemplateResponse:
                 else:
                     policy_template_references_list.append(v.to_dict())
             _dict['policy_template_references'] = policy_template_references_list
+        if hasattr(self, 'action_controls') and self.action_controls is not None:
+            if isinstance(self.action_controls, dict):
+                _dict['action_controls'] = self.action_controls
+            else:
+                _dict['action_controls'] = self.action_controls.to_dict()
         if hasattr(self, 'history') and self.history is not None:
             history_list = []
             for v in self.history:
