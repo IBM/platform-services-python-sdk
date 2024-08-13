@@ -953,6 +953,24 @@ class TestIamIdentityV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
+    def test_get_effective_account_settings_example(self):
+        """
+        get_effective_account_settings request example
+        """
+        try:
+            print('\nget_effective_account_settings() result:')
+            # begin-getEffectiveAccountSettings
+
+            response = iam_identity_service.get_effective_account_settings(account_id=account_id)
+            settings = response.get_result()
+            print(json.dumps(settings, indent=2))
+
+            # end-getEffectiveAccountSettings
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_create_report(self):
         """
         create_report request example

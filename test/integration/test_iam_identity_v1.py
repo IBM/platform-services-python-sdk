@@ -1175,6 +1175,21 @@ class TestIamIdentityV1:
         assert settings["system_refresh_token_expiration_in_seconds"] == "259200"
 
     @needscredentials
+    def test_get_effective_account_settings(self):
+
+        get_effective_account_settings_response = self.iam_identity_service.get_effective_account_settings(
+            account_id=self.account_id, include_history=False
+        )
+
+        assert get_effective_account_settings_response.get_status_code() == 200
+        settings = get_effective_account_settings_response.get_result()
+        assert settings is not None
+
+        assert settings["account_id"] == self.account_id
+        assert settings["effective"] is not None
+        assert settings["account"] is not None
+
+    @needscredentials
     def test_create_report(self):
         global report_reference
         assert report_reference is None
