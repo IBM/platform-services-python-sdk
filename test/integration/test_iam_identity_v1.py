@@ -1173,7 +1173,7 @@ class TestIamIdentityV1:
         assert settings["max_sessions_per_identity"] == "10"
         assert settings["system_access_token_expiration_in_seconds"] == "3600"
         assert settings["system_refresh_token_expiration_in_seconds"] == "259200"
-    
+
     @needscredentials
     def test_get_effective_account_settings(self):
 

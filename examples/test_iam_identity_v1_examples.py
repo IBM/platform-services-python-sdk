@@ -951,7 +951,7 @@ class TestIamIdentityV1Examples:
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_get_effective_account_settings_example(self):
         """
