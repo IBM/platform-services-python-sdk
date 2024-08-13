@@ -1,3 +1,10 @@
+# [0.56.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.55.3...v0.56.0) (2024-08-13)
+
+
+### Features
+
+* **IAM Identity:** adding effective account settings ([#272](https://github.com/IBM/platform-services-python-sdk/issues/272)) ([bfd17e2](https://github.com/IBM/platform-services-python-sdk/commit/bfd17e2c961e09d0a8b7c3ccc47277de87a7d029))
+
 ## [0.55.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.55.2...v0.55.3) (2024-08-08)
 
 
