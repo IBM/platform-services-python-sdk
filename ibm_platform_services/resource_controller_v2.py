@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.92.1-44330004-20240620-143510
+# IBM OpenAPI SDK Code Generator Version: 3.94.1-71478489-20240820-161623
 
 """
 Manage lifecycle of your Cloud resources using Resource Controller APIs. Resources are
@@ -28,6 +28,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional
 import json
+import logging
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
@@ -459,7 +460,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceAliasesList` object
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: list_resource_aliases_for_instance')
 
         if not id:
             raise ValueError('id must be provided')
@@ -1023,7 +1028,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceBindingsList` object
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: list_resource_bindings')
 
         headers = {}
         sdk_headers = get_sdk_headers(
@@ -1093,7 +1102,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceBinding` object
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: create_resource_binding')
 
         if source is None:
             raise ValueError('source must be provided')
@@ -1151,7 +1164,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceBinding` object
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: get_resource_binding')
 
         if not id:
             raise ValueError('id must be provided')
@@ -1196,7 +1213,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: delete_resource_binding')
 
         if not id:
             raise ValueError('id must be provided')
@@ -1243,7 +1264,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceBinding` object
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: update_resource_binding')
 
         if not id:
             raise ValueError('id must be provided')
@@ -1328,7 +1353,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceAliasesList` object
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: list_resource_aliases')
 
         headers = {}
         sdk_headers = get_sdk_headers(
@@ -1387,7 +1416,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceAlias` object
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: create_resource_alias')
 
         if name is None:
             raise ValueError('name must be provided')
@@ -1443,7 +1476,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceAlias` object
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: get_resource_alias')
 
         if not id:
             raise ValueError('id must be provided')
@@ -1493,7 +1530,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: delete_resource_alias')
 
         if not id:
             raise ValueError('id must be provided')
@@ -1544,7 +1585,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceAlias` object
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: update_resource_alias')
 
         if not id:
             raise ValueError('id must be provided')
@@ -1607,7 +1652,11 @@ class ResourceControllerV2(BaseService):
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceBindingsList` object
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: list_resource_bindings_for_alias')
 
         if not id:
             raise ValueError('id must be provided')
@@ -1808,6 +1857,9 @@ class Credentials:
           credentials.
     :param str iam_serviceid_crn: (optional) The Cloud Resource Name for the service
           ID of the credentials.
+
+    This type supports additional properties of type object. Additional key-value pairs
+    from the resource broker.
     """
 
     # The set of defined properties for the class
@@ -1832,7 +1884,7 @@ class Credentials:
         iam_apikey_name: Optional[str] = None,
         iam_role_crn: Optional[str] = None,
         iam_serviceid_crn: Optional[str] = None,
-        **kwargs,
+        **kwargs: Optional[object],
     ) -> None:
         """
         Initialize a Credentials object.
@@ -1850,7 +1902,8 @@ class Credentials:
                the credentials.
         :param str iam_serviceid_crn: (optional) The Cloud Resource Name for the
                service ID of the credentials.
-        :param **kwargs: (optional) Any additional properties.
+        :param object **kwargs: (optional) Additional key-value pairs from the
+               resource broker.
         """
         self.redacted = redacted
         self.apikey = apikey
@@ -1858,8 +1911,13 @@ class Credentials:
         self.iam_apikey_name = iam_apikey_name
         self.iam_role_crn = iam_role_crn
         self.iam_serviceid_crn = iam_serviceid_crn
-        for _key, _value in kwargs.items():
-            setattr(self, _key, _value)
+        for k, v in kwargs.items():
+            if k not in Credentials._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(k))
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Credentials':
@@ -1877,7 +1935,11 @@ class Credentials:
             args['iam_role_crn'] = iam_role_crn
         if (iam_serviceid_crn := _dict.get('iam_serviceid_crn')) is not None:
             args['iam_serviceid_crn'] = iam_serviceid_crn
-        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        for k, v in _dict.items():
+            if k not in cls._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                args[k] = v
         return cls(**args)
 
     @classmethod
@@ -1900,8 +1962,8 @@ class Credentials:
             _dict['iam_role_crn'] = self.iam_role_crn
         if hasattr(self, 'iam_serviceid_crn') and self.iam_serviceid_crn is not None:
             _dict['iam_serviceid_crn'] = self.iam_serviceid_crn
-        for _key in [k for k in vars(self).keys() if k not in Credentials._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in Credentials._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def _to_dict(self):
@@ -1909,21 +1971,23 @@ class Credentials:
         return self.to_dict()
 
     def get_properties(self) -> Dict:
-        """Return a dictionary of arbitrary properties from this instance of Credentials"""
+        """Return the additional properties from this instance of Credentials in the form of a dict."""
         _dict = {}
-
-        for _key in [k for k in vars(self).keys() if k not in Credentials._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in Credentials._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def set_properties(self, _dict: dict):
-        """Set a dictionary of arbitrary properties to this instance of Credentials"""
-        for _key in [k for k in vars(self).keys() if k not in Credentials._properties]:
-            delattr(self, _key)
-
-        for _key, _value in _dict.items():
-            if _key not in Credentials._properties:
-                setattr(self, _key, _value)
+        """Set a dictionary of additional properties in this instance of Credentials"""
+        for k in [_k for _k in vars(self).keys() if _k not in Credentials._properties]:
+            delattr(self, k)
+        for k, v in _dict.items():
+            if k not in Credentials._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(_key))
 
     def __str__(self) -> str:
         """Return a `str` version of this Credentials object."""
@@ -2919,6 +2983,8 @@ class ResourceBindingPostParameters:
 
     :param str serviceid_crn: (optional) An optional platform defined option to
           reuse an existing IAM serviceId for the role assignment.
+
+    This type supports additional properties of type object.
     """
 
     # The set of defined properties for the class
@@ -2928,18 +2994,23 @@ class ResourceBindingPostParameters:
         self,
         *,
         serviceid_crn: Optional[str] = None,
-        **kwargs,
+        **kwargs: Optional[object],
     ) -> None:
         """
         Initialize a ResourceBindingPostParameters object.
 
         :param str serviceid_crn: (optional) An optional platform defined option to
                reuse an existing IAM serviceId for the role assignment.
-        :param **kwargs: (optional) Any additional properties.
+        :param object **kwargs: (optional) Additional properties of type object
         """
         self.serviceid_crn = serviceid_crn
-        for _key, _value in kwargs.items():
-            setattr(self, _key, _value)
+        for k, v in kwargs.items():
+            if k not in ResourceBindingPostParameters._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(k))
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ResourceBindingPostParameters':
@@ -2947,7 +3018,11 @@ class ResourceBindingPostParameters:
         args = {}
         if (serviceid_crn := _dict.get('serviceid_crn')) is not None:
             args['serviceid_crn'] = serviceid_crn
-        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        for k, v in _dict.items():
+            if k not in cls._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                args[k] = v
         return cls(**args)
 
     @classmethod
@@ -2960,8 +3035,8 @@ class ResourceBindingPostParameters:
         _dict = {}
         if hasattr(self, 'serviceid_crn') and self.serviceid_crn is not None:
             _dict['serviceid_crn'] = self.serviceid_crn
-        for _key in [k for k in vars(self).keys() if k not in ResourceBindingPostParameters._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in ResourceBindingPostParameters._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def _to_dict(self):
@@ -2969,21 +3044,23 @@ class ResourceBindingPostParameters:
         return self.to_dict()
 
     def get_properties(self) -> Dict:
-        """Return a dictionary of arbitrary properties from this instance of ResourceBindingPostParameters"""
+        """Return the additional properties from this instance of ResourceBindingPostParameters in the form of a dict."""
         _dict = {}
-
-        for _key in [k for k in vars(self).keys() if k not in ResourceBindingPostParameters._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in ResourceBindingPostParameters._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def set_properties(self, _dict: dict):
-        """Set a dictionary of arbitrary properties to this instance of ResourceBindingPostParameters"""
-        for _key in [k for k in vars(self).keys() if k not in ResourceBindingPostParameters._properties]:
-            delattr(self, _key)
-
-        for _key, _value in _dict.items():
-            if _key not in ResourceBindingPostParameters._properties:
-                setattr(self, _key, _value)
+        """Set a dictionary of additional properties in this instance of ResourceBindingPostParameters"""
+        for k in [_k for _k in vars(self).keys() if _k not in ResourceBindingPostParameters._properties]:
+            delattr(self, k)
+        for k, v in _dict.items():
+            if k not in ResourceBindingPostParameters._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(_key))
 
     def __str__(self) -> str:
         """Return a `str` version of this ResourceBindingPostParameters object."""
@@ -3144,10 +3221,10 @@ class ResourceInstance:
           administrative features of the instance.
     :param ResourceInstanceLastOperation last_operation: (optional) The status of
           the last operation requested on the instance.
-    :param str resource_aliases_url: (optional) The relative path to the resource
-          aliases for the instance.
-    :param str resource_bindings_url: (optional) The relative path to the resource
-          bindings for the instance.
+    :param str resource_aliases_url: (optional) Deprecated: The relative path to the
+          resource aliases for the instance.
+    :param str resource_bindings_url: (optional) Deprecated: The relative path to
+          the resource bindings for the instance.
     :param str resource_keys_url: (optional) The relative path to the resource keys
           for the instance.
     :param List[PlanHistoryItem] plan_history: (optional) The plan history of the
@@ -3267,10 +3344,10 @@ class ResourceInstance:
                access administrative features of the instance.
         :param ResourceInstanceLastOperation last_operation: (optional) The status
                of the last operation requested on the instance.
-        :param str resource_aliases_url: (optional) The relative path to the
-               resource aliases for the instance.
-        :param str resource_bindings_url: (optional) The relative path to the
-               resource bindings for the instance.
+        :param str resource_aliases_url: (optional) Deprecated: The relative path
+               to the resource aliases for the instance.
+        :param str resource_bindings_url: (optional) Deprecated: The relative path
+               to the resource bindings for the instance.
         :param str resource_keys_url: (optional) The relative path to the resource
                keys for the instance.
         :param List[PlanHistoryItem] plan_history: (optional) The plan history of
@@ -3560,6 +3637,8 @@ class ResourceInstanceLastOperation:
           operation is cancelable or not.
     :param bool poll: A boolean that indicates if the resource broker's last
           operation can be polled or not.
+
+    This type supports additional properties of type object.
     """
 
     # The set of defined properties for the class
@@ -3590,7 +3669,7 @@ class ResourceInstanceLastOperation:
         sub_type: Optional[str] = None,
         reason_code: Optional[str] = None,
         poll_after: Optional[float] = None,
-        **kwargs,
+        **kwargs: Optional[object],
     ) -> None:
         """
         Initialize a ResourceInstanceLastOperation object.
@@ -3612,7 +3691,7 @@ class ResourceInstanceLastOperation:
                code for the last operation state change.
         :param float poll_after: (optional) A field which indicates the time after
                which the instance's last operation is to be polled.
-        :param **kwargs: (optional) Any additional properties.
+        :param object **kwargs: (optional) Additional properties of type object
         """
         self.type = type
         self.state = state
@@ -3623,8 +3702,13 @@ class ResourceInstanceLastOperation:
         self.poll_after = poll_after
         self.cancelable = cancelable
         self.poll = poll
-        for _key, _value in kwargs.items():
-            setattr(self, _key, _value)
+        for k, v in kwargs.items():
+            if k not in ResourceInstanceLastOperation._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(k))
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ResourceInstanceLastOperation':
@@ -3660,7 +3744,11 @@ class ResourceInstanceLastOperation:
             args['poll'] = poll
         else:
             raise ValueError('Required property \'poll\' not present in ResourceInstanceLastOperation JSON')
-        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        for k, v in _dict.items():
+            if k not in cls._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                args[k] = v
         return cls(**args)
 
     @classmethod
@@ -3689,8 +3777,8 @@ class ResourceInstanceLastOperation:
             _dict['cancelable'] = self.cancelable
         if hasattr(self, 'poll') and self.poll is not None:
             _dict['poll'] = self.poll
-        for _key in [k for k in vars(self).keys() if k not in ResourceInstanceLastOperation._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in ResourceInstanceLastOperation._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def _to_dict(self):
@@ -3698,21 +3786,23 @@ class ResourceInstanceLastOperation:
         return self.to_dict()
 
     def get_properties(self) -> Dict:
-        """Return a dictionary of arbitrary properties from this instance of ResourceInstanceLastOperation"""
+        """Return the additional properties from this instance of ResourceInstanceLastOperation in the form of a dict."""
         _dict = {}
-
-        for _key in [k for k in vars(self).keys() if k not in ResourceInstanceLastOperation._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in ResourceInstanceLastOperation._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def set_properties(self, _dict: dict):
-        """Set a dictionary of arbitrary properties to this instance of ResourceInstanceLastOperation"""
-        for _key in [k for k in vars(self).keys() if k not in ResourceInstanceLastOperation._properties]:
-            delattr(self, _key)
-
-        for _key, _value in _dict.items():
-            if _key not in ResourceInstanceLastOperation._properties:
-                setattr(self, _key, _value)
+        """Set a dictionary of additional properties in this instance of ResourceInstanceLastOperation"""
+        for k in [_k for _k in vars(self).keys() if _k not in ResourceInstanceLastOperation._properties]:
+            delattr(self, k)
+        for k, v in _dict.items():
+            if k not in ResourceInstanceLastOperation._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(_key))
 
     def __str__(self) -> str:
         """Return a `str` version of this ResourceInstanceLastOperation object."""
@@ -4099,6 +4189,8 @@ class ResourceKeyPostParameters:
 
     :param str serviceid_crn: (optional) An optional platform defined option to
           reuse an existing IAM serviceId for the role assignment.
+
+    This type supports additional properties of type object.
     """
 
     # The set of defined properties for the class
@@ -4108,18 +4200,23 @@ class ResourceKeyPostParameters:
         self,
         *,
         serviceid_crn: Optional[str] = None,
-        **kwargs,
+        **kwargs: Optional[object],
     ) -> None:
         """
         Initialize a ResourceKeyPostParameters object.
 
         :param str serviceid_crn: (optional) An optional platform defined option to
                reuse an existing IAM serviceId for the role assignment.
-        :param **kwargs: (optional) Any additional properties.
+        :param object **kwargs: (optional) Additional properties of type object
         """
         self.serviceid_crn = serviceid_crn
-        for _key, _value in kwargs.items():
-            setattr(self, _key, _value)
+        for k, v in kwargs.items():
+            if k not in ResourceKeyPostParameters._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(k))
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ResourceKeyPostParameters':
@@ -4127,7 +4224,11 @@ class ResourceKeyPostParameters:
         args = {}
         if (serviceid_crn := _dict.get('serviceid_crn')) is not None:
             args['serviceid_crn'] = serviceid_crn
-        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        for k, v in _dict.items():
+            if k not in cls._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                args[k] = v
         return cls(**args)
 
     @classmethod
@@ -4140,8 +4241,8 @@ class ResourceKeyPostParameters:
         _dict = {}
         if hasattr(self, 'serviceid_crn') and self.serviceid_crn is not None:
             _dict['serviceid_crn'] = self.serviceid_crn
-        for _key in [k for k in vars(self).keys() if k not in ResourceKeyPostParameters._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in ResourceKeyPostParameters._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def _to_dict(self):
@@ -4149,21 +4250,23 @@ class ResourceKeyPostParameters:
         return self.to_dict()
 
     def get_properties(self) -> Dict:
-        """Return a dictionary of arbitrary properties from this instance of ResourceKeyPostParameters"""
+        """Return the additional properties from this instance of ResourceKeyPostParameters in the form of a dict."""
         _dict = {}
-
-        for _key in [k for k in vars(self).keys() if k not in ResourceKeyPostParameters._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in ResourceKeyPostParameters._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def set_properties(self, _dict: dict):
-        """Set a dictionary of arbitrary properties to this instance of ResourceKeyPostParameters"""
-        for _key in [k for k in vars(self).keys() if k not in ResourceKeyPostParameters._properties]:
-            delattr(self, _key)
-
-        for _key, _value in _dict.items():
-            if _key not in ResourceKeyPostParameters._properties:
-                setattr(self, _key, _value)
+        """Set a dictionary of additional properties in this instance of ResourceKeyPostParameters"""
+        for k in [_k for _k in vars(self).keys() if _k not in ResourceKeyPostParameters._properties]:
+            delattr(self, k)
+        for k, v in _dict.items():
+            if k not in ResourceKeyPostParameters._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(_key))
 
     def __str__(self) -> str:
         """Return a `str` version of this ResourceKeyPostParameters object."""
