@@ -1,3 +1,10 @@
+# [0.57.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.56.0...v0.57.0) (2024-09-04)
+
+
+### Features
+
+* **Resource Controller:** Deprecating alias and bindings APIs and schema items ([#273](https://github.com/IBM/platform-services-python-sdk/issues/273)) ([ed77794](https://github.com/IBM/platform-services-python-sdk/commit/ed7779451b9af61db0372edd06c826b8554364cc))
+
 # [0.56.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.55.3...v0.56.0) (2024-08-13)
 
 
