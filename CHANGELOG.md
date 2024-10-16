@@ -1,3 +1,10 @@
+## [0.57.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.57.1...v0.57.2) (2024-10-16)
+
+
+### Bug Fixes
+
+* **build:** bump python core to 3.22.0 ([#277](https://github.com/IBM/platform-services-python-sdk/issues/277)) ([665b1bd](https://github.com/IBM/platform-services-python-sdk/commit/665b1bd1596cc73dc4b64cfa294904f791d500b0))
+
 ## [0.57.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.57.0...v0.57.1) (2024-09-18)
 
 
