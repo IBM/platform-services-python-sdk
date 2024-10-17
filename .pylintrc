@@ -43,27 +43,29 @@ confidence=HIGH
 # --enable=similarities". If you want to run only the classes checker, but have
 # no Warning level messages displayed, use "--disable=all --enable=classes
 # --disable=W".
-disable=too-many-arguments,
-        too-many-public-methods,
-        too-few-public-methods,
-        too-many-instance-attributes,
-        too-many-locals,
-        too-many-branches,
-        too-many-lines,
-        line-too-long,
-        similarities,
-        import-error,
-        raw-checker-failed,
-        bad-inline-option,
-        locally-disabled,
-        file-ignored,
-        suppressed-message,
-        useless-suppression,
+disable=bad-inline-option,
         deprecated-pragma,
-        use-symbolic-message-instead,
-        invalid-name,
+        disallowed-name,
+        file-ignored,
         global-statement,
-        use-implicit-booleaness-not-comparison
+        import-error,
+        invalid-name,
+        line-too-long,
+        locally-disabled,
+        raw-checker-failed,
+        similarities,
+        suppressed-message,
+        too-few-public-methods,
+        too-many-arguments,
+        too-many-branches,
+        too-many-instance-attributes,
+        too-many-lines,
+        too-many-locals,
+        too-many-positional-arguments,
+        too-many-public-methods,
+        use-implicit-booleaness-not-comparison,
+        use-symbolic-message-instead,
+        useless-suppression
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
