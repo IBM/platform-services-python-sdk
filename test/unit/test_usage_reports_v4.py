@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.usage_reports_v4 import *
 
 
-_service = UsageReportsV4(authenticator=NoAuthAuthenticator())
+_service = UsageReportsV4(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://billing.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -44,15 +46,8 @@ def preprocess_url(operation_path: str):
     The returned request URL is used to register the mock response so it needs
     to match the request URL that is formed by the requests library.
     """
-    # First, unquote the path since it might have some quoted/escaped characters in it
-    # due to how the generator inserts the operation paths into the unit test code.
-    operation_path = urllib.parse.unquote(operation_path)
 
-    # Next, quote the path using urllib so that we approximate what will
-    # happen during request processing.
-    operation_path = urllib.parse.quote(operation_path, safe='/')
-
-    # Finally, form the request URL from the base URL and operation path.
+    # Form the request URL from the base URL and operation path.
     request_url = _base_url + operation_path
 
     # If the request url does NOT end with a /, then just return it as-is.
@@ -2494,10 +2489,7 @@ class TestModel_InstanceUsage:
         instance_usage_model_json['pending'] = True
         instance_usage_model_json['currency_rate'] = 10.8716
         instance_usage_model_json['tags'] = ['env:test', 'staging']
-        instance_usage_model_json['service_tags'] = [
-            'project::config_id:b48d4e76-7c72-467c-97b6-443092334ce4',
-            'project::project_id:639bcd7e-f1f1-469f-bd28-1f03bcac6121',
-        ]
+        instance_usage_model_json['service_tags'] = ['project::config_id:b48d4e76-7c72-467c-97b6-443092334ce4', 'project::project_id:639bcd7e-f1f1-469f-bd28-1f03bcac6121']
 
         # Construct a model instance of InstanceUsage by calling from_dict on the json representation
         instance_usage_model = InstanceUsage.from_dict(instance_usage_model_json)
@@ -2644,10 +2636,7 @@ class TestModel_InstancesUsage:
         instance_usage_model['pending'] = True
         instance_usage_model['currency_rate'] = 10.8716
         instance_usage_model['tags'] = ['env:test', 'staging']
-        instance_usage_model['service_tags'] = [
-            'project::config_id:b48d4e76-7c72-467c-97b6-443092334ce4',
-            'project::project_id:639bcd7e-f1f1-469f-bd28-1f03bcac6121',
-        ]
+        instance_usage_model['service_tags'] = ['project::config_id:b48d4e76-7c72-467c-97b6-443092334ce4', 'project::project_id:639bcd7e-f1f1-469f-bd28-1f03bcac6121']
 
         # Construct a json representation of a InstancesUsage model
         instances_usage_model_json = {}
@@ -3150,30 +3139,20 @@ class TestModel_SnapshotConfigHistoryItem:
         snapshot_config_history_item_model_json['account_type'] = 'account'
         snapshot_config_history_item_model_json['interval'] = 'daily'
         snapshot_config_history_item_model_json['versioning'] = 'new'
-        snapshot_config_history_item_model_json['report_types'] = [
-            'account_summary',
-            'enterprise_summary',
-            'account_resource_instance_usage',
-        ]
+        snapshot_config_history_item_model_json['report_types'] = ['account_summary', 'enterprise_summary', 'account_resource_instance_usage']
         snapshot_config_history_item_model_json['compression'] = 'GZIP'
         snapshot_config_history_item_model_json['content_type'] = 'text/csv'
         snapshot_config_history_item_model_json['cos_reports_folder'] = 'IBMCloud-Billing-Reports'
         snapshot_config_history_item_model_json['cos_bucket'] = 'bucket_name'
         snapshot_config_history_item_model_json['cos_location'] = 'us-south'
-        snapshot_config_history_item_model_json['cos_endpoint'] = (
-            'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
-        )
+        snapshot_config_history_item_model_json['cos_endpoint'] = 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
 
         # Construct a model instance of SnapshotConfigHistoryItem by calling from_dict on the json representation
-        snapshot_config_history_item_model = SnapshotConfigHistoryItem.from_dict(
-            snapshot_config_history_item_model_json
-        )
+        snapshot_config_history_item_model = SnapshotConfigHistoryItem.from_dict(snapshot_config_history_item_model_json)
         assert snapshot_config_history_item_model != False
 
         # Construct a model instance of SnapshotConfigHistoryItem by calling from_dict on the json representation
-        snapshot_config_history_item_model_dict = SnapshotConfigHistoryItem.from_dict(
-            snapshot_config_history_item_model_json
-        ).__dict__
+        snapshot_config_history_item_model_dict = SnapshotConfigHistoryItem.from_dict(snapshot_config_history_item_model_json).__dict__
         snapshot_config_history_item_model2 = SnapshotConfigHistoryItem(**snapshot_config_history_item_model_dict)
 
         # Verify the model instances are equivalent
@@ -3197,14 +3176,10 @@ class TestModel_SnapshotList:
         # Construct dict forms of any model objects needed in order to build this model.
 
         snapshot_list_first_model = {}  # SnapshotListFirst
-        snapshot_list_first_model['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
+        snapshot_list_first_model['href'] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
 
         snapshot_list_next_model = {}  # SnapshotListNext
-        snapshot_list_next_model['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
+        snapshot_list_next_model['href'] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
         snapshot_list_next_model['offset'] = 'testString'
 
         snapshot_list_snapshots_item_billing_period_model = {}  # SnapshotListSnapshotsItemBillingPeriod
@@ -3217,9 +3192,7 @@ class TestModel_SnapshotList:
 
         snapshot_list_snapshots_item_files_item_model = {}  # SnapshotListSnapshotsItemFilesItem
         snapshot_list_snapshots_item_files_item_model['report_types'] = 'account_summary'
-        snapshot_list_snapshots_item_files_item_model['location'] = (
-            'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
-        )
+        snapshot_list_snapshots_item_files_item_model['location'] = 'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
         snapshot_list_snapshots_item_files_item_model['account_id'] = 'abc'
 
         snapshot_list_snapshots_item_model = {}  # SnapshotListSnapshotsItem
@@ -3275,9 +3248,7 @@ class TestModel_SnapshotListFirst:
 
         # Construct a json representation of a SnapshotListFirst model
         snapshot_list_first_model_json = {}
-        snapshot_list_first_model_json['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
+        snapshot_list_first_model_json['href'] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
 
         # Construct a model instance of SnapshotListFirst by calling from_dict on the json representation
         snapshot_list_first_model = SnapshotListFirst.from_dict(snapshot_list_first_model_json)
@@ -3307,9 +3278,7 @@ class TestModel_SnapshotListNext:
 
         # Construct a json representation of a SnapshotListNext model
         snapshot_list_next_model_json = {}
-        snapshot_list_next_model_json['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
+        snapshot_list_next_model_json['href'] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
         snapshot_list_next_model_json['offset'] = 'testString'
 
         # Construct a model instance of SnapshotListNext by calling from_dict on the json representation
@@ -3350,9 +3319,7 @@ class TestModel_SnapshotListSnapshotsItem:
 
         snapshot_list_snapshots_item_files_item_model = {}  # SnapshotListSnapshotsItemFilesItem
         snapshot_list_snapshots_item_files_item_model['report_types'] = 'account_summary'
-        snapshot_list_snapshots_item_files_item_model['location'] = (
-            'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
-        )
+        snapshot_list_snapshots_item_files_item_model['location'] = 'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
         snapshot_list_snapshots_item_files_item_model['account_id'] = 'abc'
 
         # Construct a json representation of a SnapshotListSnapshotsItem model
@@ -3375,15 +3342,11 @@ class TestModel_SnapshotListSnapshotsItem:
         snapshot_list_snapshots_item_model_json['processed_at'] = 1687470448297
 
         # Construct a model instance of SnapshotListSnapshotsItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_model = SnapshotListSnapshotsItem.from_dict(
-            snapshot_list_snapshots_item_model_json
-        )
+        snapshot_list_snapshots_item_model = SnapshotListSnapshotsItem.from_dict(snapshot_list_snapshots_item_model_json)
         assert snapshot_list_snapshots_item_model != False
 
         # Construct a model instance of SnapshotListSnapshotsItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_model_dict = SnapshotListSnapshotsItem.from_dict(
-            snapshot_list_snapshots_item_model_json
-        ).__dict__
+        snapshot_list_snapshots_item_model_dict = SnapshotListSnapshotsItem.from_dict(snapshot_list_snapshots_item_model_json).__dict__
         snapshot_list_snapshots_item_model2 = SnapshotListSnapshotsItem(**snapshot_list_snapshots_item_model_dict)
 
         # Verify the model instances are equivalent
@@ -3410,30 +3373,19 @@ class TestModel_SnapshotListSnapshotsItemBillingPeriod:
         snapshot_list_snapshots_item_billing_period_model_json['end'] = '2023-06-30T23:59:59.999Z'
 
         # Construct a model instance of SnapshotListSnapshotsItemBillingPeriod by calling from_dict on the json representation
-        snapshot_list_snapshots_item_billing_period_model = SnapshotListSnapshotsItemBillingPeriod.from_dict(
-            snapshot_list_snapshots_item_billing_period_model_json
-        )
+        snapshot_list_snapshots_item_billing_period_model = SnapshotListSnapshotsItemBillingPeriod.from_dict(snapshot_list_snapshots_item_billing_period_model_json)
         assert snapshot_list_snapshots_item_billing_period_model != False
 
         # Construct a model instance of SnapshotListSnapshotsItemBillingPeriod by calling from_dict on the json representation
-        snapshot_list_snapshots_item_billing_period_model_dict = SnapshotListSnapshotsItemBillingPeriod.from_dict(
-            snapshot_list_snapshots_item_billing_period_model_json
-        ).__dict__
-        snapshot_list_snapshots_item_billing_period_model2 = SnapshotListSnapshotsItemBillingPeriod(
-            **snapshot_list_snapshots_item_billing_period_model_dict
-        )
+        snapshot_list_snapshots_item_billing_period_model_dict = SnapshotListSnapshotsItemBillingPeriod.from_dict(snapshot_list_snapshots_item_billing_period_model_json).__dict__
+        snapshot_list_snapshots_item_billing_period_model2 = SnapshotListSnapshotsItemBillingPeriod(**snapshot_list_snapshots_item_billing_period_model_dict)
 
         # Verify the model instances are equivalent
         assert snapshot_list_snapshots_item_billing_period_model == snapshot_list_snapshots_item_billing_period_model2
 
         # Convert model instance back to dict and verify no loss of data
-        snapshot_list_snapshots_item_billing_period_model_json2 = (
-            snapshot_list_snapshots_item_billing_period_model.to_dict()
-        )
-        assert (
-            snapshot_list_snapshots_item_billing_period_model_json2
-            == snapshot_list_snapshots_item_billing_period_model_json
-        )
+        snapshot_list_snapshots_item_billing_period_model_json2 = snapshot_list_snapshots_item_billing_period_model.to_dict()
+        assert snapshot_list_snapshots_item_billing_period_model_json2 == snapshot_list_snapshots_item_billing_period_model_json
 
 
 class TestModel_SnapshotListSnapshotsItemFilesItem:
@@ -3449,24 +3401,16 @@ class TestModel_SnapshotListSnapshotsItemFilesItem:
         # Construct a json representation of a SnapshotListSnapshotsItemFilesItem model
         snapshot_list_snapshots_item_files_item_model_json = {}
         snapshot_list_snapshots_item_files_item_model_json['report_types'] = 'account_summary'
-        snapshot_list_snapshots_item_files_item_model_json['location'] = (
-            'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
-        )
+        snapshot_list_snapshots_item_files_item_model_json['location'] = 'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
         snapshot_list_snapshots_item_files_item_model_json['account_id'] = 'abc'
 
         # Construct a model instance of SnapshotListSnapshotsItemFilesItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_files_item_model = SnapshotListSnapshotsItemFilesItem.from_dict(
-            snapshot_list_snapshots_item_files_item_model_json
-        )
+        snapshot_list_snapshots_item_files_item_model = SnapshotListSnapshotsItemFilesItem.from_dict(snapshot_list_snapshots_item_files_item_model_json)
         assert snapshot_list_snapshots_item_files_item_model != False
 
         # Construct a model instance of SnapshotListSnapshotsItemFilesItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_files_item_model_dict = SnapshotListSnapshotsItemFilesItem.from_dict(
-            snapshot_list_snapshots_item_files_item_model_json
-        ).__dict__
-        snapshot_list_snapshots_item_files_item_model2 = SnapshotListSnapshotsItemFilesItem(
-            **snapshot_list_snapshots_item_files_item_model_dict
-        )
+        snapshot_list_snapshots_item_files_item_model_dict = SnapshotListSnapshotsItemFilesItem.from_dict(snapshot_list_snapshots_item_files_item_model_json).__dict__
+        snapshot_list_snapshots_item_files_item_model2 = SnapshotListSnapshotsItemFilesItem(**snapshot_list_snapshots_item_files_item_model_dict)
 
         # Verify the model instances are equivalent
         assert snapshot_list_snapshots_item_files_item_model == snapshot_list_snapshots_item_files_item_model2
@@ -3492,33 +3436,19 @@ class TestModel_SnapshotListSnapshotsItemReportTypesItem:
         snapshot_list_snapshots_item_report_types_item_model_json['version'] = '1.0'
 
         # Construct a model instance of SnapshotListSnapshotsItemReportTypesItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_report_types_item_model = SnapshotListSnapshotsItemReportTypesItem.from_dict(
-            snapshot_list_snapshots_item_report_types_item_model_json
-        )
+        snapshot_list_snapshots_item_report_types_item_model = SnapshotListSnapshotsItemReportTypesItem.from_dict(snapshot_list_snapshots_item_report_types_item_model_json)
         assert snapshot_list_snapshots_item_report_types_item_model != False
 
         # Construct a model instance of SnapshotListSnapshotsItemReportTypesItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_report_types_item_model_dict = SnapshotListSnapshotsItemReportTypesItem.from_dict(
-            snapshot_list_snapshots_item_report_types_item_model_json
-        ).__dict__
-        snapshot_list_snapshots_item_report_types_item_model2 = SnapshotListSnapshotsItemReportTypesItem(
-            **snapshot_list_snapshots_item_report_types_item_model_dict
-        )
+        snapshot_list_snapshots_item_report_types_item_model_dict = SnapshotListSnapshotsItemReportTypesItem.from_dict(snapshot_list_snapshots_item_report_types_item_model_json).__dict__
+        snapshot_list_snapshots_item_report_types_item_model2 = SnapshotListSnapshotsItemReportTypesItem(**snapshot_list_snapshots_item_report_types_item_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            snapshot_list_snapshots_item_report_types_item_model
-            == snapshot_list_snapshots_item_report_types_item_model2
-        )
+        assert snapshot_list_snapshots_item_report_types_item_model == snapshot_list_snapshots_item_report_types_item_model2
 
         # Convert model instance back to dict and verify no loss of data
-        snapshot_list_snapshots_item_report_types_item_model_json2 = (
-            snapshot_list_snapshots_item_report_types_item_model.to_dict()
-        )
-        assert (
-            snapshot_list_snapshots_item_report_types_item_model_json2
-            == snapshot_list_snapshots_item_report_types_item_model_json
-        )
+        snapshot_list_snapshots_item_report_types_item_model_json2 = snapshot_list_snapshots_item_report_types_item_model.to_dict()
+        assert snapshot_list_snapshots_item_report_types_item_model_json2 == snapshot_list_snapshots_item_report_types_item_model_json
 
 
 class TestModel_SnapshotConfig:
@@ -3542,19 +3472,13 @@ class TestModel_SnapshotConfig:
         snapshot_config_history_item_model['account_type'] = 'account'
         snapshot_config_history_item_model['interval'] = 'daily'
         snapshot_config_history_item_model['versioning'] = 'new'
-        snapshot_config_history_item_model['report_types'] = [
-            'account_summary',
-            'enterprise_summary',
-            'account_resource_instance_usage',
-        ]
+        snapshot_config_history_item_model['report_types'] = ['account_summary', 'enterprise_summary', 'account_resource_instance_usage']
         snapshot_config_history_item_model['compression'] = 'GZIP'
         snapshot_config_history_item_model['content_type'] = 'text/csv'
         snapshot_config_history_item_model['cos_reports_folder'] = 'IBMCloud-Billing-Reports'
         snapshot_config_history_item_model['cos_bucket'] = 'bucket_name'
         snapshot_config_history_item_model['cos_location'] = 'us-south'
-        snapshot_config_history_item_model['cos_endpoint'] = (
-            'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
-        )
+        snapshot_config_history_item_model['cos_endpoint'] = 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
 
         # Construct a json representation of a SnapshotConfig model
         snapshot_config_model_json = {}
@@ -3563,11 +3487,7 @@ class TestModel_SnapshotConfig:
         snapshot_config_model_json['account_type'] = 'account'
         snapshot_config_model_json['interval'] = 'daily'
         snapshot_config_model_json['versioning'] = 'new'
-        snapshot_config_model_json['report_types'] = [
-            'account_summary',
-            'enterprise_summary',
-            'account_resource_instance_usage',
-        ]
+        snapshot_config_model_json['report_types'] = ['account_summary', 'enterprise_summary', 'account_resource_instance_usage']
         snapshot_config_model_json['compression'] = 'GZIP'
         snapshot_config_model_json['content_type'] = 'text/csv'
         snapshot_config_model_json['cos_reports_folder'] = 'IBMCloud-Billing-Reports'
@@ -3611,18 +3531,12 @@ class TestModel_SnapshotConfigValidateResponse:
         snapshot_config_validate_response_model_json['cos_location'] = 'us-south'
 
         # Construct a model instance of SnapshotConfigValidateResponse by calling from_dict on the json representation
-        snapshot_config_validate_response_model = SnapshotConfigValidateResponse.from_dict(
-            snapshot_config_validate_response_model_json
-        )
+        snapshot_config_validate_response_model = SnapshotConfigValidateResponse.from_dict(snapshot_config_validate_response_model_json)
         assert snapshot_config_validate_response_model != False
 
         # Construct a model instance of SnapshotConfigValidateResponse by calling from_dict on the json representation
-        snapshot_config_validate_response_model_dict = SnapshotConfigValidateResponse.from_dict(
-            snapshot_config_validate_response_model_json
-        ).__dict__
-        snapshot_config_validate_response_model2 = SnapshotConfigValidateResponse(
-            **snapshot_config_validate_response_model_dict
-        )
+        snapshot_config_validate_response_model_dict = SnapshotConfigValidateResponse.from_dict(snapshot_config_validate_response_model_json).__dict__
+        snapshot_config_validate_response_model2 = SnapshotConfigValidateResponse(**snapshot_config_validate_response_model_dict)
 
         # Verify the model instances are equivalent
         assert snapshot_config_validate_response_model == snapshot_config_validate_response_model2
@@ -3798,9 +3712,7 @@ class TestModel_SubscriptionTermCredits:
         assert subscription_term_credits_model != False
 
         # Construct a model instance of SubscriptionTermCredits by calling from_dict on the json representation
-        subscription_term_credits_model_dict = SubscriptionTermCredits.from_dict(
-            subscription_term_credits_model_json
-        ).__dict__
+        subscription_term_credits_model_dict = SubscriptionTermCredits.from_dict(subscription_term_credits_model_json).__dict__
         subscription_term_credits_model2 = SubscriptionTermCredits(**subscription_term_credits_model_dict)
 
         # Verify the model instances are equivalent

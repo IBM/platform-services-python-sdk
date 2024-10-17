@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.89.0-f33c767b-20240410-144451
+# IBM OpenAPI SDK Code Generator Version: 3.96.0-d6dec9d7-20241008-212902
 
 """
 Usage reports for IBM Cloud accounts
@@ -55,7 +55,9 @@ class UsageReportsV4(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -253,9 +255,7 @@ class UsageReportsV4(BaseService):
         path_param_keys = ['account_id', 'resource_group_id', 'billingmonth']
         path_param_values = self.encode_path_vars(account_id, resource_group_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/usage/{billingmonth}'.format(
-            **path_param_dict
-        )
+        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/usage/{billingmonth}'.format(**path_param_dict)
         request = self.prepare_request(
             method='GET',
             url=url,
@@ -445,9 +445,7 @@ class UsageReportsV4(BaseService):
         path_param_keys = ['account_id', 'resource_group_id', 'billingmonth']
         path_param_values = self.encode_path_vars(account_id, resource_group_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/resource_instances/usage/{billingmonth}'.format(
-            **path_param_dict
-        )
+        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/resource_instances/usage/{billingmonth}'.format(**path_param_dict)
         request = self.prepare_request(
             method='GET',
             url=url,
@@ -541,11 +539,7 @@ class UsageReportsV4(BaseService):
         path_param_keys = ['account_id', 'organization_id', 'billingmonth']
         path_param_values = self.encode_path_vars(account_id, organization_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = (
-            '/v4/accounts/{account_id}/organizations/{organization_id}/resource_instances/usage/{billingmonth}'.format(
-                **path_param_dict
-            )
-        )
+        url = '/v4/accounts/{account_id}/organizations/{organization_id}/resource_instances/usage/{billingmonth}'.format(**path_param_dict)
         request = self.prepare_request(
             method='GET',
             url=url,
@@ -3226,6 +3220,7 @@ class SnapshotConfigHistoryItem:
         ENABLED = 'enabled'
         DISABLED = 'disabled'
 
+
     class AccountTypeEnum(str, Enum):
         """
         Type of account. Possible values [enterprise, account].
@@ -3234,12 +3229,14 @@ class SnapshotConfigHistoryItem:
         ACCOUNT = 'account'
         ENTERPRISE = 'enterprise'
 
+
     class IntervalEnum(str, Enum):
         """
         Frequency of taking the snapshot of the billing reports.
         """
 
         DAILY = 'daily'
+
 
     class VersioningEnum(str, Enum):
         """
@@ -3250,6 +3247,7 @@ class SnapshotConfigHistoryItem:
         NEW = 'new'
         OVERWRITE = 'overwrite'
 
+
     class ReportTypesEnum(str, Enum):
         """
         report_types.
@@ -3258,6 +3256,7 @@ class SnapshotConfigHistoryItem:
         ACCOUNT_SUMMARY = 'account_summary'
         ENTERPRISE_SUMMARY = 'enterprise_summary'
         ACCOUNT_RESOURCE_INSTANCE_USAGE = 'account_resource_instance_usage'
+
 
 
 class SnapshotList:
@@ -3702,6 +3701,7 @@ class SnapshotListSnapshotsItem:
         ACCOUNT = 'account'
         ENTERPRISE = 'enterprise'
 
+
     class StateEnum(str, Enum):
         """
         Status of the billing snapshot configuration. Possible values are [enabled,
@@ -3710,6 +3710,7 @@ class SnapshotListSnapshotsItem:
 
         ENABLED = 'enabled'
         DISABLED = 'disabled'
+
 
 
 class SnapshotListSnapshotsItemBillingPeriod:
@@ -3874,6 +3875,7 @@ class SnapshotListSnapshotsItemFilesItem:
         ACCOUNT_RESOURCE_INSTANCE_USAGE = 'account_resource_instance_usage'
 
 
+
 class SnapshotListSnapshotsItemReportTypesItem:
     """
     SnapshotListSnapshotsItemReportTypesItem.
@@ -3952,6 +3954,7 @@ class SnapshotListSnapshotsItemReportTypesItem:
         ACCOUNT_SUMMARY = 'account_summary'
         ENTERPRISE_SUMMARY = 'enterprise_summary'
         ACCOUNT_RESOURCE_INSTANCE_USAGE = 'account_resource_instance_usage'
+
 
 
 class SnapshotConfig:
@@ -4165,6 +4168,7 @@ class SnapshotConfig:
         ENABLED = 'enabled'
         DISABLED = 'disabled'
 
+
     class AccountTypeEnum(str, Enum):
         """
         Type of account. Possible values are [enterprise, account].
@@ -4173,12 +4177,14 @@ class SnapshotConfig:
         ACCOUNT = 'account'
         ENTERPRISE = 'enterprise'
 
+
     class IntervalEnum(str, Enum):
         """
         Frequency of taking the snapshot of the billing reports.
         """
 
         DAILY = 'daily'
+
 
     class VersioningEnum(str, Enum):
         """
@@ -4189,6 +4195,7 @@ class SnapshotConfig:
         NEW = 'new'
         OVERWRITE = 'overwrite'
 
+
     class ReportTypesEnum(str, Enum):
         """
         report_types.
@@ -4197,6 +4204,7 @@ class SnapshotConfig:
         ACCOUNT_SUMMARY = 'account_summary'
         ENTERPRISE_SUMMARY = 'enterprise_summary'
         ACCOUNT_RESOURCE_INSTANCE_USAGE = 'account_resource_instance_usage'
+
 
 
 class SnapshotConfigValidateResponse:
@@ -4748,7 +4756,6 @@ class SupportSummary:
     def __ne__(self, other: 'SupportSummary') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
 
 ##############################################################################
 # Pagers
