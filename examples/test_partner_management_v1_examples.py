@@ -14,35 +14,30 @@
 # limitations under the License.
 
 """
-Examples for PartnerUsageReportsV1
+Examples for PartnerManagementV1
 """
 
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 import os
 import pytest
-from ibm_platform_services.partner_usage_reports_v1 import *
+from ibm_platform_services.partner_management_v1 import *
 
 #
-# This file provides an example of how to use the Partner Usage Reports service.
+# This file provides an example of how to use the Partner Management service.
 #
 # The following configuration properties are assumed to be defined:
-# PARTNER_USAGE_REPORTS_URL=<service base url>
-# PARTNER_USAGE_REPORTS_AUTH_TYPE=iam
-# PARTNER_USAGE_REPORTS_APIKEY=<IAM apikey>
-# PARTNER_USAGE_REPORTS_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
-# PARTNER_USAGE_REPORTS_PARTNER_ID=<Enterprise ID of the distributor or reseller for which the report is requested>
-# PARTNER_USAGE_REPORTS_CUSTOMER_ID=<Enterprise ID of the child customer for which the report is requested>
-# PARTNER_USAGE_REPORTS_RESELLER_ID=<Enterprise ID of the reseller for which the report is requested>
-# PARTNER_USAGE_REPORTS_BILLING_MONTH=<The billing month for which the usage report is requested. Format is `yyyy-mm`>
-# PARTNER_USAGE_REPORTS_VIEWPOINT=<Enables partner to view the cost of provisioned services as applicable at each level of the hierarchy>
+# PARTNER_MANAGEMENT_URL=<service base url>
+# PARTNER_MANAGEMENT_AUTH_TYPE=iam
+# PARTNER_MANAGEMENT_APIKEY=<IAM apikey>
+# PARTNER_MANAGEMENT_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
 #
 # These configuration properties can be exported as environment variables, or stored
 # in a configuration file and then:
 # export IBM_CREDENTIALS_FILE=<name of configuration file>
 #
-config_file = 'partner_usage_reports_v1.env'
+config_file = 'partner_management_v1.env'
 
-partner_usage_reports_service = None
+partner_management_service = None
 
 config = None
 partner_id = None
@@ -50,30 +45,30 @@ billing_month = None
 
 
 ##############################################################################
-# Start of Examples for Service: PartnerUsageReportsV1
+# Start of Examples for Service: PartnerManagementV1
 ##############################################################################
 # region
-class TestPartnerUsageReportsV1Examples:
+class TestPartnerManagementV1Examples:
     """
-    Example Test Class for PartnerUsageReportsV1
+    Example Test Class for PartnerManagementV1
     """
 
     @classmethod
     def setup_class(cls):
-        global partner_usage_reports_service
+        global partner_management_service
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
             # begin-common
 
-            partner_usage_reports_service = PartnerUsageReportsV1.new_instance()
+            partner_management_service = PartnerManagementV1.new_instance()
 
             # end-common
-            assert partner_usage_reports_service is not None
+            assert partner_management_service is not None
 
             # Load the configuration
             global config
-            config = read_external_sources(PartnerUsageReportsV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(PartnerManagementV1.DEFAULT_SERVICE_NAME)
 
             global partner_id
             partner_id = config.get("PARTNER_ID")
@@ -97,11 +92,12 @@ class TestPartnerUsageReportsV1Examples:
         """
         try:
             print('\nget_resource_usage_report() result:')
+
             # begin-get_resource_usage_report
 
             all_results = []
             pager = GetResourceUsageReportPager(
-                client=partner_usage_reports_service,
+                client=partner_management_service,
                 partner_id=partner_id,
                 month=billing_month,
                 limit=10,
@@ -117,8 +113,54 @@ class TestPartnerUsageReportsV1Examples:
         except ApiException as e:
             pytest.fail(str(e))
 
+    @needscredentials
+    def test_get_billing_options_example(self):
+        """
+        get_billing_options request example
+        """
+        try:
+            print('\nget_billing_options() result:')
+
+            # begin-get_billing_options
+
+            response = partner_management_service.get_billing_options(
+                partner_id=partner_id,
+                date=billing_month,
+            )
+            billing_options_summary = response.get_result()
+
+            print(json.dumps(billing_options_summary, indent=2))
+
+            # end-get_billing_options
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_credit_pools_report_example(self):
+        """
+        get_credit_pools_report request example
+        """
+        try:
+            print('\nget_credit_pools_report() result:')
+
+            # begin-get_credit_pools_report
+
+            response = partner_management_service.get_credit_pools_report(
+                partner_id=partner_id,
+                date=billing_month,
+            )
+            credit_pools_report_summary = response.get_result()
+
+            print(json.dumps(credit_pools_report_summary, indent=2))
+
+            # end-get_credit_pools_report
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################
-# End of Examples for Service: PartnerUsageReportsV1
+# End of Examples for Service: PartnerManagementV1
 ##############################################################################
