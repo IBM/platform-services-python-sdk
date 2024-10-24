@@ -14,21 +14,21 @@
 # limitations under the License.
 
 """
-Integration Tests for PartnerUsageReportsV1
+Integration Tests for PartnerManagementV1
 """
 
 from ibm_cloud_sdk_core import *
 import os
 import pytest
-from ibm_platform_services.partner_usage_reports_v1 import *
+from ibm_platform_services.partner_management_v1 import *
 
 # Config file name
-config_file = 'partner_usage_reports_v1.env'
+config_file = 'partner_management_v1.env'
 
 
-class TestPartnerUsageReportsV1:
+class TestPartnerManagementV1:
     """
-    Integration Test Class for PartnerUsageReportsV1
+    Integration Test Class for PartnerManagementV1
     """
 
     @classmethod
@@ -36,13 +36,13 @@ class TestPartnerUsageReportsV1:
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-            cls.partner_usage_reports_service = PartnerUsageReportsV1.new_instance()
-            assert cls.partner_usage_reports_service is not None
+            cls.partner_management_service = PartnerManagementV1.new_instance()
+            assert cls.partner_management_service is not None
 
-            cls.config = read_external_sources(PartnerUsageReportsV1.DEFAULT_SERVICE_NAME)
+            cls.config = read_external_sources(PartnerManagementV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
-            cls.partner_usage_reports_service.enable_retries()
+            cls.partner_management_service.enable_retries()
 
             cls.PARTNER_ID = cls.config.get("PARTNER_ID")
             cls.RESELLER_ID = cls.config.get("RESELLER_ID")
@@ -63,7 +63,7 @@ class TestPartnerUsageReportsV1:
 
     @needscredentials
     def test_get_resource_usage_report_partner(self):
-        response = self.partner_usage_reports_service.get_resource_usage_report(
+        response = self.partner_management_service.get_resource_usage_report(
             partner_id=self.PARTNER_ID,
             month=self.BILLING_MONTH,
             limit=30,
@@ -79,7 +79,7 @@ class TestPartnerUsageReportsV1:
 
         # Test get_next().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             month=self.BILLING_MONTH,
             limit=10,
@@ -91,7 +91,7 @@ class TestPartnerUsageReportsV1:
 
         # Test get_all().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             month=self.BILLING_MONTH,
             limit=10,
@@ -106,7 +106,7 @@ class TestPartnerUsageReportsV1:
 
     @needscredentials
     def test_get_resource_usage_report_reseller_for_partner(self):
-        response = self.partner_usage_reports_service.get_resource_usage_report(
+        response = self.partner_management_service.get_resource_usage_report(
             partner_id=self.PARTNER_ID,
             children=True,
             month=self.BILLING_MONTH,
@@ -123,7 +123,7 @@ class TestPartnerUsageReportsV1:
 
         # Test get_next().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             children=True,
             month=self.BILLING_MONTH,
@@ -136,7 +136,7 @@ class TestPartnerUsageReportsV1:
 
         # Test get_all().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             children=True,
             month=self.BILLING_MONTH,
@@ -152,7 +152,7 @@ class TestPartnerUsageReportsV1:
 
     @needscredentials
     def test_get_resource_usage_report_specific_reseller(self):
-        response = self.partner_usage_reports_service.get_resource_usage_report(
+        response = self.partner_management_service.get_resource_usage_report(
             partner_id=self.PARTNER_ID,
             reseller_id=self.RESELLER_ID,
             month=self.BILLING_MONTH,
@@ -169,7 +169,7 @@ class TestPartnerUsageReportsV1:
 
         # Test get_next().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             reseller_id=self.RESELLER_ID,
             month=self.BILLING_MONTH,
@@ -182,7 +182,7 @@ class TestPartnerUsageReportsV1:
 
         # Test get_all().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             reseller_id=self.RESELLER_ID,
             month=self.BILLING_MONTH,
@@ -198,7 +198,7 @@ class TestPartnerUsageReportsV1:
 
     @needscredentials
     def test_get_resource_usage_report_specific_customer(self):
-        response = self.partner_usage_reports_service.get_resource_usage_report(
+        response = self.partner_management_service.get_resource_usage_report(
             partner_id=self.PARTNER_ID,
             customer_id=self.CUSTOMER_ID,
             month=self.BILLING_MONTH,
@@ -215,7 +215,7 @@ class TestPartnerUsageReportsV1:
 
         # Test get_next().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             customer_id=self.CUSTOMER_ID,
             month=self.BILLING_MONTH,
@@ -228,7 +228,7 @@ class TestPartnerUsageReportsV1:
 
         # Test get_all().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             customer_id=self.CUSTOMER_ID,
             month=self.BILLING_MONTH,
@@ -244,10 +244,10 @@ class TestPartnerUsageReportsV1:
 
     @needscredentials
     def test_get_resource_usage_report_recursive(self):
-        response = self.partner_usage_reports_service.get_resource_usage_report(
+        response = self.partner_management_service.get_resource_usage_report(
             partner_id=self.PARTNER_ID,
             month=self.BILLING_MONTH,
-            recurse=True,
+            recurse=False,
             limit=30,
         )
 
@@ -261,10 +261,10 @@ class TestPartnerUsageReportsV1:
 
         # Test get_next().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             month=self.BILLING_MONTH,
-            recurse=True,
+            recurse=False,
             limit=10,
         )
         while pager.has_next():
@@ -274,10 +274,10 @@ class TestPartnerUsageReportsV1:
 
         # Test get_all().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             month=self.BILLING_MONTH,
-            recurse=True,
+            recurse=False,
             limit=10,
         )
         all_items = pager.get_all()
@@ -290,7 +290,7 @@ class TestPartnerUsageReportsV1:
 
     @needscredentials
     def test_get_resource_usage_report_viewpoint(self):
-        response = self.partner_usage_reports_service.get_resource_usage_report(
+        response = self.partner_management_service.get_resource_usage_report(
             partner_id=self.PARTNER_ID,
             children=True,
             month=self.BILLING_MONTH,
@@ -308,7 +308,7 @@ class TestPartnerUsageReportsV1:
 
         # Test get_next().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             children=True,
             month=self.BILLING_MONTH,
@@ -322,7 +322,7 @@ class TestPartnerUsageReportsV1:
 
         # Test get_all().
         pager = GetResourceUsageReportPager(
-            client=self.partner_usage_reports_service,
+            client=self.partner_management_service,
             partner_id=self.PARTNER_ID,
             children=True,
             month=self.BILLING_MONTH,
@@ -336,3 +336,79 @@ class TestPartnerUsageReportsV1:
         print(
             f'\nget_resource_usage_report() returned a total of {len(all_results)} items(s) using GetResourceUsageReportPager.'
         )
+
+    @needscredentials
+    def test_get_billing_options(self):
+        response = self.partner_management_service.get_billing_options(
+            partner_id=self.PARTNER_ID,
+            date=self.BILLING_MONTH,
+            limit=30,
+        )
+
+        assert response.get_status_code() == 200
+        billing_options_summary = response.get_result()
+        assert billing_options_summary is not None
+
+    @needscredentials
+    def test_get_billing_options_reseller_for_partner(self):
+        response = self.partner_management_service.get_billing_options(
+            partner_id=self.PARTNER_ID,
+            reseller_id=self.RESELLER_ID,
+            date=self.BILLING_MONTH,
+            limit=30,
+        )
+
+        assert response.get_status_code() == 200
+        billing_options_summary = response.get_result()
+        assert billing_options_summary is not None
+
+    @needscredentials
+    def test_get_billing_options_customer_for_partner(self):
+        response = self.partner_management_service.get_billing_options(
+            partner_id=self.PARTNER_ID,
+            customer_id=self.CUSTOMER_ID,
+            date=self.BILLING_MONTH,
+            limit=30,
+        )
+
+        assert response.get_status_code() == 200
+        billing_options_summary = response.get_result()
+        assert billing_options_summary is not None
+
+    @needscredentials
+    def test_get_credit_pools_report(self):
+        response = self.partner_management_service.get_credit_pools_report(
+            partner_id=self.PARTNER_ID,
+            date=self.BILLING_MONTH,
+            limit=30,
+        )
+
+        assert response.get_status_code() == 200
+        credit_pools_report_summary = response.get_result()
+        assert credit_pools_report_summary is not None
+
+    @needscredentials
+    def test_get_credit_pools_report_reseller_for_partner(self):
+        response = self.partner_management_service.get_credit_pools_report(
+            partner_id=self.PARTNER_ID,
+            reseller_id=self.RESELLER_ID,
+            date=self.BILLING_MONTH,
+            limit=30,
+        )
+
+        assert response.get_status_code() == 200
+        credit_pools_report_summary = response.get_result()
+        assert credit_pools_report_summary is not None
+
+    @needscredentials
+    def test_get_credit_pools_report_customer_for_partner(self):
+        response = self.partner_management_service.get_credit_pools_report(
+            partner_id=self.PARTNER_ID,
+            customer_id=self.CUSTOMER_ID,
+            date=self.BILLING_MONTH,
+            limit=30,
+        )
+
+        assert response.get_status_code() == 200
+        credit_pools_report_summary = response.get_result()
+        assert credit_pools_report_summary is not None
