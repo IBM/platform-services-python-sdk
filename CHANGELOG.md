@@ -1,3 +1,10 @@
+# [0.58.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.57.2...v0.58.0) (2024-10-24)
+
+
+### Features
+
+* **Partner Management APIs:** add new service to project ([#278](https://github.com/IBM/platform-services-python-sdk/issues/278)) ([a469ec5](https://github.com/IBM/platform-services-python-sdk/commit/a469ec516d3d232e795517cae2c3758996d6917b))
+
 ## [0.57.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.57.1...v0.57.2) (2024-10-16)
 
 
