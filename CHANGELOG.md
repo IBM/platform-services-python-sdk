@@ -1,3 +1,10 @@
+# [0.59.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.58.0...v0.59.0) (2024-10-28)
+
+
+### Features
+
+* **Usage Reports:** add "created_by_email_id" to Offer schema ([#274](https://github.com/IBM/platform-services-python-sdk/issues/274)) ([099bad4](https://github.com/IBM/platform-services-python-sdk/commit/099bad4f2d064ef7d067e73cf19279dbca6f6354))
+
 # [0.58.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.57.2...v0.58.0) (2024-10-24)
 
 
