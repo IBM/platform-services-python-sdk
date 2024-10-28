@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.89.0-f33c767b-20240410-144451
+# IBM OpenAPI SDK Code Generator Version: 3.96.0-d6dec9d7-20241008-212902
 
 """
 Usage reports for IBM Cloud accounts
@@ -2171,6 +2171,7 @@ class Offer:
     :param float credits_total: The total credits before applying the offer.
     :param str offer_template: The template with which the offer was generated.
     :param datetime valid_from: The date from which the offer is valid.
+    :param str created_by_email_id: The offer's creator's email id.
     :param datetime expires_on: The date until the offer is valid.
     :param OfferCredits credits: Credit information related to an offer.
     """
@@ -2181,6 +2182,7 @@ class Offer:
         credits_total: float,
         offer_template: str,
         valid_from: datetime,
+        created_by_email_id: str,
         expires_on: datetime,
         credits: 'OfferCredits',
     ) -> None:
@@ -2191,6 +2193,7 @@ class Offer:
         :param float credits_total: The total credits before applying the offer.
         :param str offer_template: The template with which the offer was generated.
         :param datetime valid_from: The date from which the offer is valid.
+        :param str created_by_email_id: The offer's creator's email id.
         :param datetime expires_on: The date until the offer is valid.
         :param OfferCredits credits: Credit information related to an offer.
         """
@@ -2198,6 +2201,7 @@ class Offer:
         self.credits_total = credits_total
         self.offer_template = offer_template
         self.valid_from = valid_from
+        self.created_by_email_id = created_by_email_id
         self.expires_on = expires_on
         self.credits = credits
 
@@ -2221,6 +2225,10 @@ class Offer:
             args['valid_from'] = string_to_datetime(valid_from)
         else:
             raise ValueError('Required property \'valid_from\' not present in Offer JSON')
+        if (created_by_email_id := _dict.get('created_by_email_id')) is not None:
+            args['created_by_email_id'] = created_by_email_id
+        else:
+            raise ValueError('Required property \'created_by_email_id\' not present in Offer JSON')
         if (expires_on := _dict.get('expires_on')) is not None:
             args['expires_on'] = string_to_datetime(expires_on)
         else:
@@ -2247,6 +2255,8 @@ class Offer:
             _dict['offer_template'] = self.offer_template
         if hasattr(self, 'valid_from') and self.valid_from is not None:
             _dict['valid_from'] = datetime_to_string(self.valid_from)
+        if hasattr(self, 'created_by_email_id') and self.created_by_email_id is not None:
+            _dict['created_by_email_id'] = self.created_by_email_id
         if hasattr(self, 'expires_on') and self.expires_on is not None:
             _dict['expires_on'] = datetime_to_string(self.expires_on)
         if hasattr(self, 'credits') and self.credits is not None:
