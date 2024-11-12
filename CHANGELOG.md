@@ -1,3 +1,24 @@
+# [0.59.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.58.0...v0.59.0) (2024-10-28)
+
+
+### Features
+
+* **Usage Reports:** add "created_by_email_id" to Offer schema ([#274](https://github.com/IBM/platform-services-python-sdk/issues/274)) ([099bad4](https://github.com/IBM/platform-services-python-sdk/commit/099bad4f2d064ef7d067e73cf19279dbca6f6354))
+
+# [0.58.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.57.2...v0.58.0) (2024-10-24)
+
+
+### Features
+
+* **Partner Management APIs:** add new service to project ([#278](https://github.com/IBM/platform-services-python-sdk/issues/278)) ([a469ec5](https://github.com/IBM/platform-services-python-sdk/commit/a469ec516d3d232e795517cae2c3758996d6917b))
+
+## [0.57.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.57.1...v0.57.2) (2024-10-16)
+
+
+### Bug Fixes
+
+* **build:** bump python core to 3.22.0 ([#277](https://github.com/IBM/platform-services-python-sdk/issues/277)) ([665b1bd](https://github.com/IBM/platform-services-python-sdk/commit/665b1bd1596cc73dc4b64cfa294904f791d500b0))
+
 ## [0.57.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.57.0...v0.57.1) (2024-09-18)
 
 
