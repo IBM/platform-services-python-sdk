@@ -1,4 +1,4 @@
-[![Build Status](https://app.travis-ci.com/IBM/platform-services-python-sdk.svg?branch=main)](https://app.travis-ci.com/IBM/platform-services-python-sdk)
+[![Build Status](https://github.com/IBM/platform-services-python-sdk/actions/workflows/build.yaml/badge.svg)](https://github.com/IBM/platform-services-python-sdk/actions/workflows/build.yaml)
 [![Release](https://img.shields.io/github/v/release/IBM/platform-services-python-sdk)](https://github.com/IBM/platform-services-python-sdk/releases/latest)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ibm-platform-services)](https://pypi.org/project/ibm-platform-services/)
 [![PyPI](https://img.shields.io/pypi/v/ibm-platform-services)](https://pypi.org/project/ibm-platform-services/)
