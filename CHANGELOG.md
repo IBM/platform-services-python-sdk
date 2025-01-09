@@ -1,3 +1,10 @@
+## [0.59.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.59.0...v0.59.1) (2025-01-09)
+
+
+### Bug Fixes
+
+* enable github workflows ([5204e6b](https://github.com/IBM/platform-services-python-sdk/commit/5204e6b2d5750af378bd6bde06a60d0c136cefa5))
+
 # [0.59.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.58.0...v0.59.0) (2024-10-28)
 
 
