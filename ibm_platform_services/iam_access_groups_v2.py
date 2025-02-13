@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.78.0-67aec9b7-20230818-174940
+# IBM OpenAPI SDK Code Generator Version: 3.99.1-daeb6e46-20250131-173156
 
 """
 The IAM Access Groups API allows for the management of access groups (Create, Read,
@@ -26,7 +26,7 @@ API Version: 2.0
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
@@ -83,8 +83,8 @@ class IamAccessGroupsV2(BaseService):
         account_id: str,
         name: str,
         *,
-        description: str = None,
-        transaction_id: str = None,
+        description: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -162,15 +162,16 @@ class IamAccessGroupsV2(BaseService):
         self,
         account_id: str,
         *,
-        transaction_id: str = None,
-        iam_id: str = None,
-        search: str = None,
-        membership_type: str = None,
-        limit: int = None,
-        offset: int = None,
-        sort: str = None,
-        show_federated: bool = None,
-        hide_public_access: bool = None,
+        transaction_id: Optional[str] = None,
+        iam_id: Optional[str] = None,
+        search: Optional[str] = None,
+        membership_type: Optional[str] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        sort: Optional[str] = None,
+        show_federated: Optional[bool] = None,
+        hide_public_access: Optional[bool] = None,
+        show_crn: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -217,6 +218,8 @@ class IamAccessGroupsV2(BaseService):
                exist for the group.
         :param bool hide_public_access: (optional) If hide_public_access is true,
                do not include the Public Access Group in the results.
+        :param bool show_crn: (optional) If show_crn is true, group CRN will be
+               included in the response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `GroupsList` object
@@ -244,6 +247,7 @@ class IamAccessGroupsV2(BaseService):
             'sort': sort,
             'show_federated': show_federated,
             'hide_public_access': hide_public_access,
+            'show_crn': show_crn,
         }
 
         if 'headers' in kwargs:
@@ -266,8 +270,9 @@ class IamAccessGroupsV2(BaseService):
         self,
         access_group_id: str,
         *,
-        transaction_id: str = None,
-        show_federated: bool = None,
+        transaction_id: Optional[str] = None,
+        show_federated: Optional[bool] = None,
+        show_crn: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -287,6 +292,8 @@ class IamAccessGroupsV2(BaseService):
         :param bool show_federated: (optional) If show_federated is true, the group
                will return an is_federated value that is set to true if rules exist for
                the group.
+        :param bool show_crn: (optional) If show_crn is true, group CRN will be
+               included in the response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Group` object
@@ -306,6 +313,7 @@ class IamAccessGroupsV2(BaseService):
 
         params = {
             'show_federated': show_federated,
+            'show_crn': show_crn,
         }
 
         if 'headers' in kwargs:
@@ -332,9 +340,9 @@ class IamAccessGroupsV2(BaseService):
         access_group_id: str,
         if_match: str,
         *,
-        name: str = None,
-        description: str = None,
-        transaction_id: str = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -409,8 +417,8 @@ class IamAccessGroupsV2(BaseService):
         self,
         access_group_id: str,
         *,
-        transaction_id: str = None,
-        force: bool = None,
+        transaction_id: Optional[str] = None,
+        force: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -477,7 +485,7 @@ class IamAccessGroupsV2(BaseService):
         access_group_id: str,
         iam_id: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -536,8 +544,8 @@ class IamAccessGroupsV2(BaseService):
         self,
         access_group_id: str,
         *,
-        members: List['AddGroupMembersRequestMembersItem'] = None,
-        transaction_id: str = None,
+        members: Optional[List['AddGroupMembersRequestMembersItem']] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -607,13 +615,13 @@ class IamAccessGroupsV2(BaseService):
         self,
         access_group_id: str,
         *,
-        transaction_id: str = None,
-        membership_type: str = None,
-        limit: int = None,
-        offset: int = None,
-        type: str = None,
-        verbose: bool = None,
-        sort: str = None,
+        transaction_id: Optional[str] = None,
+        membership_type: Optional[str] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        type: Optional[str] = None,
+        verbose: Optional[bool] = None,
+        sort: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -695,7 +703,7 @@ class IamAccessGroupsV2(BaseService):
         access_group_id: str,
         iam_id: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -754,8 +762,8 @@ class IamAccessGroupsV2(BaseService):
         self,
         access_group_id: str,
         *,
-        members: List[str] = None,
-        transaction_id: str = None,
+        members: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -823,7 +831,7 @@ class IamAccessGroupsV2(BaseService):
         account_id: str,
         iam_id: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -891,9 +899,9 @@ class IamAccessGroupsV2(BaseService):
         account_id: str,
         iam_id: str,
         *,
-        type: str = None,
-        groups: List[str] = None,
-        transaction_id: str = None,
+        type: Optional[str] = None,
+        groups: Optional[List[str]] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -979,8 +987,8 @@ class IamAccessGroupsV2(BaseService):
         realm_name: str,
         conditions: List['RuleConditions'],
         *,
-        name: str = None,
-        transaction_id: str = None,
+        name: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1064,7 +1072,7 @@ class IamAccessGroupsV2(BaseService):
         self,
         access_group_id: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1119,7 +1127,7 @@ class IamAccessGroupsV2(BaseService):
         access_group_id: str,
         rule_id: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1181,8 +1189,8 @@ class IamAccessGroupsV2(BaseService):
         realm_name: str,
         conditions: List['RuleConditions'],
         *,
-        name: str = None,
-        transaction_id: str = None,
+        name: Optional[str] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1271,7 +1279,7 @@ class IamAccessGroupsV2(BaseService):
         access_group_id: str,
         rule_id: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1332,7 +1340,7 @@ class IamAccessGroupsV2(BaseService):
         self,
         account_id: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1390,8 +1398,8 @@ class IamAccessGroupsV2(BaseService):
         self,
         account_id: str,
         *,
-        public_access_enabled: bool = None,
-        transaction_id: str = None,
+        public_access_enabled: Optional[bool] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1470,10 +1478,10 @@ class IamAccessGroupsV2(BaseService):
         name: str,
         account_id: str,
         *,
-        description: str = None,
-        group: 'AccessGroupRequest' = None,
-        policy_template_references: List['PolicyTemplates'] = None,
-        transaction_id: str = None,
+        description: Optional[str] = None,
+        group: Optional['AccessGroupRequest'] = None,
+        policy_template_references: Optional[List['PolicyTemplates']] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1550,10 +1558,10 @@ class IamAccessGroupsV2(BaseService):
         self,
         account_id: str,
         *,
-        transaction_id: str = None,
-        limit: int = None,
-        offset: int = None,
-        verbose: bool = None,
+        transaction_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        verbose: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1615,11 +1623,11 @@ class IamAccessGroupsV2(BaseService):
         self,
         template_id: str,
         *,
-        name: str = None,
-        description: str = None,
-        group: 'AccessGroupRequest' = None,
-        policy_template_references: List['PolicyTemplates'] = None,
-        transaction_id: str = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        group: Optional['AccessGroupRequest'] = None,
+        policy_template_references: Optional[List['PolicyTemplates']] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1693,8 +1701,8 @@ class IamAccessGroupsV2(BaseService):
         self,
         template_id: str,
         *,
-        limit: int = None,
-        offset: int = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1752,8 +1760,8 @@ class IamAccessGroupsV2(BaseService):
         template_id: str,
         version_num: str,
         *,
-        verbose: bool = None,
-        transaction_id: str = None,
+        verbose: Optional[bool] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1816,11 +1824,11 @@ class IamAccessGroupsV2(BaseService):
         version_num: str,
         if_match: str,
         *,
-        name: str = None,
-        description: str = None,
-        group: 'AccessGroupRequest' = None,
-        policy_template_references: List['PolicyTemplates'] = None,
-        transaction_id: str = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        group: Optional['AccessGroupRequest'] = None,
+        policy_template_references: Optional[List['PolicyTemplates']] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1901,7 +1909,7 @@ class IamAccessGroupsV2(BaseService):
         template_id: str,
         version_num: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1956,7 +1964,7 @@ class IamAccessGroupsV2(BaseService):
         version_num: str,
         if_match: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2014,8 +2022,8 @@ class IamAccessGroupsV2(BaseService):
         self,
         template_id: str,
         *,
-        verbose: bool = None,
-        transaction_id: str = None,
+        verbose: Optional[bool] = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2073,7 +2081,7 @@ class IamAccessGroupsV2(BaseService):
         self,
         template_id: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2130,7 +2138,7 @@ class IamAccessGroupsV2(BaseService):
         target_type: str,
         target: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2203,13 +2211,13 @@ class IamAccessGroupsV2(BaseService):
         self,
         account_id: str,
         *,
-        template_id: str = None,
-        template_version: str = None,
-        target: str = None,
-        status: str = None,
-        transaction_id: str = None,
-        limit: int = None,
-        offset: int = None,
+        template_id: Optional[str] = None,
+        template_version: Optional[str] = None,
+        target: Optional[str] = None,
+        status: Optional[str] = None,
+        transaction_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2275,8 +2283,8 @@ class IamAccessGroupsV2(BaseService):
         self,
         assignment_id: str,
         *,
-        transaction_id: str = None,
-        verbose: bool = None,
+        transaction_id: Optional[str] = None,
+        verbose: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2399,7 +2407,7 @@ class IamAccessGroupsV2(BaseService):
         self,
         assignment_id: str,
         *,
-        transaction_id: str = None,
+        transaction_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2471,20 +2479,20 @@ class AccessActionControls:
     Control whether or not access group administrators in child accounts can add access
     policies to the enterprise-managed access group in their account.
 
-    :attr bool add: (optional) Action control for adding access policies to an
+    :param bool add: (optional) Action control for adding access policies to an
           enterprise-managed access group in a child account. If an access group
           administrator in a child account adds a policy, they can always update or remove
           it. Note that if conflicts arise between an update to this control in a new
           version and polices added to the access group by an administrator in a child
           account, you must resolve those conflicts in the child account. This prevents
           breaking access in the child account. For more information, see [Working with
-          versions](https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
+          versions](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
     """
 
     def __init__(
         self,
         *,
-        add: bool = None,
+        add: Optional[bool] = None,
     ) -> None:
         """
         Initialize a AccessActionControls object.
@@ -2497,7 +2505,7 @@ class AccessActionControls:
                in a child account, you must resolve those conflicts in the child account.
                This prevents breaking access in the child account. For more information,
                see [Working with
-               versions](https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
+               versions](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
         """
         self.add = add
 
@@ -2505,8 +2513,8 @@ class AccessActionControls:
     def from_dict(cls, _dict: Dict) -> 'AccessActionControls':
         """Initialize a AccessActionControls object from a json dictionary."""
         args = {}
-        if 'add' in _dict:
-            args['add'] = _dict.get('add')
+        if (add := _dict.get('add')) is not None:
+            args['add'] = add
         return cls(**args)
 
     @classmethod
@@ -2544,16 +2552,16 @@ class AccessGroupRequest:
     """
     Access Group Component.
 
-    :attr str name: Give the access group a unique name that doesn't conflict with
+    :param str name: Give the access group a unique name that doesn't conflict with
           other templates access group name in the given account. This is shown in child
           accounts.
-    :attr str description: (optional) Access group description. This is shown in
+    :param str description: (optional) Access group description. This is shown in
           child accounts.
-    :attr Members members: (optional) Array of enterprise users to add to the
+    :param Members members: (optional) Array of enterprise users to add to the
           template. All enterprise users that you add to the template must be invited to
           the child accounts where the template is assigned.
-    :attr Assertions assertions: (optional) Assertions Input Component.
-    :attr GroupActionControls action_controls: (optional) Access group action
+    :param Assertions assertions: (optional) Assertions Input Component.
+    :param GroupActionControls action_controls: (optional) Access group action
           controls component.
     """
 
@@ -2561,10 +2569,10 @@ class AccessGroupRequest:
         self,
         name: str,
         *,
-        description: str = None,
-        members: 'Members' = None,
-        assertions: 'Assertions' = None,
-        action_controls: 'GroupActionControls' = None,
+        description: Optional[str] = None,
+        members: Optional['Members'] = None,
+        assertions: Optional['Assertions'] = None,
+        action_controls: Optional['GroupActionControls'] = None,
     ) -> None:
         """
         Initialize a AccessGroupRequest object.
@@ -2591,18 +2599,18 @@ class AccessGroupRequest:
     def from_dict(cls, _dict: Dict) -> 'AccessGroupRequest':
         """Initialize a AccessGroupRequest object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in AccessGroupRequest JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'members' in _dict:
-            args['members'] = Members.from_dict(_dict.get('members'))
-        if 'assertions' in _dict:
-            args['assertions'] = Assertions.from_dict(_dict.get('assertions'))
-        if 'action_controls' in _dict:
-            args['action_controls'] = GroupActionControls.from_dict(_dict.get('action_controls'))
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (members := _dict.get('members')) is not None:
+            args['members'] = Members.from_dict(members)
+        if (assertions := _dict.get('assertions')) is not None:
+            args['assertions'] = Assertions.from_dict(assertions)
+        if (action_controls := _dict.get('action_controls')) is not None:
+            args['action_controls'] = GroupActionControls.from_dict(action_controls)
         return cls(**args)
 
     @classmethod
@@ -2657,16 +2665,16 @@ class AccessGroupResponse:
     """
     Access Group Component.
 
-    :attr str name: Give the access group a unique name that doesn't conflict with
+    :param str name: Give the access group a unique name that doesn't conflict with
           other templates access group name in the given account. This is shown in child
           accounts.
-    :attr str description: (optional) Access group description. This is shown in
+    :param str description: (optional) Access group description. This is shown in
           child accounts.
-    :attr Members members: (optional) Array of enterprise users to add to the
+    :param Members members: (optional) Array of enterprise users to add to the
           template. All enterprise users that you add to the template must be invited to
           the child accounts where the template is assigned.
-    :attr Assertions assertions: (optional) Assertions Input Component.
-    :attr GroupActionControls action_controls: (optional) Access group action
+    :param Assertions assertions: (optional) Assertions Input Component.
+    :param GroupActionControls action_controls: (optional) Access group action
           controls component.
     """
 
@@ -2674,10 +2682,10 @@ class AccessGroupResponse:
         self,
         name: str,
         *,
-        description: str = None,
-        members: 'Members' = None,
-        assertions: 'Assertions' = None,
-        action_controls: 'GroupActionControls' = None,
+        description: Optional[str] = None,
+        members: Optional['Members'] = None,
+        assertions: Optional['Assertions'] = None,
+        action_controls: Optional['GroupActionControls'] = None,
     ) -> None:
         """
         Initialize a AccessGroupResponse object.
@@ -2704,18 +2712,18 @@ class AccessGroupResponse:
     def from_dict(cls, _dict: Dict) -> 'AccessGroupResponse':
         """Initialize a AccessGroupResponse object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in AccessGroupResponse JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'members' in _dict:
-            args['members'] = Members.from_dict(_dict.get('members'))
-        if 'assertions' in _dict:
-            args['assertions'] = Assertions.from_dict(_dict.get('assertions'))
-        if 'action_controls' in _dict:
-            args['action_controls'] = GroupActionControls.from_dict(_dict.get('action_controls'))
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (members := _dict.get('members')) is not None:
+            args['members'] = Members.from_dict(members)
+        if (assertions := _dict.get('assertions')) is not None:
+            args['assertions'] = Assertions.from_dict(assertions)
+        if (action_controls := _dict.get('action_controls')) is not None:
+            args['action_controls'] = GroupActionControls.from_dict(action_controls)
         return cls(**args)
 
     @classmethod
@@ -2770,12 +2778,12 @@ class AccountSettings:
     """
     The access groups settings for a specific account.
 
-    :attr str account_id: (optional) The account id of the settings being shown.
-    :attr datetime last_modified_at: (optional) The timestamp the settings were last
-          edited at.
-    :attr str last_modified_by_id: (optional) The `iam_id` of the entity that last
+    :param str account_id: (optional) The account id of the settings being shown.
+    :param datetime last_modified_at: (optional) The timestamp the settings were
+          last edited at.
+    :param str last_modified_by_id: (optional) The `iam_id` of the entity that last
           modified the settings.
-    :attr bool public_access_enabled: (optional) This flag controls the public
+    :param bool public_access_enabled: (optional) This flag controls the public
           access feature within the account. It is set to true by default. Note: When this
           flag is set to false, all policies within the account attached to the Public
           Access group will be deleted.
@@ -2784,10 +2792,10 @@ class AccountSettings:
     def __init__(
         self,
         *,
-        account_id: str = None,
-        last_modified_at: datetime = None,
-        last_modified_by_id: str = None,
-        public_access_enabled: bool = None,
+        account_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+        public_access_enabled: Optional[bool] = None,
     ) -> None:
         """
         Initialize a AccountSettings object.
@@ -2812,14 +2820,14 @@ class AccountSettings:
     def from_dict(cls, _dict: Dict) -> 'AccountSettings':
         """Initialize a AccountSettings object from a json dictionary."""
         args = {}
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        if 'public_access_enabled' in _dict:
-            args['public_access_enabled'] = _dict.get('public_access_enabled')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (public_access_enabled := _dict.get('public_access_enabled')) is not None:
+            args['public_access_enabled'] = public_access_enabled
         return cls(**args)
 
     @classmethod
@@ -2863,8 +2871,8 @@ class AddGroupMembersRequestMembersItem:
     """
     AddGroupMembersRequestMembersItem.
 
-    :attr str iam_id: The IBMid, service ID or trusted profile ID of the member.
-    :attr str type: The type of the member, must be either "user", "service" or
+    :param str iam_id: The IBMid, service ID or trusted profile ID of the member.
+    :param str type: The type of the member, must be either "user", "service" or
           "profile".
     """
 
@@ -2888,12 +2896,12 @@ class AddGroupMembersRequestMembersItem:
     def from_dict(cls, _dict: Dict) -> 'AddGroupMembersRequestMembersItem':
         """Initialize a AddGroupMembersRequestMembersItem object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
         else:
             raise ValueError('Required property \'iam_id\' not present in AddGroupMembersRequestMembersItem JSON')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
         else:
             raise ValueError('Required property \'type\' not present in AddGroupMembersRequestMembersItem JSON')
         return cls(**args)
@@ -2935,14 +2943,14 @@ class AddGroupMembersResponse:
     """
     The members added to an access group.
 
-    :attr List[AddGroupMembersResponseMembersItem] members: (optional) The members
+    :param List[AddGroupMembersResponseMembersItem] members: (optional) The members
           added to an access group.
     """
 
     def __init__(
         self,
         *,
-        members: List['AddGroupMembersResponseMembersItem'] = None,
+        members: Optional[List['AddGroupMembersResponseMembersItem']] = None,
     ) -> None:
         """
         Initialize a AddGroupMembersResponse object.
@@ -2956,8 +2964,8 @@ class AddGroupMembersResponse:
     def from_dict(cls, _dict: Dict) -> 'AddGroupMembersResponse':
         """Initialize a AddGroupMembersResponse object from a json dictionary."""
         args = {}
-        if 'members' in _dict:
-            args['members'] = [AddGroupMembersResponseMembersItem.from_dict(v) for v in _dict.get('members')]
+        if (members := _dict.get('members')) is not None:
+            args['members'] = [AddGroupMembersResponseMembersItem.from_dict(v) for v in members]
         return cls(**args)
 
     @classmethod
@@ -3001,30 +3009,31 @@ class AddGroupMembersResponseMembersItem:
     """
     AddGroupMembersResponseMembersItem.
 
-    :attr str iam_id: (optional) The IBMid or Service Id of the member.
-    :attr str type: (optional) The member type - either `user`, `service` or
+    :param str iam_id: (optional) The IBMid or Service Id of the member.
+    :param str type: (optional) The member type - either `user`, `service` or
           `profile`.
-    :attr datetime created_at: (optional) The timestamp of when the membership was
+    :param datetime created_at: (optional) The timestamp of when the membership was
           created.
-    :attr str created_by_id: (optional) The `iam_id` of the entity that created the
+    :param str created_by_id: (optional) The `iam_id` of the entity that created the
           membership.
-    :attr int status_code: (optional) The outcome of the operation on this `iam_id`.
-    :attr str trace: (optional) A transaction-id that can be used for debugging
+    :param int status_code: (optional) The outcome of the operation on this
+          `iam_id`.
+    :param str trace: (optional) A transaction-id that can be used for debugging
           purposes.
-    :attr List[Error] errors: (optional) A list of errors that occurred when trying
+    :param List[Error] errors: (optional) A list of errors that occurred when trying
           to add members to a group.
     """
 
     def __init__(
         self,
         *,
-        iam_id: str = None,
-        type: str = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
-        status_code: int = None,
-        trace: str = None,
-        errors: List['Error'] = None,
+        iam_id: Optional[str] = None,
+        type: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        status_code: Optional[int] = None,
+        trace: Optional[str] = None,
+        errors: Optional[List['Error']] = None,
     ) -> None:
         """
         Initialize a AddGroupMembersResponseMembersItem object.
@@ -3055,20 +3064,20 @@ class AddGroupMembersResponseMembersItem:
     def from_dict(cls, _dict: Dict) -> 'AddGroupMembersResponseMembersItem':
         """Initialize a AddGroupMembersResponseMembersItem object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'status_code' in _dict:
-            args['status_code'] = _dict.get('status_code')
-        if 'trace' in _dict:
-            args['trace'] = _dict.get('trace')
-        if 'errors' in _dict:
-            args['errors'] = [Error.from_dict(v) for v in _dict.get('errors')]
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (status_code := _dict.get('status_code')) is not None:
+            args['status_code'] = status_code
+        if (trace := _dict.get('trace')) is not None:
+            args['trace'] = trace
+        if (errors := _dict.get('errors')) is not None:
+            args['errors'] = [Error.from_dict(v) for v in errors]
         return cls(**args)
 
     @classmethod
@@ -3124,16 +3133,16 @@ class AddMembershipMultipleGroupsResponse:
     """
     The response from the add member to multiple access groups request.
 
-    :attr str iam_id: (optional) The iam_id of a member.
-    :attr List[AddMembershipMultipleGroupsResponseGroupsItem] groups: (optional) The
-          list of access groups a member was added to.
+    :param str iam_id: (optional) The iam_id of a member.
+    :param List[AddMembershipMultipleGroupsResponseGroupsItem] groups: (optional)
+          The list of access groups a member was added to.
     """
 
     def __init__(
         self,
         *,
-        iam_id: str = None,
-        groups: List['AddMembershipMultipleGroupsResponseGroupsItem'] = None,
+        iam_id: Optional[str] = None,
+        groups: Optional[List['AddMembershipMultipleGroupsResponseGroupsItem']] = None,
     ) -> None:
         """
         Initialize a AddMembershipMultipleGroupsResponse object.
@@ -3149,10 +3158,10 @@ class AddMembershipMultipleGroupsResponse:
     def from_dict(cls, _dict: Dict) -> 'AddMembershipMultipleGroupsResponse':
         """Initialize a AddMembershipMultipleGroupsResponse object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
-        if 'groups' in _dict:
-            args['groups'] = [AddMembershipMultipleGroupsResponseGroupsItem.from_dict(v) for v in _dict.get('groups')]
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
+        if (groups := _dict.get('groups')) is not None:
+            args['groups'] = [AddMembershipMultipleGroupsResponseGroupsItem.from_dict(v) for v in groups]
         return cls(**args)
 
     @classmethod
@@ -3198,23 +3207,23 @@ class AddMembershipMultipleGroupsResponseGroupsItem:
     """
     AddMembershipMultipleGroupsResponseGroupsItem.
 
-    :attr str access_group_id: (optional) The access group that the member is to be
+    :param str access_group_id: (optional) The access group that the member is to be
           added to.
-    :attr int status_code: (optional) The outcome of the add membership operation on
-          this `access_group_id`.
-    :attr str trace: (optional) A transaction-id that can be used for debugging
+    :param int status_code: (optional) The outcome of the add membership operation
+          on this `access_group_id`.
+    :param str trace: (optional) A transaction-id that can be used for debugging
           purposes.
-    :attr List[Error] errors: (optional) List of errors encountered when adding
+    :param List[Error] errors: (optional) List of errors encountered when adding
           member to access group.
     """
 
     def __init__(
         self,
         *,
-        access_group_id: str = None,
-        status_code: int = None,
-        trace: str = None,
-        errors: List['Error'] = None,
+        access_group_id: Optional[str] = None,
+        status_code: Optional[int] = None,
+        trace: Optional[str] = None,
+        errors: Optional[List['Error']] = None,
     ) -> None:
         """
         Initialize a AddMembershipMultipleGroupsResponseGroupsItem object.
@@ -3237,14 +3246,14 @@ class AddMembershipMultipleGroupsResponseGroupsItem:
     def from_dict(cls, _dict: Dict) -> 'AddMembershipMultipleGroupsResponseGroupsItem':
         """Initialize a AddMembershipMultipleGroupsResponseGroupsItem object from a json dictionary."""
         args = {}
-        if 'access_group_id' in _dict:
-            args['access_group_id'] = _dict.get('access_group_id')
-        if 'status_code' in _dict:
-            args['status_code'] = _dict.get('status_code')
-        if 'trace' in _dict:
-            args['trace'] = _dict.get('trace')
-        if 'errors' in _dict:
-            args['errors'] = [Error.from_dict(v) for v in _dict.get('errors')]
+        if (access_group_id := _dict.get('access_group_id')) is not None:
+            args['access_group_id'] = access_group_id
+        if (status_code := _dict.get('status_code')) is not None:
+            args['status_code'] = status_code
+        if (trace := _dict.get('trace')) is not None:
+            args['trace'] = trace
+        if (errors := _dict.get('errors')) is not None:
+            args['errors'] = [Error.from_dict(v) for v in errors]
         return cls(**args)
 
     @classmethod
@@ -3294,9 +3303,9 @@ class Assertions:
     """
     Assertions Input Component.
 
-    :attr List[AssertionsRule] rules: (optional) Dynamic rules to automatically add
+    :param List[AssertionsRule] rules: (optional) Dynamic rules to automatically add
           federated users to access groups based on specific identity attributes.
-    :attr AssertionsActionControls action_controls: (optional) Control whether or
+    :param AssertionsActionControls action_controls: (optional) Control whether or
           not access group administrators in child accounts can add, remove, and update
           dynamic rules for the enterprise-managed access group in their account. The
           inner level RuleActionControls override these `remove` and `update` action
@@ -3306,8 +3315,8 @@ class Assertions:
     def __init__(
         self,
         *,
-        rules: List['AssertionsRule'] = None,
-        action_controls: 'AssertionsActionControls' = None,
+        rules: Optional[List['AssertionsRule']] = None,
+        action_controls: Optional['AssertionsActionControls'] = None,
     ) -> None:
         """
         Initialize a Assertions object.
@@ -3328,10 +3337,10 @@ class Assertions:
     def from_dict(cls, _dict: Dict) -> 'Assertions':
         """Initialize a Assertions object from a json dictionary."""
         args = {}
-        if 'rules' in _dict:
-            args['rules'] = [AssertionsRule.from_dict(v) for v in _dict.get('rules')]
-        if 'action_controls' in _dict:
-            args['action_controls'] = AssertionsActionControls.from_dict(_dict.get('action_controls'))
+        if (rules := _dict.get('rules')) is not None:
+            args['rules'] = [AssertionsRule.from_dict(v) for v in rules]
+        if (action_controls := _dict.get('action_controls')) is not None:
+            args['action_controls'] = AssertionsActionControls.from_dict(action_controls)
         return cls(**args)
 
     @classmethod
@@ -3382,14 +3391,14 @@ class AssertionsActionControls:
     and update dynamic rules for the enterprise-managed access group in their account. The
     inner level RuleActionControls override these `remove` and `update` action controls.
 
-    :attr bool add: (optional) Action control for adding dynamic rules to an
+    :param bool add: (optional) Action control for adding dynamic rules to an
           enterprise-managed access group. If an access group administrator in a child
           account adds a dynamic rule, they can always update or remove it. Note that if
           conflicts arise between an update to this control and rules added or updated by
           an administrator in the child account, you must resolve those conflicts in the
           child account. This prevents breaking access that the rules might grant in the
           child account. For more information, see [Working with versions].
-    :attr bool remove: (optional) Action control for removing enterprise-managed
+    :param bool remove: (optional) Action control for removing enterprise-managed
           dynamic rules in an enterprise-managed access group. Note that if a rule is
           removed from an enterprise-managed access group by an administrator in a child
           account and and you reassign the template, the rule is reinstated.
@@ -3398,8 +3407,8 @@ class AssertionsActionControls:
     def __init__(
         self,
         *,
-        add: bool = None,
-        remove: bool = None,
+        add: Optional[bool] = None,
+        remove: Optional[bool] = None,
     ) -> None:
         """
         Initialize a AssertionsActionControls object.
@@ -3425,10 +3434,10 @@ class AssertionsActionControls:
     def from_dict(cls, _dict: Dict) -> 'AssertionsActionControls':
         """Initialize a AssertionsActionControls object from a json dictionary."""
         args = {}
-        if 'add' in _dict:
-            args['add'] = _dict.get('add')
-        if 'remove' in _dict:
-            args['remove'] = _dict.get('remove')
+        if (add := _dict.get('add')) is not None:
+            args['add'] = add
+        if (remove := _dict.get('remove')) is not None:
+            args['remove'] = remove
         return cls(**args)
 
     @classmethod
@@ -3468,14 +3477,14 @@ class AssertionsRule:
     """
     Rule Input component.
 
-    :attr str name: (optional) Dynamic rule name.
-    :attr int expiration: (optional) Session duration in hours. Access group
+    :param str name: (optional) Dynamic rule name.
+    :param int expiration: (optional) Session duration in hours. Access group
           membership is revoked after this time period expires. Users must log back in to
           refresh their access group membership.
-    :attr str realm_name: (optional) The identity provider (IdP) URL.
-    :attr List[Conditions] conditions: (optional) Conditions of membership. You can
+    :param str realm_name: (optional) The identity provider (IdP) URL.
+    :param List[Conditions] conditions: (optional) Conditions of membership. You can
           think of this as a key:value pair.
-    :attr RuleActionControls action_controls: (optional) Control whether or not
+    :param RuleActionControls action_controls: (optional) Control whether or not
           access group administrators in child accounts can update and remove this dynamic
           rule in the enterprise-managed access group in their account.This overrides
           outer level AssertionsActionControls.
@@ -3484,11 +3493,11 @@ class AssertionsRule:
     def __init__(
         self,
         *,
-        name: str = None,
-        expiration: int = None,
-        realm_name: str = None,
-        conditions: List['Conditions'] = None,
-        action_controls: 'RuleActionControls' = None,
+        name: Optional[str] = None,
+        expiration: Optional[int] = None,
+        realm_name: Optional[str] = None,
+        conditions: Optional[List['Conditions']] = None,
+        action_controls: Optional['RuleActionControls'] = None,
     ) -> None:
         """
         Initialize a AssertionsRule object.
@@ -3515,16 +3524,16 @@ class AssertionsRule:
     def from_dict(cls, _dict: Dict) -> 'AssertionsRule':
         """Initialize a AssertionsRule object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'expiration' in _dict:
-            args['expiration'] = _dict.get('expiration')
-        if 'realm_name' in _dict:
-            args['realm_name'] = _dict.get('realm_name')
-        if 'conditions' in _dict:
-            args['conditions'] = [Conditions.from_dict(v) for v in _dict.get('conditions')]
-        if 'action_controls' in _dict:
-            args['action_controls'] = RuleActionControls.from_dict(_dict.get('action_controls'))
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (expiration := _dict.get('expiration')) is not None:
+            args['expiration'] = expiration
+        if (realm_name := _dict.get('realm_name')) is not None:
+            args['realm_name'] = realm_name
+        if (conditions := _dict.get('conditions')) is not None:
+            args['conditions'] = [Conditions.from_dict(v) for v in conditions]
+        if (action_controls := _dict.get('action_controls')) is not None:
+            args['action_controls'] = RuleActionControls.from_dict(action_controls)
         return cls(**args)
 
     @classmethod
@@ -3579,10 +3588,10 @@ class AssignmentResourceAccessGroup:
     """
     Assignment Resource Access Group.
 
-    :attr AssignmentResourceEntry group: Assignment resource entry.
-    :attr List[AssignmentResourceEntry] members: List of member resources of the
+    :param AssignmentResourceEntry group: Assignment resource entry.
+    :param List[AssignmentResourceEntry] members: List of member resources of the
           group.
-    :attr List[AssignmentResourceEntry] rules: List of rules associated with the
+    :param List[AssignmentResourceEntry] rules: List of rules associated with the
           group.
     """
 
@@ -3609,16 +3618,16 @@ class AssignmentResourceAccessGroup:
     def from_dict(cls, _dict: Dict) -> 'AssignmentResourceAccessGroup':
         """Initialize a AssignmentResourceAccessGroup object from a json dictionary."""
         args = {}
-        if 'group' in _dict:
-            args['group'] = AssignmentResourceEntry.from_dict(_dict.get('group'))
+        if (group := _dict.get('group')) is not None:
+            args['group'] = AssignmentResourceEntry.from_dict(group)
         else:
             raise ValueError('Required property \'group\' not present in AssignmentResourceAccessGroup JSON')
-        if 'members' in _dict:
-            args['members'] = [AssignmentResourceEntry.from_dict(v) for v in _dict.get('members')]
+        if (members := _dict.get('members')) is not None:
+            args['members'] = [AssignmentResourceEntry.from_dict(v) for v in members]
         else:
             raise ValueError('Required property \'members\' not present in AssignmentResourceAccessGroup JSON')
-        if 'rules' in _dict:
-            args['rules'] = [AssignmentResourceEntry.from_dict(v) for v in _dict.get('rules')]
+        if (rules := _dict.get('rules')) is not None:
+            args['rules'] = [AssignmentResourceEntry.from_dict(v) for v in rules]
         else:
             raise ValueError('Required property \'rules\' not present in AssignmentResourceAccessGroup JSON')
         return cls(**args)
@@ -3677,13 +3686,13 @@ class AssignmentResourceEntry:
     """
     Assignment resource entry.
 
-    :attr str id: Assignment Resource Entry Id.
-    :attr str name: (optional) Optional name of the resource.
-    :attr str version: (optional) Optional version of the resource.
-    :attr str resource: Resource in assignment resource entry.
-    :attr str error: Error in assignment resource entry.
-    :attr str operation: (optional) Optional operation on the resource.
-    :attr str status: Status of assignment resource entry.
+    :param str id: Assignment Resource Entry Id.
+    :param str name: (optional) Optional name of the resource.
+    :param str version: (optional) Optional version of the resource.
+    :param str resource: Resource in assignment resource entry.
+    :param str error: Error in assignment resource entry.
+    :param str operation: (optional) Optional operation on the resource.
+    :param str status: Status of assignment resource entry.
     """
 
     def __init__(
@@ -3693,9 +3702,9 @@ class AssignmentResourceEntry:
         error: str,
         status: str,
         *,
-        name: str = None,
-        version: str = None,
-        operation: str = None,
+        name: Optional[str] = None,
+        version: Optional[str] = None,
+        operation: Optional[str] = None,
     ) -> None:
         """
         Initialize a AssignmentResourceEntry object.
@@ -3720,26 +3729,26 @@ class AssignmentResourceEntry:
     def from_dict(cls, _dict: Dict) -> 'AssignmentResourceEntry':
         """Initialize a AssignmentResourceEntry object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in AssignmentResourceEntry JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
-        if 'resource' in _dict:
-            args['resource'] = _dict.get('resource')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
+        if (resource := _dict.get('resource')) is not None:
+            args['resource'] = resource
         else:
             raise ValueError('Required property \'resource\' not present in AssignmentResourceEntry JSON')
-        if 'error' in _dict:
-            args['error'] = _dict.get('error')
+        if (error := _dict.get('error')) is not None:
+            args['error'] = error
         else:
             raise ValueError('Required property \'error\' not present in AssignmentResourceEntry JSON')
-        if 'operation' in _dict:
-            args['operation'] = _dict.get('operation')
-        if 'status' in _dict:
-            args['status'] = _dict.get('status')
+        if (operation := _dict.get('operation')) is not None:
+            args['operation'] = operation
+        if (status := _dict.get('status')) is not None:
+            args['status'] = status
         else:
             raise ValueError('Required property \'status\' not present in AssignmentResourceEntry JSON')
         return cls(**args)
@@ -3791,17 +3800,17 @@ class Conditions:
     """
     Condition Input component.
 
-    :attr str claim: (optional) The key in the key:value pair.
-    :attr str operator: (optional) Compares the claim and the value.
-    :attr str value: (optional) The value in the key:value pair.
+    :param str claim: (optional) The key in the key:value pair.
+    :param str operator: (optional) Compares the claim and the value.
+    :param str value: (optional) The value in the key:value pair.
     """
 
     def __init__(
         self,
         *,
-        claim: str = None,
-        operator: str = None,
-        value: str = None,
+        claim: Optional[str] = None,
+        operator: Optional[str] = None,
+        value: Optional[str] = None,
     ) -> None:
         """
         Initialize a Conditions object.
@@ -3818,12 +3827,12 @@ class Conditions:
     def from_dict(cls, _dict: Dict) -> 'Conditions':
         """Initialize a Conditions object from a json dictionary."""
         args = {}
-        if 'claim' in _dict:
-            args['claim'] = _dict.get('claim')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (claim := _dict.get('claim')) is not None:
+            args['claim'] = claim
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         return cls(**args)
 
     @classmethod
@@ -3865,16 +3874,16 @@ class DeleteFromAllGroupsResponse:
     """
     The response from the delete member from access groups request.
 
-    :attr str iam_id: (optional) The `iam_id` of the member to removed from groups.
-    :attr List[DeleteFromAllGroupsResponseGroupsItem] groups: (optional) The groups
+    :param str iam_id: (optional) The `iam_id` of the member to removed from groups.
+    :param List[DeleteFromAllGroupsResponseGroupsItem] groups: (optional) The groups
           the member was removed from.
     """
 
     def __init__(
         self,
         *,
-        iam_id: str = None,
-        groups: List['DeleteFromAllGroupsResponseGroupsItem'] = None,
+        iam_id: Optional[str] = None,
+        groups: Optional[List['DeleteFromAllGroupsResponseGroupsItem']] = None,
     ) -> None:
         """
         Initialize a DeleteFromAllGroupsResponse object.
@@ -3891,10 +3900,10 @@ class DeleteFromAllGroupsResponse:
     def from_dict(cls, _dict: Dict) -> 'DeleteFromAllGroupsResponse':
         """Initialize a DeleteFromAllGroupsResponse object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
-        if 'groups' in _dict:
-            args['groups'] = [DeleteFromAllGroupsResponseGroupsItem.from_dict(v) for v in _dict.get('groups')]
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
+        if (groups := _dict.get('groups')) is not None:
+            args['groups'] = [DeleteFromAllGroupsResponseGroupsItem.from_dict(v) for v in groups]
         return cls(**args)
 
     @classmethod
@@ -3940,23 +3949,23 @@ class DeleteFromAllGroupsResponseGroupsItem:
     """
     DeleteFromAllGroupsResponseGroupsItem.
 
-    :attr str access_group_id: (optional) The access group that the member is to be
+    :param str access_group_id: (optional) The access group that the member is to be
           deleted from.
-    :attr int status_code: (optional) The outcome of the delete operation on this
+    :param int status_code: (optional) The outcome of the delete operation on this
           `access_group_id`.
-    :attr str trace: (optional) A transaction-id that can be used for debugging
+    :param str trace: (optional) A transaction-id that can be used for debugging
           purposes.
-    :attr List[Error] errors: (optional) A list of errors that occurred when trying
+    :param List[Error] errors: (optional) A list of errors that occurred when trying
           to remove a member from groups.
     """
 
     def __init__(
         self,
         *,
-        access_group_id: str = None,
-        status_code: int = None,
-        trace: str = None,
-        errors: List['Error'] = None,
+        access_group_id: Optional[str] = None,
+        status_code: Optional[int] = None,
+        trace: Optional[str] = None,
+        errors: Optional[List['Error']] = None,
     ) -> None:
         """
         Initialize a DeleteFromAllGroupsResponseGroupsItem object.
@@ -3979,14 +3988,14 @@ class DeleteFromAllGroupsResponseGroupsItem:
     def from_dict(cls, _dict: Dict) -> 'DeleteFromAllGroupsResponseGroupsItem':
         """Initialize a DeleteFromAllGroupsResponseGroupsItem object from a json dictionary."""
         args = {}
-        if 'access_group_id' in _dict:
-            args['access_group_id'] = _dict.get('access_group_id')
-        if 'status_code' in _dict:
-            args['status_code'] = _dict.get('status_code')
-        if 'trace' in _dict:
-            args['trace'] = _dict.get('trace')
-        if 'errors' in _dict:
-            args['errors'] = [Error.from_dict(v) for v in _dict.get('errors')]
+        if (access_group_id := _dict.get('access_group_id')) is not None:
+            args['access_group_id'] = access_group_id
+        if (status_code := _dict.get('status_code')) is not None:
+            args['status_code'] = status_code
+        if (trace := _dict.get('trace')) is not None:
+            args['trace'] = trace
+        if (errors := _dict.get('errors')) is not None:
+            args['errors'] = [Error.from_dict(v) for v in errors]
         return cls(**args)
 
     @classmethod
@@ -4036,16 +4045,16 @@ class DeleteGroupBulkMembersResponse:
     """
     The access group id and the members removed from it.
 
-    :attr str access_group_id: (optional) The access group id.
-    :attr List[DeleteGroupBulkMembersResponseMembersItem] members: (optional) The
+    :param str access_group_id: (optional) The access group id.
+    :param List[DeleteGroupBulkMembersResponseMembersItem] members: (optional) The
           `iam_id`s removed from the access group.
     """
 
     def __init__(
         self,
         *,
-        access_group_id: str = None,
-        members: List['DeleteGroupBulkMembersResponseMembersItem'] = None,
+        access_group_id: Optional[str] = None,
+        members: Optional[List['DeleteGroupBulkMembersResponseMembersItem']] = None,
     ) -> None:
         """
         Initialize a DeleteGroupBulkMembersResponse object.
@@ -4061,10 +4070,10 @@ class DeleteGroupBulkMembersResponse:
     def from_dict(cls, _dict: Dict) -> 'DeleteGroupBulkMembersResponse':
         """Initialize a DeleteGroupBulkMembersResponse object from a json dictionary."""
         args = {}
-        if 'access_group_id' in _dict:
-            args['access_group_id'] = _dict.get('access_group_id')
-        if 'members' in _dict:
-            args['members'] = [DeleteGroupBulkMembersResponseMembersItem.from_dict(v) for v in _dict.get('members')]
+        if (access_group_id := _dict.get('access_group_id')) is not None:
+            args['access_group_id'] = access_group_id
+        if (members := _dict.get('members')) is not None:
+            args['members'] = [DeleteGroupBulkMembersResponseMembersItem.from_dict(v) for v in members]
         return cls(**args)
 
     @classmethod
@@ -4110,22 +4119,22 @@ class DeleteGroupBulkMembersResponseMembersItem:
     """
     DeleteGroupBulkMembersResponseMembersItem.
 
-    :attr str iam_id: (optional) The `iam_id` to be deleted.
-    :attr str trace: (optional) A transaction-id that can be used for debugging
+    :param str iam_id: (optional) The `iam_id` to be deleted.
+    :param str trace: (optional) A transaction-id that can be used for debugging
           purposes.
-    :attr int status_code: (optional) The outcome of the delete membership operation
-          on this `access_group_id`.
-    :attr List[Error] errors: (optional) A list of errors that occurred when trying
+    :param int status_code: (optional) The outcome of the delete membership
+          operation on this `access_group_id`.
+    :param List[Error] errors: (optional) A list of errors that occurred when trying
           to remove a member from groups.
     """
 
     def __init__(
         self,
         *,
-        iam_id: str = None,
-        trace: str = None,
-        status_code: int = None,
-        errors: List['Error'] = None,
+        iam_id: Optional[str] = None,
+        trace: Optional[str] = None,
+        status_code: Optional[int] = None,
+        errors: Optional[List['Error']] = None,
     ) -> None:
         """
         Initialize a DeleteGroupBulkMembersResponseMembersItem object.
@@ -4147,14 +4156,14 @@ class DeleteGroupBulkMembersResponseMembersItem:
     def from_dict(cls, _dict: Dict) -> 'DeleteGroupBulkMembersResponseMembersItem':
         """Initialize a DeleteGroupBulkMembersResponseMembersItem object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
-        if 'trace' in _dict:
-            args['trace'] = _dict.get('trace')
-        if 'status_code' in _dict:
-            args['status_code'] = _dict.get('status_code')
-        if 'errors' in _dict:
-            args['errors'] = [Error.from_dict(v) for v in _dict.get('errors')]
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
+        if (trace := _dict.get('trace')) is not None:
+            args['trace'] = trace
+        if (status_code := _dict.get('status_code')) is not None:
+            args['status_code'] = status_code
+        if (errors := _dict.get('errors')) is not None:
+            args['errors'] = [Error.from_dict(v) for v in errors]
         return cls(**args)
 
     @classmethod
@@ -4206,17 +4215,17 @@ class Error:
     identifying the problem, examples "missing_field", "reserved_value" message is a
     string explaining the solution to the problem that was encountered.
 
-    :attr str code: (optional) A human-readable error code represented by a snake
+    :param str code: (optional) A human-readable error code represented by a snake
           case string.
-    :attr str message: (optional) A specific error message that details the issue or
-          an action to take.
+    :param str message: (optional) A specific error message that details the issue
+          or an action to take.
     """
 
     def __init__(
         self,
         *,
-        code: str = None,
-        message: str = None,
+        code: Optional[str] = None,
+        message: Optional[str] = None,
     ) -> None:
         """
         Initialize a Error object.
@@ -4233,10 +4242,10 @@ class Error:
     def from_dict(cls, _dict: Dict) -> 'Error':
         """Initialize a Error object from a json dictionary."""
         args = {}
-        if 'code' in _dict:
-            args['code'] = _dict.get('code')
-        if 'message' in _dict:
-            args['message'] = _dict.get('message')
+        if (code := _dict.get('code')) is not None:
+            args['code'] = code
+        if (message := _dict.get('message')) is not None:
+            args['message'] = message
         return cls(**args)
 
     @classmethod
@@ -4276,36 +4285,36 @@ class Group:
     """
     An IAM access group.
 
-    :attr str id: (optional) The group's access group ID.
-    :attr str name: (optional) The group's name.
-    :attr str description: (optional) The group's description - if defined.
-    :attr str account_id: (optional) The account id where the group was created.
-    :attr datetime created_at: (optional) The timestamp of when the group was
+    :param str id: (optional) The group's access group ID.
+    :param str name: (optional) The group's name.
+    :param str description: (optional) The group's description - if defined.
+    :param str account_id: (optional) The account id where the group was created.
+    :param datetime created_at: (optional) The timestamp of when the group was
           created.
-    :attr str created_by_id: (optional) The `iam_id` of the entity that created the
+    :param str created_by_id: (optional) The `iam_id` of the entity that created the
           group.
-    :attr datetime last_modified_at: (optional) The timestamp of when the group was
+    :param datetime last_modified_at: (optional) The timestamp of when the group was
           last edited.
-    :attr str last_modified_by_id: (optional) The `iam_id` of the entity that last
+    :param str last_modified_by_id: (optional) The `iam_id` of the entity that last
           modified the group name or description.
-    :attr str href: (optional) A url to the given group resource.
-    :attr bool is_federated: (optional) This is set to true if rules exist for the
+    :param str href: (optional) A url to the given group resource.
+    :param bool is_federated: (optional) This is set to true if rules exist for the
           group.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
-        name: str = None,
-        description: str = None,
-        account_id: str = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
-        last_modified_at: datetime = None,
-        last_modified_by_id: str = None,
-        href: str = None,
-        is_federated: bool = None,
+        id: Optional[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        account_id: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+        href: Optional[str] = None,
+        is_federated: Optional[bool] = None,
     ) -> None:
         """
         Initialize a Group object.
@@ -4334,26 +4343,26 @@ class Group:
     def from_dict(cls, _dict: Dict) -> 'Group':
         """Initialize a Group object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'is_federated' in _dict:
-            args['is_federated'] = _dict.get('is_federated')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (is_federated := _dict.get('is_federated')) is not None:
+            args['is_federated'] = is_federated
         return cls(**args)
 
     @classmethod
@@ -4409,7 +4418,7 @@ class GroupActionControls:
     """
     Access group action controls component.
 
-    :attr AccessActionControls access: (optional) Control whether or not access
+    :param AccessActionControls access: (optional) Control whether or not access
           group administrators in child accounts can add access policies to the
           enterprise-managed access group in their account.
     """
@@ -4417,7 +4426,7 @@ class GroupActionControls:
     def __init__(
         self,
         *,
-        access: 'AccessActionControls' = None,
+        access: Optional['AccessActionControls'] = None,
     ) -> None:
         """
         Initialize a GroupActionControls object.
@@ -4432,8 +4441,8 @@ class GroupActionControls:
     def from_dict(cls, _dict: Dict) -> 'GroupActionControls':
         """Initialize a GroupActionControls object from a json dictionary."""
         args = {}
-        if 'access' in _dict:
-            args['access'] = AccessActionControls.from_dict(_dict.get('access'))
+        if (access := _dict.get('access')) is not None:
+            args['access'] = AccessActionControls.from_dict(access)
         return cls(**args)
 
     @classmethod
@@ -4474,15 +4483,15 @@ class GroupMembersList:
     """
     The members of a group.
 
-    :attr int limit: Limit on how many items can be returned.
-    :attr int offset: The offset of the first item returned in the result set.
-    :attr int total_count: The total number of items that match the query.
-    :attr HrefStruct first: (optional) A link object.
-    :attr HrefStruct previous: (optional) A link object.
-    :attr HrefStruct next: (optional) A link object.
-    :attr HrefStruct last: (optional) A link object.
-    :attr List[ListGroupMembersResponseMember] members: (optional) The members of an
-          access group.
+    :param int limit: Limit on how many items can be returned.
+    :param int offset: The offset of the first item returned in the result set.
+    :param int total_count: The total number of items that match the query.
+    :param HrefStruct first: (optional) A link object.
+    :param HrefStruct previous: (optional) A link object.
+    :param HrefStruct next: (optional) A link object.
+    :param HrefStruct last: (optional) A link object.
+    :param List[ListGroupMembersResponseMember] members: (optional) The members of
+          an access group.
     """
 
     def __init__(
@@ -4491,11 +4500,11 @@ class GroupMembersList:
         offset: int,
         total_count: int,
         *,
-        first: 'HrefStruct' = None,
-        previous: 'HrefStruct' = None,
-        next: 'HrefStruct' = None,
-        last: 'HrefStruct' = None,
-        members: List['ListGroupMembersResponseMember'] = None,
+        first: Optional['HrefStruct'] = None,
+        previous: Optional['HrefStruct'] = None,
+        next: Optional['HrefStruct'] = None,
+        last: Optional['HrefStruct'] = None,
+        members: Optional[List['ListGroupMembersResponseMember']] = None,
     ) -> None:
         """
         Initialize a GroupMembersList object.
@@ -4523,28 +4532,28 @@ class GroupMembersList:
     def from_dict(cls, _dict: Dict) -> 'GroupMembersList':
         """Initialize a GroupMembersList object from a json dictionary."""
         args = {}
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
         else:
             raise ValueError('Required property \'limit\' not present in GroupMembersList JSON')
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
         else:
             raise ValueError('Required property \'offset\' not present in GroupMembersList JSON')
-        if 'total_count' in _dict:
-            args['total_count'] = _dict.get('total_count')
+        if (total_count := _dict.get('total_count')) is not None:
+            args['total_count'] = total_count
         else:
             raise ValueError('Required property \'total_count\' not present in GroupMembersList JSON')
-        if 'first' in _dict:
-            args['first'] = HrefStruct.from_dict(_dict.get('first'))
-        if 'previous' in _dict:
-            args['previous'] = HrefStruct.from_dict(_dict.get('previous'))
-        if 'next' in _dict:
-            args['next'] = HrefStruct.from_dict(_dict.get('next'))
-        if 'last' in _dict:
-            args['last'] = HrefStruct.from_dict(_dict.get('last'))
-        if 'members' in _dict:
-            args['members'] = [ListGroupMembersResponseMember.from_dict(v) for v in _dict.get('members')]
+        if (first := _dict.get('first')) is not None:
+            args['first'] = HrefStruct.from_dict(first)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = HrefStruct.from_dict(previous)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = HrefStruct.from_dict(next)
+        if (last := _dict.get('last')) is not None:
+            args['last'] = HrefStruct.from_dict(last)
+        if (members := _dict.get('members')) is not None:
+            args['members'] = [ListGroupMembersResponseMember.from_dict(v) for v in members]
         return cls(**args)
 
     @classmethod
@@ -4614,24 +4623,24 @@ class GroupTemplate:
     """
     Response output for template.
 
-    :attr str id: The ID of the access group template.
-    :attr str name: The name of the access group template.
-    :attr str description: The description of the access group template.
-    :attr str version: The version of the access group template.
-    :attr bool committed: A boolean indicating whether the access group template is
+    :param str id: The ID of the access group template.
+    :param str name: The name of the access group template.
+    :param str description: The description of the access group template.
+    :param str version: The version of the access group template.
+    :param bool committed: A boolean indicating whether the access group template is
           committed. You must commit a template before you can assign it to child
           accounts.
-    :attr AccessGroupResponse group: Access Group Component.
-    :attr List[PolicyTemplates] policy_template_references: References to policy
+    :param AccessGroupResponse group: Access Group Component.
+    :param List[PolicyTemplates] policy_template_references: References to policy
           templates assigned to the access group template.
-    :attr str href: The URL of the access group template resource.
-    :attr datetime created_at: The date and time when the access group template was
+    :param str href: The URL of the access group template resource.
+    :param datetime created_at: The date and time when the access group template was
           created.
-    :attr str created_by_id: The ID of the user who created the access group
+    :param str created_by_id: The ID of the user who created the access group
           template.
-    :attr datetime last_modified_at: The date and time when the access group
+    :param datetime last_modified_at: The date and time when the access group
           template was last modified.
-    :attr str last_modified_by_id: The ID of the user who last modified the access
+    :param str last_modified_by_id: The ID of the user who last modified the access
           group template.
     """
 
@@ -4690,54 +4699,52 @@ class GroupTemplate:
     def from_dict(cls, _dict: Dict) -> 'GroupTemplate':
         """Initialize a GroupTemplate object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in GroupTemplate JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in GroupTemplate JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         else:
             raise ValueError('Required property \'description\' not present in GroupTemplate JSON')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
         else:
             raise ValueError('Required property \'version\' not present in GroupTemplate JSON')
-        if 'committed' in _dict:
-            args['committed'] = _dict.get('committed')
+        if (committed := _dict.get('committed')) is not None:
+            args['committed'] = committed
         else:
             raise ValueError('Required property \'committed\' not present in GroupTemplate JSON')
-        if 'group' in _dict:
-            args['group'] = AccessGroupResponse.from_dict(_dict.get('group'))
+        if (group := _dict.get('group')) is not None:
+            args['group'] = AccessGroupResponse.from_dict(group)
         else:
             raise ValueError('Required property \'group\' not present in GroupTemplate JSON')
-        if 'policy_template_references' in _dict:
-            args['policy_template_references'] = [
-                PolicyTemplates.from_dict(v) for v in _dict.get('policy_template_references')
-            ]
+        if (policy_template_references := _dict.get('policy_template_references')) is not None:
+            args['policy_template_references'] = [PolicyTemplates.from_dict(v) for v in policy_template_references]
         else:
             raise ValueError('Required property \'policy_template_references\' not present in GroupTemplate JSON')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         else:
             raise ValueError('Required property \'href\' not present in GroupTemplate JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in GroupTemplate JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         else:
             raise ValueError('Required property \'created_by_id\' not present in GroupTemplate JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
         else:
             raise ValueError('Required property \'last_modified_at\' not present in GroupTemplate JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         else:
             raise ValueError('Required property \'last_modified_by_id\' not present in GroupTemplate JSON')
         return cls(**args)
@@ -4808,14 +4815,14 @@ class GroupsList:
     """
     The list of access groups returned as part of a response.
 
-    :attr int limit: Limit on how many items can be returned.
-    :attr int offset: The offset of the first item returned in the result set.
-    :attr int total_count: The total number of items that match the query.
-    :attr HrefStruct first: (optional) A link object.
-    :attr HrefStruct previous: (optional) A link object.
-    :attr HrefStruct next: (optional) A link object.
-    :attr HrefStruct last: (optional) A link object.
-    :attr List[Group] groups: (optional) An array of access groups.
+    :param int limit: Limit on how many items can be returned.
+    :param int offset: The offset of the first item returned in the result set.
+    :param int total_count: The total number of items that match the query.
+    :param HrefStruct first: (optional) A link object.
+    :param HrefStruct previous: (optional) A link object.
+    :param HrefStruct next: (optional) A link object.
+    :param HrefStruct last: (optional) A link object.
+    :param List[Group] groups: (optional) An array of access groups.
     """
 
     def __init__(
@@ -4824,11 +4831,11 @@ class GroupsList:
         offset: int,
         total_count: int,
         *,
-        first: 'HrefStruct' = None,
-        previous: 'HrefStruct' = None,
-        next: 'HrefStruct' = None,
-        last: 'HrefStruct' = None,
-        groups: List['Group'] = None,
+        first: Optional['HrefStruct'] = None,
+        previous: Optional['HrefStruct'] = None,
+        next: Optional['HrefStruct'] = None,
+        last: Optional['HrefStruct'] = None,
+        groups: Optional[List['Group']] = None,
     ) -> None:
         """
         Initialize a GroupsList object.
@@ -4855,28 +4862,28 @@ class GroupsList:
     def from_dict(cls, _dict: Dict) -> 'GroupsList':
         """Initialize a GroupsList object from a json dictionary."""
         args = {}
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
         else:
             raise ValueError('Required property \'limit\' not present in GroupsList JSON')
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
         else:
             raise ValueError('Required property \'offset\' not present in GroupsList JSON')
-        if 'total_count' in _dict:
-            args['total_count'] = _dict.get('total_count')
+        if (total_count := _dict.get('total_count')) is not None:
+            args['total_count'] = total_count
         else:
             raise ValueError('Required property \'total_count\' not present in GroupsList JSON')
-        if 'first' in _dict:
-            args['first'] = HrefStruct.from_dict(_dict.get('first'))
-        if 'previous' in _dict:
-            args['previous'] = HrefStruct.from_dict(_dict.get('previous'))
-        if 'next' in _dict:
-            args['next'] = HrefStruct.from_dict(_dict.get('next'))
-        if 'last' in _dict:
-            args['last'] = HrefStruct.from_dict(_dict.get('last'))
-        if 'groups' in _dict:
-            args['groups'] = [Group.from_dict(v) for v in _dict.get('groups')]
+        if (first := _dict.get('first')) is not None:
+            args['first'] = HrefStruct.from_dict(first)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = HrefStruct.from_dict(previous)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = HrefStruct.from_dict(next)
+        if (last := _dict.get('last')) is not None:
+            args['last'] = HrefStruct.from_dict(last)
+        if (groups := _dict.get('groups')) is not None:
+            args['groups'] = [Group.from_dict(v) for v in groups]
         return cls(**args)
 
     @classmethod
@@ -4946,13 +4953,13 @@ class HrefStruct:
     """
     A link object.
 
-    :attr str href: (optional) A string containing the link’s URL.
+    :param str href: (optional) A string containing the link’s URL.
     """
 
     def __init__(
         self,
         *,
-        href: str = None,
+        href: Optional[str] = None,
     ) -> None:
         """
         Initialize a HrefStruct object.
@@ -4965,8 +4972,8 @@ class HrefStruct:
     def from_dict(cls, _dict: Dict) -> 'HrefStruct':
         """Initialize a HrefStruct object from a json dictionary."""
         args = {}
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         return cls(**args)
 
     @classmethod
@@ -5004,35 +5011,35 @@ class ListGroupMembersResponseMember:
     """
     A single member of an access group in a list.
 
-    :attr str iam_id: (optional) The IBMid or Service Id of the member.
-    :attr str type: (optional) The member type - either `user`, `service` or
+    :param str iam_id: (optional) The IBMid or Service Id of the member.
+    :param str type: (optional) The member type - either `user`, `service` or
           `profile`.
-    :attr str membership_type: (optional) The membership type - either `static` or
+    :param str membership_type: (optional) The membership type - either `static` or
           `dynamic`.
-    :attr str name: (optional) The user's or service id's name.
-    :attr str email: (optional) If the member type is user, this is the user's
+    :param str name: (optional) The user's or service id's name.
+    :param str email: (optional) If the member type is user, this is the user's
           email.
-    :attr str description: (optional) If the member type is service, this is the
+    :param str description: (optional) If the member type is service, this is the
           service id's description.
-    :attr str href: (optional) A url to the given member resource.
-    :attr datetime created_at: (optional) The timestamp the membership was created
+    :param str href: (optional) A url to the given member resource.
+    :param datetime created_at: (optional) The timestamp the membership was created
           at.
-    :attr str created_by_id: (optional) The `iam_id` of the entity that created the
+    :param str created_by_id: (optional) The `iam_id` of the entity that created the
           membership.
     """
 
     def __init__(
         self,
         *,
-        iam_id: str = None,
-        type: str = None,
-        membership_type: str = None,
-        name: str = None,
-        email: str = None,
-        description: str = None,
-        href: str = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
+        iam_id: Optional[str] = None,
+        type: Optional[str] = None,
+        membership_type: Optional[str] = None,
+        name: Optional[str] = None,
+        email: Optional[str] = None,
+        description: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
     ) -> None:
         """
         Initialize a ListGroupMembersResponseMember object.
@@ -5067,24 +5074,24 @@ class ListGroupMembersResponseMember:
     def from_dict(cls, _dict: Dict) -> 'ListGroupMembersResponseMember':
         """Initialize a ListGroupMembersResponseMember object from a json dictionary."""
         args = {}
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
-        if 'membership_type' in _dict:
-            args['membership_type'] = _dict.get('membership_type')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'email' in _dict:
-            args['email'] = _dict.get('email')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        if (membership_type := _dict.get('membership_type')) is not None:
+            args['membership_type'] = membership_type
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (email := _dict.get('email')) is not None:
+            args['email'] = email
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         return cls(**args)
 
     @classmethod
@@ -5138,12 +5145,12 @@ class ListTemplateAssignmentResponse:
     """
     Response object containing a list of template assignments.
 
-    :attr int limit: Maximum number of items returned in the response.
-    :attr int offset: Index of the first item returned in the response.
-    :attr int total_count: Total number of items matching the query.
-    :attr HrefStruct first: A link object.
-    :attr HrefStruct last: A link object.
-    :attr List[TemplateAssignmentResponse] assignments: List of template
+    :param int limit: Maximum number of items returned in the response.
+    :param int offset: Index of the first item returned in the response.
+    :param int total_count: Total number of items matching the query.
+    :param HrefStruct first: A link object.
+    :param HrefStruct last: A link object.
+    :param List[TemplateAssignmentResponse] assignments: List of template
           assignments.
     """
 
@@ -5178,28 +5185,28 @@ class ListTemplateAssignmentResponse:
     def from_dict(cls, _dict: Dict) -> 'ListTemplateAssignmentResponse':
         """Initialize a ListTemplateAssignmentResponse object from a json dictionary."""
         args = {}
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
         else:
             raise ValueError('Required property \'limit\' not present in ListTemplateAssignmentResponse JSON')
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
         else:
             raise ValueError('Required property \'offset\' not present in ListTemplateAssignmentResponse JSON')
-        if 'total_count' in _dict:
-            args['total_count'] = _dict.get('total_count')
+        if (total_count := _dict.get('total_count')) is not None:
+            args['total_count'] = total_count
         else:
             raise ValueError('Required property \'total_count\' not present in ListTemplateAssignmentResponse JSON')
-        if 'first' in _dict:
-            args['first'] = HrefStruct.from_dict(_dict.get('first'))
+        if (first := _dict.get('first')) is not None:
+            args['first'] = HrefStruct.from_dict(first)
         else:
             raise ValueError('Required property \'first\' not present in ListTemplateAssignmentResponse JSON')
-        if 'last' in _dict:
-            args['last'] = HrefStruct.from_dict(_dict.get('last'))
+        if (last := _dict.get('last')) is not None:
+            args['last'] = HrefStruct.from_dict(last)
         else:
             raise ValueError('Required property \'last\' not present in ListTemplateAssignmentResponse JSON')
-        if 'assignments' in _dict:
-            args['assignments'] = [TemplateAssignmentResponse.from_dict(v) for v in _dict.get('assignments')]
+        if (assignments := _dict.get('assignments')) is not None:
+            args['assignments'] = [TemplateAssignmentResponse.from_dict(v) for v in assignments]
         else:
             raise ValueError('Required property \'assignments\' not present in ListTemplateAssignmentResponse JSON')
         return cls(**args)
@@ -5261,20 +5268,20 @@ class ListTemplateVersionResponse:
     """
     Response object for a single access group template version.
 
-    :attr str name: The name of the template.
-    :attr str description: The description of the template.
-    :attr str account_id: The ID of the account associated with the template.
-    :attr str version: The version number of the template.
-    :attr bool committed: A boolean indicating whether the template is committed or
+    :param str name: The name of the template.
+    :param str description: The description of the template.
+    :param str account_id: The ID of the account associated with the template.
+    :param str version: The version number of the template.
+    :param bool committed: A boolean indicating whether the template is committed or
           not.
-    :attr AccessGroupResponse group: Access Group Component.
-    :attr List[PolicyTemplates] policy_template_references: A list of policy
+    :param AccessGroupResponse group: Access Group Component.
+    :param List[PolicyTemplates] policy_template_references: A list of policy
           templates associated with the template.
-    :attr str href: The URL to the template resource.
-    :attr str created_at: The date and time the template was created.
-    :attr str created_by_id: The ID of the user who created the template.
-    :attr str last_modified_at: The date and time the template was last modified.
-    :attr str last_modified_by_id: The ID of the user who last modified the
+    :param str href: The URL to the template resource.
+    :param str created_at: The date and time the template was created.
+    :param str created_by_id: The ID of the user who created the template.
+    :param str last_modified_at: The date and time the template was last modified.
+    :param str last_modified_by_id: The ID of the user who last modified the
           template.
     """
 
@@ -5330,56 +5337,54 @@ class ListTemplateVersionResponse:
     def from_dict(cls, _dict: Dict) -> 'ListTemplateVersionResponse':
         """Initialize a ListTemplateVersionResponse object from a json dictionary."""
         args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in ListTemplateVersionResponse JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         else:
             raise ValueError('Required property \'description\' not present in ListTemplateVersionResponse JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in ListTemplateVersionResponse JSON')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
         else:
             raise ValueError('Required property \'version\' not present in ListTemplateVersionResponse JSON')
-        if 'committed' in _dict:
-            args['committed'] = _dict.get('committed')
+        if (committed := _dict.get('committed')) is not None:
+            args['committed'] = committed
         else:
             raise ValueError('Required property \'committed\' not present in ListTemplateVersionResponse JSON')
-        if 'group' in _dict:
-            args['group'] = AccessGroupResponse.from_dict(_dict.get('group'))
+        if (group := _dict.get('group')) is not None:
+            args['group'] = AccessGroupResponse.from_dict(group)
         else:
             raise ValueError('Required property \'group\' not present in ListTemplateVersionResponse JSON')
-        if 'policy_template_references' in _dict:
-            args['policy_template_references'] = [
-                PolicyTemplates.from_dict(v) for v in _dict.get('policy_template_references')
-            ]
+        if (policy_template_references := _dict.get('policy_template_references')) is not None:
+            args['policy_template_references'] = [PolicyTemplates.from_dict(v) for v in policy_template_references]
         else:
             raise ValueError(
                 'Required property \'policy_template_references\' not present in ListTemplateVersionResponse JSON'
             )
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         else:
             raise ValueError('Required property \'href\' not present in ListTemplateVersionResponse JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = created_at
         else:
             raise ValueError('Required property \'created_at\' not present in ListTemplateVersionResponse JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         else:
             raise ValueError('Required property \'created_by_id\' not present in ListTemplateVersionResponse JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = _dict.get('last_modified_at')
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = last_modified_at
         else:
             raise ValueError('Required property \'last_modified_at\' not present in ListTemplateVersionResponse JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         else:
             raise ValueError(
                 'Required property \'last_modified_by_id\' not present in ListTemplateVersionResponse JSON'
@@ -5452,14 +5457,14 @@ class ListTemplateVersionsResponse:
     """
     Response object for listing template versions.
 
-    :attr int limit: The maximum number of IAM resources to return.
-    :attr int offset: The offset of the first IAM resource in the list.
-    :attr int total_count: The total number of IAM resources in the list.
-    :attr HrefStruct first: A link object.
-    :attr HrefStruct previous: (optional) A link object.
-    :attr HrefStruct next: (optional) A link object.
-    :attr HrefStruct last: A link object.
-    :attr List[ListTemplateVersionResponse] group_template_versions: A list of
+    :param int limit: The maximum number of IAM resources to return.
+    :param int offset: The offset of the first IAM resource in the list.
+    :param int total_count: The total number of IAM resources in the list.
+    :param HrefStruct first: A link object.
+    :param HrefStruct previous: (optional) A link object.
+    :param HrefStruct next: (optional) A link object.
+    :param HrefStruct last: A link object.
+    :param List[ListTemplateVersionResponse] group_template_versions: A list of
           access group template versions.
     """
 
@@ -5472,8 +5477,8 @@ class ListTemplateVersionsResponse:
         last: 'HrefStruct',
         group_template_versions: List['ListTemplateVersionResponse'],
         *,
-        previous: 'HrefStruct' = None,
-        next: 'HrefStruct' = None,
+        previous: Optional['HrefStruct'] = None,
+        next: Optional['HrefStruct'] = None,
     ) -> None:
         """
         Initialize a ListTemplateVersionsResponse object.
@@ -5501,33 +5506,33 @@ class ListTemplateVersionsResponse:
     def from_dict(cls, _dict: Dict) -> 'ListTemplateVersionsResponse':
         """Initialize a ListTemplateVersionsResponse object from a json dictionary."""
         args = {}
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
         else:
             raise ValueError('Required property \'limit\' not present in ListTemplateVersionsResponse JSON')
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
         else:
             raise ValueError('Required property \'offset\' not present in ListTemplateVersionsResponse JSON')
-        if 'total_count' in _dict:
-            args['total_count'] = _dict.get('total_count')
+        if (total_count := _dict.get('total_count')) is not None:
+            args['total_count'] = total_count
         else:
             raise ValueError('Required property \'total_count\' not present in ListTemplateVersionsResponse JSON')
-        if 'first' in _dict:
-            args['first'] = HrefStruct.from_dict(_dict.get('first'))
+        if (first := _dict.get('first')) is not None:
+            args['first'] = HrefStruct.from_dict(first)
         else:
             raise ValueError('Required property \'first\' not present in ListTemplateVersionsResponse JSON')
-        if 'previous' in _dict:
-            args['previous'] = HrefStruct.from_dict(_dict.get('previous'))
-        if 'next' in _dict:
-            args['next'] = HrefStruct.from_dict(_dict.get('next'))
-        if 'last' in _dict:
-            args['last'] = HrefStruct.from_dict(_dict.get('last'))
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = HrefStruct.from_dict(previous)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = HrefStruct.from_dict(next)
+        if (last := _dict.get('last')) is not None:
+            args['last'] = HrefStruct.from_dict(last)
         else:
             raise ValueError('Required property \'last\' not present in ListTemplateVersionsResponse JSON')
-        if 'group_template_versions' in _dict:
+        if (group_template_versions := _dict.get('group_template_versions')) is not None:
             args['group_template_versions'] = [
-                ListTemplateVersionResponse.from_dict(v) for v in _dict.get('group_template_versions')
+                ListTemplateVersionResponse.from_dict(v) for v in group_template_versions
             ]
         else:
             raise ValueError(
@@ -5602,14 +5607,14 @@ class ListTemplatesResponse:
     """
     Response object for listing templates.
 
-    :attr int limit: The maximum number of IAM resources to return.
-    :attr int offset: The offset of the first IAM resource in the list.
-    :attr int total_count: The total number of IAM resources in the list.
-    :attr HrefStruct first: A link object.
-    :attr HrefStruct previous: (optional) A link object.
-    :attr HrefStruct next: (optional) A link object.
-    :attr HrefStruct last: A link object.
-    :attr List[GroupTemplate] group_templates: A list of access group templates.
+    :param int limit: The maximum number of IAM resources to return.
+    :param int offset: The offset of the first IAM resource in the list.
+    :param int total_count: The total number of IAM resources in the list.
+    :param HrefStruct first: A link object.
+    :param HrefStruct previous: (optional) A link object.
+    :param HrefStruct next: (optional) A link object.
+    :param HrefStruct last: A link object.
+    :param List[GroupTemplate] group_templates: A list of access group templates.
     """
 
     def __init__(
@@ -5621,8 +5626,8 @@ class ListTemplatesResponse:
         last: 'HrefStruct',
         group_templates: List['GroupTemplate'],
         *,
-        previous: 'HrefStruct' = None,
-        next: 'HrefStruct' = None,
+        previous: Optional['HrefStruct'] = None,
+        next: Optional['HrefStruct'] = None,
     ) -> None:
         """
         Initialize a ListTemplatesResponse object.
@@ -5650,32 +5655,32 @@ class ListTemplatesResponse:
     def from_dict(cls, _dict: Dict) -> 'ListTemplatesResponse':
         """Initialize a ListTemplatesResponse object from a json dictionary."""
         args = {}
-        if 'limit' in _dict:
-            args['limit'] = _dict.get('limit')
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
         else:
             raise ValueError('Required property \'limit\' not present in ListTemplatesResponse JSON')
-        if 'offset' in _dict:
-            args['offset'] = _dict.get('offset')
+        if (offset := _dict.get('offset')) is not None:
+            args['offset'] = offset
         else:
             raise ValueError('Required property \'offset\' not present in ListTemplatesResponse JSON')
-        if 'total_count' in _dict:
-            args['total_count'] = _dict.get('total_count')
+        if (total_count := _dict.get('total_count')) is not None:
+            args['total_count'] = total_count
         else:
             raise ValueError('Required property \'total_count\' not present in ListTemplatesResponse JSON')
-        if 'first' in _dict:
-            args['first'] = HrefStruct.from_dict(_dict.get('first'))
+        if (first := _dict.get('first')) is not None:
+            args['first'] = HrefStruct.from_dict(first)
         else:
             raise ValueError('Required property \'first\' not present in ListTemplatesResponse JSON')
-        if 'previous' in _dict:
-            args['previous'] = HrefStruct.from_dict(_dict.get('previous'))
-        if 'next' in _dict:
-            args['next'] = HrefStruct.from_dict(_dict.get('next'))
-        if 'last' in _dict:
-            args['last'] = HrefStruct.from_dict(_dict.get('last'))
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = HrefStruct.from_dict(previous)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = HrefStruct.from_dict(next)
+        if (last := _dict.get('last')) is not None:
+            args['last'] = HrefStruct.from_dict(last)
         else:
             raise ValueError('Required property \'last\' not present in ListTemplatesResponse JSON')
-        if 'group_templates' in _dict:
-            args['group_templates'] = [GroupTemplate.from_dict(v) for v in _dict.get('group_templates')]
+        if (group_templates := _dict.get('group_templates')) is not None:
+            args['group_templates'] = [GroupTemplate.from_dict(v) for v in group_templates]
         else:
             raise ValueError('Required property \'group_templates\' not present in ListTemplatesResponse JSON')
         return cls(**args)
@@ -5748,12 +5753,12 @@ class Members:
     Array of enterprise users to add to the template. All enterprise users that you add to
     the template must be invited to the child accounts where the template is assigned.
 
-    :attr List[str] users: (optional) Array of enterprise users to add to the
+    :param List[str] users: (optional) Array of enterprise users to add to the
           template. All enterprise users that you add to the template must be invited to
           the child accounts where the template is assigned.
-    :attr List[str] services: (optional) Array of service IDs to add to the
+    :param List[str] services: (optional) Array of service IDs to add to the
           template.
-    :attr MembersActionControls action_controls: (optional) Control whether or not
+    :param MembersActionControls action_controls: (optional) Control whether or not
           access group administrators in child accounts can add and remove members from
           the enterprise-managed access group in their account.
     """
@@ -5761,9 +5766,9 @@ class Members:
     def __init__(
         self,
         *,
-        users: List[str] = None,
-        services: List[str] = None,
-        action_controls: 'MembersActionControls' = None,
+        users: Optional[List[str]] = None,
+        services: Optional[List[str]] = None,
+        action_controls: Optional['MembersActionControls'] = None,
     ) -> None:
         """
         Initialize a Members object.
@@ -5785,12 +5790,12 @@ class Members:
     def from_dict(cls, _dict: Dict) -> 'Members':
         """Initialize a Members object from a json dictionary."""
         args = {}
-        if 'users' in _dict:
-            args['users'] = _dict.get('users')
-        if 'services' in _dict:
-            args['services'] = _dict.get('services')
-        if 'action_controls' in _dict:
-            args['action_controls'] = MembersActionControls.from_dict(_dict.get('action_controls'))
+        if (users := _dict.get('users')) is not None:
+            args['users'] = users
+        if (services := _dict.get('services')) is not None:
+            args['services'] = services
+        if (action_controls := _dict.get('action_controls')) is not None:
+            args['action_controls'] = MembersActionControls.from_dict(action_controls)
         return cls(**args)
 
     @classmethod
@@ -5836,15 +5841,15 @@ class MembersActionControls:
     Control whether or not access group administrators in child accounts can add and
     remove members from the enterprise-managed access group in their account.
 
-    :attr bool add: (optional) Action control for adding child account members to an
-          enterprise-managed access group. If an access group administrator in a child
+    :param bool add: (optional) Action control for adding child account members to
+          an enterprise-managed access group. If an access group administrator in a child
           account adds a member, they can always remove them. Note that if conflicts arise
           between an update to this control in a new version and members added by an
           administrator in the child account, you must resolve those conflicts in the
           child account. This prevents breaking access in the child account. For more
           information, see [Working with versions]
-          (https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
-    :attr bool remove: (optional) Action control for removing enterprise-managed
+          (https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
+    :param bool remove: (optional) Action control for removing enterprise-managed
           members from an enterprise-managed access group. Note that if an enterprise
           member is removed from an enterprise-managed access group in a child account and
           you reassign the template, the membership is reinstated.
@@ -5853,8 +5858,8 @@ class MembersActionControls:
     def __init__(
         self,
         *,
-        add: bool = None,
-        remove: bool = None,
+        add: Optional[bool] = None,
+        remove: Optional[bool] = None,
     ) -> None:
         """
         Initialize a MembersActionControls object.
@@ -5866,7 +5871,7 @@ class MembersActionControls:
                members added by an administrator in the child account, you must resolve
                those conflicts in the child account. This prevents breaking access in the
                child account. For more information, see [Working with versions]
-               (https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
+               (https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
         :param bool remove: (optional) Action control for removing
                enterprise-managed members from an enterprise-managed access group. Note
                that if an enterprise member is removed from an enterprise-managed access
@@ -5880,10 +5885,10 @@ class MembersActionControls:
     def from_dict(cls, _dict: Dict) -> 'MembersActionControls':
         """Initialize a MembersActionControls object from a json dictionary."""
         args = {}
-        if 'add' in _dict:
-            args['add'] = _dict.get('add')
-        if 'remove' in _dict:
-            args['remove'] = _dict.get('remove')
+        if (add := _dict.get('add')) is not None:
+            args['add'] = add
+        if (remove := _dict.get('remove')) is not None:
+            args['remove'] = remove
         return cls(**args)
 
     @classmethod
@@ -5923,15 +5928,15 @@ class PolicyTemplates:
     """
     Policy Templates Input component.
 
-    :attr str id: (optional) Policy template ID.
-    :attr str version: (optional) Policy template version.
+    :param str id: (optional) Policy template ID.
+    :param str version: (optional) Policy template version.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
-        version: str = None,
+        id: Optional[str] = None,
+        version: Optional[str] = None,
     ) -> None:
         """
         Initialize a PolicyTemplates object.
@@ -5946,10 +5951,10 @@ class PolicyTemplates:
     def from_dict(cls, _dict: Dict) -> 'PolicyTemplates':
         """Initialize a PolicyTemplates object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
         return cls(**args)
 
     @classmethod
@@ -5989,20 +5994,20 @@ class ResourceListWithTargetAccountID:
     """
     Object containing details of a resource list with target account ID.
 
-    :attr str target: (optional) The ID of the entity that the resource list applies
-          to.
-    :attr AssignmentResourceAccessGroup group: (optional) Assignment Resource Access
-          Group.
-    :attr List[AssignmentResourceEntry] policy_template_references: (optional) List
+    :param str target: (optional) The ID of the entity that the resource list
+          applies to.
+    :param AssignmentResourceAccessGroup group: (optional) Assignment Resource
+          Access Group.
+    :param List[AssignmentResourceEntry] policy_template_references: (optional) List
           of policy template references for the resource list.
     """
 
     def __init__(
         self,
         *,
-        target: str = None,
-        group: 'AssignmentResourceAccessGroup' = None,
-        policy_template_references: List['AssignmentResourceEntry'] = None,
+        target: Optional[str] = None,
+        group: Optional['AssignmentResourceAccessGroup'] = None,
+        policy_template_references: Optional[List['AssignmentResourceEntry']] = None,
     ) -> None:
         """
         Initialize a ResourceListWithTargetAccountID object.
@@ -6022,13 +6027,13 @@ class ResourceListWithTargetAccountID:
     def from_dict(cls, _dict: Dict) -> 'ResourceListWithTargetAccountID':
         """Initialize a ResourceListWithTargetAccountID object from a json dictionary."""
         args = {}
-        if 'target' in _dict:
-            args['target'] = _dict.get('target')
-        if 'group' in _dict:
-            args['group'] = AssignmentResourceAccessGroup.from_dict(_dict.get('group'))
-        if 'policy_template_references' in _dict:
+        if (target := _dict.get('target')) is not None:
+            args['target'] = target
+        if (group := _dict.get('group')) is not None:
+            args['group'] = AssignmentResourceAccessGroup.from_dict(group)
+        if (policy_template_references := _dict.get('policy_template_references')) is not None:
             args['policy_template_references'] = [
-                AssignmentResourceEntry.from_dict(v) for v in _dict.get('policy_template_references')
+                AssignmentResourceEntry.from_dict(v) for v in policy_template_references
             ]
         return cls(**args)
 
@@ -6080,41 +6085,41 @@ class Rule:
     """
     A dynamic rule of an access group.
 
-    :attr str id: (optional) The rule id.
-    :attr str name: (optional) The name of the rule.
-    :attr int expiration: (optional) Session duration in hours. Access group
+    :param str id: (optional) The rule id.
+    :param str name: (optional) The name of the rule.
+    :param int expiration: (optional) Session duration in hours. Access group
           membership is revoked after this time period expires. Users must log back in to
           refresh their access group membership. Must be between 1 and 24.
-    :attr str realm_name: (optional) The URL of the identity provider.
-    :attr str access_group_id: (optional) The group id that the dynamic rule is
+    :param str realm_name: (optional) The URL of the identity provider.
+    :param str access_group_id: (optional) The group id that the dynamic rule is
           assigned to.
-    :attr str account_id: (optional) The account id that the group is in.
-    :attr List[RuleConditions] conditions: (optional) A list of conditions that
+    :param str account_id: (optional) The account id that the group is in.
+    :param List[RuleConditions] conditions: (optional) A list of conditions that
           identities must satisfy to gain access group membership.
-    :attr datetime created_at: (optional) The timestamp for when the rule was
+    :param datetime created_at: (optional) The timestamp for when the rule was
           created.
-    :attr str created_by_id: (optional) The `iam_id` of the entity that created the
+    :param str created_by_id: (optional) The `iam_id` of the entity that created the
           dynamic rule.
-    :attr datetime last_modified_at: (optional) The timestamp for when the dynamic
+    :param datetime last_modified_at: (optional) The timestamp for when the dynamic
           rule was last edited.
-    :attr str last_modified_by_id: (optional) The IAM id that last modified the
+    :param str last_modified_by_id: (optional) The IAM id that last modified the
           rule.
     """
 
     def __init__(
         self,
         *,
-        id: str = None,
-        name: str = None,
-        expiration: int = None,
-        realm_name: str = None,
-        access_group_id: str = None,
-        account_id: str = None,
-        conditions: List['RuleConditions'] = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
-        last_modified_at: datetime = None,
-        last_modified_by_id: str = None,
+        id: Optional[str] = None,
+        name: Optional[str] = None,
+        expiration: Optional[int] = None,
+        realm_name: Optional[str] = None,
+        access_group_id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        conditions: Optional[List['RuleConditions']] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
     ) -> None:
         """
         Initialize a Rule object.
@@ -6155,28 +6160,28 @@ class Rule:
     def from_dict(cls, _dict: Dict) -> 'Rule':
         """Initialize a Rule object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'expiration' in _dict:
-            args['expiration'] = _dict.get('expiration')
-        if 'realm_name' in _dict:
-            args['realm_name'] = _dict.get('realm_name')
-        if 'access_group_id' in _dict:
-            args['access_group_id'] = _dict.get('access_group_id')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'conditions' in _dict:
-            args['conditions'] = [RuleConditions.from_dict(v) for v in _dict.get('conditions')]
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (expiration := _dict.get('expiration')) is not None:
+            args['expiration'] = expiration
+        if (realm_name := _dict.get('realm_name')) is not None:
+            args['realm_name'] = realm_name
+        if (access_group_id := _dict.get('access_group_id')) is not None:
+            args['access_group_id'] = access_group_id
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (conditions := _dict.get('conditions')) is not None:
+            args['conditions'] = [RuleConditions.from_dict(v) for v in conditions]
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         return cls(**args)
 
     @classmethod
@@ -6242,14 +6247,14 @@ class RuleActionControls:
     remove this dynamic rule in the enterprise-managed access group in their account.This
     overrides outer level AssertionsActionControls.
 
-    :attr bool remove: (optional) Action control for removing this
+    :param bool remove: (optional) Action control for removing this
           enterprise-managed dynamic rule.
     """
 
     def __init__(
         self,
         *,
-        remove: bool = None,
+        remove: Optional[bool] = None,
     ) -> None:
         """
         Initialize a RuleActionControls object.
@@ -6263,8 +6268,8 @@ class RuleActionControls:
     def from_dict(cls, _dict: Dict) -> 'RuleActionControls':
         """Initialize a RuleActionControls object from a json dictionary."""
         args = {}
-        if 'remove' in _dict:
-            args['remove'] = _dict.get('remove')
+        if (remove := _dict.get('remove')) is not None:
+            args['remove'] = remove
         return cls(**args)
 
     @classmethod
@@ -6302,10 +6307,10 @@ class RuleConditions:
     """
     The conditions of a dynamic rule.
 
-    :attr str claim: The claim to evaluate against. This will be found in the `ext`
+    :param str claim: The claim to evaluate against. This will be found in the `ext`
           claims of a user's login request.
-    :attr str operator: The operation to perform on the claim.
-    :attr str value: The stringified JSON value that the claim is compared to using
+    :param str operator: The operation to perform on the claim.
+    :param str value: The stringified JSON value that the claim is compared to using
           the operator.
     """
 
@@ -6332,16 +6337,16 @@ class RuleConditions:
     def from_dict(cls, _dict: Dict) -> 'RuleConditions':
         """Initialize a RuleConditions object from a json dictionary."""
         args = {}
-        if 'claim' in _dict:
-            args['claim'] = _dict.get('claim')
+        if (claim := _dict.get('claim')) is not None:
+            args['claim'] = claim
         else:
             raise ValueError('Required property \'claim\' not present in RuleConditions JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
+        if (operator := _dict.get('operator')) is not None:
+            args['operator'] = operator
         else:
             raise ValueError('Required property \'operator\' not present in RuleConditions JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in RuleConditions JSON')
         return cls(**args)
@@ -6397,13 +6402,13 @@ class RulesList:
     """
     A list of dynamic rules attached to the access group.
 
-    :attr List[Rule] rules: (optional) A list of dynamic rules.
+    :param List[Rule] rules: (optional) A list of dynamic rules.
     """
 
     def __init__(
         self,
         *,
-        rules: List['Rule'] = None,
+        rules: Optional[List['Rule']] = None,
     ) -> None:
         """
         Initialize a RulesList object.
@@ -6416,8 +6421,8 @@ class RulesList:
     def from_dict(cls, _dict: Dict) -> 'RulesList':
         """Initialize a RulesList object from a json dictionary."""
         args = {}
-        if 'rules' in _dict:
-            args['rules'] = [Rule.from_dict(v) for v in _dict.get('rules')]
+        if (rules := _dict.get('rules')) is not None:
+            args['rules'] = [Rule.from_dict(v) for v in rules]
         return cls(**args)
 
     @classmethod
@@ -6461,23 +6466,23 @@ class TemplateAssignmentResponse:
     """
     Response object containing the details of a template assignment.
 
-    :attr str id: The ID of the assignment.
-    :attr str account_id: The ID of the account that the assignment belongs to.
-    :attr str template_id: The ID of the template that the assignment is based on.
-    :attr str template_version: The version of the template that the assignment is
+    :param str id: The ID of the assignment.
+    :param str account_id: The ID of the account that the assignment belongs to.
+    :param str template_id: The ID of the template that the assignment is based on.
+    :param str template_version: The version of the template that the assignment is
           based on.
-    :attr str target_type: The type of the entity that the assignment applies to.
-    :attr str target: The ID of the entity that the assignment applies to.
-    :attr str operation: The operation that the assignment applies to (e.g.
+    :param str target_type: The type of the entity that the assignment applies to.
+    :param str target: The ID of the entity that the assignment applies to.
+    :param str operation: The operation that the assignment applies to (e.g.
           'assign', 'update', 'remove').
-    :attr str status: The status of the assignment (e.g. 'accepted', 'in_progress',
+    :param str status: The status of the assignment (e.g. 'accepted', 'in_progress',
           'succeeded', 'failed', 'superseded').
-    :attr str href: The URL of the assignment resource.
-    :attr datetime created_at: The date and time when the assignment was created.
-    :attr str created_by_id: The user or system that created the assignment.
-    :attr datetime last_modified_at: The date and time when the assignment was last
+    :param str href: The URL of the assignment resource.
+    :param datetime created_at: The date and time when the assignment was created.
+    :param str created_by_id: The user or system that created the assignment.
+    :param datetime last_modified_at: The date and time when the assignment was last
           updated.
-    :attr str last_modified_by_id: The user or system that last updated the
+    :param str last_modified_by_id: The user or system that last updated the
           assignment.
     """
 
@@ -6541,56 +6546,56 @@ class TemplateAssignmentResponse:
     def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResponse':
         """Initialize a TemplateAssignmentResponse object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in TemplateAssignmentResponse JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in TemplateAssignmentResponse JSON')
-        if 'template_id' in _dict:
-            args['template_id'] = _dict.get('template_id')
+        if (template_id := _dict.get('template_id')) is not None:
+            args['template_id'] = template_id
         else:
             raise ValueError('Required property \'template_id\' not present in TemplateAssignmentResponse JSON')
-        if 'template_version' in _dict:
-            args['template_version'] = _dict.get('template_version')
+        if (template_version := _dict.get('template_version')) is not None:
+            args['template_version'] = template_version
         else:
             raise ValueError('Required property \'template_version\' not present in TemplateAssignmentResponse JSON')
-        if 'target_type' in _dict:
-            args['target_type'] = _dict.get('target_type')
+        if (target_type := _dict.get('target_type')) is not None:
+            args['target_type'] = target_type
         else:
             raise ValueError('Required property \'target_type\' not present in TemplateAssignmentResponse JSON')
-        if 'target' in _dict:
-            args['target'] = _dict.get('target')
+        if (target := _dict.get('target')) is not None:
+            args['target'] = target
         else:
             raise ValueError('Required property \'target\' not present in TemplateAssignmentResponse JSON')
-        if 'operation' in _dict:
-            args['operation'] = _dict.get('operation')
+        if (operation := _dict.get('operation')) is not None:
+            args['operation'] = operation
         else:
             raise ValueError('Required property \'operation\' not present in TemplateAssignmentResponse JSON')
-        if 'status' in _dict:
-            args['status'] = _dict.get('status')
+        if (status := _dict.get('status')) is not None:
+            args['status'] = status
         else:
             raise ValueError('Required property \'status\' not present in TemplateAssignmentResponse JSON')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         else:
             raise ValueError('Required property \'href\' not present in TemplateAssignmentResponse JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in TemplateAssignmentResponse JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         else:
             raise ValueError('Required property \'created_by_id\' not present in TemplateAssignmentResponse JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
         else:
             raise ValueError('Required property \'last_modified_at\' not present in TemplateAssignmentResponse JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         else:
             raise ValueError('Required property \'last_modified_by_id\' not present in TemplateAssignmentResponse JSON')
         return cls(**args)
@@ -6683,25 +6688,25 @@ class TemplateAssignmentVerboseResponse:
     """
     Response object containing the details of a template assignment.
 
-    :attr str id: The ID of the assignment.
-    :attr str account_id: The ID of the account that the assignment belongs to.
-    :attr str template_id: The ID of the template that the assignment is based on.
-    :attr str template_version: The version of the template that the assignment is
+    :param str id: The ID of the assignment.
+    :param str account_id: The ID of the account that the assignment belongs to.
+    :param str template_id: The ID of the template that the assignment is based on.
+    :param str template_version: The version of the template that the assignment is
           based on.
-    :attr str target_type: The type of the entity that the assignment applies to.
-    :attr str target: The ID of the entity that the assignment applies to.
-    :attr str operation: The operation that the assignment applies to (e.g.
+    :param str target_type: The type of the entity that the assignment applies to.
+    :param str target: The ID of the entity that the assignment applies to.
+    :param str operation: The operation that the assignment applies to (e.g.
           'create', 'update', 'delete').
-    :attr str status: The status of the assignment (e.g. 'pending', 'success',
+    :param str status: The status of the assignment (e.g. 'pending', 'success',
           'failure').
-    :attr List[ResourceListWithTargetAccountID] resources: (optional) List of
+    :param List[ResourceListWithTargetAccountID] resources: (optional) List of
           resources for the assignment.
-    :attr str href: The URL of the assignment resource.
-    :attr datetime created_at: The date and time when the assignment was created.
-    :attr str created_by_id: The user or system that created the assignment.
-    :attr datetime last_modified_at: The date and time when the assignment was last
+    :param str href: The URL of the assignment resource.
+    :param datetime created_at: The date and time when the assignment was created.
+    :param str created_by_id: The user or system that created the assignment.
+    :param datetime last_modified_at: The date and time when the assignment was last
           updated.
-    :attr str last_modified_by_id: The user or system that last updated the
+    :param str last_modified_by_id: The user or system that last updated the
           assignment.
     """
 
@@ -6721,7 +6726,7 @@ class TemplateAssignmentVerboseResponse:
         last_modified_at: datetime,
         last_modified_by_id: str,
         *,
-        resources: List['ResourceListWithTargetAccountID'] = None,
+        resources: Optional[List['ResourceListWithTargetAccountID']] = None,
     ) -> None:
         """
         Initialize a TemplateAssignmentVerboseResponse object.
@@ -6770,64 +6775,64 @@ class TemplateAssignmentVerboseResponse:
     def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentVerboseResponse':
         """Initialize a TemplateAssignmentVerboseResponse object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in TemplateAssignmentVerboseResponse JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in TemplateAssignmentVerboseResponse JSON')
-        if 'template_id' in _dict:
-            args['template_id'] = _dict.get('template_id')
+        if (template_id := _dict.get('template_id')) is not None:
+            args['template_id'] = template_id
         else:
             raise ValueError('Required property \'template_id\' not present in TemplateAssignmentVerboseResponse JSON')
-        if 'template_version' in _dict:
-            args['template_version'] = _dict.get('template_version')
+        if (template_version := _dict.get('template_version')) is not None:
+            args['template_version'] = template_version
         else:
             raise ValueError(
                 'Required property \'template_version\' not present in TemplateAssignmentVerboseResponse JSON'
             )
-        if 'target_type' in _dict:
-            args['target_type'] = _dict.get('target_type')
+        if (target_type := _dict.get('target_type')) is not None:
+            args['target_type'] = target_type
         else:
             raise ValueError('Required property \'target_type\' not present in TemplateAssignmentVerboseResponse JSON')
-        if 'target' in _dict:
-            args['target'] = _dict.get('target')
+        if (target := _dict.get('target')) is not None:
+            args['target'] = target
         else:
             raise ValueError('Required property \'target\' not present in TemplateAssignmentVerboseResponse JSON')
-        if 'operation' in _dict:
-            args['operation'] = _dict.get('operation')
+        if (operation := _dict.get('operation')) is not None:
+            args['operation'] = operation
         else:
             raise ValueError('Required property \'operation\' not present in TemplateAssignmentVerboseResponse JSON')
-        if 'status' in _dict:
-            args['status'] = _dict.get('status')
+        if (status := _dict.get('status')) is not None:
+            args['status'] = status
         else:
             raise ValueError('Required property \'status\' not present in TemplateAssignmentVerboseResponse JSON')
-        if 'resources' in _dict:
-            args['resources'] = [ResourceListWithTargetAccountID.from_dict(v) for v in _dict.get('resources')]
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [ResourceListWithTargetAccountID.from_dict(v) for v in resources]
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         else:
             raise ValueError('Required property \'href\' not present in TemplateAssignmentVerboseResponse JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in TemplateAssignmentVerboseResponse JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         else:
             raise ValueError(
                 'Required property \'created_by_id\' not present in TemplateAssignmentVerboseResponse JSON'
             )
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
         else:
             raise ValueError(
                 'Required property \'last_modified_at\' not present in TemplateAssignmentVerboseResponse JSON'
             )
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         else:
             raise ValueError(
                 'Required property \'last_modified_by_id\' not present in TemplateAssignmentVerboseResponse JSON'
@@ -6901,26 +6906,26 @@ class TemplateResponse:
     """
     Response output for template.
 
-    :attr str id: The ID of the access group template.
-    :attr str name: The name of the access group template.
-    :attr str description: The description of the access group template.
-    :attr str account_id: The ID of the account to which the access group template
+    :param str id: The ID of the access group template.
+    :param str name: The name of the access group template.
+    :param str description: The description of the access group template.
+    :param str account_id: The ID of the account to which the access group template
           is assigned.
-    :attr str version: The version of the access group template.
-    :attr bool committed: A boolean indicating whether the access group template is
+    :param str version: The version of the access group template.
+    :param bool committed: A boolean indicating whether the access group template is
           committed. You must commit a template before you can assign it to child
           accounts.
-    :attr AccessGroupResponse group: Access Group Component.
-    :attr List[PolicyTemplates] policy_template_references: References to policy
+    :param AccessGroupResponse group: Access Group Component.
+    :param List[PolicyTemplates] policy_template_references: References to policy
           templates assigned to the access group template.
-    :attr str href: The URL of the access group template resource.
-    :attr datetime created_at: The date and time when the access group template was
+    :param str href: The URL of the access group template resource.
+    :param datetime created_at: The date and time when the access group template was
           created.
-    :attr str created_by_id: The ID of the user who created the access group
+    :param str created_by_id: The ID of the user who created the access group
           template.
-    :attr datetime last_modified_at: The date and time when the access group
+    :param datetime last_modified_at: The date and time when the access group
           template was last modified.
-    :attr str last_modified_by_id: The ID of the user who last modified the access
+    :param str last_modified_by_id: The ID of the user who last modified the access
           group template.
     """
 
@@ -6983,58 +6988,56 @@ class TemplateResponse:
     def from_dict(cls, _dict: Dict) -> 'TemplateResponse':
         """Initialize a TemplateResponse object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in TemplateResponse JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in TemplateResponse JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         else:
             raise ValueError('Required property \'description\' not present in TemplateResponse JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in TemplateResponse JSON')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
         else:
             raise ValueError('Required property \'version\' not present in TemplateResponse JSON')
-        if 'committed' in _dict:
-            args['committed'] = _dict.get('committed')
+        if (committed := _dict.get('committed')) is not None:
+            args['committed'] = committed
         else:
             raise ValueError('Required property \'committed\' not present in TemplateResponse JSON')
-        if 'group' in _dict:
-            args['group'] = AccessGroupResponse.from_dict(_dict.get('group'))
+        if (group := _dict.get('group')) is not None:
+            args['group'] = AccessGroupResponse.from_dict(group)
         else:
             raise ValueError('Required property \'group\' not present in TemplateResponse JSON')
-        if 'policy_template_references' in _dict:
-            args['policy_template_references'] = [
-                PolicyTemplates.from_dict(v) for v in _dict.get('policy_template_references')
-            ]
+        if (policy_template_references := _dict.get('policy_template_references')) is not None:
+            args['policy_template_references'] = [PolicyTemplates.from_dict(v) for v in policy_template_references]
         else:
             raise ValueError('Required property \'policy_template_references\' not present in TemplateResponse JSON')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         else:
             raise ValueError('Required property \'href\' not present in TemplateResponse JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in TemplateResponse JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         else:
             raise ValueError('Required property \'created_by_id\' not present in TemplateResponse JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
         else:
             raise ValueError('Required property \'last_modified_at\' not present in TemplateResponse JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         else:
             raise ValueError('Required property \'last_modified_by_id\' not present in TemplateResponse JSON')
         return cls(**args)
@@ -7107,26 +7110,26 @@ class TemplateVersionResponse:
     """
     Response output for template.
 
-    :attr str id: The ID of the access group template.
-    :attr str name: The name of the access group template.
-    :attr str description: The description of the access group template.
-    :attr str account_id: The ID of the account to which the access group template
+    :param str id: The ID of the access group template.
+    :param str name: The name of the access group template.
+    :param str description: The description of the access group template.
+    :param str account_id: The ID of the account to which the access group template
           is assigned.
-    :attr str version: The version of the access group template.
-    :attr bool committed: A boolean indicating whether the access group template is
+    :param str version: The version of the access group template.
+    :param bool committed: A boolean indicating whether the access group template is
           committed. You must commit a template before you can assign it to child
           accounts.
-    :attr AccessGroupResponse group: Access Group Component.
-    :attr List[PolicyTemplates] policy_template_references: References to policy
+    :param AccessGroupResponse group: Access Group Component.
+    :param List[PolicyTemplates] policy_template_references: References to policy
           templates assigned to the access group template.
-    :attr str href: The URL of the access group template resource.
-    :attr datetime created_at: The date and time when the access group template was
+    :param str href: The URL of the access group template resource.
+    :param datetime created_at: The date and time when the access group template was
           created.
-    :attr str created_by_id: The ID of the user who created the access group
+    :param str created_by_id: The ID of the user who created the access group
           template.
-    :attr datetime last_modified_at: The date and time when the access group
+    :param datetime last_modified_at: The date and time when the access group
           template was last modified.
-    :attr str last_modified_by_id: The ID of the user who last modified the access
+    :param str last_modified_by_id: The ID of the user who last modified the access
           group template.
     """
 
@@ -7189,60 +7192,58 @@ class TemplateVersionResponse:
     def from_dict(cls, _dict: Dict) -> 'TemplateVersionResponse':
         """Initialize a TemplateVersionResponse object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in TemplateVersionResponse JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
         else:
             raise ValueError('Required property \'name\' not present in TemplateVersionResponse JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         else:
             raise ValueError('Required property \'description\' not present in TemplateVersionResponse JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in TemplateVersionResponse JSON')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
         else:
             raise ValueError('Required property \'version\' not present in TemplateVersionResponse JSON')
-        if 'committed' in _dict:
-            args['committed'] = _dict.get('committed')
+        if (committed := _dict.get('committed')) is not None:
+            args['committed'] = committed
         else:
             raise ValueError('Required property \'committed\' not present in TemplateVersionResponse JSON')
-        if 'group' in _dict:
-            args['group'] = AccessGroupResponse.from_dict(_dict.get('group'))
+        if (group := _dict.get('group')) is not None:
+            args['group'] = AccessGroupResponse.from_dict(group)
         else:
             raise ValueError('Required property \'group\' not present in TemplateVersionResponse JSON')
-        if 'policy_template_references' in _dict:
-            args['policy_template_references'] = [
-                PolicyTemplates.from_dict(v) for v in _dict.get('policy_template_references')
-            ]
+        if (policy_template_references := _dict.get('policy_template_references')) is not None:
+            args['policy_template_references'] = [PolicyTemplates.from_dict(v) for v in policy_template_references]
         else:
             raise ValueError(
                 'Required property \'policy_template_references\' not present in TemplateVersionResponse JSON'
             )
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
         else:
             raise ValueError('Required property \'href\' not present in TemplateVersionResponse JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
         else:
             raise ValueError('Required property \'created_at\' not present in TemplateVersionResponse JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
         else:
             raise ValueError('Required property \'created_by_id\' not present in TemplateVersionResponse JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
         else:
             raise ValueError('Required property \'last_modified_at\' not present in TemplateVersionResponse JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
         else:
             raise ValueError('Required property \'last_modified_by_id\' not present in TemplateVersionResponse JSON')
         return cls(**args)
@@ -7334,6 +7335,7 @@ class AccessGroupsPager:
         sort: str = None,
         show_federated: bool = None,
         hide_public_access: bool = None,
+        show_crn: bool = None,
     ) -> None:
         """
         Initialize a AccessGroupsPager object.
@@ -7369,6 +7371,8 @@ class AccessGroupsPager:
                exist for the group.
         :param bool hide_public_access: (optional) If hide_public_access is true,
                do not include the Public Access Group in the results.
+        :param bool show_crn: (optional) If show_crn is true, group CRN will be
+               included in the response.
         """
         self._has_next = True
         self._client = client
@@ -7382,6 +7386,7 @@ class AccessGroupsPager:
         self._sort = sort
         self._show_federated = show_federated
         self._hide_public_access = hide_public_access
+        self._show_crn = show_crn
 
     def has_next(self) -> bool:
         """
@@ -7408,6 +7413,7 @@ class AccessGroupsPager:
             sort=self._sort,
             show_federated=self._show_federated,
             hide_public_access=self._hide_public_access,
+            show_crn=self._show_crn,
             offset=self._page_context.get('next'),
         ).get_result()
 

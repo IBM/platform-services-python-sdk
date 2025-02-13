@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,15 +44,8 @@ def preprocess_url(operation_path: str):
     The returned request URL is used to register the mock response so it needs
     to match the request URL that is formed by the requests library.
     """
-    # First, unquote the path since it might have some quoted/escaped characters in it
-    # due to how the generator inserts the operation paths into the unit test code.
-    operation_path = urllib.parse.unquote(operation_path)
 
-    # Next, quote the path using urllib so that we approximate what will
-    # happen during request processing.
-    operation_path = urllib.parse.quote(operation_path, safe='/')
-
-    # Finally, form the request URL from the base URL and operation path.
+    # Form the request URL from the base URL and operation path.
     request_url = _base_url + operation_path
 
     # If the request url does NOT end with a /, then just return it as-is.
@@ -276,6 +269,7 @@ class TestListAccessGroups:
         sort = 'name'
         show_federated = False
         hide_public_access = False
+        show_crn = False
 
         # Invoke method
         response = _service.list_access_groups(
@@ -289,6 +283,7 @@ class TestListAccessGroups:
             sort=sort,
             show_federated=show_federated,
             hide_public_access=hide_public_access,
+            show_crn=show_crn,
             headers={},
         )
 
@@ -307,6 +302,7 @@ class TestListAccessGroups:
         assert 'sort={}'.format(sort) in query_string
         assert 'show_federated={}'.format('true' if show_federated else 'false') in query_string
         assert 'hide_public_access={}'.format('true' if hide_public_access else 'false') in query_string
+        assert 'show_crn={}'.format('true' if show_crn else 'false') in query_string
 
     def test_list_access_groups_all_params_with_retries(self):
         # Enable retries and run test_list_access_groups_all_params.
@@ -433,6 +429,7 @@ class TestListAccessGroups:
             sort='name',
             show_federated=False,
             hide_public_access=False,
+            show_crn=False,
         )
         while pager.has_next():
             next_page = pager.get_next()
@@ -476,6 +473,7 @@ class TestListAccessGroups:
             sort='name',
             show_federated=False,
             hide_public_access=False,
+            show_crn=False,
         )
         all_results = pager.get_all()
         assert all_results is not None
@@ -507,12 +505,14 @@ class TestGetAccessGroup:
         access_group_id = 'testString'
         transaction_id = 'testString'
         show_federated = False
+        show_crn = False
 
         # Invoke method
         response = _service.get_access_group(
             access_group_id,
             transaction_id=transaction_id,
             show_federated=show_federated,
+            show_crn=show_crn,
             headers={},
         )
 
@@ -523,6 +523,7 @@ class TestGetAccessGroup:
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'show_federated={}'.format('true' if show_federated else 'false') in query_string
+        assert 'show_crn={}'.format('true' if show_crn else 'false') in query_string
 
     def test_get_access_group_all_params_with_retries(self):
         # Enable retries and run test_get_access_group_all_params.

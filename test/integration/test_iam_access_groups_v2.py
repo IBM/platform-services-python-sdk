@@ -375,7 +375,7 @@ class TestIamAccessGroupsV2:
             )
         except ApiException as e:
             assert e.http_response.status_code == 404
-            assert e.code == 404
+            assert e.status_code == 404
             assert self.testUserId in e.message
 
     @needscredentials
@@ -390,7 +390,7 @@ class TestIamAccessGroupsV2:
             )
         except ApiException as e:
             assert e.http_response.status_code == 404
-            assert e.code == 404
+            assert e.status_code == 404
             assert self.testGroupId in e.message
 
     @needscredentials
