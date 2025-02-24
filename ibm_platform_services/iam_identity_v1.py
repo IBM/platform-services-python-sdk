@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.93.0-c40121e6-20240729-182103
+# IBM OpenAPI SDK Code Generator Version: 3.98.0-8be2046a-20241205-162752
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -56,7 +56,9 @@ class IamIdentityV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -96,9 +98,7 @@ class IamIdentityV1(BaseService):
 
         Returns the list of API key details for a given service or user IAM ID and account
         ID. Users can manage user API keys for themself, or service ID API keys for
-        service IDs that are bound to an entity they have access to. In case of service
-        IDs and their API keys, a user must be either an account owner, a IBM Cloud org
-        manager or IBM Cloud space developer in order to manage service IDs of the entity.
+        service IDs they have access to.
 
         :param str account_id: (optional) Account ID of the API keys to query. If a
                service IAM ID is specified in iam_id then account_id must match the
@@ -182,8 +182,7 @@ class IamIdentityV1(BaseService):
         Create an API key.
 
         Creates an API key for a UserID or service ID. Users can manage user API keys for
-        themself, or service ID API keys for service IDs that are bound to an entity they
-        have access to.
+        themself, or service ID API keys for service IDs they have access to.
 
         :param str name: Name of the API key. The name is not checked for
                uniqueness. Therefore multiple names with the same value can exist. Access
@@ -204,8 +203,10 @@ class IamIdentityV1(BaseService):
                API key value is retrievable in the future by using the Get details of an
                API key request. If you create an API key for a user, you must specify
                `false` or omit the value. We don't allow storing of API keys for users.
-        :param bool support_sessions: (optional) Defines if the API key supports
-               sessions. Sessions are only supported for user apikeys.
+        :param bool support_sessions: (optional) Defines whether you can manage CLI
+               login sessions for the API key. When `true`, sessions are created and can
+               be reviewed or revoked. When `false`, no sessions are tracked. To block
+               access, delete or rotate the API key. Available only for user API keys.
         :param str action_when_leaked: (optional) Defines the action to take when
                API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param str entity_lock: (optional) Indicates if the API key is locked for
@@ -273,8 +274,7 @@ class IamIdentityV1(BaseService):
         Get details of an API key by its value.
 
         Returns the details of an API key by its value. Users can manage user API keys for
-        themself, or service ID API keys for service IDs that are bound to an entity they
-        have access to.
+        themself, or service ID API keys for service IDs they have access to.
 
         :param str iam_api_key: (optional) API key value.
         :param bool include_history: (optional) Defines if the entity history is
@@ -326,10 +326,7 @@ class IamIdentityV1(BaseService):
         Get details of an API key.
 
         Returns the details of an API key. Users can manage user API keys for themself, or
-        service ID API keys for service IDs that are bound to an entity they have access
-        to. In case of service IDs and their API keys, a user must be either an account
-        owner, a IBM Cloud org manager or IBM Cloud space developer in order to manage
-        service IDs of the entity.
+        service ID API keys for service IDs they have access to.
 
         :param str id: Unique ID of the API key.
         :param bool include_history: (optional) Defines if the entity history is
@@ -393,9 +390,8 @@ class IamIdentityV1(BaseService):
         Updates properties of an API key. This does NOT affect existing access tokens.
         Their token content will stay unchanged until the access token is refreshed. To
         update an API key, pass the property to be modified. To delete one property's
-        value, pass the property with an empty value "".Users can manage user API keys for
-        themself, or service ID API keys for service IDs that are bound to an entity they
-        have access to.
+        value, pass the property with an empty value "". Users can manage user API keys
+        for themself, or service ID API keys for service IDs they have access to.
 
         :param str id: Unique ID of the API key to be updated.
         :param str if_match: Version of the API key to be updated. Specify the
@@ -408,8 +404,10 @@ class IamIdentityV1(BaseService):
         :param str description: (optional) The description of the API key to
                update. If specified an empty description will clear the description of the
                API key. If a non empty value is provided the API key will be updated.
-        :param bool support_sessions: (optional) Defines if the API key supports
-               sessions. Sessions are only supported for user apikeys.
+        :param bool support_sessions: (optional) Defines whether you can manage CLI
+               login sessions for the API key. When `true`, sessions are created and can
+               be reviewed or revoked. When `false`, no sessions are tracked. To block
+               access, delete or rotate the API key. Available only for user API keys.
         :param str action_when_leaked: (optional) Defines the action to take when
                API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param dict headers: A `dict` containing the request headers
@@ -469,8 +467,8 @@ class IamIdentityV1(BaseService):
         Deletes an API key.
 
         Deletes an API key. Existing tokens will remain valid until expired. Users can
-        manage user API keys for themself, or service ID API keys for service IDs that are
-        bound to an entity they have access to.
+        manage user API keys for themself, or service ID API keys for service IDs they
+        have access to.
 
         :param str id: Unique ID of the API key.
         :param dict headers: A `dict` containing the request headers
@@ -558,10 +556,7 @@ class IamIdentityV1(BaseService):
         Unlock the API key.
 
         Unlocks an API key by ID. Users can manage user API keys for themself, or service
-        ID API keys for service IDs that are bound to an entity they have access to. In
-        case of service IDs and their API keys, a user must be either an account owner, a
-        IBM Cloud org manager or IBM Cloud space developer in order to manage service IDs
-        of the entity.
+        ID API keys for service IDs they have access to.
 
         :param str id: Unique ID of the API key.
         :param dict headers: A `dict` containing the request headers
@@ -602,10 +597,10 @@ class IamIdentityV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        disable the API key.
+        Disable the API key.
 
         Disable an API key. Users can manage user API keys for themself, or service ID API
-        keys for service IDs that are bound to an entity they have access to.
+        keys for service IDs they have access to.
 
         :param str id: Unique ID of the API key.
         :param dict headers: A `dict` containing the request headers
@@ -649,7 +644,7 @@ class IamIdentityV1(BaseService):
         Enable the API key.
 
         Enable an API key. Users can manage user API keys for themself, or service ID API
-        keys for service IDs that are bound to an entity they have access to.
+        keys for service IDs they have access to.
 
         :param str id: Unique ID of the API key.
         :param dict headers: A `dict` containing the request headers
@@ -704,9 +699,8 @@ class IamIdentityV1(BaseService):
         List service IDs.
 
         Returns a list of service IDs. Users can manage user API keys for themself, or
-        service ID API keys for service IDs that are bound to an entity they have access
-        to. Note: apikey details are only included in the response when creating a Service
-        ID with an api key.
+        service ID API keys for service IDs they have access to. Note: apikey details are
+        only included in the response when creating a Service ID with an api key.
 
         :param str account_id: (optional) Account ID of the service ID(s) to query.
                This parameter is required (unless using a pagetoken).
@@ -777,8 +771,7 @@ class IamIdentityV1(BaseService):
         Create a service ID.
 
         Creates a service ID for an IBM Cloud account. Users can manage user API keys for
-        themself, or service ID API keys for service IDs that are bound to an entity they
-        have access to.
+        themself, or service ID API keys for service IDs they have access to.
 
         :param str account_id: ID of the account the service ID belongs to.
         :param str name: Name of the Service Id. The name is not checked for
@@ -853,9 +846,8 @@ class IamIdentityV1(BaseService):
         Get details of a service ID.
 
         Returns the details of a service ID. Users can manage user API keys for themself,
-        or service ID API keys for service IDs that are bound to an entity they have
-        access to. Note: apikey details are only included in the response when creating a
-        Service ID with an api key.
+        or service ID API keys for service IDs they have access to. Note: apikey details
+        are only included in the response when creating a Service ID with an api key.
 
         :param str id: Unique ID of the service ID.
         :param bool include_history: (optional) Defines if the entity history is
@@ -919,9 +911,9 @@ class IamIdentityV1(BaseService):
         Their token content will stay unchanged until the access token is refreshed. To
         update a service ID, pass the property to be modified. To delete one property's
         value, pass the property with an empty value "".Users can manage user API keys for
-        themself, or service ID API keys for service IDs that are bound to an entity they
-        have access to. Note: apikey details are only included in the response when
-        creating a Service ID with an apikey.
+        themself, or service ID API keys for service IDs they have access to. Note: apikey
+        details are only included in the response when creating a Service ID with an
+        apikey.
 
         :param str id: Unique ID of the service ID to be updated.
         :param str if_match: Version of the service ID to be updated. Specify the
@@ -998,8 +990,7 @@ class IamIdentityV1(BaseService):
         service ID, all associated API keys are deleted. In case a Delete Conflict (status
         code 409) a retry of the request may help as the service ID is only deleted if the
         associated API keys were successfully deleted before. Users can manage user API
-        keys for themself, or service ID API keys for service IDs that are bound to an
-        entity they have access to.
+        keys for themself, or service ID API keys for service IDs they have access to.
 
         :param str id: Unique ID of the service ID.
         :param dict headers: A `dict` containing the request headers
@@ -1043,10 +1034,7 @@ class IamIdentityV1(BaseService):
         Lock the service ID.
 
         Locks a service ID by ID. Users can manage user API keys for themself, or service
-        ID API keys for service IDs that are bound to an entity they have access to. In
-        case of service IDs and their API keys, a user must be either an account owner, a
-        IBM Cloud org manager or IBM Cloud space developer in order to manage service IDs
-        of the entity.
+        ID API keys for service IDs they have access to.
 
         :param str id: Unique ID of the service ID.
         :param dict headers: A `dict` containing the request headers
@@ -1090,10 +1078,7 @@ class IamIdentityV1(BaseService):
         Unlock the service ID.
 
         Unlocks a service ID by ID. Users can manage user API keys for themself, or
-        service ID API keys for service IDs that are bound to an entity they have access
-        to. In case of service IDs and their API keys, a user must be either an account
-        owner, a IBM Cloud org manager or IBM Cloud space developer in order to manage
-        service IDs of the entity.
+        service ID API keys for service IDs they have access to.
 
         :param str id: Unique ID of the service ID.
         :param dict headers: A `dict` containing the request headers
@@ -3722,6 +3707,265 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
+    # identityPreferences
+    #########################
+
+    def update_preference_on_scope_account(
+        self,
+        account_id: str,
+        iam_id: str,
+        service: str,
+        preference_id: str,
+        value_string: str,
+        *,
+        value_list_of_strings: Optional[List[str]] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update Identity Preference on scope account.
+
+        Update one Identity Preference on scope 'account'. supported preferences:
+          The following preferences are storing values for identities inside an account,
+          i.e. for each account that an identity is member of, the value stored might be
+        different.
+          This means, users who might be member of multiple accounts can have multiple
+        preferences, one per account.
+          Identities like Service Ids or Trusted Profiles can only exist in one account,
+          therefore they can only have one preference inside their related account.
+          preference: console/landing_page
+            service: console
+            preferenceId: landing_page
+            supportedIdentityType: Trusted Profiles, Users
+            type: string
+            validation: valid URL (without host part), e.g. /billing or /iam
+          preference: console/global_left_navigation
+            service: console
+            preferenceId: global_left_navigation
+            supportedIdentityType: Trusted Profiles, Users
+            type: list of strings
+            validation: each entry in the list of strings must match the identifier of one
+        navigation entry in the console.
+
+        :param str account_id: Account id to update preference for.
+        :param str iam_id: IAM id to update the preference for.
+        :param str service: Service of the preference to be updated.
+        :param str preference_id: Identifier of preference to be updated.
+        :param str value_string: contains a string value of the preference. only
+               one value property is set, either 'value_string' or 'value_list_of_strings'
+               is present.
+        :param List[str] value_list_of_strings: (optional) contains a list of
+               string values of the preference. only one value property is set, either
+               'value_string' or 'value_list_of_strings' is present.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `IdentityPreferenceResponse` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not iam_id:
+            raise ValueError('iam_id must be provided')
+        if not service:
+            raise ValueError('service must be provided')
+        if not preference_id:
+            raise ValueError('preference_id must be provided')
+        if value_string is None:
+            raise ValueError('value_string must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_preference_on_scope_account',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'value_string': value_string,
+            'value_list_of_strings': value_list_of_strings,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id', 'iam_id', 'service', 'preference_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id, service, preference_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_preferences_on_scope_account(
+        self,
+        account_id: str,
+        iam_id: str,
+        service: str,
+        preference_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete Identity Preference on scope account.
+
+        Delete one Identity Preference on scope 'account'.
+
+        :param str account_id: Account id to delete preference for.
+        :param str iam_id: IAM id to delete the preference for.
+        :param str service: Service of the preference to be deleted.
+        :param str preference_id: Identifier of preference to be deleted.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not iam_id:
+            raise ValueError('iam_id must be provided')
+        if not service:
+            raise ValueError('service must be provided')
+        if not preference_id:
+            raise ValueError('preference_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_preferences_on_scope_account',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['account_id', 'iam_id', 'service', 'preference_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id, service, preference_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_preferences_on_scope_account(
+        self,
+        account_id: str,
+        iam_id: str,
+        service: str,
+        preference_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get Identity Preference on scope account.
+
+        Get one Identity Preference on scope 'account'.
+
+        :param str account_id: Account id to get preference for.
+        :param str iam_id: IAM id to get the preference for.
+        :param str service: Service of the preference to be fetched.
+        :param str preference_id: Identifier of preference to be fetched.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `IdentityPreferenceResponse` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not iam_id:
+            raise ValueError('iam_id must be provided')
+        if not service:
+            raise ValueError('service must be provided')
+        if not preference_id:
+            raise ValueError('preference_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_preferences_on_scope_account',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id', 'iam_id', 'service', 'preference_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id, service, preference_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_all_preferences_on_scope_account(
+        self,
+        account_id: str,
+        iam_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get all Identity Preferences for one account.
+
+        Get all Identity Preferences for one account / user combination.
+
+        :param str account_id: Account id to get preferences for.
+        :param str iam_id: IAM id to get the preferences for.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `IdentityPreferencesResponse` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not iam_id:
+            raise ValueError('iam_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_all_preferences_on_scope_account',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id', 'iam_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/preferences/accounts/{account_id}/identities/{iam_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
     # trustedProfileAssignments
     #########################
 
@@ -4692,7 +4936,6 @@ class ListApiKeysEnums:
 
         ENTITY = 'entity'
         ACCOUNT = 'account'
-
     class Type(str, Enum):
         """
         Optional parameter to filter the type of the queried API keys. Can be 'user' or
@@ -4701,7 +4944,6 @@ class ListApiKeysEnums:
 
         USER = 'user'
         SERVICEID = 'serviceid'
-
     class Order(str, Enum):
         """
         Optional sort order, valid values are asc and desc. Default: asc.
@@ -4796,7 +5038,6 @@ class ListAccountSettingsAssignmentsEnums:
 
         ACCOUNT = 'Account'
         ACCOUNTGROUP = 'AccountGroup'
-
     class Sort(str, Enum):
         """
         If specified, the items are sorted by the value of this property.
@@ -4805,7 +5046,6 @@ class ListAccountSettingsAssignmentsEnums:
         TEMPLATE_ID = 'template_id'
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
-
     class Order(str, Enum):
         """
         Sort order.
@@ -4829,7 +5069,6 @@ class ListAccountSettingsTemplatesEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -4853,7 +5092,6 @@ class ListVersionsOfAccountSettingsTemplateEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -4875,7 +5113,6 @@ class ListTrustedProfileAssignmentsEnums:
 
         ACCOUNT = 'Account'
         ACCOUNTGROUP = 'AccountGroup'
-
     class Sort(str, Enum):
         """
         If specified, the items are sorted by the value of this property.
@@ -4884,7 +5121,6 @@ class ListTrustedProfileAssignmentsEnums:
         TEMPLATE_ID = 'template_id'
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
-
     class Order(str, Enum):
         """
         Sort order.
@@ -4908,7 +5144,6 @@ class ListProfileTemplatesEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -4932,7 +5167,6 @@ class ListVersionsOfProfileTemplateEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -5204,13 +5438,9 @@ class AccountSettingsAccountSection:
             args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
             args['max_sessions_per_identity'] = max_sessions_per_identity
-        if (
-            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
-        ) is not None:
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
             args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
-        if (
-            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
-        ) is not None:
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
             args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         return cls(**args)
 
@@ -5254,15 +5484,9 @@ class AccountSettingsAccountSection:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         return _dict
 
@@ -5297,6 +5521,7 @@ class AccountSettingsAccountSection:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating platform API keys is access controlled. Valid
@@ -5309,6 +5534,7 @@ class AccountSettingsAccountSection:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -5329,6 +5555,7 @@ class AccountSettingsAccountSection:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class AccountSettingsAssignedTemplatesSection:
@@ -5494,13 +5721,9 @@ class AccountSettingsAssignedTemplatesSection:
             args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
             args['max_sessions_per_identity'] = max_sessions_per_identity
-        if (
-            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
-        ) is not None:
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
             args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
-        if (
-            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
-        ) is not None:
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
             args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         return cls(**args)
 
@@ -5540,15 +5763,9 @@ class AccountSettingsAssignedTemplatesSection:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         return _dict
 
@@ -5583,6 +5800,7 @@ class AccountSettingsAssignedTemplatesSection:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating platform API keys is access controlled. Valid
@@ -5595,6 +5813,7 @@ class AccountSettingsAssignedTemplatesSection:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -5615,6 +5834,7 @@ class AccountSettingsAssignedTemplatesSection:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class AccountSettingsComponent:
@@ -5761,13 +5981,9 @@ class AccountSettingsComponent:
             args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
             args['max_sessions_per_identity'] = max_sessions_per_identity
-        if (
-            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
-        ) is not None:
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
             args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
-        if (
-            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
-        ) is not None:
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
             args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         return cls(**args)
 
@@ -5801,15 +6017,9 @@ class AccountSettingsComponent:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         return _dict
 
@@ -5844,6 +6054,7 @@ class AccountSettingsComponent:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating platform API keys is access controlled. Valid
@@ -5856,6 +6067,7 @@ class AccountSettingsComponent:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -5876,6 +6088,7 @@ class AccountSettingsComponent:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class AccountSettingsEffectiveSection:
@@ -6023,13 +6236,9 @@ class AccountSettingsEffectiveSection:
             args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
             args['max_sessions_per_identity'] = max_sessions_per_identity
-        if (
-            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
-        ) is not None:
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
             args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
-        if (
-            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
-        ) is not None:
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
             args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         return cls(**args)
 
@@ -6063,15 +6272,9 @@ class AccountSettingsEffectiveSection:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         return _dict
 
@@ -6106,6 +6309,7 @@ class AccountSettingsEffectiveSection:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating platform API keys is access controlled. Valid
@@ -6118,6 +6322,7 @@ class AccountSettingsEffectiveSection:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -6138,6 +6343,7 @@ class AccountSettingsEffectiveSection:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class AccountSettingsResponse:
@@ -6295,15 +6501,11 @@ class AccountSettingsResponse:
         if (restrict_create_service_id := _dict.get('restrict_create_service_id')) is not None:
             args['restrict_create_service_id'] = restrict_create_service_id
         else:
-            raise ValueError(
-                'Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON')
         if (restrict_create_platform_apikey := _dict.get('restrict_create_platform_apikey')) is not None:
             args['restrict_create_platform_apikey'] = restrict_create_platform_apikey
         else:
-            raise ValueError(
-                'Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON')
         if (allowed_ip_addresses := _dict.get('allowed_ip_addresses')) is not None:
             args['allowed_ip_addresses'] = allowed_ip_addresses
         else:
@@ -6325,37 +6527,23 @@ class AccountSettingsResponse:
         if (session_expiration_in_seconds := _dict.get('session_expiration_in_seconds')) is not None:
             args['session_expiration_in_seconds'] = session_expiration_in_seconds
         else:
-            raise ValueError(
-                'Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
         if (session_invalidation_in_seconds := _dict.get('session_invalidation_in_seconds')) is not None:
             args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         else:
-            raise ValueError(
-                'Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON')
         if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
             args['max_sessions_per_identity'] = max_sessions_per_identity
         else:
-            raise ValueError(
-                'Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON'
-            )
-        if (
-            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
-        ) is not None:
+            raise ValueError('Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON')
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
             args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
         else:
-            raise ValueError(
-                'Required property \'system_access_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
-        if (
-            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
-        ) is not None:
+            raise ValueError('Required property \'system_access_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
             args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         else:
-            raise ValueError(
-                'Required property \'system_refresh_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'system_refresh_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
         return cls(**args)
 
     @classmethod
@@ -6405,15 +6593,9 @@ class AccountSettingsResponse:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         return _dict
 
@@ -6448,6 +6630,7 @@ class AccountSettingsResponse:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating platform API keys is access controlled. Valid
@@ -6460,6 +6643,7 @@ class AccountSettingsResponse:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -6480,6 +6664,7 @@ class AccountSettingsResponse:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class AccountSettingsTemplateList:
@@ -6556,13 +6741,9 @@ class AccountSettingsTemplateList:
         if (next := _dict.get('next')) is not None:
             args['next'] = next
         if (account_settings_templates := _dict.get('account_settings_templates')) is not None:
-            args['account_settings_templates'] = [
-                AccountSettingsTemplateResponse.from_dict(v) for v in account_settings_templates
-            ]
+            args['account_settings_templates'] = [AccountSettingsTemplateResponse.from_dict(v) for v in account_settings_templates]
         else:
-            raise ValueError(
-                'Required property \'account_settings_templates\' not present in AccountSettingsTemplateList JSON'
-            )
+            raise ValueError('Required property \'account_settings_templates\' not present in AccountSettingsTemplateList JSON')
         return cls(**args)
 
     @classmethod
@@ -6726,9 +6907,7 @@ class AccountSettingsTemplateResponse:
         if (account_settings := _dict.get('account_settings')) is not None:
             args['account_settings'] = AccountSettingsComponent.from_dict(account_settings)
         else:
-            raise ValueError(
-                'Required property \'account_settings\' not present in AccountSettingsTemplateResponse JSON'
-            )
+            raise ValueError('Required property \'account_settings\' not present in AccountSettingsTemplateResponse JSON')
         if (history := _dict.get('history')) is not None:
             args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
         if (entity_tag := _dict.get('entity_tag')) is not None:
@@ -6916,6 +7095,7 @@ class AccountSettingsUserMFA:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class ActionControls:
@@ -7305,8 +7485,10 @@ class ApiKey:
     :param str name: Name of the API key. The name is not checked for uniqueness.
           Therefore multiple names with the same value can exist. Access is done via the
           UUID of the API key.
-    :param bool support_sessions: (optional) Defines if the API key supports
-          sessions. Sessions are only supported for user apikeys.
+    :param bool support_sessions: (optional) Defines whether you can manage CLI
+          login sessions for the API key. When `true`, sessions are created and can be
+          reviewed or revoked. When `false`, no sessions are tracked. To block access,
+          delete or rotate the API key. Available only for user API keys.
     :param str action_when_leaked: (optional) Defines the action to take when API
           key is leaked, valid values are 'none', 'disable' and 'delete'.
     :param str description: (optional) The optional description of the API key. The
@@ -7379,8 +7561,10 @@ class ApiKey:
                of the creation date in ISO format.
         :param datetime modified_at: (optional) If set contains a date time string
                of the last modification date in ISO format.
-        :param bool support_sessions: (optional) Defines if the API key supports
-               sessions. Sessions are only supported for user apikeys.
+        :param bool support_sessions: (optional) Defines whether you can manage CLI
+               login sessions for the API key. When `true`, sessions are created and can
+               be reviewed or revoked. When `false`, no sessions are tracked. To block
+               access, delete or rotate the API key. Available only for user API keys.
         :param str action_when_leaked: (optional) Defines the action to take when
                API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param str description: (optional) The optional description of the API key.
@@ -8186,9 +8370,7 @@ class EffectiveAccountSettingsResponse:
         else:
             raise ValueError('Required property \'account\' not present in EffectiveAccountSettingsResponse JSON')
         if (assigned_templates := _dict.get('assigned_templates')) is not None:
-            args['assigned_templates'] = [
-                AccountSettingsAssignedTemplatesSection.from_dict(v) for v in assigned_templates
-            ]
+            args['assigned_templates'] = [AccountSettingsAssignedTemplatesSection.from_dict(v) for v in assigned_templates]
         return cls(**args)
 
     @classmethod
@@ -8379,6 +8561,7 @@ class EffectiveAccountSettingsUserMFA:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class EnityHistoryRecord:
@@ -8933,6 +9116,7 @@ class IdBasedMfaEnrollment:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
+
     class TraitUserSpecificEnum(str, Enum):
         """
         Defines the MFA trait for the account. Valid values:
@@ -8952,6 +9136,7 @@ class IdBasedMfaEnrollment:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
     class TraitEffectiveEnum(str, Enum):
         """
@@ -8973,6 +9158,7 @@ class IdBasedMfaEnrollment:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
+
     class ComplyStateEnum(str, Enum):
         """
         Defines comply state for the account. Valid values:
@@ -8986,6 +9172,183 @@ class IdBasedMfaEnrollment:
         NO = 'NO'
         ACCOUNT = 'ACCOUNT'
         CROSS_ACCOUNT = 'CROSS_ACCOUNT'
+
+
+
+class IdentityPreferenceResponse:
+    """
+    IdentityPreferenceResponse.
+
+    :param str service: (optional) Service of the preference.
+    :param str id: (optional) Unique ID of the preference.
+    :param str account_id: (optional) Account ID of the preference, only present for
+          scope 'account'.
+    :param str scope: (optional) Scope of the preference, 'global' or 'account'.
+    :param str value_string: (optional) String value of the preference, only one
+          value property is set, either 'value_string' or 'value_list_of_strings' is
+          present.
+    :param List[str] value_list_of_strings: (optional) List of value of the
+          preference, only one value property is set, either 'value_string' or
+          'value_list_of_strings' is present.
+    """
+
+    def __init__(
+        self,
+        *,
+        service: Optional[str] = None,
+        id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        scope: Optional[str] = None,
+        value_string: Optional[str] = None,
+        value_list_of_strings: Optional[List[str]] = None,
+    ) -> None:
+        """
+        Initialize a IdentityPreferenceResponse object.
+
+        :param str service: (optional) Service of the preference.
+        :param str id: (optional) Unique ID of the preference.
+        :param str account_id: (optional) Account ID of the preference, only
+               present for scope 'account'.
+        :param str scope: (optional) Scope of the preference, 'global' or
+               'account'.
+        :param str value_string: (optional) String value of the preference, only
+               one value property is set, either 'value_string' or 'value_list_of_strings'
+               is present.
+        :param List[str] value_list_of_strings: (optional) List of value of the
+               preference, only one value property is set, either 'value_string' or
+               'value_list_of_strings' is present.
+        """
+        self.service = service
+        self.id = id
+        self.account_id = account_id
+        self.scope = scope
+        self.value_string = value_string
+        self.value_list_of_strings = value_list_of_strings
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityPreferenceResponse':
+        """Initialize a IdentityPreferenceResponse object from a json dictionary."""
+        args = {}
+        if (service := _dict.get('service')) is not None:
+            args['service'] = service
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (scope := _dict.get('scope')) is not None:
+            args['scope'] = scope
+        if (value_string := _dict.get('value_string')) is not None:
+            args['value_string'] = value_string
+        if (value_list_of_strings := _dict.get('value_list_of_strings')) is not None:
+            args['value_list_of_strings'] = value_list_of_strings
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityPreferenceResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'service') and self.service is not None:
+            _dict['service'] = self.service
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'scope') and self.scope is not None:
+            _dict['scope'] = self.scope
+        if hasattr(self, 'value_string') and self.value_string is not None:
+            _dict['value_string'] = self.value_string
+        if hasattr(self, 'value_list_of_strings') and self.value_list_of_strings is not None:
+            _dict['value_list_of_strings'] = self.value_list_of_strings
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityPreferenceResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityPreferenceResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityPreferenceResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class IdentityPreferencesResponse:
+    """
+    IdentityPreferencesResponse.
+
+    :param List[IdentityPreferenceResponse] preferences: List of Identity
+          Preferences.
+    """
+
+    def __init__(
+        self,
+        preferences: List['IdentityPreferenceResponse'],
+    ) -> None:
+        """
+        Initialize a IdentityPreferencesResponse object.
+
+        :param List[IdentityPreferenceResponse] preferences: List of Identity
+               Preferences.
+        """
+        self.preferences = preferences
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityPreferencesResponse':
+        """Initialize a IdentityPreferencesResponse object from a json dictionary."""
+        args = {}
+        if (preferences := _dict.get('preferences')) is not None:
+            args['preferences'] = [IdentityPreferenceResponse.from_dict(v) for v in preferences]
+        else:
+            raise ValueError('Required property \'preferences\' not present in IdentityPreferencesResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityPreferencesResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'preferences') and self.preferences is not None:
+            preferences_list = []
+            for v in self.preferences:
+                if isinstance(v, dict):
+                    preferences_list.append(v)
+                else:
+                    preferences_list.append(v.to_dict())
+            _dict['preferences'] = preferences_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityPreferencesResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityPreferencesResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityPreferencesResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class MfaEnrollmentTypeStatus:
@@ -9721,6 +10084,7 @@ class ProfileIdentityRequest:
         CRN = 'crn'
 
 
+
 class ProfileIdentityResponse:
     """
     ProfileIdentityResponse.
@@ -9842,6 +10206,7 @@ class ProfileIdentityResponse:
         USER = 'user'
         SERVICEID = 'serviceid'
         CRN = 'crn'
+
 
 
 class ProfileLink:
@@ -11504,9 +11869,7 @@ class TemplateAssignmentResponseResource:
         if (account_settings := _dict.get('account_settings')) is not None:
             args['account_settings'] = TemplateAssignmentResponseResourceDetail.from_dict(account_settings)
         if (policy_template_refs := _dict.get('policy_template_refs')) is not None:
-            args['policy_template_refs'] = [
-                TemplateAssignmentResponseResourceDetail.from_dict(v) for v in policy_template_refs
-            ]
+            args['policy_template_refs'] = [TemplateAssignmentResponseResourceDetail.from_dict(v) for v in policy_template_refs]
         return cls(**args)
 
     @classmethod
@@ -11616,9 +11979,7 @@ class TemplateAssignmentResponseResourceDetail:
         if (status := _dict.get('status')) is not None:
             args['status'] = status
         else:
-            raise ValueError(
-                'Required property \'status\' not present in TemplateAssignmentResponseResourceDetail JSON'
-            )
+            raise ValueError('Required property \'status\' not present in TemplateAssignmentResponseResourceDetail JSON')
         return cls(**args)
 
     @classmethod
@@ -12221,6 +12582,7 @@ class TrustedProfileTemplateClaimRule:
         PROFILE_SAML = 'Profile-SAML'
 
 
+
 class TrustedProfileTemplateList:
     """
     TrustedProfileTemplateList.
@@ -12478,9 +12840,7 @@ class TrustedProfileTemplateResponse:
         if (profile := _dict.get('profile')) is not None:
             args['profile'] = TemplateProfileComponentResponse.from_dict(profile)
         if (policy_template_references := _dict.get('policy_template_references')) is not None:
-            args['policy_template_references'] = [
-                PolicyTemplateReference.from_dict(v) for v in policy_template_references
-            ]
+            args['policy_template_references'] = [PolicyTemplateReference.from_dict(v) for v in policy_template_references]
         if (action_controls := _dict.get('action_controls')) is not None:
             args['action_controls'] = ActionControls.from_dict(action_controls)
         if (history := _dict.get('history')) is not None:
