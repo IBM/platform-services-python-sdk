@@ -66,6 +66,8 @@ account_settings_template_etag = None
 account_settings_template_assignment_id = None
 account_settings_template_assignment_etag = None
 
+iam_id_for_preferences = None
+
 
 class TestIamIdentityV1:
     """
@@ -91,6 +93,7 @@ class TestIamIdentityV1:
             cls.apikey = cls.config['APIKEY']
             cls.enterprise_account_id = cls.config['ENTERPRISE_ACCOUNT_ID']
             cls.enterprise_subaccount_id = cls.config['ENTERPRISE_SUBACCOUNT_ID']
+            cls.iam_id_for_preferences = cls.config['IAM_ID_FOR_PREFERENCES']
 
             assert cls.account_id is not None
             assert cls.iam_id is not None
@@ -106,6 +109,9 @@ class TestIamIdentityV1:
             cls.profile_template_name = 'Python-SDK-IT-TrustedProfileTemplate'
             cls.profile_template_profile_name = 'Python-SDK-IT-TrustedProfile-FromTemplate'
             cls.account_settings_template_name = 'Python-SDK-IT-TrustedProfileTemplate'
+            cls.service = 'console'
+            cls.value_string = '/billing'
+            cls.preference_id1 = 'landing_page'
 
             cls.cleanup_resources()
 
@@ -1819,3 +1825,62 @@ class TestIamIdentityV1:
             template_id=account_settings_template_id
         )
         assert delete_response.get_status_code() == 204
+
+    @needscredentials
+    def test_update_api_key(self):
+        assert apikey_id1 is not None
+        assert apikey_etag1 is not None
+
+        new_description = 'This is an updated description'
+        update_api_key_response = self.iam_identity_service.update_api_key(
+            id=apikey_id1, if_match=apikey_etag1, description=new_description
+        )
+
+        assert update_api_key_response.get_status_code() == 200
+        api_key = update_api_key_response.get_result()
+        print('\nupdate_api_key() response: ', json.dumps(api_key, indent=2))
+        assert api_key is not None
+        assert api_key['description'] == new_description
+
+    @needscredentials
+    def test_update_preference_on_scope_account(self):
+        assert iam_id_for_preferences is not None
+        assert self.preference_id1 is not None
+
+        preference = self.iam_identity_service.update_preference_on_scope_account(
+            iam_id=iam_id_for_preferences,
+            service=self.service,
+            preference_id=self.preference_id1,
+            value_string=self.value_string,
+        ).get_result()
+        print('\nupdate_preference_on_scope_account() response: ', json.dumps(preference, indent=2))
+        preference is not None
+
+    @needscredentials
+    def test_get_preferences_on_scope_account(self):
+        assert iam_id_for_preferences is not None
+        assert self.preference_id1 is not None
+        preference = self.iam_identity_service.get_preferences_on_scope_account(
+            iam_id=iam_id_for_preferences, service=self.service, preference_id=self.preference_id1
+        ).get_result()
+        print('\nget_preference_on_scope_account() response: ', json.dumps(preference, indent=2))
+        preference is not None
+
+    @needscredentials
+    def test_get_all_preferences_on_scope_account(self):
+        assert iam_id_for_preferences is not None
+        assert self.preference_id1 is not None
+        preference = self.iam_identity_service.get_all_preferences_on_scope_account(
+            iam_id=iam_id_for_preferences
+        ).get_result()
+        print('\nget_all_preference_on_scope_account() response: ', json.dumps(preference, indent=2))
+        preference is not None
+
+    @needscredentials
+    def test_delete_preferences_on_scope_account(self):
+        assert iam_id_for_preferences is not None
+        assert self.preference_id1 is not None
+        preference = self.iam_identity_service.delete_preferences_on_scope_account(
+            iam_id=iam_id_for_preferences, service=self.service, preference_id=self.preference_id1
+        )
+        assert preference.get_status_code() == 204
