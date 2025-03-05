@@ -1,3 +1,10 @@
+# [0.60.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.59.1...v0.60.0) (2025-03-05)
+
+
+### Features
+
+* **IAM Access Groups:** Add CRN filter ([8581c6f](https://github.com/IBM/platform-services-python-sdk/commit/8581c6f240fcfb85a8b3f121d9af2003ef6c4970))
+
 ## [0.59.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.59.0...v0.59.1) (2025-01-09)
 
 
