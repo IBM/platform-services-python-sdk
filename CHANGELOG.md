@@ -1,3 +1,10 @@
+# [0.61.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.60.0...v0.61.0) (2025-03-07)
+
+
+### Features
+
+* **IAM Identity:** add Identity Preference API ([#284](https://github.com/IBM/platform-services-python-sdk/issues/284)) ([93862bd](https://github.com/IBM/platform-services-python-sdk/commit/93862bd538639112f60b9f4af74eb22a97a338ec))
+
 # [0.60.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.59.1...v0.60.0) (2025-03-05)
 
 
