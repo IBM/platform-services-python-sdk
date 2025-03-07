@@ -38,6 +38,7 @@ from ibm_platform_services.iam_identity_v1 import *
 # IAM_IDENTITY_IAM_ID_MEMBER=<IAM ID of a user belonging to the account but different to the one above>
 # IAM_IDENTITY_ENTERPRISE_ACCOUNT_ID=<AccountID of the enterprise account>
 # IAM_IDENTITY_ENTERPRISE_SUBACCOUNT_ID=<AccountID of an account in the enterprise>
+# IAM_IDENTITY_IAM_ID_FOR_PREFERENCES=<IAM id of the profile to set preferences>
 #
 # These configuration properties can be exported as environment variables, or stored
 # in a configuration file and then:
@@ -51,6 +52,9 @@ config = None
 
 apikey_name = 'Example-ApiKey'
 serviceid_name = 'Example-ServiceId'
+service = 'console'
+value_string = '/billing'
+preference_id1 = 'landing_page'
 
 # config property values
 account_id = None
@@ -90,6 +94,8 @@ account_settings_template_version = None
 account_settings_template_etag = None
 account_settings_template_assignment_id = None
 account_settings_template_assignment_etag = None
+
+iam_id_for_preferences = None
 
 
 ##############################################################################
@@ -135,6 +141,9 @@ class TestIamIdentityV1Examples:
 
             global enterprise_subaccount_id
             enterprise_subaccount_id = config['ENTERPRISE_SUBACCOUNT_ID']
+
+            global iam_id_for_preferences
+            iam_id_for_preferences = config['IAM_ID_FOR_PREFERENCES']
 
         print('Setup complete.')
 
@@ -1772,6 +1781,82 @@ class TestIamIdentityV1Examples:
             )
 
             # end-delete_all_versions_of_account_settings_template
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_preference_on_scope_account(self):
+        """
+        update_preference_on_scope_account request example
+        """
+        try:
+            print('\nupdate_preference_on_scope_account() result:')
+            # begin-update_preference_on_scope_account
+
+            preference = iam_identity_service.update_preference_on_scope_account(
+                iam_id=iam_id_for_preferences, service=service, preference_id=preference_id1, value_string=value_string
+            ).get_result()
+            print(json.dumps(preference, indent=2))
+
+            # end-update_preference_on_scope_account
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_preferences_on_scope_account(self):
+        """
+        get_preferences_on_scope_account request example
+        """
+        try:
+            print('\nget_preferences_on_scope_account() result:')
+            # begin-get_preferences_on_scope_account
+
+            preference = iam_identity_service.get_preferences_on_scope_account(
+                iam_id=iam_id_for_preferences, service=service, preference_id=preference_id1
+            ).get_result()
+            print(json.dumps(preference, indent=2))
+
+            # end-get_preferences_on_scope_account
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_all_preferences_on_scope_account(self):
+        """
+        get_all_preferences_on_scope_account request example
+        """
+        try:
+            print('\nget_all_preferences_on_scope_account() result:')
+            # begin-get_all_preferences_on_scope_account
+
+            preference = iam_identity_service.get_all_preferences_on_scope_account(
+                iam_id=iam_id_for_preferences
+            ).get_result()
+            print(json.dumps(preference, indent=2))
+
+            # end-get_all_preferences_on_scope_account
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_preferences_on_scope_account(self):
+        """
+        delete_preferences_on_scope_account request example
+        """
+        try:
+            # begin-delete_preferences_on_scope_account
+
+            response = iam_identity_service.delete_preferences_on_scope_account(
+                iam_id=iam_id_for_preferences, service=service, preference_id=preference_id1
+            )
+
+            # end-delete_preferences_on_scope_account
+
+            print('\ndelete_preferences_on_scope_account() response status code: ', response.get_status_code())
+
         except ApiException as e:
             pytest.fail(str(e))
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ from ibm_platform_services.iam_identity_v1 import *
 
 _service = IamIdentityV1(authenticator=NoAuthAuthenticator())
 
-_base_url = 'https://iam.cloud.ibm.com'
+_base_url = 'https://iam.test.cloud.ibm.com'
 _service.set_service_url(_base_url)
 
 
@@ -44,15 +44,8 @@ def preprocess_url(operation_path: str):
     The returned request URL is used to register the mock response so it needs
     to match the request URL that is formed by the requests library.
     """
-    # First, unquote the path since it might have some quoted/escaped characters in it
-    # due to how the generator inserts the operation paths into the unit test code.
-    operation_path = urllib.parse.unquote(operation_path)
 
-    # Next, quote the path using urllib so that we approximate what will
-    # happen during request processing.
-    operation_path = urllib.parse.quote(operation_path, safe='/')
-
-    # Finally, form the request URL from the base URL and operation path.
+    # Form the request URL from the base URL and operation path.
     request_url = _base_url + operation_path
 
     # If the request url does NOT end with a /, then just return it as-is.
@@ -6500,6 +6493,414 @@ class TestGetEffectiveAccountSettings:
 ##############################################################################
 
 ##############################################################################
+# Start of Service: IdentityPreferences
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestUpdatePreferenceOnScopeAccount:
+    """
+    Test Class for update_preference_on_scope_account
+    """
+
+    @responses.activate
+    def test_update_preference_on_scope_account_all_params(self):
+        """
+        update_preference_on_scope_account()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+        value_string = 'testString'
+        value_list_of_strings = ['testString']
+
+        # Invoke method
+        response = _service.update_preference_on_scope_account(
+            account_id,
+            iam_id,
+            service,
+            preference_id,
+            value_string,
+            value_list_of_strings=value_list_of_strings,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['value_string'] == 'testString'
+        assert req_body['value_list_of_strings'] == ['testString']
+
+    def test_update_preference_on_scope_account_all_params_with_retries(self):
+        # Enable retries and run test_update_preference_on_scope_account_all_params.
+        _service.enable_retries()
+        self.test_update_preference_on_scope_account_all_params()
+
+        # Disable retries and run test_update_preference_on_scope_account_all_params.
+        _service.disable_retries()
+        self.test_update_preference_on_scope_account_all_params()
+
+    @responses.activate
+    def test_update_preference_on_scope_account_value_error(self):
+        """
+        test_update_preference_on_scope_account_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+        value_string = 'testString'
+        value_list_of_strings = ['testString']
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "iam_id": iam_id,
+            "service": service,
+            "preference_id": preference_id,
+            "value_string": value_string,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_preference_on_scope_account(**req_copy)
+
+    def test_update_preference_on_scope_account_value_error_with_retries(self):
+        # Enable retries and run test_update_preference_on_scope_account_value_error.
+        _service.enable_retries()
+        self.test_update_preference_on_scope_account_value_error()
+
+        # Disable retries and run test_update_preference_on_scope_account_value_error.
+        _service.disable_retries()
+        self.test_update_preference_on_scope_account_value_error()
+
+
+class TestDeletePreferencesOnScopeAccount:
+    """
+    Test Class for delete_preferences_on_scope_account
+    """
+
+    @responses.activate
+    def test_delete_preferences_on_scope_account_all_params(self):
+        """
+        delete_preferences_on_scope_account()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_preferences_on_scope_account(
+            account_id,
+            iam_id,
+            service,
+            preference_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_preferences_on_scope_account_all_params_with_retries(self):
+        # Enable retries and run test_delete_preferences_on_scope_account_all_params.
+        _service.enable_retries()
+        self.test_delete_preferences_on_scope_account_all_params()
+
+        # Disable retries and run test_delete_preferences_on_scope_account_all_params.
+        _service.disable_retries()
+        self.test_delete_preferences_on_scope_account_all_params()
+
+    @responses.activate
+    def test_delete_preferences_on_scope_account_value_error(self):
+        """
+        test_delete_preferences_on_scope_account_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "iam_id": iam_id,
+            "service": service,
+            "preference_id": preference_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_preferences_on_scope_account(**req_copy)
+
+    def test_delete_preferences_on_scope_account_value_error_with_retries(self):
+        # Enable retries and run test_delete_preferences_on_scope_account_value_error.
+        _service.enable_retries()
+        self.test_delete_preferences_on_scope_account_value_error()
+
+        # Disable retries and run test_delete_preferences_on_scope_account_value_error.
+        _service.disable_retries()
+        self.test_delete_preferences_on_scope_account_value_error()
+
+
+class TestGetPreferencesOnScopeAccount:
+    """
+    Test Class for get_preferences_on_scope_account
+    """
+
+    @responses.activate
+    def test_get_preferences_on_scope_account_all_params(self):
+        """
+        get_preferences_on_scope_account()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+
+        # Invoke method
+        response = _service.get_preferences_on_scope_account(
+            account_id,
+            iam_id,
+            service,
+            preference_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_preferences_on_scope_account_all_params_with_retries(self):
+        # Enable retries and run test_get_preferences_on_scope_account_all_params.
+        _service.enable_retries()
+        self.test_get_preferences_on_scope_account_all_params()
+
+        # Disable retries and run test_get_preferences_on_scope_account_all_params.
+        _service.disable_retries()
+        self.test_get_preferences_on_scope_account_all_params()
+
+    @responses.activate
+    def test_get_preferences_on_scope_account_value_error(self):
+        """
+        test_get_preferences_on_scope_account_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "iam_id": iam_id,
+            "service": service,
+            "preference_id": preference_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_preferences_on_scope_account(**req_copy)
+
+    def test_get_preferences_on_scope_account_value_error_with_retries(self):
+        # Enable retries and run test_get_preferences_on_scope_account_value_error.
+        _service.enable_retries()
+        self.test_get_preferences_on_scope_account_value_error()
+
+        # Disable retries and run test_get_preferences_on_scope_account_value_error.
+        _service.disable_retries()
+        self.test_get_preferences_on_scope_account_value_error()
+
+
+class TestGetAllPreferencesOnScopeAccount:
+    """
+    Test Class for get_all_preferences_on_scope_account
+    """
+
+    @responses.activate
+    def test_get_all_preferences_on_scope_account_all_params(self):
+        """
+        get_all_preferences_on_scope_account()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString')
+        mock_response = '{"preferences": [{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+
+        # Invoke method
+        response = _service.get_all_preferences_on_scope_account(
+            account_id,
+            iam_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_all_preferences_on_scope_account_all_params_with_retries(self):
+        # Enable retries and run test_get_all_preferences_on_scope_account_all_params.
+        _service.enable_retries()
+        self.test_get_all_preferences_on_scope_account_all_params()
+
+        # Disable retries and run test_get_all_preferences_on_scope_account_all_params.
+        _service.disable_retries()
+        self.test_get_all_preferences_on_scope_account_all_params()
+
+    @responses.activate
+    def test_get_all_preferences_on_scope_account_value_error(self):
+        """
+        test_get_all_preferences_on_scope_account_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString')
+        mock_response = '{"preferences": [{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "iam_id": iam_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_all_preferences_on_scope_account(**req_copy)
+
+    def test_get_all_preferences_on_scope_account_value_error_with_retries(self):
+        # Enable retries and run test_get_all_preferences_on_scope_account_value_error.
+        _service.enable_retries()
+        self.test_get_all_preferences_on_scope_account_value_error()
+
+        # Disable retries and run test_get_all_preferences_on_scope_account_value_error.
+        _service.disable_retries()
+        self.test_get_all_preferences_on_scope_account_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: IdentityPreferences
+##############################################################################
+
+##############################################################################
 # Start of Service: TrustedProfileAssignments
 ##############################################################################
 # region
@@ -9777,6 +10178,89 @@ class TestModel_IdBasedMfaEnrollment:
         # Convert model instance back to dict and verify no loss of data
         id_based_mfa_enrollment_model_json2 = id_based_mfa_enrollment_model.to_dict()
         assert id_based_mfa_enrollment_model_json2 == id_based_mfa_enrollment_model_json
+
+
+class TestModel_IdentityPreferenceResponse:
+    """
+    Test Class for IdentityPreferenceResponse
+    """
+
+    def test_identity_preference_response_serialization(self):
+        """
+        Test serialization/deserialization for IdentityPreferenceResponse
+        """
+
+        # Construct a json representation of a IdentityPreferenceResponse model
+        identity_preference_response_model_json = {}
+        identity_preference_response_model_json['service'] = 'testString'
+        identity_preference_response_model_json['id'] = 'testString'
+        identity_preference_response_model_json['account_id'] = 'testString'
+        identity_preference_response_model_json['scope'] = 'testString'
+        identity_preference_response_model_json['value_string'] = 'testString'
+        identity_preference_response_model_json['value_list_of_strings'] = ['testString']
+
+        # Construct a model instance of IdentityPreferenceResponse by calling from_dict on the json representation
+        identity_preference_response_model = IdentityPreferenceResponse.from_dict(
+            identity_preference_response_model_json
+        )
+        assert identity_preference_response_model != False
+
+        # Construct a model instance of IdentityPreferenceResponse by calling from_dict on the json representation
+        identity_preference_response_model_dict = IdentityPreferenceResponse.from_dict(
+            identity_preference_response_model_json
+        ).__dict__
+        identity_preference_response_model2 = IdentityPreferenceResponse(**identity_preference_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert identity_preference_response_model == identity_preference_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_preference_response_model_json2 = identity_preference_response_model.to_dict()
+        assert identity_preference_response_model_json2 == identity_preference_response_model_json
+
+
+class TestModel_IdentityPreferencesResponse:
+    """
+    Test Class for IdentityPreferencesResponse
+    """
+
+    def test_identity_preferences_response_serialization(self):
+        """
+        Test serialization/deserialization for IdentityPreferencesResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        identity_preference_response_model = {}  # IdentityPreferenceResponse
+        identity_preference_response_model['service'] = 'testString'
+        identity_preference_response_model['id'] = 'testString'
+        identity_preference_response_model['account_id'] = 'testString'
+        identity_preference_response_model['scope'] = 'testString'
+        identity_preference_response_model['value_string'] = 'testString'
+        identity_preference_response_model['value_list_of_strings'] = ['testString']
+
+        # Construct a json representation of a IdentityPreferencesResponse model
+        identity_preferences_response_model_json = {}
+        identity_preferences_response_model_json['preferences'] = [identity_preference_response_model]
+
+        # Construct a model instance of IdentityPreferencesResponse by calling from_dict on the json representation
+        identity_preferences_response_model = IdentityPreferencesResponse.from_dict(
+            identity_preferences_response_model_json
+        )
+        assert identity_preferences_response_model != False
+
+        # Construct a model instance of IdentityPreferencesResponse by calling from_dict on the json representation
+        identity_preferences_response_model_dict = IdentityPreferencesResponse.from_dict(
+            identity_preferences_response_model_json
+        ).__dict__
+        identity_preferences_response_model2 = IdentityPreferencesResponse(**identity_preferences_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert identity_preferences_response_model == identity_preferences_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_preferences_response_model_json2 = identity_preferences_response_model.to_dict()
+        assert identity_preferences_response_model_json2 == identity_preferences_response_model_json
 
 
 class TestModel_MfaEnrollmentTypeStatus:
