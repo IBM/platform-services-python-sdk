@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.usage_reports_v4 import *
 
 
-_service = UsageReportsV4(authenticator=NoAuthAuthenticator())
+_service = UsageReportsV4(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://billing.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -101,7 +103,7 @@ class TestGetAccountSummary:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/summary/testString')
-        mock_response = '{"account_id": "account_id", "account_resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "month": "month", "billing_country_code": "billing_country_code", "billing_currency_code": "billing_currency_code", "resources": {"billable_cost": 13, "non_billable_cost": 17}, "offers": [{"offer_id": "offer_id", "credits_total": 13, "offer_template": "offer_template", "valid_from": "2019-01-01T12:00:00.000Z", "created_by_email_id": "created_by_email_id", "expires_on": "2019-01-01T12:00:00.000Z", "credits": {"starting_balance": 16, "used": 4, "balance": 7}}], "support": [{"cost": 4, "type": "type", "overage": 7}], "support_resources": ["anyValue"], "subscription": {"overage": 7, "subscriptions": [{"subscription_id": "subscription_id", "charge_agreement_number": "charge_agreement_number", "type": "type", "subscription_amount": 19, "start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits_total": 13, "terms": [{"start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits": {"total": 5, "starting_balance": 16, "used": 4, "balance": 7}}]}]}}'
+        mock_response = '{"account_id": "account_id", "account_resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "subscription_id": "subscription_id", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "month": "month", "billing_country_code": "billing_country_code", "billing_currency_code": "billing_currency_code", "resources": {"billable_cost": 13, "non_billable_cost": 17}, "offers": [{"offer_id": "offer_id", "credits_total": 13, "offer_template": "offer_template", "valid_from": "2019-01-01T12:00:00.000Z", "created_by_email_id": "created_by_email_id", "expires_on": "2019-01-01T12:00:00.000Z", "credits": {"starting_balance": 16, "used": 4, "balance": 7}}], "support": [{"cost": 4, "type": "type", "overage": 7}], "support_resources": ["anyValue"], "subscription": {"overage": 7, "subscriptions": [{"subscription_id": "subscription_id", "charge_agreement_number": "charge_agreement_number", "type": "type", "subscription_amount": 19, "start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits_total": 13, "terms": [{"start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits": {"total": 5, "starting_balance": 16, "used": 4, "balance": 7}}]}]}}'
         responses.add(
             responses.GET,
             url,
@@ -141,7 +143,7 @@ class TestGetAccountSummary:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/summary/testString')
-        mock_response = '{"account_id": "account_id", "account_resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "month": "month", "billing_country_code": "billing_country_code", "billing_currency_code": "billing_currency_code", "resources": {"billable_cost": 13, "non_billable_cost": 17}, "offers": [{"offer_id": "offer_id", "credits_total": 13, "offer_template": "offer_template", "valid_from": "2019-01-01T12:00:00.000Z", "created_by_email_id": "created_by_email_id", "expires_on": "2019-01-01T12:00:00.000Z", "credits": {"starting_balance": 16, "used": 4, "balance": 7}}], "support": [{"cost": 4, "type": "type", "overage": 7}], "support_resources": ["anyValue"], "subscription": {"overage": 7, "subscriptions": [{"subscription_id": "subscription_id", "charge_agreement_number": "charge_agreement_number", "type": "type", "subscription_amount": 19, "start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits_total": 13, "terms": [{"start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits": {"total": 5, "starting_balance": 16, "used": 4, "balance": 7}}]}]}}'
+        mock_response = '{"account_id": "account_id", "account_resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "subscription_id": "subscription_id", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "month": "month", "billing_country_code": "billing_country_code", "billing_currency_code": "billing_currency_code", "resources": {"billable_cost": 13, "non_billable_cost": 17}, "offers": [{"offer_id": "offer_id", "credits_total": 13, "offer_template": "offer_template", "valid_from": "2019-01-01T12:00:00.000Z", "created_by_email_id": "created_by_email_id", "expires_on": "2019-01-01T12:00:00.000Z", "credits": {"starting_balance": 16, "used": 4, "balance": 7}}], "support": [{"cost": 4, "type": "type", "overage": 7}], "support_resources": ["anyValue"], "subscription": {"overage": 7, "subscriptions": [{"subscription_id": "subscription_id", "charge_agreement_number": "charge_agreement_number", "type": "type", "subscription_amount": 19, "start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits_total": 13, "terms": [{"start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits": {"total": 5, "starting_balance": 16, "used": 4, "balance": 7}}]}]}}'
         responses.add(
             responses.GET,
             url,
@@ -186,7 +188,7 @@ class TestGetAccountUsage:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/usage/testString')
-        mock_response = '{"account_id": "account_id", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
+        mock_response = '{"account_id": "account_id", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "subscription_id": "subscription_id", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
         responses.add(
             responses.GET,
             url,
@@ -234,7 +236,7 @@ class TestGetAccountUsage:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/usage/testString')
-        mock_response = '{"account_id": "account_id", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
+        mock_response = '{"account_id": "account_id", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "subscription_id": "subscription_id", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
         responses.add(
             responses.GET,
             url,
@@ -274,7 +276,7 @@ class TestGetAccountUsage:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/usage/testString')
-        mock_response = '{"account_id": "account_id", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
+        mock_response = '{"account_id": "account_id", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "subscription_id": "subscription_id", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
         responses.add(
             responses.GET,
             url,
@@ -358,7 +360,7 @@ class TestGetResourceGroupUsage:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/resource_groups/testString/usage/testString')
-        mock_response = '{"account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
+        mock_response = '{"account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "subscription_id": "subscription_id", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
         responses.add(
             responses.GET,
             url,
@@ -408,7 +410,7 @@ class TestGetResourceGroupUsage:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/resource_groups/testString/usage/testString')
-        mock_response = '{"account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
+        mock_response = '{"account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "subscription_id": "subscription_id", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
         responses.add(
             responses.GET,
             url,
@@ -450,7 +452,7 @@ class TestGetResourceGroupUsage:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/resource_groups/testString/usage/testString')
-        mock_response = '{"account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
+        mock_response = '{"account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "subscription_id": "subscription_id", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
         responses.add(
             responses.GET,
             url,
@@ -497,7 +499,7 @@ class TestGetResourceUsageAccount:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/resource_instances/usage/testString')
-        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
+        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "subscription_id": "subscription_id", "created_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -572,7 +574,7 @@ class TestGetResourceUsageAccount:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/resource_instances/usage/testString')
-        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
+        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "subscription_id": "subscription_id", "created_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -612,7 +614,7 @@ class TestGetResourceUsageAccount:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/resource_instances/usage/testString')
-        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
+        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "subscription_id": "subscription_id", "created_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -651,8 +653,8 @@ class TestGetResourceUsageAccount:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v4/accounts/testString/resource_instances/usage/testString')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -698,8 +700,8 @@ class TestGetResourceUsageAccount:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v4/accounts/testString/resource_instances/usage/testString')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -748,7 +750,7 @@ class TestGetResourceUsageResourceGroup:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString')
-        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
+        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "subscription_id": "subscription_id", "created_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -819,7 +821,7 @@ class TestGetResourceUsageResourceGroup:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString')
-        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
+        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "subscription_id": "subscription_id", "created_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -861,7 +863,7 @@ class TestGetResourceUsageResourceGroup:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString')
-        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
+        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "subscription_id": "subscription_id", "created_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -902,8 +904,8 @@ class TestGetResourceUsageResourceGroup:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -948,8 +950,8 @@ class TestGetResourceUsageResourceGroup:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -997,7 +999,7 @@ class TestGetResourceUsageOrg:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/organizations/testString/resource_instances/usage/testString')
-        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
+        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "subscription_id": "subscription_id", "created_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -1068,7 +1070,7 @@ class TestGetResourceUsageOrg:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/organizations/testString/resource_instances/usage/testString')
-        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
+        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "subscription_id": "subscription_id", "created_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -1110,7 +1112,7 @@ class TestGetResourceUsageOrg:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/organizations/testString/resource_instances/usage/testString')
-        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
+        mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "parent_resource_instance_id": "parent_resource_instance_id", "plan_id": "plan_id", "plan_name": "plan_name", "pricing_plan_id": "pricing_plan_id", "subscription_id": "subscription_id", "created_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "pending": true, "currency_rate": 10.8716, "tags": ["anyValue"], "service_tags": ["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -1151,8 +1153,8 @@ class TestGetResourceUsageOrg:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v4/accounts/testString/organizations/testString/resource_instances/usage/testString')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -1197,8 +1199,8 @@ class TestGetResourceUsageOrg:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v4/accounts/testString/organizations/testString/resource_instances/usage/testString')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?_start=1"},"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"account_id":"account_id","resource_instance_id":"resource_instance_id","resource_instance_name":"resource_instance_name","resource_id":"resource_id","catalog_id":"catalog_id","resource_name":"resource_name","resource_group_id":"resource_group_id","resource_group_name":"resource_group_name","organization_id":"organization_id","organization_name":"organization_name","space_id":"space_id","space_name":"space_name","consumer_id":"consumer_id","region":"region","pricing_region":"pricing_region","pricing_country":"USA","currency_code":"USD","billable":true,"parent_resource_instance_id":"parent_resource_instance_id","plan_id":"plan_id","plan_name":"plan_name","pricing_plan_id":"pricing_plan_id","subscription_id":"subscription_id","created_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","month":"2017-08","usage":[{"metric":"UP-TIME","metric_name":"UP-TIME","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130.0,"price":["anyValue"],"unit":"HOURS","unit_name":"HOURS","non_chargeable":true,"discounts":[{"ref":"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9","name":"platform-discount","display_name":"Platform Service Discount","discount":5}],"volume_discount":15,"volume_cost":11}],"pending":true,"currency_rate":10.8716,"tags":["anyValue"],"service_tags":["anyValue"]}]}'
         responses.add(
             responses.GET,
             url,
@@ -1285,7 +1287,7 @@ class TestGetOrgUsage:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/organizations/testString/usage/testString')
-        mock_response = '{"account_id": "account_id", "organization_id": "organization_id", "organization_name": "organization_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
+        mock_response = '{"account_id": "account_id", "organization_id": "organization_id", "organization_name": "organization_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "subscription_id": "subscription_id", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
         responses.add(
             responses.GET,
             url,
@@ -1335,7 +1337,7 @@ class TestGetOrgUsage:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/organizations/testString/usage/testString')
-        mock_response = '{"account_id": "account_id", "organization_id": "organization_id", "organization_name": "organization_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
+        mock_response = '{"account_id": "account_id", "organization_id": "organization_id", "organization_name": "organization_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "subscription_id": "subscription_id", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
         responses.add(
             responses.GET,
             url,
@@ -1377,7 +1379,7 @@ class TestGetOrgUsage:
         """
         # Set up mock
         url = preprocess_url('/v4/accounts/testString/organizations/testString/usage/testString')
-        mock_response = '{"account_id": "account_id", "organization_id": "organization_id", "organization_name": "organization_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
+        mock_response = '{"account_id": "account_id", "organization_id": "organization_id", "organization_name": "organization_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "catalog_id": "catalog_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "subscription_id": "subscription_id", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "volume_discount": 15, "volume_cost": 11}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}], "pending": true}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "currency_rate": 10.8716}'
         responses.add(
             responses.GET,
             url,
@@ -2219,6 +2221,7 @@ class TestModel_AccountSummary:
         plan_model['billable'] = True
         plan_model['cost'] = 72.5
         plan_model['rated_cost'] = 72.5
+        plan_model['subscription_id'] = 'testString'
         plan_model['usage'] = [metric_model]
         plan_model['discounts'] = [discount_model]
         plan_model['pending'] = True
@@ -2352,6 +2355,7 @@ class TestModel_AccountUsage:
         plan_model['billable'] = True
         plan_model['cost'] = 72.5
         plan_model['rated_cost'] = 72.5
+        plan_model['subscription_id'] = 'testString'
         plan_model['usage'] = [metric_model]
         plan_model['discounts'] = [discount_model]
         plan_model['pending'] = True
@@ -2482,15 +2486,15 @@ class TestModel_InstanceUsage:
         instance_usage_model_json['plan_id'] = 'testString'
         instance_usage_model_json['plan_name'] = 'testString'
         instance_usage_model_json['pricing_plan_id'] = 'testString'
+        instance_usage_model_json['subscription_id'] = 'testString'
+        instance_usage_model_json['created_at'] = '2019-01-01T12:00:00Z'
+        instance_usage_model_json['deleted_at'] = '2019-01-01T12:00:00Z'
         instance_usage_model_json['month'] = '2017-08'
         instance_usage_model_json['usage'] = [metric_model]
         instance_usage_model_json['pending'] = True
         instance_usage_model_json['currency_rate'] = 10.8716
         instance_usage_model_json['tags'] = ['env:test', 'staging']
-        instance_usage_model_json['service_tags'] = [
-            'project::config_id:b48d4e76-7c72-467c-97b6-443092334ce4',
-            'project::project_id:639bcd7e-f1f1-469f-bd28-1f03bcac6121',
-        ]
+        instance_usage_model_json['service_tags'] = ['project::config_id:b48d4e76-7c72-467c-97b6-443092334ce4', 'project::project_id:639bcd7e-f1f1-469f-bd28-1f03bcac6121']
 
         # Construct a model instance of InstanceUsage by calling from_dict on the json representation
         instance_usage_model = InstanceUsage.from_dict(instance_usage_model_json)
@@ -2632,15 +2636,15 @@ class TestModel_InstancesUsage:
         instance_usage_model['plan_id'] = 'testString'
         instance_usage_model['plan_name'] = 'testString'
         instance_usage_model['pricing_plan_id'] = 'testString'
+        instance_usage_model['subscription_id'] = 'testString'
+        instance_usage_model['created_at'] = '2019-01-01T12:00:00Z'
+        instance_usage_model['deleted_at'] = '2019-01-01T12:00:00Z'
         instance_usage_model['month'] = '2017-08'
         instance_usage_model['usage'] = [metric_model]
         instance_usage_model['pending'] = True
         instance_usage_model['currency_rate'] = 10.8716
         instance_usage_model['tags'] = ['env:test', 'staging']
-        instance_usage_model['service_tags'] = [
-            'project::config_id:b48d4e76-7c72-467c-97b6-443092334ce4',
-            'project::project_id:639bcd7e-f1f1-469f-bd28-1f03bcac6121',
-        ]
+        instance_usage_model['service_tags'] = ['project::config_id:b48d4e76-7c72-467c-97b6-443092334ce4', 'project::project_id:639bcd7e-f1f1-469f-bd28-1f03bcac6121']
 
         # Construct a json representation of a InstancesUsage model
         instances_usage_model_json = {}
@@ -2832,6 +2836,7 @@ class TestModel_OrgUsage:
         plan_model['billable'] = True
         plan_model['cost'] = 72.5
         plan_model['rated_cost'] = 72.5
+        plan_model['subscription_id'] = 'testString'
         plan_model['usage'] = [metric_model]
         plan_model['discounts'] = [discount_model]
         plan_model['pending'] = True
@@ -2916,6 +2921,7 @@ class TestModel_Plan:
         plan_model_json['billable'] = True
         plan_model_json['cost'] = 72.5
         plan_model_json['rated_cost'] = 72.5
+        plan_model_json['subscription_id'] = 'testString'
         plan_model_json['usage'] = [metric_model]
         plan_model_json['discounts'] = [discount_model]
         plan_model_json['pending'] = True
@@ -2977,6 +2983,7 @@ class TestModel_Resource:
         plan_model['billable'] = True
         plan_model['cost'] = 72.5
         plan_model['rated_cost'] = 72.5
+        plan_model['subscription_id'] = 'testString'
         plan_model['usage'] = [metric_model]
         plan_model['discounts'] = [discount_model]
         plan_model['pending'] = True
@@ -3050,6 +3057,7 @@ class TestModel_ResourceGroupUsage:
         plan_model['billable'] = True
         plan_model['cost'] = 72.5
         plan_model['rated_cost'] = 72.5
+        plan_model['subscription_id'] = 'testString'
         plan_model['usage'] = [metric_model]
         plan_model['discounts'] = [discount_model]
         plan_model['pending'] = True
@@ -3143,30 +3151,20 @@ class TestModel_SnapshotConfigHistoryItem:
         snapshot_config_history_item_model_json['account_type'] = 'account'
         snapshot_config_history_item_model_json['interval'] = 'daily'
         snapshot_config_history_item_model_json['versioning'] = 'new'
-        snapshot_config_history_item_model_json['report_types'] = [
-            'account_summary',
-            'enterprise_summary',
-            'account_resource_instance_usage',
-        ]
+        snapshot_config_history_item_model_json['report_types'] = ['account_summary', 'enterprise_summary', 'account_resource_instance_usage']
         snapshot_config_history_item_model_json['compression'] = 'GZIP'
         snapshot_config_history_item_model_json['content_type'] = 'text/csv'
         snapshot_config_history_item_model_json['cos_reports_folder'] = 'IBMCloud-Billing-Reports'
         snapshot_config_history_item_model_json['cos_bucket'] = 'bucket_name'
         snapshot_config_history_item_model_json['cos_location'] = 'us-south'
-        snapshot_config_history_item_model_json['cos_endpoint'] = (
-            'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
-        )
+        snapshot_config_history_item_model_json['cos_endpoint'] = 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
 
         # Construct a model instance of SnapshotConfigHistoryItem by calling from_dict on the json representation
-        snapshot_config_history_item_model = SnapshotConfigHistoryItem.from_dict(
-            snapshot_config_history_item_model_json
-        )
+        snapshot_config_history_item_model = SnapshotConfigHistoryItem.from_dict(snapshot_config_history_item_model_json)
         assert snapshot_config_history_item_model != False
 
         # Construct a model instance of SnapshotConfigHistoryItem by calling from_dict on the json representation
-        snapshot_config_history_item_model_dict = SnapshotConfigHistoryItem.from_dict(
-            snapshot_config_history_item_model_json
-        ).__dict__
+        snapshot_config_history_item_model_dict = SnapshotConfigHistoryItem.from_dict(snapshot_config_history_item_model_json).__dict__
         snapshot_config_history_item_model2 = SnapshotConfigHistoryItem(**snapshot_config_history_item_model_dict)
 
         # Verify the model instances are equivalent
@@ -3190,14 +3188,10 @@ class TestModel_SnapshotList:
         # Construct dict forms of any model objects needed in order to build this model.
 
         snapshot_list_first_model = {}  # SnapshotListFirst
-        snapshot_list_first_model['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
+        snapshot_list_first_model['href'] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
 
         snapshot_list_next_model = {}  # SnapshotListNext
-        snapshot_list_next_model['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
+        snapshot_list_next_model['href'] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
         snapshot_list_next_model['offset'] = 'testString'
 
         snapshot_list_snapshots_item_billing_period_model = {}  # SnapshotListSnapshotsItemBillingPeriod
@@ -3210,9 +3204,7 @@ class TestModel_SnapshotList:
 
         snapshot_list_snapshots_item_files_item_model = {}  # SnapshotListSnapshotsItemFilesItem
         snapshot_list_snapshots_item_files_item_model['report_types'] = 'account_summary'
-        snapshot_list_snapshots_item_files_item_model['location'] = (
-            'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
-        )
+        snapshot_list_snapshots_item_files_item_model['location'] = 'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
         snapshot_list_snapshots_item_files_item_model['account_id'] = 'abc'
 
         snapshot_list_snapshots_item_model = {}  # SnapshotListSnapshotsItem
@@ -3268,9 +3260,7 @@ class TestModel_SnapshotListFirst:
 
         # Construct a json representation of a SnapshotListFirst model
         snapshot_list_first_model_json = {}
-        snapshot_list_first_model_json['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
+        snapshot_list_first_model_json['href'] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
 
         # Construct a model instance of SnapshotListFirst by calling from_dict on the json representation
         snapshot_list_first_model = SnapshotListFirst.from_dict(snapshot_list_first_model_json)
@@ -3300,9 +3290,7 @@ class TestModel_SnapshotListNext:
 
         # Construct a json representation of a SnapshotListNext model
         snapshot_list_next_model_json = {}
-        snapshot_list_next_model_json['href'] = (
-            '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
-        )
+        snapshot_list_next_model_json['href'] = '/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06'
         snapshot_list_next_model_json['offset'] = 'testString'
 
         # Construct a model instance of SnapshotListNext by calling from_dict on the json representation
@@ -3343,9 +3331,7 @@ class TestModel_SnapshotListSnapshotsItem:
 
         snapshot_list_snapshots_item_files_item_model = {}  # SnapshotListSnapshotsItemFilesItem
         snapshot_list_snapshots_item_files_item_model['report_types'] = 'account_summary'
-        snapshot_list_snapshots_item_files_item_model['location'] = (
-            'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
-        )
+        snapshot_list_snapshots_item_files_item_model['location'] = 'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
         snapshot_list_snapshots_item_files_item_model['account_id'] = 'abc'
 
         # Construct a json representation of a SnapshotListSnapshotsItem model
@@ -3368,15 +3354,11 @@ class TestModel_SnapshotListSnapshotsItem:
         snapshot_list_snapshots_item_model_json['processed_at'] = 1687470448297
 
         # Construct a model instance of SnapshotListSnapshotsItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_model = SnapshotListSnapshotsItem.from_dict(
-            snapshot_list_snapshots_item_model_json
-        )
+        snapshot_list_snapshots_item_model = SnapshotListSnapshotsItem.from_dict(snapshot_list_snapshots_item_model_json)
         assert snapshot_list_snapshots_item_model != False
 
         # Construct a model instance of SnapshotListSnapshotsItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_model_dict = SnapshotListSnapshotsItem.from_dict(
-            snapshot_list_snapshots_item_model_json
-        ).__dict__
+        snapshot_list_snapshots_item_model_dict = SnapshotListSnapshotsItem.from_dict(snapshot_list_snapshots_item_model_json).__dict__
         snapshot_list_snapshots_item_model2 = SnapshotListSnapshotsItem(**snapshot_list_snapshots_item_model_dict)
 
         # Verify the model instances are equivalent
@@ -3403,30 +3385,19 @@ class TestModel_SnapshotListSnapshotsItemBillingPeriod:
         snapshot_list_snapshots_item_billing_period_model_json['end'] = '2023-06-30T23:59:59.999Z'
 
         # Construct a model instance of SnapshotListSnapshotsItemBillingPeriod by calling from_dict on the json representation
-        snapshot_list_snapshots_item_billing_period_model = SnapshotListSnapshotsItemBillingPeriod.from_dict(
-            snapshot_list_snapshots_item_billing_period_model_json
-        )
+        snapshot_list_snapshots_item_billing_period_model = SnapshotListSnapshotsItemBillingPeriod.from_dict(snapshot_list_snapshots_item_billing_period_model_json)
         assert snapshot_list_snapshots_item_billing_period_model != False
 
         # Construct a model instance of SnapshotListSnapshotsItemBillingPeriod by calling from_dict on the json representation
-        snapshot_list_snapshots_item_billing_period_model_dict = SnapshotListSnapshotsItemBillingPeriod.from_dict(
-            snapshot_list_snapshots_item_billing_period_model_json
-        ).__dict__
-        snapshot_list_snapshots_item_billing_period_model2 = SnapshotListSnapshotsItemBillingPeriod(
-            **snapshot_list_snapshots_item_billing_period_model_dict
-        )
+        snapshot_list_snapshots_item_billing_period_model_dict = SnapshotListSnapshotsItemBillingPeriod.from_dict(snapshot_list_snapshots_item_billing_period_model_json).__dict__
+        snapshot_list_snapshots_item_billing_period_model2 = SnapshotListSnapshotsItemBillingPeriod(**snapshot_list_snapshots_item_billing_period_model_dict)
 
         # Verify the model instances are equivalent
         assert snapshot_list_snapshots_item_billing_period_model == snapshot_list_snapshots_item_billing_period_model2
 
         # Convert model instance back to dict and verify no loss of data
-        snapshot_list_snapshots_item_billing_period_model_json2 = (
-            snapshot_list_snapshots_item_billing_period_model.to_dict()
-        )
-        assert (
-            snapshot_list_snapshots_item_billing_period_model_json2
-            == snapshot_list_snapshots_item_billing_period_model_json
-        )
+        snapshot_list_snapshots_item_billing_period_model_json2 = snapshot_list_snapshots_item_billing_period_model.to_dict()
+        assert snapshot_list_snapshots_item_billing_period_model_json2 == snapshot_list_snapshots_item_billing_period_model_json
 
 
 class TestModel_SnapshotListSnapshotsItemFilesItem:
@@ -3442,24 +3413,16 @@ class TestModel_SnapshotListSnapshotsItemFilesItem:
         # Construct a json representation of a SnapshotListSnapshotsItemFilesItem model
         snapshot_list_snapshots_item_files_item_model_json = {}
         snapshot_list_snapshots_item_files_item_model_json['report_types'] = 'account_summary'
-        snapshot_list_snapshots_item_files_item_model_json['location'] = (
-            'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
-        )
+        snapshot_list_snapshots_item_files_item_model_json['location'] = 'june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz'
         snapshot_list_snapshots_item_files_item_model_json['account_id'] = 'abc'
 
         # Construct a model instance of SnapshotListSnapshotsItemFilesItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_files_item_model = SnapshotListSnapshotsItemFilesItem.from_dict(
-            snapshot_list_snapshots_item_files_item_model_json
-        )
+        snapshot_list_snapshots_item_files_item_model = SnapshotListSnapshotsItemFilesItem.from_dict(snapshot_list_snapshots_item_files_item_model_json)
         assert snapshot_list_snapshots_item_files_item_model != False
 
         # Construct a model instance of SnapshotListSnapshotsItemFilesItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_files_item_model_dict = SnapshotListSnapshotsItemFilesItem.from_dict(
-            snapshot_list_snapshots_item_files_item_model_json
-        ).__dict__
-        snapshot_list_snapshots_item_files_item_model2 = SnapshotListSnapshotsItemFilesItem(
-            **snapshot_list_snapshots_item_files_item_model_dict
-        )
+        snapshot_list_snapshots_item_files_item_model_dict = SnapshotListSnapshotsItemFilesItem.from_dict(snapshot_list_snapshots_item_files_item_model_json).__dict__
+        snapshot_list_snapshots_item_files_item_model2 = SnapshotListSnapshotsItemFilesItem(**snapshot_list_snapshots_item_files_item_model_dict)
 
         # Verify the model instances are equivalent
         assert snapshot_list_snapshots_item_files_item_model == snapshot_list_snapshots_item_files_item_model2
@@ -3485,33 +3448,19 @@ class TestModel_SnapshotListSnapshotsItemReportTypesItem:
         snapshot_list_snapshots_item_report_types_item_model_json['version'] = '1.0'
 
         # Construct a model instance of SnapshotListSnapshotsItemReportTypesItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_report_types_item_model = SnapshotListSnapshotsItemReportTypesItem.from_dict(
-            snapshot_list_snapshots_item_report_types_item_model_json
-        )
+        snapshot_list_snapshots_item_report_types_item_model = SnapshotListSnapshotsItemReportTypesItem.from_dict(snapshot_list_snapshots_item_report_types_item_model_json)
         assert snapshot_list_snapshots_item_report_types_item_model != False
 
         # Construct a model instance of SnapshotListSnapshotsItemReportTypesItem by calling from_dict on the json representation
-        snapshot_list_snapshots_item_report_types_item_model_dict = SnapshotListSnapshotsItemReportTypesItem.from_dict(
-            snapshot_list_snapshots_item_report_types_item_model_json
-        ).__dict__
-        snapshot_list_snapshots_item_report_types_item_model2 = SnapshotListSnapshotsItemReportTypesItem(
-            **snapshot_list_snapshots_item_report_types_item_model_dict
-        )
+        snapshot_list_snapshots_item_report_types_item_model_dict = SnapshotListSnapshotsItemReportTypesItem.from_dict(snapshot_list_snapshots_item_report_types_item_model_json).__dict__
+        snapshot_list_snapshots_item_report_types_item_model2 = SnapshotListSnapshotsItemReportTypesItem(**snapshot_list_snapshots_item_report_types_item_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            snapshot_list_snapshots_item_report_types_item_model
-            == snapshot_list_snapshots_item_report_types_item_model2
-        )
+        assert snapshot_list_snapshots_item_report_types_item_model == snapshot_list_snapshots_item_report_types_item_model2
 
         # Convert model instance back to dict and verify no loss of data
-        snapshot_list_snapshots_item_report_types_item_model_json2 = (
-            snapshot_list_snapshots_item_report_types_item_model.to_dict()
-        )
-        assert (
-            snapshot_list_snapshots_item_report_types_item_model_json2
-            == snapshot_list_snapshots_item_report_types_item_model_json
-        )
+        snapshot_list_snapshots_item_report_types_item_model_json2 = snapshot_list_snapshots_item_report_types_item_model.to_dict()
+        assert snapshot_list_snapshots_item_report_types_item_model_json2 == snapshot_list_snapshots_item_report_types_item_model_json
 
 
 class TestModel_SnapshotConfig:
@@ -3535,19 +3484,13 @@ class TestModel_SnapshotConfig:
         snapshot_config_history_item_model['account_type'] = 'account'
         snapshot_config_history_item_model['interval'] = 'daily'
         snapshot_config_history_item_model['versioning'] = 'new'
-        snapshot_config_history_item_model['report_types'] = [
-            'account_summary',
-            'enterprise_summary',
-            'account_resource_instance_usage',
-        ]
+        snapshot_config_history_item_model['report_types'] = ['account_summary', 'enterprise_summary', 'account_resource_instance_usage']
         snapshot_config_history_item_model['compression'] = 'GZIP'
         snapshot_config_history_item_model['content_type'] = 'text/csv'
         snapshot_config_history_item_model['cos_reports_folder'] = 'IBMCloud-Billing-Reports'
         snapshot_config_history_item_model['cos_bucket'] = 'bucket_name'
         snapshot_config_history_item_model['cos_location'] = 'us-south'
-        snapshot_config_history_item_model['cos_endpoint'] = (
-            'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
-        )
+        snapshot_config_history_item_model['cos_endpoint'] = 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
 
         # Construct a json representation of a SnapshotConfig model
         snapshot_config_model_json = {}
@@ -3556,11 +3499,7 @@ class TestModel_SnapshotConfig:
         snapshot_config_model_json['account_type'] = 'account'
         snapshot_config_model_json['interval'] = 'daily'
         snapshot_config_model_json['versioning'] = 'new'
-        snapshot_config_model_json['report_types'] = [
-            'account_summary',
-            'enterprise_summary',
-            'account_resource_instance_usage',
-        ]
+        snapshot_config_model_json['report_types'] = ['account_summary', 'enterprise_summary', 'account_resource_instance_usage']
         snapshot_config_model_json['compression'] = 'GZIP'
         snapshot_config_model_json['content_type'] = 'text/csv'
         snapshot_config_model_json['cos_reports_folder'] = 'IBMCloud-Billing-Reports'
@@ -3604,18 +3543,12 @@ class TestModel_SnapshotConfigValidateResponse:
         snapshot_config_validate_response_model_json['cos_location'] = 'us-south'
 
         # Construct a model instance of SnapshotConfigValidateResponse by calling from_dict on the json representation
-        snapshot_config_validate_response_model = SnapshotConfigValidateResponse.from_dict(
-            snapshot_config_validate_response_model_json
-        )
+        snapshot_config_validate_response_model = SnapshotConfigValidateResponse.from_dict(snapshot_config_validate_response_model_json)
         assert snapshot_config_validate_response_model != False
 
         # Construct a model instance of SnapshotConfigValidateResponse by calling from_dict on the json representation
-        snapshot_config_validate_response_model_dict = SnapshotConfigValidateResponse.from_dict(
-            snapshot_config_validate_response_model_json
-        ).__dict__
-        snapshot_config_validate_response_model2 = SnapshotConfigValidateResponse(
-            **snapshot_config_validate_response_model_dict
-        )
+        snapshot_config_validate_response_model_dict = SnapshotConfigValidateResponse.from_dict(snapshot_config_validate_response_model_json).__dict__
+        snapshot_config_validate_response_model2 = SnapshotConfigValidateResponse(**snapshot_config_validate_response_model_dict)
 
         # Verify the model instances are equivalent
         assert snapshot_config_validate_response_model == snapshot_config_validate_response_model2
@@ -3791,9 +3724,7 @@ class TestModel_SubscriptionTermCredits:
         assert subscription_term_credits_model != False
 
         # Construct a model instance of SubscriptionTermCredits by calling from_dict on the json representation
-        subscription_term_credits_model_dict = SubscriptionTermCredits.from_dict(
-            subscription_term_credits_model_json
-        ).__dict__
+        subscription_term_credits_model_dict = SubscriptionTermCredits.from_dict(subscription_term_credits_model_json).__dict__
         subscription_term_credits_model2 = SubscriptionTermCredits(**subscription_term_credits_model_dict)
 
         # Verify the model instances are equivalent

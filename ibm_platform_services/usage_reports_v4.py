@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.96.0-d6dec9d7-20241008-212902
+# IBM OpenAPI SDK Code Generator Version: 3.102.0-615ec964-20250307-203034
 
 """
 Usage reports for IBM Cloud accounts
@@ -55,7 +55,9 @@ class UsageReportsV4(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -253,9 +255,7 @@ class UsageReportsV4(BaseService):
         path_param_keys = ['account_id', 'resource_group_id', 'billingmonth']
         path_param_values = self.encode_path_vars(account_id, resource_group_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/usage/{billingmonth}'.format(
-            **path_param_dict
-        )
+        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/usage/{billingmonth}'.format(**path_param_dict)
         request = self.prepare_request(
             method='GET',
             url=url,
@@ -445,9 +445,7 @@ class UsageReportsV4(BaseService):
         path_param_keys = ['account_id', 'resource_group_id', 'billingmonth']
         path_param_values = self.encode_path_vars(account_id, resource_group_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/resource_instances/usage/{billingmonth}'.format(
-            **path_param_dict
-        )
+        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/resource_instances/usage/{billingmonth}'.format(**path_param_dict)
         request = self.prepare_request(
             method='GET',
             url=url,
@@ -541,11 +539,7 @@ class UsageReportsV4(BaseService):
         path_param_keys = ['account_id', 'organization_id', 'billingmonth']
         path_param_values = self.encode_path_vars(account_id, organization_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = (
-            '/v4/accounts/{account_id}/organizations/{organization_id}/resource_instances/usage/{billingmonth}'.format(
-                **path_param_dict
-            )
-        )
+        url = '/v4/accounts/{account_id}/organizations/{organization_id}/resource_instances/usage/{billingmonth}'.format(**path_param_dict)
         request = self.prepare_request(
             method='GET',
             url=url,
@@ -1461,6 +1455,12 @@ class InstanceUsage:
           provisioned and rated.
     :param str pricing_plan_id: (optional) The ID of the pricing plan used to rate
           the usage.
+    :param str subscription_id: (optional) The ID of service subscription with
+          effective from timestamp.
+    :param datetime created_at: (optional) The timestamp in RFC 3339 string format
+          at which instance is created.
+    :param datetime deleted_at: (optional) The timestamp in RFC 3339 string format
+          at which instance is deleted.
     :param str month: The month.
     :param List[Metric] usage: All the resource used in the account.
     :param bool pending: (optional) Pending charge from classic infrastructure.
@@ -1499,6 +1499,9 @@ class InstanceUsage:
         parent_resource_instance_id: Optional[str] = None,
         plan_name: Optional[str] = None,
         pricing_plan_id: Optional[str] = None,
+        subscription_id: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        deleted_at: Optional[datetime] = None,
         pending: Optional[bool] = None,
         currency_rate: Optional[float] = None,
         tags: Optional[List[object]] = None,
@@ -1538,6 +1541,12 @@ class InstanceUsage:
                was provisioned and rated.
         :param str pricing_plan_id: (optional) The ID of the pricing plan used to
                rate the usage.
+        :param str subscription_id: (optional) The ID of service subscription with
+               effective from timestamp.
+        :param datetime created_at: (optional) The timestamp in RFC 3339 string
+               format at which instance is created.
+        :param datetime deleted_at: (optional) The timestamp in RFC 3339 string
+               format at which instance is deleted.
         :param bool pending: (optional) Pending charge from classic infrastructure.
         :param float currency_rate: (optional) The value of the account's currency
                in USD.
@@ -1568,6 +1577,9 @@ class InstanceUsage:
         self.plan_id = plan_id
         self.plan_name = plan_name
         self.pricing_plan_id = pricing_plan_id
+        self.subscription_id = subscription_id
+        self.created_at = created_at
+        self.deleted_at = deleted_at
         self.month = month
         self.usage = usage
         self.pending = pending
@@ -1637,6 +1649,12 @@ class InstanceUsage:
             args['plan_name'] = plan_name
         if (pricing_plan_id := _dict.get('pricing_plan_id')) is not None:
             args['pricing_plan_id'] = pricing_plan_id
+        if (subscription_id := _dict.get('subscription_id')) is not None:
+            args['subscription_id'] = subscription_id
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (deleted_at := _dict.get('deleted_at')) is not None:
+            args['deleted_at'] = string_to_datetime(deleted_at)
         if (month := _dict.get('month')) is not None:
             args['month'] = month
         else:
@@ -1707,6 +1725,12 @@ class InstanceUsage:
             _dict['plan_name'] = self.plan_name
         if hasattr(self, 'pricing_plan_id') and self.pricing_plan_id is not None:
             _dict['pricing_plan_id'] = self.pricing_plan_id
+        if hasattr(self, 'subscription_id') and self.subscription_id is not None:
+            _dict['subscription_id'] = self.subscription_id
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'deleted_at') and self.deleted_at is not None:
+            _dict['deleted_at'] = datetime_to_string(self.deleted_at)
         if hasattr(self, 'month') and self.month is not None:
             _dict['month'] = self.month
         if hasattr(self, 'usage') and self.usage is not None:
@@ -2514,6 +2538,8 @@ class Plan:
     :param bool billable: Indicates if the plan charges are billed to the customer.
     :param float cost: The total cost incurred by the plan.
     :param float rated_cost: Total pre-discounted cost incurred by the plan.
+    :param str subscription_id: (optional) The ID of service subscription with
+          effective from timestamp.
     :param List[Metric] usage: All the metrics in the plan.
     :param List[Discount] discounts: All the discounts applicable to the plan.
     :param bool pending: (optional) Pending charge from classic infrastructure.
@@ -2531,6 +2557,7 @@ class Plan:
         plan_name: Optional[str] = None,
         pricing_region: Optional[str] = None,
         pricing_plan_id: Optional[str] = None,
+        subscription_id: Optional[str] = None,
         pending: Optional[bool] = None,
     ) -> None:
         """
@@ -2547,6 +2574,8 @@ class Plan:
         :param str pricing_region: (optional) The pricing region for the plan.
         :param str pricing_plan_id: (optional) The ID of the pricing plan used to
                rate the usage.
+        :param str subscription_id: (optional) The ID of service subscription with
+               effective from timestamp.
         :param bool pending: (optional) Pending charge from classic infrastructure.
         """
         self.plan_id = plan_id
@@ -2556,6 +2585,7 @@ class Plan:
         self.billable = billable
         self.cost = cost
         self.rated_cost = rated_cost
+        self.subscription_id = subscription_id
         self.usage = usage
         self.discounts = discounts
         self.pending = pending
@@ -2586,6 +2616,8 @@ class Plan:
             args['rated_cost'] = rated_cost
         else:
             raise ValueError('Required property \'rated_cost\' not present in Plan JSON')
+        if (subscription_id := _dict.get('subscription_id')) is not None:
+            args['subscription_id'] = subscription_id
         if (usage := _dict.get('usage')) is not None:
             args['usage'] = [Metric.from_dict(v) for v in usage]
         else:
@@ -2620,6 +2652,8 @@ class Plan:
             _dict['cost'] = self.cost
         if hasattr(self, 'rated_cost') and self.rated_cost is not None:
             _dict['rated_cost'] = self.rated_cost
+        if hasattr(self, 'subscription_id') and self.subscription_id is not None:
+            _dict['subscription_id'] = self.subscription_id
         if hasattr(self, 'usage') and self.usage is not None:
             usage_list = []
             for v in self.usage:
@@ -3025,9 +3059,9 @@ class SnapshotConfigHistoryItem:
     """
     SnapshotConfigHistoryItem.
 
-    :param float start_time: (optional) Timestamp in milliseconds when the snapshot
+    :param int start_time: (optional) Timestamp in milliseconds when the snapshot
           configuration was created.
-    :param float end_time: (optional) Timestamp in milliseconds when the snapshot
+    :param int end_time: (optional) Timestamp in milliseconds when the snapshot
           configuration ends.
     :param str updated_by: (optional) Account that updated the billing snapshot
           configuration.
@@ -3057,8 +3091,8 @@ class SnapshotConfigHistoryItem:
     def __init__(
         self,
         *,
-        start_time: Optional[float] = None,
-        end_time: Optional[float] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
         updated_by: Optional[str] = None,
         account_id: Optional[str] = None,
         state: Optional[str] = None,
@@ -3076,10 +3110,10 @@ class SnapshotConfigHistoryItem:
         """
         Initialize a SnapshotConfigHistoryItem object.
 
-        :param float start_time: (optional) Timestamp in milliseconds when the
+        :param int start_time: (optional) Timestamp in milliseconds when the
                snapshot configuration was created.
-        :param float end_time: (optional) Timestamp in milliseconds when the
-               snapshot configuration ends.
+        :param int end_time: (optional) Timestamp in milliseconds when the snapshot
+               configuration ends.
         :param str updated_by: (optional) Account that updated the billing snapshot
                configuration.
         :param str account_id: (optional) Account ID for which billing report
@@ -3226,6 +3260,7 @@ class SnapshotConfigHistoryItem:
         ENABLED = 'enabled'
         DISABLED = 'disabled'
 
+
     class AccountTypeEnum(str, Enum):
         """
         Type of account. Possible values [enterprise, account].
@@ -3234,12 +3269,14 @@ class SnapshotConfigHistoryItem:
         ACCOUNT = 'account'
         ENTERPRISE = 'enterprise'
 
+
     class IntervalEnum(str, Enum):
         """
         Frequency of taking the snapshot of the billing reports.
         """
 
         DAILY = 'daily'
+
 
     class VersioningEnum(str, Enum):
         """
@@ -3249,6 +3286,7 @@ class SnapshotConfigHistoryItem:
 
         NEW = 'new'
         OVERWRITE = 'overwrite'
+
 
     class ReportTypesEnum(str, Enum):
         """
@@ -3260,11 +3298,12 @@ class SnapshotConfigHistoryItem:
         ACCOUNT_RESOURCE_INSTANCE_USAGE = 'account_resource_instance_usage'
 
 
+
 class SnapshotList:
     """
     List of billing reports snapshots.
 
-    :param float count: (optional) Number of total snapshots.
+    :param int count: (optional) Number of total snapshots.
     :param SnapshotListFirst first: (optional) Reference to the first page of the
           search query.
     :param SnapshotListNext next: (optional) Reference to the next page of the
@@ -3275,7 +3314,7 @@ class SnapshotList:
     def __init__(
         self,
         *,
-        count: Optional[float] = None,
+        count: Optional[int] = None,
         first: Optional['SnapshotListFirst'] = None,
         next: Optional['SnapshotListNext'] = None,
         snapshots: Optional[List['SnapshotListSnapshotsItem']] = None,
@@ -3283,7 +3322,7 @@ class SnapshotList:
         """
         Initialize a SnapshotList object.
 
-        :param float count: (optional) Number of total snapshots.
+        :param int count: (optional) Number of total snapshots.
         :param SnapshotListFirst first: (optional) Reference to the first page of
                the search query.
         :param SnapshotListNext next: (optional) Reference to the next page of the
@@ -3510,7 +3549,7 @@ class SnapshotListSnapshotsItem:
           List of report types configured for the snapshot.
     :param List[SnapshotListSnapshotsItemFilesItem] files: (optional) List of
           location of reports.
-    :param float processed_at: (optional) Timestamp at which snapshot is captured.
+    :param int processed_at: (optional) Timestamp at which snapshot is captured.
     """
 
     def __init__(
@@ -3702,6 +3741,7 @@ class SnapshotListSnapshotsItem:
         ACCOUNT = 'account'
         ENTERPRISE = 'enterprise'
 
+
     class StateEnum(str, Enum):
         """
         Status of the billing snapshot configuration. Possible values are [enabled,
@@ -3710,6 +3750,7 @@ class SnapshotListSnapshotsItem:
 
         ENABLED = 'enabled'
         DISABLED = 'disabled'
+
 
 
 class SnapshotListSnapshotsItemBillingPeriod:
@@ -3874,6 +3915,7 @@ class SnapshotListSnapshotsItemFilesItem:
         ACCOUNT_RESOURCE_INSTANCE_USAGE = 'account_resource_instance_usage'
 
 
+
 class SnapshotListSnapshotsItemReportTypesItem:
     """
     SnapshotListSnapshotsItemReportTypesItem.
@@ -3954,6 +3996,7 @@ class SnapshotListSnapshotsItemReportTypesItem:
         ACCOUNT_RESOURCE_INSTANCE_USAGE = 'account_resource_instance_usage'
 
 
+
 class SnapshotConfig:
     """
     Billing reports snapshot configuration.
@@ -3979,9 +4022,9 @@ class SnapshotConfig:
           snapshot of the billing reports.
     :param str cos_location: (optional) Region of the COS instance.
     :param str cos_endpoint: (optional) The endpoint of the COS instance.
-    :param float created_at: (optional) Timestamp in milliseconds when the snapshot
+    :param int created_at: (optional) Timestamp in milliseconds when the snapshot
           configuration was created.
-    :param float last_updated_at: (optional) Timestamp in milliseconds when the
+    :param int last_updated_at: (optional) Timestamp in milliseconds when the
           snapshot configuration was last updated.
     :param List[SnapshotConfigHistoryItem] history: (optional) List of previous
           versions of the snapshot configurations.
@@ -4165,6 +4208,7 @@ class SnapshotConfig:
         ENABLED = 'enabled'
         DISABLED = 'disabled'
 
+
     class AccountTypeEnum(str, Enum):
         """
         Type of account. Possible values are [enterprise, account].
@@ -4173,12 +4217,14 @@ class SnapshotConfig:
         ACCOUNT = 'account'
         ENTERPRISE = 'enterprise'
 
+
     class IntervalEnum(str, Enum):
         """
         Frequency of taking the snapshot of the billing reports.
         """
 
         DAILY = 'daily'
+
 
     class VersioningEnum(str, Enum):
         """
@@ -4189,6 +4235,7 @@ class SnapshotConfig:
         NEW = 'new'
         OVERWRITE = 'overwrite'
 
+
     class ReportTypesEnum(str, Enum):
         """
         report_types.
@@ -4197,6 +4244,7 @@ class SnapshotConfig:
         ACCOUNT_SUMMARY = 'account_summary'
         ENTERPRISE_SUMMARY = 'enterprise_summary'
         ACCOUNT_RESOURCE_INSTANCE_USAGE = 'account_resource_instance_usage'
+
 
 
 class SnapshotConfigValidateResponse:
@@ -4748,7 +4796,6 @@ class SupportSummary:
     def __ne__(self, other: 'SupportSummary') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
 
 ##############################################################################
 # Pagers
