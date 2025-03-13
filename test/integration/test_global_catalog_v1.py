@@ -42,8 +42,6 @@ class TestGlobalCatalogV1(unittest.TestCase):
 
         timestamp = int(time.time())
 
-        self.fetchedEntry = {}
-
         self.defaultEntry = {
             'name': 'someName{}'.format(timestamp),
             'id': 'someId{}'.format(timestamp),
