@@ -42,13 +42,15 @@ class TestGlobalCatalogV1(unittest.TestCase):
 
         timestamp = int(time.time())
 
+        self.fetchedEntry = {}
+
         self.defaultEntry = {
             'name': 'someName{}'.format(timestamp),
             'id': 'someId{}'.format(timestamp),
             'active': False,
             'kind': 'service',
             'disabled': False,
-            'tags': ['a', 'b', 'c'],
+            'tags': ['a', 'b', 'c', 'support_ibm'],
             'overview_ui': {'en': {'display_name': 'display', 'long_description': 'longDesc', 'description': 'desc'}},
             'images': {'image': 'image', 'small_image': 'small', 'medium_image': 'medium', 'feature_image': 'feature'},
             'provider': {'email': 'bogus@us.ibm.com', 'name': 'someName'},
@@ -65,7 +67,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             'active': False,
             'kind': 'service',
             'disabled': False,
-            'tags': ['a', 'b', 'c'],
+            'tags': ['a', 'b', 'c', 'support_ibm'],
             'overview_ui': {'en': {'display_name': 'display', 'long_description': 'longDesc', 'description': 'desc'}},
             'images': {'image': 'image', 'small_image': 'small', 'medium_image': 'medium', 'feature_image': 'feature'},
             'provider': {'email': 'bogus@us.ibm.com', 'name': 'someName'},
@@ -138,7 +140,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             provider=self.defaultEntry['provider'],
         )
 
-        env = self.service.get_catalog_entry(id=self.defaultEntry['id'])
+        env = self.service.get_catalog_entry(id=self.defaultEntry['id'],complete=True)
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -155,7 +157,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
         print("get_catalog_entry() response: ", catalog_entry)
 
     def test_update_catalog_entry(self):
-        self.service.create_catalog_entry(
+        resp = self.service.create_catalog_entry(
             id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
@@ -166,6 +168,9 @@ class TestGlobalCatalogV1(unittest.TestCase):
             provider=self.defaultEntry['provider'],
         )
 
+        results = resp.get_result()
+        assert results.get('id') == self.defaultEntry['id']
+
         env = self.service.update_catalog_entry(
             id=self.updatedEntry['id'],
             name=self.updatedEntry['name'],
@@ -175,6 +180,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             disabled=self.updatedEntry['disabled'],
             tags=self.updatedEntry['tags'],
             provider=self.updatedEntry['provider'],
+            url=results.get('url'),
         )
         assert env is not None
         assert env.get_status_code() == 200
@@ -288,8 +294,6 @@ class TestGlobalCatalogV1(unittest.TestCase):
         resources = results.get('resources')
         assert resources is not None
         assert len(resources) > 0
-        resources_obj = EntrySearchResult.from_dict(resources)
-        print("list_catalog_entries() response: ", resources_obj)
 
     def test_get_child_catalog_entry(self):
         self.service.create_catalog_entry(
@@ -416,9 +420,9 @@ class TestGlobalCatalogV1(unittest.TestCase):
             provider=self.defaultEntry['provider'],
         )
 
-        with pytest.raises(ApiException) as e:
-            self.service.update_visibility(id=self.defaultEntry['id'])
-        assert e.value.code == 403
+        env = self.service.update_visibility(id=self.defaultEntry['id'])
+        assert env is not None
+        assert env.get_status_code() == 200
 
     def test_update_visibility_failure(self):
         with pytest.raises(ApiException) as e:
@@ -463,7 +467,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
         )
 
         env = self.service.list_artifacts(
-            object_id=self.defaultEntry['id'], artifact_id=self.defaultEntry['artifactId']
+            object_id=self.defaultEntry['id']
         )
         assert env is not None
         assert env.get_status_code() == 200

@@ -160,6 +160,11 @@ class TestGlobalCatalogV1Examples:
             print('\nupdate_catalog_entry() result:')
             # begin-update_catalog_entry
 
+            catalog_entry = global_catalog_service.get_catalog_entry(
+                id=catalog_entry_id,
+                complete=True,
+            ).get_result()
+
             overview_model_EN = {
                 'display_name': 'Example Web Starter V2',
                 'description': 'Use the Example V2 service in your applications',
@@ -195,6 +200,7 @@ class TestGlobalCatalogV1Examples:
                 provider=provider_model,
                 active=True,
                 metadata=metadata_model,
+                url=catalog_entry['url'],
             ).get_result()
 
             print(json.dumps(catalog_entry, indent=2))
@@ -265,7 +271,7 @@ class TestGlobalCatalogV1Examples:
 
             response = global_catalog_service.restore_catalog_entry(
                 id=catalog_entry_id,
-            ).get_result()
+            )
 
             # end-restore_catalog_entry
 
@@ -309,7 +315,7 @@ class TestGlobalCatalogV1Examples:
             response = global_catalog_service.update_visibility(
                 id=catalog_entry_id,
                 extendable=False,
-            ).get_result()
+            )
 
             # end-update_visibility
 
@@ -381,7 +387,7 @@ class TestGlobalCatalogV1Examples:
                 artifact_id='artifact.txt',
                 artifact=artifact_contents,
                 content_type='text/plain',
-            ).get_result()
+            )
 
             # end-upload_artifact
 
@@ -448,7 +454,7 @@ class TestGlobalCatalogV1Examples:
             response = global_catalog_service.delete_artifact(
                 object_id=catalog_entry_id,
                 artifact_id='artifact.txt',
-            ).get_result()
+            )
 
             # end-delete_artifact
 
@@ -467,7 +473,7 @@ class TestGlobalCatalogV1Examples:
         try:
             # begin-delete_catalog_entry
 
-            response = global_catalog_service.delete_catalog_entry(id=catalog_entry_id).get_result()
+            response = global_catalog_service.delete_catalog_entry(id=catalog_entry_id)
 
             # end-delete_catalog_entry
 
