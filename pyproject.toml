@@ -1,6 +1,6 @@
 [project]
 name = "ibm-platform-services"
-version = "0.61.0"
+version = "0.61.1"
 authors = [
     { name="IBM", email="devxsdk@us.ibm.com" }
 ]
