@@ -1,3 +1,10 @@
+## [0.61.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.61.0...v0.61.1) (2025-03-13)
+
+
+### Bug Fixes
+
+* **Global Catalog:** fix price field capitalization ([#286](https://github.com/IBM/platform-services-python-sdk/issues/286)) ([cb333fd](https://github.com/IBM/platform-services-python-sdk/commit/cb333fd5a3b5bdb25e68e6bf84447b2e920584de))
+
 # [0.61.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.60.0...v0.61.0) (2025-03-07)
 
 
