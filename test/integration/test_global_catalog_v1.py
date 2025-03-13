@@ -138,7 +138,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             provider=self.defaultEntry['provider'],
         )
 
-        env = self.service.get_catalog_entry(id=self.defaultEntry['id'],complete=True)
+        env = self.service.get_catalog_entry(id=self.defaultEntry['id'], complete=True)
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -464,9 +464,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             artifact=self.defaultEntry['artifact'],
         )
 
-        env = self.service.list_artifacts(
-            object_id=self.defaultEntry['id']
-        )
+        env = self.service.list_artifacts(object_id=self.defaultEntry['id'])
         assert env is not None
         assert env.get_status_code() == 200
 
