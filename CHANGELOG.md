@@ -1,3 +1,10 @@
+# [0.62.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.61.1...v0.62.0) (2025-03-17)
+
+
+### Features
+
+* **Usage Reports:** added subscription_id, created_at, deleted_at to InstanceUsage API response ([#285](https://github.com/IBM/platform-services-python-sdk/issues/285)) ([5bb241f](https://github.com/IBM/platform-services-python-sdk/commit/5bb241f59b5715d0f3ebad95b8087cfa1110a841))
+
 ## [0.61.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.61.0...v0.61.1) (2025-03-13)
 
 
