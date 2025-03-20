@@ -60,6 +60,7 @@ example_assignment_policy_id = None
 example_updated_policy_etag = None
 example_target_account_id = None
 example_assignment_etag = None
+example_account_settings_etag = None
 
 ##############################################################################
 # Start of Examples for Service: IamPolicyManagementV1
@@ -999,6 +1000,66 @@ class TestIamPolicyManagementV1Examples:
 
             # end-delete_policy_template
             print('\ndelete_policy_template() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_access_management_account_settings_example(self):
+        """
+        get_access_management_account_settings request example
+        """
+        try:
+            # begin-get_access_management_account_settings
+
+            response = iam_policy_management_service.get_settings(
+                account_id=example_account_id,
+                accept_language='default',
+            )
+
+            # end-get_access_management_account_settings
+            print('\nget_settings() response status code: ', response.get_status_code())
+            result = response.get_result()
+            assert result is not None
+            global example_account_settings_etag
+            example_account_settings_etag = response.get_headers().get("Etag")
+            print(json.dumps(result, indent=2))
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_access_management_account_settings_example(self):
+        """
+        update_access_management_account_settings request example
+        """
+        try:
+            # Construct a dict representation of a IdentityTypesBase model
+            identity_types_base_model = {'state': 'monitor', 'external_allowed_accounts': []}
+
+            # Construct a dict representation of a IdentityTypesPatch model
+            identity_types_patch_model = {
+                'user': identity_types_base_model,
+                'service_id': identity_types_base_model,
+                'service': identity_types_base_model,
+            }
+
+            # Construct a dict representation of a ExternalAccountIdentityInteractionPatch model
+            external_account_identity_interaction_patch_model = {'identity_types': identity_types_patch_model}
+            # begin-update_access_management_account_settings
+
+            response = iam_policy_management_service.update_settings(
+                account_id=example_account_id,
+                accept_language='default',
+                if_match=example_account_settings_etag,
+                external_account_identity_interaction=external_account_identity_interaction_patch_model,
+            )
+
+            # end-update_access_management_account_settings
+            print('\nupdate_settings() response status code: ', response.get_status_code())
+            result = response.get_result()
+            assert result is not None
+            print(json.dumps(result, indent=2))
 
         except ApiException as e:
             pytest.fail(str(e))

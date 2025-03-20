@@ -68,6 +68,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         cls.testPolicySubject = PolicySubject(attributes=[SubjectAttribute(name='iam_id', value=cls.testUserId)])
         cls.testPolicyRole = PolicyRole(role_id=cls.testViewerRoleCrn)
         cls.testPolicyAssignmentETag = ""
+        cls.testAccountSettingsETag = ""
         resource_tag = ResourceTag(name='project', value='prototype', operator='stringEquals')
         cls.testPolicyResources = PolicyResource(
             attributes=[
@@ -826,24 +827,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result.state == "active"
 
     def test_26_create_policy_assignment(self):
-        try:
-            response = self.service.create_policy_template_assignment(
-                version="1.0",
-                target=AssignmentTargetDetails(
-                    type="Enterprise",
-                    id=self.testTargetEnterpriseAccountId,
-                ),
-                templates=[
-                    AssignmentTemplateDetails(id=self.testS2STemplateId, version=self.testS2SBaseTemplateVersion)
-                ],
-            )
-        except ApiException as e:
-            assert (
-                e.message
-                == "Invalid body format. Check the input parameters. instance.target.type is not one of enum values: Account"
-            )
-
-    def test_27_create_policy_assignment(self):
         response = self.service.create_policy_template_assignment(
             version="1.0",
             target=AssignmentTargetDetails(
@@ -863,7 +846,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         self.__class__.testAssignmentPolicyId = result.assignments[0].resources[0].policy.resource_created.id
         self.__class__.testPolicyAssignmentETag = response.get_headers().get(self.etagHeader)
 
-    def test_28_list_policy_assignments(self):
+    def test_27_list_policy_assignments(self):
         response = self.service.list_policy_assignments(
             account_id=self.testAccountId,
             accept_language='default',
@@ -876,7 +859,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result = PolicyTemplateAssignmentCollection.from_dict(result_dict)
         assert result is not None
 
-    def test_29_get_policy_assignment(self):
+    def test_28_get_policy_assignment(self):
         assert self.testAssignmentId
         print("Assignment ID: ", self.testAssignmentId)
         response = self.service.get_policy_assignment(
@@ -892,7 +875,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result is not None
         assert result.id == self.testAssignmentId
 
-    def test_30_update_policy_assignment(self):
+    def test_29_update_policy_assignment(self):
         assert self.testAssignmentId
         assert self.testPolicyAssignmentETag
         print("Assignment ID: ", self.testAssignmentId)
@@ -911,7 +894,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result is not None
         print("Policy Assignment Update: ", result)
 
-    def test_31_get_v2_assignment_policy(self):
+    def test_30_get_v2_assignment_policy(self):
         assert self.testAssignmentPolicyId
         print("Assignment Policy ID: ", self.testAssignmentPolicyId)
 
@@ -926,14 +909,68 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result is not None
         assert result.template is not None
 
-    def test_32_delete_policy_assignment(self):
+    def test_31_delete_policy_assignment(self):
         response = self.service.delete_policy_assignment(
             assignment_id=self.testAssignmentId,
         )
         assert response.get_status_code() == 204
 
-    def test_33_delete_policy_template(self):
+    def test_32_delete_policy_template(self):
         response = self.service.delete_policy_template(
             policy_template_id=self.testS2STemplateId,
         )
         assert response.get_status_code() == 204
+
+    def test_33_get_access_management_account_settings(self):
+        response = self.service.get_settings(
+            account_id=self.testAccountId,
+            accept_language='default',
+        )
+        assert response is not None
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+        result = AccountSettingsAccessManagement.from_dict(result_dict)
+        assert result is not None
+        assert result.external_account_identity_interaction is not None
+        assert result.external_account_identity_interaction.identity_types is not None
+        assert result.external_account_identity_interaction.identity_types.user is not None
+        assert result.external_account_identity_interaction.identity_types.service is not None
+        assert result.external_account_identity_interaction.identity_types.service_id is not None
+        self.__class__.testAccountSettingsETag = response.get_headers().get(self.etagHeader)
+
+    def test_34_update_access_management_account_settings(self):
+        assert self.testAccountSettingsETag
+        # Construct a dict representation of a IdentityTypesBase model
+        identity_types_base_model = {'state': 'monitor', 'external_allowed_accounts': []}
+
+        # Construct a dict representation of a IdentityTypesPatch model
+        identity_types_patch_model = {
+            'user': identity_types_base_model,
+            'service_id': identity_types_base_model,
+            'service': identity_types_base_model,
+        }
+
+        # Construct a dict representation of a ExternalAccountIdentityInteractionPatch model
+        external_account_identity_interaction_patch_model = {'identity_types': identity_types_patch_model}
+
+        response = self.service.update_settings(
+            account_id=self.testAccountId,
+            accept_language='default',
+            if_match=self.testAccountSettingsETag,
+            external_account_identity_interaction=external_account_identity_interaction_patch_model,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+        result = AccountSettingsAccessManagement.from_dict(result_dict)
+        assert result is not None
+        assert result.external_account_identity_interaction is not None
+        assert result.external_account_identity_interaction.identity_types is not None
+        assert result.external_account_identity_interaction.identity_types.user is not None
+        assert result.external_account_identity_interaction.identity_types.user.state == "monitor"
+        assert result.external_account_identity_interaction.identity_types.service is not None
+        assert result.external_account_identity_interaction.identity_types.service.state == "monitor"
+        assert result.external_account_identity_interaction.identity_types.service_id is not None
+        assert result.external_account_identity_interaction.identity_types.service_id.state == "monitor"

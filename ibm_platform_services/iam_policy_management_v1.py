@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.90.1-64fd3296-20240515-180710
+# IBM OpenAPI SDK Code Generator Version: 3.102.0-615ec964-20250307-203034
 
 """
 IAM Policy Management API
@@ -90,6 +90,8 @@ class IamPolicyManagementV1(BaseService):
         sort: Optional[str] = None,
         format: Optional[str] = None,
         state: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -135,6 +137,10 @@ class IamPolicyManagementV1(BaseService):
         :param str state: (optional) The state of the policy.
                * `active` - returns active policies
                * `deleted` - returns non-active policies.
+        :param int limit: (optional) The number of documents to include in
+               collection.
+        :param str start: (optional) Page token that refers to the page of
+               collection to return.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `PolicyCollection` object
@@ -163,6 +169,8 @@ class IamPolicyManagementV1(BaseService):
             'sort': sort,
             'format': format,
             'state': state,
+            'limit': limit,
+            'start': start,
         }
 
         if 'headers' in kwargs:
@@ -963,6 +971,8 @@ class IamPolicyManagementV1(BaseService):
         sort: Optional[str] = None,
         format: Optional[str] = None,
         state: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1019,6 +1029,10 @@ class IamPolicyManagementV1(BaseService):
         :param str state: (optional) The state of the policy.
                * `active` - returns active policies
                * `deleted` - returns non-active policies.
+        :param int limit: (optional) The number of documents to include in
+               collection.
+        :param str start: (optional) Page token that refers to the page of
+               collection to return.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `V2PolicyCollection` object
@@ -1047,6 +1061,8 @@ class IamPolicyManagementV1(BaseService):
             'sort': sort,
             'format': format,
             'state': state,
+            'limit': limit,
+            'start': start,
         }
 
         if 'headers' in kwargs:
@@ -1624,6 +1640,8 @@ class IamPolicyManagementV1(BaseService):
         policy_service_name: Optional[str] = None,
         policy_service_group_id: Optional[str] = None,
         policy_type: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1659,6 +1677,10 @@ class IamPolicyManagementV1(BaseService):
         :param str policy_service_name: (optional) Service name, Optional.
         :param str policy_service_group_id: (optional) Service group id, Optional.
         :param str policy_type: (optional) Policy type, Optional.
+        :param int limit: (optional) The number of documents to include in
+               collection.
+        :param str start: (optional) Page token that refers to the page of
+               collection to return.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `PolicyTemplateCollection` object
@@ -1684,6 +1706,8 @@ class IamPolicyManagementV1(BaseService):
             'policy_service_name': policy_service_name,
             'policy_service_group_id': policy_service_group_id,
             'policy_type': policy_type,
+            'limit': limit,
+            'start': start,
         }
 
         if 'headers' in kwargs:
@@ -1970,6 +1994,8 @@ class IamPolicyManagementV1(BaseService):
         policy_template_id: str,
         *,
         state: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1979,6 +2005,10 @@ class IamPolicyManagementV1(BaseService):
 
         :param str policy_template_id: The policy template ID.
         :param str state: (optional) The policy template state.
+        :param int limit: (optional) The number of documents to include in
+               collection.
+        :param str start: (optional) Page token that refers to the page of
+               collection to return.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `PolicyTemplateVersionsCollection` object
@@ -1996,6 +2026,8 @@ class IamPolicyManagementV1(BaseService):
 
         params = {
             'state': state,
+            'limit': limit,
+            'start': start,
         }
 
         if 'headers' in kwargs:
@@ -2263,6 +2295,8 @@ class IamPolicyManagementV1(BaseService):
         accept_language: Optional[str] = None,
         template_id: Optional[str] = None,
         template_version: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2292,6 +2326,10 @@ class IamPolicyManagementV1(BaseService):
                * `zh-tw` - (Chinese, Taiwan).
         :param str template_id: (optional) Optional template id.
         :param str template_version: (optional) Optional policy template version.
+        :param int limit: (optional) The number of documents to include in
+               collection.
+        :param str start: (optional) Page token that refers to the page of
+               collection to return.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `PolicyTemplateAssignmentCollection` object
@@ -2316,6 +2354,8 @@ class IamPolicyManagementV1(BaseService):
             'account_id': account_id,
             'template_id': template_id,
             'template_version': template_version,
+            'limit': limit,
+            'start': start,
         }
 
         if 'headers' in kwargs:
@@ -2432,7 +2472,7 @@ class IamPolicyManagementV1(BaseService):
         :param str version: specify version of response body format.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `GetPolicyAssignmentResponse` object
+        :rtype: DetailedResponse with `dict` result representing a `PolicyTemplateAssignmentItems` object
         """
 
         if not assignment_id:
@@ -2583,6 +2623,181 @@ class IamPolicyManagementV1(BaseService):
             method='DELETE',
             url=url,
             headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Access Management Settings
+    #########################
+
+    def get_settings(
+        self,
+        account_id: str,
+        *,
+        accept_language: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Retrieve Access Management account settings by account ID.
+
+        Retrieve Access Management settings for an account by providing the account ID.
+
+        :param str account_id: The account GUID that the settings belong to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsAccessManagement` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {
+            'Accept-Language': accept_language,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_settings',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/accounts/{account_id}/settings/access_management'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_settings(
+        self,
+        account_id: str,
+        if_match: str,
+        *,
+        external_account_identity_interaction: Optional['ExternalAccountIdentityInteractionPatch'] = None,
+        accept_language: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update Access Management account settings by account ID.
+
+        Update access management settings for an account.
+        ### External Account Identity Interaction
+        Update the way identities within an external account are allowed to interact with
+        the requested account by providing:
+        * the `account_id` as a parameter
+        * the external account ID(s) and state for the specific identity in the request
+        body
+        External account identity interaction includes the following `identity_types`:
+        `user` (user identities defined as
+        [IBMid's](https://test.cloud.ibm.com/docs/account?topic=account-identity-overview#users-bestpract)),
+        `service_id` (defined as [IAM
+        ServiceIds](https://test.cloud.ibm.com/docs/account?topic=account-identity-overview#serviceid-bestpract)),
+        `service` (defined by a service’s
+        [CRN](https://test.cloud.ibm.com/docs/account?topic=account-crn)). To update an
+        Identity’s setting, the `state` and `external_allowed_accounts` fields are
+        required.
+        Different identity states are:
+        * "enabled": An identity type is allowed to access resources in the account
+        provided it has access policies on those resources.
+        * "limited": An identity type is allowed to access resources in the account
+        provided it has access policies on those resources AND it is associated with
+        either the account the resources are in or one of the allowed accounts. This
+        setting leverages the "external_allowed_accounts" list.
+        * "monitor": Has no direct impact on an Identity’s access. Instead, it creates AT
+        events for access decisions as if the account were in a limited “state”.
+        **Note**: The state "enabled" is a special case. In this case, access is given to
+        all accounts and there is no need to specify a particular list. Therefore, when
+        updating "state" to "enabled" for an identity type "external_allowed_accounts"
+        should be left empty.
+
+        :param str account_id: The account GUID that the settings belong to.
+        :param str if_match: The revision number for updating Access Management
+               Account Settings and must match the ETag value of the existing Access
+               Management Account Settings. The Etag can be retrieved using the GET
+               /v1/accounts/{account_id}/settings/access_management API and looking at the
+               ETag response header.
+        :param ExternalAccountIdentityInteractionPatch
+               external_account_identity_interaction: (optional) Update to how external
+               accounts can interact in relation to the requested account.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsAccessManagement` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if external_account_identity_interaction is not None:
+            external_account_identity_interaction = convert_model(external_account_identity_interaction)
+        headers = {
+            'If-Match': if_match,
+            'Accept-Language': accept_language,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_settings',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'external_account_identity_interaction': external_account_identity_interaction,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/accounts/{account_id}/settings/access_management'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
         )
 
         response = self.send(request, **kwargs)
@@ -2771,6 +2986,79 @@ class ListPolicyTemplateVersionsEnums:
 ##############################################################################
 # Models
 ##############################################################################
+
+
+class AccountSettingsAccessManagement:
+    """
+    The Access Management Account Settings that are currently set for the requested
+    account.
+
+    :param ExternalAccountIdentityInteraction external_account_identity_interaction:
+          How external accounts can interact in relation to the requested account.
+    """
+
+    def __init__(
+        self,
+        external_account_identity_interaction: 'ExternalAccountIdentityInteraction',
+    ) -> None:
+        """
+        Initialize a AccountSettingsAccessManagement object.
+
+        :param ExternalAccountIdentityInteraction
+               external_account_identity_interaction: How external accounts can interact
+               in relation to the requested account.
+        """
+        self.external_account_identity_interaction = external_account_identity_interaction
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountSettingsAccessManagement':
+        """Initialize a AccountSettingsAccessManagement object from a json dictionary."""
+        args = {}
+        if (external_account_identity_interaction := _dict.get('external_account_identity_interaction')) is not None:
+            args['external_account_identity_interaction'] = ExternalAccountIdentityInteraction.from_dict(
+                external_account_identity_interaction
+            )
+        else:
+            raise ValueError(
+                'Required property \'external_account_identity_interaction\' not present in AccountSettingsAccessManagement JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountSettingsAccessManagement object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if (
+            hasattr(self, 'external_account_identity_interaction')
+            and self.external_account_identity_interaction is not None
+        ):
+            if isinstance(self.external_account_identity_interaction, dict):
+                _dict['external_account_identity_interaction'] = self.external_account_identity_interaction
+            else:
+                _dict['external_account_identity_interaction'] = self.external_account_identity_interaction.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountSettingsAccessManagement object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountSettingsAccessManagement') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountSettingsAccessManagement') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class AssignmentResourceCreated:
@@ -3566,6 +3854,7 @@ class ErrorObject:
         POLICY_TEMPLATE_NOT_FOUND = 'policy_template_not_found'
         POLICY_ASSIGNMENT_NOT_FOUND = 'policy_assignment_not_found'
         POLICY_ASSIGNMENT_CONFLICT_ERROR = 'policy_assignment_conflict_error'
+        RESOURCE_NOT_FOUND = 'resource_not_found'
 
 
 class ErrorResponse:
@@ -3650,68 +3939,49 @@ class ErrorResponse:
         return not self == other
 
 
-class GetPolicyAssignmentResponse:
+class ExternalAccountIdentityInteraction:
     """
-    GetPolicyAssignmentResponse.
+    How external accounts can interact in relation to the requested account.
 
-    """
-
-    def __init__(
-        self,
-    ) -> None:
-        """
-        Initialize a GetPolicyAssignmentResponse object.
-
-        """
-        msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(['GetPolicyAssignmentResponsePolicyAssignmentV1', 'GetPolicyAssignmentResponsePolicyAssignment'])
-        )
-        raise Exception(msg)
-
-
-class GetPolicyAssignmentResponsePolicyAssignmentV1Subject:
-    """
-    subject details of access type assignment.
-
-    :param str id: (optional)
-    :param str type: (optional)
+    :param IdentityTypes identity_types: The settings for each identity type.
     """
 
     def __init__(
         self,
-        *,
-        id: Optional[str] = None,
-        type: Optional[str] = None,
+        identity_types: 'IdentityTypes',
     ) -> None:
         """
-        Initialize a GetPolicyAssignmentResponsePolicyAssignmentV1Subject object.
+        Initialize a ExternalAccountIdentityInteraction object.
 
+        :param IdentityTypes identity_types: The settings for each identity type.
         """
-        self.id = id
-        self.type = type
+        self.identity_types = identity_types
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'GetPolicyAssignmentResponsePolicyAssignmentV1Subject':
-        """Initialize a GetPolicyAssignmentResponsePolicyAssignmentV1Subject object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ExternalAccountIdentityInteraction':
+        """Initialize a ExternalAccountIdentityInteraction object from a json dictionary."""
         args = {}
-        if (id := _dict.get('id')) is not None:
-            args['id'] = id
-        if (type := _dict.get('type')) is not None:
-            args['type'] = type
+        if (identity_types := _dict.get('identity_types')) is not None:
+            args['identity_types'] = IdentityTypes.from_dict(identity_types)
+        else:
+            raise ValueError(
+                'Required property \'identity_types\' not present in ExternalAccountIdentityInteraction JSON'
+            )
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a GetPolicyAssignmentResponsePolicyAssignmentV1Subject object from a json dictionary."""
+        """Initialize a ExternalAccountIdentityInteraction object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'id') and getattr(self, 'id') is not None:
-            _dict['id'] = getattr(self, 'id')
-        if hasattr(self, 'type') and getattr(self, 'type') is not None:
-            _dict['type'] = getattr(self, 'type')
+        if hasattr(self, 'identity_types') and self.identity_types is not None:
+            if isinstance(self.identity_types, dict):
+                _dict['identity_types'] = self.identity_types
+            else:
+                _dict['identity_types'] = self.identity_types.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -3719,26 +3989,139 @@ class GetPolicyAssignmentResponsePolicyAssignmentV1Subject:
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this GetPolicyAssignmentResponsePolicyAssignmentV1Subject object."""
+        """Return a `str` version of this ExternalAccountIdentityInteraction object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'GetPolicyAssignmentResponsePolicyAssignmentV1Subject') -> bool:
+    def __eq__(self, other: 'ExternalAccountIdentityInteraction') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'GetPolicyAssignmentResponsePolicyAssignmentV1Subject') -> bool:
+    def __ne__(self, other: 'ExternalAccountIdentityInteraction') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-    class TypeEnum(str, Enum):
-        """
-        type.
-        """
 
-        IAM_ID = 'iam_id'
-        ACCESS_GROUP_ID = 'access_group_id'
+class ExternalAccountIdentityInteractionPatch:
+    """
+    Update to how external accounts can interact in relation to the requested account.
+
+    :param IdentityTypesPatch identity_types: (optional) The settings to apply for
+          each identity type for a request.
+    """
+
+    def __init__(
+        self,
+        *,
+        identity_types: Optional['IdentityTypesPatch'] = None,
+    ) -> None:
+        """
+        Initialize a ExternalAccountIdentityInteractionPatch object.
+
+        :param IdentityTypesPatch identity_types: (optional) The settings to apply
+               for each identity type for a request.
+        """
+        self.identity_types = identity_types
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ExternalAccountIdentityInteractionPatch':
+        """Initialize a ExternalAccountIdentityInteractionPatch object from a json dictionary."""
+        args = {}
+        if (identity_types := _dict.get('identity_types')) is not None:
+            args['identity_types'] = IdentityTypesPatch.from_dict(identity_types)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ExternalAccountIdentityInteractionPatch object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'identity_types') and self.identity_types is not None:
+            if isinstance(self.identity_types, dict):
+                _dict['identity_types'] = self.identity_types
+            else:
+                _dict['identity_types'] = self.identity_types.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ExternalAccountIdentityInteractionPatch object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ExternalAccountIdentityInteractionPatch') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ExternalAccountIdentityInteractionPatch') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class First:
+    """
+    Details with href linking to first page of requested collection.
+
+    :param str href: (optional) The href linking to the page of requested
+          collection.
+    """
+
+    def __init__(
+        self,
+        *,
+        href: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a First object.
+
+        """
+        self.href = href
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'First':
+        """Initialize a First object from a json dictionary."""
+        args = {}
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a First object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this First object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'First') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'First') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class Grant:
@@ -3874,6 +4257,269 @@ class GrantWithEnrichedRoles:
         return not self == other
 
 
+class IdentityTypes:
+    """
+    The settings for each identity type.
+
+    :param IdentityTypesBase user: The core set of properties associated with an
+          identity type.
+    :param IdentityTypesBase service_id: The core set of properties associated with
+          an identity type.
+    :param IdentityTypesBase service: The core set of properties associated with an
+          identity type.
+    """
+
+    def __init__(
+        self,
+        user: 'IdentityTypesBase',
+        service_id: 'IdentityTypesBase',
+        service: 'IdentityTypesBase',
+    ) -> None:
+        """
+        Initialize a IdentityTypes object.
+
+        :param IdentityTypesBase user: The core set of properties associated with
+               an identity type.
+        :param IdentityTypesBase service_id: The core set of properties associated
+               with an identity type.
+        :param IdentityTypesBase service: The core set of properties associated
+               with an identity type.
+        """
+        self.user = user
+        self.service_id = service_id
+        self.service = service
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityTypes':
+        """Initialize a IdentityTypes object from a json dictionary."""
+        args = {}
+        if (user := _dict.get('user')) is not None:
+            args['user'] = IdentityTypesBase.from_dict(user)
+        else:
+            raise ValueError('Required property \'user\' not present in IdentityTypes JSON')
+        if (service_id := _dict.get('service_id')) is not None:
+            args['service_id'] = IdentityTypesBase.from_dict(service_id)
+        else:
+            raise ValueError('Required property \'service_id\' not present in IdentityTypes JSON')
+        if (service := _dict.get('service')) is not None:
+            args['service'] = IdentityTypesBase.from_dict(service)
+        else:
+            raise ValueError('Required property \'service\' not present in IdentityTypes JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityTypes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'user') and self.user is not None:
+            if isinstance(self.user, dict):
+                _dict['user'] = self.user
+            else:
+                _dict['user'] = self.user.to_dict()
+        if hasattr(self, 'service_id') and self.service_id is not None:
+            if isinstance(self.service_id, dict):
+                _dict['service_id'] = self.service_id
+            else:
+                _dict['service_id'] = self.service_id.to_dict()
+        if hasattr(self, 'service') and self.service is not None:
+            if isinstance(self.service, dict):
+                _dict['service'] = self.service
+            else:
+                _dict['service'] = self.service.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityTypes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityTypes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityTypes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class IdentityTypesBase:
+    """
+    The core set of properties associated with an identity type.
+
+    :param str state: The state of the identity type.
+    :param List[str] external_allowed_accounts: List of accounts that the state
+          applies to for a given identity.
+    """
+
+    def __init__(
+        self,
+        state: str,
+        external_allowed_accounts: List[str],
+    ) -> None:
+        """
+        Initialize a IdentityTypesBase object.
+
+        :param str state: The state of the identity type.
+        :param List[str] external_allowed_accounts: List of accounts that the state
+               applies to for a given identity.
+        """
+        self.state = state
+        self.external_allowed_accounts = external_allowed_accounts
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityTypesBase':
+        """Initialize a IdentityTypesBase object from a json dictionary."""
+        args = {}
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        else:
+            raise ValueError('Required property \'state\' not present in IdentityTypesBase JSON')
+        if (external_allowed_accounts := _dict.get('external_allowed_accounts')) is not None:
+            args['external_allowed_accounts'] = external_allowed_accounts
+        else:
+            raise ValueError('Required property \'external_allowed_accounts\' not present in IdentityTypesBase JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityTypesBase object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        if hasattr(self, 'external_allowed_accounts') and self.external_allowed_accounts is not None:
+            _dict['external_allowed_accounts'] = self.external_allowed_accounts
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityTypesBase object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityTypesBase') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityTypesBase') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class StateEnum(str, Enum):
+        """
+        The state of the identity type.
+        """
+
+        ENABLED = 'enabled'
+        MONITOR = 'monitor'
+        LIMITED = 'limited'
+
+
+class IdentityTypesPatch:
+    """
+    The settings to apply for each identity type for a request.
+
+    :param IdentityTypesBase user: (optional) The core set of properties associated
+          with an identity type.
+    :param IdentityTypesBase service_id: (optional) The core set of properties
+          associated with an identity type.
+    :param IdentityTypesBase service: (optional) The core set of properties
+          associated with an identity type.
+    """
+
+    def __init__(
+        self,
+        *,
+        user: Optional['IdentityTypesBase'] = None,
+        service_id: Optional['IdentityTypesBase'] = None,
+        service: Optional['IdentityTypesBase'] = None,
+    ) -> None:
+        """
+        Initialize a IdentityTypesPatch object.
+
+        :param IdentityTypesBase user: (optional) The core set of properties
+               associated with an identity type.
+        :param IdentityTypesBase service_id: (optional) The core set of properties
+               associated with an identity type.
+        :param IdentityTypesBase service: (optional) The core set of properties
+               associated with an identity type.
+        """
+        self.user = user
+        self.service_id = service_id
+        self.service = service
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityTypesPatch':
+        """Initialize a IdentityTypesPatch object from a json dictionary."""
+        args = {}
+        if (user := _dict.get('user')) is not None:
+            args['user'] = IdentityTypesBase.from_dict(user)
+        if (service_id := _dict.get('service_id')) is not None:
+            args['service_id'] = IdentityTypesBase.from_dict(service_id)
+        if (service := _dict.get('service')) is not None:
+            args['service'] = IdentityTypesBase.from_dict(service)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityTypesPatch object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'user') and self.user is not None:
+            if isinstance(self.user, dict):
+                _dict['user'] = self.user
+            else:
+                _dict['user'] = self.user.to_dict()
+        if hasattr(self, 'service_id') and self.service_id is not None:
+            if isinstance(self.service_id, dict):
+                _dict['service_id'] = self.service_id
+            else:
+                _dict['service_id'] = self.service_id.to_dict()
+        if hasattr(self, 'service') and self.service is not None:
+            if isinstance(self.service, dict):
+                _dict['service'] = self.service
+            else:
+                _dict['service'] = self.service.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityTypesPatch object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityTypesPatch') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityTypesPatch') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class LimitData:
     """
     policy template current and limit details with in an account.
@@ -3955,6 +4601,73 @@ class NestedCondition:
             ", ".join(['NestedConditionRuleAttribute', 'NestedConditionRuleWithConditions'])
         )
         raise Exception(msg)
+
+
+class Next:
+    """
+    Details with href linking to following page of requested collection.
+
+    :param str href: (optional) The href linking to the page of requested
+          collection.
+    :param str start: (optional) Page token that refers to the page of collection.
+    """
+
+    def __init__(
+        self,
+        *,
+        href: Optional[str] = None,
+        start: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a Next object.
+
+        :param str start: (optional) Page token that refers to the page of
+               collection.
+        """
+        self.href = href
+        self.start = start
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Next':
+        """Initialize a Next object from a json dictionary."""
+        args = {}
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (start := _dict.get('start')) is not None:
+            args['start'] = start
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Next object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        if hasattr(self, 'start') and self.start is not None:
+            _dict['start'] = self.start
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Next object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Next') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Next') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class Policy:
@@ -4619,8 +5332,9 @@ class PolicyAssignmentV1Subject:
     """
     subject details of access type assignment.
 
-    :param str id: (optional)
-    :param str type: (optional)
+    :param str id: (optional) The unique identifier of the subject of the
+          assignment.
+    :param str type: (optional) The identity type of the subject of the assignment.
     """
 
     def __init__(
@@ -4680,7 +5394,7 @@ class PolicyAssignmentV1Subject:
 
     class TypeEnum(str, Enum):
         """
-        type.
+        The identity type of the subject of the assignment.
         """
 
         IAM_ID = 'iam_id'
@@ -4691,25 +5405,57 @@ class PolicyCollection:
     """
     A collection of policies.
 
+    :param int limit: (optional) The number of documents to include per each page of
+          collection.
+    :param First first: (optional) Details with href linking to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to following page of
+          requested collection.
+    :param Previous previous: (optional) Details with href linking to previous page
+          of requested collection.
     :param List[PolicyTemplateMetaData] policies: (optional) List of policies.
     """
 
     def __init__(
         self,
         *,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
         policies: Optional[List['PolicyTemplateMetaData']] = None,
     ) -> None:
         """
         Initialize a PolicyCollection object.
 
+        :param int limit: (optional) The number of documents to include per each
+               page of collection.
+        :param First first: (optional) Details with href linking to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to following page of
+               requested collection.
+        :param Previous previous: (optional) Details with href linking to previous
+               page of requested collection.
         :param List[PolicyTemplateMetaData] policies: (optional) List of policies.
         """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
         self.policies = policies
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'PolicyCollection':
         """Initialize a PolicyCollection object from a json dictionary."""
         args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
         if (policies := _dict.get('policies')) is not None:
             args['policies'] = [PolicyTemplateMetaData.from_dict(v) for v in policies]
         return cls(**args)
@@ -4722,6 +5468,23 @@ class PolicyCollection:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
         if hasattr(self, 'policies') and self.policies is not None:
             policies_list = []
             for v in self.policies:
@@ -5162,6 +5925,14 @@ class PolicyTemplateAssignmentCollection:
     """
     A collection of policies assignments.
 
+    :param int limit: (optional) The number of documents to include per each page of
+          collection.
+    :param First first: (optional) Details with href linking to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to following page of
+          requested collection.
+    :param Previous previous: (optional) Details with href linking to previous page
+          of requested collection.
     :param List[PolicyTemplateAssignmentItems] assignments: (optional) List of
           policy assignments.
     """
@@ -5169,20 +5940,44 @@ class PolicyTemplateAssignmentCollection:
     def __init__(
         self,
         *,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
         assignments: Optional[List['PolicyTemplateAssignmentItems']] = None,
     ) -> None:
         """
         Initialize a PolicyTemplateAssignmentCollection object.
 
+        :param int limit: (optional) The number of documents to include per each
+               page of collection.
+        :param First first: (optional) Details with href linking to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to following page of
+               requested collection.
+        :param Previous previous: (optional) Details with href linking to previous
+               page of requested collection.
         :param List[PolicyTemplateAssignmentItems] assignments: (optional) List of
                policy assignments.
         """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
         self.assignments = assignments
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'PolicyTemplateAssignmentCollection':
         """Initialize a PolicyTemplateAssignmentCollection object from a json dictionary."""
         args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
         if (assignments := _dict.get('assignments')) is not None:
             args['assignments'] = assignments
         return cls(**args)
@@ -5195,6 +5990,23 @@ class PolicyTemplateAssignmentCollection:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
         if hasattr(self, 'assignments') and self.assignments is not None:
             assignments_list = []
             for v in self.assignments:
@@ -5249,6 +6061,14 @@ class PolicyTemplateCollection:
     """
     A collection of policy Templates.
 
+    :param int limit: (optional) The number of documents to include per each page of
+          collection.
+    :param First first: (optional) Details with href linking to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to following page of
+          requested collection.
+    :param Previous previous: (optional) Details with href linking to previous page
+          of requested collection.
     :param List[PolicyTemplate] policy_templates: (optional) List of policy
           templates.
     """
@@ -5256,20 +6076,44 @@ class PolicyTemplateCollection:
     def __init__(
         self,
         *,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
         policy_templates: Optional[List['PolicyTemplate']] = None,
     ) -> None:
         """
         Initialize a PolicyTemplateCollection object.
 
+        :param int limit: (optional) The number of documents to include per each
+               page of collection.
+        :param First first: (optional) Details with href linking to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to following page of
+               requested collection.
+        :param Previous previous: (optional) Details with href linking to previous
+               page of requested collection.
         :param List[PolicyTemplate] policy_templates: (optional) List of policy
                templates.
         """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
         self.policy_templates = policy_templates
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'PolicyTemplateCollection':
         """Initialize a PolicyTemplateCollection object from a json dictionary."""
         args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
         if (policy_templates := _dict.get('policy_templates')) is not None:
             args['policy_templates'] = [PolicyTemplate.from_dict(v) for v in policy_templates]
         return cls(**args)
@@ -5282,6 +6126,23 @@ class PolicyTemplateCollection:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
         if hasattr(self, 'policy_templates') and self.policy_templates is not None:
             policy_templates_list = []
             for v in self.policy_templates:
@@ -5709,6 +6570,14 @@ class PolicyTemplateVersionsCollection:
     """
     A collection of versions for a specific policy template.
 
+    :param int limit: (optional) The number of documents to include per each page of
+          collection.
+    :param First first: (optional) Details with href linking to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to following page of
+          requested collection.
+    :param Previous previous: (optional) Details with href linking to previous page
+          of requested collection.
     :param List[PolicyTemplate] versions: (optional) List of policy templates
           versions.
     """
@@ -5716,20 +6585,44 @@ class PolicyTemplateVersionsCollection:
     def __init__(
         self,
         *,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
         versions: Optional[List['PolicyTemplate']] = None,
     ) -> None:
         """
         Initialize a PolicyTemplateVersionsCollection object.
 
+        :param int limit: (optional) The number of documents to include per each
+               page of collection.
+        :param First first: (optional) Details with href linking to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to following page of
+               requested collection.
+        :param Previous previous: (optional) Details with href linking to previous
+               page of requested collection.
         :param List[PolicyTemplate] versions: (optional) List of policy templates
                versions.
         """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
         self.versions = versions
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'PolicyTemplateVersionsCollection':
         """Initialize a PolicyTemplateVersionsCollection object from a json dictionary."""
         args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
         if (versions := _dict.get('versions')) is not None:
             args['versions'] = [PolicyTemplate.from_dict(v) for v in versions]
         return cls(**args)
@@ -5742,6 +6635,23 @@ class PolicyTemplateVersionsCollection:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
         if hasattr(self, 'versions') and self.versions is not None:
             versions_list = []
             for v in self.versions:
@@ -5767,6 +6677,73 @@ class PolicyTemplateVersionsCollection:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'PolicyTemplateVersionsCollection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class Previous:
+    """
+    Details with href linking to previous page of requested collection.
+
+    :param str href: (optional) The href linking to the page of requested
+          collection.
+    :param str start: (optional) Page token that refers to the page of collection.
+    """
+
+    def __init__(
+        self,
+        *,
+        href: Optional[str] = None,
+        start: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a Previous object.
+
+        :param str start: (optional) Page token that refers to the page of
+               collection.
+        """
+        self.href = href
+        self.start = start
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Previous':
+        """Initialize a Previous object from a json dictionary."""
+        args = {}
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (start := _dict.get('start')) is not None:
+            args['start'] = start
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Previous object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        if hasattr(self, 'start') and self.start is not None:
+            _dict['start'] = self.start
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Previous object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Previous') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Previous') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -6974,26 +7951,58 @@ class V2PolicyCollection:
     """
     A collection of policies.
 
+    :param int limit: (optional) The number of documents to include per each page of
+          collection.
+    :param First first: (optional) Details with href linking to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to following page of
+          requested collection.
+    :param Previous previous: (optional) Details with href linking to previous page
+          of requested collection.
     :param List[V2PolicyTemplateMetaData] policies: (optional) List of policies.
     """
 
     def __init__(
         self,
         *,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
         policies: Optional[List['V2PolicyTemplateMetaData']] = None,
     ) -> None:
         """
         Initialize a V2PolicyCollection object.
 
+        :param int limit: (optional) The number of documents to include per each
+               page of collection.
+        :param First first: (optional) Details with href linking to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to following page of
+               requested collection.
+        :param Previous previous: (optional) Details with href linking to previous
+               page of requested collection.
         :param List[V2PolicyTemplateMetaData] policies: (optional) List of
                policies.
         """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
         self.policies = policies
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'V2PolicyCollection':
         """Initialize a V2PolicyCollection object from a json dictionary."""
         args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
         if (policies := _dict.get('policies')) is not None:
             args['policies'] = [V2PolicyTemplateMetaData.from_dict(v) for v in policies]
         return cls(**args)
@@ -7006,6 +8015,23 @@ class V2PolicyCollection:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
         if hasattr(self, 'policies') and self.policies is not None:
             policies_list = []
             for v in self.policies:
@@ -7852,388 +8878,6 @@ class ControlResponseControlWithEnrichedRoles(ControlResponse):
         return not self == other
 
 
-class GetPolicyAssignmentResponsePolicyAssignment(GetPolicyAssignmentResponse):
-    """
-    The set of properties associated with the policy template assignment.
-
-    :param str template_id: (optional) policy template id.
-    :param str template_version: (optional) policy template version.
-    :param str assignment_id: (optional) Passed in value to correlate with other
-          assignments.
-    :param str target_type: (optional) Assignment target type.
-    :param str target: (optional) ID of the target account.
-    :param str id: (optional) Policy assignment ID.
-    :param str account_id: (optional) The account GUID that the policies assignments
-          belong to..
-    :param str href: (optional) The href URL that links to the policies assignments
-          API by policy assignment ID.
-    :param datetime created_at: (optional) The UTC timestamp when the policy
-          assignment was created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
-          policy assignment.
-    :param datetime last_modified_at: (optional) The UTC timestamp when the policy
-          assignment was last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
-          modified the policy assignment.
-    :param List[PolicyAssignmentResources] resources: (optional) Object for each
-          account assigned.
-    :param str status: (optional) The policy assignment status.
-    """
-
-    def __init__(
-        self,
-        *,
-        template_id: Optional[str] = None,
-        template_version: Optional[str] = None,
-        assignment_id: Optional[str] = None,
-        target_type: Optional[str] = None,
-        target: Optional[str] = None,
-        id: Optional[str] = None,
-        account_id: Optional[str] = None,
-        href: Optional[str] = None,
-        created_at: Optional[datetime] = None,
-        created_by_id: Optional[str] = None,
-        last_modified_at: Optional[datetime] = None,
-        last_modified_by_id: Optional[str] = None,
-        resources: Optional[List['PolicyAssignmentResources']] = None,
-        status: Optional[str] = None,
-    ) -> None:
-        """
-        Initialize a GetPolicyAssignmentResponsePolicyAssignment object.
-
-        :param str template_id: (optional) policy template id.
-        :param str template_version: (optional) policy template version.
-        :param str assignment_id: (optional) Passed in value to correlate with
-               other assignments.
-        :param str target_type: (optional) Assignment target type.
-        :param str target: (optional) ID of the target account.
-        :param List[PolicyAssignmentResources] resources: (optional) Object for
-               each account assigned.
-        :param str status: (optional) The policy assignment status.
-        """
-        # pylint: disable=super-init-not-called
-        self.template_id = template_id
-        self.template_version = template_version
-        self.assignment_id = assignment_id
-        self.target_type = target_type
-        self.target = target
-        self.id = id
-        self.account_id = account_id
-        self.href = href
-        self.created_at = created_at
-        self.created_by_id = created_by_id
-        self.last_modified_at = last_modified_at
-        self.last_modified_by_id = last_modified_by_id
-        self.resources = resources
-        self.status = status
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'GetPolicyAssignmentResponsePolicyAssignment':
-        """Initialize a GetPolicyAssignmentResponsePolicyAssignment object from a json dictionary."""
-        args = {}
-        if (template_id := _dict.get('template_id')) is not None:
-            args['template_id'] = template_id
-        if (template_version := _dict.get('template_version')) is not None:
-            args['template_version'] = template_version
-        if (assignment_id := _dict.get('assignment_id')) is not None:
-            args['assignment_id'] = assignment_id
-        if (target_type := _dict.get('target_type')) is not None:
-            args['target_type'] = target_type
-        if (target := _dict.get('target')) is not None:
-            args['target'] = target
-        if (id := _dict.get('id')) is not None:
-            args['id'] = id
-        if (account_id := _dict.get('account_id')) is not None:
-            args['account_id'] = account_id
-        if (href := _dict.get('href')) is not None:
-            args['href'] = href
-        if (created_at := _dict.get('created_at')) is not None:
-            args['created_at'] = string_to_datetime(created_at)
-        if (created_by_id := _dict.get('created_by_id')) is not None:
-            args['created_by_id'] = created_by_id
-        if (last_modified_at := _dict.get('last_modified_at')) is not None:
-            args['last_modified_at'] = string_to_datetime(last_modified_at)
-        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
-            args['last_modified_by_id'] = last_modified_by_id
-        if (resources := _dict.get('resources')) is not None:
-            args['resources'] = [PolicyAssignmentResources.from_dict(v) for v in resources]
-        if (status := _dict.get('status')) is not None:
-            args['status'] = status
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a GetPolicyAssignmentResponsePolicyAssignment object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'template_id') and self.template_id is not None:
-            _dict['template_id'] = self.template_id
-        if hasattr(self, 'template_version') and self.template_version is not None:
-            _dict['template_version'] = self.template_version
-        if hasattr(self, 'assignment_id') and self.assignment_id is not None:
-            _dict['assignment_id'] = self.assignment_id
-        if hasattr(self, 'target_type') and self.target_type is not None:
-            _dict['target_type'] = self.target_type
-        if hasattr(self, 'target') and self.target is not None:
-            _dict['target'] = self.target
-        if hasattr(self, 'id') and getattr(self, 'id') is not None:
-            _dict['id'] = getattr(self, 'id')
-        if hasattr(self, 'account_id') and getattr(self, 'account_id') is not None:
-            _dict['account_id'] = getattr(self, 'account_id')
-        if hasattr(self, 'href') and getattr(self, 'href') is not None:
-            _dict['href'] = getattr(self, 'href')
-        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
-            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
-        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
-            _dict['created_by_id'] = getattr(self, 'created_by_id')
-        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
-            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
-        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
-            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
-        if hasattr(self, 'resources') and self.resources is not None:
-            resources_list = []
-            for v in self.resources:
-                if isinstance(v, dict):
-                    resources_list.append(v)
-                else:
-                    resources_list.append(v.to_dict())
-            _dict['resources'] = resources_list
-        if hasattr(self, 'status') and self.status is not None:
-            _dict['status'] = self.status
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this GetPolicyAssignmentResponsePolicyAssignment object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'GetPolicyAssignmentResponsePolicyAssignment') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'GetPolicyAssignmentResponsePolicyAssignment') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-    class TargetTypeEnum(str, Enum):
-        """
-        Assignment target type.
-        """
-
-        ACCOUNT = 'Account'
-        ACCOUNTGROUP = 'AccountGroup'
-        ENTERPRISE = 'Enterprise'
-
-    class StatusEnum(str, Enum):
-        """
-        The policy assignment status.
-        """
-
-        IN_PROGRESS = 'in_progress'
-        SUCCEEDED = 'succeeded'
-        SUCCEED_WITH_ERRORS = 'succeed_with_errors'
-        FAILED = 'failed'
-
-
-class GetPolicyAssignmentResponsePolicyAssignmentV1(GetPolicyAssignmentResponse):
-    """
-    The set of properties associated with the policy template assignment.
-
-    :param AssignmentTargetDetails target: assignment target account and type.
-    :param str id: (optional) Policy assignment ID.
-    :param str account_id: (optional) The account GUID that the policies assignments
-          belong to..
-    :param str href: (optional) The href URL that links to the policies assignments
-          API by policy assignment ID.
-    :param datetime created_at: (optional) The UTC timestamp when the policy
-          assignment was created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
-          policy assignment.
-    :param datetime last_modified_at: (optional) The UTC timestamp when the policy
-          assignment was last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
-          modified the policy assignment.
-    :param List[PolicyAssignmentV1Resources] resources: Object for each account
-          assigned.
-    :param GetPolicyAssignmentResponsePolicyAssignmentV1Subject subject: (optional)
-          subject details of access type assignment.
-    :param AssignmentTemplateDetails template: policy template details.
-    :param str status: The policy assignment status.
-    """
-
-    def __init__(
-        self,
-        target: 'AssignmentTargetDetails',
-        resources: List['PolicyAssignmentV1Resources'],
-        template: 'AssignmentTemplateDetails',
-        status: str,
-        *,
-        id: Optional[str] = None,
-        account_id: Optional[str] = None,
-        href: Optional[str] = None,
-        created_at: Optional[datetime] = None,
-        created_by_id: Optional[str] = None,
-        last_modified_at: Optional[datetime] = None,
-        last_modified_by_id: Optional[str] = None,
-        subject: Optional['GetPolicyAssignmentResponsePolicyAssignmentV1Subject'] = None,
-    ) -> None:
-        """
-        Initialize a GetPolicyAssignmentResponsePolicyAssignmentV1 object.
-
-        :param AssignmentTargetDetails target: assignment target account and type.
-        :param List[PolicyAssignmentV1Resources] resources: Object for each account
-               assigned.
-        :param AssignmentTemplateDetails template: policy template details.
-        :param str status: The policy assignment status.
-        :param GetPolicyAssignmentResponsePolicyAssignmentV1Subject subject:
-               (optional) subject details of access type assignment.
-        """
-        # pylint: disable=super-init-not-called
-        self.target = target
-        self.id = id
-        self.account_id = account_id
-        self.href = href
-        self.created_at = created_at
-        self.created_by_id = created_by_id
-        self.last_modified_at = last_modified_at
-        self.last_modified_by_id = last_modified_by_id
-        self.resources = resources
-        self.subject = subject
-        self.template = template
-        self.status = status
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'GetPolicyAssignmentResponsePolicyAssignmentV1':
-        """Initialize a GetPolicyAssignmentResponsePolicyAssignmentV1 object from a json dictionary."""
-        args = {}
-        if (target := _dict.get('target')) is not None:
-            args['target'] = AssignmentTargetDetails.from_dict(target)
-        else:
-            raise ValueError(
-                'Required property \'target\' not present in GetPolicyAssignmentResponsePolicyAssignmentV1 JSON'
-            )
-        if (id := _dict.get('id')) is not None:
-            args['id'] = id
-        if (account_id := _dict.get('account_id')) is not None:
-            args['account_id'] = account_id
-        if (href := _dict.get('href')) is not None:
-            args['href'] = href
-        if (created_at := _dict.get('created_at')) is not None:
-            args['created_at'] = string_to_datetime(created_at)
-        if (created_by_id := _dict.get('created_by_id')) is not None:
-            args['created_by_id'] = created_by_id
-        if (last_modified_at := _dict.get('last_modified_at')) is not None:
-            args['last_modified_at'] = string_to_datetime(last_modified_at)
-        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
-            args['last_modified_by_id'] = last_modified_by_id
-        if (resources := _dict.get('resources')) is not None:
-            args['resources'] = [PolicyAssignmentV1Resources.from_dict(v) for v in resources]
-        else:
-            raise ValueError(
-                'Required property \'resources\' not present in GetPolicyAssignmentResponsePolicyAssignmentV1 JSON'
-            )
-        if (subject := _dict.get('subject')) is not None:
-            args['subject'] = GetPolicyAssignmentResponsePolicyAssignmentV1Subject.from_dict(subject)
-        if (template := _dict.get('template')) is not None:
-            args['template'] = AssignmentTemplateDetails.from_dict(template)
-        else:
-            raise ValueError(
-                'Required property \'template\' not present in GetPolicyAssignmentResponsePolicyAssignmentV1 JSON'
-            )
-        if (status := _dict.get('status')) is not None:
-            args['status'] = status
-        else:
-            raise ValueError(
-                'Required property \'status\' not present in GetPolicyAssignmentResponsePolicyAssignmentV1 JSON'
-            )
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a GetPolicyAssignmentResponsePolicyAssignmentV1 object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'target') and self.target is not None:
-            if isinstance(self.target, dict):
-                _dict['target'] = self.target
-            else:
-                _dict['target'] = self.target.to_dict()
-        if hasattr(self, 'id') and getattr(self, 'id') is not None:
-            _dict['id'] = getattr(self, 'id')
-        if hasattr(self, 'account_id') and getattr(self, 'account_id') is not None:
-            _dict['account_id'] = getattr(self, 'account_id')
-        if hasattr(self, 'href') and getattr(self, 'href') is not None:
-            _dict['href'] = getattr(self, 'href')
-        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
-            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
-        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
-            _dict['created_by_id'] = getattr(self, 'created_by_id')
-        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
-            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
-        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
-            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
-        if hasattr(self, 'resources') and self.resources is not None:
-            resources_list = []
-            for v in self.resources:
-                if isinstance(v, dict):
-                    resources_list.append(v)
-                else:
-                    resources_list.append(v.to_dict())
-            _dict['resources'] = resources_list
-        if hasattr(self, 'subject') and self.subject is not None:
-            if isinstance(self.subject, dict):
-                _dict['subject'] = self.subject
-            else:
-                _dict['subject'] = self.subject.to_dict()
-        if hasattr(self, 'template') and self.template is not None:
-            if isinstance(self.template, dict):
-                _dict['template'] = self.template
-            else:
-                _dict['template'] = self.template.to_dict()
-        if hasattr(self, 'status') and self.status is not None:
-            _dict['status'] = self.status
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this GetPolicyAssignmentResponsePolicyAssignmentV1 object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'GetPolicyAssignmentResponsePolicyAssignmentV1') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'GetPolicyAssignmentResponsePolicyAssignmentV1') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-    class StatusEnum(str, Enum):
-        """
-        The policy assignment status.
-        """
-
-        IN_PROGRESS = 'in_progress'
-        SUCCEEDED = 'succeeded'
-        SUCCEED_WITH_ERRORS = 'succeed_with_errors'
-        FAILED = 'failed'
-
-
 class NestedConditionRuleAttribute(NestedCondition):
     """
     Rule that specifies additional access granted (e.g., time-based condition).
@@ -8610,8 +9254,6 @@ class PolicyTemplateAssignmentItemsPolicyAssignment(PolicyTemplateAssignmentItem
         """
 
         ACCOUNT = 'Account'
-        ACCOUNTGROUP = 'AccountGroup'
-        ENTERPRISE = 'Enterprise'
 
     class StatusEnum(str, Enum):
         """
@@ -9014,3 +9656,557 @@ class V2PolicyRuleRuleWithNestedConditions(V2PolicyRule):
 
         AND = 'and'
         OR = 'or'
+
+
+##############################################################################
+# Pagers
+##############################################################################
+
+
+class PoliciesPager:
+    """
+    PoliciesPager can be used to simplify the use of the "list_policies" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamPolicyManagementV1,
+        account_id: str,
+        accept_language: str = None,
+        iam_id: str = None,
+        access_group_id: str = None,
+        type: str = None,
+        service_type: str = None,
+        tag_name: str = None,
+        tag_value: str = None,
+        sort: str = None,
+        format: str = None,
+        state: str = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a PoliciesPager object.
+        :param str account_id: The account GUID that the policies belong to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str iam_id: (optional) Optional IAM ID used to identify the subject.
+        :param str access_group_id: (optional) Optional access group id.
+        :param str type: (optional) Optional type of policy.
+        :param str service_type: (optional) Optional type of service.
+        :param str tag_name: (optional) Optional name of the access tag in the
+               policy.
+        :param str tag_value: (optional) Optional value of the access tag in the
+               policy.
+        :param str sort: (optional) Optional top level policy field to sort
+               results. Ascending sort is default. Descending sort available by prepending
+               '-' to field. Example '-last_modified_at'.
+        :param str format: (optional) Include additional data per policy returned
+               * `include_last_permit` - returns details of when the policy last granted a
+               permit decision and the number of times it has done so
+               * `display` - returns the list of all actions included in each of the
+               policy roles.
+        :param str state: (optional) The state of the policy.
+               * `active` - returns active policies
+               * `deleted` - returns non-active policies.
+        :param int limit: (optional) The number of documents to include in
+               collection.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._accept_language = accept_language
+        self._iam_id = iam_id
+        self._access_group_id = access_group_id
+        self._type = type
+        self._service_type = service_type
+        self._tag_name = tag_name
+        self._tag_value = tag_value
+        self._sort = sort
+        self._format = format
+        self._state = state
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of PolicyTemplateMetaData.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_policies(
+            account_id=self._account_id,
+            accept_language=self._accept_language,
+            iam_id=self._iam_id,
+            access_group_id=self._access_group_id,
+            type=self._type,
+            service_type=self._service_type,
+            tag_name=self._tag_name,
+            tag_value=self._tag_value,
+            sort=self._sort,
+            format=self._format,
+            state=self._state,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = next_page_link.get('start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('policies')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of PolicyTemplateMetaData.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class V2PoliciesPager:
+    """
+    V2PoliciesPager can be used to simplify the use of the "list_v2_policies" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamPolicyManagementV1,
+        account_id: str,
+        accept_language: str = None,
+        iam_id: str = None,
+        access_group_id: str = None,
+        type: str = None,
+        service_type: str = None,
+        service_name: str = None,
+        service_group_id: str = None,
+        sort: str = None,
+        format: str = None,
+        state: str = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a V2PoliciesPager object.
+        :param str account_id: The account GUID in which the policies belong to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str iam_id: (optional) Optional IAM ID used to identify the subject.
+        :param str access_group_id: (optional) Optional access group id.
+        :param str type: (optional) Optional type of policy.
+        :param str service_type: (optional) Optional type of service.
+        :param str service_name: (optional) Optional name of service.
+        :param str service_group_id: (optional) Optional ID of service group.
+        :param str sort: (optional) Optional top level policy field to sort
+               results. Ascending sort is default. Descending sort available by prepending
+               '-' to field, for example, '-last_modified_at'. Note that last permit
+               information is only included when 'format=include_last_permit', for
+               example, "format=include_last_permit&sort=last_permit_at" Example fields
+               that can be sorted on:
+                 - 'id'
+                 - 'type'
+                 - 'href'
+                 - 'created_at'
+                 - 'created_by_id'
+                 - 'last_modified_at'
+                 - 'last_modified_by_id'
+                 - 'state'
+                 - 'last_permit_at'
+                 - 'last_permit_frequency'.
+        :param str format: (optional) Include additional data per policy returned
+               * `include_last_permit` - returns details of when the policy last granted a
+               permit decision and the number of times it has done so
+               * `display` - returns the list of all actions included in each of the
+               policy roles and translations for all relevant fields.
+        :param str state: (optional) The state of the policy.
+               * `active` - returns active policies
+               * `deleted` - returns non-active policies.
+        :param int limit: (optional) The number of documents to include in
+               collection.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._accept_language = accept_language
+        self._iam_id = iam_id
+        self._access_group_id = access_group_id
+        self._type = type
+        self._service_type = service_type
+        self._service_name = service_name
+        self._service_group_id = service_group_id
+        self._sort = sort
+        self._format = format
+        self._state = state
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of V2PolicyTemplateMetaData.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_v2_policies(
+            account_id=self._account_id,
+            accept_language=self._accept_language,
+            iam_id=self._iam_id,
+            access_group_id=self._access_group_id,
+            type=self._type,
+            service_type=self._service_type,
+            service_name=self._service_name,
+            service_group_id=self._service_group_id,
+            sort=self._sort,
+            format=self._format,
+            state=self._state,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = next_page_link.get('start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('policies')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of V2PolicyTemplateMetaData.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class PolicyTemplatesPager:
+    """
+    PolicyTemplatesPager can be used to simplify the use of the "list_policy_templates" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamPolicyManagementV1,
+        account_id: str,
+        accept_language: str = None,
+        state: str = None,
+        name: str = None,
+        policy_service_type: str = None,
+        policy_service_name: str = None,
+        policy_service_group_id: str = None,
+        policy_type: str = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a PolicyTemplatesPager object.
+        :param str account_id: The account GUID that the policy templates belong
+               to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str state: (optional) The policy template state.
+        :param str name: (optional) The policy template name.
+        :param str policy_service_type: (optional) Service type, Optional.
+        :param str policy_service_name: (optional) Service name, Optional.
+        :param str policy_service_group_id: (optional) Service group id, Optional.
+        :param str policy_type: (optional) Policy type, Optional.
+        :param int limit: (optional) The number of documents to include in
+               collection.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._accept_language = accept_language
+        self._state = state
+        self._name = name
+        self._policy_service_type = policy_service_type
+        self._policy_service_name = policy_service_name
+        self._policy_service_group_id = policy_service_group_id
+        self._policy_type = policy_type
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of PolicyTemplate.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_policy_templates(
+            account_id=self._account_id,
+            accept_language=self._accept_language,
+            state=self._state,
+            name=self._name,
+            policy_service_type=self._policy_service_type,
+            policy_service_name=self._policy_service_name,
+            policy_service_group_id=self._policy_service_group_id,
+            policy_type=self._policy_type,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = next_page_link.get('start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('policy_templates')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of PolicyTemplate.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class PolicyTemplateVersionsPager:
+    """
+    PolicyTemplateVersionsPager can be used to simplify the use of the "list_policy_template_versions" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamPolicyManagementV1,
+        policy_template_id: str,
+        state: str = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a PolicyTemplateVersionsPager object.
+        :param str policy_template_id: The policy template ID.
+        :param str state: (optional) The policy template state.
+        :param int limit: (optional) The number of documents to include in
+               collection.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._policy_template_id = policy_template_id
+        self._state = state
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of PolicyTemplate.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_policy_template_versions(
+            policy_template_id=self._policy_template_id,
+            state=self._state,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = next_page_link.get('start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('versions')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of PolicyTemplate.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class PolicyAssignmentsPager:
+    """
+    PolicyAssignmentsPager can be used to simplify the use of the "list_policy_assignments" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamPolicyManagementV1,
+        version: str,
+        account_id: str,
+        accept_language: str = None,
+        template_id: str = None,
+        template_version: str = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a PolicyAssignmentsPager object.
+        :param str version: specify version of response body format.
+        :param str account_id: The account GUID in which the policies belong to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str template_id: (optional) Optional template id.
+        :param str template_version: (optional) Optional policy template version.
+        :param int limit: (optional) The number of documents to include in
+               collection.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._version = version
+        self._account_id = account_id
+        self._accept_language = accept_language
+        self._template_id = template_id
+        self._template_version = template_version
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of PolicyTemplateAssignmentItems.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_policy_assignments(
+            version=self._version,
+            account_id=self._account_id,
+            accept_language=self._accept_language,
+            template_id=self._template_id,
+            template_version=self._template_version,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = next_page_link.get('start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('assignments')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of PolicyTemplateAssignmentItems.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
