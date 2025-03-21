@@ -1,3 +1,10 @@
+# [0.63.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.62.0...v0.63.0) (2025-03-21)
+
+
+### Features
+
+* **IAM Policy Management:** add access management account settings API ([#287](https://github.com/IBM/platform-services-python-sdk/issues/287)) ([7aa264d](https://github.com/IBM/platform-services-python-sdk/commit/7aa264d5bf9e7785a8c0313b68a20afc7d1e2d72))
+
 # [0.62.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.61.1...v0.62.0) (2025-03-17)
 
 
