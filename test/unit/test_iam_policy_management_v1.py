@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,15 +44,8 @@ def preprocess_url(operation_path: str):
     The returned request URL is used to register the mock response so it needs
     to match the request URL that is formed by the requests library.
     """
-    # First, unquote the path since it might have some quoted/escaped characters in it
-    # due to how the generator inserts the operation paths into the unit test code.
-    operation_path = urllib.parse.unquote(operation_path)
 
-    # Next, quote the path using urllib so that we approximate what will
-    # happen during request processing.
-    operation_path = urllib.parse.quote(operation_path, safe='/')
-
-    # Finally, form the request URL from the base URL and operation path.
+    # Form the request URL from the base URL and operation path.
     request_url = _base_url + operation_path
 
     # If the request url does NOT end with a /, then just return it as-is.
@@ -108,7 +101,7 @@ class TestListPolicies:
         """
         # Set up mock
         url = preprocess_url('/v1/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
         responses.add(
             responses.GET,
             url,
@@ -129,6 +122,8 @@ class TestListPolicies:
         sort = 'id'
         format = 'include_last_permit'
         state = 'active'
+        limit = 50
+        start = 'testString'
 
         # Invoke method
         response = _service.list_policies(
@@ -143,6 +138,8 @@ class TestListPolicies:
             sort=sort,
             format=format,
             state=state,
+            limit=limit,
+            start=start,
             headers={},
         )
 
@@ -162,6 +159,8 @@ class TestListPolicies:
         assert 'sort={}'.format(sort) in query_string
         assert 'format={}'.format(format) in query_string
         assert 'state={}'.format(state) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
 
     def test_list_policies_all_params_with_retries(self):
         # Enable retries and run test_list_policies_all_params.
@@ -179,7 +178,7 @@ class TestListPolicies:
         """
         # Set up mock
         url = preprocess_url('/v1/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
         responses.add(
             responses.GET,
             url,
@@ -221,7 +220,7 @@ class TestListPolicies:
         """
         # Set up mock
         url = preprocess_url('/v1/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
         responses.add(
             responses.GET,
             url,
@@ -250,6 +249,97 @@ class TestListPolicies:
         # Disable retries and run test_list_policies_value_error.
         _service.disable_retries()
         self.test_list_policies_value_error()
+
+    @responses.activate
+    def test_list_policies_with_pager_get_next(self):
+        """
+        test_list_policies_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/policies')
+        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"policies":[{"id":"id","type":"type","description":"description","subjects":[{"attributes":[{"name":"name","value":"value"}]}],"roles":[{"role_id":"role_id","display_name":"display_name","description":"description"}],"resources":[{"attributes":[{"name":"name","value":"value","operator":"operator"}],"tags":[{"name":"name","value":"value","operator":"operator"}]}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","state":"active","template":{"id":"id","version":"version","assignment_id":"assignment_id","root_id":"root_id","root_version":"root_version"}}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"policies":[{"id":"id","type":"type","description":"description","subjects":[{"attributes":[{"name":"name","value":"value"}]}],"roles":[{"role_id":"role_id","display_name":"display_name","description":"description"}],"resources":[{"attributes":[{"name":"name","value":"value","operator":"operator"}],"tags":[{"name":"name","value":"value","operator":"operator"}]}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","state":"active","template":{"id":"id","version":"version","assignment_id":"assignment_id","root_id":"root_id","root_version":"root_version"}}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = PoliciesPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            iam_id='testString',
+            access_group_id='testString',
+            type='access',
+            service_type='service',
+            tag_name='testString',
+            tag_value='testString',
+            sort='id',
+            format='include_last_permit',
+            state='active',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_policies_with_pager_get_all(self):
+        """
+        test_list_policies_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/policies')
+        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"policies":[{"id":"id","type":"type","description":"description","subjects":[{"attributes":[{"name":"name","value":"value"}]}],"roles":[{"role_id":"role_id","display_name":"display_name","description":"description"}],"resources":[{"attributes":[{"name":"name","value":"value","operator":"operator"}],"tags":[{"name":"name","value":"value","operator":"operator"}]}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","state":"active","template":{"id":"id","version":"version","assignment_id":"assignment_id","root_id":"root_id","root_version":"root_version"}}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"policies":[{"id":"id","type":"type","description":"description","subjects":[{"attributes":[{"name":"name","value":"value"}]}],"roles":[{"role_id":"role_id","display_name":"display_name","description":"description"}],"resources":[{"attributes":[{"name":"name","value":"value","operator":"operator"}],"tags":[{"name":"name","value":"value","operator":"operator"}]}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","state":"active","template":{"id":"id","version":"version","assignment_id":"assignment_id","root_id":"root_id","root_version":"root_version"}}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = PoliciesPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            iam_id='testString',
+            access_group_id='testString',
+            type='access',
+            service_type='service',
+            tag_name='testString',
+            tag_value='testString',
+            sort='id',
+            format='include_last_permit',
+            state='active',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 
 class TestCreatePolicy:
@@ -1525,7 +1615,7 @@ class TestListV2Policies:
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21, "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21, "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
         responses.add(
             responses.GET,
             url,
@@ -1546,6 +1636,8 @@ class TestListV2Policies:
         sort = 'testString'
         format = 'include_last_permit'
         state = 'active'
+        limit = 50
+        start = 'testString'
 
         # Invoke method
         response = _service.list_v2_policies(
@@ -1560,6 +1652,8 @@ class TestListV2Policies:
             sort=sort,
             format=format,
             state=state,
+            limit=limit,
+            start=start,
             headers={},
         )
 
@@ -1579,6 +1673,8 @@ class TestListV2Policies:
         assert 'sort={}'.format(sort) in query_string
         assert 'format={}'.format(format) in query_string
         assert 'state={}'.format(state) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
 
     def test_list_v2_policies_all_params_with_retries(self):
         # Enable retries and run test_list_v2_policies_all_params.
@@ -1596,7 +1692,7 @@ class TestListV2Policies:
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21, "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21, "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
         responses.add(
             responses.GET,
             url,
@@ -1638,7 +1734,7 @@ class TestListV2Policies:
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21, "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21, "template": {"id": "id", "version": "version", "assignment_id": "assignment_id", "root_id": "root_id", "root_version": "root_version"}}]}'
         responses.add(
             responses.GET,
             url,
@@ -1667,6 +1763,97 @@ class TestListV2Policies:
         # Disable retries and run test_list_v2_policies_value_error.
         _service.disable_retries()
         self.test_list_v2_policies_value_error()
+
+    @responses.activate
+    def test_list_v2_policies_with_pager_get_next(self):
+        """
+        test_list_v2_policies_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/policies')
+        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"policies":[{"type":"access","description":"description","subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"id":"id","href":"href","control":{"grant":{"roles":[{"role_id":"role_id"}]}},"created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","state":"active","last_permit_at":"last_permit_at","last_permit_frequency":21,"template":{"id":"id","version":"version","assignment_id":"assignment_id","root_id":"root_id","root_version":"root_version"}}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"policies":[{"type":"access","description":"description","subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"id":"id","href":"href","control":{"grant":{"roles":[{"role_id":"role_id"}]}},"created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","state":"active","last_permit_at":"last_permit_at","last_permit_frequency":21,"template":{"id":"id","version":"version","assignment_id":"assignment_id","root_id":"root_id","root_version":"root_version"}}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = V2PoliciesPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            iam_id='testString',
+            access_group_id='testString',
+            type='access',
+            service_type='service',
+            service_name='testString',
+            service_group_id='testString',
+            sort='testString',
+            format='include_last_permit',
+            state='active',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_v2_policies_with_pager_get_all(self):
+        """
+        test_list_v2_policies_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/policies')
+        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"policies":[{"type":"access","description":"description","subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"id":"id","href":"href","control":{"grant":{"roles":[{"role_id":"role_id"}]}},"created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","state":"active","last_permit_at":"last_permit_at","last_permit_frequency":21,"template":{"id":"id","version":"version","assignment_id":"assignment_id","root_id":"root_id","root_version":"root_version"}}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"policies":[{"type":"access","description":"description","subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"id":"id","href":"href","control":{"grant":{"roles":[{"role_id":"role_id"}]}},"created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","state":"active","last_permit_at":"last_permit_at","last_permit_frequency":21,"template":{"id":"id","version":"version","assignment_id":"assignment_id","root_id":"root_id","root_version":"root_version"}}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = V2PoliciesPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            iam_id='testString',
+            access_group_id='testString',
+            type='access',
+            service_type='service',
+            service_name='testString',
+            service_group_id='testString',
+            sort='testString',
+            format='include_last_permit',
+            state='active',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 
 class TestCreateV2Policy:
@@ -2432,7 +2619,7 @@ class TestListPolicyTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -2450,6 +2637,8 @@ class TestListPolicyTemplates:
         policy_service_name = 'testString'
         policy_service_group_id = 'testString'
         policy_type = 'access'
+        limit = 50
+        start = 'testString'
 
         # Invoke method
         response = _service.list_policy_templates(
@@ -2461,6 +2650,8 @@ class TestListPolicyTemplates:
             policy_service_name=policy_service_name,
             policy_service_group_id=policy_service_group_id,
             policy_type=policy_type,
+            limit=limit,
+            start=start,
             headers={},
         )
 
@@ -2477,6 +2668,8 @@ class TestListPolicyTemplates:
         assert 'policy_service_name={}'.format(policy_service_name) in query_string
         assert 'policy_service_group_id={}'.format(policy_service_group_id) in query_string
         assert 'policy_type={}'.format(policy_type) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
 
     def test_list_policy_templates_all_params_with_retries(self):
         # Enable retries and run test_list_policy_templates_all_params.
@@ -2494,7 +2687,7 @@ class TestListPolicyTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -2536,7 +2729,7 @@ class TestListPolicyTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -2565,6 +2758,91 @@ class TestListPolicyTemplates:
         # Disable retries and run test_list_policy_templates_value_error.
         _service.disable_retries()
         self.test_list_policy_templates_value_error()
+
+    @responses.activate
+    def test_list_policy_templates_with_pager_get_next(self):
+        """
+        test_list_policy_templates_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/policy_templates')
+        mock_response1 = '{"next":{"start":"1"},"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = PolicyTemplatesPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            state='active',
+            name='testString',
+            policy_service_type='service',
+            policy_service_name='testString',
+            policy_service_group_id='testString',
+            policy_type='access',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_policy_templates_with_pager_get_all(self):
+        """
+        test_list_policy_templates_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/policy_templates')
+        mock_response1 = '{"next":{"start":"1"},"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = PolicyTemplatesPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            state='active',
+            name='testString',
+            policy_service_type='service',
+            policy_service_name='testString',
+            policy_service_group_id='testString',
+            policy_type='access',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 
 class TestCreatePolicyTemplate:
@@ -3311,7 +3589,7 @@ class TestListPolicyTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3323,11 +3601,15 @@ class TestListPolicyTemplateVersions:
         # Set up parameter values
         policy_template_id = 'testString'
         state = 'active'
+        limit = 50
+        start = 'testString'
 
         # Invoke method
         response = _service.list_policy_template_versions(
             policy_template_id,
             state=state,
+            limit=limit,
+            start=start,
             headers={},
         )
 
@@ -3338,6 +3620,8 @@ class TestListPolicyTemplateVersions:
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'state={}'.format(state) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
 
     def test_list_policy_template_versions_all_params_with_retries(self):
         # Enable retries and run test_list_policy_template_versions_all_params.
@@ -3355,7 +3639,7 @@ class TestListPolicyTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3393,7 +3677,7 @@ class TestListPolicyTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3422,6 +3706,79 @@ class TestListPolicyTemplateVersions:
         # Disable retries and run test_list_policy_template_versions_value_error.
         _service.disable_retries()
         self.test_list_policy_template_versions_value_error()
+
+    @responses.activate
+    def test_list_policy_template_versions_with_pager_get_next(self):
+        """
+        test_list_policy_template_versions_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/policy_templates/testString/versions')
+        mock_response1 = '{"next":{"start":"1"},"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = PolicyTemplateVersionsPager(
+            client=_service,
+            policy_template_id='testString',
+            state='active',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_policy_template_versions_with_pager_get_all(self):
+        """
+        test_list_policy_template_versions_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/policy_templates/testString/versions')
+        mock_response1 = '{"next":{"start":"1"},"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = PolicyTemplateVersionsPager(
+            client=_service,
+            policy_template_id='testString',
+            state='active',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 
 class TestReplacePolicyTemplate:
@@ -3936,7 +4293,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3951,6 +4308,8 @@ class TestListPolicyAssignments:
         accept_language = 'default'
         template_id = 'testString'
         template_version = 'testString'
+        limit = 50
+        start = 'testString'
 
         # Invoke method
         response = _service.list_policy_assignments(
@@ -3959,6 +4318,8 @@ class TestListPolicyAssignments:
             accept_language=accept_language,
             template_id=template_id,
             template_version=template_version,
+            limit=limit,
+            start=start,
             headers={},
         )
 
@@ -3972,6 +4333,8 @@ class TestListPolicyAssignments:
         assert 'account_id={}'.format(account_id) in query_string
         assert 'template_id={}'.format(template_id) in query_string
         assert 'template_version={}'.format(template_version) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
 
     def test_list_policy_assignments_all_params_with_retries(self):
         # Enable retries and run test_list_policy_assignments_all_params.
@@ -3989,7 +4352,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -4034,7 +4397,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -4065,6 +4428,85 @@ class TestListPolicyAssignments:
         # Disable retries and run test_list_policy_assignments_value_error.
         _service.disable_retries()
         self.test_list_policy_assignments_value_error()
+
+    @responses.activate
+    def test_list_policy_assignments_with_pager_get_next(self):
+        """
+        test_list_policy_assignments_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/policy_assignments')
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":11}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":11}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = PolicyAssignmentsPager(
+            client=_service,
+            version='1.0',
+            account_id='testString',
+            accept_language='default',
+            template_id='testString',
+            template_version='testString',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_policy_assignments_with_pager_get_all(self):
+        """
+        test_list_policy_assignments_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/policy_assignments')
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":11}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":11}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = PolicyAssignmentsPager(
+            client=_service,
+            version='1.0',
+            account_id='testString',
+            accept_language='default',
+            template_id='testString',
+            template_version='testString',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 
 class TestCreatePolicyTemplateAssignment:
@@ -4515,11 +4957,406 @@ class TestDeletePolicyAssignment:
 # End of Service: PolicyAssignments
 ##############################################################################
 
+##############################################################################
+# Start of Service: AccessManagementSettings
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamPolicyManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamPolicyManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamPolicyManagementV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestGetSettings:
+    """
+    Test Class for get_settings
+    """
+
+    @responses.activate
+    def test_get_settings_all_params(self):
+        """
+        get_settings()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/settings/access_management')
+        mock_response = '{"external_account_identity_interaction": {"identity_types": {"user": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service_id": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}}}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        accept_language = 'default'
+
+        # Invoke method
+        response = _service.get_settings(
+            account_id,
+            accept_language=accept_language,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_settings_all_params_with_retries(self):
+        # Enable retries and run test_get_settings_all_params.
+        _service.enable_retries()
+        self.test_get_settings_all_params()
+
+        # Disable retries and run test_get_settings_all_params.
+        _service.disable_retries()
+        self.test_get_settings_all_params()
+
+    @responses.activate
+    def test_get_settings_required_params(self):
+        """
+        test_get_settings_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/settings/access_management')
+        mock_response = '{"external_account_identity_interaction": {"identity_types": {"user": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service_id": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}}}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.get_settings(
+            account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_settings_required_params_with_retries(self):
+        # Enable retries and run test_get_settings_required_params.
+        _service.enable_retries()
+        self.test_get_settings_required_params()
+
+        # Disable retries and run test_get_settings_required_params.
+        _service.disable_retries()
+        self.test_get_settings_required_params()
+
+    @responses.activate
+    def test_get_settings_value_error(self):
+        """
+        test_get_settings_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/settings/access_management')
+        mock_response = '{"external_account_identity_interaction": {"identity_types": {"user": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service_id": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}}}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_settings(**req_copy)
+
+    def test_get_settings_value_error_with_retries(self):
+        # Enable retries and run test_get_settings_value_error.
+        _service.enable_retries()
+        self.test_get_settings_value_error()
+
+        # Disable retries and run test_get_settings_value_error.
+        _service.disable_retries()
+        self.test_get_settings_value_error()
+
+
+class TestUpdateSettings:
+    """
+    Test Class for update_settings
+    """
+
+    @responses.activate
+    def test_update_settings_all_params(self):
+        """
+        update_settings()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/settings/access_management')
+        mock_response = '{"external_account_identity_interaction": {"identity_types": {"user": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service_id": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}}}}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a IdentityTypesBase model
+        identity_types_base_model = {}
+        identity_types_base_model['state'] = 'enabled'
+        identity_types_base_model['external_allowed_accounts'] = ['testString']
+
+        # Construct a dict representation of a IdentityTypesPatch model
+        identity_types_patch_model = {}
+        identity_types_patch_model['user'] = identity_types_base_model
+        identity_types_patch_model['service_id'] = identity_types_base_model
+        identity_types_patch_model['service'] = identity_types_base_model
+
+        # Construct a dict representation of a ExternalAccountIdentityInteractionPatch model
+        external_account_identity_interaction_patch_model = {}
+        external_account_identity_interaction_patch_model['identity_types'] = identity_types_patch_model
+
+        # Set up parameter values
+        account_id = 'testString'
+        if_match = 'testString'
+        external_account_identity_interaction = external_account_identity_interaction_patch_model
+        accept_language = 'default'
+
+        # Invoke method
+        response = _service.update_settings(
+            account_id,
+            if_match,
+            external_account_identity_interaction=external_account_identity_interaction,
+            accept_language=accept_language,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['external_account_identity_interaction'] == external_account_identity_interaction_patch_model
+
+    def test_update_settings_all_params_with_retries(self):
+        # Enable retries and run test_update_settings_all_params.
+        _service.enable_retries()
+        self.test_update_settings_all_params()
+
+        # Disable retries and run test_update_settings_all_params.
+        _service.disable_retries()
+        self.test_update_settings_all_params()
+
+    @responses.activate
+    def test_update_settings_required_params(self):
+        """
+        test_update_settings_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/settings/access_management')
+        mock_response = '{"external_account_identity_interaction": {"identity_types": {"user": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service_id": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}}}}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a IdentityTypesBase model
+        identity_types_base_model = {}
+        identity_types_base_model['state'] = 'enabled'
+        identity_types_base_model['external_allowed_accounts'] = ['testString']
+
+        # Construct a dict representation of a IdentityTypesPatch model
+        identity_types_patch_model = {}
+        identity_types_patch_model['user'] = identity_types_base_model
+        identity_types_patch_model['service_id'] = identity_types_base_model
+        identity_types_patch_model['service'] = identity_types_base_model
+
+        # Construct a dict representation of a ExternalAccountIdentityInteractionPatch model
+        external_account_identity_interaction_patch_model = {}
+        external_account_identity_interaction_patch_model['identity_types'] = identity_types_patch_model
+
+        # Set up parameter values
+        account_id = 'testString'
+        if_match = 'testString'
+        external_account_identity_interaction = external_account_identity_interaction_patch_model
+
+        # Invoke method
+        response = _service.update_settings(
+            account_id,
+            if_match,
+            external_account_identity_interaction=external_account_identity_interaction,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['external_account_identity_interaction'] == external_account_identity_interaction_patch_model
+
+    def test_update_settings_required_params_with_retries(self):
+        # Enable retries and run test_update_settings_required_params.
+        _service.enable_retries()
+        self.test_update_settings_required_params()
+
+        # Disable retries and run test_update_settings_required_params.
+        _service.disable_retries()
+        self.test_update_settings_required_params()
+
+    @responses.activate
+    def test_update_settings_value_error(self):
+        """
+        test_update_settings_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/settings/access_management')
+        mock_response = '{"external_account_identity_interaction": {"identity_types": {"user": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service_id": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}, "service": {"state": "enabled", "external_allowed_accounts": ["external_allowed_accounts"]}}}}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a IdentityTypesBase model
+        identity_types_base_model = {}
+        identity_types_base_model['state'] = 'enabled'
+        identity_types_base_model['external_allowed_accounts'] = ['testString']
+
+        # Construct a dict representation of a IdentityTypesPatch model
+        identity_types_patch_model = {}
+        identity_types_patch_model['user'] = identity_types_base_model
+        identity_types_patch_model['service_id'] = identity_types_base_model
+        identity_types_patch_model['service'] = identity_types_base_model
+
+        # Construct a dict representation of a ExternalAccountIdentityInteractionPatch model
+        external_account_identity_interaction_patch_model = {}
+        external_account_identity_interaction_patch_model['identity_types'] = identity_types_patch_model
+
+        # Set up parameter values
+        account_id = 'testString'
+        if_match = 'testString'
+        external_account_identity_interaction = external_account_identity_interaction_patch_model
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "if_match": if_match,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_settings(**req_copy)
+
+    def test_update_settings_value_error_with_retries(self):
+        # Enable retries and run test_update_settings_value_error.
+        _service.enable_retries()
+        self.test_update_settings_value_error()
+
+        # Disable retries and run test_update_settings_value_error.
+        _service.disable_retries()
+        self.test_update_settings_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: AccessManagementSettings
+##############################################################################
+
 
 ##############################################################################
 # Start of Model Tests
 ##############################################################################
 # region
+
+
+class TestModel_AccountSettingsAccessManagement:
+    """
+    Test Class for AccountSettingsAccessManagement
+    """
+
+    def test_account_settings_access_management_serialization(self):
+        """
+        Test serialization/deserialization for AccountSettingsAccessManagement
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        identity_types_base_model = {}  # IdentityTypesBase
+        identity_types_base_model['state'] = 'enabled'
+        identity_types_base_model['external_allowed_accounts'] = ['testString']
+
+        identity_types_model = {}  # IdentityTypes
+        identity_types_model['user'] = identity_types_base_model
+        identity_types_model['service_id'] = identity_types_base_model
+        identity_types_model['service'] = identity_types_base_model
+
+        external_account_identity_interaction_model = {}  # ExternalAccountIdentityInteraction
+        external_account_identity_interaction_model['identity_types'] = identity_types_model
+
+        # Construct a json representation of a AccountSettingsAccessManagement model
+        account_settings_access_management_model_json = {}
+        account_settings_access_management_model_json['external_account_identity_interaction'] = (
+            external_account_identity_interaction_model
+        )
+
+        # Construct a model instance of AccountSettingsAccessManagement by calling from_dict on the json representation
+        account_settings_access_management_model = AccountSettingsAccessManagement.from_dict(
+            account_settings_access_management_model_json
+        )
+        assert account_settings_access_management_model != False
+
+        # Construct a model instance of AccountSettingsAccessManagement by calling from_dict on the json representation
+        account_settings_access_management_model_dict = AccountSettingsAccessManagement.from_dict(
+            account_settings_access_management_model_json
+        ).__dict__
+        account_settings_access_management_model2 = AccountSettingsAccessManagement(
+            **account_settings_access_management_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert account_settings_access_management_model == account_settings_access_management_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        account_settings_access_management_model_json2 = account_settings_access_management_model.to_dict()
+        assert account_settings_access_management_model_json2 == account_settings_access_management_model_json
 
 
 class TestModel_AssignmentResourceCreated:
@@ -4891,53 +5728,132 @@ class TestModel_ErrorResponse:
         assert error_response_model_json2 == error_response_model_json
 
 
-class TestModel_GetPolicyAssignmentResponsePolicyAssignmentV1Subject:
+class TestModel_ExternalAccountIdentityInteraction:
     """
-    Test Class for GetPolicyAssignmentResponsePolicyAssignmentV1Subject
+    Test Class for ExternalAccountIdentityInteraction
     """
 
-    def test_get_policy_assignment_response_policy_assignment_v1_subject_serialization(self):
+    def test_external_account_identity_interaction_serialization(self):
         """
-        Test serialization/deserialization for GetPolicyAssignmentResponsePolicyAssignmentV1Subject
+        Test serialization/deserialization for ExternalAccountIdentityInteraction
         """
 
-        # Construct a json representation of a GetPolicyAssignmentResponsePolicyAssignmentV1Subject model
-        get_policy_assignment_response_policy_assignment_v1_subject_model_json = {}
+        # Construct dict forms of any model objects needed in order to build this model.
 
-        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignmentV1Subject by calling from_dict on the json representation
-        get_policy_assignment_response_policy_assignment_v1_subject_model = (
-            GetPolicyAssignmentResponsePolicyAssignmentV1Subject.from_dict(
-                get_policy_assignment_response_policy_assignment_v1_subject_model_json
-            )
-        )
-        assert get_policy_assignment_response_policy_assignment_v1_subject_model != False
+        identity_types_base_model = {}  # IdentityTypesBase
+        identity_types_base_model['state'] = 'enabled'
+        identity_types_base_model['external_allowed_accounts'] = ['testString']
 
-        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignmentV1Subject by calling from_dict on the json representation
-        get_policy_assignment_response_policy_assignment_v1_subject_model_dict = (
-            GetPolicyAssignmentResponsePolicyAssignmentV1Subject.from_dict(
-                get_policy_assignment_response_policy_assignment_v1_subject_model_json
-            ).__dict__
+        identity_types_model = {}  # IdentityTypes
+        identity_types_model['user'] = identity_types_base_model
+        identity_types_model['service_id'] = identity_types_base_model
+        identity_types_model['service'] = identity_types_base_model
+
+        # Construct a json representation of a ExternalAccountIdentityInteraction model
+        external_account_identity_interaction_model_json = {}
+        external_account_identity_interaction_model_json['identity_types'] = identity_types_model
+
+        # Construct a model instance of ExternalAccountIdentityInteraction by calling from_dict on the json representation
+        external_account_identity_interaction_model = ExternalAccountIdentityInteraction.from_dict(
+            external_account_identity_interaction_model_json
         )
-        get_policy_assignment_response_policy_assignment_v1_subject_model2 = (
-            GetPolicyAssignmentResponsePolicyAssignmentV1Subject(
-                **get_policy_assignment_response_policy_assignment_v1_subject_model_dict
-            )
+        assert external_account_identity_interaction_model != False
+
+        # Construct a model instance of ExternalAccountIdentityInteraction by calling from_dict on the json representation
+        external_account_identity_interaction_model_dict = ExternalAccountIdentityInteraction.from_dict(
+            external_account_identity_interaction_model_json
+        ).__dict__
+        external_account_identity_interaction_model2 = ExternalAccountIdentityInteraction(
+            **external_account_identity_interaction_model_dict
         )
 
         # Verify the model instances are equivalent
-        assert (
-            get_policy_assignment_response_policy_assignment_v1_subject_model
-            == get_policy_assignment_response_policy_assignment_v1_subject_model2
-        )
+        assert external_account_identity_interaction_model == external_account_identity_interaction_model2
 
         # Convert model instance back to dict and verify no loss of data
-        get_policy_assignment_response_policy_assignment_v1_subject_model_json2 = (
-            get_policy_assignment_response_policy_assignment_v1_subject_model.to_dict()
+        external_account_identity_interaction_model_json2 = external_account_identity_interaction_model.to_dict()
+        assert external_account_identity_interaction_model_json2 == external_account_identity_interaction_model_json
+
+
+class TestModel_ExternalAccountIdentityInteractionPatch:
+    """
+    Test Class for ExternalAccountIdentityInteractionPatch
+    """
+
+    def test_external_account_identity_interaction_patch_serialization(self):
+        """
+        Test serialization/deserialization for ExternalAccountIdentityInteractionPatch
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        identity_types_base_model = {}  # IdentityTypesBase
+        identity_types_base_model['state'] = 'enabled'
+        identity_types_base_model['external_allowed_accounts'] = ['testString']
+
+        identity_types_patch_model = {}  # IdentityTypesPatch
+        identity_types_patch_model['user'] = identity_types_base_model
+        identity_types_patch_model['service_id'] = identity_types_base_model
+        identity_types_patch_model['service'] = identity_types_base_model
+
+        # Construct a json representation of a ExternalAccountIdentityInteractionPatch model
+        external_account_identity_interaction_patch_model_json = {}
+        external_account_identity_interaction_patch_model_json['identity_types'] = identity_types_patch_model
+
+        # Construct a model instance of ExternalAccountIdentityInteractionPatch by calling from_dict on the json representation
+        external_account_identity_interaction_patch_model = ExternalAccountIdentityInteractionPatch.from_dict(
+            external_account_identity_interaction_patch_model_json
+        )
+        assert external_account_identity_interaction_patch_model != False
+
+        # Construct a model instance of ExternalAccountIdentityInteractionPatch by calling from_dict on the json representation
+        external_account_identity_interaction_patch_model_dict = ExternalAccountIdentityInteractionPatch.from_dict(
+            external_account_identity_interaction_patch_model_json
+        ).__dict__
+        external_account_identity_interaction_patch_model2 = ExternalAccountIdentityInteractionPatch(
+            **external_account_identity_interaction_patch_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert external_account_identity_interaction_patch_model == external_account_identity_interaction_patch_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        external_account_identity_interaction_patch_model_json2 = (
+            external_account_identity_interaction_patch_model.to_dict()
         )
         assert (
-            get_policy_assignment_response_policy_assignment_v1_subject_model_json2
-            == get_policy_assignment_response_policy_assignment_v1_subject_model_json
+            external_account_identity_interaction_patch_model_json2
+            == external_account_identity_interaction_patch_model_json
         )
+
+
+class TestModel_First:
+    """
+    Test Class for First
+    """
+
+    def test_first_serialization(self):
+        """
+        Test serialization/deserialization for First
+        """
+
+        # Construct a json representation of a First model
+        first_model_json = {}
+
+        # Construct a model instance of First by calling from_dict on the json representation
+        first_model = First.from_dict(first_model_json)
+        assert first_model != False
+
+        # Construct a model instance of First by calling from_dict on the json representation
+        first_model_dict = First.from_dict(first_model_json).__dict__
+        first_model2 = First(**first_model_dict)
+
+        # Verify the model instances are equivalent
+        assert first_model == first_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        first_model_json2 = first_model.to_dict()
+        assert first_model_json2 == first_model_json
 
 
 class TestModel_Grant:
@@ -5018,6 +5934,113 @@ class TestModel_GrantWithEnrichedRoles:
         assert grant_with_enriched_roles_model_json2 == grant_with_enriched_roles_model_json
 
 
+class TestModel_IdentityTypes:
+    """
+    Test Class for IdentityTypes
+    """
+
+    def test_identity_types_serialization(self):
+        """
+        Test serialization/deserialization for IdentityTypes
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        identity_types_base_model = {}  # IdentityTypesBase
+        identity_types_base_model['state'] = 'enabled'
+        identity_types_base_model['external_allowed_accounts'] = ['testString']
+
+        # Construct a json representation of a IdentityTypes model
+        identity_types_model_json = {}
+        identity_types_model_json['user'] = identity_types_base_model
+        identity_types_model_json['service_id'] = identity_types_base_model
+        identity_types_model_json['service'] = identity_types_base_model
+
+        # Construct a model instance of IdentityTypes by calling from_dict on the json representation
+        identity_types_model = IdentityTypes.from_dict(identity_types_model_json)
+        assert identity_types_model != False
+
+        # Construct a model instance of IdentityTypes by calling from_dict on the json representation
+        identity_types_model_dict = IdentityTypes.from_dict(identity_types_model_json).__dict__
+        identity_types_model2 = IdentityTypes(**identity_types_model_dict)
+
+        # Verify the model instances are equivalent
+        assert identity_types_model == identity_types_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_types_model_json2 = identity_types_model.to_dict()
+        assert identity_types_model_json2 == identity_types_model_json
+
+
+class TestModel_IdentityTypesBase:
+    """
+    Test Class for IdentityTypesBase
+    """
+
+    def test_identity_types_base_serialization(self):
+        """
+        Test serialization/deserialization for IdentityTypesBase
+        """
+
+        # Construct a json representation of a IdentityTypesBase model
+        identity_types_base_model_json = {}
+        identity_types_base_model_json['state'] = 'enabled'
+        identity_types_base_model_json['external_allowed_accounts'] = ['testString']
+
+        # Construct a model instance of IdentityTypesBase by calling from_dict on the json representation
+        identity_types_base_model = IdentityTypesBase.from_dict(identity_types_base_model_json)
+        assert identity_types_base_model != False
+
+        # Construct a model instance of IdentityTypesBase by calling from_dict on the json representation
+        identity_types_base_model_dict = IdentityTypesBase.from_dict(identity_types_base_model_json).__dict__
+        identity_types_base_model2 = IdentityTypesBase(**identity_types_base_model_dict)
+
+        # Verify the model instances are equivalent
+        assert identity_types_base_model == identity_types_base_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_types_base_model_json2 = identity_types_base_model.to_dict()
+        assert identity_types_base_model_json2 == identity_types_base_model_json
+
+
+class TestModel_IdentityTypesPatch:
+    """
+    Test Class for IdentityTypesPatch
+    """
+
+    def test_identity_types_patch_serialization(self):
+        """
+        Test serialization/deserialization for IdentityTypesPatch
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        identity_types_base_model = {}  # IdentityTypesBase
+        identity_types_base_model['state'] = 'enabled'
+        identity_types_base_model['external_allowed_accounts'] = ['testString']
+
+        # Construct a json representation of a IdentityTypesPatch model
+        identity_types_patch_model_json = {}
+        identity_types_patch_model_json['user'] = identity_types_base_model
+        identity_types_patch_model_json['service_id'] = identity_types_base_model
+        identity_types_patch_model_json['service'] = identity_types_base_model
+
+        # Construct a model instance of IdentityTypesPatch by calling from_dict on the json representation
+        identity_types_patch_model = IdentityTypesPatch.from_dict(identity_types_patch_model_json)
+        assert identity_types_patch_model != False
+
+        # Construct a model instance of IdentityTypesPatch by calling from_dict on the json representation
+        identity_types_patch_model_dict = IdentityTypesPatch.from_dict(identity_types_patch_model_json).__dict__
+        identity_types_patch_model2 = IdentityTypesPatch(**identity_types_patch_model_dict)
+
+        # Verify the model instances are equivalent
+        assert identity_types_patch_model == identity_types_patch_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_types_patch_model_json2 = identity_types_patch_model.to_dict()
+        assert identity_types_patch_model_json2 == identity_types_patch_model_json
+
+
 class TestModel_LimitData:
     """
     Test Class for LimitData
@@ -5045,6 +6068,36 @@ class TestModel_LimitData:
         # Convert model instance back to dict and verify no loss of data
         limit_data_model_json2 = limit_data_model.to_dict()
         assert limit_data_model_json2 == limit_data_model_json
+
+
+class TestModel_Next:
+    """
+    Test Class for Next
+    """
+
+    def test_next_serialization(self):
+        """
+        Test serialization/deserialization for Next
+        """
+
+        # Construct a json representation of a Next model
+        next_model_json = {}
+        next_model_json['start'] = 'testString'
+
+        # Construct a model instance of Next by calling from_dict on the json representation
+        next_model = Next.from_dict(next_model_json)
+        assert next_model != False
+
+        # Construct a model instance of Next by calling from_dict on the json representation
+        next_model_dict = Next.from_dict(next_model_json).__dict__
+        next_model2 = Next(**next_model_dict)
+
+        # Verify the model instances are equivalent
+        assert next_model == next_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        next_model_json2 = next_model.to_dict()
+        assert next_model_json2 == next_model_json
 
 
 class TestModel_Policy:
@@ -5508,6 +6561,14 @@ class TestModel_PolicyCollection:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
+
         subject_attribute_model = {}  # SubjectAttribute
         subject_attribute_model['name'] = 'testString'
         subject_attribute_model['value'] = 'testString'
@@ -5550,6 +6611,10 @@ class TestModel_PolicyCollection:
 
         # Construct a json representation of a PolicyCollection model
         policy_collection_model_json = {}
+        policy_collection_model_json['limit'] = 1
+        policy_collection_model_json['first'] = first_model
+        policy_collection_model_json['next'] = next_model
+        policy_collection_model_json['previous'] = previous_model
         policy_collection_model_json['policies'] = [policy_template_meta_data_model]
 
         # Construct a model instance of PolicyCollection by calling from_dict on the json representation
@@ -5772,6 +6837,14 @@ class TestModel_PolicyTemplateAssignmentCollection:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
+
         assignment_target_details_model = {}  # AssignmentTargetDetails
         assignment_target_details_model['type'] = 'Account'
         assignment_target_details_model['id'] = 'testString'
@@ -5822,6 +6895,10 @@ class TestModel_PolicyTemplateAssignmentCollection:
 
         # Construct a json representation of a PolicyTemplateAssignmentCollection model
         policy_template_assignment_collection_model_json = {}
+        policy_template_assignment_collection_model_json['limit'] = 1
+        policy_template_assignment_collection_model_json['first'] = first_model
+        policy_template_assignment_collection_model_json['next'] = next_model
+        policy_template_assignment_collection_model_json['previous'] = previous_model
         policy_template_assignment_collection_model_json['assignments'] = [policy_template_assignment_items_model]
 
         # Construct a model instance of PolicyTemplateAssignmentCollection by calling from_dict on the json representation
@@ -5857,6 +6934,14 @@ class TestModel_PolicyTemplateCollection:
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
+
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
 
         v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
         v2_policy_resource_attribute_model['key'] = 'testString'
@@ -5914,6 +6999,10 @@ class TestModel_PolicyTemplateCollection:
 
         # Construct a json representation of a PolicyTemplateCollection model
         policy_template_collection_model_json = {}
+        policy_template_collection_model_json['limit'] = 1
+        policy_template_collection_model_json['first'] = first_model
+        policy_template_collection_model_json['next'] = next_model
+        policy_template_collection_model_json['previous'] = previous_model
         policy_template_collection_model_json['policy_templates'] = [policy_template_model]
 
         # Construct a model instance of PolicyTemplateCollection by calling from_dict on the json representation
@@ -6109,6 +7198,14 @@ class TestModel_PolicyTemplateVersionsCollection:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
+
         v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
         v2_policy_resource_attribute_model['key'] = 'testString'
         v2_policy_resource_attribute_model['operator'] = 'stringEquals'
@@ -6165,6 +7262,10 @@ class TestModel_PolicyTemplateVersionsCollection:
 
         # Construct a json representation of a PolicyTemplateVersionsCollection model
         policy_template_versions_collection_model_json = {}
+        policy_template_versions_collection_model_json['limit'] = 1
+        policy_template_versions_collection_model_json['first'] = first_model
+        policy_template_versions_collection_model_json['next'] = next_model
+        policy_template_versions_collection_model_json['previous'] = previous_model
         policy_template_versions_collection_model_json['versions'] = [policy_template_model]
 
         # Construct a model instance of PolicyTemplateVersionsCollection by calling from_dict on the json representation
@@ -6187,6 +7288,36 @@ class TestModel_PolicyTemplateVersionsCollection:
         # Convert model instance back to dict and verify no loss of data
         policy_template_versions_collection_model_json2 = policy_template_versions_collection_model.to_dict()
         assert policy_template_versions_collection_model_json2 == policy_template_versions_collection_model_json
+
+
+class TestModel_Previous:
+    """
+    Test Class for Previous
+    """
+
+    def test_previous_serialization(self):
+        """
+        Test serialization/deserialization for Previous
+        """
+
+        # Construct a json representation of a Previous model
+        previous_model_json = {}
+        previous_model_json['start'] = 'testString'
+
+        # Construct a model instance of Previous by calling from_dict on the json representation
+        previous_model = Previous.from_dict(previous_model_json)
+        assert previous_model != False
+
+        # Construct a model instance of Previous by calling from_dict on the json representation
+        previous_model_dict = Previous.from_dict(previous_model_json).__dict__
+        previous_model2 = Previous(**previous_model_dict)
+
+        # Verify the model instances are equivalent
+        assert previous_model == previous_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        previous_model_json2 = previous_model.to_dict()
+        assert previous_model_json2 == previous_model_json
 
 
 class TestModel_ResourceAttribute:
@@ -6689,6 +7820,14 @@ class TestModel_V2PolicyCollection:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
+
         v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
         v2_policy_subject_attribute_model['key'] = 'testString'
         v2_policy_subject_attribute_model['operator'] = 'stringEquals'
@@ -6747,6 +7886,10 @@ class TestModel_V2PolicyCollection:
 
         # Construct a json representation of a V2PolicyCollection model
         v2_policy_collection_model_json = {}
+        v2_policy_collection_model_json['limit'] = 1
+        v2_policy_collection_model_json['first'] = first_model
+        v2_policy_collection_model_json['next'] = next_model
+        v2_policy_collection_model_json['previous'] = previous_model
         v2_policy_collection_model_json['policies'] = [v2_policy_template_meta_data_model]
 
         # Construct a model instance of V2PolicyCollection by calling from_dict on the json representation
@@ -7126,192 +8269,6 @@ class TestModel_ControlResponseControlWithEnrichedRoles:
         assert (
             control_response_control_with_enriched_roles_model_json2
             == control_response_control_with_enriched_roles_model_json
-        )
-
-
-class TestModel_GetPolicyAssignmentResponsePolicyAssignment:
-    """
-    Test Class for GetPolicyAssignmentResponsePolicyAssignment
-    """
-
-    def test_get_policy_assignment_response_policy_assignment_serialization(self):
-        """
-        Test serialization/deserialization for GetPolicyAssignmentResponsePolicyAssignment
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        assignment_resource_created_model = {}  # AssignmentResourceCreated
-        assignment_resource_created_model['id'] = 'testString'
-
-        conflicts_with_model = {}  # ConflictsWith
-        conflicts_with_model['etag'] = 'testString'
-        conflicts_with_model['role'] = 'testString'
-        conflicts_with_model['policy'] = 'testString'
-
-        error_details_model = {}  # ErrorDetails
-        error_details_model['conflicts_with'] = conflicts_with_model
-
-        error_object_model = {}  # ErrorObject
-        error_object_model['code'] = 'insufficent_permissions'
-        error_object_model['message'] = 'testString'
-        error_object_model['details'] = error_details_model
-        error_object_model['more_info'] = 'testString'
-
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
-
-        policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
-        policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
-        policy_assignment_resource_policy_model['status'] = 'testString'
-        policy_assignment_resource_policy_model['error_message'] = error_response_model
-
-        policy_assignment_resources_model = {}  # PolicyAssignmentResources
-        policy_assignment_resources_model['target'] = 'testString'
-        policy_assignment_resources_model['policy'] = policy_assignment_resource_policy_model
-
-        # Construct a json representation of a GetPolicyAssignmentResponsePolicyAssignment model
-        get_policy_assignment_response_policy_assignment_model_json = {}
-        get_policy_assignment_response_policy_assignment_model_json['template_id'] = 'testString'
-        get_policy_assignment_response_policy_assignment_model_json['template_version'] = 'testString'
-        get_policy_assignment_response_policy_assignment_model_json['assignment_id'] = 'testString'
-        get_policy_assignment_response_policy_assignment_model_json['target_type'] = 'Account'
-        get_policy_assignment_response_policy_assignment_model_json['target'] = 'testString'
-        get_policy_assignment_response_policy_assignment_model_json['resources'] = [policy_assignment_resources_model]
-        get_policy_assignment_response_policy_assignment_model_json['status'] = 'in_progress'
-
-        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignment by calling from_dict on the json representation
-        get_policy_assignment_response_policy_assignment_model = GetPolicyAssignmentResponsePolicyAssignment.from_dict(
-            get_policy_assignment_response_policy_assignment_model_json
-        )
-        assert get_policy_assignment_response_policy_assignment_model != False
-
-        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignment by calling from_dict on the json representation
-        get_policy_assignment_response_policy_assignment_model_dict = (
-            GetPolicyAssignmentResponsePolicyAssignment.from_dict(
-                get_policy_assignment_response_policy_assignment_model_json
-            ).__dict__
-        )
-        get_policy_assignment_response_policy_assignment_model2 = GetPolicyAssignmentResponsePolicyAssignment(
-            **get_policy_assignment_response_policy_assignment_model_dict
-        )
-
-        # Verify the model instances are equivalent
-        assert (
-            get_policy_assignment_response_policy_assignment_model
-            == get_policy_assignment_response_policy_assignment_model2
-        )
-
-        # Convert model instance back to dict and verify no loss of data
-        get_policy_assignment_response_policy_assignment_model_json2 = (
-            get_policy_assignment_response_policy_assignment_model.to_dict()
-        )
-        assert (
-            get_policy_assignment_response_policy_assignment_model_json2
-            == get_policy_assignment_response_policy_assignment_model_json
-        )
-
-
-class TestModel_GetPolicyAssignmentResponsePolicyAssignmentV1:
-    """
-    Test Class for GetPolicyAssignmentResponsePolicyAssignmentV1
-    """
-
-    def test_get_policy_assignment_response_policy_assignment_v1_serialization(self):
-        """
-        Test serialization/deserialization for GetPolicyAssignmentResponsePolicyAssignmentV1
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        assignment_target_details_model = {}  # AssignmentTargetDetails
-        assignment_target_details_model['type'] = 'Account'
-        assignment_target_details_model['id'] = 'testString'
-
-        assignment_resource_created_model = {}  # AssignmentResourceCreated
-        assignment_resource_created_model['id'] = 'testString'
-
-        conflicts_with_model = {}  # ConflictsWith
-        conflicts_with_model['etag'] = 'testString'
-        conflicts_with_model['role'] = 'testString'
-        conflicts_with_model['policy'] = 'testString'
-
-        error_details_model = {}  # ErrorDetails
-        error_details_model['conflicts_with'] = conflicts_with_model
-
-        error_object_model = {}  # ErrorObject
-        error_object_model['code'] = 'insufficent_permissions'
-        error_object_model['message'] = 'testString'
-        error_object_model['details'] = error_details_model
-        error_object_model['more_info'] = 'testString'
-
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
-
-        policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
-        policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
-        policy_assignment_resource_policy_model['status'] = 'testString'
-        policy_assignment_resource_policy_model['error_message'] = error_response_model
-
-        policy_assignment_v1_resources_model = {}  # PolicyAssignmentV1Resources
-        policy_assignment_v1_resources_model['target'] = assignment_target_details_model
-        policy_assignment_v1_resources_model['policy'] = policy_assignment_resource_policy_model
-
-        get_policy_assignment_response_policy_assignment_v1_subject_model = (
-            {}
-        )  # GetPolicyAssignmentResponsePolicyAssignmentV1Subject
-
-        assignment_template_details_model = {}  # AssignmentTemplateDetails
-        assignment_template_details_model['id'] = 'testString'
-        assignment_template_details_model['version'] = 'testString'
-
-        # Construct a json representation of a GetPolicyAssignmentResponsePolicyAssignmentV1 model
-        get_policy_assignment_response_policy_assignment_v1_model_json = {}
-        get_policy_assignment_response_policy_assignment_v1_model_json['target'] = assignment_target_details_model
-        get_policy_assignment_response_policy_assignment_v1_model_json['resources'] = [
-            policy_assignment_v1_resources_model
-        ]
-        get_policy_assignment_response_policy_assignment_v1_model_json['subject'] = (
-            get_policy_assignment_response_policy_assignment_v1_subject_model
-        )
-        get_policy_assignment_response_policy_assignment_v1_model_json['template'] = assignment_template_details_model
-        get_policy_assignment_response_policy_assignment_v1_model_json['status'] = 'in_progress'
-
-        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignmentV1 by calling from_dict on the json representation
-        get_policy_assignment_response_policy_assignment_v1_model = (
-            GetPolicyAssignmentResponsePolicyAssignmentV1.from_dict(
-                get_policy_assignment_response_policy_assignment_v1_model_json
-            )
-        )
-        assert get_policy_assignment_response_policy_assignment_v1_model != False
-
-        # Construct a model instance of GetPolicyAssignmentResponsePolicyAssignmentV1 by calling from_dict on the json representation
-        get_policy_assignment_response_policy_assignment_v1_model_dict = (
-            GetPolicyAssignmentResponsePolicyAssignmentV1.from_dict(
-                get_policy_assignment_response_policy_assignment_v1_model_json
-            ).__dict__
-        )
-        get_policy_assignment_response_policy_assignment_v1_model2 = GetPolicyAssignmentResponsePolicyAssignmentV1(
-            **get_policy_assignment_response_policy_assignment_v1_model_dict
-        )
-
-        # Verify the model instances are equivalent
-        assert (
-            get_policy_assignment_response_policy_assignment_v1_model
-            == get_policy_assignment_response_policy_assignment_v1_model2
-        )
-
-        # Convert model instance back to dict and verify no loss of data
-        get_policy_assignment_response_policy_assignment_v1_model_json2 = (
-            get_policy_assignment_response_policy_assignment_v1_model.to_dict()
-        )
-        assert (
-            get_policy_assignment_response_policy_assignment_v1_model_json2
-            == get_policy_assignment_response_policy_assignment_v1_model_json
         )
 
 
