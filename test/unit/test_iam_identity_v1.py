@@ -120,6 +120,7 @@ class TestListApiKeys:
         sort = 'testString'
         order = 'asc'
         include_history = False
+        filter = 'testString'
 
         # Invoke method
         response = _service.list_api_keys(
@@ -132,6 +133,7 @@ class TestListApiKeys:
             sort=sort,
             order=order,
             include_history=include_history,
+            filter=filter,
             headers={},
         )
 
@@ -150,6 +152,7 @@ class TestListApiKeys:
         assert 'sort={}'.format(sort) in query_string
         assert 'order={}'.format(order) in query_string
         assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+        assert 'filter={}'.format(filter) in query_string
 
     def test_list_api_keys_all_params_with_retries(self):
         # Enable retries and run test_list_api_keys_all_params.
@@ -1128,6 +1131,7 @@ class TestListServiceIds:
         sort = 'testString'
         order = 'asc'
         include_history = False
+        filter = 'testString'
 
         # Invoke method
         response = _service.list_service_ids(
@@ -1138,6 +1142,7 @@ class TestListServiceIds:
             sort=sort,
             order=order,
             include_history=include_history,
+            filter=filter,
             headers={},
         )
 
@@ -1154,6 +1159,7 @@ class TestListServiceIds:
         assert 'sort={}'.format(sort) in query_string
         assert 'order={}'.format(order) in query_string
         assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+        assert 'filter={}'.format(filter) in query_string
 
     def test_list_service_ids_all_params_with_retries(self):
         # Enable retries and run test_list_service_ids_all_params.
@@ -1987,6 +1993,7 @@ class TestListProfiles:
         order = 'asc'
         include_history = False
         pagetoken = 'testString'
+        filter = 'testString'
 
         # Invoke method
         response = _service.list_profiles(
@@ -1997,6 +2004,7 @@ class TestListProfiles:
             order=order,
             include_history=include_history,
             pagetoken=pagetoken,
+            filter=filter,
             headers={},
         )
 
@@ -2013,6 +2021,7 @@ class TestListProfiles:
         assert 'order={}'.format(order) in query_string
         assert 'include_history={}'.format('true' if include_history else 'false') in query_string
         assert 'pagetoken={}'.format(pagetoken) in query_string
+        assert 'filter={}'.format(filter) in query_string
 
     def test_list_profiles_all_params_with_retries(self):
         # Enable retries and run test_list_profiles_all_params.

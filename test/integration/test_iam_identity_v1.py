@@ -429,6 +429,35 @@ class TestIamIdentityV1:
         assert len(apikeys) == 2
 
     @needscredentials
+    def test_list_api_keys_with_filter(self):
+        apikeys = []
+
+        # Retrieve one apikey at a time to test the pagination.
+        pagetoken = None
+        pagetoken_present = True
+        filter = "name co \"Python\""
+        while pagetoken_present:
+            list_api_keys_response = self.iam_identity_service.list_api_keys(
+                account_id=self.account_id, iam_id=self.iam_id, pagesize=1, pagetoken=pagetoken, filter=filter
+            )
+            assert list_api_keys_response.get_status_code() == 200
+            api_key_list = list_api_keys_response.get_result()
+            assert api_key_list is not None
+            print('\nlist_api_keys() response: ', json.dumps(api_key_list, indent=2))
+
+            if len(api_key_list['apikeys']) > 0:
+                for apikey in api_key_list['apikeys']:
+                    if apikey['name'] == self.apikey_name:
+                        apikeys.append(apikey)
+
+            # fetch pagetoken value
+            pagetoken = self.get_page_token(api_key_list.get('next'))
+            pagetoken_present = pagetoken is not None
+
+        # make sure we retrieved the two apikeys that we created previously.
+        assert len(apikeys) == 2
+
+    @needscredentials
     def test_update_api_key(self):
         assert apikey_id1 is not None
         assert apikey_etag1 is not None
@@ -571,6 +600,20 @@ class TestIamIdentityV1:
         assert len(service_id_list['serviceids']) == 1
 
     @needscredentials
+    def test_list_service_ids_with_filter(self):
+        filter = "name co \"Python\""
+        list_service_ids_response = self.iam_identity_service.list_service_ids(
+            account_id=self.account_id, name=self.serviceid_name, pagesize=100, filter=filter
+        )
+
+        assert list_service_ids_response.get_status_code() == 200
+        service_id_list = list_service_ids_response.get_result()
+        print('\nlist_service_ids() response: ', json.dumps(service_id_list, indent=2))
+
+        assert service_id_list is not None
+        assert len(service_id_list['serviceids']) == 1
+
+    @needscredentials
     def test_update_service_id(self):
         assert serviceid_id1 is not None
         assert serviceid_etag1 is not None
@@ -688,6 +731,32 @@ class TestIamIdentityV1:
         while pagetoken_present:
             list_profiles_response = self.iam_identity_service.list_profiles(
                 account_id=self.account_id, pagesize=1, pagetoken=pagetoken, include_history=False
+            )
+            assert list_profiles_response.get_status_code() == 200
+            profile_list = list_profiles_response.get_result()
+            assert profile_list is not None
+            print('\nlist_profiles() response: ', json.dumps(profile_list, indent=2))
+
+            if len(profile_list['profiles']) > 0:
+                for profile in profile_list['profiles']:
+                    if profile['name'] == self.profile_name1 or profile['name'] == self.profile_name2:
+                        profiles.append(profile)
+
+            pagetoken = self.get_page_token(profile_list.get('next'))
+            pagetoken_present = pagetoken is not None
+
+        assert len(profiles) == 2
+
+    @needscredentials
+    def test_list_profiles_with_filter(self):
+        profiles = []
+
+        pagetoken = None
+        pagetoken_present = True
+        filter = "name co \"Python\""
+        while pagetoken_present:
+            list_profiles_response = self.iam_identity_service.list_profiles(
+                account_id=self.account_id, pagesize=1, pagetoken=pagetoken, include_history=False, filter=filter
             )
             assert list_profiles_response.get_status_code() == 200
             profile_list = list_profiles_response.get_result()
@@ -1844,11 +1913,12 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_update_preference_on_scope_account(self):
-        assert iam_id_for_preferences is not None
+        assert self.iam_id_for_preferences is not None
         assert self.preference_id1 is not None
 
         preference = self.iam_identity_service.update_preference_on_scope_account(
-            iam_id=iam_id_for_preferences,
+            iam_id=self.iam_id_for_preferences,
+            account_id=self.account_id,
             service=self.service,
             preference_id=self.preference_id1,
             value_string=self.value_string,
@@ -1858,29 +1928,35 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_preferences_on_scope_account(self):
-        assert iam_id_for_preferences is not None
+        assert self.iam_id_for_preferences is not None
         assert self.preference_id1 is not None
         preference = self.iam_identity_service.get_preferences_on_scope_account(
-            iam_id=iam_id_for_preferences, service=self.service, preference_id=self.preference_id1
+            iam_id=self.iam_id_for_preferences,
+            account_id=self.account_id,
+            service=self.service,
+            preference_id=self.preference_id1,
         ).get_result()
         print('\nget_preference_on_scope_account() response: ', json.dumps(preference, indent=2))
         preference is not None
 
     @needscredentials
     def test_get_all_preferences_on_scope_account(self):
-        assert iam_id_for_preferences is not None
+        assert self.iam_id_for_preferences is not None
         assert self.preference_id1 is not None
         preference = self.iam_identity_service.get_all_preferences_on_scope_account(
-            iam_id=iam_id_for_preferences
+            account_id=self.account_id, iam_id=self.iam_id_for_preferences
         ).get_result()
         print('\nget_all_preference_on_scope_account() response: ', json.dumps(preference, indent=2))
         preference is not None
 
     @needscredentials
     def test_delete_preferences_on_scope_account(self):
-        assert iam_id_for_preferences is not None
+        assert self.iam_id_for_preferences is not None
         assert self.preference_id1 is not None
         preference = self.iam_identity_service.delete_preferences_on_scope_account(
-            iam_id=iam_id_for_preferences, service=self.service, preference_id=self.preference_id1
+            iam_id=self.iam_id_for_preferences,
+            account_id=self.account_id,
+            service=self.service,
+            preference_id=self.preference_id1,
         )
         assert preference.get_status_code() == 204

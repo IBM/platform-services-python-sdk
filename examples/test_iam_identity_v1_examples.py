@@ -1794,7 +1794,11 @@ class TestIamIdentityV1Examples:
             # begin-update_preference_on_scope_account
 
             preference = iam_identity_service.update_preference_on_scope_account(
-                iam_id=iam_id_for_preferences, service=service, preference_id=preference_id1, value_string=value_string
+                iam_id=iam_id_for_preferences,
+                account_id=account_id,
+                service=service,
+                preference_id=preference_id1,
+                value_string=value_string,
             ).get_result()
             print(json.dumps(preference, indent=2))
 
@@ -1813,7 +1817,7 @@ class TestIamIdentityV1Examples:
             # begin-get_preferences_on_scope_account
 
             preference = iam_identity_service.get_preferences_on_scope_account(
-                iam_id=iam_id_for_preferences, service=service, preference_id=preference_id1
+                iam_id=iam_id_for_preferences, account_id=account_id, service=service, preference_id=preference_id1
             ).get_result()
             print(json.dumps(preference, indent=2))
 
@@ -1832,7 +1836,7 @@ class TestIamIdentityV1Examples:
             # begin-get_all_preferences_on_scope_account
 
             preference = iam_identity_service.get_all_preferences_on_scope_account(
-                iam_id=iam_id_for_preferences
+                iam_id=iam_id_for_preferences, account_id=account_id
             ).get_result()
             print(json.dumps(preference, indent=2))
 
@@ -1850,7 +1854,7 @@ class TestIamIdentityV1Examples:
             # begin-delete_preferences_on_scope_account
 
             response = iam_identity_service.delete_preferences_on_scope_account(
-                iam_id=iam_id_for_preferences, service=service, preference_id=preference_id1
+                iam_id=iam_id_for_preferences, account_id=account_id, service=service, preference_id=preference_id1
             )
 
             # end-delete_preferences_on_scope_account
