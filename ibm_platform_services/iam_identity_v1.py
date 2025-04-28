@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.98.0-8be2046a-20241205-162752
+# IBM OpenAPI SDK Code Generator Version: 3.103.0-e8b84313-20250402-201816
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -89,6 +89,7 @@ class IamIdentityV1(BaseService):
         sort: Optional[str] = None,
         order: Optional[str] = None,
         include_history: Optional[bool] = None,
+        filter: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -120,6 +121,9 @@ class IamIdentityV1(BaseService):
                desc. Default: asc.
         :param bool include_history: (optional) Defines if the entity history is
                included in the response.
+        :param str filter: (optional) An optional filter query parameter used to
+               refine the results of the search operation. For more information see
+               [Filtering list results](#filter-list-results) section.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ApiKeyList` object
@@ -143,6 +147,7 @@ class IamIdentityV1(BaseService):
             'sort': sort,
             'order': order,
             'include_history': include_history,
+            'filter': filter,
         }
 
         if 'headers' in kwargs:
@@ -691,6 +696,7 @@ class IamIdentityV1(BaseService):
         sort: Optional[str] = None,
         order: Optional[str] = None,
         include_history: Optional[bool] = None,
+        filter: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -715,6 +721,9 @@ class IamIdentityV1(BaseService):
                desc. Default: asc.
         :param bool include_history: (optional) Defines if the entity history is
                included in the response.
+        :param str filter: (optional) An optional filter query parameter used to
+               refine the results of the search operation. For more information see
+               [Filtering list results](#filter-list-results) section.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ServiceIdList` object
@@ -736,6 +745,7 @@ class IamIdentityV1(BaseService):
             'sort': sort,
             'order': order,
             'include_history': include_history,
+            'filter': filter,
         }
 
         if 'headers' in kwargs:
@@ -1187,6 +1197,7 @@ class IamIdentityV1(BaseService):
         order: Optional[str] = None,
         include_history: Optional[bool] = None,
         pagetoken: Optional[str] = None,
+        filter: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1208,6 +1219,9 @@ class IamIdentityV1(BaseService):
                included in the response.
         :param str pagetoken: (optional) Optional Prev or Next page token returned
                from a previous query execution. Default is start with first page.
+        :param str filter: (optional) An optional filter query parameter used to
+               refine the results of the search operation. For more information see
+               [Filtering list results](#filter-list-results) section.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TrustedProfilesList` object
@@ -1231,6 +1245,7 @@ class IamIdentityV1(BaseService):
             'order': order,
             'include_history': include_history,
             'pagetoken': pagetoken,
+            'filter': filter,
         }
 
         if 'headers' in kwargs:
@@ -2090,7 +2105,10 @@ class IamIdentityV1(BaseService):
         """
         Add a specific identity that can assume the trusted profile.
 
-        Add a specific identity that can assume the trusted profile.
+        Add a specific identity that can assume the trusted profile. This API will update
+        the trusted profile itself, thus calling it repeatedly for the same profile can
+        lead to conflicts responded with HTTP code 409. Make sure to call this API only
+        once in a few seconds for the same trusted profile.
 
         :param str profile_id: ID of the trusted profile.
         :param str identity_type: Type of the identity.
@@ -2219,7 +2237,7 @@ class IamIdentityV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Delete the identity that can assume the trusted profile.
+        Delete the identity that can assume the trusted profile. This API will update the trusted profile itself, thus calling it repeatedly for the same profile can lead to conflicts responded with HTTP code 409. Make sure to call this API only once in a few seconds for the same trusted profile.
 
         Delete the identity that can assume the trusted profile.
 
@@ -3825,7 +3843,7 @@ class IamIdentityV1(BaseService):
         :param str preference_id: Identifier of preference to be deleted.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
+        :rtype: DetailedResponse with `dict` result representing a `ExceptionResponse` object
         """
 
         if not account_id:
@@ -3847,6 +3865,7 @@ class IamIdentityV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
             del kwargs['headers']
+        headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id', 'iam_id', 'service', 'preference_id']
         path_param_values = self.encode_path_vars(account_id, iam_id, service, preference_id)
