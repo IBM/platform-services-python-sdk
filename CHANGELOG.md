@@ -1,3 +1,10 @@
+# [0.64.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.63.0...v0.64.0) (2025-04-28)
+
+
+### Features
+
+* **IAM Identity:** add filter parameter for search api ([#288](https://github.com/IBM/platform-services-python-sdk/issues/288)) ([f1f3d91](https://github.com/IBM/platform-services-python-sdk/commit/f1f3d91f3fb4db2a9ec639a889fa5a84cfb20395))
+
 # [0.63.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.62.0...v0.63.0) (2025-03-21)
 
 
