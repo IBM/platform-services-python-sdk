@@ -61,6 +61,13 @@ example_updated_policy_etag = None
 example_target_account_id = None
 example_assignment_etag = None
 example_account_settings_etag = None
+example_action_control_template_id = None
+example_action_control_template_etag = None
+example_action_control_template_version = None
+example_basic_action_control_template_version = None
+example_action_control_assignment_id = None
+example_action_control_assignment_etag = None
+
 
 ##############################################################################
 # Start of Examples for Service: IamPolicyManagementV1
@@ -1060,6 +1067,345 @@ class TestIamPolicyManagementV1Examples:
             result = response.get_result()
             assert result is not None
             print(json.dumps(result, indent=2))
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_action_control_template_example(self):
+        """
+        create_action_control_template request example
+        """
+        try:
+            print('\ncreate_action_control_template() result:')
+            # begin-create_action_control_template
+
+            template_action_control_model = {
+                'service_name': 'am-test-service',
+                'description': 'am-test-service service actionControl',
+                'actions': ['am-test-service.test.delete'],
+            }
+
+            response = iam_policy_management_service.create_action_control_template(
+                name='SDKExamplesTest',
+                account_id=example_account_id,
+                description='SDK Test ActionControl Template',
+                action_control=template_action_control_model,
+            )
+            action_control_template = response.get_result()
+
+            global example_action_control_template_id
+            example_action_control_template_id = action_control_template['id']
+            global example_basic_action_control_template_version
+            example_basic_action_control_template_version = action_control_template['version']
+
+            print(json.dumps(action_control_template, indent=2))
+
+            # end-create_action_control_template
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_action_control_template_example(self):
+        """
+        get_action_control_template request example
+        """
+        try:
+            print('\nget_action_control_template() result:')
+            # begin-get_action_control_template
+
+            print('example_action_control_template_id: ', example_action_control_template_id)
+            response = iam_policy_management_service.get_action_control_template(
+                action_control_template_id=example_action_control_template_id,
+            )
+            action_control_template = response.get_result()
+
+            global example_action_control_template_etag
+            example_action_control_template_etag = response.get_headers().get("Etag")
+
+            print(json.dumps(action_control_template, indent=2))
+
+            # end-get_action_control_template
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_replace_action_control_template_example(self):
+        """
+        replace_action_control_template request example
+        """
+        try:
+            print('\nreplace_action_control_template() result:')
+            # begin-replace_action_control_template
+
+            template_action_control_model = {
+                'service_name': 'am-test-service',
+                'description': 'am-test-service service actionControl',
+                'actions': ['am-test-service.test.delete'],
+            }
+
+            response = iam_policy_management_service.replace_action_control_template(
+                action_control_template_id=example_action_control_template_id,
+                version=example_basic_action_control_template_version,
+                if_match=example_action_control_template_etag,
+                action_control=template_action_control_model,
+            )
+            action_control_template = response.get_result()
+
+            print(json.dumps(action_control_template, indent=2))
+
+            # end-replace_action_control_template
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_list_action_control_templates_example(self):
+        """
+        list_action_control_templates request example
+        """
+        try:
+            print('\nlist_action_control_templates() result:')
+            # begin-list_action_control_templates
+
+            response = iam_policy_management_service.list_action_control_templates(
+                account_id=example_account_id,
+            )
+            action_control_template_collection = response.get_result()
+
+            print(json.dumps(action_control_template_collection, indent=2))
+
+            # end-list_action_control_templates
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_action_control_template_version_example(self):
+        """
+        create_action_control_template_version request example
+        """
+        try:
+            print('\ncreate_action_control_template_version() result:')
+            # begin-create_action_control_template_version
+            template_action_control_model = {
+                'service_name': 'am-test-service',
+                'description': 'am-test-service service actionControl',
+                'actions': ['am-test-service.test.create'],
+            }
+
+            response = iam_policy_management_service.create_action_control_template_version(
+                action_control_template_id=example_action_control_template_id,
+                committed=True,
+                action_control=template_action_control_model,
+            )
+            action_control_template = response.get_result()
+            global example_action_control_template_version
+            example_action_control_template_version = action_control_template['version']
+            print(json.dumps(action_control_template, indent=2))
+
+            # end-create_action_control_template_version
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_list_action_control_template_versions_example(self):
+        """
+        list_action_control_template_versions request example
+        """
+        try:
+            print('\nlist_action_control_template_versions() result:')
+            # begin-list_action_control_template_versions
+
+            response = iam_policy_management_service.list_action_control_template_versions(
+                action_control_template_id=example_action_control_template_id,
+            )
+            action_control_template_versions_collection = response.get_result()
+
+            print(json.dumps(action_control_template_versions_collection, indent=2))
+
+            # end-list_action_control_template_versions
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_get_action_control_template_version_example(self):
+        """
+        get_action_control_template_version request example
+        """
+        try:
+            print('\nget_action_control_template_version() result:')
+            # begin-get_action_control_template_version
+
+            response = iam_policy_management_service.get_action_control_template_version(
+                action_control_template_id=example_action_control_template_id,
+                version=example_action_control_template_version,
+            )
+            action_control_template = response.get_result()
+
+            global example_template_etag
+            example_template_etag = response.get_headers().get("Etag")
+
+            print(json.dumps(action_control_template, indent=2))
+
+            # end-get_action_control_template_version
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_commit_action_control_template_example(self):
+        """
+        commit_action_control_template request example
+        """
+        try:
+            # begin-commit_action_control_template
+
+            response = iam_policy_management_service.commit_action_control_template(
+                action_control_template_id=example_action_control_template_id,
+                version=example_basic_action_control_template_version,
+            )
+
+            # end-commit_action_control_template
+            print('\ncommit_action_control_template() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_create_action_control_assignment_example(self):
+        """
+        create_action_control_template_assignment request example
+        """
+        try:
+            print('\ncreate_action_control_template_assignment() result:')
+            # begin-create_action_control_template_assignment
+            response = iam_policy_management_service.create_action_control_template_assignment(
+                target=AssignmentTargetDetails(
+                    type="Account",
+                    id=example_target_account_id,
+                ),
+                templates=[
+                    AssignmentTemplateDetails(
+                        id=example_action_control_template_id, version=example_basic_action_control_template_version
+                    )
+                ],
+            )
+            result = response.get_result()
+            assert result is not None
+
+            global example_action_control_assignment_id
+            example_action_control_assignment_id = result['assignments'][0]['id']
+            global example_action_control_assignment_etag
+            example_action_control_assignment_etag = response.get_headers().get("Etag")
+            print(json.dumps(result, indent=2))
+
+            # end-create_action_control_template_assignment
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_update_action_control_assignment_example(self):
+        """
+        update_action_control_assignment request example
+        """
+        try:
+            print('\nupdate_action_control_assignment() result:')
+            # begin-update_action_control_assignment
+
+            response = iam_policy_management_service.update_action_control_assignment(
+                assignment_id=example_action_control_assignment_id,
+                if_match=example_action_control_assignment_etag,
+                template_version=example_action_control_template_version,
+            )
+            assignment = response.get_result()
+
+            print(json.dumps(assignment, indent=2))
+
+            # end-update_action_control_assignment
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_list_action_control_assignments_example(self):
+        """
+        list_action_control_assignments request example
+        """
+        try:
+            print('\nlist_action_control_assignments() result:')
+            # begin-list_action_control_assignments
+
+            response = iam_policy_management_service.list_action_control_assignments(
+                account_id=example_account_id,
+            )
+            action_control_template_assignment_collection = response.get_result()
+
+            print(json.dumps(action_control_template_assignment_collection, indent=2))
+
+            # end-list_action_control_assignments
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_get_action_control_assignment_example(self):
+        """
+        get_action_control_assignment request example
+        """
+        try:
+            print('\nget_action_control_assignment() result:')
+            # begin-get_action_control_assignment
+
+            response = iam_policy_management_service.get_action_control_assignment(
+                assignment_id=example_action_control_assignment_id,
+            )
+            action_control_assignment_record = response.get_result()
+
+            print(json.dumps(action_control_assignment_record, indent=2))
+
+            # end-get_action_control_assignment
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_delete_action_control_assignment_example(self):
+        """
+        delete_action_control_assignment request example
+        """
+        try:
+            # begin-delete_action_control_assignment
+
+            response = iam_policy_management_service.delete_action_control_assignment(
+                assignment_id=example_action_control_assignment_id,
+            )
+
+            # end-delete_action_control_assignment
+            print('\ndelete_action_control_assignment() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_delete_action_control_template_example(self):
+        """
+        delete_action_control_template request example
+        """
+        try:
+            # begin-action_control_policy_template
+
+            response = iam_policy_management_service.delete_action_control_template(
+                action_control_template_id=example_action_control_template_id,
+            )
+
+            # end-delete_action_control_template
+            print('\ndelete_action_control_template() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))

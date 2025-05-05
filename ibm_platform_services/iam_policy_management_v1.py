@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.102.0-615ec964-20250307-203034
+# IBM OpenAPI SDK Code Generator Version: 3.103.0-e8b84313-20250402-201816
 
 """
 IAM Policy Management API
@@ -137,9 +137,9 @@ class IamPolicyManagementV1(BaseService):
         :param str state: (optional) The state of the policy.
                * `active` - returns active policies
                * `deleted` - returns non-active policies.
-        :param int limit: (optional) The number of documents to include in
+        :param int limit: (optional) The number of documents to include in the
                collection.
-        :param str start: (optional) Page token that refers to the page of
+        :param str start: (optional) Page token that refers to the page of the
                collection to return.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -254,7 +254,7 @@ class IamPolicyManagementV1(BaseService):
 
         :param str type: The policy type; either 'access' or 'authorization'.
         :param List[PolicySubject] subjects: The subjects associated with a policy.
-        :param List[PolicyRole] roles: A set of role cloud resource names (CRNs)
+        :param List[PolicyRole] roles: A set of role Cloud Resource Names (CRNs)
                granted by the policy.
         :param List[PolicyResource] resources: The resources associated with a
                policy.
@@ -388,7 +388,7 @@ class IamPolicyManagementV1(BaseService):
                header.
         :param str type: The policy type; either 'access' or 'authorization'.
         :param List[PolicySubject] subjects: The subjects associated with a policy.
-        :param List[PolicyRole] roles: A set of role cloud resource names (CRNs)
+        :param List[PolicyRole] roles: A set of role Cloud Resource Names (CRNs)
                granted by the policy.
         :param List[PolicyResource] resources: The resources associated with a
                policy.
@@ -713,13 +713,13 @@ class IamPolicyManagementV1(BaseService):
         the new role, but there must be at least one service-defined action to
         successfully create the new role.
 
-        :param str display_name: The display name of the role that is shown in the
-               console.
+        :param str display_name: The display the name of the role that is shown in
+               the console.
         :param List[str] actions: The actions of the role. For more information,
                see [IAM roles and
                actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
-        :param str name: The name of the role that is used in the CRN. Can only be
-               alphanumeric and has to be capitalized.
+        :param str name: The name of the role that is used in the CRN. This must be
+               alphanumeric and capitalized.
         :param str account_id: The account GUID.
         :param str service_name: The service name.
         :param str description: (optional) The description of the role.
@@ -809,8 +809,8 @@ class IamPolicyManagementV1(BaseService):
         :param str if_match: The revision number for updating a role and must match
                the ETag value of the existing role. The Etag can be retrieved using the
                GET /v2/roles/{role_id} API and looking at the ETag response header.
-        :param str display_name: The display name of the role that is shown in the
-               console.
+        :param str display_name: The display the name of the role that is shown in
+               the console.
         :param List[str] actions: The actions of the role. For more information,
                see [IAM roles and
                actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
@@ -1029,9 +1029,9 @@ class IamPolicyManagementV1(BaseService):
         :param str state: (optional) The state of the policy.
                * `active` - returns active policies
                * `deleted` - returns non-active policies.
-        :param int limit: (optional) The number of documents to include in
+        :param int limit: (optional) The number of documents to include in the
                collection.
-        :param str start: (optional) Page token that refers to the page of
+        :param str start: (optional) Page token that refers to the page of the
                collection to return.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -1148,8 +1148,9 @@ class IamPolicyManagementV1(BaseService):
           'dateTimeLessThan', 'dateTimeLessThanOrEquals', 'dateTimeGreaterThan',
         'dateTimeGreaterThanOrEquals',
           'dayOfWeekEquals', 'dayOfWeekAnyOf'
-        ``` The pattern field that matches the rule is required when rule is provided. For
-        the business hour rule example above, the **`pattern`** is
+        ```
+        The pattern field that matches the rule is required when rule is provided. For the
+        business hour rule example above, the **`pattern`** is
         **`"time-based-conditions:weekly"`**. For more information, see [Time-based
         conditions
         operators](/docs/account?topic=account-iam-condition-properties&interface=ui#policy-condition-properties)
@@ -1225,7 +1226,8 @@ class IamPolicyManagementV1(BaseService):
         locationvalues are supported by the service, they are validated against Global
         Catalog locations.
 
-        :param Control control: Specifies the type of access granted by the policy.
+        :param Control control: Specifies the type of access that is granted by the
+               policy.
         :param str type: The policy type; either 'access' or 'authorization'.
         :param str description: (optional) Description of the policy.
         :param V2PolicySubject subject: (optional) The subject attributes for whom
@@ -1450,7 +1452,8 @@ class IamPolicyManagementV1(BaseService):
                match the ETag value of the existing policy. The Etag can be retrieved
                using the GET /v2/policies/{id} API and looking at the ETag response
                header.
-        :param Control control: Specifies the type of access granted by the policy.
+        :param Control control: Specifies the type of access that is granted by the
+               policy.
         :param str type: The policy type; either 'access' or 'authorization'.
         :param str description: (optional) Description of the policy.
         :param V2PolicySubject subject: (optional) The subject attributes for whom
@@ -1677,9 +1680,9 @@ class IamPolicyManagementV1(BaseService):
         :param str policy_service_name: (optional) Service name, Optional.
         :param str policy_service_group_id: (optional) Service group id, Optional.
         :param str policy_type: (optional) Policy type, Optional.
-        :param int limit: (optional) The number of documents to include in
+        :param int limit: (optional) The number of documents to include in the
                collection.
-        :param str start: (optional) Page token that refers to the page of
+        :param str start: (optional) Page token that refers to the page of the
                collection to return.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -1743,13 +1746,13 @@ class IamPolicyManagementV1(BaseService):
         Create a policy template. Policy templates define a policy without requiring a
         subject, and you can use them to grant access to multiple subjects.
 
-        :param str name: Required field when creating a new template. Otherwise
-               this field is optional. If the field is included it will change the name
-               value for all existing versions of the template.
-        :param str account_id: Enterprise account ID where this template will be
+        :param str name: Required field when creating a new template. Otherwise,
+               this field is optional. If the field is included, it changes the name value
+               for all existing versions of the template.
+        :param str account_id: Enterprise account ID where this template is
                created.
         :param TemplatePolicy policy: The core set of properties associated with
-               the template's policy objet.
+               the template's policy object.
         :param str description: (optional) Description of the policy template. This
                is shown to users in the enterprise account. Use this to describe the
                purpose or context of the policy for enterprise users managing IAM
@@ -1933,10 +1936,10 @@ class IamPolicyManagementV1(BaseService):
 
         :param str policy_template_id: The policy template ID.
         :param TemplatePolicy policy: The core set of properties associated with
-               the template's policy objet.
+               the template's policy object.
         :param str name: (optional) Required field when creating a new template.
-               Otherwise this field is optional. If the field is included it will change
-               the name value for all existing versions of the template.
+               Otherwise, this field is optional. If the field is included, it changes the
+               name value for all existing versions of the template.
         :param str description: (optional) Description of the policy template. This
                is shown to users in the enterprise account. Use this to describe the
                purpose or context of the policy for enterprise users managing IAM
@@ -2005,9 +2008,9 @@ class IamPolicyManagementV1(BaseService):
 
         :param str policy_template_id: The policy template ID.
         :param str state: (optional) The policy template state.
-        :param int limit: (optional) The number of documents to include in
+        :param int limit: (optional) The number of documents to include in the
                collection.
-        :param str start: (optional) Page token that refers to the page of
+        :param str start: (optional) Page token that refers to the page of the
                collection to return.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -2075,10 +2078,10 @@ class IamPolicyManagementV1(BaseService):
                /v1/policy_templates/{policy_template_id}/versions/{version} API and
                looking at the ETag response header.
         :param TemplatePolicy policy: The core set of properties associated with
-               the template's policy objet.
+               the template's policy object.
         :param str name: (optional) Required field when creating a new template.
-               Otherwise this field is optional. If the field is included it will change
-               the name value for all existing versions of the template.
+               Otherwise, this field is optional. If the field is included, it changes the
+               name value for all existing versions of the template.
         :param str description: (optional) Description of the policy template. This
                is shown to users in the enterprise account. Use this to describe the
                purpose or context of the policy for enterprise users managing IAM
@@ -2326,9 +2329,9 @@ class IamPolicyManagementV1(BaseService):
                * `zh-tw` - (Chinese, Taiwan).
         :param str template_id: (optional) Optional template id.
         :param str template_version: (optional) Optional policy template version.
-        :param int limit: (optional) The number of documents to include in
+        :param int limit: (optional) The number of documents to include in the
                collection.
-        :param str start: (optional) Page token that refers to the page of
+        :param str start: (optional) Page token that refers to the page of the
                collection to return.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -2526,9 +2529,9 @@ class IamPolicyManagementV1(BaseService):
         :param str assignment_id: The policy template assignment ID.
         :param str version: specify version of response body format.
         :param str if_match: The revision number for updating a policy assignment
-               and must match the ETag value of the existing policy assignment. The Etag
+               and must match the Etag value of the existing policy assignment. The Etag
                can be retrieved using the GET /v1/policy_assignments/{assignment_id} API
-               and looking at the ETag response header.
+               and looking at the Etag response header.
         :param str template_version: The policy template version to update to.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -2709,15 +2712,15 @@ class IamPolicyManagementV1(BaseService):
         Update the way identities within an external account are allowed to interact with
         the requested account by providing:
         * the `account_id` as a parameter
-        * the external account ID(s) and state for the specific identity in the request
-        body
+        * one or more external account ID(s) and state for the specific identity in the
+        request body
         External account identity interaction includes the following `identity_types`:
-        `user` (user identities defined as
-        [IBMid's](https://test.cloud.ibm.com/docs/account?topic=account-identity-overview#users-bestpract)),
+        `user` (user identities that are defined as
+        [IBMid's](https://cloud.ibm.com/docs/account?topic=account-identity-overview#users-bestpract)),
         `service_id` (defined as [IAM
-        ServiceIds](https://test.cloud.ibm.com/docs/account?topic=account-identity-overview#serviceid-bestpract)),
+        ServiceIds](https://cloud.ibm.com/docs/account?topic=account-identity-overview#serviceid-bestpract)),
         `service` (defined by a service’s
-        [CRN](https://test.cloud.ibm.com/docs/account?topic=account-crn)). To update an
+        [CRN](https://cloud.ibm.com/docs/account?topic=account-crn)). To update an
         Identity’s setting, the `state` and `external_allowed_accounts` fields are
         required.
         Different identity states are:
@@ -2726,9 +2729,9 @@ class IamPolicyManagementV1(BaseService):
         * "limited": An identity type is allowed to access resources in the account
         provided it has access policies on those resources AND it is associated with
         either the account the resources are in or one of the allowed accounts. This
-        setting leverages the "external_allowed_accounts" list.
-        * "monitor": Has no direct impact on an Identity’s access. Instead, it creates AT
-        events for access decisions as if the account were in a limited “state”.
+        setting uses the "external_allowed_accounts" list.
+        * "monitor": It has no direct impact on an Identity’s access. Instead, it creates
+        AT events for access decisions as if the account were in a limited “state”.
         **Note**: The state "enabled" is a special case. In this case, access is given to
         all accounts and there is no need to specify a particular list. Therefore, when
         updating "state" to "enabled" for an identity type "external_allowed_accounts"
@@ -2736,10 +2739,10 @@ class IamPolicyManagementV1(BaseService):
 
         :param str account_id: The account GUID that the settings belong to.
         :param str if_match: The revision number for updating Access Management
-               Account Settings and must match the ETag value of the existing Access
+               Account Settings and must match the Etag value of the existing Access
                Management Account Settings. The Etag can be retrieved using the GET
                /v1/accounts/{account_id}/settings/access_management API and looking at the
-               ETag response header.
+               Etag response header.
         :param ExternalAccountIdentityInteractionPatch
                external_account_identity_interaction: (optional) Update to how external
                accounts can interact in relation to the requested account.
@@ -2798,6 +2801,974 @@ class IamPolicyManagementV1(BaseService):
             url=url,
             headers=headers,
             data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Action Control Templates
+    #########################
+
+    def list_action_control_templates(
+        self,
+        account_id: str,
+        *,
+        accept_language: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List action control templates by attributes.
+
+        List action control templates and filter by attributes by using query parameters.
+        The following attributes are supported:
+        `account_id`
+        `account_id` is a required query parameter. Only action control templates that
+        have the specified attributes and that the caller has read access to are returned.
+        If the caller does not have read access to any action control templates an empty
+        array is returned.
+
+        :param str account_id: The account GUID that the action control templates
+               belong to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        :param str start: (optional) Page token that refers to the page of the
+               collection to return.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ActionControlTemplateCollection` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {
+            'Accept-Language': accept_language,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_action_control_templates',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'limit': limit,
+            'start': start,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/action_control_templates'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_action_control_template(
+        self,
+        name: str,
+        account_id: str,
+        *,
+        description: Optional[str] = None,
+        committed: Optional[bool] = None,
+        action_control: Optional['TemplateActionControl'] = None,
+        accept_language: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create an action control template.
+
+        Create an action control template. Action control templates define a service
+        action control.
+
+        :param str name: Required field when creating a new template. Otherwise,
+               this field is optional. If the field is included, it changes the name value
+               for all existing versions of the template.
+        :param str account_id: Enterprise account ID where this template is
+               created.
+        :param str description: (optional) Description of the action control
+               template. This is shown to users in the enterprise account. Use this to
+               describe the purpose or context of the action control for enterprise users
+               managing IAM templates.
+        :param bool committed: (optional) Committed status of the template. If
+               committed is set to true, then the template version can no longer be
+               updated.
+        :param TemplateActionControl action_control: (optional) The action control
+               properties that are created in an action resource when the template is
+               assigned.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ActionControlTemplate` object
+        """
+
+        if name is None:
+            raise ValueError('name must be provided')
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        if action_control is not None:
+            action_control = convert_model(action_control)
+        headers = {
+            'Accept-Language': accept_language,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_action_control_template',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'account_id': account_id,
+            'description': description,
+            'committed': committed,
+            'action_control': action_control,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/action_control_templates'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_action_control_template(
+        self,
+        action_control_template_id: str,
+        *,
+        state: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Retrieve the latest version of an action control template.
+
+        Retrieve the latest version of an action control template by providing an action
+        control template ID.
+
+        :param str action_control_template_id: Action control template ID.
+        :param str state: (optional) The action control template state.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ActionControlTemplate` object
+        """
+
+        if not action_control_template_id:
+            raise ValueError('action_control_template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_action_control_template',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'state': state,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['action_control_template_id']
+        path_param_values = self.encode_path_vars(action_control_template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/action_control_templates/{action_control_template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_action_control_template(
+        self,
+        action_control_template_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete an action control template.
+
+        Delete an action control template by providing the action control template ID.
+        This deletes all versions of this template. An action control template can't be
+        deleted if any version of the template is assigned to one or more child accounts.
+        You must remove the action control assignments first.
+
+        :param str action_control_template_id: Action control template ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not action_control_template_id:
+            raise ValueError('action_control_template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_action_control_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['action_control_template_id']
+        path_param_values = self.encode_path_vars(action_control_template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/action_control_templates/{action_control_template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_action_control_template_version(
+        self,
+        action_control_template_id: str,
+        *,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        action_control: Optional['TemplateActionControl'] = None,
+        committed: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create a new action control template version.
+
+        Create a new version of an action control template. Use this if you need to make
+        updates to an action control template that is committed.
+
+        :param str action_control_template_id: The action control template ID.
+        :param str name: (optional) Required field when creating a new template.
+               Otherwise, this field is optional. If the field is included, it will change
+               the name value for all existing versions of the template.
+        :param str description: (optional) Description of the action control
+               template. This is shown to users in the enterprise account. Use this to
+               describe the purpose or context of the action control for enterprise users
+               managing IAM templates.
+        :param TemplateActionControl action_control: (optional) The action control
+               properties that are created in an action resource when the template is
+               assigned.
+        :param bool committed: (optional) Committed status of the template version.
+               If committed is set to true, then the template version can no longer be
+               updated.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ActionControlTemplate` object
+        """
+
+        if not action_control_template_id:
+            raise ValueError('action_control_template_id must be provided')
+        if action_control is not None:
+            action_control = convert_model(action_control)
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_action_control_template_version',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'description': description,
+            'action_control': action_control,
+            'committed': committed,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['action_control_template_id']
+        path_param_values = self.encode_path_vars(action_control_template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/action_control_templates/{action_control_template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_action_control_template_versions(
+        self,
+        action_control_template_id: str,
+        *,
+        state: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Retrieve action control template versions.
+
+        Retrieve the versions of an action control template by providing an action control
+        template ID.
+
+        :param str action_control_template_id: The action control template ID.
+        :param str state: (optional) Action control template state.
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        :param str start: (optional) Page token that refers to the page of the
+               collection to return.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ActionControlTemplateVersionsCollection` object
+        """
+
+        if not action_control_template_id:
+            raise ValueError('action_control_template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_action_control_template_versions',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'state': state,
+            'limit': limit,
+            'start': start,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['action_control_template_id']
+        path_param_values = self.encode_path_vars(action_control_template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/action_control_templates/{action_control_template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def replace_action_control_template(
+        self,
+        action_control_template_id: str,
+        version: str,
+        if_match: str,
+        *,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        action_control: Optional['TemplateActionControl'] = None,
+        committed: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update an action control template version.
+
+        Update a specific version of an action control template. You can use this only if
+        the version isn't committed.
+
+        :param str action_control_template_id: Action control template ID.
+        :param str version: Action control template version.
+        :param str if_match: The revision number for updating an action control
+               template version must match the Etag value of the existing action control
+               template version. The Etag can be retrieved using the GET
+               /v1/action_control_templates/{template_id}/versions/{version} API and
+               looking at the Etag response header.
+        :param str name: (optional) Required field when creating a new template.
+               Otherwise, this field is optional. If the field is included, it will change
+               the name value for all existing versions of the template.
+        :param str description: (optional) Description of the action control
+               template. This is shown to users in the enterprise account. Use this to
+               describe the purpose or context of the action control for enterprise users
+               managing IAM templates.
+        :param TemplateActionControl action_control: (optional) The action control
+               properties that are created in an action resource when the template is
+               assigned.
+        :param bool committed: (optional) Committed status of the template version.
+               If committed is set to true, then the template version can no longer be
+               updated.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ActionControlTemplate` object
+        """
+
+        if not action_control_template_id:
+            raise ValueError('action_control_template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if action_control is not None:
+            action_control = convert_model(action_control)
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='replace_action_control_template',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'description': description,
+            'action_control': action_control,
+            'committed': committed,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['action_control_template_id', 'version']
+        path_param_values = self.encode_path_vars(action_control_template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/action_control_templates/{action_control_template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_action_control_template_version(
+        self,
+        action_control_template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete an action control template version.
+
+        Delete a specific version of an action control template by providing an action
+        control template ID and version number. You can't delete an action control
+        template version that is assigned to one or more child accounts. You must remove
+        the action control assignments first.
+
+        :param str action_control_template_id: Action control template ID.
+        :param str version: Action control template version.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not action_control_template_id:
+            raise ValueError('action_control_template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_action_control_template_version',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['action_control_template_id', 'version']
+        path_param_values = self.encode_path_vars(action_control_template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/action_control_templates/{action_control_template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_action_control_template_version(
+        self,
+        action_control_template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Retrieve an action control template version.
+
+        Retrieve an action control template by providing an action control template ID and
+        version number.
+
+        :param str action_control_template_id: Action control template ID.
+        :param str version: Action control template version.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ActionControlTemplate` object
+        """
+
+        if not action_control_template_id:
+            raise ValueError('action_control_template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_action_control_template_version',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['action_control_template_id', 'version']
+        path_param_values = self.encode_path_vars(action_control_template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/action_control_templates/{action_control_template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def commit_action_control_template(
+        self,
+        action_control_template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Commit an action control template version.
+
+        Commit an action control template version. You cannot make any further changes to
+        the action control template once it's committed. If you have to make updates after
+        committing a version, create a new version.
+
+        :param str action_control_template_id: Action control template ID.
+        :param str version: The action control template version.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not action_control_template_id:
+            raise ValueError('action_control_template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='commit_action_control_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['action_control_template_id', 'version']
+        path_param_values = self.encode_path_vars(action_control_template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/action_control_templates/{action_control_template_id}/versions/{version}/commit'.format(
+            **path_param_dict
+        )
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Action Control Assignments
+    #########################
+
+    def list_action_control_assignments(
+        self,
+        account_id: str,
+        *,
+        accept_language: Optional[str] = None,
+        template_id: Optional[str] = None,
+        template_version: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get action control template assignments.
+
+        Get action control template assignments by attributes. The following attributes
+        are supported:
+        `account_id`, `template_id`, `template_version`, `sort`.
+        `account_id` is a required query parameter. Only action control template
+        assignments with the specified attributes and  accessible by the caller are
+        returned. If the caller does not have read access to any action control template
+        assignments, an empty array is returned.
+
+        :param str account_id: The account GUID in which the action control
+               assignment belongs to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str template_id: (optional) Optional template ID.
+        :param str template_version: (optional) Optional action control template
+               version.
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        :param str start: (optional) Page token that refers to the page of the
+               collection to return.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ActionControlAssignmentCollection` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {
+            'Accept-Language': accept_language,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_action_control_assignments',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'template_id': template_id,
+            'template_version': template_version,
+            'limit': limit,
+            'start': start,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/action_control_assignments'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_action_control_template_assignment(
+        self,
+        target: 'AssignmentTargetDetails',
+        templates: List['ActionControlAssignmentTemplate'],
+        *,
+        accept_language: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create an action control template assignment.
+
+        Assign an action control template to child accounts and account groups. This
+        creates the action control in the accounts and account groups that you specify.
+
+        :param AssignmentTargetDetails target: assignment target account and type.
+        :param List[ActionControlAssignmentTemplate] templates: List of action
+               control template details for action control assignment.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ActionControlAssignmentCollection` object
+        """
+
+        if target is None:
+            raise ValueError('target must be provided')
+        if templates is None:
+            raise ValueError('templates must be provided')
+        target = convert_model(target)
+        templates = [convert_model(x) for x in templates]
+        headers = {
+            'Accept-Language': accept_language,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_action_control_template_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'target': target,
+            'templates': templates,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/action_control_assignments'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_action_control_assignment(
+        self,
+        assignment_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Retrieve an action control assignment.
+
+        Retrieve an action control template assignment by providing an action control
+        assignment ID.
+
+        :param str assignment_id: Action control template assignment ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ActionControlAssignment` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_action_control_assignment',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/action_control_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_action_control_assignment(
+        self,
+        assignment_id: str,
+        if_match: str,
+        template_version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update an action control assignment.
+
+        Update an action control assignment by providing an action control assignment ID.
+
+        :param str assignment_id: Action control template assignment ID.
+        :param str if_match: The revision number for updating an action control
+               assignment and must match the Etag value of the existing action control
+               assignment. The Etag can be retrieved using the GET
+               /v1/action_control_assignments/{assignment_id} API and looking at the Etag
+               response header.
+        :param str template_version: The version number of the template used to
+               identify different versions of same template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ActionControlAssignment` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_action_control_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_version': template_version,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/action_control_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_action_control_assignment(
+        self,
+        assignment_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Remove an action control assignment.
+
+        Remove an action control template assignment by providing an action control
+        assignment ID. You can't delete an action control assignment if the status is
+        "in_progress".
+
+        :param str assignment_id: Action control template assignment ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_action_control_assignment',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/action_control_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
         )
 
         response = self.send(request, **kwargs)
@@ -2983,6 +3954,34 @@ class ListPolicyTemplateVersionsEnums:
         DELETED = 'deleted'
 
 
+class GetActionControlTemplateEnums:
+    """
+    Enums for get_action_control_template parameters.
+    """
+
+    class State(str, Enum):
+        """
+        The action control template state.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
+
+
+class ListActionControlTemplateVersionsEnums:
+    """
+    Enums for list_action_control_template_versions parameters.
+    """
+
+    class State(str, Enum):
+        """
+        Action control template state.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
+
+
 ##############################################################################
 # Models
 ##############################################################################
@@ -3061,11 +4060,1019 @@ class AccountSettingsAccessManagement:
         return not self == other
 
 
+class ActionControlAssignment:
+    """
+    The set of properties associated with the assigned action control template.
+
+    :param str id: (optional) Action control assignment ID.
+    :param str account_id: (optional) The account GUID that the action control
+          assignments belong to.
+    :param str href: (optional) The href URL that links to the action control
+          assignments API by action control assignment ID.
+    :param datetime created_at: (optional) The UTC timestamp when the action control
+          assignment was created.
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
+          action control assignment.
+    :param datetime last_modified_at: (optional) The UTC timestamp when the action
+          control assignment was last modified.
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
+          modified the action control assignment.
+    :param str operation: (optional) The current operation of the action control
+          assignment.
+    :param List[ActionControlAssignmentResource] resources: (optional) Resources
+          created when action control template is assigned.
+    :param ActionControlAssignmentTemplate template: The action control template id
+          and version that will be assigned.
+    :param AssignmentTargetDetails target: assignment target account and type.
+    :param str status: (optional) The action control assignment status.
+    """
+
+    def __init__(
+        self,
+        template: 'ActionControlAssignmentTemplate',
+        target: 'AssignmentTargetDetails',
+        *,
+        id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+        operation: Optional[str] = None,
+        resources: Optional[List['ActionControlAssignmentResource']] = None,
+        status: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a ActionControlAssignment object.
+
+        :param ActionControlAssignmentTemplate template: The action control
+               template id and version that will be assigned.
+        :param AssignmentTargetDetails target: assignment target account and type.
+        """
+        self.id = id
+        self.account_id = account_id
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+        self.operation = operation
+        self.resources = resources
+        self.template = template
+        self.target = target
+        self.status = status
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlAssignment':
+        """Initialize a ActionControlAssignment object from a json dictionary."""
+        args = {}
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (operation := _dict.get('operation')) is not None:
+            args['operation'] = operation
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [ActionControlAssignmentResource.from_dict(v) for v in resources]
+        if (template := _dict.get('template')) is not None:
+            args['template'] = ActionControlAssignmentTemplate.from_dict(template)
+        else:
+            raise ValueError('Required property \'template\' not present in ActionControlAssignment JSON')
+        if (target := _dict.get('target')) is not None:
+            args['target'] = AssignmentTargetDetails.from_dict(target)
+        else:
+            raise ValueError('Required property \'target\' not present in ActionControlAssignment JSON')
+        if (status := _dict.get('status')) is not None:
+            args['status'] = status
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlAssignment object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and getattr(self, 'id') is not None:
+            _dict['id'] = getattr(self, 'id')
+        if hasattr(self, 'account_id') and getattr(self, 'account_id') is not None:
+            _dict['account_id'] = getattr(self, 'account_id')
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
+            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
+        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
+            _dict['created_by_id'] = getattr(self, 'created_by_id')
+        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
+            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
+        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
+            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
+        if hasattr(self, 'operation') and getattr(self, 'operation') is not None:
+            _dict['operation'] = getattr(self, 'operation')
+        if hasattr(self, 'resources') and getattr(self, 'resources') is not None:
+            resources_list = []
+            for v in getattr(self, 'resources'):
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
+        if hasattr(self, 'template') and self.template is not None:
+            if isinstance(self.template, dict):
+                _dict['template'] = self.template
+            else:
+                _dict['template'] = self.template.to_dict()
+        if hasattr(self, 'target') and self.target is not None:
+            if isinstance(self.target, dict):
+                _dict['target'] = self.target
+            else:
+                _dict['target'] = self.target.to_dict()
+        if hasattr(self, 'status') and getattr(self, 'status') is not None:
+            _dict['status'] = getattr(self, 'status')
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlAssignment object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlAssignment') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlAssignment') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class OperationEnum(str, Enum):
+        """
+        The current operation of the action control assignment.
+        """
+
+        CREATE = 'create'
+        APPLY = 'apply'
+        UPDATE = 'update'
+        REMOVE = 'remove'
+
+    class StatusEnum(str, Enum):
+        """
+        The action control assignment status.
+        """
+
+        ACCEPTED = 'accepted'
+        FAILURE = 'failure'
+        IN_PROGRESS = 'in_progress'
+        SUPERSEDED = 'superseded'
+
+
+class ActionControlAssignmentCollection:
+    """
+    A collection of action control assignments.
+
+    :param int limit: (optional) The number of documents to include per each page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to the following page of
+          requested collection.
+    :param Previous previous: (optional) Details with linking href to previous page
+          of requested collection.
+    :param List[ActionControlAssignment] assignments: List of action control
+          assignments.
+    """
+
+    def __init__(
+        self,
+        assignments: List['ActionControlAssignment'],
+        *,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
+    ) -> None:
+        """
+        Initialize a ActionControlAssignmentCollection object.
+
+        :param List[ActionControlAssignment] assignments: List of action control
+               assignments.
+        :param int limit: (optional) The number of documents to include per each
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to the following
+               page of requested collection.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
+        """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
+        self.assignments = assignments
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlAssignmentCollection':
+        """Initialize a ActionControlAssignmentCollection object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
+        if (assignments := _dict.get('assignments')) is not None:
+            args['assignments'] = [ActionControlAssignment.from_dict(v) for v in assignments]
+        else:
+            raise ValueError('Required property \'assignments\' not present in ActionControlAssignmentCollection JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlAssignmentCollection object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'assignments') and self.assignments is not None:
+            assignments_list = []
+            for v in self.assignments:
+                if isinstance(v, dict):
+                    assignments_list.append(v)
+                else:
+                    assignments_list.append(v.to_dict())
+            _dict['assignments'] = assignments_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlAssignmentCollection object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlAssignmentCollection') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlAssignmentCollection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ActionControlAssignmentResource:
+    """
+    The action control assignment resources and target where the template is assigned.
+
+    :param AssignmentTargetDetails target: assignment target account and type.
+    :param ActionControlAssignmentResourceActionControl action_control: (optional)
+          Set of properties of the assigned resource or error message if assignment
+          failed.
+    """
+
+    def __init__(
+        self,
+        target: 'AssignmentTargetDetails',
+        *,
+        action_control: Optional['ActionControlAssignmentResourceActionControl'] = None,
+    ) -> None:
+        """
+        Initialize a ActionControlAssignmentResource object.
+
+        :param AssignmentTargetDetails target: assignment target account and type.
+        :param ActionControlAssignmentResourceActionControl action_control:
+               (optional) Set of properties of the assigned resource or error message if
+               assignment failed.
+        """
+        self.target = target
+        self.action_control = action_control
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlAssignmentResource':
+        """Initialize a ActionControlAssignmentResource object from a json dictionary."""
+        args = {}
+        if (target := _dict.get('target')) is not None:
+            args['target'] = AssignmentTargetDetails.from_dict(target)
+        else:
+            raise ValueError('Required property \'target\' not present in ActionControlAssignmentResource JSON')
+        if (action_control := _dict.get('action_control')) is not None:
+            args['action_control'] = ActionControlAssignmentResourceActionControl.from_dict(action_control)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlAssignmentResource object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'target') and self.target is not None:
+            if isinstance(self.target, dict):
+                _dict['target'] = self.target
+            else:
+                _dict['target'] = self.target.to_dict()
+        if hasattr(self, 'action_control') and self.action_control is not None:
+            if isinstance(self.action_control, dict):
+                _dict['action_control'] = self.action_control
+            else:
+                _dict['action_control'] = self.action_control.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlAssignmentResource object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlAssignmentResource') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlAssignmentResource') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ActionControlAssignmentResourceActionControl:
+    """
+    Set of properties of the assigned resource or error message if assignment failed.
+
+    :param ActionControlAssignmentResourceCreated resource_created: (optional) On
+          success, it includes the action control assigned.
+    :param ErrorResponse error_message: (optional) The error response from API.
+    """
+
+    def __init__(
+        self,
+        *,
+        resource_created: Optional['ActionControlAssignmentResourceCreated'] = None,
+        error_message: Optional['ErrorResponse'] = None,
+    ) -> None:
+        """
+        Initialize a ActionControlAssignmentResourceActionControl object.
+
+        :param ActionControlAssignmentResourceCreated resource_created: (optional)
+               On success, it includes the action control assigned.
+        :param ErrorResponse error_message: (optional) The error response from API.
+        """
+        self.resource_created = resource_created
+        self.error_message = error_message
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlAssignmentResourceActionControl':
+        """Initialize a ActionControlAssignmentResourceActionControl object from a json dictionary."""
+        args = {}
+        if (resource_created := _dict.get('resource_created')) is not None:
+            args['resource_created'] = ActionControlAssignmentResourceCreated.from_dict(resource_created)
+        if (error_message := _dict.get('error_message')) is not None:
+            args['error_message'] = ErrorResponse.from_dict(error_message)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlAssignmentResourceActionControl object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'resource_created') and self.resource_created is not None:
+            if isinstance(self.resource_created, dict):
+                _dict['resource_created'] = self.resource_created
+            else:
+                _dict['resource_created'] = self.resource_created.to_dict()
+        if hasattr(self, 'error_message') and self.error_message is not None:
+            if isinstance(self.error_message, dict):
+                _dict['error_message'] = self.error_message
+            else:
+                _dict['error_message'] = self.error_message.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlAssignmentResourceActionControl object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlAssignmentResourceActionControl') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlAssignmentResourceActionControl') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ActionControlAssignmentResourceCreated:
+    """
+    On success, it includes the action control assigned.
+
+    :param str id: (optional) action control id.
+    """
+
+    def __init__(
+        self,
+        *,
+        id: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a ActionControlAssignmentResourceCreated object.
+
+        :param str id: (optional) action control id.
+        """
+        self.id = id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlAssignmentResourceCreated':
+        """Initialize a ActionControlAssignmentResourceCreated object from a json dictionary."""
+        args = {}
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlAssignmentResourceCreated object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlAssignmentResourceCreated object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlAssignmentResourceCreated') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlAssignmentResourceCreated') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ActionControlAssignmentTemplate:
+    """
+    The action control template id and version that will be assigned.
+
+    :param str id: Action control template ID.
+    :param str version: Action control template version.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        version: str,
+    ) -> None:
+        """
+        Initialize a ActionControlAssignmentTemplate object.
+
+        :param str id: Action control template ID.
+        :param str version: Action control template version.
+        """
+        self.id = id
+        self.version = version
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlAssignmentTemplate':
+        """Initialize a ActionControlAssignmentTemplate object from a json dictionary."""
+        args = {}
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        else:
+            raise ValueError('Required property \'id\' not present in ActionControlAssignmentTemplate JSON')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
+        else:
+            raise ValueError('Required property \'version\' not present in ActionControlAssignmentTemplate JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlAssignmentTemplate object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlAssignmentTemplate object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlAssignmentTemplate') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlAssignmentTemplate') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ActionControlTemplate:
+    """
+    The set of properties associated with the action control template.
+
+    :param str name: Required field when creating a new template. Otherwise, this
+          field is optional. If the field is included, it changes the name value for all
+          existing versions of the template.
+    :param str description: Description of the action control template. This is
+          shown to users in the enterprise account. Use this to describe the purpose or
+          context of the action control for enterprise users managing IAM templates.
+    :param str account_id: Enterprise account ID where this template is created.
+    :param bool committed: (optional) Committed status of the template. If committed
+          is set to true, then the template version can no longer be updated.
+    :param TemplateActionControl action_control: (optional) The action control
+          properties that are created in an action resource when the template is assigned.
+    :param str id: (optional) The action control template ID.
+    :param str href: (optional) The href URL that links to the action control
+          templates API by action control template ID.
+    :param datetime created_at: (optional) The UTC timestamp when the action control
+          template was created.
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
+          action control template.
+    :param datetime last_modified_at: (optional) The UTC timestamp when the action
+          control template was last modified.
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
+          modified the action control template.
+    :param str version: The version number of the template used to identify
+          different versions of same template.
+    :param str state: State of action control template.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        account_id: str,
+        version: str,
+        state: str,
+        *,
+        committed: Optional[bool] = None,
+        action_control: Optional['TemplateActionControl'] = None,
+        id: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a ActionControlTemplate object.
+
+        :param str name: Required field when creating a new template. Otherwise,
+               this field is optional. If the field is included, it changes the name value
+               for all existing versions of the template.
+        :param str description: Description of the action control template. This is
+               shown to users in the enterprise account. Use this to describe the purpose
+               or context of the action control for enterprise users managing IAM
+               templates.
+        :param str account_id: Enterprise account ID where this template is
+               created.
+        :param str version: The version number of the template used to identify
+               different versions of same template.
+        :param str state: State of action control template.
+        :param bool committed: (optional) Committed status of the template. If
+               committed is set to true, then the template version can no longer be
+               updated.
+        :param TemplateActionControl action_control: (optional) The action control
+               properties that are created in an action resource when the template is
+               assigned.
+        """
+        self.name = name
+        self.description = description
+        self.account_id = account_id
+        self.committed = committed
+        self.action_control = action_control
+        self.id = id
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+        self.version = version
+        self.state = state
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlTemplate':
+        """Initialize a ActionControlTemplate object from a json dictionary."""
+        args = {}
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        else:
+            raise ValueError('Required property \'name\' not present in ActionControlTemplate JSON')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        else:
+            raise ValueError('Required property \'description\' not present in ActionControlTemplate JSON')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        else:
+            raise ValueError('Required property \'account_id\' not present in ActionControlTemplate JSON')
+        if (committed := _dict.get('committed')) is not None:
+            args['committed'] = committed
+        if (action_control := _dict.get('action_control')) is not None:
+            args['action_control'] = TemplateActionControl.from_dict(action_control)
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
+        else:
+            raise ValueError('Required property \'version\' not present in ActionControlTemplate JSON')
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        else:
+            raise ValueError('Required property \'state\' not present in ActionControlTemplate JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlTemplate object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'committed') and self.committed is not None:
+            _dict['committed'] = self.committed
+        if hasattr(self, 'action_control') and self.action_control is not None:
+            if isinstance(self.action_control, dict):
+                _dict['action_control'] = self.action_control
+            else:
+                _dict['action_control'] = self.action_control.to_dict()
+        if hasattr(self, 'id') and getattr(self, 'id') is not None:
+            _dict['id'] = getattr(self, 'id')
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
+            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
+        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
+            _dict['created_by_id'] = getattr(self, 'created_by_id')
+        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
+            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
+        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
+            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlTemplate object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlTemplate') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlTemplate') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class StateEnum(str, Enum):
+        """
+        State of action control template.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
+
+
+class ActionControlTemplateCollection:
+    """
+    A collection of action control templates.
+
+    :param int limit: (optional) The number of documents to include per each page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to the following page of
+          requested collection.
+    :param Previous previous: (optional) Details with linking href to previous page
+          of requested collection.
+    :param List[ActionControlTemplate] action_control_templates: List of action
+          control templates.
+    """
+
+    def __init__(
+        self,
+        action_control_templates: List['ActionControlTemplate'],
+        *,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
+    ) -> None:
+        """
+        Initialize a ActionControlTemplateCollection object.
+
+        :param List[ActionControlTemplate] action_control_templates: List of action
+               control templates.
+        :param int limit: (optional) The number of documents to include per each
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to the following
+               page of requested collection.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
+        """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
+        self.action_control_templates = action_control_templates
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlTemplateCollection':
+        """Initialize a ActionControlTemplateCollection object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
+        if (action_control_templates := _dict.get('action_control_templates')) is not None:
+            args['action_control_templates'] = [ActionControlTemplate.from_dict(v) for v in action_control_templates]
+        else:
+            raise ValueError(
+                'Required property \'action_control_templates\' not present in ActionControlTemplateCollection JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlTemplateCollection object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'action_control_templates') and self.action_control_templates is not None:
+            action_control_templates_list = []
+            for v in self.action_control_templates:
+                if isinstance(v, dict):
+                    action_control_templates_list.append(v)
+                else:
+                    action_control_templates_list.append(v.to_dict())
+            _dict['action_control_templates'] = action_control_templates_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlTemplateCollection object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlTemplateCollection') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlTemplateCollection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ActionControlTemplateVersionsCollection:
+    """
+    A collection of versions for a specific action control template.
+
+    :param int limit: (optional) The number of documents to include per each page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to the following page of
+          requested collection.
+    :param Previous previous: (optional) Details with linking href to previous page
+          of requested collection.
+    :param List[ActionControlTemplate] versions: List of action control templates
+          versions.
+    """
+
+    def __init__(
+        self,
+        versions: List['ActionControlTemplate'],
+        *,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
+    ) -> None:
+        """
+        Initialize a ActionControlTemplateVersionsCollection object.
+
+        :param List[ActionControlTemplate] versions: List of action control
+               templates versions.
+        :param int limit: (optional) The number of documents to include per each
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to the following
+               page of requested collection.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
+        """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
+        self.versions = versions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ActionControlTemplateVersionsCollection':
+        """Initialize a ActionControlTemplateVersionsCollection object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
+        if (versions := _dict.get('versions')) is not None:
+            args['versions'] = [ActionControlTemplate.from_dict(v) for v in versions]
+        else:
+            raise ValueError(
+                'Required property \'versions\' not present in ActionControlTemplateVersionsCollection JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ActionControlTemplateVersionsCollection object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'versions') and self.versions is not None:
+            versions_list = []
+            for v in self.versions:
+                if isinstance(v, dict):
+                    versions_list.append(v)
+                else:
+                    versions_list.append(v.to_dict())
+            _dict['versions'] = versions_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ActionControlTemplateVersionsCollection object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ActionControlTemplateVersionsCollection') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ActionControlTemplateVersionsCollection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class AssignmentResourceCreated:
     """
-    On success, includes the  policy assigned.
+    On success, includes the  policy that is assigned.
 
-    :param str id: (optional) policy id.
+    :param str id: (optional) Policy id.
     """
 
     def __init__(
@@ -3076,7 +5083,7 @@ class AssignmentResourceCreated:
         """
         Initialize a AssignmentResourceCreated object.
 
-        :param str id: (optional) policy id.
+        :param str id: (optional) Policy id.
         """
         self.id = id
 
@@ -3123,21 +5130,20 @@ class AssignmentTargetDetails:
     """
     assignment target account and type.
 
-    :param str type: (optional) Assignment target type.
-    :param str id: (optional) ID of the target account.
+    :param str type: Assignment target type.
+    :param str id: ID of the target account.
     """
 
     def __init__(
         self,
-        *,
-        type: Optional[str] = None,
-        id: Optional[str] = None,
+        type: str,
+        id: str,
     ) -> None:
         """
         Initialize a AssignmentTargetDetails object.
 
-        :param str type: (optional) Assignment target type.
-        :param str id: (optional) ID of the target account.
+        :param str type: Assignment target type.
+        :param str id: ID of the target account.
         """
         self.type = type
         self.id = id
@@ -3148,8 +5154,12 @@ class AssignmentTargetDetails:
         args = {}
         if (type := _dict.get('type')) is not None:
             args['type'] = type
+        else:
+            raise ValueError('Required property \'type\' not present in AssignmentTargetDetails JSON')
         if (id := _dict.get('id')) is not None:
             args['id'] = id
+        else:
+            raise ValueError('Required property \'id\' not present in AssignmentTargetDetails JSON')
         return cls(**args)
 
     @classmethod
@@ -3196,8 +5206,8 @@ class AssignmentTemplateDetails:
     """
     policy template details.
 
-    :param str id: (optional) policy template id.
-    :param str version: (optional) policy template version.
+    :param str id: (optional) Policy template ID.
+    :param str version: (optional) Policy template version.
     """
 
     def __init__(
@@ -3209,8 +5219,8 @@ class AssignmentTemplateDetails:
         """
         Initialize a AssignmentTemplateDetails object.
 
-        :param str id: (optional) policy template id.
-        :param str version: (optional) policy template version.
+        :param str id: (optional) Policy template ID.
+        :param str version: (optional) Policy template version.
         """
         self.id = id
         self.version = version
@@ -3263,8 +5273,8 @@ class ConflictsWith:
     Details of conflicting resource.
 
     :param str etag: (optional) The revision number of the resource.
-    :param str role: (optional) The conflicting role id.
-    :param str policy: (optional) The conflicting policy id.
+    :param str role: (optional) The conflicting role of ID.
+    :param str policy: (optional) The conflicting policy ID.
     """
 
     def __init__(
@@ -3278,8 +5288,8 @@ class ConflictsWith:
         Initialize a ConflictsWith object.
 
         :param str etag: (optional) The revision number of the resource.
-        :param str role: (optional) The conflicting role id.
-        :param str policy: (optional) The conflicting policy id.
+        :param str role: (optional) The conflicting role of ID.
+        :param str policy: (optional) The conflicting policy ID.
         """
         self.etag = etag
         self.role = role
@@ -3334,9 +5344,9 @@ class ConflictsWith:
 
 class Control:
     """
-    Specifies the type of access granted by the policy.
+    Specifies the type of access that is granted by the policy.
 
-    :param Grant grant: Permission granted by the policy.
+    :param Grant grant: Permission is granted by the policy.
     """
 
     def __init__(
@@ -3346,7 +5356,7 @@ class Control:
         """
         Initialize a Control object.
 
-        :param Grant grant: Permission granted by the policy.
+        :param Grant grant: Permission is granted by the policy.
         """
         self.grant = grant
 
@@ -3418,7 +5428,7 @@ class CustomRole:
     An additional set of properties associated with a role.
 
     :param str id: (optional) The role ID. Composed of hexadecimal characters.
-    :param str display_name: The display name of the role that is shown in the
+    :param str display_name: The display the name of the role that is shown in the
           console.
     :param str description: (optional) The description of the role.
     :param List[str] actions: The actions of the role. For more information, see
@@ -3426,19 +5436,19 @@ class CustomRole:
           actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
     :param str crn: (optional) The role Cloud Resource Name (CRN). Example CRN:
           'crn:v1:ibmcloud:public:iam-access-management::a/exampleAccountId::customRole:ExampleRoleName'.
-    :param str name: The name of the role that is used in the CRN. Can only be
-          alphanumeric and has to be capitalized.
+    :param str name: The name of the role that is used in the CRN. This must be
+          alphanumeric and capitalized.
     :param str account_id: The account GUID.
     :param str service_name: The service name.
     :param datetime created_at: (optional) The UTC timestamp when the role was
           created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
           role.
     :param datetime last_modified_at: (optional) The UTC timestamp when the role was
           last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
           modified the policy.
-    :param str href: (optional) The href link back to the role.
+    :param str href: (optional) The href links back to the role.
     """
 
     def __init__(
@@ -3461,13 +5471,13 @@ class CustomRole:
         """
         Initialize a CustomRole object.
 
-        :param str display_name: The display name of the role that is shown in the
-               console.
+        :param str display_name: The display the name of the role that is shown in
+               the console.
         :param List[str] actions: The actions of the role. For more information,
                see [IAM roles and
                actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
-        :param str name: The name of the role that is used in the CRN. Can only be
-               alphanumeric and has to be capitalized.
+        :param str name: The name of the role that is used in the CRN. This must be
+               alphanumeric and capitalized.
         :param str account_id: The account GUID.
         :param str service_name: The service name.
         :param str description: (optional) The description of the role.
@@ -3590,10 +5600,10 @@ class EnrichedRoles:
 
     :param str role_id: The role Cloud Resource Name (CRN) granted by the policy.
           Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
-    :param str display_name: (optional) The service defined (or user defined if a
-          custom role) display name of the role.
-    :param str description: (optional) The service defined (or user defined if a
-          custom role) description of the role.
+    :param str display_name: (optional) The display name of the role, either
+          service-defined or user-defined for custom roles.
+    :param str description: (optional) The role description, either service-defined
+          or user-defined for custom roles.
     :param List[RoleAction] actions: The actions of the role. For more information,
           see [IAM roles and
           actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
@@ -3855,32 +5865,32 @@ class ErrorObject:
         POLICY_ASSIGNMENT_NOT_FOUND = 'policy_assignment_not_found'
         POLICY_ASSIGNMENT_CONFLICT_ERROR = 'policy_assignment_conflict_error'
         RESOURCE_NOT_FOUND = 'resource_not_found'
+        ACTION_CONTROL_TEMPLATE_NOT_FOUND = 'action_control_template_not_found'
+        ACTION_CONTROL_ASSIGNMENT_NOT_FOUND = 'action_control_assignment_not_found'
 
 
 class ErrorResponse:
     """
     The error response from API.
 
-    :param str trace: (optional) The unique transaction id for the request.
-    :param List[ErrorObject] errors: (optional) The errors encountered during the
-          response.
-    :param int status_code: (optional) The http error code of the response.
+    :param str trace: The unique transaction ID for the request.
+    :param List[ErrorObject] errors: The errors encountered during the response.
+    :param int status_code: The HTTP error code of the response.
     """
 
     def __init__(
         self,
-        *,
-        trace: Optional[str] = None,
-        errors: Optional[List['ErrorObject']] = None,
-        status_code: Optional[int] = None,
+        trace: str,
+        errors: List['ErrorObject'],
+        status_code: int,
     ) -> None:
         """
         Initialize a ErrorResponse object.
 
-        :param str trace: (optional) The unique transaction id for the request.
-        :param List[ErrorObject] errors: (optional) The errors encountered during
-               the response.
-        :param int status_code: (optional) The http error code of the response.
+        :param str trace: The unique transaction ID for the request.
+        :param List[ErrorObject] errors: The errors encountered during the
+               response.
+        :param int status_code: The HTTP error code of the response.
         """
         self.trace = trace
         self.errors = errors
@@ -3892,10 +5902,16 @@ class ErrorResponse:
         args = {}
         if (trace := _dict.get('trace')) is not None:
             args['trace'] = trace
+        else:
+            raise ValueError('Required property \'trace\' not present in ErrorResponse JSON')
         if (errors := _dict.get('errors')) is not None:
             args['errors'] = [ErrorObject.from_dict(v) for v in errors]
+        else:
+            raise ValueError('Required property \'errors\' not present in ErrorResponse JSON')
         if (status_code := _dict.get('status_code')) is not None:
             args['status_code'] = status_code
+        else:
+            raise ValueError('Required property \'status_code\' not present in ErrorResponse JSON')
         return cls(**args)
 
     @classmethod
@@ -4068,7 +6084,7 @@ class ExternalAccountIdentityInteractionPatch:
 
 class First:
     """
-    Details with href linking to first page of requested collection.
+    Details with linking href to first page of requested collection.
 
     :param str href: (optional) The href linking to the page of requested
           collection.
@@ -4126,9 +6142,9 @@ class First:
 
 class Grant:
     """
-    Permission granted by the policy.
+    Permission is granted by the policy.
 
-    :param List[Roles] roles: A set of role cloud resource names (CRNs) granted by
+    :param List[Roles] roles: A set of role Cloud Resource Names (CRNs) granted by
           the policy.
     """
 
@@ -4139,7 +6155,7 @@ class Grant:
         """
         Initialize a Grant object.
 
-        :param List[Roles] roles: A set of role cloud resource names (CRNs) granted
+        :param List[Roles] roles: A set of role Cloud Resource Names (CRNs) granted
                by the policy.
         """
         self.roles = roles
@@ -4605,11 +6621,12 @@ class NestedCondition:
 
 class Next:
     """
-    Details with href linking to following page of requested collection.
+    Details with href linking to the following page of requested collection.
 
     :param str href: (optional) The href linking to the page of requested
           collection.
-    :param str start: (optional) Page token that refers to the page of collection.
+    :param str start: (optional) Page token that refers to the page of the
+          collection.
     """
 
     def __init__(
@@ -4621,7 +6638,7 @@ class Next:
         """
         Initialize a Next object.
 
-        :param str start: (optional) Page token that refers to the page of
+        :param str start: (optional) Page token that refers to the page of the
                collection.
         """
         self.href = href
@@ -4678,17 +6695,17 @@ class Policy:
     :param str type: The policy type; either 'access' or 'authorization'.
     :param str description: (optional) Customer-defined description.
     :param List[PolicySubject] subjects: The subjects associated with a policy.
-    :param List[PolicyRole] roles: A set of role cloud resource names (CRNs) granted
+    :param List[PolicyRole] roles: A set of role Cloud Resource Names (CRNs) granted
           by the policy.
     :param List[PolicyResource] resources: The resources associated with a policy.
-    :param str href: (optional) The href link back to the policy.
+    :param str href: (optional) The href links back to the policy.
     :param datetime created_at: (optional) The UTC timestamp when the policy was
           created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
           policy.
     :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           was last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
           modified the policy.
     :param str state: (optional) The policy state.
     """
@@ -4714,7 +6731,7 @@ class Policy:
 
         :param str type: The policy type; either 'access' or 'authorization'.
         :param List[PolicySubject] subjects: The subjects associated with a policy.
-        :param List[PolicyRole] roles: A set of role cloud resource names (CRNs)
+        :param List[PolicyRole] roles: A set of role Cloud Resource Names (CRNs)
                granted by the policy.
         :param List[PolicyResource] resources: The resources associated with a
                policy.
@@ -4856,7 +6873,7 @@ class PolicyAssignmentResourcePolicy:
     Set of properties for the assigned resource.
 
     :param AssignmentResourceCreated resource_created: (optional) On success,
-          includes the  policy assigned.
+          includes the  policy that is assigned.
     :param str status: (optional) policy status.
     :param ErrorResponse error_message: (optional) The error response from API.
     """
@@ -4872,7 +6889,7 @@ class PolicyAssignmentResourcePolicy:
         Initialize a PolicyAssignmentResourcePolicy object.
 
         :param AssignmentResourceCreated resource_created: (optional) On success,
-               includes the  policy assigned.
+               includes the  policy that is assigned.
         :param str status: (optional) policy status.
         :param ErrorResponse error_message: (optional) The error response from API.
         """
@@ -5011,20 +7028,20 @@ class PolicyAssignmentV1:
     :param AssignmentTargetDetails target: assignment target account and type.
     :param str id: (optional) Policy assignment ID.
     :param str account_id: (optional) The account GUID that the policies assignments
-          belong to..
+          belong to.
     :param str href: (optional) The href URL that links to the policies assignments
           API by policy assignment ID.
     :param datetime created_at: (optional) The UTC timestamp when the policy
           assignment was created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
           policy assignment.
     :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           assignment was last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
           modified the policy assignment.
     :param List[PolicyAssignmentV1Resources] resources: Object for each account
           assigned.
-    :param PolicyAssignmentV1Subject subject: (optional) subject details of access
+    :param PolicyAssignmentV1Subject subject: (optional) Subject details of access
           type assignment.
     :param AssignmentTemplateDetails template: policy template details.
     :param str status: The policy assignment status.
@@ -5054,7 +7071,7 @@ class PolicyAssignmentV1:
                assigned.
         :param AssignmentTemplateDetails template: policy template details.
         :param str status: The policy assignment status.
-        :param PolicyAssignmentV1Subject subject: (optional) subject details of
+        :param PolicyAssignmentV1Subject subject: (optional) Subject details of
                access type assignment.
         """
         self.target = target
@@ -5190,29 +7207,62 @@ class PolicyAssignmentV1Collection:
     """
     Policy assignment response.
 
-    :param List[PolicyAssignmentV1] assignments: (optional) Response of policy
-          assignments.
+    :param int limit: (optional) The number of documents to include per each page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to the following page of
+          requested collection.
+    :param Previous previous: (optional) Details with linking href to previous page
+          of requested collection.
+    :param List[PolicyAssignmentV1] assignments: Response of policy assignments.
     """
 
     def __init__(
         self,
+        assignments: List['PolicyAssignmentV1'],
         *,
-        assignments: Optional[List['PolicyAssignmentV1']] = None,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
     ) -> None:
         """
         Initialize a PolicyAssignmentV1Collection object.
 
-        :param List[PolicyAssignmentV1] assignments: (optional) Response of policy
+        :param List[PolicyAssignmentV1] assignments: Response of policy
                assignments.
+        :param int limit: (optional) The number of documents to include per each
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to the following
+               page of requested collection.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
         """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
         self.assignments = assignments
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'PolicyAssignmentV1Collection':
         """Initialize a PolicyAssignmentV1Collection object from a json dictionary."""
         args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
         if (assignments := _dict.get('assignments')) is not None:
             args['assignments'] = [PolicyAssignmentV1.from_dict(v) for v in assignments]
+        else:
+            raise ValueError('Required property \'assignments\' not present in PolicyAssignmentV1Collection JSON')
         return cls(**args)
 
     @classmethod
@@ -5223,6 +7273,23 @@ class PolicyAssignmentV1Collection:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
         if hasattr(self, 'assignments') and self.assignments is not None:
             assignments_list = []
             for v in self.assignments:
@@ -5330,7 +7397,7 @@ class PolicyAssignmentV1Resources:
 
 class PolicyAssignmentV1Subject:
     """
-    subject details of access type assignment.
+    Subject details of access type assignment.
 
     :param str id: (optional) The unique identifier of the subject of the
           assignment.
@@ -5406,37 +7473,37 @@ class PolicyCollection:
     A collection of policies.
 
     :param int limit: (optional) The number of documents to include per each page of
-          collection.
-    :param First first: (optional) Details with href linking to first page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
           requested collection.
-    :param Next next: (optional) Details with href linking to following page of
+    :param Next next: (optional) Details with href linking to the following page of
           requested collection.
-    :param Previous previous: (optional) Details with href linking to previous page
+    :param Previous previous: (optional) Details with linking href to previous page
           of requested collection.
-    :param List[PolicyTemplateMetaData] policies: (optional) List of policies.
+    :param List[PolicyTemplateMetaData] policies: List of policies.
     """
 
     def __init__(
         self,
+        policies: List['PolicyTemplateMetaData'],
         *,
         limit: Optional[int] = None,
         first: Optional['First'] = None,
         next: Optional['Next'] = None,
         previous: Optional['Previous'] = None,
-        policies: Optional[List['PolicyTemplateMetaData']] = None,
     ) -> None:
         """
         Initialize a PolicyCollection object.
 
+        :param List[PolicyTemplateMetaData] policies: List of policies.
         :param int limit: (optional) The number of documents to include per each
-               page of collection.
-        :param First first: (optional) Details with href linking to first page of
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
                requested collection.
-        :param Next next: (optional) Details with href linking to following page of
-               requested collection.
-        :param Previous previous: (optional) Details with href linking to previous
+        :param Next next: (optional) Details with href linking to the following
                page of requested collection.
-        :param List[PolicyTemplateMetaData] policies: (optional) List of policies.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
         """
         self.limit = limit
         self.first = first
@@ -5458,6 +7525,8 @@ class PolicyCollection:
             args['previous'] = Previous.from_dict(previous)
         if (policies := _dict.get('policies')) is not None:
             args['policies'] = [PolicyTemplateMetaData.from_dict(v) for v in policies]
+        else:
+            raise ValueError('Required property \'policies\' not present in PolicyCollection JSON')
         return cls(**args)
 
     @classmethod
@@ -5518,22 +7587,20 @@ class PolicyResource:
     """
     The attributes of the resource. Note that only one resource is allowed in a policy.
 
-    :param List[ResourceAttribute] attributes: (optional) List of resource
-          attributes.
+    :param List[ResourceAttribute] attributes: List of resource attributes.
     :param List[ResourceTag] tags: (optional) List of access management tags.
     """
 
     def __init__(
         self,
+        attributes: List['ResourceAttribute'],
         *,
-        attributes: Optional[List['ResourceAttribute']] = None,
         tags: Optional[List['ResourceTag']] = None,
     ) -> None:
         """
         Initialize a PolicyResource object.
 
-        :param List[ResourceAttribute] attributes: (optional) List of resource
-               attributes.
+        :param List[ResourceAttribute] attributes: List of resource attributes.
         :param List[ResourceTag] tags: (optional) List of access management tags.
         """
         self.attributes = attributes
@@ -5545,6 +7612,8 @@ class PolicyResource:
         args = {}
         if (attributes := _dict.get('attributes')) is not None:
             args['attributes'] = [ResourceAttribute.from_dict(v) for v in attributes]
+        else:
+            raise ValueError('Required property \'attributes\' not present in PolicyResource JSON')
         if (tags := _dict.get('tags')) is not None:
             args['tags'] = [ResourceTag.from_dict(v) for v in tags]
         return cls(**args)
@@ -5675,19 +7744,17 @@ class PolicySubject:
     The subject attribute values that must match in order for this policy to apply in a
     permission decision.
 
-    :param List[SubjectAttribute] attributes: (optional) List of subject attributes.
+    :param List[SubjectAttribute] attributes: List of subject attributes.
     """
 
     def __init__(
         self,
-        *,
-        attributes: Optional[List['SubjectAttribute']] = None,
+        attributes: List['SubjectAttribute'],
     ) -> None:
         """
         Initialize a PolicySubject object.
 
-        :param List[SubjectAttribute] attributes: (optional) List of subject
-               attributes.
+        :param List[SubjectAttribute] attributes: List of subject attributes.
         """
         self.attributes = attributes
 
@@ -5697,6 +7764,8 @@ class PolicySubject:
         args = {}
         if (attributes := _dict.get('attributes')) is not None:
             args['attributes'] = [SubjectAttribute.from_dict(v) for v in attributes]
+        else:
+            raise ValueError('Required property \'attributes\' not present in PolicySubject JSON')
         return cls(**args)
 
     @classmethod
@@ -5740,29 +7809,28 @@ class PolicyTemplate:
     """
     The core set of properties associated with the policy template.
 
-    :param str name: Required field when creating a new template. Otherwise this
-          field is optional. If the field is included it will change the name value for
-          all existing versions of the template.
+    :param str name: Required field when creating a new template. Otherwise, this
+          field is optional. If the field is included, it changes the name value for all
+          existing versions of the template.
     :param str description: (optional) Description of the policy template. This is
           shown to users in the enterprise account. Use this to describe the purpose or
           context of the policy for enterprise users managing IAM templates.
-    :param str account_id: Enterprise account ID where this template will be
-          created.
+    :param str account_id: Enterprise account ID where this template is created.
     :param str version: Template version.
     :param bool committed: (optional) Committed status of the template version.
     :param TemplatePolicy policy: The core set of properties associated with the
-          template's policy objet.
-    :param str state: (optional) State of policy template.
+          template's policy object.
+    :param str state: State of policy template.
     :param str id: (optional) The policy template ID.
     :param str href: (optional) The href URL that links to the policy templates API
           by policy template ID.
     :param datetime created_at: (optional) The UTC timestamp when the policy
           template was created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
           policy template.
     :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           template was last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
           modified the policy template.
     """
 
@@ -5772,10 +7840,10 @@ class PolicyTemplate:
         account_id: str,
         version: str,
         policy: 'TemplatePolicy',
+        state: str,
         *,
         description: Optional[str] = None,
         committed: Optional[bool] = None,
-        state: Optional[str] = None,
         id: Optional[str] = None,
         href: Optional[str] = None,
         created_at: Optional[datetime] = None,
@@ -5786,20 +7854,20 @@ class PolicyTemplate:
         """
         Initialize a PolicyTemplate object.
 
-        :param str name: Required field when creating a new template. Otherwise
-               this field is optional. If the field is included it will change the name
-               value for all existing versions of the template.
-        :param str account_id: Enterprise account ID where this template will be
+        :param str name: Required field when creating a new template. Otherwise,
+               this field is optional. If the field is included, it changes the name value
+               for all existing versions of the template.
+        :param str account_id: Enterprise account ID where this template is
                created.
         :param str version: Template version.
         :param TemplatePolicy policy: The core set of properties associated with
-               the template's policy objet.
+               the template's policy object.
+        :param str state: State of policy template.
         :param str description: (optional) Description of the policy template. This
                is shown to users in the enterprise account. Use this to describe the
                purpose or context of the policy for enterprise users managing IAM
                templates.
         :param bool committed: (optional) Committed status of the template version.
-        :param str state: (optional) State of policy template.
         """
         self.name = name
         self.description = description
@@ -5841,6 +7909,8 @@ class PolicyTemplate:
             raise ValueError('Required property \'policy\' not present in PolicyTemplate JSON')
         if (state := _dict.get('state')) is not None:
             args['state'] = state
+        else:
+            raise ValueError('Required property \'state\' not present in PolicyTemplate JSON')
         if (id := _dict.get('id')) is not None:
             args['id'] = id
         if (href := _dict.get('href')) is not None:
@@ -5926,39 +7996,39 @@ class PolicyTemplateAssignmentCollection:
     A collection of policies assignments.
 
     :param int limit: (optional) The number of documents to include per each page of
-          collection.
-    :param First first: (optional) Details with href linking to first page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
           requested collection.
-    :param Next next: (optional) Details with href linking to following page of
+    :param Next next: (optional) Details with href linking to the following page of
           requested collection.
-    :param Previous previous: (optional) Details with href linking to previous page
+    :param Previous previous: (optional) Details with linking href to previous page
           of requested collection.
-    :param List[PolicyTemplateAssignmentItems] assignments: (optional) List of
-          policy assignments.
+    :param List[PolicyTemplateAssignmentItems] assignments: List of policy
+          assignments.
     """
 
     def __init__(
         self,
+        assignments: List['PolicyTemplateAssignmentItems'],
         *,
         limit: Optional[int] = None,
         first: Optional['First'] = None,
         next: Optional['Next'] = None,
         previous: Optional['Previous'] = None,
-        assignments: Optional[List['PolicyTemplateAssignmentItems']] = None,
     ) -> None:
         """
         Initialize a PolicyTemplateAssignmentCollection object.
 
+        :param List[PolicyTemplateAssignmentItems] assignments: List of policy
+               assignments.
         :param int limit: (optional) The number of documents to include per each
-               page of collection.
-        :param First first: (optional) Details with href linking to first page of
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
                requested collection.
-        :param Next next: (optional) Details with href linking to following page of
-               requested collection.
-        :param Previous previous: (optional) Details with href linking to previous
+        :param Next next: (optional) Details with href linking to the following
                page of requested collection.
-        :param List[PolicyTemplateAssignmentItems] assignments: (optional) List of
-               policy assignments.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
         """
         self.limit = limit
         self.first = first
@@ -5980,6 +8050,8 @@ class PolicyTemplateAssignmentCollection:
             args['previous'] = Previous.from_dict(previous)
         if (assignments := _dict.get('assignments')) is not None:
             args['assignments'] = assignments
+        else:
+            raise ValueError('Required property \'assignments\' not present in PolicyTemplateAssignmentCollection JSON')
         return cls(**args)
 
     @classmethod
@@ -6062,39 +8134,37 @@ class PolicyTemplateCollection:
     A collection of policy Templates.
 
     :param int limit: (optional) The number of documents to include per each page of
-          collection.
-    :param First first: (optional) Details with href linking to first page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
           requested collection.
-    :param Next next: (optional) Details with href linking to following page of
+    :param Next next: (optional) Details with href linking to the following page of
           requested collection.
-    :param Previous previous: (optional) Details with href linking to previous page
+    :param Previous previous: (optional) Details with linking href to previous page
           of requested collection.
-    :param List[PolicyTemplate] policy_templates: (optional) List of policy
-          templates.
+    :param List[PolicyTemplate] policy_templates: List of policy templates.
     """
 
     def __init__(
         self,
+        policy_templates: List['PolicyTemplate'],
         *,
         limit: Optional[int] = None,
         first: Optional['First'] = None,
         next: Optional['Next'] = None,
         previous: Optional['Previous'] = None,
-        policy_templates: Optional[List['PolicyTemplate']] = None,
     ) -> None:
         """
         Initialize a PolicyTemplateCollection object.
 
+        :param List[PolicyTemplate] policy_templates: List of policy templates.
         :param int limit: (optional) The number of documents to include per each
-               page of collection.
-        :param First first: (optional) Details with href linking to first page of
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
                requested collection.
-        :param Next next: (optional) Details with href linking to following page of
-               requested collection.
-        :param Previous previous: (optional) Details with href linking to previous
+        :param Next next: (optional) Details with href linking to the following
                page of requested collection.
-        :param List[PolicyTemplate] policy_templates: (optional) List of policy
-               templates.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
         """
         self.limit = limit
         self.first = first
@@ -6116,6 +8186,8 @@ class PolicyTemplateCollection:
             args['previous'] = Previous.from_dict(previous)
         if (policy_templates := _dict.get('policy_templates')) is not None:
             args['policy_templates'] = [PolicyTemplate.from_dict(v) for v in policy_templates]
+        else:
+            raise ValueError('Required property \'policy_templates\' not present in PolicyTemplateCollection JSON')
         return cls(**args)
 
     @classmethod
@@ -6176,29 +8248,28 @@ class PolicyTemplateLimitData:
     """
     The core set of properties associated with the policy template.
 
-    :param str name: Required field when creating a new template. Otherwise this
-          field is optional. If the field is included it will change the name value for
-          all existing versions of the template.
+    :param str name: Required field when creating a new template. Otherwise, this
+          field is optional. If the field is included, it changes the name value for all
+          existing versions of the template.
     :param str description: (optional) Description of the policy template. This is
           shown to users in the enterprise account. Use this to describe the purpose or
           context of the policy for enterprise users managing IAM templates.
-    :param str account_id: Enterprise account ID where this template will be
-          created.
+    :param str account_id: Enterprise account ID where this template is created.
     :param str version: Template version.
     :param bool committed: (optional) Committed status of the template version.
     :param TemplatePolicy policy: The core set of properties associated with the
-          template's policy objet.
-    :param str state: (optional) State of policy template.
+          template's policy object.
+    :param str state: State of policy template.
     :param str id: (optional) The policy template ID.
     :param str href: (optional) The href URL that links to the policy templates API
           by policy template ID.
     :param datetime created_at: (optional) The UTC timestamp when the policy
           template was created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
           policy template.
     :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           template was last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
           modified the policy template.
     :param TemplateCountData counts: (optional) policy template count details.
     """
@@ -6209,10 +8280,10 @@ class PolicyTemplateLimitData:
         account_id: str,
         version: str,
         policy: 'TemplatePolicy',
+        state: str,
         *,
         description: Optional[str] = None,
         committed: Optional[bool] = None,
-        state: Optional[str] = None,
         id: Optional[str] = None,
         href: Optional[str] = None,
         created_at: Optional[datetime] = None,
@@ -6224,20 +8295,20 @@ class PolicyTemplateLimitData:
         """
         Initialize a PolicyTemplateLimitData object.
 
-        :param str name: Required field when creating a new template. Otherwise
-               this field is optional. If the field is included it will change the name
-               value for all existing versions of the template.
-        :param str account_id: Enterprise account ID where this template will be
+        :param str name: Required field when creating a new template. Otherwise,
+               this field is optional. If the field is included, it changes the name value
+               for all existing versions of the template.
+        :param str account_id: Enterprise account ID where this template is
                created.
         :param str version: Template version.
         :param TemplatePolicy policy: The core set of properties associated with
-               the template's policy objet.
+               the template's policy object.
+        :param str state: State of policy template.
         :param str description: (optional) Description of the policy template. This
                is shown to users in the enterprise account. Use this to describe the
                purpose or context of the policy for enterprise users managing IAM
                templates.
         :param bool committed: (optional) Committed status of the template version.
-        :param str state: (optional) State of policy template.
         :param TemplateCountData counts: (optional) policy template count details.
         """
         self.name = name
@@ -6281,6 +8352,8 @@ class PolicyTemplateLimitData:
             raise ValueError('Required property \'policy\' not present in PolicyTemplateLimitData JSON')
         if (state := _dict.get('state')) is not None:
             args['state'] = state
+        else:
+            raise ValueError('Required property \'state\' not present in PolicyTemplateLimitData JSON')
         if (id := _dict.get('id')) is not None:
             args['id'] = id
         if (href := _dict.get('href')) is not None:
@@ -6376,17 +8449,17 @@ class PolicyTemplateMetaData:
     :param str type: The policy type; either 'access' or 'authorization'.
     :param str description: (optional) Customer-defined description.
     :param List[PolicySubject] subjects: The subjects associated with a policy.
-    :param List[PolicyRole] roles: A set of role cloud resource names (CRNs) granted
+    :param List[PolicyRole] roles: A set of role Cloud Resource Names (CRNs) granted
           by the policy.
     :param List[PolicyResource] resources: The resources associated with a policy.
-    :param str href: (optional) The href link back to the policy.
+    :param str href: (optional) The href links back to the policy.
     :param datetime created_at: (optional) The UTC timestamp when the policy was
           created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
           policy.
     :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           was last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
           modified the policy.
     :param str state: (optional) The policy state.
     :param TemplateMetadata template: (optional) The details of the IAM template
@@ -6417,7 +8490,7 @@ class PolicyTemplateMetaData:
 
         :param str type: The policy type; either 'access' or 'authorization'.
         :param List[PolicySubject] subjects: The subjects associated with a policy.
-        :param List[PolicyRole] roles: A set of role cloud resource names (CRNs)
+        :param List[PolicyRole] roles: A set of role Cloud Resource Names (CRNs)
                granted by the policy.
         :param List[PolicyResource] resources: The resources associated with a
                policy.
@@ -6571,39 +8644,37 @@ class PolicyTemplateVersionsCollection:
     A collection of versions for a specific policy template.
 
     :param int limit: (optional) The number of documents to include per each page of
-          collection.
-    :param First first: (optional) Details with href linking to first page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
           requested collection.
-    :param Next next: (optional) Details with href linking to following page of
+    :param Next next: (optional) Details with href linking to the following page of
           requested collection.
-    :param Previous previous: (optional) Details with href linking to previous page
+    :param Previous previous: (optional) Details with linking href to previous page
           of requested collection.
-    :param List[PolicyTemplate] versions: (optional) List of policy templates
-          versions.
+    :param List[PolicyTemplate] versions: List of policy templates versions.
     """
 
     def __init__(
         self,
+        versions: List['PolicyTemplate'],
         *,
         limit: Optional[int] = None,
         first: Optional['First'] = None,
         next: Optional['Next'] = None,
         previous: Optional['Previous'] = None,
-        versions: Optional[List['PolicyTemplate']] = None,
     ) -> None:
         """
         Initialize a PolicyTemplateVersionsCollection object.
 
+        :param List[PolicyTemplate] versions: List of policy templates versions.
         :param int limit: (optional) The number of documents to include per each
-               page of collection.
-        :param First first: (optional) Details with href linking to first page of
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
                requested collection.
-        :param Next next: (optional) Details with href linking to following page of
-               requested collection.
-        :param Previous previous: (optional) Details with href linking to previous
+        :param Next next: (optional) Details with href linking to the following
                page of requested collection.
-        :param List[PolicyTemplate] versions: (optional) List of policy templates
-               versions.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
         """
         self.limit = limit
         self.first = first
@@ -6625,6 +8696,8 @@ class PolicyTemplateVersionsCollection:
             args['previous'] = Previous.from_dict(previous)
         if (versions := _dict.get('versions')) is not None:
             args['versions'] = [PolicyTemplate.from_dict(v) for v in versions]
+        else:
+            raise ValueError('Required property \'versions\' not present in PolicyTemplateVersionsCollection JSON')
         return cls(**args)
 
     @classmethod
@@ -6683,11 +8756,12 @@ class PolicyTemplateVersionsCollection:
 
 class Previous:
     """
-    Details with href linking to previous page of requested collection.
+    Details with linking href to previous page of requested collection.
 
     :param str href: (optional) The href linking to the page of requested
           collection.
-    :param str start: (optional) Page token that refers to the page of collection.
+    :param str start: (optional) Page token that refers to the page of the
+          collection.
     """
 
     def __init__(
@@ -6699,7 +8773,7 @@ class Previous:
         """
         Initialize a Previous object.
 
-        :param str start: (optional) Page token that refers to the page of
+        :param str start: (optional) Page token that refers to the page of the
                collection.
         """
         self.href = href
@@ -6908,7 +8982,7 @@ class Role:
     """
     A role resource.
 
-    :param str display_name: The display name of the role that is shown in the
+    :param str display_name: The display the name of the role that is shown in the
           console.
     :param str description: (optional) The description of the role.
     :param List[str] actions: The actions of the role. For more information, see
@@ -6929,8 +9003,8 @@ class Role:
         """
         Initialize a Role object.
 
-        :param str display_name: The display name of the role that is shown in the
-               console.
+        :param str display_name: The display the name of the role that is shown in
+               the console.
         :param List[str] actions: The actions of the role. For more information,
                see [IAM roles and
                actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
@@ -6998,11 +9072,11 @@ class Role:
 
 class RoleAction:
     """
-    An action that can be performed by the policy subject when assigned role.
+    An action that can be performed by the policy subject when assigned a role.
 
     :param str id: Unique identifier for action with structure
-          service.resource.action e.g., cbr.rule.read.
-    :param str display_name: Service defined display name for action.
+          service.resource.action. For example, cbr.rule.read.
+    :param str display_name: Services defined display name for action.
     :param str description: Service defined description for action.
     """
 
@@ -7016,8 +9090,8 @@ class RoleAction:
         Initialize a RoleAction object.
 
         :param str id: Unique identifier for action with structure
-               service.resource.action e.g., cbr.rule.read.
-        :param str display_name: Service defined display name for action.
+               service.resource.action. For example, cbr.rule.read.
+        :param str display_name: Services defined display name for action.
         :param str description: Service defined description for action.
         """
         self.id = id
@@ -7081,24 +9155,23 @@ class RoleCollection:
     """
     A collection of roles returned by the 'list roles' operation.
 
-    :param List[CustomRole] custom_roles: (optional) List of custom roles.
-    :param List[Role] service_roles: (optional) List of service roles.
-    :param List[Role] system_roles: (optional) List of system roles.
+    :param List[CustomRole] custom_roles: List of custom roles.
+    :param List[Role] service_roles: List of service roles.
+    :param List[Role] system_roles: List of system roles.
     """
 
     def __init__(
         self,
-        *,
-        custom_roles: Optional[List['CustomRole']] = None,
-        service_roles: Optional[List['Role']] = None,
-        system_roles: Optional[List['Role']] = None,
+        custom_roles: List['CustomRole'],
+        service_roles: List['Role'],
+        system_roles: List['Role'],
     ) -> None:
         """
         Initialize a RoleCollection object.
 
-        :param List[CustomRole] custom_roles: (optional) List of custom roles.
-        :param List[Role] service_roles: (optional) List of service roles.
-        :param List[Role] system_roles: (optional) List of system roles.
+        :param List[CustomRole] custom_roles: List of custom roles.
+        :param List[Role] service_roles: List of service roles.
+        :param List[Role] system_roles: List of system roles.
         """
         self.custom_roles = custom_roles
         self.service_roles = service_roles
@@ -7110,10 +9183,16 @@ class RoleCollection:
         args = {}
         if (custom_roles := _dict.get('custom_roles')) is not None:
             args['custom_roles'] = [CustomRole.from_dict(v) for v in custom_roles]
+        else:
+            raise ValueError('Required property \'custom_roles\' not present in RoleCollection JSON')
         if (service_roles := _dict.get('service_roles')) is not None:
             args['service_roles'] = [Role.from_dict(v) for v in service_roles]
+        else:
+            raise ValueError('Required property \'service_roles\' not present in RoleCollection JSON')
         if (system_roles := _dict.get('system_roles')) is not None:
             args['system_roles'] = [Role.from_dict(v) for v in system_roles]
+        else:
+            raise ValueError('Required property \'system_roles\' not present in RoleCollection JSON')
         return cls(**args)
 
     @classmethod
@@ -7232,13 +9311,15 @@ class Roles:
 
 class RuleAttribute:
     """
-    Rule that specifies additional access granted (e.g., time-based condition).
+    Rule that specifies additional access that is granted (For example, time-based
+    condition).
 
     :param str key: The name of an attribute.
     :param str operator: The operator of an attribute.
     :param object value: The value of a rule, resource, or subject attribute; can be
-          boolean or string for resource and subject attribute. Can be string or an array
-          of strings (e.g., array of days to permit access) for rule attribute.
+          boolean or string for resource and subject attribute. Can be a string or an
+          array of strings (for example, an array of days to permit access) for rule
+          attribute.
     """
 
     def __init__(
@@ -7253,9 +9334,9 @@ class RuleAttribute:
         :param str key: The name of an attribute.
         :param str operator: The operator of an attribute.
         :param object value: The value of a rule, resource, or subject attribute;
-               can be boolean or string for resource and subject attribute. Can be string
-               or an array of strings (e.g., array of days to permit access) for rule
-               attribute.
+               can be boolean or string for resource and subject attribute. Can be a
+               string or an array of strings (for example, an array of days to permit
+               access) for rule attribute.
         """
         self.key = key
         self.operator = operator
@@ -7408,6 +9489,85 @@ class SubjectAttribute:
         return not self == other
 
 
+class TemplateActionControl:
+    """
+    The action control properties that are created in an action resource when the template
+    is assigned.
+
+    :param str service_name: The service name that the action control refers.
+    :param str description: (optional) Description of the action control.
+    :param List[str] actions: List of actions to control access.
+    """
+
+    def __init__(
+        self,
+        service_name: str,
+        actions: List[str],
+        *,
+        description: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a TemplateActionControl object.
+
+        :param str service_name: The service name that the action control refers.
+        :param List[str] actions: List of actions to control access.
+        :param str description: (optional) Description of the action control.
+        """
+        self.service_name = service_name
+        self.description = description
+        self.actions = actions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateActionControl':
+        """Initialize a TemplateActionControl object from a json dictionary."""
+        args = {}
+        if (service_name := _dict.get('service_name')) is not None:
+            args['service_name'] = service_name
+        else:
+            raise ValueError('Required property \'service_name\' not present in TemplateActionControl JSON')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (actions := _dict.get('actions')) is not None:
+            args['actions'] = actions
+        else:
+            raise ValueError('Required property \'actions\' not present in TemplateActionControl JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateActionControl object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'service_name') and self.service_name is not None:
+            _dict['service_name'] = self.service_name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'actions') and self.actions is not None:
+            _dict['actions'] = self.actions
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateActionControl object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateActionControl') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateActionControl') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class TemplateCountData:
     """
     policy template count details.
@@ -7492,9 +9652,9 @@ class TemplateMetadata:
 
     :param str id: (optional) The policy template ID.
     :param str version: (optional) Template version.
-    :param str assignment_id: (optional) policy assignment id.
-    :param str root_id: (optional) orchestrator template id.
-    :param str root_version: (optional) orchestrator template version.
+    :param str assignment_id: (optional) Policy assignment ID.
+    :param str root_id: (optional) Orchestrator template ID.
+    :param str root_version: (optional) Orchestrator template version.
     """
 
     def __init__(
@@ -7511,9 +9671,9 @@ class TemplateMetadata:
 
         :param str id: (optional) The policy template ID.
         :param str version: (optional) Template version.
-        :param str assignment_id: (optional) policy assignment id.
-        :param str root_id: (optional) orchestrator template id.
-        :param str root_version: (optional) orchestrator template version.
+        :param str assignment_id: (optional) Policy assignment ID.
+        :param str root_id: (optional) Orchestrator template ID.
+        :param str root_version: (optional) Orchestrator template version.
         """
         self.id = id
         self.version = version
@@ -7578,7 +9738,7 @@ class TemplateMetadata:
 
 class TemplatePolicy:
     """
-    The core set of properties associated with the template's policy objet.
+    The core set of properties associated with the template's policy object.
 
     :param str type: The policy type; either 'access' or 'authorization'.
     :param str description: (optional) Description of the policy. This is shown in
@@ -7593,8 +9753,8 @@ class TemplatePolicy:
           'time-based-conditions:weekly:custom-hours'.
     :param V2PolicyRule rule: (optional) Additional access conditions associated
           with the policy.
-    :param Control control: (optional) Specifies the type of access granted by the
-          policy.
+    :param Control control: (optional) Specifies the type of access that is granted
+          by the policy.
     """
 
     def __init__(
@@ -7624,8 +9784,8 @@ class TemplatePolicy:
                'time-based-conditions:weekly:custom-hours'.
         :param V2PolicyRule rule: (optional) Additional access conditions
                associated with the policy.
-        :param Control control: (optional) Specifies the type of access granted by
-               the policy.
+        :param Control control: (optional) Specifies the type of access that is
+               granted by the policy.
         """
         self.type = type
         self.description = description
@@ -7741,11 +9901,11 @@ class V2Policy:
     :param ControlResponse control:
     :param datetime created_at: (optional) The UTC timestamp when the policy was
           created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
           policy.
     :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           was last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
           modified the policy.
     :param str state: The policy state, either 'deleted' or 'active'.
     :param str last_permit_at: (optional) The optional last permit time of policy,
@@ -7952,38 +10112,37 @@ class V2PolicyCollection:
     A collection of policies.
 
     :param int limit: (optional) The number of documents to include per each page of
-          collection.
-    :param First first: (optional) Details with href linking to first page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
           requested collection.
-    :param Next next: (optional) Details with href linking to following page of
+    :param Next next: (optional) Details with href linking to the following page of
           requested collection.
-    :param Previous previous: (optional) Details with href linking to previous page
+    :param Previous previous: (optional) Details with linking href to previous page
           of requested collection.
-    :param List[V2PolicyTemplateMetaData] policies: (optional) List of policies.
+    :param List[V2PolicyTemplateMetaData] policies: List of policies.
     """
 
     def __init__(
         self,
+        policies: List['V2PolicyTemplateMetaData'],
         *,
         limit: Optional[int] = None,
         first: Optional['First'] = None,
         next: Optional['Next'] = None,
         previous: Optional['Previous'] = None,
-        policies: Optional[List['V2PolicyTemplateMetaData']] = None,
     ) -> None:
         """
         Initialize a V2PolicyCollection object.
 
+        :param List[V2PolicyTemplateMetaData] policies: List of policies.
         :param int limit: (optional) The number of documents to include per each
-               page of collection.
-        :param First first: (optional) Details with href linking to first page of
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
                requested collection.
-        :param Next next: (optional) Details with href linking to following page of
-               requested collection.
-        :param Previous previous: (optional) Details with href linking to previous
+        :param Next next: (optional) Details with href linking to the following
                page of requested collection.
-        :param List[V2PolicyTemplateMetaData] policies: (optional) List of
-               policies.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
         """
         self.limit = limit
         self.first = first
@@ -8005,6 +10164,8 @@ class V2PolicyCollection:
             args['previous'] = Previous.from_dict(previous)
         if (policies := _dict.get('policies')) is not None:
             args['policies'] = [V2PolicyTemplateMetaData.from_dict(v) for v in policies]
+        else:
+            raise ValueError('Required property \'policies\' not present in V2PolicyCollection JSON')
         return cls(**args)
 
     @classmethod
@@ -8152,8 +10313,9 @@ class V2PolicyResourceAttribute:
     :param str key: The name of a resource attribute.
     :param str operator: The operator of an attribute.
     :param object value: The value of a rule, resource, or subject attribute; can be
-          boolean or string for resource and subject attribute. Can be string or an array
-          of strings (e.g., array of days to permit access) for rule attribute.
+          boolean or string for resource and subject attribute. Can be a string or an
+          array of strings (for example, an array of days to permit access) for rule
+          attribute.
     """
 
     def __init__(
@@ -8168,9 +10330,9 @@ class V2PolicyResourceAttribute:
         :param str key: The name of a resource attribute.
         :param str operator: The operator of an attribute.
         :param object value: The value of a rule, resource, or subject attribute;
-               can be boolean or string for resource and subject attribute. Can be string
-               or an array of strings (e.g., array of days to permit access) for rule
-               attribute.
+               can be boolean or string for resource and subject attribute. Can be a
+               string or an array of strings (for example, an array of days to permit
+               access) for rule attribute.
         """
         self.key = key
         self.operator = operator
@@ -8351,7 +10513,7 @@ class V2PolicySubject:
     The subject attributes for whom the policy grants access.
 
     :param List[V2PolicySubjectAttribute] attributes: List of subject attributes
-          associated with policy/.
+          associated with policy.
     """
 
     def __init__(
@@ -8362,7 +10524,7 @@ class V2PolicySubject:
         Initialize a V2PolicySubject object.
 
         :param List[V2PolicySubjectAttribute] attributes: List of subject
-               attributes associated with policy/.
+               attributes associated with policy.
         """
         self.attributes = attributes
 
@@ -8417,11 +10579,13 @@ class V2PolicySubjectAttribute:
     """
     Subject attribute for whom the policy grants access.
 
-    :param str key: The name of a subject attribute, e.g., iam_id, access_group_id.
+    :param str key: The name of a subject attribute. For example, iam_id,
+          access_group_id.
     :param str operator: The operator of an attribute.
     :param object value: The value of a rule, resource, or subject attribute; can be
-          boolean or string for resource and subject attribute. Can be string or an array
-          of strings (e.g., array of days to permit access) for rule attribute.
+          boolean or string for resource and subject attribute. Can be a string or an
+          array of strings (for example, an array of days to permit access) for rule
+          attribute.
     """
 
     def __init__(
@@ -8433,13 +10597,13 @@ class V2PolicySubjectAttribute:
         """
         Initialize a V2PolicySubjectAttribute object.
 
-        :param str key: The name of a subject attribute, e.g., iam_id,
+        :param str key: The name of a subject attribute. For example, iam_id,
                access_group_id.
         :param str operator: The operator of an attribute.
         :param object value: The value of a rule, resource, or subject attribute;
-               can be boolean or string for resource and subject attribute. Can be string
-               or an array of strings (e.g., array of days to permit access) for rule
-               attribute.
+               can be boolean or string for resource and subject attribute. Can be a
+               string or an array of strings (for example, an array of days to permit
+               access) for rule attribute.
         """
         self.key = key
         self.operator = operator
@@ -8527,11 +10691,11 @@ class V2PolicyTemplateMetaData:
     :param ControlResponse control:
     :param datetime created_at: (optional) The UTC timestamp when the policy was
           created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
           policy.
     :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           was last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
           modified the policy.
     :param str state: The policy state, either 'deleted' or 'active'.
     :param str last_permit_at: (optional) The optional last permit time of policy,
@@ -8752,9 +10916,9 @@ class V2PolicyTemplateMetaData:
 
 class ControlResponseControl(ControlResponse):
     """
-    Specifies the type of access granted by the policy.
+    Specifies the type of access that is granted by the policy.
 
-    :param Grant grant: Permission granted by the policy.
+    :param Grant grant: Permission is granted by the policy.
     """
 
     def __init__(
@@ -8764,7 +10928,7 @@ class ControlResponseControl(ControlResponse):
         """
         Initialize a ControlResponseControl object.
 
-        :param Grant grant: Permission granted by the policy.
+        :param Grant grant: Permission is granted by the policy.
         """
         # pylint: disable=super-init-not-called
         self.grant = grant
@@ -8815,7 +10979,8 @@ class ControlResponseControl(ControlResponse):
 
 class ControlResponseControlWithEnrichedRoles(ControlResponse):
     """
-    Specifies the type of access granted by the policy with additional role information.
+    Specifies the type of access that is granted by the policy with additional role
+    information.
 
     :param GrantWithEnrichedRoles grant: Permission granted by the policy with
           translated roles and additional role information.
@@ -8880,13 +11045,15 @@ class ControlResponseControlWithEnrichedRoles(ControlResponse):
 
 class NestedConditionRuleAttribute(NestedCondition):
     """
-    Rule that specifies additional access granted (e.g., time-based condition).
+    Rule that specifies additional access that is granted (For example, time-based
+    condition).
 
     :param str key: The name of an attribute.
     :param str operator: The operator of an attribute.
     :param object value: The value of a rule, resource, or subject attribute; can be
-          boolean or string for resource and subject attribute. Can be string or an array
-          of strings (e.g., array of days to permit access) for rule attribute.
+          boolean or string for resource and subject attribute. Can be a string or an
+          array of strings (for example, an array of days to permit access) for rule
+          attribute.
     """
 
     def __init__(
@@ -8901,9 +11068,9 @@ class NestedConditionRuleAttribute(NestedCondition):
         :param str key: The name of an attribute.
         :param str operator: The operator of an attribute.
         :param object value: The value of a rule, resource, or subject attribute;
-               can be boolean or string for resource and subject attribute. Can be string
-               or an array of strings (e.g., array of days to permit access) for rule
-               attribute.
+               can be boolean or string for resource and subject attribute. Can be a
+               string or an array of strings (for example, an array of days to permit
+               access) for rule attribute.
         """
         # pylint: disable=super-init-not-called
         self.key = key
@@ -8990,12 +11157,12 @@ class NestedConditionRuleAttribute(NestedCondition):
 
 class NestedConditionRuleWithConditions(NestedCondition):
     """
-    Rule that specifies additional access granted (e.g., time-based condition) accross
-    multiple conditions.
+    Rule that specifies additional access that is granted (for example, time-based
+    condition) accross multiple conditions.
 
     :param str operator: Operator to evaluate conditions.
     :param List[RuleAttribute] conditions: List of conditions associated with a
-          policy, e.g., time-based conditions that grant access over a certain time
+          policy. For example, time-based conditions that grant access over a certain time
           period.
     """
 
@@ -9009,8 +11176,8 @@ class NestedConditionRuleWithConditions(NestedCondition):
 
         :param str operator: Operator to evaluate conditions.
         :param List[RuleAttribute] conditions: List of conditions associated with a
-               policy, e.g., time-based conditions that grant access over a certain time
-               period.
+               policy. For example, time-based conditions that grant access over a certain
+               time period.
         """
         # pylint: disable=super-init-not-called
         self.operator = operator
@@ -9081,38 +11248,40 @@ class PolicyTemplateAssignmentItemsPolicyAssignment(PolicyTemplateAssignmentItem
     """
     The set of properties associated with the policy template assignment.
 
-    :param str template_id: (optional) policy template id.
-    :param str template_version: (optional) policy template version.
+    :param str template_id: policy template ID.
+    :param str template_version: policy template version.
     :param str assignment_id: (optional) Passed in value to correlate with other
           assignments.
-    :param str target_type: (optional) Assignment target type.
-    :param str target: (optional) ID of the target account.
+    :param str target_type: Assignment target type.
+    :param str target: ID of the target account.
     :param str id: (optional) Policy assignment ID.
     :param str account_id: (optional) The account GUID that the policies assignments
-          belong to..
+          belong to.
     :param str href: (optional) The href URL that links to the policies assignments
           API by policy assignment ID.
     :param datetime created_at: (optional) The UTC timestamp when the policy
           assignment was created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
           policy assignment.
     :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           assignment was last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
           modified the policy assignment.
-    :param List[PolicyAssignmentResources] resources: (optional) Object for each
-          account assigned.
-    :param str status: (optional) The policy assignment status.
+    :param List[PolicyAssignmentResources] resources: Object for each account
+          assigned.
+    :param str status: The policy assignment status.
     """
 
     def __init__(
         self,
+        template_id: str,
+        template_version: str,
+        target_type: str,
+        target: str,
+        resources: List['PolicyAssignmentResources'],
+        status: str,
         *,
-        template_id: Optional[str] = None,
-        template_version: Optional[str] = None,
         assignment_id: Optional[str] = None,
-        target_type: Optional[str] = None,
-        target: Optional[str] = None,
         id: Optional[str] = None,
         account_id: Optional[str] = None,
         href: Optional[str] = None,
@@ -9120,21 +11289,19 @@ class PolicyTemplateAssignmentItemsPolicyAssignment(PolicyTemplateAssignmentItem
         created_by_id: Optional[str] = None,
         last_modified_at: Optional[datetime] = None,
         last_modified_by_id: Optional[str] = None,
-        resources: Optional[List['PolicyAssignmentResources']] = None,
-        status: Optional[str] = None,
     ) -> None:
         """
         Initialize a PolicyTemplateAssignmentItemsPolicyAssignment object.
 
-        :param str template_id: (optional) policy template id.
-        :param str template_version: (optional) policy template version.
+        :param str template_id: policy template ID.
+        :param str template_version: policy template version.
+        :param str target_type: Assignment target type.
+        :param str target: ID of the target account.
+        :param List[PolicyAssignmentResources] resources: Object for each account
+               assigned.
+        :param str status: The policy assignment status.
         :param str assignment_id: (optional) Passed in value to correlate with
                other assignments.
-        :param str target_type: (optional) Assignment target type.
-        :param str target: (optional) ID of the target account.
-        :param List[PolicyAssignmentResources] resources: (optional) Object for
-               each account assigned.
-        :param str status: (optional) The policy assignment status.
         """
         # pylint: disable=super-init-not-called
         self.template_id = template_id
@@ -9158,14 +11325,30 @@ class PolicyTemplateAssignmentItemsPolicyAssignment(PolicyTemplateAssignmentItem
         args = {}
         if (template_id := _dict.get('template_id')) is not None:
             args['template_id'] = template_id
+        else:
+            raise ValueError(
+                'Required property \'template_id\' not present in PolicyTemplateAssignmentItemsPolicyAssignment JSON'
+            )
         if (template_version := _dict.get('template_version')) is not None:
             args['template_version'] = template_version
+        else:
+            raise ValueError(
+                'Required property \'template_version\' not present in PolicyTemplateAssignmentItemsPolicyAssignment JSON'
+            )
         if (assignment_id := _dict.get('assignment_id')) is not None:
             args['assignment_id'] = assignment_id
         if (target_type := _dict.get('target_type')) is not None:
             args['target_type'] = target_type
+        else:
+            raise ValueError(
+                'Required property \'target_type\' not present in PolicyTemplateAssignmentItemsPolicyAssignment JSON'
+            )
         if (target := _dict.get('target')) is not None:
             args['target'] = target
+        else:
+            raise ValueError(
+                'Required property \'target\' not present in PolicyTemplateAssignmentItemsPolicyAssignment JSON'
+            )
         if (id := _dict.get('id')) is not None:
             args['id'] = id
         if (account_id := _dict.get('account_id')) is not None:
@@ -9182,8 +11365,16 @@ class PolicyTemplateAssignmentItemsPolicyAssignment(PolicyTemplateAssignmentItem
             args['last_modified_by_id'] = last_modified_by_id
         if (resources := _dict.get('resources')) is not None:
             args['resources'] = [PolicyAssignmentResources.from_dict(v) for v in resources]
+        else:
+            raise ValueError(
+                'Required property \'resources\' not present in PolicyTemplateAssignmentItemsPolicyAssignment JSON'
+            )
         if (status := _dict.get('status')) is not None:
             args['status'] = status
+        else:
+            raise ValueError(
+                'Required property \'status\' not present in PolicyTemplateAssignmentItemsPolicyAssignment JSON'
+            )
         return cls(**args)
 
     @classmethod
@@ -9254,6 +11445,8 @@ class PolicyTemplateAssignmentItemsPolicyAssignment(PolicyTemplateAssignmentItem
         """
 
         ACCOUNT = 'Account'
+        ACCOUNTGROUP = 'AccountGroup'
+        ENTERPRISE = 'Enterprise'
 
     class StatusEnum(str, Enum):
         """
@@ -9273,20 +11466,20 @@ class PolicyTemplateAssignmentItemsPolicyAssignmentV1(PolicyTemplateAssignmentIt
     :param AssignmentTargetDetails target: assignment target account and type.
     :param str id: (optional) Policy assignment ID.
     :param str account_id: (optional) The account GUID that the policies assignments
-          belong to..
+          belong to.
     :param str href: (optional) The href URL that links to the policies assignments
           API by policy assignment ID.
     :param datetime created_at: (optional) The UTC timestamp when the policy
           assignment was created.
-    :param str created_by_id: (optional) The iam ID of the entity that created the
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
           policy assignment.
     :param datetime last_modified_at: (optional) The UTC timestamp when the policy
           assignment was last modified.
-    :param str last_modified_by_id: (optional) The iam ID of the entity that last
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
           modified the policy assignment.
     :param List[PolicyAssignmentV1Resources] resources: Object for each account
           assigned.
-    :param PolicyAssignmentV1Subject subject: (optional) subject details of access
+    :param PolicyAssignmentV1Subject subject: (optional) Subject details of access
           type assignment.
     :param AssignmentTemplateDetails template: policy template details.
     :param str status: The policy assignment status.
@@ -9316,7 +11509,7 @@ class PolicyTemplateAssignmentItemsPolicyAssignmentV1(PolicyTemplateAssignmentIt
                assigned.
         :param AssignmentTemplateDetails template: policy template details.
         :param str status: The policy assignment status.
-        :param PolicyAssignmentV1Subject subject: (optional) subject details of
+        :param PolicyAssignmentV1Subject subject: (optional) Subject details of
                access type assignment.
         """
         # pylint: disable=super-init-not-called
@@ -9459,13 +11652,15 @@ class PolicyTemplateAssignmentItemsPolicyAssignmentV1(PolicyTemplateAssignmentIt
 
 class V2PolicyRuleRuleAttribute(V2PolicyRule):
     """
-    Rule that specifies additional access granted (e.g., time-based condition).
+    Rule that specifies additional access that is granted (For example, time-based
+    condition).
 
     :param str key: The name of an attribute.
     :param str operator: The operator of an attribute.
     :param object value: The value of a rule, resource, or subject attribute; can be
-          boolean or string for resource and subject attribute. Can be string or an array
-          of strings (e.g., array of days to permit access) for rule attribute.
+          boolean or string for resource and subject attribute. Can be a string or an
+          array of strings (for example, an array of days to permit access) for rule
+          attribute.
     """
 
     def __init__(
@@ -9480,9 +11675,9 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
         :param str key: The name of an attribute.
         :param str operator: The operator of an attribute.
         :param object value: The value of a rule, resource, or subject attribute;
-               can be boolean or string for resource and subject attribute. Can be string
-               or an array of strings (e.g., array of days to permit access) for rule
-               attribute.
+               can be boolean or string for resource and subject attribute. Can be a
+               string or an array of strings (for example, an array of days to permit
+               access) for rule attribute.
         """
         # pylint: disable=super-init-not-called
         self.key = key
@@ -9569,12 +11764,12 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
 
 class V2PolicyRuleRuleWithNestedConditions(V2PolicyRule):
     """
-    Rule that specifies additional access granted (e.g., time-based condition) accross
-    multiple conditions.
+    Rule that specifies additional access that is granted (for example, time-based
+    condition) accross multiple conditions.
 
     :param str operator: Operator to evaluate conditions.
     :param List[NestedCondition] conditions: List of conditions associated with a
-          policy, e.g., time-based conditions that grant access over a certain time
+          policy. For example, time-based conditions that grant access over a certain time
           period.
     """
 
@@ -9588,8 +11783,8 @@ class V2PolicyRuleRuleWithNestedConditions(V2PolicyRule):
 
         :param str operator: Operator to evaluate conditions.
         :param List[NestedCondition] conditions: List of conditions associated with
-               a policy, e.g., time-based conditions that grant access over a certain time
-               period.
+               a policy. For example, time-based conditions that grant access over a
+               certain time period.
         """
         # pylint: disable=super-init-not-called
         self.operator = operator
@@ -9719,7 +11914,7 @@ class PoliciesPager:
         :param str state: (optional) The state of the policy.
                * `active` - returns active policies
                * `deleted` - returns non-active policies.
-        :param int limit: (optional) The number of documents to include in
+        :param int limit: (optional) The number of documents to include in the
                collection.
         """
         self._has_next = True
@@ -9860,7 +12055,7 @@ class V2PoliciesPager:
         :param str state: (optional) The state of the policy.
                * `active` - returns active policies
                * `deleted` - returns non-active policies.
-        :param int limit: (optional) The number of documents to include in
+        :param int limit: (optional) The number of documents to include in the
                collection.
         """
         self._has_next = True
@@ -9975,7 +12170,7 @@ class PolicyTemplatesPager:
         :param str policy_service_name: (optional) Service name, Optional.
         :param str policy_service_group_id: (optional) Service group id, Optional.
         :param str policy_type: (optional) Policy type, Optional.
-        :param int limit: (optional) The number of documents to include in
+        :param int limit: (optional) The number of documents to include in the
                collection.
         """
         self._has_next = True
@@ -10060,7 +12255,7 @@ class PolicyTemplateVersionsPager:
         Initialize a PolicyTemplateVersionsPager object.
         :param str policy_template_id: The policy template ID.
         :param str state: (optional) The policy template state.
-        :param int limit: (optional) The number of documents to include in
+        :param int limit: (optional) The number of documents to include in the
                collection.
         """
         self._has_next = True
@@ -10150,7 +12345,7 @@ class PolicyAssignmentsPager:
                * `zh-tw` - (Chinese, Taiwan).
         :param str template_id: (optional) Optional template id.
         :param str template_version: (optional) Optional policy template version.
-        :param int limit: (optional) The number of documents to include in
+        :param int limit: (optional) The number of documents to include in the
                collection.
         """
         self._has_next = True
@@ -10203,6 +12398,258 @@ class PolicyAssignmentsPager:
         Returns all results by invoking get_next() repeatedly
         until all pages of results have been retrieved.
         :return: A List[dict], where each element is a dict that represents an instance of PolicyTemplateAssignmentItems.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class ActionControlTemplatesPager:
+    """
+    ActionControlTemplatesPager can be used to simplify the use of the "list_action_control_templates" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamPolicyManagementV1,
+        account_id: str,
+        accept_language: str = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a ActionControlTemplatesPager object.
+        :param str account_id: The account GUID that the action control templates
+               belong to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._accept_language = accept_language
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ActionControlTemplate.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_action_control_templates(
+            account_id=self._account_id,
+            accept_language=self._accept_language,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = next_page_link.get('start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('action_control_templates')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ActionControlTemplate.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class ActionControlTemplateVersionsPager:
+    """
+    ActionControlTemplateVersionsPager can be used to simplify the use of the "list_action_control_template_versions" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamPolicyManagementV1,
+        action_control_template_id: str,
+        state: str = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a ActionControlTemplateVersionsPager object.
+        :param str action_control_template_id: The action control template ID.
+        :param str state: (optional) Action control template state.
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._action_control_template_id = action_control_template_id
+        self._state = state
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ActionControlTemplate.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_action_control_template_versions(
+            action_control_template_id=self._action_control_template_id,
+            state=self._state,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = next_page_link.get('start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('versions')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ActionControlTemplate.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class ActionControlAssignmentsPager:
+    """
+    ActionControlAssignmentsPager can be used to simplify the use of the "list_action_control_assignments" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamPolicyManagementV1,
+        account_id: str,
+        accept_language: str = None,
+        template_id: str = None,
+        template_version: str = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a ActionControlAssignmentsPager object.
+        :param str account_id: The account GUID in which the action control
+               assignment belongs to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str template_id: (optional) Optional template ID.
+        :param str template_version: (optional) Optional action control template
+               version.
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._accept_language = accept_language
+        self._template_id = template_id
+        self._template_version = template_version
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ActionControlAssignment.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_action_control_assignments(
+            account_id=self._account_id,
+            accept_language=self._accept_language,
+            template_id=self._template_id,
+            template_version=self._template_version,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = next_page_link.get('start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('assignments')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ActionControlAssignment.
         :rtype: List[dict]
         """
         results = []
