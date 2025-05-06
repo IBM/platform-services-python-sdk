@@ -1393,12 +1393,31 @@ class TestIamPolicyManagementV1Examples:
             pytest.fail(str(e))
 
     # @needscredentials
+    def test_delete_action_control_template_version_example(self):
+        """
+        delete_action_control_template_version request example
+        """
+        try:
+            # begin-delete_action_control_template_version
+
+            response = iam_policy_management_service.delete_action_control_template_version(
+                action_control_template_id=example_action_control_template_id,
+                version=example_basic_action_control_template_version,
+            )
+
+            # end-delete_action_control_template_version
+            print('\ndelete_action_control_template_version() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
     def test_delete_action_control_template_example(self):
         """
         delete_action_control_template request example
         """
         try:
-            # begin-action_control_policy_template
+            # begin-delete_action_control_template
 
             response = iam_policy_management_service.delete_action_control_template(
                 action_control_template_id=example_action_control_template_id,

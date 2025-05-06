@@ -1218,7 +1218,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         )
         assert response.get_status_code() == 204
 
-    def test_45_list_policy_template_versions(self):
+    def test_45_list_action_control_template_versions(self):
         response = self.service.list_action_control_template_versions(
             action_control_template_id=self.testActionControlTemplateId,
         )
@@ -1291,13 +1291,28 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result is not None
         print("ActionControl Assignment Update: ", result)
 
-    def test_49_delete_action_control_assignment(self):
+    def test_49_get_action_control_assignment(self):
+        assert self.testActionControlAssignmentId
+        print("Assignment ID: ", self.testActionControlAssignmentId)
+        response = self.service.get_action_control_assignment(
+            assignment_id=self.testActionControlAssignmentId,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlAssignment.from_dict(result_dict)
+        assert result is not None
+        assert result.id == self.testActionControlAssignmentId
+
+    def test_50_delete_action_control_assignment(self):
         response = self.service.delete_action_control_assignment(
             assignment_id=self.testActionControlAssignmentId,
         )
         assert response.get_status_code() == 204
 
-    def test_50_delete_action_control_template(self):
+    def test_51_delete_action_control_template(self):
         response = self.service.delete_action_control_template(
             action_control_template_id=self.testActionControlTemplateId,
         )
