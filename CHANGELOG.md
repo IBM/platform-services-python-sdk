@@ -1,3 +1,10 @@
+# [0.65.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.64.0...v0.65.0) (2025-05-07)
+
+
+### Features
+
+* **IAM Policy Management:** add support for action control templates from IAM ([#289](https://github.com/IBM/platform-services-python-sdk/issues/289)) ([579ae95](https://github.com/IBM/platform-services-python-sdk/commit/579ae95bb78389b94137d15339ec6556cfe7062d))
+
 # [0.64.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.63.0...v0.64.0) (2025-04-28)
 
 
