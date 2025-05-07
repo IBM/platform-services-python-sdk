@@ -4293,7 +4293,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -4352,7 +4352,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -4397,7 +4397,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -4436,8 +4436,8 @@ class TestListPolicyAssignments:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/policy_assignments')
-        mock_response1 = '{"next":{"start":"1"},"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":11}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
-        mock_response2 = '{"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":11}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -4477,8 +4477,8 @@ class TestListPolicyAssignments:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/policy_assignments')
-        mock_response1 = '{"next":{"start":"1"},"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":11}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
-        mock_response2 = '{"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":11}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -4521,7 +4521,7 @@ class TestCreatePolicyTemplateAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.POST,
             url,
@@ -4583,7 +4583,7 @@ class TestCreatePolicyTemplateAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.POST,
             url,
@@ -4643,7 +4643,7 @@ class TestCreatePolicyTemplateAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.POST,
             url,
@@ -4700,7 +4700,7 @@ class TestGetPolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
         responses.add(
             responses.GET,
             url,
@@ -4744,7 +4744,7 @@ class TestGetPolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
         responses.add(
             responses.GET,
             url,
@@ -4789,7 +4789,7 @@ class TestUpdatePolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
         responses.add(
             responses.PATCH,
             url,
@@ -4840,7 +4840,7 @@ class TestUpdatePolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
         responses.add(
             responses.PATCH,
             url,
@@ -5300,6 +5300,1974 @@ class TestUpdateSettings:
 # End of Service: AccessManagementSettings
 ##############################################################################
 
+##############################################################################
+# Start of Service: ActionControlTemplates
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamPolicyManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamPolicyManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamPolicyManagementV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListActionControlTemplates:
+    """
+    Test Class for list_action_control_templates
+    """
+
+    @responses.activate
+    def test_list_action_control_templates_all_params(self):
+        """
+        list_action_control_templates()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "action_control_templates": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        accept_language = 'default'
+        limit = 50
+        start = 'testString'
+
+        # Invoke method
+        response = _service.list_action_control_templates(
+            account_id,
+            accept_language=accept_language,
+            limit=limit,
+            start=start,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+    def test_list_action_control_templates_all_params_with_retries(self):
+        # Enable retries and run test_list_action_control_templates_all_params.
+        _service.enable_retries()
+        self.test_list_action_control_templates_all_params()
+
+        # Disable retries and run test_list_action_control_templates_all_params.
+        _service.disable_retries()
+        self.test_list_action_control_templates_all_params()
+
+    @responses.activate
+    def test_list_action_control_templates_required_params(self):
+        """
+        test_list_action_control_templates_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "action_control_templates": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.list_action_control_templates(
+            account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+
+    def test_list_action_control_templates_required_params_with_retries(self):
+        # Enable retries and run test_list_action_control_templates_required_params.
+        _service.enable_retries()
+        self.test_list_action_control_templates_required_params()
+
+        # Disable retries and run test_list_action_control_templates_required_params.
+        _service.disable_retries()
+        self.test_list_action_control_templates_required_params()
+
+    @responses.activate
+    def test_list_action_control_templates_value_error(self):
+        """
+        test_list_action_control_templates_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "action_control_templates": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_action_control_templates(**req_copy)
+
+    def test_list_action_control_templates_value_error_with_retries(self):
+        # Enable retries and run test_list_action_control_templates_value_error.
+        _service.enable_retries()
+        self.test_list_action_control_templates_value_error()
+
+        # Disable retries and run test_list_action_control_templates_value_error.
+        _service.disable_retries()
+        self.test_list_action_control_templates_value_error()
+
+    @responses.activate
+    def test_list_action_control_templates_with_pager_get_next(self):
+        """
+        test_list_action_control_templates_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/action_control_templates')
+        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"action_control_templates":[{"name":"name","description":"description","account_id":"account_id","committed":false,"action_control":{"service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"action_control_templates":[{"name":"name","description":"description","account_id":"account_id","committed":false,"action_control":{"service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = ActionControlTemplatesPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_action_control_templates_with_pager_get_all(self):
+        """
+        test_list_action_control_templates_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/action_control_templates')
+        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"action_control_templates":[{"name":"name","description":"description","account_id":"account_id","committed":false,"action_control":{"service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"action_control_templates":[{"name":"name","description":"description","account_id":"account_id","committed":false,"action_control":{"service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = ActionControlTemplatesPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+
+class TestCreateActionControlTemplate:
+    """
+    Test Class for create_action_control_template
+    """
+
+    @responses.activate
+    def test_create_action_control_template_all_params(self):
+        """
+        create_action_control_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateActionControl model
+        template_action_control_model = {}
+        template_action_control_model['service_name'] = 'testString'
+        template_action_control_model['description'] = 'testString'
+        template_action_control_model['actions'] = ['testString']
+
+        # Set up parameter values
+        name = 'testString'
+        account_id = 'testString'
+        description = 'testString'
+        committed = True
+        action_control = template_action_control_model
+        accept_language = 'default'
+
+        # Invoke method
+        response = _service.create_action_control_template(
+            name,
+            account_id,
+            description=description,
+            committed=committed,
+            action_control=action_control,
+            accept_language=accept_language,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['account_id'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['committed'] == True
+        assert req_body['action_control'] == template_action_control_model
+
+    def test_create_action_control_template_all_params_with_retries(self):
+        # Enable retries and run test_create_action_control_template_all_params.
+        _service.enable_retries()
+        self.test_create_action_control_template_all_params()
+
+        # Disable retries and run test_create_action_control_template_all_params.
+        _service.disable_retries()
+        self.test_create_action_control_template_all_params()
+
+    @responses.activate
+    def test_create_action_control_template_required_params(self):
+        """
+        test_create_action_control_template_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateActionControl model
+        template_action_control_model = {}
+        template_action_control_model['service_name'] = 'testString'
+        template_action_control_model['description'] = 'testString'
+        template_action_control_model['actions'] = ['testString']
+
+        # Set up parameter values
+        name = 'testString'
+        account_id = 'testString'
+        description = 'testString'
+        committed = True
+        action_control = template_action_control_model
+
+        # Invoke method
+        response = _service.create_action_control_template(
+            name,
+            account_id,
+            description=description,
+            committed=committed,
+            action_control=action_control,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['account_id'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['committed'] == True
+        assert req_body['action_control'] == template_action_control_model
+
+    def test_create_action_control_template_required_params_with_retries(self):
+        # Enable retries and run test_create_action_control_template_required_params.
+        _service.enable_retries()
+        self.test_create_action_control_template_required_params()
+
+        # Disable retries and run test_create_action_control_template_required_params.
+        _service.disable_retries()
+        self.test_create_action_control_template_required_params()
+
+    @responses.activate
+    def test_create_action_control_template_value_error(self):
+        """
+        test_create_action_control_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateActionControl model
+        template_action_control_model = {}
+        template_action_control_model['service_name'] = 'testString'
+        template_action_control_model['description'] = 'testString'
+        template_action_control_model['actions'] = ['testString']
+
+        # Set up parameter values
+        name = 'testString'
+        account_id = 'testString'
+        description = 'testString'
+        committed = True
+        action_control = template_action_control_model
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "name": name,
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_action_control_template(**req_copy)
+
+    def test_create_action_control_template_value_error_with_retries(self):
+        # Enable retries and run test_create_action_control_template_value_error.
+        _service.enable_retries()
+        self.test_create_action_control_template_value_error()
+
+        # Disable retries and run test_create_action_control_template_value_error.
+        _service.disable_retries()
+        self.test_create_action_control_template_value_error()
+
+
+class TestGetActionControlTemplate:
+    """
+    Test Class for get_action_control_template
+    """
+
+    @responses.activate
+    def test_get_action_control_template_all_params(self):
+        """
+        get_action_control_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        state = 'active'
+
+        # Invoke method
+        response = _service.get_action_control_template(
+            action_control_template_id,
+            state=state,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'state={}'.format(state) in query_string
+
+    def test_get_action_control_template_all_params_with_retries(self):
+        # Enable retries and run test_get_action_control_template_all_params.
+        _service.enable_retries()
+        self.test_get_action_control_template_all_params()
+
+        # Disable retries and run test_get_action_control_template_all_params.
+        _service.disable_retries()
+        self.test_get_action_control_template_all_params()
+
+    @responses.activate
+    def test_get_action_control_template_required_params(self):
+        """
+        test_get_action_control_template_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+
+        # Invoke method
+        response = _service.get_action_control_template(
+            action_control_template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_action_control_template_required_params_with_retries(self):
+        # Enable retries and run test_get_action_control_template_required_params.
+        _service.enable_retries()
+        self.test_get_action_control_template_required_params()
+
+        # Disable retries and run test_get_action_control_template_required_params.
+        _service.disable_retries()
+        self.test_get_action_control_template_required_params()
+
+    @responses.activate
+    def test_get_action_control_template_value_error(self):
+        """
+        test_get_action_control_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "action_control_template_id": action_control_template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_action_control_template(**req_copy)
+
+    def test_get_action_control_template_value_error_with_retries(self):
+        # Enable retries and run test_get_action_control_template_value_error.
+        _service.enable_retries()
+        self.test_get_action_control_template_value_error()
+
+        # Disable retries and run test_get_action_control_template_value_error.
+        _service.disable_retries()
+        self.test_get_action_control_template_value_error()
+
+
+class TestDeleteActionControlTemplate:
+    """
+    Test Class for delete_action_control_template
+    """
+
+    @responses.activate
+    def test_delete_action_control_template_all_params(self):
+        """
+        delete_action_control_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_action_control_template(
+            action_control_template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_action_control_template_all_params_with_retries(self):
+        # Enable retries and run test_delete_action_control_template_all_params.
+        _service.enable_retries()
+        self.test_delete_action_control_template_all_params()
+
+        # Disable retries and run test_delete_action_control_template_all_params.
+        _service.disable_retries()
+        self.test_delete_action_control_template_all_params()
+
+    @responses.activate
+    def test_delete_action_control_template_value_error(self):
+        """
+        test_delete_action_control_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "action_control_template_id": action_control_template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_action_control_template(**req_copy)
+
+    def test_delete_action_control_template_value_error_with_retries(self):
+        # Enable retries and run test_delete_action_control_template_value_error.
+        _service.enable_retries()
+        self.test_delete_action_control_template_value_error()
+
+        # Disable retries and run test_delete_action_control_template_value_error.
+        _service.disable_retries()
+        self.test_delete_action_control_template_value_error()
+
+
+class TestCreateActionControlTemplateVersion:
+    """
+    Test Class for create_action_control_template_version
+    """
+
+    @responses.activate
+    def test_create_action_control_template_version_all_params(self):
+        """
+        create_action_control_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateActionControl model
+        template_action_control_model = {}
+        template_action_control_model['service_name'] = 'testString'
+        template_action_control_model['description'] = 'testString'
+        template_action_control_model['actions'] = ['testString']
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        action_control = template_action_control_model
+        committed = True
+
+        # Invoke method
+        response = _service.create_action_control_template_version(
+            action_control_template_id,
+            name=name,
+            description=description,
+            action_control=action_control,
+            committed=committed,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['action_control'] == template_action_control_model
+        assert req_body['committed'] == True
+
+    def test_create_action_control_template_version_all_params_with_retries(self):
+        # Enable retries and run test_create_action_control_template_version_all_params.
+        _service.enable_retries()
+        self.test_create_action_control_template_version_all_params()
+
+        # Disable retries and run test_create_action_control_template_version_all_params.
+        _service.disable_retries()
+        self.test_create_action_control_template_version_all_params()
+
+    @responses.activate
+    def test_create_action_control_template_version_value_error(self):
+        """
+        test_create_action_control_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateActionControl model
+        template_action_control_model = {}
+        template_action_control_model['service_name'] = 'testString'
+        template_action_control_model['description'] = 'testString'
+        template_action_control_model['actions'] = ['testString']
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        action_control = template_action_control_model
+        committed = True
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "action_control_template_id": action_control_template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_action_control_template_version(**req_copy)
+
+    def test_create_action_control_template_version_value_error_with_retries(self):
+        # Enable retries and run test_create_action_control_template_version_value_error.
+        _service.enable_retries()
+        self.test_create_action_control_template_version_value_error()
+
+        # Disable retries and run test_create_action_control_template_version_value_error.
+        _service.disable_retries()
+        self.test_create_action_control_template_version_value_error()
+
+
+class TestListActionControlTemplateVersions:
+    """
+    Test Class for list_action_control_template_versions
+    """
+
+    @responses.activate
+    def test_list_action_control_template_versions_all_params(self):
+        """
+        list_action_control_template_versions()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        state = 'active'
+        limit = 50
+        start = 'testString'
+
+        # Invoke method
+        response = _service.list_action_control_template_versions(
+            action_control_template_id,
+            state=state,
+            limit=limit,
+            start=start,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'state={}'.format(state) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+    def test_list_action_control_template_versions_all_params_with_retries(self):
+        # Enable retries and run test_list_action_control_template_versions_all_params.
+        _service.enable_retries()
+        self.test_list_action_control_template_versions_all_params()
+
+        # Disable retries and run test_list_action_control_template_versions_all_params.
+        _service.disable_retries()
+        self.test_list_action_control_template_versions_all_params()
+
+    @responses.activate
+    def test_list_action_control_template_versions_required_params(self):
+        """
+        test_list_action_control_template_versions_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+
+        # Invoke method
+        response = _service.list_action_control_template_versions(
+            action_control_template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_action_control_template_versions_required_params_with_retries(self):
+        # Enable retries and run test_list_action_control_template_versions_required_params.
+        _service.enable_retries()
+        self.test_list_action_control_template_versions_required_params()
+
+        # Disable retries and run test_list_action_control_template_versions_required_params.
+        _service.disable_retries()
+        self.test_list_action_control_template_versions_required_params()
+
+    @responses.activate
+    def test_list_action_control_template_versions_value_error(self):
+        """
+        test_list_action_control_template_versions_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "action_control_template_id": action_control_template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_action_control_template_versions(**req_copy)
+
+    def test_list_action_control_template_versions_value_error_with_retries(self):
+        # Enable retries and run test_list_action_control_template_versions_value_error.
+        _service.enable_retries()
+        self.test_list_action_control_template_versions_value_error()
+
+        # Disable retries and run test_list_action_control_template_versions_value_error.
+        _service.disable_retries()
+        self.test_list_action_control_template_versions_value_error()
+
+    @responses.activate
+    def test_list_action_control_template_versions_with_pager_get_next(self):
+        """
+        test_list_action_control_template_versions_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/action_control_templates/testString/versions')
+        mock_response1 = '{"next":{"start":"1"},"versions":[{"name":"name","description":"description","account_id":"account_id","committed":false,"action_control":{"service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"versions":[{"name":"name","description":"description","account_id":"account_id","committed":false,"action_control":{"service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = ActionControlTemplateVersionsPager(
+            client=_service,
+            action_control_template_id='testString',
+            state='active',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_action_control_template_versions_with_pager_get_all(self):
+        """
+        test_list_action_control_template_versions_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/action_control_templates/testString/versions')
+        mock_response1 = '{"next":{"start":"1"},"versions":[{"name":"name","description":"description","account_id":"account_id","committed":false,"action_control":{"service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"versions":[{"name":"name","description":"description","account_id":"account_id","committed":false,"action_control":{"service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = ActionControlTemplateVersionsPager(
+            client=_service,
+            action_control_template_id='testString',
+            state='active',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+
+class TestReplaceActionControlTemplate:
+    """
+    Test Class for replace_action_control_template
+    """
+
+    @responses.activate
+    def test_replace_action_control_template_all_params(self):
+        """
+        replace_action_control_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a TemplateActionControl model
+        template_action_control_model = {}
+        template_action_control_model['service_name'] = 'testString'
+        template_action_control_model['description'] = 'testString'
+        template_action_control_model['actions'] = ['testString']
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        version = 'testString'
+        if_match = 'testString'
+        name = 'testString'
+        description = 'testString'
+        action_control = template_action_control_model
+        committed = True
+
+        # Invoke method
+        response = _service.replace_action_control_template(
+            action_control_template_id,
+            version,
+            if_match,
+            name=name,
+            description=description,
+            action_control=action_control,
+            committed=committed,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['action_control'] == template_action_control_model
+        assert req_body['committed'] == True
+
+    def test_replace_action_control_template_all_params_with_retries(self):
+        # Enable retries and run test_replace_action_control_template_all_params.
+        _service.enable_retries()
+        self.test_replace_action_control_template_all_params()
+
+        # Disable retries and run test_replace_action_control_template_all_params.
+        _service.disable_retries()
+        self.test_replace_action_control_template_all_params()
+
+    @responses.activate
+    def test_replace_action_control_template_value_error(self):
+        """
+        test_replace_action_control_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a TemplateActionControl model
+        template_action_control_model = {}
+        template_action_control_model['service_name'] = 'testString'
+        template_action_control_model['description'] = 'testString'
+        template_action_control_model['actions'] = ['testString']
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        version = 'testString'
+        if_match = 'testString'
+        name = 'testString'
+        description = 'testString'
+        action_control = template_action_control_model
+        committed = True
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "action_control_template_id": action_control_template_id,
+            "version": version,
+            "if_match": if_match,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.replace_action_control_template(**req_copy)
+
+    def test_replace_action_control_template_value_error_with_retries(self):
+        # Enable retries and run test_replace_action_control_template_value_error.
+        _service.enable_retries()
+        self.test_replace_action_control_template_value_error()
+
+        # Disable retries and run test_replace_action_control_template_value_error.
+        _service.disable_retries()
+        self.test_replace_action_control_template_value_error()
+
+
+class TestDeleteActionControlTemplateVersion:
+    """
+    Test Class for delete_action_control_template_version
+    """
+
+    @responses.activate
+    def test_delete_action_control_template_version_all_params(self):
+        """
+        delete_action_control_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.delete_action_control_template_version(
+            action_control_template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_action_control_template_version_all_params_with_retries(self):
+        # Enable retries and run test_delete_action_control_template_version_all_params.
+        _service.enable_retries()
+        self.test_delete_action_control_template_version_all_params()
+
+        # Disable retries and run test_delete_action_control_template_version_all_params.
+        _service.disable_retries()
+        self.test_delete_action_control_template_version_all_params()
+
+    @responses.activate
+    def test_delete_action_control_template_version_value_error(self):
+        """
+        test_delete_action_control_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "action_control_template_id": action_control_template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_action_control_template_version(**req_copy)
+
+    def test_delete_action_control_template_version_value_error_with_retries(self):
+        # Enable retries and run test_delete_action_control_template_version_value_error.
+        _service.enable_retries()
+        self.test_delete_action_control_template_version_value_error()
+
+        # Disable retries and run test_delete_action_control_template_version_value_error.
+        _service.disable_retries()
+        self.test_delete_action_control_template_version_value_error()
+
+
+class TestGetActionControlTemplateVersion:
+    """
+    Test Class for get_action_control_template_version
+    """
+
+    @responses.activate
+    def test_get_action_control_template_version_all_params(self):
+        """
+        get_action_control_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.get_action_control_template_version(
+            action_control_template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_action_control_template_version_all_params_with_retries(self):
+        # Enable retries and run test_get_action_control_template_version_all_params.
+        _service.enable_retries()
+        self.test_get_action_control_template_version_all_params()
+
+        # Disable retries and run test_get_action_control_template_version_all_params.
+        _service.disable_retries()
+        self.test_get_action_control_template_version_all_params()
+
+    @responses.activate
+    def test_get_action_control_template_version_value_error(self):
+        """
+        test_get_action_control_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "action_control": {"service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "action_control_template_id": action_control_template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_action_control_template_version(**req_copy)
+
+    def test_get_action_control_template_version_value_error_with_retries(self):
+        # Enable retries and run test_get_action_control_template_version_value_error.
+        _service.enable_retries()
+        self.test_get_action_control_template_version_value_error()
+
+        # Disable retries and run test_get_action_control_template_version_value_error.
+        _service.disable_retries()
+        self.test_get_action_control_template_version_value_error()
+
+
+class TestCommitActionControlTemplate:
+    """
+    Test Class for commit_action_control_template
+    """
+
+    @responses.activate
+    def test_commit_action_control_template_all_params(self):
+        """
+        commit_action_control_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions/testString/commit')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.commit_action_control_template(
+            action_control_template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_commit_action_control_template_all_params_with_retries(self):
+        # Enable retries and run test_commit_action_control_template_all_params.
+        _service.enable_retries()
+        self.test_commit_action_control_template_all_params()
+
+        # Disable retries and run test_commit_action_control_template_all_params.
+        _service.disable_retries()
+        self.test_commit_action_control_template_all_params()
+
+    @responses.activate
+    def test_commit_action_control_template_value_error(self):
+        """
+        test_commit_action_control_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_templates/testString/versions/testString/commit')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        action_control_template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "action_control_template_id": action_control_template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.commit_action_control_template(**req_copy)
+
+    def test_commit_action_control_template_value_error_with_retries(self):
+        # Enable retries and run test_commit_action_control_template_value_error.
+        _service.enable_retries()
+        self.test_commit_action_control_template_value_error()
+
+        # Disable retries and run test_commit_action_control_template_value_error.
+        _service.disable_retries()
+        self.test_commit_action_control_template_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: ActionControlTemplates
+##############################################################################
+
+##############################################################################
+# Start of Service: ActionControlAssignments
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamPolicyManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamPolicyManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamPolicyManagementV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListActionControlAssignments:
+    """
+    Test Class for list_action_control_assignments
+    """
+
+    @responses.activate
+    def test_list_action_control_assignments_all_params(self):
+        """
+        list_action_control_assignments()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        accept_language = 'default'
+        template_id = 'testString'
+        template_version = 'testString'
+        limit = 50
+        start = 'testString'
+
+        # Invoke method
+        response = _service.list_action_control_assignments(
+            account_id,
+            accept_language=accept_language,
+            template_id=template_id,
+            template_version=template_version,
+            limit=limit,
+            start=start,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'template_id={}'.format(template_id) in query_string
+        assert 'template_version={}'.format(template_version) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+    def test_list_action_control_assignments_all_params_with_retries(self):
+        # Enable retries and run test_list_action_control_assignments_all_params.
+        _service.enable_retries()
+        self.test_list_action_control_assignments_all_params()
+
+        # Disable retries and run test_list_action_control_assignments_all_params.
+        _service.disable_retries()
+        self.test_list_action_control_assignments_all_params()
+
+    @responses.activate
+    def test_list_action_control_assignments_required_params(self):
+        """
+        test_list_action_control_assignments_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.list_action_control_assignments(
+            account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+
+    def test_list_action_control_assignments_required_params_with_retries(self):
+        # Enable retries and run test_list_action_control_assignments_required_params.
+        _service.enable_retries()
+        self.test_list_action_control_assignments_required_params()
+
+        # Disable retries and run test_list_action_control_assignments_required_params.
+        _service.disable_retries()
+        self.test_list_action_control_assignments_required_params()
+
+    @responses.activate
+    def test_list_action_control_assignments_value_error(self):
+        """
+        test_list_action_control_assignments_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_action_control_assignments(**req_copy)
+
+    def test_list_action_control_assignments_value_error_with_retries(self):
+        # Enable retries and run test_list_action_control_assignments_value_error.
+        _service.enable_retries()
+        self.test_list_action_control_assignments_value_error()
+
+        # Disable retries and run test_list_action_control_assignments_value_error.
+        _service.disable_retries()
+        self.test_list_action_control_assignments_value_error()
+
+    @responses.activate
+    def test_list_action_control_assignments_with_pager_get_next(self):
+        """
+        test_list_action_control_assignments_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/action_control_assignments')
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = ActionControlAssignmentsPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            template_id='testString',
+            template_version='testString',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_action_control_assignments_with_pager_get_all(self):
+        """
+        test_list_action_control_assignments_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/action_control_assignments')
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = ActionControlAssignmentsPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            template_id='testString',
+            template_version='testString',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+
+class TestCreateActionControlTemplateAssignment:
+    """
+    Test Class for create_action_control_template_assignment
+    """
+
+    @responses.activate
+    def test_create_action_control_template_assignment_all_params(self):
+        """
+        create_action_control_template_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AssignmentTargetDetails model
+        assignment_target_details_model = {}
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        # Construct a dict representation of a ActionControlAssignmentTemplate model
+        action_control_assignment_template_model = {}
+        action_control_assignment_template_model['id'] = 'testString'
+        action_control_assignment_template_model['version'] = 'testString'
+
+        # Set up parameter values
+        target = assignment_target_details_model
+        templates = [action_control_assignment_template_model]
+        accept_language = 'default'
+
+        # Invoke method
+        response = _service.create_action_control_template_assignment(
+            target,
+            templates,
+            accept_language=accept_language,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['target'] == assignment_target_details_model
+        assert req_body['templates'] == [action_control_assignment_template_model]
+
+    def test_create_action_control_template_assignment_all_params_with_retries(self):
+        # Enable retries and run test_create_action_control_template_assignment_all_params.
+        _service.enable_retries()
+        self.test_create_action_control_template_assignment_all_params()
+
+        # Disable retries and run test_create_action_control_template_assignment_all_params.
+        _service.disable_retries()
+        self.test_create_action_control_template_assignment_all_params()
+
+    @responses.activate
+    def test_create_action_control_template_assignment_required_params(self):
+        """
+        test_create_action_control_template_assignment_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AssignmentTargetDetails model
+        assignment_target_details_model = {}
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        # Construct a dict representation of a ActionControlAssignmentTemplate model
+        action_control_assignment_template_model = {}
+        action_control_assignment_template_model['id'] = 'testString'
+        action_control_assignment_template_model['version'] = 'testString'
+
+        # Set up parameter values
+        target = assignment_target_details_model
+        templates = [action_control_assignment_template_model]
+
+        # Invoke method
+        response = _service.create_action_control_template_assignment(
+            target,
+            templates,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['target'] == assignment_target_details_model
+        assert req_body['templates'] == [action_control_assignment_template_model]
+
+    def test_create_action_control_template_assignment_required_params_with_retries(self):
+        # Enable retries and run test_create_action_control_template_assignment_required_params.
+        _service.enable_retries()
+        self.test_create_action_control_template_assignment_required_params()
+
+        # Disable retries and run test_create_action_control_template_assignment_required_params.
+        _service.disable_retries()
+        self.test_create_action_control_template_assignment_required_params()
+
+    @responses.activate
+    def test_create_action_control_template_assignment_value_error(self):
+        """
+        test_create_action_control_template_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AssignmentTargetDetails model
+        assignment_target_details_model = {}
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        # Construct a dict representation of a ActionControlAssignmentTemplate model
+        action_control_assignment_template_model = {}
+        action_control_assignment_template_model['id'] = 'testString'
+        action_control_assignment_template_model['version'] = 'testString'
+
+        # Set up parameter values
+        target = assignment_target_details_model
+        templates = [action_control_assignment_template_model]
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "target": target,
+            "templates": templates,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_action_control_template_assignment(**req_copy)
+
+    def test_create_action_control_template_assignment_value_error_with_retries(self):
+        # Enable retries and run test_create_action_control_template_assignment_value_error.
+        _service.enable_retries()
+        self.test_create_action_control_template_assignment_value_error()
+
+        # Disable retries and run test_create_action_control_template_assignment_value_error.
+        _service.disable_retries()
+        self.test_create_action_control_template_assignment_value_error()
+
+
+class TestGetActionControlAssignment:
+    """
+    Test Class for get_action_control_assignment
+    """
+
+    @responses.activate
+    def test_get_action_control_assignment_all_params(self):
+        """
+        get_action_control_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments/testString')
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Invoke method
+        response = _service.get_action_control_assignment(
+            assignment_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_action_control_assignment_all_params_with_retries(self):
+        # Enable retries and run test_get_action_control_assignment_all_params.
+        _service.enable_retries()
+        self.test_get_action_control_assignment_all_params()
+
+        # Disable retries and run test_get_action_control_assignment_all_params.
+        _service.disable_retries()
+        self.test_get_action_control_assignment_all_params()
+
+    @responses.activate
+    def test_get_action_control_assignment_value_error(self):
+        """
+        test_get_action_control_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments/testString')
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_action_control_assignment(**req_copy)
+
+    def test_get_action_control_assignment_value_error_with_retries(self):
+        # Enable retries and run test_get_action_control_assignment_value_error.
+        _service.enable_retries()
+        self.test_get_action_control_assignment_value_error()
+
+        # Disable retries and run test_get_action_control_assignment_value_error.
+        _service.disable_retries()
+        self.test_get_action_control_assignment_value_error()
+
+
+class TestUpdateActionControlAssignment:
+    """
+    Test Class for update_action_control_assignment
+    """
+
+    @responses.activate
+    def test_update_action_control_assignment_all_params(self):
+        """
+        update_action_control_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments/testString')
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        if_match = 'testString'
+        template_version = 'testString'
+
+        # Invoke method
+        response = _service.update_action_control_assignment(
+            assignment_id,
+            if_match,
+            template_version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['template_version'] == 'testString'
+
+    def test_update_action_control_assignment_all_params_with_retries(self):
+        # Enable retries and run test_update_action_control_assignment_all_params.
+        _service.enable_retries()
+        self.test_update_action_control_assignment_all_params()
+
+        # Disable retries and run test_update_action_control_assignment_all_params.
+        _service.disable_retries()
+        self.test_update_action_control_assignment_all_params()
+
+    @responses.activate
+    def test_update_action_control_assignment_value_error(self):
+        """
+        test_update_action_control_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments/testString')
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        if_match = 'testString'
+        template_version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+            "if_match": if_match,
+            "template_version": template_version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_action_control_assignment(**req_copy)
+
+    def test_update_action_control_assignment_value_error_with_retries(self):
+        # Enable retries and run test_update_action_control_assignment_value_error.
+        _service.enable_retries()
+        self.test_update_action_control_assignment_value_error()
+
+        # Disable retries and run test_update_action_control_assignment_value_error.
+        _service.disable_retries()
+        self.test_update_action_control_assignment_value_error()
+
+
+class TestDeleteActionControlAssignment:
+    """
+    Test Class for delete_action_control_assignment
+    """
+
+    @responses.activate
+    def test_delete_action_control_assignment_all_params(self):
+        """
+        delete_action_control_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_action_control_assignment(
+            assignment_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_action_control_assignment_all_params_with_retries(self):
+        # Enable retries and run test_delete_action_control_assignment_all_params.
+        _service.enable_retries()
+        self.test_delete_action_control_assignment_all_params()
+
+        # Disable retries and run test_delete_action_control_assignment_all_params.
+        _service.disable_retries()
+        self.test_delete_action_control_assignment_all_params()
+
+    @responses.activate
+    def test_delete_action_control_assignment_value_error(self):
+        """
+        test_delete_action_control_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/action_control_assignments/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_action_control_assignment(**req_copy)
+
+    def test_delete_action_control_assignment_value_error_with_retries(self):
+        # Enable retries and run test_delete_action_control_assignment_value_error.
+        _service.enable_retries()
+        self.test_delete_action_control_assignment_value_error()
+
+        # Disable retries and run test_delete_action_control_assignment_value_error.
+        _service.disable_retries()
+        self.test_delete_action_control_assignment_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: ActionControlAssignments
+##############################################################################
+
 
 ##############################################################################
 # Start of Model Tests
@@ -5357,6 +7325,515 @@ class TestModel_AccountSettingsAccessManagement:
         # Convert model instance back to dict and verify no loss of data
         account_settings_access_management_model_json2 = account_settings_access_management_model.to_dict()
         assert account_settings_access_management_model_json2 == account_settings_access_management_model_json
+
+
+class TestModel_ActionControlAssignment:
+    """
+    Test Class for ActionControlAssignment
+    """
+
+    def test_action_control_assignment_serialization(self):
+        """
+        Test serialization/deserialization for ActionControlAssignment
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        action_control_assignment_template_model = {}  # ActionControlAssignmentTemplate
+        action_control_assignment_template_model['id'] = 'testString'
+        action_control_assignment_template_model['version'] = 'testString'
+
+        assignment_target_details_model = {}  # AssignmentTargetDetails
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        # Construct a json representation of a ActionControlAssignment model
+        action_control_assignment_model_json = {}
+        action_control_assignment_model_json['template'] = action_control_assignment_template_model
+        action_control_assignment_model_json['target'] = assignment_target_details_model
+
+        # Construct a model instance of ActionControlAssignment by calling from_dict on the json representation
+        action_control_assignment_model = ActionControlAssignment.from_dict(action_control_assignment_model_json)
+        assert action_control_assignment_model != False
+
+        # Construct a model instance of ActionControlAssignment by calling from_dict on the json representation
+        action_control_assignment_model_dict = ActionControlAssignment.from_dict(
+            action_control_assignment_model_json
+        ).__dict__
+        action_control_assignment_model2 = ActionControlAssignment(**action_control_assignment_model_dict)
+
+        # Verify the model instances are equivalent
+        assert action_control_assignment_model == action_control_assignment_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        action_control_assignment_model_json2 = action_control_assignment_model.to_dict()
+        assert action_control_assignment_model_json2 == action_control_assignment_model_json
+
+
+class TestModel_ActionControlAssignmentCollection:
+    """
+    Test Class for ActionControlAssignmentCollection
+    """
+
+    def test_action_control_assignment_collection_serialization(self):
+        """
+        Test serialization/deserialization for ActionControlAssignmentCollection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
+
+        action_control_assignment_template_model = {}  # ActionControlAssignmentTemplate
+        action_control_assignment_template_model['id'] = 'testString'
+        action_control_assignment_template_model['version'] = 'testString'
+
+        assignment_target_details_model = {}  # AssignmentTargetDetails
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        action_control_assignment_model = {}  # ActionControlAssignment
+        action_control_assignment_model['template'] = action_control_assignment_template_model
+        action_control_assignment_model['target'] = assignment_target_details_model
+
+        # Construct a json representation of a ActionControlAssignmentCollection model
+        action_control_assignment_collection_model_json = {}
+        action_control_assignment_collection_model_json['limit'] = 1
+        action_control_assignment_collection_model_json['first'] = first_model
+        action_control_assignment_collection_model_json['next'] = next_model
+        action_control_assignment_collection_model_json['previous'] = previous_model
+        action_control_assignment_collection_model_json['assignments'] = [action_control_assignment_model]
+
+        # Construct a model instance of ActionControlAssignmentCollection by calling from_dict on the json representation
+        action_control_assignment_collection_model = ActionControlAssignmentCollection.from_dict(
+            action_control_assignment_collection_model_json
+        )
+        assert action_control_assignment_collection_model != False
+
+        # Construct a model instance of ActionControlAssignmentCollection by calling from_dict on the json representation
+        action_control_assignment_collection_model_dict = ActionControlAssignmentCollection.from_dict(
+            action_control_assignment_collection_model_json
+        ).__dict__
+        action_control_assignment_collection_model2 = ActionControlAssignmentCollection(
+            **action_control_assignment_collection_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert action_control_assignment_collection_model == action_control_assignment_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        action_control_assignment_collection_model_json2 = action_control_assignment_collection_model.to_dict()
+        assert action_control_assignment_collection_model_json2 == action_control_assignment_collection_model_json
+
+
+class TestModel_ActionControlAssignmentResource:
+    """
+    Test Class for ActionControlAssignmentResource
+    """
+
+    def test_action_control_assignment_resource_serialization(self):
+        """
+        Test serialization/deserialization for ActionControlAssignmentResource
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        assignment_target_details_model = {}  # AssignmentTargetDetails
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        action_control_assignment_resource_created_model = {}  # ActionControlAssignmentResourceCreated
+        action_control_assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 0
+
+        action_control_assignment_resource_action_control_model = {}  # ActionControlAssignmentResourceActionControl
+        action_control_assignment_resource_action_control_model['resource_created'] = (
+            action_control_assignment_resource_created_model
+        )
+        action_control_assignment_resource_action_control_model['error_message'] = error_response_model
+
+        # Construct a json representation of a ActionControlAssignmentResource model
+        action_control_assignment_resource_model_json = {}
+        action_control_assignment_resource_model_json['target'] = assignment_target_details_model
+        action_control_assignment_resource_model_json['action_control'] = (
+            action_control_assignment_resource_action_control_model
+        )
+
+        # Construct a model instance of ActionControlAssignmentResource by calling from_dict on the json representation
+        action_control_assignment_resource_model = ActionControlAssignmentResource.from_dict(
+            action_control_assignment_resource_model_json
+        )
+        assert action_control_assignment_resource_model != False
+
+        # Construct a model instance of ActionControlAssignmentResource by calling from_dict on the json representation
+        action_control_assignment_resource_model_dict = ActionControlAssignmentResource.from_dict(
+            action_control_assignment_resource_model_json
+        ).__dict__
+        action_control_assignment_resource_model2 = ActionControlAssignmentResource(
+            **action_control_assignment_resource_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert action_control_assignment_resource_model == action_control_assignment_resource_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        action_control_assignment_resource_model_json2 = action_control_assignment_resource_model.to_dict()
+        assert action_control_assignment_resource_model_json2 == action_control_assignment_resource_model_json
+
+
+class TestModel_ActionControlAssignmentResourceActionControl:
+    """
+    Test Class for ActionControlAssignmentResourceActionControl
+    """
+
+    def test_action_control_assignment_resource_action_control_serialization(self):
+        """
+        Test serialization/deserialization for ActionControlAssignmentResourceActionControl
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        action_control_assignment_resource_created_model = {}  # ActionControlAssignmentResourceCreated
+        action_control_assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 0
+
+        # Construct a json representation of a ActionControlAssignmentResourceActionControl model
+        action_control_assignment_resource_action_control_model_json = {}
+        action_control_assignment_resource_action_control_model_json['resource_created'] = (
+            action_control_assignment_resource_created_model
+        )
+        action_control_assignment_resource_action_control_model_json['error_message'] = error_response_model
+
+        # Construct a model instance of ActionControlAssignmentResourceActionControl by calling from_dict on the json representation
+        action_control_assignment_resource_action_control_model = (
+            ActionControlAssignmentResourceActionControl.from_dict(
+                action_control_assignment_resource_action_control_model_json
+            )
+        )
+        assert action_control_assignment_resource_action_control_model != False
+
+        # Construct a model instance of ActionControlAssignmentResourceActionControl by calling from_dict on the json representation
+        action_control_assignment_resource_action_control_model_dict = (
+            ActionControlAssignmentResourceActionControl.from_dict(
+                action_control_assignment_resource_action_control_model_json
+            ).__dict__
+        )
+        action_control_assignment_resource_action_control_model2 = ActionControlAssignmentResourceActionControl(
+            **action_control_assignment_resource_action_control_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            action_control_assignment_resource_action_control_model
+            == action_control_assignment_resource_action_control_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        action_control_assignment_resource_action_control_model_json2 = (
+            action_control_assignment_resource_action_control_model.to_dict()
+        )
+        assert (
+            action_control_assignment_resource_action_control_model_json2
+            == action_control_assignment_resource_action_control_model_json
+        )
+
+
+class TestModel_ActionControlAssignmentResourceCreated:
+    """
+    Test Class for ActionControlAssignmentResourceCreated
+    """
+
+    def test_action_control_assignment_resource_created_serialization(self):
+        """
+        Test serialization/deserialization for ActionControlAssignmentResourceCreated
+        """
+
+        # Construct a json representation of a ActionControlAssignmentResourceCreated model
+        action_control_assignment_resource_created_model_json = {}
+        action_control_assignment_resource_created_model_json['id'] = 'testString'
+
+        # Construct a model instance of ActionControlAssignmentResourceCreated by calling from_dict on the json representation
+        action_control_assignment_resource_created_model = ActionControlAssignmentResourceCreated.from_dict(
+            action_control_assignment_resource_created_model_json
+        )
+        assert action_control_assignment_resource_created_model != False
+
+        # Construct a model instance of ActionControlAssignmentResourceCreated by calling from_dict on the json representation
+        action_control_assignment_resource_created_model_dict = ActionControlAssignmentResourceCreated.from_dict(
+            action_control_assignment_resource_created_model_json
+        ).__dict__
+        action_control_assignment_resource_created_model2 = ActionControlAssignmentResourceCreated(
+            **action_control_assignment_resource_created_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert action_control_assignment_resource_created_model == action_control_assignment_resource_created_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        action_control_assignment_resource_created_model_json2 = (
+            action_control_assignment_resource_created_model.to_dict()
+        )
+        assert (
+            action_control_assignment_resource_created_model_json2
+            == action_control_assignment_resource_created_model_json
+        )
+
+
+class TestModel_ActionControlAssignmentTemplate:
+    """
+    Test Class for ActionControlAssignmentTemplate
+    """
+
+    def test_action_control_assignment_template_serialization(self):
+        """
+        Test serialization/deserialization for ActionControlAssignmentTemplate
+        """
+
+        # Construct a json representation of a ActionControlAssignmentTemplate model
+        action_control_assignment_template_model_json = {}
+        action_control_assignment_template_model_json['id'] = 'testString'
+        action_control_assignment_template_model_json['version'] = 'testString'
+
+        # Construct a model instance of ActionControlAssignmentTemplate by calling from_dict on the json representation
+        action_control_assignment_template_model = ActionControlAssignmentTemplate.from_dict(
+            action_control_assignment_template_model_json
+        )
+        assert action_control_assignment_template_model != False
+
+        # Construct a model instance of ActionControlAssignmentTemplate by calling from_dict on the json representation
+        action_control_assignment_template_model_dict = ActionControlAssignmentTemplate.from_dict(
+            action_control_assignment_template_model_json
+        ).__dict__
+        action_control_assignment_template_model2 = ActionControlAssignmentTemplate(
+            **action_control_assignment_template_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert action_control_assignment_template_model == action_control_assignment_template_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        action_control_assignment_template_model_json2 = action_control_assignment_template_model.to_dict()
+        assert action_control_assignment_template_model_json2 == action_control_assignment_template_model_json
+
+
+class TestModel_ActionControlTemplate:
+    """
+    Test Class for ActionControlTemplate
+    """
+
+    def test_action_control_template_serialization(self):
+        """
+        Test serialization/deserialization for ActionControlTemplate
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        template_action_control_model = {}  # TemplateActionControl
+        template_action_control_model['service_name'] = 'testString'
+        template_action_control_model['description'] = 'testString'
+        template_action_control_model['actions'] = ['testString']
+
+        # Construct a json representation of a ActionControlTemplate model
+        action_control_template_model_json = {}
+        action_control_template_model_json['name'] = 'testString'
+        action_control_template_model_json['description'] = 'testString'
+        action_control_template_model_json['account_id'] = 'testString'
+        action_control_template_model_json['committed'] = True
+        action_control_template_model_json['action_control'] = template_action_control_model
+        action_control_template_model_json['version'] = 'testString'
+        action_control_template_model_json['state'] = 'active'
+
+        # Construct a model instance of ActionControlTemplate by calling from_dict on the json representation
+        action_control_template_model = ActionControlTemplate.from_dict(action_control_template_model_json)
+        assert action_control_template_model != False
+
+        # Construct a model instance of ActionControlTemplate by calling from_dict on the json representation
+        action_control_template_model_dict = ActionControlTemplate.from_dict(
+            action_control_template_model_json
+        ).__dict__
+        action_control_template_model2 = ActionControlTemplate(**action_control_template_model_dict)
+
+        # Verify the model instances are equivalent
+        assert action_control_template_model == action_control_template_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        action_control_template_model_json2 = action_control_template_model.to_dict()
+        assert action_control_template_model_json2 == action_control_template_model_json
+
+
+class TestModel_ActionControlTemplateCollection:
+    """
+    Test Class for ActionControlTemplateCollection
+    """
+
+    def test_action_control_template_collection_serialization(self):
+        """
+        Test serialization/deserialization for ActionControlTemplateCollection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
+
+        template_action_control_model = {}  # TemplateActionControl
+        template_action_control_model['service_name'] = 'testString'
+        template_action_control_model['description'] = 'testString'
+        template_action_control_model['actions'] = ['testString']
+
+        action_control_template_model = {}  # ActionControlTemplate
+        action_control_template_model['name'] = 'testString'
+        action_control_template_model['description'] = 'testString'
+        action_control_template_model['account_id'] = 'testString'
+        action_control_template_model['committed'] = True
+        action_control_template_model['action_control'] = template_action_control_model
+        action_control_template_model['version'] = 'testString'
+        action_control_template_model['state'] = 'active'
+
+        # Construct a json representation of a ActionControlTemplateCollection model
+        action_control_template_collection_model_json = {}
+        action_control_template_collection_model_json['limit'] = 1
+        action_control_template_collection_model_json['first'] = first_model
+        action_control_template_collection_model_json['next'] = next_model
+        action_control_template_collection_model_json['previous'] = previous_model
+        action_control_template_collection_model_json['action_control_templates'] = [action_control_template_model]
+
+        # Construct a model instance of ActionControlTemplateCollection by calling from_dict on the json representation
+        action_control_template_collection_model = ActionControlTemplateCollection.from_dict(
+            action_control_template_collection_model_json
+        )
+        assert action_control_template_collection_model != False
+
+        # Construct a model instance of ActionControlTemplateCollection by calling from_dict on the json representation
+        action_control_template_collection_model_dict = ActionControlTemplateCollection.from_dict(
+            action_control_template_collection_model_json
+        ).__dict__
+        action_control_template_collection_model2 = ActionControlTemplateCollection(
+            **action_control_template_collection_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert action_control_template_collection_model == action_control_template_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        action_control_template_collection_model_json2 = action_control_template_collection_model.to_dict()
+        assert action_control_template_collection_model_json2 == action_control_template_collection_model_json
+
+
+class TestModel_ActionControlTemplateVersionsCollection:
+    """
+    Test Class for ActionControlTemplateVersionsCollection
+    """
+
+    def test_action_control_template_versions_collection_serialization(self):
+        """
+        Test serialization/deserialization for ActionControlTemplateVersionsCollection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
+
+        template_action_control_model = {}  # TemplateActionControl
+        template_action_control_model['service_name'] = 'testString'
+        template_action_control_model['description'] = 'testString'
+        template_action_control_model['actions'] = ['testString']
+
+        action_control_template_model = {}  # ActionControlTemplate
+        action_control_template_model['name'] = 'testString'
+        action_control_template_model['description'] = 'testString'
+        action_control_template_model['account_id'] = 'testString'
+        action_control_template_model['committed'] = True
+        action_control_template_model['action_control'] = template_action_control_model
+        action_control_template_model['version'] = 'testString'
+        action_control_template_model['state'] = 'active'
+
+        # Construct a json representation of a ActionControlTemplateVersionsCollection model
+        action_control_template_versions_collection_model_json = {}
+        action_control_template_versions_collection_model_json['limit'] = 1
+        action_control_template_versions_collection_model_json['first'] = first_model
+        action_control_template_versions_collection_model_json['next'] = next_model
+        action_control_template_versions_collection_model_json['previous'] = previous_model
+        action_control_template_versions_collection_model_json['versions'] = [action_control_template_model]
+
+        # Construct a model instance of ActionControlTemplateVersionsCollection by calling from_dict on the json representation
+        action_control_template_versions_collection_model = ActionControlTemplateVersionsCollection.from_dict(
+            action_control_template_versions_collection_model_json
+        )
+        assert action_control_template_versions_collection_model != False
+
+        # Construct a model instance of ActionControlTemplateVersionsCollection by calling from_dict on the json representation
+        action_control_template_versions_collection_model_dict = ActionControlTemplateVersionsCollection.from_dict(
+            action_control_template_versions_collection_model_json
+        ).__dict__
+        action_control_template_versions_collection_model2 = ActionControlTemplateVersionsCollection(
+            **action_control_template_versions_collection_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert action_control_template_versions_collection_model == action_control_template_versions_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        action_control_template_versions_collection_model_json2 = (
+            action_control_template_versions_collection_model.to_dict()
+        )
+        assert (
+            action_control_template_versions_collection_model_json2
+            == action_control_template_versions_collection_model_json
+        )
 
 
 class TestModel_AssignmentResourceCreated:
@@ -5710,7 +8187,7 @@ class TestModel_ErrorResponse:
         error_response_model_json = {}
         error_response_model_json['trace'] = 'testString'
         error_response_model_json['errors'] = [error_object_model]
-        error_response_model_json['status_code'] = 38
+        error_response_model_json['status_code'] = 0
 
         # Construct a model instance of ErrorResponse by calling from_dict on the json representation
         error_response_model = ErrorResponse.from_dict(error_response_model_json)
@@ -6193,7 +8670,7 @@ class TestModel_PolicyAssignmentResourcePolicy:
         error_response_model = {}  # ErrorResponse
         error_response_model['trace'] = 'testString'
         error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
+        error_response_model['status_code'] = 0
 
         # Construct a json representation of a PolicyAssignmentResourcePolicy model
         policy_assignment_resource_policy_model_json = {}
@@ -6255,7 +8732,7 @@ class TestModel_PolicyAssignmentResources:
         error_response_model = {}  # ErrorResponse
         error_response_model['trace'] = 'testString'
         error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
+        error_response_model['status_code'] = 0
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
@@ -6321,7 +8798,7 @@ class TestModel_PolicyAssignmentV1:
         error_response_model = {}  # ErrorResponse
         error_response_model['trace'] = 'testString'
         error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
+        error_response_model['status_code'] = 0
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
@@ -6374,6 +8851,14 @@ class TestModel_PolicyAssignmentV1Collection:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
+
         assignment_target_details_model = {}  # AssignmentTargetDetails
         assignment_target_details_model['type'] = 'Account'
         assignment_target_details_model['id'] = 'testString'
@@ -6398,7 +8883,7 @@ class TestModel_PolicyAssignmentV1Collection:
         error_response_model = {}  # ErrorResponse
         error_response_model['trace'] = 'testString'
         error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
+        error_response_model['status_code'] = 0
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
@@ -6424,6 +8909,10 @@ class TestModel_PolicyAssignmentV1Collection:
 
         # Construct a json representation of a PolicyAssignmentV1Collection model
         policy_assignment_v1_collection_model_json = {}
+        policy_assignment_v1_collection_model_json['limit'] = 1
+        policy_assignment_v1_collection_model_json['first'] = first_model
+        policy_assignment_v1_collection_model_json['next'] = next_model
+        policy_assignment_v1_collection_model_json['previous'] = previous_model
         policy_assignment_v1_collection_model_json['assignments'] = [policy_assignment_v1_model]
 
         # Construct a model instance of PolicyAssignmentV1Collection by calling from_dict on the json representation
@@ -6484,7 +8973,7 @@ class TestModel_PolicyAssignmentV1Resources:
         error_response_model = {}  # ErrorResponse
         error_response_model['trace'] = 'testString'
         error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
+        error_response_model['status_code'] = 0
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
@@ -6869,7 +9358,7 @@ class TestModel_PolicyTemplateAssignmentCollection:
         error_response_model = {}  # ErrorResponse
         error_response_model['trace'] = 'testString'
         error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
+        error_response_model['status_code'] = 0
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
@@ -7586,6 +10075,40 @@ class TestModel_SubjectAttribute:
         # Convert model instance back to dict and verify no loss of data
         subject_attribute_model_json2 = subject_attribute_model.to_dict()
         assert subject_attribute_model_json2 == subject_attribute_model_json
+
+
+class TestModel_TemplateActionControl:
+    """
+    Test Class for TemplateActionControl
+    """
+
+    def test_template_action_control_serialization(self):
+        """
+        Test serialization/deserialization for TemplateActionControl
+        """
+
+        # Construct a json representation of a TemplateActionControl model
+        template_action_control_model_json = {}
+        template_action_control_model_json['service_name'] = 'testString'
+        template_action_control_model_json['description'] = 'testString'
+        template_action_control_model_json['actions'] = ['testString']
+
+        # Construct a model instance of TemplateActionControl by calling from_dict on the json representation
+        template_action_control_model = TemplateActionControl.from_dict(template_action_control_model_json)
+        assert template_action_control_model != False
+
+        # Construct a model instance of TemplateActionControl by calling from_dict on the json representation
+        template_action_control_model_dict = TemplateActionControl.from_dict(
+            template_action_control_model_json
+        ).__dict__
+        template_action_control_model2 = TemplateActionControl(**template_action_control_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_action_control_model == template_action_control_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_action_control_model_json2 = template_action_control_model.to_dict()
+        assert template_action_control_model_json2 == template_action_control_model_json
 
 
 class TestModel_TemplateCountData:
@@ -8386,7 +10909,7 @@ class TestModel_PolicyTemplateAssignmentItemsPolicyAssignment:
         error_response_model = {}  # ErrorResponse
         error_response_model['trace'] = 'testString'
         error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
+        error_response_model['status_code'] = 0
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
@@ -8477,7 +11000,7 @@ class TestModel_PolicyTemplateAssignmentItemsPolicyAssignmentV1:
         error_response_model = {}  # ErrorResponse
         error_response_model['trace'] = 'testString'
         error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
+        error_response_model['status_code'] = 0
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model

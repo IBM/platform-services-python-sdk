@@ -53,8 +53,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert cls.testAccountId is not None
         cls.testTargetAccountId = cls.config.get('TEST_TARGET_ACCOUNT_ID')
         assert cls.testTargetAccountId is not None
-        cls.testTargetEnterpriseAccountId = cls.config.get('TEST_TARGET_ENTERPRISE_ACCOUNT_ID')
-        assert cls.testTargetEnterpriseAccountId is not None
 
         cls.etagHeader = "ETag"
         cls.testPolicyETag = ""
@@ -144,6 +142,16 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         )
         cls.testTemplatePrefix = 'SDKPython'
         cls.testTemplateName = cls.testTemplatePrefix + str(random.randint(0, 99999))
+        cls.testActionControlTemplateName = 'TestActionControl' + cls.testTemplatePrefix + str(random.randint(0, 99999))
+        cls.testActionControlBaseTemplateId = ""
+        cls.testActionControlBaseTemplateVersion = ""
+        cls.testActionControlBaseTemplateETag = ""
+        cls.testActionControlTemplateId = ""
+        cls.testActionControlTemplateVersion = ""
+        cls.testActionControlAssignmentId = ""
+        cls.testActionControlTemplateUpdateVersion = ""
+        cls.testActionControlTemplateETag = ""
+        cls.testActionControlAssignmentEtag = ""
 
         print('\nSetup complete.')
 
@@ -974,3 +982,338 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result.external_account_identity_interaction.identity_types.service.state == "monitor"
         assert result.external_account_identity_interaction.identity_types.service_id is not None
         assert result.external_account_identity_interaction.identity_types.service_id.state == "monitor"
+
+    def test_35_create_action_control_basic_template(self):
+        response = self.service.create_action_control_template(
+            name=self.testActionControlTemplateName,
+            account_id=self.testAccountId,
+            description='SDK Test ActionControl Template',
+        )
+        assert response is not None
+
+        assert response.get_status_code() == 201
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlTemplate.from_dict(result_dict)
+        assert result is not None
+
+        self.__class__.testActionControlBaseTemplateId = result.id
+        self.__class__.testActionControlBaseTemplateVersion = result.version
+        assert result.state == "active"
+
+    def test_36_get_action_control_basic_template(self):
+        assert self.testActionControlBaseTemplateId
+        print("Action Control Template ID: ", self.testActionControlBaseTemplateId)
+
+        response = self.service.get_action_control_template(
+            action_control_template_id=self.testActionControlBaseTemplateId,
+        )
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlTemplate.from_dict(result_dict)
+        assert result is not None
+
+        self.__class__.testActionControlBaseTemplateETag = response.get_headers().get(self.etagHeader)
+        assert result.state == "active"
+
+    def test_37_replace_action_control_basic_template(self):
+        assert self.testActionControlBaseTemplateId
+        assert self.testActionControlBaseTemplateETag
+        assert self.testActionControlBaseTemplateVersion
+
+        print("ActionControl Template ID: ", self.testActionControlBaseTemplateId)
+
+        updated_template_description = 'SDK Updated Test Action Control Template'
+        updated_template_name = 'SDK Test Action Control Without Action Control'
+        response = self.service.replace_action_control_template(
+            action_control_template_id=self.testActionControlBaseTemplateId,
+            version=self.testActionControlBaseTemplateVersion,
+            if_match=self.testActionControlBaseTemplateETag,
+            description=updated_template_description,
+            name=updated_template_name,
+        )
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlTemplate.from_dict(result_dict)
+        assert result is not None
+        self.__class__.testActionControlBaseTemplateETag = response.get_headers().get(self.etagHeader)
+        assert result.description == updated_template_description
+        assert result.name == updated_template_name
+        assert result.state == "active"
+
+    def test_38_replace_action_control_template(self):
+        assert self.testActionControlBaseTemplateId
+        assert self.testActionControlBaseTemplateETag
+        assert self.testActionControlBaseTemplateVersion
+
+        print("ActionControl Template ID: ", self.testActionControlBaseTemplateId)
+
+        updated_template_description = 'SDK Updated Test Action Control Template With ActionControl'
+
+        template_action_control_model = {
+            'service_name': 'am-test-service',
+            'description': 'am-test-service service actionControl',
+            'actions': ['am-test-service.test.delete'],
+        }
+
+        response = self.service.replace_action_control_template(
+            action_control_template_id=self.testActionControlBaseTemplateId,
+            version=self.testActionControlBaseTemplateVersion,
+            if_match=self.testActionControlBaseTemplateETag,
+            description=updated_template_description,
+            action_control=template_action_control_model,
+        )
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlTemplate.from_dict(result_dict)
+        assert result is not None
+        assert result.description == updated_template_description
+        assert result.state == "active"
+
+    def test_39_list_action_control_templates(self):
+        response = self.service.list_action_control_templates(
+            account_id=self.testAccountId,
+            accept_language='default',
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlTemplateCollection.from_dict(result_dict)
+
+        print("Action Control Template list: ", result)
+
+        # Confirm the test action control template is present
+        foundTestTemplate = False
+        for template in result.action_control_templates:
+            if template.id == self.testActionControlBaseTemplateId:
+                foundTestTemplate = True
+                break
+        assert foundTestTemplate
+        assert result.action_control_templates[0].state == "active"
+
+    def test_40_delete_action_control_base_template_version(self):
+        response = self.service.delete_action_control_template_version(
+            action_control_template_id=self.testActionControlBaseTemplateId,
+            version=self.testActionControlBaseTemplateVersion,
+        )
+        assert response.get_status_code() == 204
+
+    def test_41_create_action_template(self):
+        template_action_control_model = {
+            'service_name': 'am-test-service',
+            'description': 'am-test-service service actionControl',
+            'actions': ['am-test-service.test.delete'],
+        }
+
+        response = self.service.create_action_control_template(
+            name=self.testActionControlTemplateName,
+            account_id=self.testAccountId,
+            description='SDK Test ActionControl Template',
+            action_control=template_action_control_model,
+        )
+        assert response is not None
+
+        assert response.get_status_code() == 201
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlTemplate.from_dict(result_dict)
+        assert result is not None
+
+        self.__class__.testActionControlTemplateId = result.id
+        self.__class__.testActionControlTemplateVersion = result.version
+        self.__class__.testActionControlTemplateETag = response.get_headers().get(self.etagHeader)
+        assert result.state == "active"
+
+    def test_41_create_action_template_version(self):
+        template_action_control_model = {
+            'service_name': 'am-test-service',
+            'description': 'am-test-service service actionControl',
+            'actions': ['am-test-service.test.create'],
+        }
+
+        response = self.service.create_action_control_template_version(
+            action_control=template_action_control_model,
+            description='SDK Test Policy S2S Template',
+            committed=True,
+            action_control_template_id=self.testActionControlTemplateId,
+        )
+        assert response is not None
+
+        assert response.get_status_code() == 201
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlTemplate.from_dict(result_dict)
+        print("ActionControl Template Version: ", result)
+        assert result is not None
+
+        self.__class__.testActionControlTemplateUpdateVersion = result.version
+        assert result.state == "active"
+
+    def test_42_replace_action_control_template(self):
+        assert self.testActionControlTemplateId
+        assert self.testActionControlTemplateVersion
+        assert self.testActionControlTemplateETag
+
+        print("ActionControl Template ID: ", self.testActionControlTemplateId)
+
+        updated_template_description = 'SDK Updated Test Action Control Template'
+
+        template_action_control_model = {
+            'service_name': 'am-test-service',
+            'description': 'am-test-service service actionControl',
+            'actions': ['am-test-service.test.delete'],
+        }
+
+        response = self.service.replace_action_control_template(
+            action_control_template_id=self.testActionControlTemplateId,
+            version=self.testActionControlTemplateVersion,
+            if_match=self.testActionControlTemplateETag,
+            description=updated_template_description,
+            action_control=template_action_control_model,
+        )
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlTemplate.from_dict(result_dict)
+        assert result is not None
+        assert result.description == updated_template_description
+        assert result.state == "active"
+
+    def test_43_get_action_control_template_version(self):
+        response = self.service.get_action_control_template_version(
+            action_control_template_id=self.testActionControlTemplateId,
+            version=self.testActionControlTemplateVersion,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        self.__class__.testTemplateETag = response.get_headers().get(self.etagHeader)
+        result = ActionControlTemplate.from_dict(result_dict)
+        assert result is not None
+        assert result.state == "active"
+
+    def test_44_commit_action_control_template(self):
+        response = self.service.commit_action_control_template(
+            action_control_template_id=self.testActionControlTemplateId,
+            version=self.testActionControlTemplateVersion,
+        )
+        assert response.get_status_code() == 204
+
+    def test_45_list_action_control_template_versions(self):
+        response = self.service.list_action_control_template_versions(
+            action_control_template_id=self.testActionControlTemplateId,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlTemplateVersionsCollection.from_dict(result_dict)
+        assert result is not None
+        assert len(result.versions) == 2
+
+        # Confirm the test policy template with new version is present
+        foundTestTemplateVersion = False
+        for version in result.versions:
+            if version.version == self.testActionControlTemplateVersion:
+                foundTestTemplateVersion = True
+                break
+        assert foundTestTemplateVersion
+
+    def test_46_create_action_control_assignment(self):
+        response = self.service.create_action_control_template_assignment(
+            target=AssignmentTargetDetails(
+                type="Account",
+                id=self.testTargetAccountId,
+            ),
+            templates=[
+                AssignmentTemplateDetails(
+                    id=self.testActionControlTemplateId, version=self.testActionControlTemplateVersion
+                )
+            ],
+        )
+        assert response.get_status_code() == 201
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlAssignmentCollection.from_dict(result_dict)
+        print("ActionControl Assignment Creation: ", result)
+        assert result is not None
+        self.__class__.testActionControlAssignmentId = result.assignments[0].id
+        self.__class__.testActionControlAssignmentEtag = response.get_headers().get(self.etagHeader)
+
+    def test_47_list_action_control_assignments(self):
+        response = self.service.list_action_control_assignments(
+            account_id=self.testAccountId,
+            accept_language='default',
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+        result = ActionControlAssignmentCollection.from_dict(result_dict)
+        assert result is not None
+
+    def test_48_update_action_control_assignment(self):
+        assert self.testActionControlAssignmentId
+        assert self.testActionControlAssignmentEtag
+        print("Assignment ID: ", self.testActionControlAssignmentId)
+        response = self.service.update_action_control_assignment(
+            assignment_id=self.testActionControlAssignmentId,
+            if_match=self.testActionControlAssignmentEtag,
+            template_version=self.testActionControlTemplateUpdateVersion,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlAssignment.from_dict(result_dict)
+        assert result is not None
+        print("ActionControl Assignment Update: ", result)
+
+    def test_49_get_action_control_assignment(self):
+        assert self.testActionControlAssignmentId
+        print("Assignment ID: ", self.testActionControlAssignmentId)
+        response = self.service.get_action_control_assignment(
+            assignment_id=self.testActionControlAssignmentId,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = ActionControlAssignment.from_dict(result_dict)
+        assert result is not None
+        assert result.id == self.testActionControlAssignmentId
+
+    def test_50_delete_action_control_assignment(self):
+        response = self.service.delete_action_control_assignment(
+            assignment_id=self.testActionControlAssignmentId,
+        )
+        assert response.get_status_code() == 204
+
+    def test_51_delete_action_control_template(self):
+        response = self.service.delete_action_control_template(
+            action_control_template_id=self.testActionControlTemplateId,
+        )
+        assert response.get_status_code() == 204
