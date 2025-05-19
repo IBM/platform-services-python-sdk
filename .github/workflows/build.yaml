@@ -55,6 +55,12 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install Poetry
+        run: |
+          sudo apt install pipx
+          sudo pipx ensurepath --global
+          sudo pipx install poetry
+
       - name: Build & Test
         run: make ci
 

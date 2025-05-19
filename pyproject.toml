@@ -37,26 +37,22 @@ Changelog = "https://github.com/IBM/platform-services-python-sdk/blob/main/CHANG
 Contributing = "https://github.com/IBM/platform-services-python-sdk/blob/main/CONTRIBUTING.md"
 License = "https://github.com/IBM/platform-services-python-sdk/blob/main/LICENSE"
 
-[project.optional-dependencies]
-dev = [
-    "coverage>=7.3.2,<8.0.0",
-    "pylint>=3.0.0,<4.0.0",
-    "pytest>=7.4.2,<8.0.0",
-    "pytest-cov>=4.1.0,<5.0.0",
-    "responses>=0.23.3,<1.0.0",
-    "black>=24.0.0,<25.0.0",
-]
-publish = [
-    "build",
-    "twine"
-]
-
 [build-system]
-requires = ["setuptools>=67.7.2"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=2.1.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
 
-[tool.setuptools]
-packages = ["ibm_platform_services"]
+[tool.poetry]
+packages = [
+    { include = "ibm_platform_services" },
+]
+
+[tool.poetry.group.dev.dependencies]
+coverage = ">=7.3.2,<8.0.0"
+pylint = ">=3.00,<4.0.0"
+pytest = ">=7.4.1,<8.0.0"
+pytest-cov = ">=4.1.0,<5.0.0"
+responses = ">=0.23.3,<1.0.0"
+black = ">=24.0.0,<25.0.0"
 
 [tool.black]
 line-length = 120

@@ -25,10 +25,16 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.13
+      
+      - name: Install Poetry
+        run: |
+          sudo apt install pipx
+          sudo pipx ensurepath --global
+          sudo pipx install poetry
 
       - name: Build and publish distribution
         env:
-          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
         run: |
           make ci
           make publish-release
