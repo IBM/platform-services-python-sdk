@@ -61,9 +61,7 @@ class GlobalCatalogV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
@@ -2646,7 +2644,6 @@ class CatalogEntry:
         DASHBOARD = 'dashboard'
 
 
-
 class CatalogEntryMetadata:
     """
     Model used to describe metadata object returned.
@@ -3160,7 +3157,10 @@ class CatalogEntryMetadataPricing:
             _dict['deployment_location'] = self.deployment_location
         if hasattr(self, 'deployment_region') and self.deployment_region is not None:
             _dict['deployment_region'] = self.deployment_region
-        if hasattr(self, 'deployment_location_no_price_available') and self.deployment_location_no_price_available is not None:
+        if (
+            hasattr(self, 'deployment_location_no_price_available')
+            and self.deployment_location_no_price_available is not None
+        ):
             _dict['deployment_location_no_price_available'] = self.deployment_location_no_price_available
         if hasattr(self, 'metrics') and self.metrics is not None:
             metrics_list = []
@@ -4661,7 +4661,10 @@ class PricingGet:
             _dict['deployment_location'] = self.deployment_location
         if hasattr(self, 'deployment_region') and self.deployment_region is not None:
             _dict['deployment_region'] = self.deployment_region
-        if hasattr(self, 'deployment_location_no_price_available') and self.deployment_location_no_price_available is not None:
+        if (
+            hasattr(self, 'deployment_location_no_price_available')
+            and self.deployment_location_no_price_available is not None
+        ):
             _dict['deployment_location_no_price_available'] = self.deployment_location_no_price_available
         if hasattr(self, 'type') and self.type is not None:
             _dict['type'] = self.type

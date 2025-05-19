@@ -33,9 +33,7 @@ import urllib
 from ibm_platform_services.global_catalog_v1 import *
 
 
-_service = GlobalCatalogV1(
-    authenticator=NoAuthAuthenticator()
-)
+_service = GlobalCatalogV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://globalcatalog.cloud.ibm.com/api/v1'
 _service.set_service_url(_base_url)
@@ -4783,12 +4781,18 @@ class TestModel_CatalogEntryMetadataDeployment:
         catalog_entry_metadata_deployment_model_json['target_network'] = 'testString'
 
         # Construct a model instance of CatalogEntryMetadataDeployment by calling from_dict on the json representation
-        catalog_entry_metadata_deployment_model = CatalogEntryMetadataDeployment.from_dict(catalog_entry_metadata_deployment_model_json)
+        catalog_entry_metadata_deployment_model = CatalogEntryMetadataDeployment.from_dict(
+            catalog_entry_metadata_deployment_model_json
+        )
         assert catalog_entry_metadata_deployment_model != False
 
         # Construct a model instance of CatalogEntryMetadataDeployment by calling from_dict on the json representation
-        catalog_entry_metadata_deployment_model_dict = CatalogEntryMetadataDeployment.from_dict(catalog_entry_metadata_deployment_model_json).__dict__
-        catalog_entry_metadata_deployment_model2 = CatalogEntryMetadataDeployment(**catalog_entry_metadata_deployment_model_dict)
+        catalog_entry_metadata_deployment_model_dict = CatalogEntryMetadataDeployment.from_dict(
+            catalog_entry_metadata_deployment_model_json
+        ).__dict__
+        catalog_entry_metadata_deployment_model2 = CatalogEntryMetadataDeployment(
+            **catalog_entry_metadata_deployment_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert catalog_entry_metadata_deployment_model == catalog_entry_metadata_deployment_model2
@@ -4859,11 +4863,15 @@ class TestModel_CatalogEntryMetadataPricing:
         catalog_entry_metadata_pricing_model_json['sales_avenue'] = ['testString']
 
         # Construct a model instance of CatalogEntryMetadataPricing by calling from_dict on the json representation
-        catalog_entry_metadata_pricing_model = CatalogEntryMetadataPricing.from_dict(catalog_entry_metadata_pricing_model_json)
+        catalog_entry_metadata_pricing_model = CatalogEntryMetadataPricing.from_dict(
+            catalog_entry_metadata_pricing_model_json
+        )
         assert catalog_entry_metadata_pricing_model != False
 
         # Construct a model instance of CatalogEntryMetadataPricing by calling from_dict on the json representation
-        catalog_entry_metadata_pricing_model_dict = CatalogEntryMetadataPricing.from_dict(catalog_entry_metadata_pricing_model_json).__dict__
+        catalog_entry_metadata_pricing_model_dict = CatalogEntryMetadataPricing.from_dict(
+            catalog_entry_metadata_pricing_model_json
+        ).__dict__
         catalog_entry_metadata_pricing_model2 = CatalogEntryMetadataPricing(**catalog_entry_metadata_pricing_model_dict)
 
         # Verify the model instances are equivalent
@@ -6169,7 +6177,9 @@ class TestModel_UIMediaSourceMetaData:
         assert ui_media_source_meta_data_model != False
 
         # Construct a model instance of UIMediaSourceMetaData by calling from_dict on the json representation
-        ui_media_source_meta_data_model_dict = UIMediaSourceMetaData.from_dict(ui_media_source_meta_data_model_json).__dict__
+        ui_media_source_meta_data_model_dict = UIMediaSourceMetaData.from_dict(
+            ui_media_source_meta_data_model_json
+        ).__dict__
         ui_media_source_meta_data_model2 = UIMediaSourceMetaData(**ui_media_source_meta_data_model_dict)
 
         # Verify the model instances are equivalent
@@ -6440,7 +6450,9 @@ class TestModel_VisibilityDetailAccounts:
         assert visibility_detail_accounts_model != False
 
         # Construct a model instance of VisibilityDetailAccounts by calling from_dict on the json representation
-        visibility_detail_accounts_model_dict = VisibilityDetailAccounts.from_dict(visibility_detail_accounts_model_json).__dict__
+        visibility_detail_accounts_model_dict = VisibilityDetailAccounts.from_dict(
+            visibility_detail_accounts_model_json
+        ).__dict__
         visibility_detail_accounts_model2 = VisibilityDetailAccounts(**visibility_detail_accounts_model_dict)
 
         # Verify the model instances are equivalent
