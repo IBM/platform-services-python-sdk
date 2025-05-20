@@ -1,3 +1,10 @@
+# [0.66.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.65.0...v0.66.0) (2025-05-20)
+
+
+### Features
+
+* **Global Catalog:** support non ibm only visibility ([#291](https://github.com/IBM/platform-services-python-sdk/issues/291)) ([eeb6fb5](https://github.com/IBM/platform-services-python-sdk/commit/eeb6fb50fb36d68ac51ae956a2ab586d90143ed8))
+
 # [0.65.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.64.0...v0.65.0) (2025-05-07)
 
 
