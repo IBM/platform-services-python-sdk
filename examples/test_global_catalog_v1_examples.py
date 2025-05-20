@@ -314,6 +314,7 @@ class TestGlobalCatalogV1Examples:
 
             response = global_catalog_service.update_visibility(
                 id=catalog_entry_id,
+                restrictions="private",
                 extendable=False,
             )
 

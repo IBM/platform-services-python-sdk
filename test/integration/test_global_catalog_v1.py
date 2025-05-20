@@ -418,7 +418,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             provider=self.defaultEntry['provider'],
         )
 
-        env = self.service.update_visibility(id=self.defaultEntry['id'])
+        env = self.service.update_visibility(id=self.defaultEntry['id'], restrictions="private")
         assert env is not None
         assert env.get_status_code() == 200
 

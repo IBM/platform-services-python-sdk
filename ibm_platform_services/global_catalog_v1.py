@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.102.0-615ec964-20250307-203034
+# IBM OpenAPI SDK Code Generator Version: 3.104.0-b4a47c49-20250418-184351
 
 """
 The catalog service manages offerings across geographies as the system of record. The
@@ -215,8 +215,10 @@ class GlobalCatalogV1(BaseService):
         :param str name: Programmatic name for this catalog entry, which must be
                formatted like a CRN segment. See the display name in OverviewUI for a
                user-readable name.
-        :param str kind: The type of catalog entry, **service**, **template**,
-               **dashboard**, which determines the type and shape of the object.
+        :param str kind: The type of catalog entry which determines the type and
+               shape of the object. Valid GC types are buildpack, cname, dataset,
+               geography, iaas, platform_service, runtime, service, template,
+               ui-dashboard.
         :param dict overview_ui: Overview is nested in the top level. The key value
                pair is `[_language_]overview_ui`.
         :param Image images: Image annotation for this catalog entry. The image is
@@ -224,8 +226,9 @@ class GlobalCatalogV1(BaseService):
         :param bool disabled: Boolean value that determines the global visibility
                for the catalog entry, and its children. If it is not enabled, all plans
                are disabled.
-        :param List[str] tags: A list of tags. For example, IBM, 3rd Party, Beta,
-               GA, and Single Tenant.
+        :param List[str] tags: A searchable list of tags. For example, IBM, 3rd
+               Party, Beta, GA, and Single Tenant. Valid values found at
+               https://globalcatalog.test.cloud.ibm.com/search.
         :param Provider provider: Information related to the provider associated
                with a catalog entry.
         :param str id: Catalog entry's unique ID. It's the same across all catalog
@@ -432,8 +435,10 @@ class GlobalCatalogV1(BaseService):
         :param str name: Programmatic name for this catalog entry, which must be
                formatted like a CRN segment. See the display name in OverviewUI for a
                user-readable name.
-        :param str kind: The type of catalog entry, **service**, **template**,
-               **dashboard**, which determines the type and shape of the object.
+        :param str kind: The type of catalog entry which determines the type and
+               shape of the object. Valid GC types are buildpack, cname, dataset,
+               geography, iaas, platform_service, runtime, service, template,
+               ui-dashboard.
         :param dict overview_ui: Overview is nested in the top level. The key value
                pair is `[_language_]overview_ui`.
         :param Image images: Image annotation for this catalog entry. The image is
@@ -441,8 +446,9 @@ class GlobalCatalogV1(BaseService):
         :param bool disabled: Boolean value that determines the global visibility
                for the catalog entry, and its children. If it is not enabled, all plans
                are disabled.
-        :param List[str] tags: A list of tags. For example, IBM, 3rd Party, Beta,
-               GA, and Single Tenant.
+        :param List[str] tags: A searchable list of tags. For example, IBM, 3rd
+               Party, Beta, GA, and Single Tenant. Valid values found at
+               https://globalcatalog.test.cloud.ibm.com/search.
         :param Provider provider: Information related to the provider associated
                with a catalog entry.
         :param str parent_id: (optional) The ID of the parent catalog entry if it
@@ -824,6 +830,7 @@ class GlobalCatalogV1(BaseService):
         self,
         id: str,
         *,
+        restrictions: Optional[str] = None,
         extendable: Optional[bool] = None,
         include: Optional['VisibilityDetail'] = None,
         exclude: Optional['VisibilityDetail'] = None,
@@ -837,7 +844,13 @@ class GlobalCatalogV1(BaseService):
         the provided token. This endpoint is ETag enabled.
 
         :param str id: The object's unique ID.
-        :param bool extendable: (optional) Allows the visibility to be extenable.
+        :param str restrictions: (optional) This controls the overall visibility.
+               It is an enum of *public*, *nonibm_only*, *ibm_only*, and *private*. public
+               means it is visible to all. nonibm_only means it is visible to all except
+               IBM unless their account is explicitly included, ibm_only means it is
+               visible to all IBM unless their account is explicitly excluded. private
+               means it is visible only to the included accounts.
+        :param bool extendable: (optional) Allows the visibility to be extendable.
         :param VisibilityDetail include: (optional) Visibility details related to a
                catalog entry.
         :param VisibilityDetail exclude: (optional) Visibility details related to a
@@ -870,6 +883,7 @@ class GlobalCatalogV1(BaseService):
         }
 
         data = {
+            'restrictions': restrictions,
             'extendable': extendable,
             'include': include,
             'exclude': exclude,
@@ -1962,33 +1976,56 @@ class CFMetaData:
     """
     Service-related metadata.
 
-    :param str type: (optional) Type of service.
+    :param str type: (optional) Deprecated: The type of service (public, cfaas,
+          personal_catalog, kms, toolchain, etc.).
     :param bool iam_compatible: (optional) Boolean value that describes whether the
-          service is compatible with Identity and Access Management.
-    :param bool unique_api_key: (optional) Boolean value that describes whether the
-          service has a unique API key.
-    :param bool provisionable: (optional) Boolean value that describes whether the
-          service is provisionable or not. You may need sales or support to create this
+          service is compatible with Identity and Access Management for authentication and
+          authorization.
+    :param bool unique_api_key: (optional) Deprecated: Boolean value that describes
+          whether the service has a unique API key. Only settable on services, should be
+          set via partnercenter.
+    :param bool provisionable: (optional) Boolean value that, if true, the service
+          is provisionable via resource controller (RC) or, if false, via a service
+          control point API. If false, you may need sales or support to create this
           service.
-    :param bool bindable: (optional) Boolean value that describes whether you can
-          create bindings for this service.
-    :param bool async_provisioning_supported: (optional) Boolean value that
-          describes whether the service supports asynchronous provisioning.
-    :param bool async_unprovisioning_supported: (optional) Boolean value that
-          describes whether the service supports asynchronous unprovisioning.
-    :param List[str] requires: (optional) Service dependencies.
+    :param bool bindable: (optional) Boolean value that describes whether the
+          service can be bound to an application. If true then this will create and use
+          resource keys.
+    :param bool async_provisioning_supported: (optional) Deprecated: Boolean value
+          that describes whether the service supports asynchronous provisioning. Now
+          handled by a 202 response indicating support from the broker on provisioning.
+    :param bool async_unprovisioning_supported: (optional) Deprecated: Boolean value
+          that describes whether the service supports asynchronous unprovisioning. Now
+          handled by a 202 response indicating support from the broker on unprovisioning.
+    :param List[str] requires: (optional) Deprecated: Dependencies needed to use
+          this service.
     :param bool plan_updateable: (optional) Boolean value that describes whether the
-          service supports upgrade or downgrade for some plans.
-    :param str state: (optional) String that describes whether the service is active
-          or inactive.
-    :param bool service_check_enabled: (optional) Boolean value that describes
-          whether the service check is enabled.
-    :param int test_check_interval: (optional) Test check interval.
+          service supports changing plans within the service. Only settable on services,
+          read only on plans and deployments.
+    :param str state: (optional) Deprecated: String that describes whether the
+          service is active or inactive.
+    :param bool service_check_enabled: (optional) Deprecated: Boolean value that
+          describes whether the Estado testing service will perform uptime tests for this
+          service.
+    :param int test_check_interval: (optional) Deprecated: A unit of time that
+          determines the time in between uptime checks performed by Estado.
     :param bool service_key_supported: (optional) Boolean value that describes
-          whether the service supports service keys.
-    :param dict cf_guid: (optional) If the field is imported from Cloud Foundry, the
-          Cloud Foundry region's GUID. This is a required field. For example,
+          whether the service supports the creation of service credentials. Without
+          service key support, a service cannot be bound to a cluster.
+    :param dict cf_guid: (optional) Deprecated: If the field is imported from Cloud
+          Foundry, the Cloud Foundry region's GUID. This is a required field. For example,
           `us-south=123`.
+    :param str crn_mask: (optional) Cloud resource name identifying the environment
+          containing this service.
+    :param dict user_defined_service: (optional) Deprecated: An extended set of
+          metadata fields that pertain to user-defined services.
+    :param dict extension: (optional) Deprecated: A property-bag like extension to
+          service metadata.
+    :param bool paid_only: (optional) Deprecated: Boolean flag indicating if this
+          service only offers paid pricing plans rather than the default paygo.
+    :param bool custom_create_page_hybrid_enabled: (optional) Boolean flag that
+          determines if the hybrid page is accessible from the main catalog provisioning
+          page.
     """
 
     def __init__(
@@ -2008,37 +2045,67 @@ class CFMetaData:
         test_check_interval: Optional[int] = None,
         service_key_supported: Optional[bool] = None,
         cf_guid: Optional[dict] = None,
+        crn_mask: Optional[str] = None,
+        user_defined_service: Optional[dict] = None,
+        extension: Optional[dict] = None,
+        paid_only: Optional[bool] = None,
+        custom_create_page_hybrid_enabled: Optional[bool] = None,
     ) -> None:
         """
         Initialize a CFMetaData object.
 
-        :param str type: (optional) Type of service.
+        :param str type: (optional) Deprecated: The type of service (public, cfaas,
+               personal_catalog, kms, toolchain, etc.).
         :param bool iam_compatible: (optional) Boolean value that describes whether
-               the service is compatible with Identity and Access Management.
-        :param bool unique_api_key: (optional) Boolean value that describes whether
-               the service has a unique API key.
-        :param bool provisionable: (optional) Boolean value that describes whether
-               the service is provisionable or not. You may need sales or support to
+               the service is compatible with Identity and Access Management for
+               authentication and authorization.
+        :param bool unique_api_key: (optional) Deprecated: Boolean value that
+               describes whether the service has a unique API key. Only settable on
+               services, should be set via partnercenter.
+        :param bool provisionable: (optional) Boolean value that, if true, the
+               service is provisionable via resource controller (RC) or, if false, via a
+               service control point API. If false, you may need sales or support to
                create this service.
-        :param bool bindable: (optional) Boolean value that describes whether you
-               can create bindings for this service.
-        :param bool async_provisioning_supported: (optional) Boolean value that
-               describes whether the service supports asynchronous provisioning.
-        :param bool async_unprovisioning_supported: (optional) Boolean value that
-               describes whether the service supports asynchronous unprovisioning.
-        :param List[str] requires: (optional) Service dependencies.
+        :param bool bindable: (optional) Boolean value that describes whether the
+               service can be bound to an application. If true then this will create and
+               use resource keys.
+        :param bool async_provisioning_supported: (optional) Deprecated: Boolean
+               value that describes whether the service supports asynchronous
+               provisioning. Now handled by a 202 response indicating support from the
+               broker on provisioning.
+        :param bool async_unprovisioning_supported: (optional) Deprecated: Boolean
+               value that describes whether the service supports asynchronous
+               unprovisioning. Now handled by a 202 response indicating support from the
+               broker on unprovisioning.
+        :param List[str] requires: (optional) Deprecated: Dependencies needed to
+               use this service.
         :param bool plan_updateable: (optional) Boolean value that describes
-               whether the service supports upgrade or downgrade for some plans.
-        :param str state: (optional) String that describes whether the service is
-               active or inactive.
-        :param bool service_check_enabled: (optional) Boolean value that describes
-               whether the service check is enabled.
-        :param int test_check_interval: (optional) Test check interval.
+               whether the service supports changing plans within the service. Only
+               settable on services, read only on plans and deployments.
+        :param str state: (optional) Deprecated: String that describes whether the
+               service is active or inactive.
+        :param bool service_check_enabled: (optional) Deprecated: Boolean value
+               that describes whether the Estado testing service will perform uptime tests
+               for this service.
+        :param int test_check_interval: (optional) Deprecated: A unit of time that
+               determines the time in between uptime checks performed by Estado.
         :param bool service_key_supported: (optional) Boolean value that describes
-               whether the service supports service keys.
-        :param dict cf_guid: (optional) If the field is imported from Cloud
-               Foundry, the Cloud Foundry region's GUID. This is a required field. For
-               example, `us-south=123`.
+               whether the service supports the creation of service credentials. Without
+               service key support, a service cannot be bound to a cluster.
+        :param dict cf_guid: (optional) Deprecated: If the field is imported from
+               Cloud Foundry, the Cloud Foundry region's GUID. This is a required field.
+               For example, `us-south=123`.
+        :param str crn_mask: (optional) Cloud resource name identifying the
+               environment containing this service.
+        :param dict user_defined_service: (optional) Deprecated: An extended set of
+               metadata fields that pertain to user-defined services.
+        :param dict extension: (optional) Deprecated: A property-bag like extension
+               to service metadata.
+        :param bool paid_only: (optional) Deprecated: Boolean flag indicating if
+               this service only offers paid pricing plans rather than the default paygo.
+        :param bool custom_create_page_hybrid_enabled: (optional) Boolean flag that
+               determines if the hybrid page is accessible from the main catalog
+               provisioning page.
         """
         self.type = type
         self.iam_compatible = iam_compatible
@@ -2054,6 +2121,11 @@ class CFMetaData:
         self.test_check_interval = test_check_interval
         self.service_key_supported = service_key_supported
         self.cf_guid = cf_guid
+        self.crn_mask = crn_mask
+        self.user_defined_service = user_defined_service
+        self.extension = extension
+        self.paid_only = paid_only
+        self.custom_create_page_hybrid_enabled = custom_create_page_hybrid_enabled
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'CFMetaData':
@@ -2087,6 +2159,16 @@ class CFMetaData:
             args['service_key_supported'] = service_key_supported
         if (cf_guid := _dict.get('cf_guid')) is not None:
             args['cf_guid'] = cf_guid
+        if (crn_mask := _dict.get('crn_mask')) is not None:
+            args['crn_mask'] = crn_mask
+        if (user_defined_service := _dict.get('user_defined_service')) is not None:
+            args['user_defined_service'] = user_defined_service
+        if (extension := _dict.get('extension')) is not None:
+            args['extension'] = extension
+        if (paid_only := _dict.get('paid_only')) is not None:
+            args['paid_only'] = paid_only
+        if (custom_create_page_hybrid_enabled := _dict.get('custom_create_page_hybrid_enabled')) is not None:
+            args['custom_create_page_hybrid_enabled'] = custom_create_page_hybrid_enabled
         return cls(**args)
 
     @classmethod
@@ -2125,6 +2207,16 @@ class CFMetaData:
             _dict['service_key_supported'] = self.service_key_supported
         if hasattr(self, 'cf_guid') and self.cf_guid is not None:
             _dict['cf_guid'] = self.cf_guid
+        if hasattr(self, 'crn_mask') and self.crn_mask is not None:
+            _dict['crn_mask'] = self.crn_mask
+        if hasattr(self, 'user_defined_service') and self.user_defined_service is not None:
+            _dict['user_defined_service'] = self.user_defined_service
+        if hasattr(self, 'extension') and self.extension is not None:
+            _dict['extension'] = self.extension
+        if hasattr(self, 'paid_only') and self.paid_only is not None:
+            _dict['paid_only'] = self.paid_only
+        if hasattr(self, 'custom_create_page_hybrid_enabled') and self.custom_create_page_hybrid_enabled is not None:
+            _dict['custom_create_page_hybrid_enabled'] = self.custom_create_page_hybrid_enabled
         return _dict
 
     def _to_dict(self):
@@ -2152,8 +2244,8 @@ class Callbacks:
 
     :param str controller_url: (optional) The URL of the deployment controller.
     :param str broker_url: (optional) The URL of the deployment broker.
-    :param str broker_proxy_url: (optional) The URL of the deployment broker SC
-          proxy.
+    :param str broker_proxy_url: (optional) Deprecated: The URL of the deployment
+          broker SC proxy.
     :param str dashboard_url: (optional) The URL of dashboard callback.
     :param str dashboard_data_url: (optional) The URL of dashboard data.
     :param str dashboard_detail_tab_url: (optional) The URL of the dashboard detail
@@ -2184,8 +2276,8 @@ class Callbacks:
 
         :param str controller_url: (optional) The URL of the deployment controller.
         :param str broker_url: (optional) The URL of the deployment broker.
-        :param str broker_proxy_url: (optional) The URL of the deployment broker SC
-               proxy.
+        :param str broker_proxy_url: (optional) Deprecated: The URL of the
+               deployment broker SC proxy.
         :param str dashboard_url: (optional) The URL of dashboard callback.
         :param str dashboard_data_url: (optional) The URL of dashboard data.
         :param str dashboard_detail_tab_url: (optional) The URL of the dashboard
@@ -2289,8 +2381,9 @@ class CatalogEntry:
     :param str name: Programmatic name for this catalog entry, which must be
           formatted like a CRN segment. See the display name in OverviewUI for a
           user-readable name.
-    :param str kind: The type of catalog entry, **service**, **template**,
-          **dashboard**, which determines the type and shape of the object.
+    :param str kind: The type of catalog entry which determines the type and shape
+          of the object. Valid GC types are buildpack, cname, dataset, geography, iaas,
+          platform_service, runtime, service, template, ui-dashboard.
     :param dict overview_ui: Overview is nested in the top level. The key value pair
           is `[_language_]overview_ui`.
     :param Image images: Image annotation for this catalog entry. The image is a
@@ -2300,8 +2393,9 @@ class CatalogEntry:
     :param bool disabled: Boolean value that determines the global visibility for
           the catalog entry, and its children. If it is not enabled, all plans are
           disabled.
-    :param List[str] tags: A list of tags. For example, IBM, 3rd Party, Beta, GA,
-          and Single Tenant.
+    :param List[str] tags: A searchable list of tags. For example, IBM, 3rd Party,
+          Beta, GA, and Single Tenant. Valid values found at
+          https://globalcatalog.test.cloud.ibm.com/search.
     :param bool group: (optional) Boolean value that determines whether the catalog
           entry is a group.
     :param Provider provider: Information related to the provider associated with a
@@ -2319,7 +2413,8 @@ class CatalogEntry:
     :param List[str] geo_tags: (optional) tags to indicate the locations this
           service is deployable to.
     :param List[str] pricing_tags: (optional) tags to indicate the type of pricing
-          plans this service supports.
+          plans this service supports. Plans tagged with paid_only will not be shown for
+          trial accounts.
     :param datetime created: (optional) Date created.
     :param datetime updated: (optional) Date last updated.
     """
@@ -2353,8 +2448,10 @@ class CatalogEntry:
         :param str name: Programmatic name for this catalog entry, which must be
                formatted like a CRN segment. See the display name in OverviewUI for a
                user-readable name.
-        :param str kind: The type of catalog entry, **service**, **template**,
-               **dashboard**, which determines the type and shape of the object.
+        :param str kind: The type of catalog entry which determines the type and
+               shape of the object. Valid GC types are buildpack, cname, dataset,
+               geography, iaas, platform_service, runtime, service, template,
+               ui-dashboard.
         :param dict overview_ui: Overview is nested in the top level. The key value
                pair is `[_language_]overview_ui`.
         :param Image images: Image annotation for this catalog entry. The image is
@@ -2362,8 +2459,9 @@ class CatalogEntry:
         :param bool disabled: Boolean value that determines the global visibility
                for the catalog entry, and its children. If it is not enabled, all plans
                are disabled.
-        :param List[str] tags: A list of tags. For example, IBM, 3rd Party, Beta,
-               GA, and Single Tenant.
+        :param List[str] tags: A searchable list of tags. For example, IBM, 3rd
+               Party, Beta, GA, and Single Tenant. Valid values found at
+               https://globalcatalog.test.cloud.ibm.com/search.
         :param Provider provider: Information related to the provider associated
                with a catalog entry.
         :param str parent_id: (optional) The ID of the parent catalog entry if it
@@ -2536,8 +2634,9 @@ class CatalogEntry:
 
     class KindEnum(str, Enum):
         """
-        The type of catalog entry, **service**, **template**, **dashboard**, which
-        determines the type and shape of the object.
+        The type of catalog entry which determines the type and shape of the object. Valid
+        GC types are buildpack, cname, dataset, geography, iaas, platform_service,
+        runtime, service, template, ui-dashboard.
         """
 
         SERVICE = 'service'
@@ -2550,7 +2649,8 @@ class CatalogEntryMetadata:
     Model used to describe metadata object returned.
 
     :param bool rc_compatible: (optional) Boolean value that describes whether the
-          service is compatible with the Resource Controller.
+          service is compatible with the Resource Controller. Only settable for
+          deployments, propogated upward.
     :param CFMetaData service: (optional) Service-related metadata.
     :param PlanMetaData plan: (optional) Plan-related metadata.
     :param AliasMetaData alias: (optional) Alias-related metadata.
@@ -2563,7 +2663,8 @@ class CatalogEntryMetadata:
     :param Callbacks callbacks: (optional) Callback-related information associated
           with a catalog entry.
     :param str original_name: (optional) The original name of the object.
-    :param str version: (optional) Optional version of the object.
+    :param str version: (optional) Deprecated: Optional version of the object. Only
+          valid for templates.
     :param dict other: (optional) Additional information.
     :param CatalogEntryMetadataPricing pricing: (optional) Pricing-related
           information.
@@ -2593,7 +2694,8 @@ class CatalogEntryMetadata:
         Initialize a CatalogEntryMetadata object.
 
         :param bool rc_compatible: (optional) Boolean value that describes whether
-               the service is compatible with the Resource Controller.
+               the service is compatible with the Resource Controller. Only settable for
+               deployments, propogated upward.
         :param CFMetaData service: (optional) Service-related metadata.
         :param PlanMetaData plan: (optional) Plan-related metadata.
         :param AliasMetaData alias: (optional) Alias-related metadata.
@@ -2607,7 +2709,8 @@ class CatalogEntryMetadata:
         :param Callbacks callbacks: (optional) Callback-related information
                associated with a catalog entry.
         :param str original_name: (optional) The original name of the object.
-        :param str version: (optional) Optional version of the object.
+        :param str version: (optional) Deprecated: Optional version of the object.
+               Only valid for templates.
         :param dict other: (optional) Additional information.
         :param CatalogEntryMetadataPricing pricing: (optional) Pricing-related
                information.
@@ -2755,15 +2858,21 @@ class CatalogEntryMetadataDeployment:
           located.
     :param str location_url: (optional) Pointer to the location resource in the
           catalog.
-    :param str original_location: (optional) Original service location.
+    :param str original_location: (optional) The original region in which this
+          deployment existed.
     :param str target_crn: (optional) A CRN that describes the deployment.
           crn:v1:[cname]:[ctype]:[location]:[scope]::[resource-type]:[resource].
-    :param str service_crn: (optional) CRN for the service.
-    :param str mccp_id: (optional) ID for MCCP.
+    :param str service_crn: (optional) Cloud resource name for this deployment.
+    :param str mccp_id: (optional) Deprecated: ID of the multi cloud connectivity
+          platform.
     :param Broker broker: (optional) The broker associated with a catalog entry.
-    :param bool supports_rc_migration: (optional) This deployment not only supports
-          RC but is ready to migrate and support the RC broker for a location.
-    :param str target_network: (optional) network to use during deployment.
+    :param bool supports_rc_migration: (optional) Deprecated: This deployment not
+          only supports RC but is ready to migrate and support the RC broker for a
+          location.
+    :param str target_network: (optional) When using the service_endpoint_supported
+          tag for a deployment, this optional field can be set on a deployment to denote
+          the supported service endpoint type (cse_private, public, or
+          cse_private+public).
     """
 
     def __init__(
@@ -2784,17 +2893,22 @@ class CatalogEntryMetadataDeployment:
 
         :param str location: (optional) Describes the region where the service is
                located.
-        :param str original_location: (optional) Original service location.
+        :param str original_location: (optional) The original region in which this
+               deployment existed.
         :param str target_crn: (optional) A CRN that describes the deployment.
                crn:v1:[cname]:[ctype]:[location]:[scope]::[resource-type]:[resource].
-        :param str service_crn: (optional) CRN for the service.
-        :param str mccp_id: (optional) ID for MCCP.
+        :param str service_crn: (optional) Cloud resource name for this deployment.
+        :param str mccp_id: (optional) Deprecated: ID of the multi cloud
+               connectivity platform.
         :param Broker broker: (optional) The broker associated with a catalog
                entry.
-        :param bool supports_rc_migration: (optional) This deployment not only
-               supports RC but is ready to migrate and support the RC broker for a
-               location.
-        :param str target_network: (optional) network to use during deployment.
+        :param bool supports_rc_migration: (optional) Deprecated: This deployment
+               not only supports RC but is ready to migrate and support the RC broker for
+               a location.
+        :param str target_network: (optional) When using the
+               service_endpoint_supported tag for a deployment, this optional field can be
+               set on a deployment to denote the supported service endpoint type
+               (cse_private, public, or cse_private+public).
         """
         self.location = location
         self.location_url = location_url
@@ -2885,7 +2999,7 @@ class CatalogEntryMetadataPricing:
     Pricing-related information.
 
     :param str type: (optional) Type of plan. Valid values are `free`, `trial`,
-          `paygo`, `bluemix-subscription`, and `ibm-subscription`.
+          `paygo`, `paid`, `subscription`.
     :param str origin: (optional) Defines where the pricing originates.
     :param StartingPrice starting_price: (optional) Plan-specific starting price
           information.
@@ -2893,6 +3007,9 @@ class CatalogEntryMetadataPricing:
           from. Only set if object kind is deployment.
     :param str deployment_location: (optional) The deployment location this pricing
           is from. Only set if object kind is deployment.
+    :param str deployment_region: (optional) If price is for a deployment object
+          then the region in the pricing catalog of the deployment object will be here. To
+          be valid, this value must be contained within deployment_regions.
     :param bool deployment_location_no_price_available: (optional) Is the location
           price not available. Only set in api /pricing/deployment and only set if true.
           This means for the given deployment object there was no pricing set in pricing
@@ -2900,6 +3017,17 @@ class CatalogEntryMetadataPricing:
     :param List[Metrics] metrics: (optional) Plan-specific cost metric structure.
     :param List[str] deployment_regions: (optional) List of regions where region
           pricing is available. Only set on global deployments if enabled by owner.
+    :param datetime effective_from: (optional) The start date-time indicating when
+          this pricing plan takes effect.
+    :param datetime effective_until: (optional) The end date-time indicating when
+          this pricing plan is no longer in effect.
+    :param bool require_login: (optional) Boolean value indicating whether or not
+          this pricing plan requires login to get pricing data.
+    :param str pricing_catalog_url: (optional) URL to the entry for this plan on the
+          pricing catalog.
+    :param List[str] sales_avenue: (optional) Tags describing how this plan was
+          purchased (catalog [default], seller, private offer). Currently only settable on
+          MCSP subscription plans.
     """
 
     def __init__(
@@ -2910,15 +3038,21 @@ class CatalogEntryMetadataPricing:
         starting_price: Optional['StartingPrice'] = None,
         deployment_id: Optional[str] = None,
         deployment_location: Optional[str] = None,
+        deployment_region: Optional[str] = None,
         deployment_location_no_price_available: Optional[bool] = None,
         metrics: Optional[List['Metrics']] = None,
         deployment_regions: Optional[List[str]] = None,
+        effective_from: Optional[datetime] = None,
+        effective_until: Optional[datetime] = None,
+        require_login: Optional[bool] = None,
+        pricing_catalog_url: Optional[str] = None,
+        sales_avenue: Optional[List[str]] = None,
     ) -> None:
         """
         Initialize a CatalogEntryMetadataPricing object.
 
         :param str type: (optional) Type of plan. Valid values are `free`, `trial`,
-               `paygo`, `bluemix-subscription`, and `ibm-subscription`.
+               `paygo`, `paid`, `subscription`.
         :param str origin: (optional) Defines where the pricing originates.
         :param StartingPrice starting_price: (optional) Plan-specific starting
                price information.
@@ -2926,6 +3060,10 @@ class CatalogEntryMetadataPricing:
                is from. Only set if object kind is deployment.
         :param str deployment_location: (optional) The deployment location this
                pricing is from. Only set if object kind is deployment.
+        :param str deployment_region: (optional) If price is for a deployment
+               object then the region in the pricing catalog of the deployment object will
+               be here. To be valid, this value must be contained within
+               deployment_regions.
         :param bool deployment_location_no_price_available: (optional) Is the
                location price not available. Only set in api /pricing/deployment and only
                set if true. This means for the given deployment object there was no
@@ -2935,15 +3073,32 @@ class CatalogEntryMetadataPricing:
         :param List[str] deployment_regions: (optional) List of regions where
                region pricing is available. Only set on global deployments if enabled by
                owner.
+        :param datetime effective_from: (optional) The start date-time indicating
+               when this pricing plan takes effect.
+        :param datetime effective_until: (optional) The end date-time indicating
+               when this pricing plan is no longer in effect.
+        :param bool require_login: (optional) Boolean value indicating whether or
+               not this pricing plan requires login to get pricing data.
+        :param str pricing_catalog_url: (optional) URL to the entry for this plan
+               on the pricing catalog.
+        :param List[str] sales_avenue: (optional) Tags describing how this plan was
+               purchased (catalog [default], seller, private offer). Currently only
+               settable on MCSP subscription plans.
         """
         self.type = type
         self.origin = origin
         self.starting_price = starting_price
         self.deployment_id = deployment_id
         self.deployment_location = deployment_location
+        self.deployment_region = deployment_region
         self.deployment_location_no_price_available = deployment_location_no_price_available
         self.metrics = metrics
         self.deployment_regions = deployment_regions
+        self.effective_from = effective_from
+        self.effective_until = effective_until
+        self.require_login = require_login
+        self.pricing_catalog_url = pricing_catalog_url
+        self.sales_avenue = sales_avenue
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'CatalogEntryMetadataPricing':
@@ -2959,12 +3114,24 @@ class CatalogEntryMetadataPricing:
             args['deployment_id'] = deployment_id
         if (deployment_location := _dict.get('deployment_location')) is not None:
             args['deployment_location'] = deployment_location
+        if (deployment_region := _dict.get('deployment_region')) is not None:
+            args['deployment_region'] = deployment_region
         if (deployment_location_no_price_available := _dict.get('deployment_location_no_price_available')) is not None:
             args['deployment_location_no_price_available'] = deployment_location_no_price_available
         if (metrics := _dict.get('metrics')) is not None:
             args['metrics'] = [Metrics.from_dict(v) for v in metrics]
         if (deployment_regions := _dict.get('deployment_regions')) is not None:
             args['deployment_regions'] = deployment_regions
+        if (effective_from := _dict.get('effective_from')) is not None:
+            args['effective_from'] = string_to_datetime(effective_from)
+        if (effective_until := _dict.get('effective_until')) is not None:
+            args['effective_until'] = string_to_datetime(effective_until)
+        if (require_login := _dict.get('require_login')) is not None:
+            args['require_login'] = require_login
+        if (pricing_catalog_url := _dict.get('pricing_catalog_url')) is not None:
+            args['pricing_catalog_url'] = pricing_catalog_url
+        if (sales_avenue := _dict.get('sales_avenue')) is not None:
+            args['sales_avenue'] = sales_avenue
         return cls(**args)
 
     @classmethod
@@ -2988,6 +3155,8 @@ class CatalogEntryMetadataPricing:
             _dict['deployment_id'] = self.deployment_id
         if hasattr(self, 'deployment_location') and self.deployment_location is not None:
             _dict['deployment_location'] = self.deployment_location
+        if hasattr(self, 'deployment_region') and self.deployment_region is not None:
+            _dict['deployment_region'] = self.deployment_region
         if (
             hasattr(self, 'deployment_location_no_price_available')
             and self.deployment_location_no_price_available is not None
@@ -3003,6 +3172,16 @@ class CatalogEntryMetadataPricing:
             _dict['metrics'] = metrics_list
         if hasattr(self, 'deployment_regions') and self.deployment_regions is not None:
             _dict['deployment_regions'] = self.deployment_regions
+        if hasattr(self, 'effective_from') and self.effective_from is not None:
+            _dict['effective_from'] = datetime_to_string(self.effective_from)
+        if hasattr(self, 'effective_until') and self.effective_until is not None:
+            _dict['effective_until'] = datetime_to_string(self.effective_until)
+        if hasattr(self, 'require_login') and self.require_login is not None:
+            _dict['require_login'] = self.require_login
+        if hasattr(self, 'pricing_catalog_url') and self.pricing_catalog_url is not None:
+            _dict['pricing_catalog_url'] = self.pricing_catalog_url
+        if hasattr(self, 'sales_avenue') and self.sales_avenue is not None:
+            _dict['sales_avenue'] = self.sales_avenue
         return _dict
 
     def _to_dict(self):
@@ -3101,15 +3280,21 @@ class DeploymentBase:
     :param str location: (optional) Describes the region where the service is
           located.
     :param str location_url: (optional) URL of deployment.
-    :param str original_location: (optional) Original service location.
+    :param str original_location: (optional) The original region in which this
+          deployment existed.
     :param str target_crn: (optional) A CRN that describes the deployment.
           crn:v1:[cname]:[ctype]:[location]:[scope]::[resource-type]:[resource].
-    :param str service_crn: (optional) CRN for the service.
-    :param str mccp_id: (optional) ID for MCCP.
+    :param str service_crn: (optional) Cloud resource name for this deployment.
+    :param str mccp_id: (optional) Deprecated: ID of the multi cloud connectivity
+          platform.
     :param Broker broker: (optional) The broker associated with a catalog entry.
-    :param bool supports_rc_migration: (optional) This deployment not only supports
-          RC but is ready to migrate and support the RC broker for a location.
-    :param str target_network: (optional) network to use during deployment.
+    :param bool supports_rc_migration: (optional) Deprecated: This deployment not
+          only supports RC but is ready to migrate and support the RC broker for a
+          location.
+    :param str target_network: (optional) When using the service_endpoint_supported
+          tag for a deployment, this optional field can be set on a deployment to denote
+          the supported service endpoint type (cse_private, public, or
+          cse_private+public).
     """
 
     def __init__(
@@ -3131,17 +3316,22 @@ class DeploymentBase:
         :param str location: (optional) Describes the region where the service is
                located.
         :param str location_url: (optional) URL of deployment.
-        :param str original_location: (optional) Original service location.
+        :param str original_location: (optional) The original region in which this
+               deployment existed.
         :param str target_crn: (optional) A CRN that describes the deployment.
                crn:v1:[cname]:[ctype]:[location]:[scope]::[resource-type]:[resource].
-        :param str service_crn: (optional) CRN for the service.
-        :param str mccp_id: (optional) ID for MCCP.
+        :param str service_crn: (optional) Cloud resource name for this deployment.
+        :param str mccp_id: (optional) Deprecated: ID of the multi cloud
+               connectivity platform.
         :param Broker broker: (optional) The broker associated with a catalog
                entry.
-        :param bool supports_rc_migration: (optional) This deployment not only
-               supports RC but is ready to migrate and support the RC broker for a
-               location.
-        :param str target_network: (optional) network to use during deployment.
+        :param bool supports_rc_migration: (optional) Deprecated: This deployment
+               not only supports RC but is ready to migrate and support the RC broker for
+               a location.
+        :param str target_network: (optional) When using the
+               service_endpoint_supported tag for a deployment, this optional field can be
+               set on a deployment to denote the supported service endpoint type
+               (cse_private, public, or cse_private+public).
         """
         self.location = location
         self.location_url = location_url
@@ -3606,20 +3796,30 @@ class Metrics:
     """
     Plan-specific cost metrics information.
 
-    :param str part_ref: (optional) The part reference.
+    :param str part_ref: (optional) The reference guid for the part.
     :param str metric_id: (optional) The metric ID or part number.
-    :param str tier_model: (optional) The tier model.
-    :param str charge_unit: (optional) The unit to charge.
-    :param str charge_unit_name: (optional) The charge unit name.
-    :param int charge_unit_quantity: (optional) The charge unit quantity.
-    :param str resource_display_name: (optional) Display name of the resource.
-    :param str charge_unit_display_name: (optional) Display name of the charge unit.
-    :param int usage_cap_qty: (optional) Usage limit for the metric.
-    :param int display_cap: (optional) Display capacity.
-    :param datetime effective_from: (optional) Effective from time.
-    :param datetime effective_until: (optional) Effective until time.
+    :param str tier_model: (optional) The pricing tier type used to calculate the
+          marginal unit price. Follows simple, graduated or block tier styles.
+    :param str charge_unit: (optional) The unit to be charged under this metric.
+    :param str charge_unit_name: (optional) The name associated with a charge unit
+          to provide context.
+    :param int charge_unit_quantity: (optional) The quantity associated with the
+          charge unit to determine price change intervals.
+    :param str resource_display_name: (optional) The display name of the resource
+          tied to the charge unit of this metric.
+    :param str charge_unit_display_name: (optional) Display name of the charge unit
+          to be rendered human readable by the UI.
+    :param int usage_cap_qty: (optional) Upper bound for the usage under the parent
+          metric.
+    :param int display_cap: (optional) The display capacity for the UI.
+    :param datetime effective_from: (optional) The end date-time indicating when
+          this metric is no longer in effect.
+    :param datetime effective_until: (optional) The start date-time indicating when
+          this metric takes effect.
     :param List[Amount] amounts: (optional) The pricing per metric by country and
           currency.
+    :param dict additional_properties: (optional) A property-bag like extension to
+          metric metadata.
     """
 
     def __init__(
@@ -3638,25 +3838,36 @@ class Metrics:
         effective_from: Optional[datetime] = None,
         effective_until: Optional[datetime] = None,
         amounts: Optional[List['Amount']] = None,
+        additional_properties: Optional[dict] = None,
     ) -> None:
         """
         Initialize a Metrics object.
 
-        :param str part_ref: (optional) The part reference.
+        :param str part_ref: (optional) The reference guid for the part.
         :param str metric_id: (optional) The metric ID or part number.
-        :param str tier_model: (optional) The tier model.
-        :param str charge_unit: (optional) The unit to charge.
-        :param str charge_unit_name: (optional) The charge unit name.
-        :param int charge_unit_quantity: (optional) The charge unit quantity.
-        :param str resource_display_name: (optional) Display name of the resource.
+        :param str tier_model: (optional) The pricing tier type used to calculate
+               the marginal unit price. Follows simple, graduated or block tier styles.
+        :param str charge_unit: (optional) The unit to be charged under this
+               metric.
+        :param str charge_unit_name: (optional) The name associated with a charge
+               unit to provide context.
+        :param int charge_unit_quantity: (optional) The quantity associated with
+               the charge unit to determine price change intervals.
+        :param str resource_display_name: (optional) The display name of the
+               resource tied to the charge unit of this metric.
         :param str charge_unit_display_name: (optional) Display name of the charge
-               unit.
-        :param int usage_cap_qty: (optional) Usage limit for the metric.
-        :param int display_cap: (optional) Display capacity.
-        :param datetime effective_from: (optional) Effective from time.
-        :param datetime effective_until: (optional) Effective until time.
+               unit to be rendered human readable by the UI.
+        :param int usage_cap_qty: (optional) Upper bound for the usage under the
+               parent metric.
+        :param int display_cap: (optional) The display capacity for the UI.
+        :param datetime effective_from: (optional) The end date-time indicating
+               when this metric is no longer in effect.
+        :param datetime effective_until: (optional) The start date-time indicating
+               when this metric takes effect.
         :param List[Amount] amounts: (optional) The pricing per metric by country
                and currency.
+        :param dict additional_properties: (optional) A property-bag like extension
+               to metric metadata.
         """
         self.part_ref = part_ref
         self.metric_id = metric_id
@@ -3671,6 +3882,7 @@ class Metrics:
         self.effective_from = effective_from
         self.effective_until = effective_until
         self.amounts = amounts
+        self.additional_properties = additional_properties
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Metrics':
@@ -3702,6 +3914,8 @@ class Metrics:
             args['effective_until'] = string_to_datetime(effective_until)
         if (amounts := _dict.get('amounts')) is not None:
             args['amounts'] = [Amount.from_dict(v) for v in amounts]
+        if (additional_properties := _dict.get('additional_properties')) is not None:
+            args['additional_properties'] = additional_properties
         return cls(**args)
 
     @classmethod
@@ -3744,6 +3958,8 @@ class Metrics:
                 else:
                     amounts_list.append(v.to_dict())
             _dict['amounts'] = amounts_list
+        if hasattr(self, 'additional_properties') and self.additional_properties is not None:
+            _dict['additional_properties'] = self.additional_properties
         return _dict
 
     def _to_dict(self):
@@ -3770,7 +3986,8 @@ class ObjectMetadataSet:
     Model used to describe metadata object that can be set.
 
     :param bool rc_compatible: (optional) Boolean value that describes whether the
-          service is compatible with the Resource Controller.
+          service is compatible with the Resource Controller. Only settable for
+          deployments, propogated upward.
     :param CFMetaData service: (optional) Service-related metadata.
     :param PlanMetaData plan: (optional) Plan-related metadata.
     :param AliasMetaData alias: (optional) Alias-related metadata.
@@ -3783,7 +4000,8 @@ class ObjectMetadataSet:
     :param Callbacks callbacks: (optional) Callback-related information associated
           with a catalog entry.
     :param str original_name: (optional) The original name of the object.
-    :param str version: (optional) Optional version of the object.
+    :param str version: (optional) Deprecated: Optional version of the object. Only
+          valid for templates.
     :param dict other: (optional) Additional information.
     :param PricingSet pricing: (optional) Pricing-related information.
     :param DeploymentBase deployment: (optional) Deployment-related metadata.
@@ -3811,7 +4029,8 @@ class ObjectMetadataSet:
         Initialize a ObjectMetadataSet object.
 
         :param bool rc_compatible: (optional) Boolean value that describes whether
-               the service is compatible with the Resource Controller.
+               the service is compatible with the Resource Controller. Only settable for
+               deployments, propogated upward.
         :param CFMetaData service: (optional) Service-related metadata.
         :param PlanMetaData plan: (optional) Plan-related metadata.
         :param AliasMetaData alias: (optional) Alias-related metadata.
@@ -3825,7 +4044,8 @@ class ObjectMetadataSet:
         :param Callbacks callbacks: (optional) Callback-related information
                associated with a catalog entry.
         :param str original_name: (optional) The original name of the object.
-        :param str version: (optional) Optional version of the object.
+        :param str version: (optional) Deprecated: Optional version of the object.
+               Only valid for templates.
         :param dict other: (optional) Additional information.
         :param PricingSet pricing: (optional) Pricing-related information.
         :param DeploymentBase deployment: (optional) Deployment-related metadata.
@@ -4058,21 +4278,31 @@ class PlanMetaData:
     Plan-related metadata.
 
     :param bool bindable: (optional) Boolean value that describes whether the
-          service can be bound to an application.
+          service can be bound to an application. If true then this will create and use
+          resource keys.
     :param bool reservable: (optional) Boolean value that describes whether the
-          service can be reserved.
+          service can be reserved for pricing subscriptions.
     :param bool allow_internal_users: (optional) Boolean value that describes
-          whether the service can be used internally.
-    :param bool async_provisioning_supported: (optional) Boolean value that
-          describes whether the service can be provisioned asynchronously.
-    :param bool async_unprovisioning_supported: (optional) Boolean value that
-          describes whether the service can be unprovisioned asynchronously.
-    :param int test_check_interval: (optional) Test check interval.
-    :param str single_scope_instance: (optional) Single scope instance.
-    :param bool service_check_enabled: (optional) Boolean value that describes
-          whether the service check is enabled.
-    :param dict cf_guid: (optional) If the field is imported from Cloud Foundry, the
-          Cloud Foundry region's GUID. This is a required field. For example,
+          whether the service can be used on IBM accounts. If false this cannot be
+          onboarded by an IBM account.
+    :param bool async_provisioning_supported: (optional) Deprecated: Boolean value
+          that describes whether the service supports asynchronous provisioning. Now
+          handled by a 202 response indicating support from the broker on provisioning.
+    :param bool async_unprovisioning_supported: (optional) Deprecated: Boolean value
+          that describes whether the service supports asynchronous unprovisioning. Now
+          handled by a 202 response indicating support from the broker on unprovisioning.
+    :param str provision_type: (optional) How the subscription is provisioned
+          (managed cloud service provider (mcsp), IBM_cloud, legacy).
+    :param int test_check_interval: (optional) Deprecated: A unit of time that
+          determines the time in between uptime checks to be performed by the Estado
+          testing service.
+    :param str single_scope_instance: (optional) Deprecated: String denoting if a
+          single instance is shared among a group of users. E.g. org.
+    :param bool service_check_enabled: (optional) Deprecated: Boolean value that
+          describes whether the Estado testing service will perform uptime tests for this
+          service.
+    :param dict cf_guid: (optional) Deprecated: If the field is imported from Cloud
+          Foundry, the Cloud Foundry region's GUID. This is a required field. For example,
           `us-south=123`.
     """
 
@@ -4084,6 +4314,7 @@ class PlanMetaData:
         allow_internal_users: Optional[bool] = None,
         async_provisioning_supported: Optional[bool] = None,
         async_unprovisioning_supported: Optional[bool] = None,
+        provision_type: Optional[str] = None,
         test_check_interval: Optional[int] = None,
         single_scope_instance: Optional[str] = None,
         service_check_enabled: Optional[bool] = None,
@@ -4093,28 +4324,41 @@ class PlanMetaData:
         Initialize a PlanMetaData object.
 
         :param bool bindable: (optional) Boolean value that describes whether the
-               service can be bound to an application.
+               service can be bound to an application. If true then this will create and
+               use resource keys.
         :param bool reservable: (optional) Boolean value that describes whether the
-               service can be reserved.
+               service can be reserved for pricing subscriptions.
         :param bool allow_internal_users: (optional) Boolean value that describes
-               whether the service can be used internally.
-        :param bool async_provisioning_supported: (optional) Boolean value that
-               describes whether the service can be provisioned asynchronously.
-        :param bool async_unprovisioning_supported: (optional) Boolean value that
-               describes whether the service can be unprovisioned asynchronously.
-        :param int test_check_interval: (optional) Test check interval.
-        :param str single_scope_instance: (optional) Single scope instance.
-        :param bool service_check_enabled: (optional) Boolean value that describes
-               whether the service check is enabled.
-        :param dict cf_guid: (optional) If the field is imported from Cloud
-               Foundry, the Cloud Foundry region's GUID. This is a required field. For
-               example, `us-south=123`.
+               whether the service can be used on IBM accounts. If false this cannot be
+               onboarded by an IBM account.
+        :param bool async_provisioning_supported: (optional) Deprecated: Boolean
+               value that describes whether the service supports asynchronous
+               provisioning. Now handled by a 202 response indicating support from the
+               broker on provisioning.
+        :param bool async_unprovisioning_supported: (optional) Deprecated: Boolean
+               value that describes whether the service supports asynchronous
+               unprovisioning. Now handled by a 202 response indicating support from the
+               broker on unprovisioning.
+        :param str provision_type: (optional) How the subscription is provisioned
+               (managed cloud service provider (mcsp), IBM_cloud, legacy).
+        :param int test_check_interval: (optional) Deprecated: A unit of time that
+               determines the time in between uptime checks to be performed by the Estado
+               testing service.
+        :param str single_scope_instance: (optional) Deprecated: String denoting if
+               a single instance is shared among a group of users. E.g. org.
+        :param bool service_check_enabled: (optional) Deprecated: Boolean value
+               that describes whether the Estado testing service will perform uptime tests
+               for this service.
+        :param dict cf_guid: (optional) Deprecated: If the field is imported from
+               Cloud Foundry, the Cloud Foundry region's GUID. This is a required field.
+               For example, `us-south=123`.
         """
         self.bindable = bindable
         self.reservable = reservable
         self.allow_internal_users = allow_internal_users
         self.async_provisioning_supported = async_provisioning_supported
         self.async_unprovisioning_supported = async_unprovisioning_supported
+        self.provision_type = provision_type
         self.test_check_interval = test_check_interval
         self.single_scope_instance = single_scope_instance
         self.service_check_enabled = service_check_enabled
@@ -4134,6 +4378,8 @@ class PlanMetaData:
             args['async_provisioning_supported'] = async_provisioning_supported
         if (async_unprovisioning_supported := _dict.get('async_unprovisioning_supported')) is not None:
             args['async_unprovisioning_supported'] = async_unprovisioning_supported
+        if (provision_type := _dict.get('provision_type')) is not None:
+            args['provision_type'] = provision_type
         if (test_check_interval := _dict.get('test_check_interval')) is not None:
             args['test_check_interval'] = test_check_interval
         if (single_scope_instance := _dict.get('single_scope_instance')) is not None:
@@ -4162,6 +4408,8 @@ class PlanMetaData:
             _dict['async_provisioning_supported'] = self.async_provisioning_supported
         if hasattr(self, 'async_unprovisioning_supported') and self.async_unprovisioning_supported is not None:
             _dict['async_unprovisioning_supported'] = self.async_unprovisioning_supported
+        if hasattr(self, 'provision_type') and self.provision_type is not None:
+            _dict['provision_type'] = self.provision_type
         if hasattr(self, 'test_check_interval') and self.test_check_interval is not None:
             _dict['test_check_interval'] = self.test_check_interval
         if hasattr(self, 'single_scope_instance') and self.single_scope_instance is not None:
@@ -4195,7 +4443,8 @@ class Price:
     """
     Pricing-related information.
 
-    :param int quantity_tier: (optional) Pricing tier.
+    :param int quantity_tier: (optional) The quantity of _metric_ associated with
+          the current price point.
     :param float price: (optional) Price in the selected currency.
     """
 
@@ -4208,7 +4457,8 @@ class Price:
         """
         Initialize a Price object.
 
-        :param int quantity_tier: (optional) Pricing tier.
+        :param int quantity_tier: (optional) The quantity of _metric_ associated
+               with the current price point.
         :param float price: (optional) Price in the selected currency.
         """
         self.quantity_tier = quantity_tier
@@ -4265,18 +4515,32 @@ class PricingGet:
           from. Only set if object kind is deployment.
     :param str deployment_location: (optional) The deployment location this pricing
           is from. Only set if object kind is deployment.
+    :param str deployment_region: (optional) If price is for a deployment object
+          then the region in the pricing catalog of the deployment object will be here. To
+          be valid, this value must be contained within deployment_regions.
     :param bool deployment_location_no_price_available: (optional) Is the location
           price not available. Only set in api /pricing/deployment and only set if true.
           This means for the given deployment object there was no pricing set in pricing
           catalog.
     :param str type: (optional) Type of plan. Valid values are `free`, `trial`,
-          `paygo`, `bluemix-subscription`, and `ibm-subscription`.
+          `paygo`, `paid`, `subscription`.
     :param str origin: (optional) Defines where the pricing originates.
     :param StartingPrice starting_price: (optional) Plan-specific starting price
           information.
     :param List[Metrics] metrics: (optional) Plan-specific cost metric structure.
     :param List[str] deployment_regions: (optional) List of regions where region
           pricing is available. Only set on global deployments if enabled by owner.
+    :param datetime effective_from: (optional) The start date-time indicating when
+          this pricing plan takes effect.
+    :param datetime effective_until: (optional) The end date-time indicating when
+          this pricing plan is no longer in effect.
+    :param bool require_login: (optional) Boolean value indicating whether or not
+          this pricing plan requires login to get pricing data.
+    :param str pricing_catalog_url: (optional) URL to the entry for this plan on the
+          pricing catalog.
+    :param List[str] sales_avenue: (optional) Tags describing how this plan was
+          purchased (catalog [default], seller, private offer). Currently only settable on
+          MCSP subscription plans.
     """
 
     def __init__(
@@ -4284,12 +4548,18 @@ class PricingGet:
         *,
         deployment_id: Optional[str] = None,
         deployment_location: Optional[str] = None,
+        deployment_region: Optional[str] = None,
         deployment_location_no_price_available: Optional[bool] = None,
         type: Optional[str] = None,
         origin: Optional[str] = None,
         starting_price: Optional['StartingPrice'] = None,
         metrics: Optional[List['Metrics']] = None,
         deployment_regions: Optional[List[str]] = None,
+        effective_from: Optional[datetime] = None,
+        effective_until: Optional[datetime] = None,
+        require_login: Optional[bool] = None,
+        pricing_catalog_url: Optional[str] = None,
+        sales_avenue: Optional[List[str]] = None,
     ) -> None:
         """
         Initialize a PricingGet object.
@@ -4298,12 +4568,16 @@ class PricingGet:
                is from. Only set if object kind is deployment.
         :param str deployment_location: (optional) The deployment location this
                pricing is from. Only set if object kind is deployment.
+        :param str deployment_region: (optional) If price is for a deployment
+               object then the region in the pricing catalog of the deployment object will
+               be here. To be valid, this value must be contained within
+               deployment_regions.
         :param bool deployment_location_no_price_available: (optional) Is the
                location price not available. Only set in api /pricing/deployment and only
                set if true. This means for the given deployment object there was no
                pricing set in pricing catalog.
         :param str type: (optional) Type of plan. Valid values are `free`, `trial`,
-               `paygo`, `bluemix-subscription`, and `ibm-subscription`.
+               `paygo`, `paid`, `subscription`.
         :param str origin: (optional) Defines where the pricing originates.
         :param StartingPrice starting_price: (optional) Plan-specific starting
                price information.
@@ -4312,15 +4586,32 @@ class PricingGet:
         :param List[str] deployment_regions: (optional) List of regions where
                region pricing is available. Only set on global deployments if enabled by
                owner.
+        :param datetime effective_from: (optional) The start date-time indicating
+               when this pricing plan takes effect.
+        :param datetime effective_until: (optional) The end date-time indicating
+               when this pricing plan is no longer in effect.
+        :param bool require_login: (optional) Boolean value indicating whether or
+               not this pricing plan requires login to get pricing data.
+        :param str pricing_catalog_url: (optional) URL to the entry for this plan
+               on the pricing catalog.
+        :param List[str] sales_avenue: (optional) Tags describing how this plan was
+               purchased (catalog [default], seller, private offer). Currently only
+               settable on MCSP subscription plans.
         """
         self.deployment_id = deployment_id
         self.deployment_location = deployment_location
+        self.deployment_region = deployment_region
         self.deployment_location_no_price_available = deployment_location_no_price_available
         self.type = type
         self.origin = origin
         self.starting_price = starting_price
         self.metrics = metrics
         self.deployment_regions = deployment_regions
+        self.effective_from = effective_from
+        self.effective_until = effective_until
+        self.require_login = require_login
+        self.pricing_catalog_url = pricing_catalog_url
+        self.sales_avenue = sales_avenue
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'PricingGet':
@@ -4330,6 +4621,8 @@ class PricingGet:
             args['deployment_id'] = deployment_id
         if (deployment_location := _dict.get('deployment_location')) is not None:
             args['deployment_location'] = deployment_location
+        if (deployment_region := _dict.get('deployment_region')) is not None:
+            args['deployment_region'] = deployment_region
         if (deployment_location_no_price_available := _dict.get('deployment_location_no_price_available')) is not None:
             args['deployment_location_no_price_available'] = deployment_location_no_price_available
         if (type := _dict.get('type')) is not None:
@@ -4342,6 +4635,16 @@ class PricingGet:
             args['metrics'] = [Metrics.from_dict(v) for v in metrics]
         if (deployment_regions := _dict.get('deployment_regions')) is not None:
             args['deployment_regions'] = deployment_regions
+        if (effective_from := _dict.get('effective_from')) is not None:
+            args['effective_from'] = string_to_datetime(effective_from)
+        if (effective_until := _dict.get('effective_until')) is not None:
+            args['effective_until'] = string_to_datetime(effective_until)
+        if (require_login := _dict.get('require_login')) is not None:
+            args['require_login'] = require_login
+        if (pricing_catalog_url := _dict.get('pricing_catalog_url')) is not None:
+            args['pricing_catalog_url'] = pricing_catalog_url
+        if (sales_avenue := _dict.get('sales_avenue')) is not None:
+            args['sales_avenue'] = sales_avenue
         return cls(**args)
 
     @classmethod
@@ -4356,6 +4659,8 @@ class PricingGet:
             _dict['deployment_id'] = self.deployment_id
         if hasattr(self, 'deployment_location') and self.deployment_location is not None:
             _dict['deployment_location'] = self.deployment_location
+        if hasattr(self, 'deployment_region') and self.deployment_region is not None:
+            _dict['deployment_region'] = self.deployment_region
         if (
             hasattr(self, 'deployment_location_no_price_available')
             and self.deployment_location_no_price_available is not None
@@ -4380,6 +4685,16 @@ class PricingGet:
             _dict['metrics'] = metrics_list
         if hasattr(self, 'deployment_regions') and self.deployment_regions is not None:
             _dict['deployment_regions'] = self.deployment_regions
+        if hasattr(self, 'effective_from') and self.effective_from is not None:
+            _dict['effective_from'] = datetime_to_string(self.effective_from)
+        if hasattr(self, 'effective_until') and self.effective_until is not None:
+            _dict['effective_until'] = datetime_to_string(self.effective_until)
+        if hasattr(self, 'require_login') and self.require_login is not None:
+            _dict['require_login'] = self.require_login
+        if hasattr(self, 'pricing_catalog_url') and self.pricing_catalog_url is not None:
+            _dict['pricing_catalog_url'] = self.pricing_catalog_url
+        if hasattr(self, 'sales_avenue') and self.sales_avenue is not None:
+            _dict['sales_avenue'] = self.sales_avenue
         return _dict
 
     def _to_dict(self):
@@ -4552,8 +4867,9 @@ class PricingSet:
     Pricing-related information.
 
     :param str type: (optional) Type of plan. Valid values are `free`, `trial`,
-          `paygo`, `bluemix-subscription`, and `ibm-subscription`.
-    :param str origin: (optional) Defines where the pricing originates.
+          `paygo`, `paid`, `subscription`.
+    :param str origin: (optional) Defines where the pricing originates, either the
+          pricing catalog or the global catalog.
     :param StartingPrice starting_price: (optional) Plan-specific starting price
           information.
     """
@@ -4569,8 +4885,9 @@ class PricingSet:
         Initialize a PricingSet object.
 
         :param str type: (optional) Type of plan. Valid values are `free`, `trial`,
-               `paygo`, `bluemix-subscription`, and `ibm-subscription`.
-        :param str origin: (optional) Defines where the pricing originates.
+               `paygo`, `paid`, `subscription`.
+        :param str origin: (optional) Defines where the pricing originates, either
+               the pricing catalog or the global catalog.
         :param StartingPrice starting_price: (optional) Plan-specific starting
                price information.
         """
@@ -5121,7 +5438,7 @@ class TemplateMetaData:
 
     :param List[str] services: (optional) List of required offering or plan IDs.
     :param int default_memory: (optional) Cloud Foundry instance memory value.
-    :param str start_cmd: (optional) Start Command.
+    :param str start_cmd: (optional) Command used to start a service.
     :param SourceMetaData source: (optional) Location of your applications source
           files.
     :param str runtime_catalog_id: (optional) ID of the runtime.
@@ -5154,7 +5471,7 @@ class TemplateMetaData:
         :param List[str] services: (optional) List of required offering or plan
                IDs.
         :param int default_memory: (optional) Cloud Foundry instance memory value.
-        :param str start_cmd: (optional) Start Command.
+        :param str start_cmd: (optional) Command used to start a service.
         :param SourceMetaData source: (optional) Location of your applications
                source files.
         :param str runtime_catalog_id: (optional) ID of the runtime.
@@ -5345,7 +5662,8 @@ class UIMetaData:
           weight to the UI.
     :param datetime end_of_service_time: (optional) Date and time the service will
           no longer be available.
-    :param bool hidden: (optional) Denotes visibility.
+    :param bool hidden: (optional) Denotes visibility. Can be set on a
+          service/plan/deployment only by an account with bluemix admin privileges.
     :param bool hide_lite_metering: (optional) Denotes lite metering visibility.
     :param bool no_upgrade_next_step: (optional) Denotes whether an upgrade should
           occur.
@@ -5391,7 +5709,8 @@ class UIMetaData:
                weight to the UI.
         :param datetime end_of_service_time: (optional) Date and time the service
                will no longer be available.
-        :param bool hidden: (optional) Denotes visibility.
+        :param bool hidden: (optional) Denotes visibility. Can be set on a
+               service/plan/deployment only by an account with bluemix admin privileges.
         :param bool hide_lite_metering: (optional) Denotes lite metering
                visibility.
         :param bool no_upgrade_next_step: (optional) Denotes whether an upgrade
@@ -5616,9 +5935,9 @@ class URLS:
     :param str sdk_download_url: (optional) URL to downlaod an SDK.
     :param str terms_url: (optional) URL to the terms of use for your service.
     :param str custom_create_page_url: (optional) URL to the custom create page for
-          your serivce.
+          your service.
     :param str catalog_details_url: (optional) URL to the catalog details page for
-          your serivce.
+          your service.
     :param str deprecation_doc_url: (optional) URL for deprecation documentation.
     :param str dashboard_url: (optional) URL for dashboard.
     :param str registration_url: (optional) URL for registration.
@@ -5651,9 +5970,9 @@ class URLS:
         :param str sdk_download_url: (optional) URL to downlaod an SDK.
         :param str terms_url: (optional) URL to the terms of use for your service.
         :param str custom_create_page_url: (optional) URL to the custom create page
-               for your serivce.
+               for your service.
         :param str catalog_details_url: (optional) URL to the catalog details page
-               for your serivce.
+               for your service.
         :param str deprecation_doc_url: (optional) URL for deprecation
                documentation.
         :param str dashboard_url: (optional) URL for dashboard.
@@ -5761,19 +6080,21 @@ class Visibility:
     Information related to the visibility of a catalog entry.
 
     :param str restrictions: (optional) This controls the overall visibility. It is
-          an enum of *public*, *ibm_only*, and *private*. public means it is visible to
-          all. ibm_only means it is visible to all IBM unless their account is explicitly
-          excluded. private means it is visible only to the included accounts.
+          an enum of *public*, *nonibm_only*, *ibm_only*, and *private*. public means it
+          is visible to all. nonibm_only means it is visible to all except IBM unless
+          their account is explicitly included, ibm_only means it is visible to all IBM
+          unless their account is explicitly excluded. private means it is visible only to
+          the included accounts.
     :param str owner: (optional) IAM Scope-related information associated with a
           catalog entry.
-    :param bool extendable: (optional) Allows the visibility to be extenable.
+    :param bool extendable: (optional) Allows the visibility to be extendable.
     :param VisibilityDetail include: (optional) Visibility details related to a
           catalog entry.
     :param VisibilityDetail exclude: (optional) Visibility details related to a
           catalog entry.
     :param bool approved: (optional) Determines whether the owning account has full
           control over the visibility of the entry such as adding non-IBM accounts to the
-          whitelist and making entries `private`, `ibm_only` or `public`.
+          whitelist and making entries `private`, `nonibm_only`, `ibm_only` or `public`.
     """
 
     def __init__(
@@ -5789,7 +6110,13 @@ class Visibility:
         """
         Initialize a Visibility object.
 
-        :param bool extendable: (optional) Allows the visibility to be extenable.
+        :param str restrictions: (optional) This controls the overall visibility.
+               It is an enum of *public*, *nonibm_only*, *ibm_only*, and *private*. public
+               means it is visible to all. nonibm_only means it is visible to all except
+               IBM unless their account is explicitly included, ibm_only means it is
+               visible to all IBM unless their account is explicitly excluded. private
+               means it is visible only to the included accounts.
+        :param bool extendable: (optional) Allows the visibility to be extendable.
         :param VisibilityDetail include: (optional) Visibility details related to a
                catalog entry.
         :param VisibilityDetail exclude: (optional) Visibility details related to a
@@ -5828,8 +6155,8 @@ class Visibility:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'restrictions') and getattr(self, 'restrictions') is not None:
-            _dict['restrictions'] = getattr(self, 'restrictions')
+        if hasattr(self, 'restrictions') and self.restrictions is not None:
+            _dict['restrictions'] = self.restrictions
         if hasattr(self, 'owner') and getattr(self, 'owner') is not None:
             _dict['owner'] = getattr(self, 'owner')
         if hasattr(self, 'extendable') and self.extendable is not None:
