@@ -15,7 +15,7 @@
 # limitations under the License.
 
 """
- This class contains an integration test for the Open Service Broker service.
+This class contains an integration test for the Open Service Broker service.
 """
 
 import pytest

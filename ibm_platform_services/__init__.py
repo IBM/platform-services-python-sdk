@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
- This package provides a client library for accessing the IBM Cloud Platform Services.
+This package provides a client library for accessing the IBM Cloud Platform Services.
 """
 
 from ibm_cloud_sdk_core import IAMTokenManager, DetailedResponse, BaseService, ApiException

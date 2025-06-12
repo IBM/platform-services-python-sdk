@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
- This class contains an integration test for User Management service.
+This class contains an integration test for User Management service.
 """
 
 import os

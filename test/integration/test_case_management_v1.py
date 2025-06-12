@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 '''
- This class contains an integration test for the Case Management service.
+This class contains an integration test for the Case Management service.
 '''
 
 import pytest
