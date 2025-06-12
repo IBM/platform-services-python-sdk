@@ -15,7 +15,7 @@
 # limitations under the License.
 
 """
- This class contains an integration test for the IAM Policy Management service.
+This class contains an integration test for the IAM Policy Management service.
 """
 
 import pytest

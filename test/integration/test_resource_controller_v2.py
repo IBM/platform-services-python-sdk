@@ -15,7 +15,7 @@
 # limitations under the License.
 
 """
- This class contains an integration test for the Resource Controller service.
+This class contains an integration test for the Resource Controller service.
 """
 
 import pytest
