@@ -1,3 +1,10 @@
+## [0.66.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.66.1...v0.66.2) (2025-06-12)
+
+
+### Bug Fixes
+
+* **build:** bump python core to avoid CVE ([8ee39cf](https://github.com/IBM/platform-services-python-sdk/commit/8ee39cf09915a632165b536d2de4b2600e376d6f))
+
 ## [0.66.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.66.0...v0.66.1) (2025-05-30)
 
 
