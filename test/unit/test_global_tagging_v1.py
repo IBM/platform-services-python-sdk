@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.global_tagging_v1 import *
 
 
-_service = GlobalTaggingV1(authenticator=NoAuthAuthenticator())
+_service = GlobalTaggingV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://tags.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -42,15 +44,8 @@ def preprocess_url(operation_path: str):
     The returned request URL is used to register the mock response so it needs
     to match the request URL that is formed by the requests library.
     """
-    # First, unquote the path since it might have some quoted/escaped characters in it
-    # due to how the generator inserts the operation paths into the unit test code.
-    operation_path = urllib.parse.unquote(operation_path)
 
-    # Next, quote the path using urllib so that we approximate what will
-    # happen during request processing.
-    operation_path = urllib.parse.quote(operation_path, safe='/')
-
-    # Finally, form the request URL from the base URL and operation path.
+    # Form the request URL from the base URL and operation path.
     request_url = _base_url + operation_path
 
     # If the request url does NOT end with a /, then just return it as-is.
@@ -594,10 +589,15 @@ class TestAttachTag:
         resource_model['resource_id'] = 'testString'
         resource_model['resource_type'] = 'testString'
 
+        # Construct a dict representation of a QueryString model
+        query_string_model = {}
+        query_string_model['query_string'] = 'testString'
+
         # Set up parameter values
-        resources = [resource_model]
         tag_name = 'testString'
         tag_names = ['testString']
+        resources = [resource_model]
+        query = query_string_model
         x_request_id = 'testString'
         x_correlation_id = 'testString'
         account_id = 'testString'
@@ -607,9 +607,10 @@ class TestAttachTag:
 
         # Invoke method
         response = _service.attach_tag(
-            resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            resources=resources,
+            query=query,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
             account_id=account_id,
@@ -631,9 +632,10 @@ class TestAttachTag:
         assert 'update={}'.format('true' if update else 'false') in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['resources'] == [resource_model]
         assert req_body['tag_name'] == 'testString'
         assert req_body['tag_names'] == ['testString']
+        assert req_body['resources'] == [resource_model]
+        assert req_body['query'] == query_string_model
 
     def test_attach_tag_all_params_with_retries(self):
         # Enable retries and run test_attach_tag_all_params.
@@ -665,16 +667,22 @@ class TestAttachTag:
         resource_model['resource_id'] = 'testString'
         resource_model['resource_type'] = 'testString'
 
+        # Construct a dict representation of a QueryString model
+        query_string_model = {}
+        query_string_model['query_string'] = 'testString'
+
         # Set up parameter values
-        resources = [resource_model]
         tag_name = 'testString'
         tag_names = ['testString']
+        resources = [resource_model]
+        query = query_string_model
 
         # Invoke method
         response = _service.attach_tag(
-            resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            resources=resources,
+            query=query,
             headers={},
         )
 
@@ -683,9 +691,10 @@ class TestAttachTag:
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['resources'] == [resource_model]
         assert req_body['tag_name'] == 'testString'
         assert req_body['tag_names'] == ['testString']
+        assert req_body['resources'] == [resource_model]
+        assert req_body['query'] == query_string_model
 
     def test_attach_tag_required_params_with_retries(self):
         # Enable retries and run test_attach_tag_required_params.
@@ -695,50 +704,6 @@ class TestAttachTag:
         # Disable retries and run test_attach_tag_required_params.
         _service.disable_retries()
         self.test_attach_tag_required_params()
-
-    @responses.activate
-    def test_attach_tag_value_error(self):
-        """
-        test_attach_tag_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v3/tags/attach')
-        mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Construct a dict representation of a Resource model
-        resource_model = {}
-        resource_model['resource_id'] = 'testString'
-        resource_model['resource_type'] = 'testString'
-
-        # Set up parameter values
-        resources = [resource_model]
-        tag_name = 'testString'
-        tag_names = ['testString']
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "resources": resources,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.attach_tag(**req_copy)
-
-    def test_attach_tag_value_error_with_retries(self):
-        # Enable retries and run test_attach_tag_value_error.
-        _service.enable_retries()
-        self.test_attach_tag_value_error()
-
-        # Disable retries and run test_attach_tag_value_error.
-        _service.disable_retries()
-        self.test_attach_tag_value_error()
 
 
 class TestDetachTag:
@@ -767,10 +732,15 @@ class TestDetachTag:
         resource_model['resource_id'] = 'testString'
         resource_model['resource_type'] = 'testString'
 
+        # Construct a dict representation of a QueryString model
+        query_string_model = {}
+        query_string_model['query_string'] = 'testString'
+
         # Set up parameter values
-        resources = [resource_model]
         tag_name = 'testString'
         tag_names = ['testString']
+        resources = [resource_model]
+        query = query_string_model
         x_request_id = 'testString'
         x_correlation_id = 'testString'
         account_id = 'testString'
@@ -778,9 +748,10 @@ class TestDetachTag:
 
         # Invoke method
         response = _service.detach_tag(
-            resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            resources=resources,
+            query=query,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
             account_id=account_id,
@@ -798,9 +769,10 @@ class TestDetachTag:
         assert 'tag_type={}'.format(tag_type) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['resources'] == [resource_model]
         assert req_body['tag_name'] == 'testString'
         assert req_body['tag_names'] == ['testString']
+        assert req_body['resources'] == [resource_model]
+        assert req_body['query'] == query_string_model
 
     def test_detach_tag_all_params_with_retries(self):
         # Enable retries and run test_detach_tag_all_params.
@@ -832,16 +804,22 @@ class TestDetachTag:
         resource_model['resource_id'] = 'testString'
         resource_model['resource_type'] = 'testString'
 
+        # Construct a dict representation of a QueryString model
+        query_string_model = {}
+        query_string_model['query_string'] = 'testString'
+
         # Set up parameter values
-        resources = [resource_model]
         tag_name = 'testString'
         tag_names = ['testString']
+        resources = [resource_model]
+        query = query_string_model
 
         # Invoke method
         response = _service.detach_tag(
-            resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            resources=resources,
+            query=query,
             headers={},
         )
 
@@ -850,9 +828,10 @@ class TestDetachTag:
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['resources'] == [resource_model]
         assert req_body['tag_name'] == 'testString'
         assert req_body['tag_names'] == ['testString']
+        assert req_body['resources'] == [resource_model]
+        assert req_body['query'] == query_string_model
 
     def test_detach_tag_required_params_with_retries(self):
         # Enable retries and run test_detach_tag_required_params.
@@ -862,50 +841,6 @@ class TestDetachTag:
         # Disable retries and run test_detach_tag_required_params.
         _service.disable_retries()
         self.test_detach_tag_required_params()
-
-    @responses.activate
-    def test_detach_tag_value_error(self):
-        """
-        test_detach_tag_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v3/tags/detach')
-        mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Construct a dict representation of a Resource model
-        resource_model = {}
-        resource_model['resource_id'] = 'testString'
-        resource_model['resource_type'] = 'testString'
-
-        # Set up parameter values
-        resources = [resource_model]
-        tag_name = 'testString'
-        tag_names = ['testString']
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "resources": resources,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.detach_tag(**req_copy)
-
-    def test_detach_tag_value_error_with_retries(self):
-        # Enable retries and run test_detach_tag_value_error.
-        _service.enable_retries()
-        self.test_detach_tag_value_error()
-
-        # Disable retries and run test_detach_tag_value_error.
-        _service.disable_retries()
-        self.test_detach_tag_value_error()
 
 
 # endregion
@@ -972,18 +907,12 @@ class TestModel_CreateTagResultsResultsItem:
         create_tag_results_results_item_model_json['is_error'] = True
 
         # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
-        create_tag_results_results_item_model = CreateTagResultsResultsItem.from_dict(
-            create_tag_results_results_item_model_json
-        )
+        create_tag_results_results_item_model = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json)
         assert create_tag_results_results_item_model != False
 
         # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
-        create_tag_results_results_item_model_dict = CreateTagResultsResultsItem.from_dict(
-            create_tag_results_results_item_model_json
-        ).__dict__
-        create_tag_results_results_item_model2 = CreateTagResultsResultsItem(
-            **create_tag_results_results_item_model_dict
-        )
+        create_tag_results_results_item_model_dict = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json).__dict__
+        create_tag_results_results_item_model2 = CreateTagResultsResultsItem(**create_tag_results_results_item_model_dict)
 
         # Verify the model instances are equivalent
         assert create_tag_results_results_item_model == create_tag_results_results_item_model2
@@ -1069,7 +998,7 @@ class TestModel_DeleteTagResultsItem:
         expected_dict = {'foo': 'testString'}
         delete_tag_results_item_model.set_properties(expected_dict)
         actual_dict = delete_tag_results_item_model.get_properties()
-        assert actual_dict == expected_dict
+        assert actual_dict.keys() == expected_dict.keys()
 
 
 class TestModel_DeleteTagsResult:
@@ -1139,6 +1068,36 @@ class TestModel_DeleteTagsResultItem:
         # Convert model instance back to dict and verify no loss of data
         delete_tags_result_item_model_json2 = delete_tags_result_item_model.to_dict()
         assert delete_tags_result_item_model_json2 == delete_tags_result_item_model_json
+
+
+class TestModel_QueryString:
+    """
+    Test Class for QueryString
+    """
+
+    def test_query_string_serialization(self):
+        """
+        Test serialization/deserialization for QueryString
+        """
+
+        # Construct a json representation of a QueryString model
+        query_string_model_json = {}
+        query_string_model_json['query_string'] = 'testString'
+
+        # Construct a model instance of QueryString by calling from_dict on the json representation
+        query_string_model = QueryString.from_dict(query_string_model_json)
+        assert query_string_model != False
+
+        # Construct a model instance of QueryString by calling from_dict on the json representation
+        query_string_model_dict = QueryString.from_dict(query_string_model_json).__dict__
+        query_string_model2 = QueryString(**query_string_model_dict)
+
+        # Verify the model instances are equivalent
+        assert query_string_model == query_string_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        query_string_model_json2 = query_string_model.to_dict()
+        assert query_string_model_json2 == query_string_model_json
 
 
 class TestModel_Resource:
@@ -1253,9 +1212,7 @@ class TestModel_TagResults:
         # Construct dict forms of any model objects needed in order to build this model.
 
         tag_results_item_model = {}  # TagResultsItem
-        tag_results_item_model['resource_id'] = (
-            'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
-        )
+        tag_results_item_model['resource_id'] = 'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
         tag_results_item_model['is_error'] = False
 
         # Construct a json representation of a TagResults model

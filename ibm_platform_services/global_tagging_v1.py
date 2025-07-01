@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
+# IBM OpenAPI SDK Code Generator Version: 3.105.0-3c13b041-20250605-193116
 
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete, or
@@ -23,10 +23,10 @@ unique within a billing account. You can create tags in two formats: `key:value`
 `label`. The tagging API supports three types of tag: `user` `service`, and `access` tags.
 `service` tags cannot be attached to IMS resources. `service` tags must be in the form
 `service_prefix:tag_label` where `service_prefix` identifies the Service owning the tag.
-`access` tags cannot be attached to IMS and Cloud Foundry resources. They must be in the
-form `key:value`. You can replace all resource's tags using the `replace` query parameter
-in the attach operation. You can update the `value` of a resource's tag in the format
-`key:value`, using the `update` query parameter in the attach operation.
+`access` tags cannot be attached to IMS resources. They must be in the form `key:value`.
+You can replace all resource's tags using the `replace` query parameter in the attach
+operation. You can update the `value` of a resource's tag in the format `key:value`, using
+the `update` query parameter in the attach operation.
 
 API Version: 1.2.0
 """
@@ -63,7 +63,9 @@ class GlobalTaggingV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -453,10 +455,11 @@ class GlobalTaggingV1(BaseService):
 
     def attach_tag(
         self,
-        resources: List['Resource'],
         *,
         tag_name: Optional[str] = None,
         tag_names: Optional[List[str]] = None,
+        resources: Optional[List['Resource']] = None,
+        query: Optional['QueryString'] = None,
         x_request_id: Optional[str] = None,
         x_correlation_id: Optional[str] = None,
         account_id: Optional[str] = None,
@@ -472,10 +475,11 @@ class GlobalTaggingV1(BaseService):
         than 1000 tags per each 'user' and 'service' type, and no more than 250 'access'
         tags (which is the account limit).
 
-        :param List[Resource] resources: List of resources on which the tag or tags
-               are attached.
         :param str tag_name: (optional) The name of the tag to attach.
         :param List[str] tag_names: (optional) An array of tag names to attach.
+        :param List[Resource] resources: (optional) List of resources on which the
+               tagging operation operates on.
+        :param QueryString query: (optional) A valid Global Search string.
         :param str x_request_id: (optional) An alphanumeric string that is used to
                trace the request. The value  may include ASCII alphanumerics and any of
                following segment separators: space ( ), comma (,), hyphen, (-), and
@@ -516,9 +520,10 @@ class GlobalTaggingV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `TagResults` object
         """
 
-        if resources is None:
-            raise ValueError('resources must be provided')
-        resources = [convert_model(x) for x in resources]
+        if resources is not None:
+            resources = [convert_model(x) for x in resources]
+        if query is not None:
+            query = convert_model(query)
         headers = {
             'x-request-id': x_request_id,
             'x-correlation-id': x_correlation_id,
@@ -538,9 +543,10 @@ class GlobalTaggingV1(BaseService):
         }
 
         data = {
-            'resources': resources,
             'tag_name': tag_name,
             'tag_names': tag_names,
+            'resources': resources,
+            'query': query,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -565,10 +571,11 @@ class GlobalTaggingV1(BaseService):
 
     def detach_tag(
         self,
-        resources: List['Resource'],
         *,
         tag_name: Optional[str] = None,
         tag_names: Optional[List[str]] = None,
+        resources: Optional[List['Resource']] = None,
+        query: Optional['QueryString'] = None,
         x_request_id: Optional[str] = None,
         x_correlation_id: Optional[str] = None,
         account_id: Optional[str] = None,
@@ -580,10 +587,11 @@ class GlobalTaggingV1(BaseService):
 
         Detaches one or more tags from one or more resources.
 
-        :param List[Resource] resources: List of resources on which the tag or tags
-               are detached.
         :param str tag_name: (optional) The name of the tag to detach.
         :param List[str] tag_names: (optional) An array of tag names to detach.
+        :param List[Resource] resources: (optional) List of resources on which the
+               tagging operation operates on.
+        :param QueryString query: (optional) A valid Global Search string.
         :param str x_request_id: (optional) An alphanumeric string that is used to
                trace the request. The value  may include ASCII alphanumerics and any of
                following segment separators: space ( ), comma (,), hyphen, (-), and
@@ -612,9 +620,10 @@ class GlobalTaggingV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `TagResults` object
         """
 
-        if resources is None:
-            raise ValueError('resources must be provided')
-        resources = [convert_model(x) for x in resources]
+        if resources is not None:
+            resources = [convert_model(x) for x in resources]
+        if query is not None:
+            query = convert_model(query)
         headers = {
             'x-request-id': x_request_id,
             'x-correlation-id': x_correlation_id,
@@ -632,9 +641,10 @@ class GlobalTaggingV1(BaseService):
         }
 
         data = {
-            'resources': resources,
             'tag_name': tag_name,
             'tag_names': tag_names,
+            'resources': resources,
+            'query': query,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -672,7 +682,6 @@ class ListTagsEnums:
         USER = 'user'
         SERVICE = 'service'
         ACCESS = 'access'
-
     class Providers(str, Enum):
         """
         Select a provider. Supported values are `ghost` and `ims`. To list both Global
@@ -683,7 +692,6 @@ class ListTagsEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class OrderByName(str, Enum):
         """
         Order the output by tag name.
@@ -718,7 +726,6 @@ class DeleteTagAllEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -744,7 +751,6 @@ class DeleteTagEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -1001,6 +1007,8 @@ class DeleteTagResultsItem:
     :param str provider: (optional) The provider of the tag.
     :param bool is_error: (optional) It is `true` if the operation exits with an
           error (for example, the tag does not exist).
+
+    This type supports additional properties of type object.
     """
 
     # The set of defined properties for the class
@@ -1011,7 +1019,7 @@ class DeleteTagResultsItem:
         *,
         provider: Optional[str] = None,
         is_error: Optional[bool] = None,
-        **kwargs,
+        **kwargs: Optional[object],
     ) -> None:
         """
         Initialize a DeleteTagResultsItem object.
@@ -1019,12 +1027,17 @@ class DeleteTagResultsItem:
         :param str provider: (optional) The provider of the tag.
         :param bool is_error: (optional) It is `true` if the operation exits with
                an error (for example, the tag does not exist).
-        :param **kwargs: (optional) Any additional properties.
+        :param object **kwargs: (optional) Additional properties of type object
         """
         self.provider = provider
         self.is_error = is_error
-        for _key, _value in kwargs.items():
-            setattr(self, _key, _value)
+        for k, v in kwargs.items():
+            if k not in DeleteTagResultsItem._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(k))
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'DeleteTagResultsItem':
@@ -1034,7 +1047,11 @@ class DeleteTagResultsItem:
             args['provider'] = provider
         if (is_error := _dict.get('is_error')) is not None:
             args['is_error'] = is_error
-        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        for k, v in _dict.items():
+            if k not in cls._properties:
+                    if not isinstance(v, object):
+                        raise ValueError('Value for additional property {} must be of type object'.format(k))
+                    args[k] = v
         return cls(**args)
 
     @classmethod
@@ -1049,8 +1066,8 @@ class DeleteTagResultsItem:
             _dict['provider'] = self.provider
         if hasattr(self, 'is_error') and self.is_error is not None:
             _dict['is_error'] = self.is_error
-        for _key in [k for k in vars(self).keys() if k not in DeleteTagResultsItem._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in DeleteTagResultsItem._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def _to_dict(self):
@@ -1058,21 +1075,23 @@ class DeleteTagResultsItem:
         return self.to_dict()
 
     def get_properties(self) -> Dict:
-        """Return a dictionary of arbitrary properties from this instance of DeleteTagResultsItem"""
+        """Return the additional properties from this instance of DeleteTagResultsItem in the form of a dict."""
         _dict = {}
-
-        for _key in [k for k in vars(self).keys() if k not in DeleteTagResultsItem._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in DeleteTagResultsItem._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def set_properties(self, _dict: dict):
-        """Set a dictionary of arbitrary properties to this instance of DeleteTagResultsItem"""
-        for _key in [k for k in vars(self).keys() if k not in DeleteTagResultsItem._properties]:
-            delattr(self, _key)
-
-        for _key, _value in _dict.items():
-            if _key not in DeleteTagResultsItem._properties:
-                setattr(self, _key, _value)
+        """Set a dictionary of additional properties in this instance of DeleteTagResultsItem"""
+        for k in [_k for _k in vars(self).keys() if _k not in DeleteTagResultsItem._properties]:
+            delattr(self, k)
+        for k, v in _dict.items():
+            if k not in DeleteTagResultsItem._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(k))
 
     def __str__(self) -> str:
         """Return a `str` version of this DeleteTagResultsItem object."""
@@ -1095,6 +1114,7 @@ class DeleteTagResultsItem:
 
         GHOST = 'ghost'
         IMS = 'ims'
+
 
 
 class DeleteTagsResult:
@@ -1248,12 +1268,76 @@ class DeleteTagsResultItem:
         return not self == other
 
 
+class QueryString:
+    """
+    A valid Global Search string.
+
+    :param str query_string: The Lucene-formatted query string.
+    """
+
+    def __init__(
+        self,
+        query_string: str,
+    ) -> None:
+        """
+        Initialize a QueryString object.
+
+        :param str query_string: The Lucene-formatted query string.
+        """
+        self.query_string = query_string
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'QueryString':
+        """Initialize a QueryString object from a json dictionary."""
+        args = {}
+        if (query_string := _dict.get('query_string')) is not None:
+            args['query_string'] = query_string
+        else:
+            raise ValueError('Required property \'query_string\' not present in QueryString JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a QueryString object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'query_string') and self.query_string is not None:
+            _dict['query_string'] = self.query_string
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this QueryString object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'QueryString') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'QueryString') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class Resource:
     """
     A resource that might have tags that are attached.
 
     :param str resource_id: The CRN or IMS ID of the resource.
-    :param str resource_type: (optional) The IMS resource type of the resource.
+    :param str resource_type: (optional) The IMS resource type of the resource. It
+          can be one of SoftLayer_Virtual_DedicatedHost, SoftLayer_Hardware,
+          SoftLayer_Hardware_Server, SoftLayer_Network_Application_Delivery_Controller,
+          SoftLayer_Network_Vlan, SoftLayer_Network_Vlan_Firewall,
+          SoftLayer_Network_Component_Firewall, SoftLayer_Network_Firewall_Module_Context,
+          SoftLayer_Virtual_Guest.
     """
 
     def __init__(
@@ -1267,6 +1351,11 @@ class Resource:
 
         :param str resource_id: The CRN or IMS ID of the resource.
         :param str resource_type: (optional) The IMS resource type of the resource.
+               It can be one of SoftLayer_Virtual_DedicatedHost, SoftLayer_Hardware,
+               SoftLayer_Hardware_Server,
+               SoftLayer_Network_Application_Delivery_Controller, SoftLayer_Network_Vlan,
+               SoftLayer_Network_Vlan_Firewall, SoftLayer_Network_Component_Firewall,
+               SoftLayer_Network_Firewall_Module_Context, SoftLayer_Virtual_Guest.
         """
         self.resource_id = resource_id
         self.resource_type = resource_type
