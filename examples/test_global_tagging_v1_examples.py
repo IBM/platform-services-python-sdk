@@ -77,8 +77,8 @@ class TestGlobalTaggingV1Examples:
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file), reason="External configuration not available, skipping..."
-    )
+        not os.path.exists(config_file),
+        reason="External configuration not available, skipping...")
 
     @needscredentials
     def test_create_tag_example(self):
@@ -110,8 +110,11 @@ class TestGlobalTaggingV1Examples:
             # begin-list_tags
 
             tag_list = global_tagging_service.list_tags(
-                tag_type='user', attached_only=True, full_data=True, providers=['ghost'], order_by_name='asc'
-            ).get_result()
+                tag_type='user',
+                attached_only=True,
+                full_data=True,
+                providers=['ghost'],
+                order_by_name='asc').get_result()
 
             print(json.dumps(tag_list, indent=2))
 
@@ -132,8 +135,8 @@ class TestGlobalTaggingV1Examples:
             resource_model = {'resource_id': resource_crn}
 
             tag_results = global_tagging_service.attach_tag(
-                resources=[resource_model], tag_names=['tag_test_1', 'tag_test_2'], tag_type='user'
-            ).get_result()
+                resources=[resource_model], tag_names=[
+                    'tag_test_1', 'tag_test_2'], tag_type='user').get_result()
 
             print(json.dumps(tag_results, indent=2))
 
@@ -155,8 +158,8 @@ class TestGlobalTaggingV1Examples:
             query_string_model = {'query_string': filter}
 
             tag_results = global_tagging_service.attach_tag(
-                query=query_string_model, tag_names=['tag_test_3', 'tag_test_4'], tag_type='user'
-            ).get_result()
+                query=query_string_model, tag_names=[
+                    'tag_test_3', 'tag_test_4'], tag_type='user').get_result()
 
             print(json.dumps(tag_results, indent=2))
 
@@ -177,8 +180,8 @@ class TestGlobalTaggingV1Examples:
             resource_model = {'resource_id': resource_crn}
 
             tag_results = global_tagging_service.detach_tag(
-                resources=[resource_model], tag_names=['tag_test_1', 'tag_test_2'], tag_type='user'
-            ).get_result()
+                resources=[resource_model], tag_names=[
+                    'tag_test_1', 'tag_test_2'], tag_type='user').get_result()
 
             print(json.dumps(tag_results, indent=2))
 
@@ -200,8 +203,8 @@ class TestGlobalTaggingV1Examples:
             query_string_model = {'query_string': filter}
 
             tag_results = global_tagging_service.detach_tag(
-                query=query_string_model, tag_names=['tag_test_3', 'tag_test_4'], tag_type='user'
-            ).get_result()
+                query=query_string_model, tag_names=[
+                    'tag_test_3', 'tag_test_4'], tag_type='user').get_result()
 
             print(json.dumps(tag_results, indent=2))
 
