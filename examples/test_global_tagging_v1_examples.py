@@ -151,7 +151,7 @@ class TestGlobalTaggingV1Examples:
             # begin-attach_tag
 
             filter = 'crn: "%s"' (resource_crn)
-            query_string_model = {'query_string': 'resource_crn}
+            query_string_model = {'query_string': filter}
 
             tag_results = global_tagging_service.attach_tag(
                 query=query_string_model, tag_names=['tag_test_3', 'tag_test_4'], tag_type='user'
@@ -196,7 +196,7 @@ class TestGlobalTaggingV1Examples:
             # begin-attach_tag
 
             filter = 'crn: "%s"' (resource_crn)
-            query_string_model = {'query_string': 'resource_crn}
+            query_string_model = {'query_string': filter}
 
             tag_results = global_tagging_service.detach_tag(
                 query=query_string_model, tag_names=['tag_test_3', 'tag_test_4'], tag_type='user'
