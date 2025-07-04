@@ -142,6 +142,29 @@ class TestGlobalTaggingV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
+    def test_attach_tag_query_example(self):
+        """
+        attach_tag request example
+        """
+        try:
+            print('\nattach_tag() result:')
+            # begin-attach_tag
+
+            filter = 'crn: "%s"' (resource_crn)
+            query_string_model = {'query_string': 'resource_crn}
+
+            tag_results = global_tagging_service.attach_tag(
+                query=query_string_model, tag_names=['tag_test_3', 'tag_test_4'], tag_type='user'
+            ).get_result()
+
+            print(json.dumps(tag_results, indent=2))
+
+            # end-attach_tag
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_detach_tag_example(self):
         """
         detach_tag request example
@@ -159,6 +182,29 @@ class TestGlobalTaggingV1Examples:
             print(json.dumps(tag_results, indent=2))
 
             # end-detach_tag
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_detach_tag_query_example(self):
+        """
+        detach_tag request example
+        """
+        try:
+            print('\nattach_tag() result:')
+            # begin-attach_tag
+
+            filter = 'crn: "%s"' (resource_crn)
+            query_string_model = {'query_string': 'resource_crn}
+
+            tag_results = global_tagging_service.detach_tag(
+                query=query_string_model, tag_names=['tag_test_3', 'tag_test_4'], tag_type='user'
+            ).get_result()
+
+            print(json.dumps(tag_results, indent=2))
+
+            # end-attach_tag
 
         except ApiException as e:
             pytest.fail(str(e))
