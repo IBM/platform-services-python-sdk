@@ -68,7 +68,8 @@ class TestGlobalTaggingV1Examples:
 
             # Load the configuration
             global config
-            config = read_external_sources(GlobalTaggingV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(
+                GlobalTaggingV1.DEFAULT_SERVICE_NAME)
 
             global resource_crn
             resource_crn = config.get("RESOURCE_CRN")
@@ -238,7 +239,8 @@ class TestGlobalTaggingV1Examples:
             print('\ndelete_tag_all() result:')
             # begin-delete_tag_all
 
-            delete_tags_result = global_tagging_service.delete_tag_all(tag_type='user').get_result()
+            delete_tags_result = global_tagging_service.delete_tag_all(
+                tag_type='user').get_result()
 
             print(json.dumps(delete_tags_result, indent=2))
 
