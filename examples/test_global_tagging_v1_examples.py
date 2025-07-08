@@ -68,8 +68,7 @@ class TestGlobalTaggingV1Examples:
 
             # Load the configuration
             global config
-            config = read_external_sources(
-                GlobalTaggingV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(GlobalTaggingV1.DEFAULT_SERVICE_NAME)
 
             global resource_crn
             resource_crn = config.get("RESOURCE_CRN")
@@ -77,8 +76,8 @@ class TestGlobalTaggingV1Examples:
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file),
-        reason="External configuration not available, skipping...")
+        not os.path.exists(config_file), reason="External configuration not available, skipping..."
+    )
 
     @needscredentials
     def test_create_tag_example(self):
@@ -110,11 +109,8 @@ class TestGlobalTaggingV1Examples:
             # begin-list_tags
 
             tag_list = global_tagging_service.list_tags(
-                tag_type='user',
-                attached_only=True,
-                full_data=True,
-                providers=['ghost'],
-                order_by_name='asc').get_result()
+                tag_type='user', attached_only=True, full_data=True, providers=['ghost'], order_by_name='asc'
+            ).get_result()
 
             print(json.dumps(tag_list, indent=2))
 
@@ -135,31 +131,8 @@ class TestGlobalTaggingV1Examples:
             resource_model = {'resource_id': resource_crn}
 
             tag_results = global_tagging_service.attach_tag(
-                resources=[resource_model], tag_names=[
-                    'tag_test_1', 'tag_test_2'], tag_type='user').get_result()
-
-            print(json.dumps(tag_results, indent=2))
-
-            # end-attach_tag
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_attach_tag_query_example(self):
-        """
-        attach_tag request example
-        """
-        try:
-            print('\nattach_tag() result:')
-            # begin-attach_tag
-
-            filter = 'crn: "%s"' (resource_crn)
-            query_string_model = {'query_string': filter}
-
-            tag_results = global_tagging_service.attach_tag(
-                query=query_string_model, tag_names=[
-                    'tag_test_3', 'tag_test_4'], tag_type='user').get_result()
+                tag_names=['tag_test_1', 'tag_test_2'], tag_type='user'
+            ).get_result()
 
             print(json.dumps(tag_results, indent=2))
 
@@ -180,35 +153,12 @@ class TestGlobalTaggingV1Examples:
             resource_model = {'resource_id': resource_crn}
 
             tag_results = global_tagging_service.detach_tag(
-                resources=[resource_model], tag_names=[
-                    'tag_test_1', 'tag_test_2'], tag_type='user').get_result()
+                tag_names=['tag_test_1', 'tag_test_2'], tag_type='user'
+            ).get_result()
 
             print(json.dumps(tag_results, indent=2))
 
             # end-detach_tag
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_detach_tag_query_example(self):
-        """
-        detach_tag request example
-        """
-        try:
-            print('\nattach_tag() result:')
-            # begin-attach_tag
-
-            filter = 'crn: "%s"' (resource_crn)
-            query_string_model = {'query_string': filter}
-
-            tag_results = global_tagging_service.detach_tag(
-                query=query_string_model, tag_names=[
-                    'tag_test_3', 'tag_test_4'], tag_type='user').get_result()
-
-            print(json.dumps(tag_results, indent=2))
-
-            # end-attach_tag
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -242,8 +192,7 @@ class TestGlobalTaggingV1Examples:
             print('\ndelete_tag_all() result:')
             # begin-delete_tag_all
 
-            delete_tags_result = global_tagging_service.delete_tag_all(
-                tag_type='user').get_result()
+            delete_tags_result = global_tagging_service.delete_tag_all(tag_type='user').get_result()
 
             print(json.dumps(delete_tags_result, indent=2))
 
