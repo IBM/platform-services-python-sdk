@@ -1,3 +1,10 @@
+# [0.67.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.66.2...v0.67.0) (2025-07-09)
+
+
+### Features
+
+* **Global Tagging:** regenerate service with latest API definition ([#295](https://github.com/IBM/platform-services-python-sdk/issues/295)) ([649c1a1](https://github.com/IBM/platform-services-python-sdk/commit/649c1a1833cbd15be349abe91d899912a1ec6048))
+
 ## [0.66.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.66.1...v0.66.2) (2025-06-12)
 
 
