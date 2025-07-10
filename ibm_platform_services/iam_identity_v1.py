@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.103.0-e8b84313-20250402-201816
+# IBM OpenAPI SDK Code Generator Version: 3.105.1-067d600b-20250616-154447
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -74,7 +74,743 @@ class IamIdentityV1(BaseService):
         BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
-    # API key operations
+    # Service IDs
+    #########################
+
+    def list_service_ids(
+        self,
+        *,
+        account_id: Optional[str] = None,
+        group_id: Optional[str] = None,
+        name: Optional[str] = None,
+        pagesize: Optional[int] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[bool] = None,
+        filter: Optional[str] = None,
+        show_group_id: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List service IDs.
+
+        Returns a list of service IDs. Users can manage user API keys for themself, or
+        service ID API keys for service IDs they have access to. Note: apikey details are
+        only included in the response when creating a Service ID with an api key.
+
+        :param str account_id: (optional) Account ID of the service ID(s) to query.
+               This parameter is required (unless using a pagetoken).
+        :param str group_id: (optional) Group ID of the service ID(s) to query. If
+               this parameter is not provided the default group is applied.
+        :param str name: (optional) Name of the service ID(s) to query. Optional.20
+               items per page. Valid range is 1 to 100.
+        :param int pagesize: (optional) Optional size of a single page. Default is
+               20 items per page. Valid range is 1 to 100.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param str sort: (optional) Optional sort property, valid values are name,
+               description, created_at and modified_at. If specified, the items are sorted
+               by the value of this property.
+        :param str order: (optional) Optional sort order, valid values are asc and
+               desc. Default: asc.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param str filter: (optional) An optional filter query parameter used to
+               refine the results of the search operation. For more information see
+               [Filtering list results](#filter-list-results) section.
+        :param str show_group_id: (optional) Defines if the service ID group ID is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ServiceIdList` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_service_ids',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'group_id': group_id,
+            'name': name,
+            'pagesize': pagesize,
+            'pagetoken': pagetoken,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+            'filter': filter,
+            'show_group_id': show_group_id,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/serviceids/'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_service_id(
+        self,
+        account_id: str,
+        name: str,
+        *,
+        group_id: Optional[str] = None,
+        description: Optional[str] = None,
+        unique_instance_crns: Optional[List[str]] = None,
+        apikey: Optional['ApiKeyInsideCreateServiceIdRequest'] = None,
+        show_group_id: Optional[str] = None,
+        entity_lock: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create a service ID.
+
+        Creates a service ID for an IBM Cloud account. Users can manage user API keys for
+        themself, or service ID API keys for service IDs they have access to.
+
+        :param str account_id: ID of the account the service ID belongs to.
+        :param str name: Name of the Service Id. The name is not checked for
+               uniqueness. Therefore multiple names with the same value can exist. Access
+               is done via the UUID of the Service Id.
+        :param str group_id: (optional) ID of the group to which the service ID
+               belongs to. If the value is not set, the service ID is bound to the default
+               group.
+        :param str description: (optional) The optional description of the Service
+               Id. The 'description' property is only available if a description was
+               provided during a create of a Service Id.
+        :param List[str] unique_instance_crns: (optional) Optional list of CRNs
+               (string array) which point to the services connected to the service ID.
+        :param ApiKeyInsideCreateServiceIdRequest apikey: (optional) Parameters for
+               the API key in the Create service Id V1 REST request.
+        :param str show_group_id: (optional) Defines if the service ID group ID is
+               included in the response.
+        :param str entity_lock: (optional) Indicates if the service ID is locked
+               for further write operations. False by default.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ServiceId` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        if name is None:
+            raise ValueError('name must be provided')
+        if apikey is not None:
+            apikey = convert_model(apikey)
+        headers = {
+            'Entity-Lock': entity_lock,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_service_id',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'show_group_id': show_group_id,
+        }
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'group_id': group_id,
+            'description': description,
+            'unique_instance_crns': unique_instance_crns,
+            'apikey': apikey,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/serviceids/'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_service_id(
+        self,
+        id: str,
+        *,
+        include_history: Optional[bool] = None,
+        include_activity: Optional[bool] = None,
+        show_group_id: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get details of a service ID.
+
+        Returns the details of a service ID. Users can manage user API keys for themself,
+        or service ID API keys for service IDs they have access to. Note: apikey details
+        are only included in the response when creating a Service ID with an api key.
+
+        :param str id: Unique ID of the service ID.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param bool include_activity: (optional) Defines if the entity's activity
+               is included in the response. Retrieving activity data is an expensive
+               operation, so only request this when needed.
+        :param str show_group_id: (optional) Defines if the service ID group ID is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ServiceId` object
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_service_id',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+            'include_activity': include_activity,
+            'show_group_id': show_group_id,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/serviceids/{id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_service_id(
+        self,
+        id: str,
+        if_match: str,
+        *,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        unique_instance_crns: Optional[List[str]] = None,
+        show_group_id: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update service ID.
+
+        Updates properties of a service ID. This does NOT affect existing access tokens.
+        Their token content will stay unchanged until the access token is refreshed. To
+        update a service ID, pass the property to be modified. To delete one property's
+        value, pass the property with an empty value "".Users can manage user API keys for
+        themself, or service ID API keys for service IDs they have access to. Note: apikey
+        details are only included in the response when creating a Service ID with an
+        apikey.
+
+        :param str id: Unique ID of the service ID to be updated.
+        :param str if_match: Version of the service ID to be updated. Specify the
+               version that you retrieved as entity_tag (ETag header) when reading the
+               service ID. This value helps identifying parallel usage of this API. Pass *
+               to indicate to update any version available. This might result in stale
+               updates.
+        :param str name: (optional) The name of the service ID to update. If
+               specified in the request the parameter must not be empty. The name is not
+               checked for uniqueness. Failure to this will result in an Error condition.
+        :param str description: (optional) The description of the service ID to
+               update. If specified an empty description will clear the description of the
+               service ID. If an non empty value is provided the service ID will be
+               updated.
+        :param List[str] unique_instance_crns: (optional) List of CRNs which point
+               to the services connected to this service ID. If specified an empty list
+               will clear all existing unique instance crns of the service ID.
+        :param str show_group_id: (optional) Defines if the service ID group ID is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ServiceId` object
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_service_id',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'show_group_id': show_group_id,
+        }
+
+        data = {
+            'name': name,
+            'description': description,
+            'unique_instance_crns': unique_instance_crns,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/serviceids/{id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_service_id(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Deletes a service ID and associated API keys.
+
+        Deletes a service ID and all API keys associated to it. Before deleting the
+        service ID, all associated API keys are deleted. In case a Delete Conflict (status
+        code 409) a retry of the request may help as the service ID is only deleted if the
+        associated API keys were successfully deleted before. Users can manage user API
+        keys for themself, or service ID API keys for service IDs they have access to.
+
+        :param str id: Unique ID of the service ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_service_id',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/serviceids/{id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def lock_service_id(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Lock the service ID.
+
+        Locks a service ID by ID. Users can manage user API keys for themself, or service
+        ID API keys for service IDs they have access to.
+
+        :param str id: Unique ID of the service ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='lock_service_id',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/serviceids/{id}/lock'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def unlock_service_id(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Unlock the service ID.
+
+        Unlocks a service ID by ID. Users can manage user API keys for themself, or
+        service ID API keys for service IDs they have access to.
+
+        :param str id: Unique ID of the service ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='unlock_service_id',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/serviceids/{id}/lock'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Service ID Groups
+    #########################
+
+    def list_service_id_group(
+        self,
+        *,
+        account_id: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List service ID groups.
+
+        Returns a list of all service ID groups for the given account ID.
+
+        :param str account_id: (optional) Account ID of the service ID groups to
+               query.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ServiceIdGroupList` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_service_id_group',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/serviceid_groups'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_service_id_group(
+        self,
+        account_id: str,
+        name: str,
+        *,
+        description: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create a service ID group.
+
+        Creates a service ID group for the given account ID.
+
+        :param str account_id: ID of the account the service ID group belongs to.
+        :param str name: Name of the service ID group. Unique in the account.
+        :param str description: (optional) Description of the service ID group.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ServiceIdGroup` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        if name is None:
+            raise ValueError('name must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_service_id_group',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'description': description,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/serviceid_groups'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_service_id_group(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get details of a service ID group.
+
+        Returns the details of a service ID group.
+
+        :param str id: Unique ID of the service ID group.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ServiceIdGroup` object
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_service_id_group',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/serviceid_groups/{id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_service_id_group(
+        self,
+        id: str,
+        if_match: str,
+        name: str,
+        *,
+        description: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update a service ID group.
+
+        Update a service ID group.
+
+        :param str id: Unique ID of the service ID group to be updated.
+        :param str if_match: Version of the service ID gorup to be updated. Specify
+               the version that you retrieved when reading service ID group. This value
+               helps identifying parallel usage of this API. Pass * to indicate to update
+               any version available. This might result in stale updates.
+        :param str name: Name of the service ID group. Unique in the account.
+        :param str description: (optional) Description of the service ID group.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ServiceIdGroup` object
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if name is None:
+            raise ValueError('name must be provided')
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_service_id_group',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'description': description,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/serviceid_groups/{id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_service_id_group(
+        self,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete a service ID group.
+
+        Delete a service ID group.
+
+        :param str id: Unique ID of the service ID group.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_service_id_group',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/serviceid_groups/{id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # API Keys
     #########################
 
     def list_api_keys(
@@ -90,6 +826,7 @@ class IamIdentityV1(BaseService):
         order: Optional[str] = None,
         include_history: Optional[bool] = None,
         filter: Optional[str] = None,
+        group_id: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -124,6 +861,10 @@ class IamIdentityV1(BaseService):
         :param str filter: (optional) An optional filter query parameter used to
                refine the results of the search operation. For more information see
                [Filtering list results](#filter-list-results) section.
+        :param str group_id: (optional) Optional group ID of the service ID(s) to
+               which the searched API keys are bound. If this parameter is not provided
+               the default group is applied on service ID API keys. For user API keys this
+               parameter is ignored as they always belong to the default group.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ApiKeyList` object
@@ -148,6 +889,7 @@ class IamIdentityV1(BaseService):
             'order': order,
             'include_history': include_history,
             'filter': filter,
+            'group_id': group_id,
         }
 
         if 'headers' in kwargs:
@@ -683,446 +1425,7 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
-    # Service ID operations
-    #########################
-
-    def list_service_ids(
-        self,
-        *,
-        account_id: Optional[str] = None,
-        name: Optional[str] = None,
-        pagesize: Optional[int] = None,
-        pagetoken: Optional[str] = None,
-        sort: Optional[str] = None,
-        order: Optional[str] = None,
-        include_history: Optional[bool] = None,
-        filter: Optional[str] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        List service IDs.
-
-        Returns a list of service IDs. Users can manage user API keys for themself, or
-        service ID API keys for service IDs they have access to. Note: apikey details are
-        only included in the response when creating a Service ID with an api key.
-
-        :param str account_id: (optional) Account ID of the service ID(s) to query.
-               This parameter is required (unless using a pagetoken).
-        :param str name: (optional) Name of the service ID(s) to query. Optional.20
-               items per page. Valid range is 1 to 100.
-        :param int pagesize: (optional) Optional size of a single page. Default is
-               20 items per page. Valid range is 1 to 100.
-        :param str pagetoken: (optional) Optional Prev or Next page token returned
-               from a previous query execution. Default is start with first page.
-        :param str sort: (optional) Optional sort property, valid values are name,
-               description, created_at and modified_at. If specified, the items are sorted
-               by the value of this property.
-        :param str order: (optional) Optional sort order, valid values are asc and
-               desc. Default: asc.
-        :param bool include_history: (optional) Defines if the entity history is
-               included in the response.
-        :param str filter: (optional) An optional filter query parameter used to
-               refine the results of the search operation. For more information see
-               [Filtering list results](#filter-list-results) section.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ServiceIdList` object
-        """
-
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='list_service_ids',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'account_id': account_id,
-            'name': name,
-            'pagesize': pagesize,
-            'pagetoken': pagetoken,
-            'sort': sort,
-            'order': order,
-            'include_history': include_history,
-            'filter': filter,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v1/serviceids/'
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def create_service_id(
-        self,
-        account_id: str,
-        name: str,
-        *,
-        description: Optional[str] = None,
-        unique_instance_crns: Optional[List[str]] = None,
-        apikey: Optional['ApiKeyInsideCreateServiceIdRequest'] = None,
-        entity_lock: Optional[str] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Create a service ID.
-
-        Creates a service ID for an IBM Cloud account. Users can manage user API keys for
-        themself, or service ID API keys for service IDs they have access to.
-
-        :param str account_id: ID of the account the service ID belongs to.
-        :param str name: Name of the Service Id. The name is not checked for
-               uniqueness. Therefore multiple names with the same value can exist. Access
-               is done via the UUID of the Service Id.
-        :param str description: (optional) The optional description of the Service
-               Id. The 'description' property is only available if a description was
-               provided during a create of a Service Id.
-        :param List[str] unique_instance_crns: (optional) Optional list of CRNs
-               (string array) which point to the services connected to the service ID.
-        :param ApiKeyInsideCreateServiceIdRequest apikey: (optional) Parameters for
-               the API key in the Create service Id V1 REST request.
-        :param str entity_lock: (optional) Indicates if the service ID is locked
-               for further write operations. False by default.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ServiceId` object
-        """
-
-        if account_id is None:
-            raise ValueError('account_id must be provided')
-        if name is None:
-            raise ValueError('name must be provided')
-        if apikey is not None:
-            apikey = convert_model(apikey)
-        headers = {
-            'Entity-Lock': entity_lock,
-        }
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='create_service_id',
-        )
-        headers.update(sdk_headers)
-
-        data = {
-            'account_id': account_id,
-            'name': name,
-            'description': description,
-            'unique_instance_crns': unique_instance_crns,
-            'apikey': apikey,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v1/serviceids/'
-        request = self.prepare_request(
-            method='POST',
-            url=url,
-            headers=headers,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def get_service_id(
-        self,
-        id: str,
-        *,
-        include_history: Optional[bool] = None,
-        include_activity: Optional[bool] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Get details of a service ID.
-
-        Returns the details of a service ID. Users can manage user API keys for themself,
-        or service ID API keys for service IDs they have access to. Note: apikey details
-        are only included in the response when creating a Service ID with an api key.
-
-        :param str id: Unique ID of the service ID.
-        :param bool include_history: (optional) Defines if the entity history is
-               included in the response.
-        :param bool include_activity: (optional) Defines if the entity's activity
-               is included in the response. Retrieving activity data is an expensive
-               operation, so only request this when needed.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ServiceId` object
-        """
-
-        if not id:
-            raise ValueError('id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='get_service_id',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'include_history': include_history,
-            'include_activity': include_activity,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['id']
-        path_param_values = self.encode_path_vars(id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/serviceids/{id}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def update_service_id(
-        self,
-        id: str,
-        if_match: str,
-        *,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-        unique_instance_crns: Optional[List[str]] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Update service ID.
-
-        Updates properties of a service ID. This does NOT affect existing access tokens.
-        Their token content will stay unchanged until the access token is refreshed. To
-        update a service ID, pass the property to be modified. To delete one property's
-        value, pass the property with an empty value "".Users can manage user API keys for
-        themself, or service ID API keys for service IDs they have access to. Note: apikey
-        details are only included in the response when creating a Service ID with an
-        apikey.
-
-        :param str id: Unique ID of the service ID to be updated.
-        :param str if_match: Version of the service ID to be updated. Specify the
-               version that you retrieved as entity_tag (ETag header) when reading the
-               service ID. This value helps identifying parallel usage of this API. Pass *
-               to indicate to update any version available. This might result in stale
-               updates.
-        :param str name: (optional) The name of the service ID to update. If
-               specified in the request the parameter must not be empty. The name is not
-               checked for uniqueness. Failure to this will result in an Error condition.
-        :param str description: (optional) The description of the service ID to
-               update. If specified an empty description will clear the description of the
-               service ID. If an non empty value is provided the service ID will be
-               updated.
-        :param List[str] unique_instance_crns: (optional) List of CRNs which point
-               to the services connected to this service ID. If specified an empty list
-               will clear all existing unique instance crns of the service ID.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ServiceId` object
-        """
-
-        if not id:
-            raise ValueError('id must be provided')
-        if not if_match:
-            raise ValueError('if_match must be provided')
-        headers = {
-            'If-Match': if_match,
-        }
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='update_service_id',
-        )
-        headers.update(sdk_headers)
-
-        data = {
-            'name': name,
-            'description': description,
-            'unique_instance_crns': unique_instance_crns,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['id']
-        path_param_values = self.encode_path_vars(id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/serviceids/{id}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='PUT',
-            url=url,
-            headers=headers,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def delete_service_id(
-        self,
-        id: str,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Deletes a service ID and associated API keys.
-
-        Deletes a service ID and all API keys associated to it. Before deleting the
-        service ID, all associated API keys are deleted. In case a Delete Conflict (status
-        code 409) a retry of the request may help as the service ID is only deleted if the
-        associated API keys were successfully deleted before. Users can manage user API
-        keys for themself, or service ID API keys for service IDs they have access to.
-
-        :param str id: Unique ID of the service ID.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
-        """
-
-        if not id:
-            raise ValueError('id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='delete_service_id',
-        )
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-
-        path_param_keys = ['id']
-        path_param_values = self.encode_path_vars(id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/serviceids/{id}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='DELETE',
-            url=url,
-            headers=headers,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def lock_service_id(
-        self,
-        id: str,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Lock the service ID.
-
-        Locks a service ID by ID. Users can manage user API keys for themself, or service
-        ID API keys for service IDs they have access to.
-
-        :param str id: Unique ID of the service ID.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
-        """
-
-        if not id:
-            raise ValueError('id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='lock_service_id',
-        )
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-
-        path_param_keys = ['id']
-        path_param_values = self.encode_path_vars(id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/serviceids/{id}/lock'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='POST',
-            url=url,
-            headers=headers,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def unlock_service_id(
-        self,
-        id: str,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Unlock the service ID.
-
-        Unlocks a service ID by ID. Users can manage user API keys for themself, or
-        service ID API keys for service IDs they have access to.
-
-        :param str id: Unique ID of the service ID.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
-        """
-
-        if not id:
-            raise ValueError('id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='unlock_service_id',
-        )
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-
-        path_param_keys = ['id']
-        path_param_values = self.encode_path_vars(id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/serviceids/{id}/lock'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='DELETE',
-            url=url,
-            headers=headers,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    #########################
-    # Trusted profiles operations
+    # Trusted Profiles
     #########################
 
     def create_profile(
@@ -1131,6 +1434,7 @@ class IamIdentityV1(BaseService):
         account_id: str,
         *,
         description: Optional[str] = None,
+        email: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1145,6 +1449,7 @@ class IamIdentityV1(BaseService):
         :param str description: (optional) The optional description of the trusted
                profile. The 'description' property is only available if a description was
                provided during creation of trusted profile.
+        :param str email: (optional) The email of the trusted profile.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TrustedProfile` object
@@ -1166,6 +1471,7 @@ class IamIdentityV1(BaseService):
             'name': name,
             'account_id': account_id,
             'description': description,
+            'email': email,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1327,6 +1633,7 @@ class IamIdentityV1(BaseService):
         *,
         name: Optional[str] = None,
         description: Optional[str] = None,
+        email: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1347,6 +1654,9 @@ class IamIdentityV1(BaseService):
                to update. If specified an empty description will clear the description of
                the trusted profile. If a non empty value is provided the trusted profile
                will be updated.
+        :param str email: (optional) The email of the profile to update. If
+               specified an empty email will clear the email of the profile. If an non
+               empty value is provided the trusted profile will be updated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TrustedProfile` object
@@ -1369,6 +1679,7 @@ class IamIdentityV1(BaseService):
         data = {
             'name': name,
             'description': description,
+            'email': email,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -2105,10 +2416,11 @@ class IamIdentityV1(BaseService):
         """
         Add a specific identity that can assume the trusted profile.
 
-        Add a specific identity that can assume the trusted profile. This API will update
-        the trusted profile itself, thus calling it repeatedly for the same profile can
-        lead to conflicts responded with HTTP code 409. Make sure to call this API only
-        once in a few seconds for the same trusted profile.
+        Add a specific identity that can assume the trusted profile.
+        **Note:** This API will update the trusted profile itself,  thus calling it
+        repeatedly for the same profile can lead to  conflicts responded with HTTP code
+        409. Make sure to call this  API only once in a few seconds for the same trusted
+        profile.
 
         :param str profile_id: ID of the trusted profile.
         :param str identity_type: Type of the identity.
@@ -2237,9 +2549,13 @@ class IamIdentityV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Delete the identity that can assume the trusted profile. This API will update the trusted profile itself, thus calling it repeatedly for the same profile can lead to conflicts responded with HTTP code 409. Make sure to call this API only once in a few seconds for the same trusted profile.
+        Delete the identity that can assume the trusted profile.
 
         Delete the identity that can assume the trusted profile.
+        **Note:** This API will update the trusted profile itself,  thus calling it
+        repeatedly for the same profile can lead to  conflicts responded with HTTP code
+        409. Make sure to call this  API only once in a few seconds for the same trusted
+        profile.
 
         :param str profile_id: ID of the trusted profile.
         :param str identity_type: Type of the identity.
@@ -2282,7 +2598,121 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
-    # Account settings
+    # Activities
+    #########################
+
+    def create_report(
+        self,
+        account_id: str,
+        *,
+        type: Optional[str] = None,
+        duration: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Trigger activity report for the account.
+
+        Trigger activity report for the account by specifying the account ID. It can take
+        a few minutes to generate the report for retrieval.
+
+        :param str account_id: ID of the account.
+        :param str type: (optional) Optional report type. The supported value is
+               'inactive'. List all identities that have not authenticated within the time
+               indicated by duration.
+        :param str duration: (optional) Optional duration of the report. The
+               supported unit of duration is hours.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ReportReference` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_report',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'type': type,
+            'duration': duration,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/activity/accounts/{account_id}/report'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_report(
+        self,
+        account_id: str,
+        reference: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get activity report for the account.
+
+        Get activity report for the account by specifying the account ID and the reference
+        that is generated by triggering the report. Reports older than a day are deleted
+        when generating a new report.
+
+        :param str account_id: ID of the account.
+        :param str reference: Reference for the report to be generated, You can use
+               'latest' to get the latest report for the given account.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Report` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not reference:
+            raise ValueError('reference must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_report',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id', 'reference']
+        path_param_values = self.encode_path_vars(account_id, reference)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/activity/accounts/{account_id}/report/{reference}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Account Settings
     #########################
 
     def get_account_settings(
@@ -2470,8 +2900,65 @@ class IamIdentityV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    def get_effective_account_settings(
+        self,
+        account_id: str,
+        *,
+        include_history: Optional[bool] = None,
+        resolve_user_mfa: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get effective account settings configuration.
+
+        Returns effective account settings for given account ID.
+
+        :param str account_id: Unique ID of the account.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param bool resolve_user_mfa: (optional) Enrich MFA exemptions with user
+               information.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `EffectiveAccountSettingsResponse` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_effective_account_settings',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+            'resolve_user_mfa': resolve_user_mfa,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/accounts/{account_id}/effective_settings/identity'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
     #########################
-    # MFA enrollment status
+    # MFA Enrollment Status
     #########################
 
     def get_mfa_status(
@@ -2634,1096 +3121,7 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
-    # accountSettingsAssignments
-    #########################
-
-    def list_account_settings_assignments(
-        self,
-        *,
-        account_id: Optional[str] = None,
-        template_id: Optional[str] = None,
-        template_version: Optional[str] = None,
-        target: Optional[str] = None,
-        target_type: Optional[str] = None,
-        limit: Optional[int] = None,
-        pagetoken: Optional[str] = None,
-        sort: Optional[str] = None,
-        order: Optional[str] = None,
-        include_history: Optional[bool] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        List assignments.
-
-        List account settings assignments.
-
-        :param str account_id: (optional) Account ID of the Assignments to query.
-               This parameter is required unless using a pagetoken.
-        :param str template_id: (optional) Filter results by Template Id.
-        :param str template_version: (optional) Filter results Template Version.
-        :param str target: (optional) Filter results by the assignment target.
-        :param str target_type: (optional) Filter results by the assignment's
-               target type.
-        :param int limit: (optional) Optional size of a single page. Default is 20
-               items per page. Valid range is 1 to 100.
-        :param str pagetoken: (optional) Optional Prev or Next page token returned
-               from a previous query execution. Default is start with first page.
-        :param str sort: (optional) If specified, the items are sorted by the value
-               of this property.
-        :param str order: (optional) Sort order.
-        :param bool include_history: (optional) Defines if the entity history is
-               included in the response.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentListResponse` object
-        """
-
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='list_account_settings_assignments',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'account_id': account_id,
-            'template_id': template_id,
-            'template_version': template_version,
-            'target': target,
-            'target_type': target_type,
-            'limit': limit,
-            'pagetoken': pagetoken,
-            'sort': sort,
-            'order': order,
-            'include_history': include_history,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v1/account_settings_assignments/'
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def create_account_settings_assignment(
-        self,
-        template_id: str,
-        template_version: int,
-        target_type: str,
-        target: str,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Create assignment.
-
-        Create an assigment for an account settings template.
-
-        :param str template_id: ID of the template to assign.
-        :param int template_version: Version of the template to assign.
-        :param str target_type: Type of target to deploy to.
-        :param str target: Identifier of target to deploy to.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
-        """
-
-        if template_id is None:
-            raise ValueError('template_id must be provided')
-        if template_version is None:
-            raise ValueError('template_version must be provided')
-        if target_type is None:
-            raise ValueError('target_type must be provided')
-        if target is None:
-            raise ValueError('target must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='create_account_settings_assignment',
-        )
-        headers.update(sdk_headers)
-
-        data = {
-            'template_id': template_id,
-            'template_version': template_version,
-            'target_type': target_type,
-            'target': target,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v1/account_settings_assignments/'
-        request = self.prepare_request(
-            method='POST',
-            url=url,
-            headers=headers,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def get_account_settings_assignment(
-        self,
-        assignment_id: str,
-        *,
-        include_history: Optional[bool] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Get assignment.
-
-        Get an assigment for an account settings template.
-
-        :param str assignment_id: ID of the Assignment Record.
-        :param bool include_history: (optional) Defines if the entity history is
-               included in the response.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
-        """
-
-        if not assignment_id:
-            raise ValueError('assignment_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='get_account_settings_assignment',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'include_history': include_history,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['assignment_id']
-        path_param_values = self.encode_path_vars(assignment_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/account_settings_assignments/{assignment_id}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def delete_account_settings_assignment(
-        self,
-        assignment_id: str,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Delete assignment.
-
-        Delete an account settings template assignment. This removes any IAM resources
-        created by this assignment in child accounts.
-
-        :param str assignment_id: ID of the Assignment Record.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ExceptionResponse` object
-        """
-
-        if not assignment_id:
-            raise ValueError('assignment_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='delete_account_settings_assignment',
-        )
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['assignment_id']
-        path_param_values = self.encode_path_vars(assignment_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/account_settings_assignments/{assignment_id}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='DELETE',
-            url=url,
-            headers=headers,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def update_account_settings_assignment(
-        self,
-        assignment_id: str,
-        if_match: str,
-        template_version: int,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Update assignment.
-
-        Update an account settings assignment. Call this method to retry failed
-        assignments or migrate the settings in child accounts to a new version.
-
-        :param str assignment_id: ID of the Assignment Record.
-        :param str if_match: Version of the assignment to be updated. Specify the
-               version that you retrieved when reading the assignment. This value  helps
-               identifying parallel usage of this API. Pass * to indicate to update any
-               version available. This might result in stale updates.
-        :param int template_version: Template version to be applied to the
-               assignment. To retry all failed assignments, provide the existing version.
-               To migrate to a different version, provide the new version number.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
-        """
-
-        if not assignment_id:
-            raise ValueError('assignment_id must be provided')
-        if not if_match:
-            raise ValueError('if_match must be provided')
-        if template_version is None:
-            raise ValueError('template_version must be provided')
-        headers = {
-            'If-Match': if_match,
-        }
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='update_account_settings_assignment',
-        )
-        headers.update(sdk_headers)
-
-        data = {
-            'template_version': template_version,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['assignment_id']
-        path_param_values = self.encode_path_vars(assignment_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/account_settings_assignments/{assignment_id}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='PATCH',
-            url=url,
-            headers=headers,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    #########################
-    # accountSettingsTemplate
-    #########################
-
-    def list_account_settings_templates(
-        self,
-        *,
-        account_id: Optional[str] = None,
-        limit: Optional[str] = None,
-        pagetoken: Optional[str] = None,
-        sort: Optional[str] = None,
-        order: Optional[str] = None,
-        include_history: Optional[str] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        List account settings templates.
-
-        List account settings templates in an enterprise account.
-
-        :param str account_id: (optional) Account ID of the account settings
-               templates to query. This parameter is required unless using a pagetoken.
-        :param str limit: (optional) Optional size of a single page.
-        :param str pagetoken: (optional) Optional Prev or Next page token returned
-               from a previous query execution. Default is start with first page.
-        :param str sort: (optional) Optional sort property. If specified, the
-               returned templated are sorted according to this property.
-        :param str order: (optional) Optional sort order.
-        :param str include_history: (optional) Defines if the entity history is
-               included in the response.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateList` object
-        """
-
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='list_account_settings_templates',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'account_id': account_id,
-            'limit': limit,
-            'pagetoken': pagetoken,
-            'sort': sort,
-            'order': order,
-            'include_history': include_history,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v1/account_settings_templates'
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def create_account_settings_template(
-        self,
-        *,
-        account_id: Optional[str] = None,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-        account_settings: Optional['AccountSettingsComponent'] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Create an account settings template.
-
-        Create a new account settings template in an enterprise account.
-
-        :param str account_id: (optional) ID of the account where the template
-               resides.
-        :param str name: (optional) The name of the trusted profile template. This
-               is visible only in the enterprise account.
-        :param str description: (optional) The description of the trusted profile
-               template. Describe the template for enterprise account users.
-        :param AccountSettingsComponent account_settings: (optional)
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
-        """
-
-        if account_settings is not None:
-            account_settings = convert_model(account_settings)
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='create_account_settings_template',
-        )
-        headers.update(sdk_headers)
-
-        data = {
-            'account_id': account_id,
-            'name': name,
-            'description': description,
-            'account_settings': account_settings,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v1/account_settings_templates'
-        request = self.prepare_request(
-            method='POST',
-            url=url,
-            headers=headers,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def get_latest_account_settings_template_version(
-        self,
-        template_id: str,
-        *,
-        include_history: Optional[bool] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Get latest version of an account settings template.
-
-        Get the latest version of a specific account settings template in an enterprise
-        account.
-
-        :param str template_id: ID of the account settings template.
-        :param bool include_history: (optional) Defines if the entity history is
-               included in the response.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
-        """
-
-        if not template_id:
-            raise ValueError('template_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='get_latest_account_settings_template_version',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'include_history': include_history,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['template_id']
-        path_param_values = self.encode_path_vars(template_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/account_settings_templates/{template_id}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def delete_all_versions_of_account_settings_template(
-        self,
-        template_id: str,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Delete all versions of an account settings template.
-
-        Delete all versions of an account settings template in an enterprise account. If
-        any version is assigned to child accounts, you must first delete the assignment.
-
-        :param str template_id: ID of the account settings template.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
-        """
-
-        if not template_id:
-            raise ValueError('template_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='delete_all_versions_of_account_settings_template',
-        )
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-
-        path_param_keys = ['template_id']
-        path_param_values = self.encode_path_vars(template_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/account_settings_templates/{template_id}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='DELETE',
-            url=url,
-            headers=headers,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def list_versions_of_account_settings_template(
-        self,
-        template_id: str,
-        *,
-        limit: Optional[str] = None,
-        pagetoken: Optional[str] = None,
-        sort: Optional[str] = None,
-        order: Optional[str] = None,
-        include_history: Optional[str] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        List account settings template versions.
-
-        List the versions of a specific account settings template in an enterprise
-        account.
-
-        :param str template_id: ID of the account settings template.
-        :param str limit: (optional) Optional size of a single page.
-        :param str pagetoken: (optional) Optional Prev or Next page token returned
-               from a previous query execution. Default is start with first page.
-        :param str sort: (optional) Optional sort property. If specified, the
-               returned templated are sorted according to this property.
-        :param str order: (optional) Optional sort order.
-        :param str include_history: (optional) Defines if the entity history is
-               included in the response.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateList` object
-        """
-
-        if not template_id:
-            raise ValueError('template_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='list_versions_of_account_settings_template',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'limit': limit,
-            'pagetoken': pagetoken,
-            'sort': sort,
-            'order': order,
-            'include_history': include_history,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['template_id']
-        path_param_values = self.encode_path_vars(template_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/account_settings_templates/{template_id}/versions'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def create_account_settings_template_version(
-        self,
-        template_id: str,
-        *,
-        account_id: Optional[str] = None,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-        account_settings: Optional['AccountSettingsComponent'] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Create a new version of an account settings template.
-
-        Create a new version of an account settings template in an Enterprise Account.
-
-        :param str template_id: ID of the account settings template.
-        :param str account_id: (optional) ID of the account where the template
-               resides.
-        :param str name: (optional) The name of the trusted profile template. This
-               is visible only in the enterprise account.
-        :param str description: (optional) The description of the trusted profile
-               template. Describe the template for enterprise account users.
-        :param AccountSettingsComponent account_settings: (optional)
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
-        """
-
-        if not template_id:
-            raise ValueError('template_id must be provided')
-        if account_settings is not None:
-            account_settings = convert_model(account_settings)
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='create_account_settings_template_version',
-        )
-        headers.update(sdk_headers)
-
-        data = {
-            'account_id': account_id,
-            'name': name,
-            'description': description,
-            'account_settings': account_settings,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['template_id']
-        path_param_values = self.encode_path_vars(template_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/account_settings_templates/{template_id}/versions'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='POST',
-            url=url,
-            headers=headers,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def get_account_settings_template_version(
-        self,
-        template_id: str,
-        version: str,
-        *,
-        include_history: Optional[bool] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Get version of an account settings template.
-
-        Get a specific version of an account settings template in an Enterprise Account.
-
-        :param str template_id: ID of the account settings template.
-        :param str version: Version of the account settings template.
-        :param bool include_history: (optional) Defines if the entity history is
-               included in the response.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
-        """
-
-        if not template_id:
-            raise ValueError('template_id must be provided')
-        if not version:
-            raise ValueError('version must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='get_account_settings_template_version',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'include_history': include_history,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['template_id', 'version']
-        path_param_values = self.encode_path_vars(template_id, version)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/account_settings_templates/{template_id}/versions/{version}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def update_account_settings_template_version(
-        self,
-        if_match: str,
-        template_id: str,
-        version: str,
-        *,
-        account_id: Optional[str] = None,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-        account_settings: Optional['AccountSettingsComponent'] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Update version of an account settings template.
-
-        Update a specific version of an account settings template in an Enterprise
-        Account.
-
-        :param str if_match: Entity tag of the Template to be updated. Specify the
-               tag that you retrieved when reading the account settings template. This
-               value helps identifying parallel usage of this API. Pass * to indicate to
-               update any version available. This might result in stale updates.
-        :param str template_id: ID of the account settings template.
-        :param str version: Version of the account settings template.
-        :param str account_id: (optional) ID of the account where the template
-               resides.
-        :param str name: (optional) The name of the trusted profile template. This
-               is visible only in the enterprise account.
-        :param str description: (optional) The description of the trusted profile
-               template. Describe the template for enterprise account users.
-        :param AccountSettingsComponent account_settings: (optional)
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
-        """
-
-        if not if_match:
-            raise ValueError('if_match must be provided')
-        if not template_id:
-            raise ValueError('template_id must be provided')
-        if not version:
-            raise ValueError('version must be provided')
-        if account_settings is not None:
-            account_settings = convert_model(account_settings)
-        headers = {
-            'If-Match': if_match,
-        }
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='update_account_settings_template_version',
-        )
-        headers.update(sdk_headers)
-
-        data = {
-            'account_id': account_id,
-            'name': name,
-            'description': description,
-            'account_settings': account_settings,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['template_id', 'version']
-        path_param_values = self.encode_path_vars(template_id, version)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/account_settings_templates/{template_id}/versions/{version}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='PUT',
-            url=url,
-            headers=headers,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def delete_account_settings_template_version(
-        self,
-        template_id: str,
-        version: str,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Delete version of an account settings template.
-
-        Delete a specific version of an account settings template in an Enterprise
-        Account.
-
-        :param str template_id: ID of the account settings template.
-        :param str version: Version of the account settings template.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
-        """
-
-        if not template_id:
-            raise ValueError('template_id must be provided')
-        if not version:
-            raise ValueError('version must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='delete_account_settings_template_version',
-        )
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-
-        path_param_keys = ['template_id', 'version']
-        path_param_values = self.encode_path_vars(template_id, version)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/account_settings_templates/{template_id}/versions/{version}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='DELETE',
-            url=url,
-            headers=headers,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def commit_account_settings_template(
-        self,
-        template_id: str,
-        version: str,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Commit a template version.
-
-        Commit a specific version of an account settings template in an Enterprise
-        Account. A Template must be committed before being assigned, and once committed,
-        can no longer be modified.
-
-        :param str template_id: ID of the account settings template.
-        :param str version: Version of the account settings template.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
-        """
-
-        if not template_id:
-            raise ValueError('template_id must be provided')
-        if not version:
-            raise ValueError('version must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='commit_account_settings_template',
-        )
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-
-        path_param_keys = ['template_id', 'version']
-        path_param_values = self.encode_path_vars(template_id, version)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/account_settings_templates/{template_id}/versions/{version}/commit'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='POST',
-            url=url,
-            headers=headers,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    #########################
-    # activityOperations
-    #########################
-
-    def create_report(
-        self,
-        account_id: str,
-        *,
-        type: Optional[str] = None,
-        duration: Optional[str] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Trigger activity report for the account.
-
-        Trigger activity report for the account by specifying the account ID. It can take
-        a few minutes to generate the report for retrieval.
-
-        :param str account_id: ID of the account.
-        :param str type: (optional) Optional report type. The supported value is
-               'inactive'. List all identities that have not authenticated within the time
-               indicated by duration.
-        :param str duration: (optional) Optional duration of the report. The
-               supported unit of duration is hours.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ReportReference` object
-        """
-
-        if not account_id:
-            raise ValueError('account_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='create_report',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'type': type,
-            'duration': duration,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['account_id']
-        path_param_values = self.encode_path_vars(account_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/activity/accounts/{account_id}/report'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='POST',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def get_report(
-        self,
-        account_id: str,
-        reference: str,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Get activity report for the account.
-
-        Get activity report for the account by specifying the account ID and the reference
-        that is generated by triggering the report. Reports older than a day are deleted
-        when generating a new report.
-
-        :param str account_id: ID of the account.
-        :param str reference: Reference for the report to be generated, You can use
-               'latest' to get the latest report for the given account.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `Report` object
-        """
-
-        if not account_id:
-            raise ValueError('account_id must be provided')
-        if not reference:
-            raise ValueError('reference must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='get_report',
-        )
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['account_id', 'reference']
-        path_param_values = self.encode_path_vars(account_id, reference)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/activity/accounts/{account_id}/report/{reference}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    #########################
-    # effectiveAccountSettings
-    #########################
-
-    def get_effective_account_settings(
-        self,
-        account_id: str,
-        *,
-        include_history: Optional[bool] = None,
-        resolve_user_mfa: Optional[bool] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Get effective account settings configuration.
-
-        Returns effective account settings for given account ID.
-
-        :param str account_id: Unique ID of the account.
-        :param bool include_history: (optional) Defines if the entity history is
-               included in the response.
-        :param bool resolve_user_mfa: (optional) Enrich MFA exemptions with user
-               information.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `EffectiveAccountSettingsResponse` object
-        """
-
-        if not account_id:
-            raise ValueError('account_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='get_effective_account_settings',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'include_history': include_history,
-            'resolve_user_mfa': resolve_user_mfa,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['account_id']
-        path_param_values = self.encode_path_vars(account_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/accounts/{account_id}/effective_settings/identity'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    #########################
-    # identityPreferences
+    # Identity Preferences
     #########################
 
     def update_preference_on_scope_account(
@@ -3740,27 +3138,38 @@ class IamIdentityV1(BaseService):
         """
         Update Identity Preference on scope account.
 
-        Update one Identity Preference on scope 'account'. supported preferences:
-          The following preferences are storing values for identities inside an account,
-          i.e. for each account that an identity is member of, the value stored might be
-        different.
-          This means, users who might be member of multiple accounts can have multiple
-        preferences, one per account.
-          Identities like Service Ids or Trusted Profiles can only exist in one account,
-          therefore they can only have one preference inside their related account.
-          preference: console/landing_page
-            service: console
-            preferenceId: landing_page
-            supportedIdentityType: Trusted Profiles, Users
-            type: string
-            validation: valid URL (without host part), e.g. /billing or /iam
-          preference: console/global_left_navigation
-            service: console
-            preferenceId: global_left_navigation
-            supportedIdentityType: Trusted Profiles, Users
-            type: list of strings
-            validation: each entry in the list of strings must match the identifier of one
-        navigation entry in the console.
+        Update one Identity Preference on scope `account`.
+        The following preferences are storing values for identities inside an account,
+        i.e. for each account that an identity is member of, the value stored might be
+        different. This means, **users** who might be member of multiple accounts can have
+        multiple preferences, one per account.  Identities like **Service Ids** or
+        **Trusted Profiles** can only exist in one account,  therefore they can only have
+        one preference inside their related account.
+        ### Preferences
+        - **console/landing_page**
+          service: `console`
+          preference_id: `landing_page`
+          supported identity types: `Trusted Profile`
+          type: `string`
+          validation: valid path for the IBM Cloud Console (without host part), e.g.
+        `/billing` or `/iam`
+        - **console/global_left_navigation**
+          service: `console`
+          preference_id: `global_left_navigation`
+          supported identity types: `Trusted Profile`
+          type: `list of strings`
+          validation: each entry in the list of strings must match the identifier of one
+        navigation entry in the console;
+          these identifiers are defined and interpreted by the IBM Cloud Console;
+        currently the following entries are supported:
+        `slash,projects,rex,containers,databases,is,logmet,automation,complianceAndSecurity,apis,cp4d,partner-center,sap,satellite,vmWare,watsonx`
+        ### Authorization
+        To call this method for the identity type `Trusted Profile`, you must be assigned
+        one or more IAM access roles that include the following action on the target
+        resource `account` and resource type `preferences`:
+        - iam-identity.preferences.update
+        By default, the `Administrator` role on service `iam-identity` contains this
+        action.
 
         :param str account_id: Account id to update preference for.
         :param str iam_id: IAM id to update the preference for.
@@ -3835,7 +3244,10 @@ class IamIdentityV1(BaseService):
         """
         Delete Identity Preference on scope account.
 
-        Delete one Identity Preference on scope 'account'.
+        Delete one Identity Preference on scope `account`. For details about the
+        preferences supported  and how the method request is authorized, refer to the
+        description of operation
+        `Update Identity Preference on scope account`.
 
         :param str account_id: Account id to delete preference for.
         :param str iam_id: IAM id to delete the preference for.
@@ -3843,7 +3255,7 @@ class IamIdentityV1(BaseService):
         :param str preference_id: Identifier of preference to be deleted.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ExceptionResponse` object
+        :rtype: DetailedResponse
         """
 
         if not account_id:
@@ -3865,7 +3277,6 @@ class IamIdentityV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
             del kwargs['headers']
-        headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id', 'iam_id', 'service', 'preference_id']
         path_param_values = self.encode_path_vars(account_id, iam_id, service, preference_id)
@@ -3893,7 +3304,20 @@ class IamIdentityV1(BaseService):
         """
         Get Identity Preference on scope account.
 
-        Get one Identity Preference on scope 'account'.
+        Get one Identity Preference on scope `account`. For details about the preferences
+        supported,  refer to the description of operation `Update Identity Preference on
+        scope account`.
+        ### Authorization
+        To call this method for the identity type `Trusted Profile`, one of the following
+        conditions must be true:
+        - the Authorization token represents the trusted profile which is addressed by
+        this request
+        - you must be assigned one or more IAM access roles that include the following
+        action on the target resource `account` and resource type `preferences`:
+          - iam-identity.preferences.update
+          By default, the `Administrator` role on service `iam-identity` contains this
+        action.
+        - Services inside the IBM Cloud Console can call this method.
 
         :param str account_id: Account id to get preference for.
         :param str iam_id: IAM id to get the preference for.
@@ -3947,9 +3371,14 @@ class IamIdentityV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Get all Identity Preferences for one account.
+        Get all Identity Preferences on scope account.
 
-        Get all Identity Preferences for one account / user combination.
+        Get all Identity Preferences for one account / identity combination. For details
+        about the preferences  supported and how the method request is authorized, refer
+        to the description of operation
+        `Get Identity Preference on scope account`.
+        If you are not allowed to read a preference, the call will not fail. Instead, this
+        preference is/ these preferences are not returned in the list call.
 
         :param str account_id: Account id to get preferences for.
         :param str iam_id: IAM id to get the preferences for.
@@ -3989,319 +3418,7 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
-    # trustedProfileAssignments
-    #########################
-
-    def list_trusted_profile_assignments(
-        self,
-        *,
-        account_id: Optional[str] = None,
-        template_id: Optional[str] = None,
-        template_version: Optional[str] = None,
-        target: Optional[str] = None,
-        target_type: Optional[str] = None,
-        limit: Optional[int] = None,
-        pagetoken: Optional[str] = None,
-        sort: Optional[str] = None,
-        order: Optional[str] = None,
-        include_history: Optional[bool] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        List assignments.
-
-        List trusted profile template assignments.
-
-        :param str account_id: (optional) Account ID of the Assignments to query.
-               This parameter is required unless using a pagetoken.
-        :param str template_id: (optional) Filter results by Template Id.
-        :param str template_version: (optional) Filter results Template Version.
-        :param str target: (optional) Filter results by the assignment target.
-        :param str target_type: (optional) Filter results by the assignment's
-               target type.
-        :param int limit: (optional) Optional size of a single page. Default is 20
-               items per page. Valid range is 1 to 100.
-        :param str pagetoken: (optional) Optional Prev or Next page token returned
-               from a previous query execution. Default is start with first page.
-        :param str sort: (optional) If specified, the items are sorted by the value
-               of this property.
-        :param str order: (optional) Sort order.
-        :param bool include_history: (optional) Defines if the entity history is
-               included in the response.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentListResponse` object
-        """
-
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='list_trusted_profile_assignments',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'account_id': account_id,
-            'template_id': template_id,
-            'template_version': template_version,
-            'target': target,
-            'target_type': target_type,
-            'limit': limit,
-            'pagetoken': pagetoken,
-            'sort': sort,
-            'order': order,
-            'include_history': include_history,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v1/profile_assignments/'
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def create_trusted_profile_assignment(
-        self,
-        template_id: str,
-        template_version: int,
-        target_type: str,
-        target: str,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Create assignment.
-
-        Create an assigment for a trusted profile template.
-
-        :param str template_id: ID of the template to assign.
-        :param int template_version: Version of the template to assign.
-        :param str target_type: Type of target to deploy to.
-        :param str target: Identifier of target to deploy to.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
-        """
-
-        if template_id is None:
-            raise ValueError('template_id must be provided')
-        if template_version is None:
-            raise ValueError('template_version must be provided')
-        if target_type is None:
-            raise ValueError('target_type must be provided')
-        if target is None:
-            raise ValueError('target must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='create_trusted_profile_assignment',
-        )
-        headers.update(sdk_headers)
-
-        data = {
-            'template_id': template_id,
-            'template_version': template_version,
-            'target_type': target_type,
-            'target': target,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v1/profile_assignments/'
-        request = self.prepare_request(
-            method='POST',
-            url=url,
-            headers=headers,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def get_trusted_profile_assignment(
-        self,
-        assignment_id: str,
-        *,
-        include_history: Optional[bool] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Get assignment.
-
-        Get an assigment for a trusted profile template.
-
-        :param str assignment_id: ID of the Assignment Record.
-        :param bool include_history: (optional) Defines if the entity history is
-               included in the response.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
-        """
-
-        if not assignment_id:
-            raise ValueError('assignment_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='get_trusted_profile_assignment',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'include_history': include_history,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['assignment_id']
-        path_param_values = self.encode_path_vars(assignment_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/profile_assignments/{assignment_id}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def delete_trusted_profile_assignment(
-        self,
-        assignment_id: str,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Delete assignment.
-
-        Delete a trusted profile assignment. This removes any IAM resources created by
-        this assignment in child accounts.
-
-        :param str assignment_id: ID of the Assignment Record.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ExceptionResponse` object
-        """
-
-        if not assignment_id:
-            raise ValueError('assignment_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='delete_trusted_profile_assignment',
-        )
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['assignment_id']
-        path_param_values = self.encode_path_vars(assignment_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/profile_assignments/{assignment_id}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='DELETE',
-            url=url,
-            headers=headers,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def update_trusted_profile_assignment(
-        self,
-        assignment_id: str,
-        if_match: str,
-        template_version: int,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Update assignment.
-
-        Update a trusted profile assignment. Call this method to retry failed assignments
-        or migrate the trusted profile in child accounts to a new version.
-
-        :param str assignment_id: ID of the Assignment Record.
-        :param str if_match: Version of the Assignment to be updated. Specify the
-               version that you retrieved when reading the Assignment. This value  helps
-               identifying parallel usage of this API. Pass * to indicate to update any
-               version available. This might result in stale updates.
-        :param int template_version: Template version to be applied to the
-               assignment. To retry all failed assignments, provide the existing version.
-               To migrate to a different version, provide the new version number.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
-        """
-
-        if not assignment_id:
-            raise ValueError('assignment_id must be provided')
-        if not if_match:
-            raise ValueError('if_match must be provided')
-        if template_version is None:
-            raise ValueError('template_version must be provided')
-        headers = {
-            'If-Match': if_match,
-        }
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='update_trusted_profile_assignment',
-        )
-        headers.update(sdk_headers)
-
-        data = {
-            'template_version': template_version,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['assignment_id']
-        path_param_values = self.encode_path_vars(assignment_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/profile_assignments/{assignment_id}'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='PATCH',
-            url=url,
-            headers=headers,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    #########################
-    # trustedProfileTemplate
+    # Trusted Profile Template
     #########################
 
     def list_profile_templates(
@@ -4945,6 +4062,1246 @@ class IamIdentityV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    #########################
+    # Trusted Profile Template Assignments
+    #########################
+
+    def list_trusted_profile_assignments(
+        self,
+        *,
+        account_id: Optional[str] = None,
+        template_id: Optional[str] = None,
+        template_version: Optional[str] = None,
+        target: Optional[str] = None,
+        target_type: Optional[str] = None,
+        limit: Optional[int] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List assignments.
+
+        List trusted profile template assignments.
+
+        :param str account_id: (optional) Account ID of the Assignments to query.
+               This parameter is required unless using a pagetoken.
+        :param str template_id: (optional) Filter results by Template Id.
+        :param str template_version: (optional) Filter results Template Version.
+        :param str target: (optional) Filter results by the assignment target.
+        :param str target_type: (optional) Filter results by the assignment's
+               target type.
+        :param int limit: (optional) Optional size of a single page. Default is 20
+               items per page. Valid range is 1 to 100.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param str sort: (optional) If specified, the items are sorted by the value
+               of this property.
+        :param str order: (optional) Sort order.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentListResponse` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_trusted_profile_assignments',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'template_id': template_id,
+            'template_version': template_version,
+            'target': target,
+            'target_type': target_type,
+            'limit': limit,
+            'pagetoken': pagetoken,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/profile_assignments/'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_trusted_profile_assignment(
+        self,
+        template_id: str,
+        template_version: int,
+        target_type: str,
+        target: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create assignment.
+
+        Create an assigment for a trusted profile template.
+
+        :param str template_id: ID of the template to assign.
+        :param int template_version: Version of the template to assign.
+        :param str target_type: Type of target to deploy to.
+        :param str target: Identifier of target to deploy to.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if template_id is None:
+            raise ValueError('template_id must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        if target_type is None:
+            raise ValueError('target_type must be provided')
+        if target is None:
+            raise ValueError('target must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_trusted_profile_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_id': template_id,
+            'template_version': template_version,
+            'target_type': target_type,
+            'target': target,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/profile_assignments/'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_trusted_profile_assignment(
+        self,
+        assignment_id: str,
+        *,
+        include_history: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get assignment.
+
+        Get an assigment for a trusted profile template.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_trusted_profile_assignment',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_trusted_profile_assignment(
+        self,
+        assignment_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete assignment.
+
+        Delete a trusted profile assignment. This removes any IAM resources created by
+        this assignment in child accounts.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ExceptionResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_trusted_profile_assignment',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_trusted_profile_assignment(
+        self,
+        assignment_id: str,
+        if_match: str,
+        template_version: int,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update assignment.
+
+        Update a trusted profile assignment. Call this method to retry failed assignments
+        or migrate the trusted profile in child accounts to a new version.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param str if_match: Version of the Assignment to be updated. Specify the
+               version that you retrieved when reading the Assignment. This value  helps
+               identifying parallel usage of this API. Pass * to indicate to update any
+               version available. This might result in stale updates.
+        :param int template_version: Template version to be applied to the
+               assignment. To retry all failed assignments, provide the existing version.
+               To migrate to a different version, provide the new version number.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_trusted_profile_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_version': template_version,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Account Settings Template
+    #########################
+
+    def list_account_settings_templates(
+        self,
+        *,
+        account_id: Optional[str] = None,
+        limit: Optional[str] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List account settings templates.
+
+        List account settings templates in an enterprise account.
+
+        :param str account_id: (optional) Account ID of the account settings
+               templates to query. This parameter is required unless using a pagetoken.
+        :param str limit: (optional) Optional size of a single page.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param str sort: (optional) Optional sort property. If specified, the
+               returned templated are sorted according to this property.
+        :param str order: (optional) Optional sort order.
+        :param str include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateList` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_account_settings_templates',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'limit': limit,
+            'pagetoken': pagetoken,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/account_settings_templates'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_account_settings_template(
+        self,
+        *,
+        account_id: Optional[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        account_settings: Optional['AccountSettingsComponent'] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create an account settings template.
+
+        Create a new account settings template in an enterprise account.
+
+        :param str account_id: (optional) ID of the account where the template
+               resides.
+        :param str name: (optional) The name of the trusted profile template. This
+               is visible only in the enterprise account.
+        :param str description: (optional) The description of the trusted profile
+               template. Describe the template for enterprise account users.
+        :param AccountSettingsComponent account_settings: (optional)
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
+        """
+
+        if account_settings is not None:
+            account_settings = convert_model(account_settings)
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_account_settings_template',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'description': description,
+            'account_settings': account_settings,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/account_settings_templates'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_latest_account_settings_template_version(
+        self,
+        template_id: str,
+        *,
+        include_history: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get latest version of an account settings template.
+
+        Get the latest version of a specific account settings template in an enterprise
+        account.
+
+        :param str template_id: ID of the account settings template.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_latest_account_settings_template_version',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_all_versions_of_account_settings_template(
+        self,
+        template_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete all versions of an account settings template.
+
+        Delete all versions of an account settings template in an enterprise account. If
+        any version is assigned to child accounts, you must first delete the assignment.
+
+        :param str template_id: ID of the account settings template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_all_versions_of_account_settings_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_versions_of_account_settings_template(
+        self,
+        template_id: str,
+        *,
+        limit: Optional[str] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List account settings template versions.
+
+        List the versions of a specific account settings template in an enterprise
+        account.
+
+        :param str template_id: ID of the account settings template.
+        :param str limit: (optional) Optional size of a single page.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param str sort: (optional) Optional sort property. If specified, the
+               returned templated are sorted according to this property.
+        :param str order: (optional) Optional sort order.
+        :param str include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateList` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_versions_of_account_settings_template',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'limit': limit,
+            'pagetoken': pagetoken,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_account_settings_template_version(
+        self,
+        template_id: str,
+        *,
+        account_id: Optional[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        account_settings: Optional['AccountSettingsComponent'] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create a new version of an account settings template.
+
+        Create a new version of an account settings template in an Enterprise Account.
+
+        :param str template_id: ID of the account settings template.
+        :param str account_id: (optional) ID of the account where the template
+               resides.
+        :param str name: (optional) The name of the trusted profile template. This
+               is visible only in the enterprise account.
+        :param str description: (optional) The description of the trusted profile
+               template. Describe the template for enterprise account users.
+        :param AccountSettingsComponent account_settings: (optional)
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if account_settings is not None:
+            account_settings = convert_model(account_settings)
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_account_settings_template_version',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'description': description,
+            'account_settings': account_settings,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_account_settings_template_version(
+        self,
+        template_id: str,
+        version: str,
+        *,
+        include_history: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get version of an account settings template.
+
+        Get a specific version of an account settings template in an Enterprise Account.
+
+        :param str template_id: ID of the account settings template.
+        :param str version: Version of the account settings template.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_account_settings_template_version',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_account_settings_template_version(
+        self,
+        if_match: str,
+        template_id: str,
+        version: str,
+        *,
+        account_id: Optional[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        account_settings: Optional['AccountSettingsComponent'] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update version of an account settings template.
+
+        Update a specific version of an account settings template in an Enterprise
+        Account.
+
+        :param str if_match: Entity tag of the Template to be updated. Specify the
+               tag that you retrieved when reading the account settings template. This
+               value helps identifying parallel usage of this API. Pass * to indicate to
+               update any version available. This might result in stale updates.
+        :param str template_id: ID of the account settings template.
+        :param str version: Version of the account settings template.
+        :param str account_id: (optional) ID of the account where the template
+               resides.
+        :param str name: (optional) The name of the trusted profile template. This
+               is visible only in the enterprise account.
+        :param str description: (optional) The description of the trusted profile
+               template. Describe the template for enterprise account users.
+        :param AccountSettingsComponent account_settings: (optional)
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
+        """
+
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        if account_settings is not None:
+            account_settings = convert_model(account_settings)
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_account_settings_template_version',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'description': description,
+            'account_settings': account_settings,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_account_settings_template_version(
+        self,
+        template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete version of an account settings template.
+
+        Delete a specific version of an account settings template in an Enterprise
+        Account.
+
+        :param str template_id: ID of the account settings template.
+        :param str version: Version of the account settings template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_account_settings_template_version',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def commit_account_settings_template(
+        self,
+        template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Commit a template version.
+
+        Commit a specific version of an account settings template in an Enterprise
+        Account. A Template must be committed before being assigned, and once committed,
+        can no longer be modified.
+
+        :param str template_id: ID of the account settings template.
+        :param str version: Version of the account settings template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='commit_account_settings_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions/{version}/commit'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Account Settings Template Assignments
+    #########################
+
+    def list_account_settings_assignments(
+        self,
+        *,
+        account_id: Optional[str] = None,
+        template_id: Optional[str] = None,
+        template_version: Optional[str] = None,
+        target: Optional[str] = None,
+        target_type: Optional[str] = None,
+        limit: Optional[int] = None,
+        pagetoken: Optional[str] = None,
+        sort: Optional[str] = None,
+        order: Optional[str] = None,
+        include_history: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List assignments.
+
+        List account settings assignments.
+
+        :param str account_id: (optional) Account ID of the Assignments to query.
+               This parameter is required unless using a pagetoken.
+        :param str template_id: (optional) Filter results by Template Id.
+        :param str template_version: (optional) Filter results Template Version.
+        :param str target: (optional) Filter results by the assignment target.
+        :param str target_type: (optional) Filter results by the assignment's
+               target type.
+        :param int limit: (optional) Optional size of a single page. Default is 20
+               items per page. Valid range is 1 to 100.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param str sort: (optional) If specified, the items are sorted by the value
+               of this property.
+        :param str order: (optional) Sort order.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentListResponse` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_account_settings_assignments',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'template_id': template_id,
+            'template_version': template_version,
+            'target': target,
+            'target_type': target_type,
+            'limit': limit,
+            'pagetoken': pagetoken,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/account_settings_assignments/'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_account_settings_assignment(
+        self,
+        template_id: str,
+        template_version: int,
+        target_type: str,
+        target: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create assignment.
+
+        Create an assigment for an account settings template.
+
+        :param str template_id: ID of the template to assign.
+        :param int template_version: Version of the template to assign.
+        :param str target_type: Type of target to deploy to.
+        :param str target: Identifier of target to deploy to.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if template_id is None:
+            raise ValueError('template_id must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        if target_type is None:
+            raise ValueError('target_type must be provided')
+        if target is None:
+            raise ValueError('target must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_account_settings_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_id': template_id,
+            'template_version': template_version,
+            'target_type': target_type,
+            'target': target,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/account_settings_assignments/'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_account_settings_assignment(
+        self,
+        assignment_id: str,
+        *,
+        include_history: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get assignment.
+
+        Get an assigment for an account settings template.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_account_settings_assignment',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_account_settings_assignment(
+        self,
+        assignment_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete assignment.
+
+        Delete an account settings template assignment. This removes any IAM resources
+        created by this assignment in child accounts.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ExceptionResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_account_settings_assignment',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_account_settings_assignment(
+        self,
+        assignment_id: str,
+        if_match: str,
+        template_version: int,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update assignment.
+
+        Update an account settings assignment. Call this method to retry failed
+        assignments or migrate the settings in child accounts to a new version.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param str if_match: Version of the assignment to be updated. Specify the
+               version that you retrieved when reading the assignment. This value  helps
+               identifying parallel usage of this API. Pass * to indicate to update any
+               version available. This might result in stale updates.
+        :param int template_version: Template version to be applied to the
+               assignment. To retry all failed assignments, provide the existing version.
+               To migrate to a different version, provide the new version number.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_account_settings_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_version': template_version,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+class ListServiceIdsEnums:
+    """
+    Enums for list_service_ids parameters.
+    """
+
+    class Order(str, Enum):
+        """
+        Optional sort order, valid values are asc and desc. Default: asc.
+        """
+
+        ASC = 'asc'
+        DESC = 'desc'
+
 
 class ListApiKeysEnums:
     """
@@ -4968,20 +5325,6 @@ class ListApiKeysEnums:
 
         USER = 'user'
         SERVICEID = 'serviceid'
-
-    class Order(str, Enum):
-        """
-        Optional sort order, valid values are asc and desc. Default: asc.
-        """
-
-        ASC = 'asc'
-        DESC = 'desc'
-
-
-class ListServiceIdsEnums:
-    """
-    Enums for list_service_ids parameters.
-    """
 
     class Order(str, Enum):
         """
@@ -5051,9 +5394,57 @@ class DeleteProfileIdentityEnums:
         CRN = 'crn'
 
 
-class ListAccountSettingsAssignmentsEnums:
+class ListProfileTemplatesEnums:
     """
-    Enums for list_account_settings_assignments parameters.
+    Enums for list_profile_templates parameters.
+    """
+
+    class Sort(str, Enum):
+        """
+        Optional sort property. If specified, the returned templates are sorted according
+        to this property.
+        """
+
+        CREATED_AT = 'created_at'
+        LAST_MODIFIED_AT = 'last_modified_at'
+        NAME = 'name'
+
+    class Order(str, Enum):
+        """
+        Optional sort order.
+        """
+
+        ASC = 'asc'
+        DESC = 'desc'
+
+
+class ListVersionsOfProfileTemplateEnums:
+    """
+    Enums for list_versions_of_profile_template parameters.
+    """
+
+    class Sort(str, Enum):
+        """
+        Optional sort property. If specified, the returned templated are sorted according
+        to this property.
+        """
+
+        CREATED_AT = 'created_at'
+        LAST_MODIFIED_AT = 'last_modified_at'
+        NAME = 'name'
+
+    class Order(str, Enum):
+        """
+        Optional sort order.
+        """
+
+        ASC = 'asc'
+        DESC = 'desc'
+
+
+class ListTrustedProfileAssignmentsEnums:
+    """
+    Enums for list_trusted_profile_assignments parameters.
     """
 
     class TargetType(str, Enum):
@@ -5130,9 +5521,9 @@ class ListVersionsOfAccountSettingsTemplateEnums:
         DESC = 'desc'
 
 
-class ListTrustedProfileAssignmentsEnums:
+class ListAccountSettingsAssignmentsEnums:
     """
-    Enums for list_trusted_profile_assignments parameters.
+    Enums for list_account_settings_assignments parameters.
     """
 
     class TargetType(str, Enum):
@@ -5155,54 +5546,6 @@ class ListTrustedProfileAssignmentsEnums:
     class Order(str, Enum):
         """
         Sort order.
-        """
-
-        ASC = 'asc'
-        DESC = 'desc'
-
-
-class ListProfileTemplatesEnums:
-    """
-    Enums for list_profile_templates parameters.
-    """
-
-    class Sort(str, Enum):
-        """
-        Optional sort property. If specified, the returned templates are sorted according
-        to this property.
-        """
-
-        CREATED_AT = 'created_at'
-        LAST_MODIFIED_AT = 'last_modified_at'
-        NAME = 'name'
-
-    class Order(str, Enum):
-        """
-        Optional sort order.
-        """
-
-        ASC = 'asc'
-        DESC = 'desc'
-
-
-class ListVersionsOfProfileTemplateEnums:
-    """
-    Enums for list_versions_of_profile_template parameters.
-    """
-
-    class Sort(str, Enum):
-        """
-        Optional sort property. If specified, the returned templated are sorted according
-        to this property.
-        """
-
-        CREATED_AT = 'created_at'
-        LAST_MODIFIED_AT = 'last_modified_at'
-        NAME = 'name'
-
-    class Order(str, Enum):
-        """
-        Optional sort order.
         """
 
         ASC = 'asc'
@@ -11058,6 +11401,8 @@ class ServiceId:
     :param datetime modified_at: If set contains a date time string of the last
           modification date in ISO format.
     :param str account_id: ID of the account the service ID belongs to.
+    :param str group_id: (optional) ID of the group to which the service ID belongs
+          to. Only set if requested via parameter `show_group_id`.
     :param str name: Name of the Service Id. The name is not checked for uniqueness.
           Therefore multiple names with the same value can exist. Access is done via the
           UUID of the Service Id.
@@ -11085,6 +11430,7 @@ class ServiceId:
         name: str,
         *,
         context: Optional['ResponseContext'] = None,
+        group_id: Optional[str] = None,
         description: Optional[str] = None,
         unique_instance_crns: Optional[List[str]] = None,
         history: Optional[List['EnityHistoryRecord']] = None,
@@ -11112,6 +11458,8 @@ class ServiceId:
                is done via the UUID of the Service Id.
         :param ResponseContext context: (optional) Context with key properties for
                problem determination.
+        :param str group_id: (optional) ID of the group to which the service ID
+               belongs to. Only set if requested via parameter `show_group_id`.
         :param str description: (optional) The optional description of the Service
                Id. The 'description' property is only available if a description was
                provided during a create of a Service Id.
@@ -11132,6 +11480,7 @@ class ServiceId:
         self.created_at = created_at
         self.modified_at = modified_at
         self.account_id = account_id
+        self.group_id = group_id
         self.name = name
         self.description = description
         self.unique_instance_crns = unique_instance_crns
@@ -11177,6 +11526,8 @@ class ServiceId:
             args['account_id'] = account_id
         else:
             raise ValueError('Required property \'account_id\' not present in ServiceId JSON')
+        if (group_id := _dict.get('group_id')) is not None:
+            args['group_id'] = group_id
         if (name := _dict.get('name')) is not None:
             args['name'] = name
         else:
@@ -11222,6 +11573,8 @@ class ServiceId:
             _dict['modified_at'] = datetime_to_string(self.modified_at)
         if hasattr(self, 'account_id') and self.account_id is not None:
             _dict['account_id'] = self.account_id
+        if hasattr(self, 'group_id') and self.group_id is not None:
+            _dict['group_id'] = self.group_id
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
         if hasattr(self, 'description') and self.description is not None:
@@ -11263,6 +11616,215 @@ class ServiceId:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'ServiceId') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ServiceIdGroup:
+    """
+    ServiceIdGroup.
+
+    :param str id: ID of the the service ID group.
+    :param str entity_tag: (optional) Version of the service ID group details
+          object. You need to specify this value when updating the service ID group to
+          avoid stale updates.
+    :param str account_id: ID of the account the service ID group belongs to.
+    :param str crn: Cloud Resource Name of the item.
+    :param str name: Name of the service ID group. Unique in the account.
+    :param str description: (optional) Description of the service ID group.
+    :param str created_at: (optional) Timestamp of when the service ID group was
+          created.
+    :param str created_by: IAM ID of the user or service which created the Service
+          Id group.
+    :param str modified_at: (optional) Timestamp of when the service ID group was
+          modified.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        account_id: str,
+        crn: str,
+        name: str,
+        created_by: str,
+        *,
+        entity_tag: Optional[str] = None,
+        description: Optional[str] = None,
+        created_at: Optional[str] = None,
+        modified_at: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a ServiceIdGroup object.
+
+        :param str id: ID of the the service ID group.
+        :param str account_id: ID of the account the service ID group belongs to.
+        :param str crn: Cloud Resource Name of the item.
+        :param str name: Name of the service ID group. Unique in the account.
+        :param str created_by: IAM ID of the user or service which created the
+               Service Id group.
+        :param str entity_tag: (optional) Version of the service ID group details
+               object. You need to specify this value when updating the service ID group
+               to avoid stale updates.
+        :param str description: (optional) Description of the service ID group.
+        :param str created_at: (optional) Timestamp of when the service ID group
+               was created.
+        :param str modified_at: (optional) Timestamp of when the service ID group
+               was modified.
+        """
+        self.id = id
+        self.entity_tag = entity_tag
+        self.account_id = account_id
+        self.crn = crn
+        self.name = name
+        self.description = description
+        self.created_at = created_at
+        self.created_by = created_by
+        self.modified_at = modified_at
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ServiceIdGroup':
+        """Initialize a ServiceIdGroup object from a json dictionary."""
+        args = {}
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        else:
+            raise ValueError('Required property \'id\' not present in ServiceIdGroup JSON')
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        else:
+            raise ValueError('Required property \'account_id\' not present in ServiceIdGroup JSON')
+        if (crn := _dict.get('crn')) is not None:
+            args['crn'] = crn
+        else:
+            raise ValueError('Required property \'crn\' not present in ServiceIdGroup JSON')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        else:
+            raise ValueError('Required property \'name\' not present in ServiceIdGroup JSON')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = created_at
+        if (created_by := _dict.get('created_by')) is not None:
+            args['created_by'] = created_by
+        else:
+            raise ValueError('Required property \'created_by\' not present in ServiceIdGroup JSON')
+        if (modified_at := _dict.get('modified_at')) is not None:
+            args['modified_at'] = modified_at
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ServiceIdGroup object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'entity_tag') and self.entity_tag is not None:
+            _dict['entity_tag'] = self.entity_tag
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = self.created_at
+        if hasattr(self, 'created_by') and self.created_by is not None:
+            _dict['created_by'] = self.created_by
+        if hasattr(self, 'modified_at') and self.modified_at is not None:
+            _dict['modified_at'] = self.modified_at
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ServiceIdGroup object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ServiceIdGroup') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ServiceIdGroup') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ServiceIdGroupList:
+    """
+    ServiceIdGroupList.
+
+    :param List[ServiceIdGroup] serviceid_groups: List of Service ID groups based on
+          the query parameter.
+    """
+
+    def __init__(
+        self,
+        serviceid_groups: List['ServiceIdGroup'],
+    ) -> None:
+        """
+        Initialize a ServiceIdGroupList object.
+
+        :param List[ServiceIdGroup] serviceid_groups: List of Service ID groups
+               based on the query parameter.
+        """
+        self.serviceid_groups = serviceid_groups
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ServiceIdGroupList':
+        """Initialize a ServiceIdGroupList object from a json dictionary."""
+        args = {}
+        if (serviceid_groups := _dict.get('serviceid_groups')) is not None:
+            args['serviceid_groups'] = [ServiceIdGroup.from_dict(v) for v in serviceid_groups]
+        else:
+            raise ValueError('Required property \'serviceid_groups\' not present in ServiceIdGroupList JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ServiceIdGroupList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'serviceid_groups') and self.serviceid_groups is not None:
+            serviceid_groups_list = []
+            for v in self.serviceid_groups:
+                if isinstance(v, dict):
+                    serviceid_groups_list.append(v)
+                else:
+                    serviceid_groups_list.append(v.to_dict())
+            _dict['serviceid_groups'] = serviceid_groups_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ServiceIdGroupList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ServiceIdGroupList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ServiceIdGroupList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -12118,7 +12680,25 @@ class TemplateProfileComponentRequest:
     Input body parameters for the TemplateProfileComponent.
 
     :param str name: Name of the Profile.
+          You can use replacement variables in the profile name to adjust the name per
+          account.
+          The following variables are supported:
+          - `${template_id}` will be replaced by a unique identifier representing the
+          trusted profile template
+          - `${template_name}` will be replaced by the current name of the trusted profile
+          template
+          - `${template_version}` will be replaced by the current version of the trusted
+          profile template
+          - `${account_id}` will be replaced by the account identifier to which this
+          trusted profile template is assigned to
+          - `${account_name}` will be replaced by the account name to which this trusted
+          profile template is assigned to
+          Changes to e.g. the name of the account will NOT cause an update of the trusted
+          profile name. The profile name is  processed during account assignment and any
+          template version upgrade, i.e. during that operation, the updated account name
+          would be used.
     :param str description: (optional) Description of the Profile.
+    :param str email: (optional) Email of the trusted profile.
     :param List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for the
           Profile.
     :param List[ProfileIdentityRequest] identities: (optional) Identities for the
@@ -12130,6 +12710,7 @@ class TemplateProfileComponentRequest:
         name: str,
         *,
         description: Optional[str] = None,
+        email: Optional[str] = None,
         rules: Optional[List['TrustedProfileTemplateClaimRule']] = None,
         identities: Optional[List['ProfileIdentityRequest']] = None,
     ) -> None:
@@ -12137,7 +12718,25 @@ class TemplateProfileComponentRequest:
         Initialize a TemplateProfileComponentRequest object.
 
         :param str name: Name of the Profile.
+               You can use replacement variables in the profile name to adjust the name
+               per account.
+               The following variables are supported:
+               - `${template_id}` will be replaced by a unique identifier representing the
+               trusted profile template
+               - `${template_name}` will be replaced by the current name of the trusted
+               profile template
+               - `${template_version}` will be replaced by the current version of the
+               trusted profile template
+               - `${account_id}` will be replaced by the account identifier to which this
+               trusted profile template is assigned to
+               - `${account_name}` will be replaced by the account name to which this
+               trusted profile template is assigned to
+               Changes to e.g. the name of the account will NOT cause an update of the
+               trusted profile name. The profile name is  processed during account
+               assignment and any template version upgrade, i.e. during that operation,
+               the updated account name would be used.
         :param str description: (optional) Description of the Profile.
+        :param str email: (optional) Email of the trusted profile.
         :param List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for
                the Profile.
         :param List[ProfileIdentityRequest] identities: (optional) Identities for
@@ -12145,6 +12744,7 @@ class TemplateProfileComponentRequest:
         """
         self.name = name
         self.description = description
+        self.email = email
         self.rules = rules
         self.identities = identities
 
@@ -12158,6 +12758,8 @@ class TemplateProfileComponentRequest:
             raise ValueError('Required property \'name\' not present in TemplateProfileComponentRequest JSON')
         if (description := _dict.get('description')) is not None:
             args['description'] = description
+        if (email := _dict.get('email')) is not None:
+            args['email'] = email
         if (rules := _dict.get('rules')) is not None:
             args['rules'] = [TrustedProfileTemplateClaimRule.from_dict(v) for v in rules]
         if (identities := _dict.get('identities')) is not None:
@@ -12176,6 +12778,8 @@ class TemplateProfileComponentRequest:
             _dict['name'] = self.name
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
+        if hasattr(self, 'email') and self.email is not None:
+            _dict['email'] = self.email
         if hasattr(self, 'rules') and self.rules is not None:
             rules_list = []
             for v in self.rules:
@@ -12221,6 +12825,7 @@ class TemplateProfileComponentResponse:
     :param str description: (optional) Description of the Profile.
     :param List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for the
           Profile.
+    :param str email: (optional) Email of the trusted profile.
     :param List[ProfileIdentityResponse] identities: (optional) Identities for the
           Profile.
     """
@@ -12231,6 +12836,7 @@ class TemplateProfileComponentResponse:
         *,
         description: Optional[str] = None,
         rules: Optional[List['TrustedProfileTemplateClaimRule']] = None,
+        email: Optional[str] = None,
         identities: Optional[List['ProfileIdentityResponse']] = None,
     ) -> None:
         """
@@ -12240,12 +12846,14 @@ class TemplateProfileComponentResponse:
         :param str description: (optional) Description of the Profile.
         :param List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for
                the Profile.
+        :param str email: (optional) Email of the trusted profile.
         :param List[ProfileIdentityResponse] identities: (optional) Identities for
                the Profile.
         """
         self.name = name
         self.description = description
         self.rules = rules
+        self.email = email
         self.identities = identities
 
     @classmethod
@@ -12260,6 +12868,8 @@ class TemplateProfileComponentResponse:
             args['description'] = description
         if (rules := _dict.get('rules')) is not None:
             args['rules'] = [TrustedProfileTemplateClaimRule.from_dict(v) for v in rules]
+        if (email := _dict.get('email')) is not None:
+            args['email'] = email
         if (identities := _dict.get('identities')) is not None:
             args['identities'] = [ProfileIdentityResponse.from_dict(v) for v in identities]
         return cls(**args)
@@ -12284,6 +12894,8 @@ class TemplateProfileComponentResponse:
                 else:
                     rules_list.append(v.to_dict())
             _dict['rules'] = rules_list
+        if hasattr(self, 'email') and self.email is not None:
+            _dict['email'] = self.email
         if hasattr(self, 'identities') and self.identities is not None:
             identities_list = []
             for v in self.identities:
@@ -12331,6 +12943,9 @@ class TrustedProfile:
     :param str description: (optional) The optional description of the trusted
           profile. The 'description' property is only available if a description was
           provided during a create of a trusted profile.
+    :param str email: (optional) The optional email of the trusted profile. The
+          'email' property is only available if an email was provided during a create of a
+          trusted profile.
     :param datetime created_at: (optional) If set contains a date time string of the
           creation date in ISO format.
     :param datetime modified_at: (optional) If set contains a date time string of
@@ -12363,6 +12978,7 @@ class TrustedProfile:
         *,
         context: Optional['ResponseContext'] = None,
         description: Optional[str] = None,
+        email: Optional[str] = None,
         created_at: Optional[datetime] = None,
         modified_at: Optional[datetime] = None,
         template_id: Optional[str] = None,
@@ -12394,6 +13010,9 @@ class TrustedProfile:
         :param str description: (optional) The optional description of the trusted
                profile. The 'description' property is only available if a description was
                provided during a create of a trusted profile.
+        :param str email: (optional) The optional email of the trusted profile. The
+               'email' property is only available if an email was provided during a create
+               of a trusted profile.
         :param datetime created_at: (optional) If set contains a date time string
                of the creation date in ISO format.
         :param datetime modified_at: (optional) If set contains a date time string
@@ -12418,6 +13037,7 @@ class TrustedProfile:
         self.crn = crn
         self.name = name
         self.description = description
+        self.email = email
         self.created_at = created_at
         self.modified_at = modified_at
         self.iam_id = iam_id
@@ -12453,6 +13073,8 @@ class TrustedProfile:
             raise ValueError('Required property \'name\' not present in TrustedProfile JSON')
         if (description := _dict.get('description')) is not None:
             args['description'] = description
+        if (email := _dict.get('email')) is not None:
+            args['email'] = email
         if (created_at := _dict.get('created_at')) is not None:
             args['created_at'] = string_to_datetime(created_at)
         if (modified_at := _dict.get('modified_at')) is not None:
@@ -12502,6 +13124,8 @@ class TrustedProfile:
             _dict['name'] = self.name
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
+        if hasattr(self, 'email') and self.email is not None:
+            _dict['email'] = self.email
         if hasattr(self, 'created_at') and self.created_at is not None:
             _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'modified_at') and self.modified_at is not None:

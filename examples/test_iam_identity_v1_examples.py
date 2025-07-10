@@ -52,6 +52,7 @@ config = None
 
 apikey_name = 'Example-ApiKey'
 serviceid_name = 'Example-ServiceId'
+serviceid_group_name = 'Example-ServiceId'
 service = 'console'
 value_string = '/billing'
 preference_id1 = 'landing_page'
@@ -69,6 +70,9 @@ apikey_etag = None
 
 svc_id = None
 svc_id_etag = None
+
+service_id_group_id = None
+service_id_group_etag = None
 
 profile_id = None
 profile_etag = None
@@ -508,6 +512,109 @@ class TestIamIdentityV1Examples:
             # end-delete_service_id
 
             print('\ndelete_service_id() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_service_id_group_example(self):
+        """
+        create_service_id_group request example
+        """
+        try:
+            print('\ncreate_service_id_group() result:')
+            # begin-create_service_id_group
+
+            service_id_group = iam_identity_service.create_service_id_group(
+                account_id=account_id, name=serviceid_group_name, description='Example ServiceId group'
+            ).get_result()
+            print(json.dumps(service_id_group, indent=2))
+
+            # end-create_service_id_group
+
+            global service_id_group_id
+            service_id_group_id = service_id_group['id']
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_service_id_group_example(self):
+        """
+        get_service_id_group request example
+        """
+        try:
+            print('\nget_service_id_group() result:')
+            # begin-get_service_id_group
+
+            response = iam_identity_service.get_service_id_group(
+                id=service_id_group_id,
+            )
+            service_id_group = response.get_result()
+            print(json.dumps(service_id_group, indent=2))
+
+            # end-get_service_id_group
+
+            global service_id_group_etag
+            service_id_group_etag = response.get_headers()['Etag']
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_service_id_group_example(self):
+        """
+        list_service_id_group request example
+        """
+        try:
+            print('\nlist_service_id_group() result:')
+            # begin-list_service_id_group
+
+            service_id_group_list = iam_identity_service.list_service_id_group(
+                account_id=account_id, name=serviceid_name
+            ).get_result()
+            print(json.dumps(service_id_group_list, indent=2))
+
+            # end-list_service_id_group
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_service_id_group_example(self):
+        """
+        update_service_id_group request example
+        """
+        try:
+            print('\nupdate_service_id_group() result:')
+            # begin-update_service_id_group
+
+            service_id_group = iam_identity_service.update_service_id_group(
+                id=service_id_group_id,
+                if_match=service_id_group_etag,
+                name=serviceid_group_name,
+                description='This is an updated description',
+            ).get_result()
+            print(json.dumps(service_id_group, indent=2))
+
+            # end-update_service_id_group
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_service_id_group_example(self):
+        """
+        delete_service_id_group request example
+        """
+        try:
+            # begin-delete_service_id_group
+
+            response = iam_identity_service.delete_service_id_group(id=service_id_group_id)
+
+            # end-delete_service_id_group
+
+            print('\ndelete_service_id_group() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))

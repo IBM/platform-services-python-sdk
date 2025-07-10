@@ -33,7 +33,7 @@ from ibm_platform_services.iam_identity_v1 import *
 
 _service = IamIdentityV1(authenticator=NoAuthAuthenticator())
 
-_base_url = 'https://iam.test.cloud.ibm.com'
+_base_url = 'https://iam.cloud.ibm.com'
 _service.set_service_url(_base_url)
 
 
@@ -56,7 +56,1319 @@ def preprocess_url(operation_path: str):
 
 
 ##############################################################################
-# Start of Service: APIKeyOperations
+# Start of Service: ServiceIDs
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListServiceIds:
+    """
+    Test Class for list_service_ids
+    """
+
+    @responses.activate
+    def test_list_service_ids_all_params(self):
+        """
+        list_service_ids()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "serviceids": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "group_id": "group_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        group_id = 'testString'
+        name = 'testString'
+        pagesize = 38
+        pagetoken = 'testString'
+        sort = 'testString'
+        order = 'asc'
+        include_history = False
+        filter = 'testString'
+        show_group_id = 'testString'
+
+        # Invoke method
+        response = _service.list_service_ids(
+            account_id=account_id,
+            group_id=group_id,
+            name=name,
+            pagesize=pagesize,
+            pagetoken=pagetoken,
+            sort=sort,
+            order=order,
+            include_history=include_history,
+            filter=filter,
+            show_group_id=show_group_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'group_id={}'.format(group_id) in query_string
+        assert 'name={}'.format(name) in query_string
+        assert 'pagesize={}'.format(pagesize) in query_string
+        assert 'pagetoken={}'.format(pagetoken) in query_string
+        assert 'sort={}'.format(sort) in query_string
+        assert 'order={}'.format(order) in query_string
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+        assert 'filter={}'.format(filter) in query_string
+        assert 'show_group_id={}'.format(show_group_id) in query_string
+
+    def test_list_service_ids_all_params_with_retries(self):
+        # Enable retries and run test_list_service_ids_all_params.
+        _service.enable_retries()
+        self.test_list_service_ids_all_params()
+
+        # Disable retries and run test_list_service_ids_all_params.
+        _service.disable_retries()
+        self.test_list_service_ids_all_params()
+
+    @responses.activate
+    def test_list_service_ids_required_params(self):
+        """
+        test_list_service_ids_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "serviceids": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "group_id": "group_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Invoke method
+        response = _service.list_service_ids()
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_service_ids_required_params_with_retries(self):
+        # Enable retries and run test_list_service_ids_required_params.
+        _service.enable_retries()
+        self.test_list_service_ids_required_params()
+
+        # Disable retries and run test_list_service_ids_required_params.
+        _service.disable_retries()
+        self.test_list_service_ids_required_params()
+
+
+class TestCreateServiceId:
+    """
+    Test Class for create_service_id
+    """
+
+    @responses.activate
+    def test_create_service_id_all_params(self):
+        """
+        create_service_id()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "group_id": "group_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a ApiKeyInsideCreateServiceIdRequest model
+        api_key_inside_create_service_id_request_model = {}
+        api_key_inside_create_service_id_request_model['name'] = 'testString'
+        api_key_inside_create_service_id_request_model['description'] = 'testString'
+        api_key_inside_create_service_id_request_model['apikey'] = 'testString'
+        api_key_inside_create_service_id_request_model['store_value'] = True
+
+        # Set up parameter values
+        account_id = 'testString'
+        name = 'testString'
+        group_id = 'testString'
+        description = 'testString'
+        unique_instance_crns = ['testString']
+        apikey = api_key_inside_create_service_id_request_model
+        show_group_id = 'testString'
+        entity_lock = 'false'
+
+        # Invoke method
+        response = _service.create_service_id(
+            account_id,
+            name,
+            group_id=group_id,
+            description=description,
+            unique_instance_crns=unique_instance_crns,
+            apikey=apikey,
+            show_group_id=show_group_id,
+            entity_lock=entity_lock,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'show_group_id={}'.format(show_group_id) in query_string
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['group_id'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['unique_instance_crns'] == ['testString']
+        assert req_body['apikey'] == api_key_inside_create_service_id_request_model
+
+    def test_create_service_id_all_params_with_retries(self):
+        # Enable retries and run test_create_service_id_all_params.
+        _service.enable_retries()
+        self.test_create_service_id_all_params()
+
+        # Disable retries and run test_create_service_id_all_params.
+        _service.disable_retries()
+        self.test_create_service_id_all_params()
+
+    @responses.activate
+    def test_create_service_id_required_params(self):
+        """
+        test_create_service_id_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "group_id": "group_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a ApiKeyInsideCreateServiceIdRequest model
+        api_key_inside_create_service_id_request_model = {}
+        api_key_inside_create_service_id_request_model['name'] = 'testString'
+        api_key_inside_create_service_id_request_model['description'] = 'testString'
+        api_key_inside_create_service_id_request_model['apikey'] = 'testString'
+        api_key_inside_create_service_id_request_model['store_value'] = True
+
+        # Set up parameter values
+        account_id = 'testString'
+        name = 'testString'
+        group_id = 'testString'
+        description = 'testString'
+        unique_instance_crns = ['testString']
+        apikey = api_key_inside_create_service_id_request_model
+
+        # Invoke method
+        response = _service.create_service_id(
+            account_id,
+            name,
+            group_id=group_id,
+            description=description,
+            unique_instance_crns=unique_instance_crns,
+            apikey=apikey,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['group_id'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['unique_instance_crns'] == ['testString']
+        assert req_body['apikey'] == api_key_inside_create_service_id_request_model
+
+    def test_create_service_id_required_params_with_retries(self):
+        # Enable retries and run test_create_service_id_required_params.
+        _service.enable_retries()
+        self.test_create_service_id_required_params()
+
+        # Disable retries and run test_create_service_id_required_params.
+        _service.disable_retries()
+        self.test_create_service_id_required_params()
+
+    @responses.activate
+    def test_create_service_id_value_error(self):
+        """
+        test_create_service_id_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "group_id": "group_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a ApiKeyInsideCreateServiceIdRequest model
+        api_key_inside_create_service_id_request_model = {}
+        api_key_inside_create_service_id_request_model['name'] = 'testString'
+        api_key_inside_create_service_id_request_model['description'] = 'testString'
+        api_key_inside_create_service_id_request_model['apikey'] = 'testString'
+        api_key_inside_create_service_id_request_model['store_value'] = True
+
+        # Set up parameter values
+        account_id = 'testString'
+        name = 'testString'
+        group_id = 'testString'
+        description = 'testString'
+        unique_instance_crns = ['testString']
+        apikey = api_key_inside_create_service_id_request_model
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "name": name,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_service_id(**req_copy)
+
+    def test_create_service_id_value_error_with_retries(self):
+        # Enable retries and run test_create_service_id_value_error.
+        _service.enable_retries()
+        self.test_create_service_id_value_error()
+
+        # Disable retries and run test_create_service_id_value_error.
+        _service.disable_retries()
+        self.test_create_service_id_value_error()
+
+
+class TestGetServiceId:
+    """
+    Test Class for get_service_id
+    """
+
+    @responses.activate
+    def test_get_service_id_all_params(self):
+        """
+        get_service_id()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "group_id": "group_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+        include_history = False
+        include_activity = False
+        show_group_id = 'testString'
+
+        # Invoke method
+        response = _service.get_service_id(
+            id,
+            include_history=include_history,
+            include_activity=include_activity,
+            show_group_id=show_group_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+        assert 'include_activity={}'.format('true' if include_activity else 'false') in query_string
+        assert 'show_group_id={}'.format(show_group_id) in query_string
+
+    def test_get_service_id_all_params_with_retries(self):
+        # Enable retries and run test_get_service_id_all_params.
+        _service.enable_retries()
+        self.test_get_service_id_all_params()
+
+        # Disable retries and run test_get_service_id_all_params.
+        _service.disable_retries()
+        self.test_get_service_id_all_params()
+
+    @responses.activate
+    def test_get_service_id_required_params(self):
+        """
+        test_get_service_id_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "group_id": "group_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Invoke method
+        response = _service.get_service_id(
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_service_id_required_params_with_retries(self):
+        # Enable retries and run test_get_service_id_required_params.
+        _service.enable_retries()
+        self.test_get_service_id_required_params()
+
+        # Disable retries and run test_get_service_id_required_params.
+        _service.disable_retries()
+        self.test_get_service_id_required_params()
+
+    @responses.activate
+    def test_get_service_id_value_error(self):
+        """
+        test_get_service_id_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "group_id": "group_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_service_id(**req_copy)
+
+    def test_get_service_id_value_error_with_retries(self):
+        # Enable retries and run test_get_service_id_value_error.
+        _service.enable_retries()
+        self.test_get_service_id_value_error()
+
+        # Disable retries and run test_get_service_id_value_error.
+        _service.disable_retries()
+        self.test_get_service_id_value_error()
+
+
+class TestUpdateServiceId:
+    """
+    Test Class for update_service_id
+    """
+
+    @responses.activate
+    def test_update_service_id_all_params(self):
+        """
+        update_service_id()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "group_id": "group_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+        if_match = 'testString'
+        name = 'testString'
+        description = 'testString'
+        unique_instance_crns = ['testString']
+        show_group_id = 'testString'
+
+        # Invoke method
+        response = _service.update_service_id(
+            id,
+            if_match,
+            name=name,
+            description=description,
+            unique_instance_crns=unique_instance_crns,
+            show_group_id=show_group_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'show_group_id={}'.format(show_group_id) in query_string
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['unique_instance_crns'] == ['testString']
+
+    def test_update_service_id_all_params_with_retries(self):
+        # Enable retries and run test_update_service_id_all_params.
+        _service.enable_retries()
+        self.test_update_service_id_all_params()
+
+        # Disable retries and run test_update_service_id_all_params.
+        _service.disable_retries()
+        self.test_update_service_id_all_params()
+
+    @responses.activate
+    def test_update_service_id_required_params(self):
+        """
+        test_update_service_id_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "group_id": "group_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+        if_match = 'testString'
+        name = 'testString'
+        description = 'testString'
+        unique_instance_crns = ['testString']
+
+        # Invoke method
+        response = _service.update_service_id(
+            id,
+            if_match,
+            name=name,
+            description=description,
+            unique_instance_crns=unique_instance_crns,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['unique_instance_crns'] == ['testString']
+
+    def test_update_service_id_required_params_with_retries(self):
+        # Enable retries and run test_update_service_id_required_params.
+        _service.enable_retries()
+        self.test_update_service_id_required_params()
+
+        # Disable retries and run test_update_service_id_required_params.
+        _service.disable_retries()
+        self.test_update_service_id_required_params()
+
+    @responses.activate
+    def test_update_service_id_value_error(self):
+        """
+        test_update_service_id_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "group_id": "group_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+        if_match = 'testString'
+        name = 'testString'
+        description = 'testString'
+        unique_instance_crns = ['testString']
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+            "if_match": if_match,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_service_id(**req_copy)
+
+    def test_update_service_id_value_error_with_retries(self):
+        # Enable retries and run test_update_service_id_value_error.
+        _service.enable_retries()
+        self.test_update_service_id_value_error()
+
+        # Disable retries and run test_update_service_id_value_error.
+        _service.disable_retries()
+        self.test_update_service_id_value_error()
+
+
+class TestDeleteServiceId:
+    """
+    Test Class for delete_service_id
+    """
+
+    @responses.activate
+    def test_delete_service_id_all_params(self):
+        """
+        delete_service_id()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Invoke method
+        response = _service.delete_service_id(
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_service_id_all_params_with_retries(self):
+        # Enable retries and run test_delete_service_id_all_params.
+        _service.enable_retries()
+        self.test_delete_service_id_all_params()
+
+        # Disable retries and run test_delete_service_id_all_params.
+        _service.disable_retries()
+        self.test_delete_service_id_all_params()
+
+    @responses.activate
+    def test_delete_service_id_value_error(self):
+        """
+        test_delete_service_id_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_service_id(**req_copy)
+
+    def test_delete_service_id_value_error_with_retries(self):
+        # Enable retries and run test_delete_service_id_value_error.
+        _service.enable_retries()
+        self.test_delete_service_id_value_error()
+
+        # Disable retries and run test_delete_service_id_value_error.
+        _service.disable_retries()
+        self.test_delete_service_id_value_error()
+
+
+class TestLockServiceId:
+    """
+    Test Class for lock_service_id
+    """
+
+    @responses.activate
+    def test_lock_service_id_all_params(self):
+        """
+        lock_service_id()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString/lock')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Invoke method
+        response = _service.lock_service_id(
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_lock_service_id_all_params_with_retries(self):
+        # Enable retries and run test_lock_service_id_all_params.
+        _service.enable_retries()
+        self.test_lock_service_id_all_params()
+
+        # Disable retries and run test_lock_service_id_all_params.
+        _service.disable_retries()
+        self.test_lock_service_id_all_params()
+
+    @responses.activate
+    def test_lock_service_id_value_error(self):
+        """
+        test_lock_service_id_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString/lock')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.lock_service_id(**req_copy)
+
+    def test_lock_service_id_value_error_with_retries(self):
+        # Enable retries and run test_lock_service_id_value_error.
+        _service.enable_retries()
+        self.test_lock_service_id_value_error()
+
+        # Disable retries and run test_lock_service_id_value_error.
+        _service.disable_retries()
+        self.test_lock_service_id_value_error()
+
+
+class TestUnlockServiceId:
+    """
+    Test Class for unlock_service_id
+    """
+
+    @responses.activate
+    def test_unlock_service_id_all_params(self):
+        """
+        unlock_service_id()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString/lock')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Invoke method
+        response = _service.unlock_service_id(
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_unlock_service_id_all_params_with_retries(self):
+        # Enable retries and run test_unlock_service_id_all_params.
+        _service.enable_retries()
+        self.test_unlock_service_id_all_params()
+
+        # Disable retries and run test_unlock_service_id_all_params.
+        _service.disable_retries()
+        self.test_unlock_service_id_all_params()
+
+    @responses.activate
+    def test_unlock_service_id_value_error(self):
+        """
+        test_unlock_service_id_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceids/testString/lock')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.unlock_service_id(**req_copy)
+
+    def test_unlock_service_id_value_error_with_retries(self):
+        # Enable retries and run test_unlock_service_id_value_error.
+        _service.enable_retries()
+        self.test_unlock_service_id_value_error()
+
+        # Disable retries and run test_unlock_service_id_value_error.
+        _service.disable_retries()
+        self.test_unlock_service_id_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: ServiceIDs
+##############################################################################
+
+##############################################################################
+# Start of Service: ServiceIDGroups
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListServiceIdGroup:
+    """
+    Test Class for list_service_id_group
+    """
+
+    @responses.activate
+    def test_list_service_id_group_all_params(self):
+        """
+        list_service_id_group()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceid_groups')
+        mock_response = '{"serviceid_groups": [{"id": "id", "entity_tag": "entity_tag", "account_id": "account_id", "crn": "crn", "name": "name", "description": "description", "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.list_service_id_group(
+            account_id=account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+
+    def test_list_service_id_group_all_params_with_retries(self):
+        # Enable retries and run test_list_service_id_group_all_params.
+        _service.enable_retries()
+        self.test_list_service_id_group_all_params()
+
+        # Disable retries and run test_list_service_id_group_all_params.
+        _service.disable_retries()
+        self.test_list_service_id_group_all_params()
+
+    @responses.activate
+    def test_list_service_id_group_required_params(self):
+        """
+        test_list_service_id_group_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceid_groups')
+        mock_response = '{"serviceid_groups": [{"id": "id", "entity_tag": "entity_tag", "account_id": "account_id", "crn": "crn", "name": "name", "description": "description", "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Invoke method
+        response = _service.list_service_id_group()
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_service_id_group_required_params_with_retries(self):
+        # Enable retries and run test_list_service_id_group_required_params.
+        _service.enable_retries()
+        self.test_list_service_id_group_required_params()
+
+        # Disable retries and run test_list_service_id_group_required_params.
+        _service.disable_retries()
+        self.test_list_service_id_group_required_params()
+
+
+class TestCreateServiceIdGroup:
+    """
+    Test Class for create_service_id_group
+    """
+
+    @responses.activate
+    def test_create_service_id_group_all_params(self):
+        """
+        create_service_id_group()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceid_groups')
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "account_id": "account_id", "crn": "crn", "name": "name", "description": "description", "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+
+        # Invoke method
+        response = _service.create_service_id_group(
+            account_id,
+            name,
+            description=description,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+
+    def test_create_service_id_group_all_params_with_retries(self):
+        # Enable retries and run test_create_service_id_group_all_params.
+        _service.enable_retries()
+        self.test_create_service_id_group_all_params()
+
+        # Disable retries and run test_create_service_id_group_all_params.
+        _service.disable_retries()
+        self.test_create_service_id_group_all_params()
+
+    @responses.activate
+    def test_create_service_id_group_value_error(self):
+        """
+        test_create_service_id_group_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceid_groups')
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "account_id": "account_id", "crn": "crn", "name": "name", "description": "description", "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "name": name,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_service_id_group(**req_copy)
+
+    def test_create_service_id_group_value_error_with_retries(self):
+        # Enable retries and run test_create_service_id_group_value_error.
+        _service.enable_retries()
+        self.test_create_service_id_group_value_error()
+
+        # Disable retries and run test_create_service_id_group_value_error.
+        _service.disable_retries()
+        self.test_create_service_id_group_value_error()
+
+
+class TestGetServiceIdGroup:
+    """
+    Test Class for get_service_id_group
+    """
+
+    @responses.activate
+    def test_get_service_id_group_all_params(self):
+        """
+        get_service_id_group()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceid_groups/testString')
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "account_id": "account_id", "crn": "crn", "name": "name", "description": "description", "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Invoke method
+        response = _service.get_service_id_group(
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_service_id_group_all_params_with_retries(self):
+        # Enable retries and run test_get_service_id_group_all_params.
+        _service.enable_retries()
+        self.test_get_service_id_group_all_params()
+
+        # Disable retries and run test_get_service_id_group_all_params.
+        _service.disable_retries()
+        self.test_get_service_id_group_all_params()
+
+    @responses.activate
+    def test_get_service_id_group_value_error(self):
+        """
+        test_get_service_id_group_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceid_groups/testString')
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "account_id": "account_id", "crn": "crn", "name": "name", "description": "description", "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_service_id_group(**req_copy)
+
+    def test_get_service_id_group_value_error_with_retries(self):
+        # Enable retries and run test_get_service_id_group_value_error.
+        _service.enable_retries()
+        self.test_get_service_id_group_value_error()
+
+        # Disable retries and run test_get_service_id_group_value_error.
+        _service.disable_retries()
+        self.test_get_service_id_group_value_error()
+
+
+class TestUpdateServiceIdGroup:
+    """
+    Test Class for update_service_id_group
+    """
+
+    @responses.activate
+    def test_update_service_id_group_all_params(self):
+        """
+        update_service_id_group()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceid_groups/testString')
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "account_id": "account_id", "crn": "crn", "name": "name", "description": "description", "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+        if_match = 'testString'
+        name = 'testString'
+        description = 'testString'
+
+        # Invoke method
+        response = _service.update_service_id_group(
+            id,
+            if_match,
+            name,
+            description=description,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+
+    def test_update_service_id_group_all_params_with_retries(self):
+        # Enable retries and run test_update_service_id_group_all_params.
+        _service.enable_retries()
+        self.test_update_service_id_group_all_params()
+
+        # Disable retries and run test_update_service_id_group_all_params.
+        _service.disable_retries()
+        self.test_update_service_id_group_all_params()
+
+    @responses.activate
+    def test_update_service_id_group_value_error(self):
+        """
+        test_update_service_id_group_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceid_groups/testString')
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "account_id": "account_id", "crn": "crn", "name": "name", "description": "description", "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+        if_match = 'testString'
+        name = 'testString'
+        description = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+            "if_match": if_match,
+            "name": name,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_service_id_group(**req_copy)
+
+    def test_update_service_id_group_value_error_with_retries(self):
+        # Enable retries and run test_update_service_id_group_value_error.
+        _service.enable_retries()
+        self.test_update_service_id_group_value_error()
+
+        # Disable retries and run test_update_service_id_group_value_error.
+        _service.disable_retries()
+        self.test_update_service_id_group_value_error()
+
+
+class TestDeleteServiceIdGroup:
+    """
+    Test Class for delete_service_id_group
+    """
+
+    @responses.activate
+    def test_delete_service_id_group_all_params(self):
+        """
+        delete_service_id_group()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceid_groups/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Invoke method
+        response = _service.delete_service_id_group(
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_service_id_group_all_params_with_retries(self):
+        # Enable retries and run test_delete_service_id_group_all_params.
+        _service.enable_retries()
+        self.test_delete_service_id_group_all_params()
+
+        # Disable retries and run test_delete_service_id_group_all_params.
+        _service.disable_retries()
+        self.test_delete_service_id_group_all_params()
+
+    @responses.activate
+    def test_delete_service_id_group_value_error(self):
+        """
+        test_delete_service_id_group_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/serviceid_groups/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_service_id_group(**req_copy)
+
+    def test_delete_service_id_group_value_error_with_retries(self):
+        # Enable retries and run test_delete_service_id_group_value_error.
+        _service.enable_retries()
+        self.test_delete_service_id_group_value_error()
+
+        # Disable retries and run test_delete_service_id_group_value_error.
+        _service.disable_retries()
+        self.test_delete_service_id_group_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: ServiceIDGroups
+##############################################################################
+
+##############################################################################
+# Start of Service: APIKeys
 ##############################################################################
 # region
 
@@ -121,6 +1433,7 @@ class TestListApiKeys:
         order = 'asc'
         include_history = False
         filter = 'testString'
+        group_id = 'testString'
 
         # Invoke method
         response = _service.list_api_keys(
@@ -134,6 +1447,7 @@ class TestListApiKeys:
             order=order,
             include_history=include_history,
             filter=filter,
+            group_id=group_id,
             headers={},
         )
 
@@ -153,6 +1467,7 @@ class TestListApiKeys:
         assert 'order={}'.format(order) in query_string
         assert 'include_history={}'.format('true' if include_history else 'false') in query_string
         assert 'filter={}'.format(filter) in query_string
+        assert 'group_id={}'.format(group_id) in query_string
 
     def test_list_api_keys_all_params_with_retries(self):
         # Enable retries and run test_list_api_keys_all_params.
@@ -1065,780 +2380,11 @@ class TestEnableApiKey:
 
 # endregion
 ##############################################################################
-# End of Service: APIKeyOperations
+# End of Service: APIKeys
 ##############################################################################
 
 ##############################################################################
-# Start of Service: ServiceIDOperations
-##############################################################################
-# region
-
-
-class TestNewInstance:
-    """
-    Test Class for new_instance
-    """
-
-    def test_new_instance(self):
-        """
-        new_instance()
-        """
-        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
-
-        service = IamIdentityV1.new_instance(
-            service_name='TEST_SERVICE',
-        )
-
-        assert service is not None
-        assert isinstance(service, IamIdentityV1)
-
-    def test_new_instance_without_authenticator(self):
-        """
-        new_instance_without_authenticator()
-        """
-        with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = IamIdentityV1.new_instance(
-                service_name='TEST_SERVICE_NOT_FOUND',
-            )
-
-
-class TestListServiceIds:
-    """
-    Test Class for list_service_ids
-    """
-
-    @responses.activate
-    def test_list_service_ids_all_params(self):
-        """
-        list_service_ids()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "serviceids": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        name = 'testString'
-        pagesize = 38
-        pagetoken = 'testString'
-        sort = 'testString'
-        order = 'asc'
-        include_history = False
-        filter = 'testString'
-
-        # Invoke method
-        response = _service.list_service_ids(
-            account_id=account_id,
-            name=name,
-            pagesize=pagesize,
-            pagetoken=pagetoken,
-            sort=sort,
-            order=order,
-            include_history=include_history,
-            filter=filter,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-        assert 'name={}'.format(name) in query_string
-        assert 'pagesize={}'.format(pagesize) in query_string
-        assert 'pagetoken={}'.format(pagetoken) in query_string
-        assert 'sort={}'.format(sort) in query_string
-        assert 'order={}'.format(order) in query_string
-        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
-        assert 'filter={}'.format(filter) in query_string
-
-    def test_list_service_ids_all_params_with_retries(self):
-        # Enable retries and run test_list_service_ids_all_params.
-        _service.enable_retries()
-        self.test_list_service_ids_all_params()
-
-        # Disable retries and run test_list_service_ids_all_params.
-        _service.disable_retries()
-        self.test_list_service_ids_all_params()
-
-    @responses.activate
-    def test_list_service_ids_required_params(self):
-        """
-        test_list_service_ids_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "serviceids": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Invoke method
-        response = _service.list_service_ids()
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_list_service_ids_required_params_with_retries(self):
-        # Enable retries and run test_list_service_ids_required_params.
-        _service.enable_retries()
-        self.test_list_service_ids_required_params()
-
-        # Disable retries and run test_list_service_ids_required_params.
-        _service.disable_retries()
-        self.test_list_service_ids_required_params()
-
-
-class TestCreateServiceId:
-    """
-    Test Class for create_service_id
-    """
-
-    @responses.activate
-    def test_create_service_id_all_params(self):
-        """
-        create_service_id()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=201,
-        )
-
-        # Construct a dict representation of a ApiKeyInsideCreateServiceIdRequest model
-        api_key_inside_create_service_id_request_model = {}
-        api_key_inside_create_service_id_request_model['name'] = 'testString'
-        api_key_inside_create_service_id_request_model['description'] = 'testString'
-        api_key_inside_create_service_id_request_model['apikey'] = 'testString'
-        api_key_inside_create_service_id_request_model['store_value'] = True
-
-        # Set up parameter values
-        account_id = 'testString'
-        name = 'testString'
-        description = 'testString'
-        unique_instance_crns = ['testString']
-        apikey = api_key_inside_create_service_id_request_model
-        entity_lock = 'false'
-
-        # Invoke method
-        response = _service.create_service_id(
-            account_id,
-            name,
-            description=description,
-            unique_instance_crns=unique_instance_crns,
-            apikey=apikey,
-            entity_lock=entity_lock,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 201
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['account_id'] == 'testString'
-        assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
-        assert req_body['unique_instance_crns'] == ['testString']
-        assert req_body['apikey'] == api_key_inside_create_service_id_request_model
-
-    def test_create_service_id_all_params_with_retries(self):
-        # Enable retries and run test_create_service_id_all_params.
-        _service.enable_retries()
-        self.test_create_service_id_all_params()
-
-        # Disable retries and run test_create_service_id_all_params.
-        _service.disable_retries()
-        self.test_create_service_id_all_params()
-
-    @responses.activate
-    def test_create_service_id_required_params(self):
-        """
-        test_create_service_id_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=201,
-        )
-
-        # Construct a dict representation of a ApiKeyInsideCreateServiceIdRequest model
-        api_key_inside_create_service_id_request_model = {}
-        api_key_inside_create_service_id_request_model['name'] = 'testString'
-        api_key_inside_create_service_id_request_model['description'] = 'testString'
-        api_key_inside_create_service_id_request_model['apikey'] = 'testString'
-        api_key_inside_create_service_id_request_model['store_value'] = True
-
-        # Set up parameter values
-        account_id = 'testString'
-        name = 'testString'
-        description = 'testString'
-        unique_instance_crns = ['testString']
-        apikey = api_key_inside_create_service_id_request_model
-
-        # Invoke method
-        response = _service.create_service_id(
-            account_id,
-            name,
-            description=description,
-            unique_instance_crns=unique_instance_crns,
-            apikey=apikey,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 201
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['account_id'] == 'testString'
-        assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
-        assert req_body['unique_instance_crns'] == ['testString']
-        assert req_body['apikey'] == api_key_inside_create_service_id_request_model
-
-    def test_create_service_id_required_params_with_retries(self):
-        # Enable retries and run test_create_service_id_required_params.
-        _service.enable_retries()
-        self.test_create_service_id_required_params()
-
-        # Disable retries and run test_create_service_id_required_params.
-        _service.disable_retries()
-        self.test_create_service_id_required_params()
-
-    @responses.activate
-    def test_create_service_id_value_error(self):
-        """
-        test_create_service_id_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=201,
-        )
-
-        # Construct a dict representation of a ApiKeyInsideCreateServiceIdRequest model
-        api_key_inside_create_service_id_request_model = {}
-        api_key_inside_create_service_id_request_model['name'] = 'testString'
-        api_key_inside_create_service_id_request_model['description'] = 'testString'
-        api_key_inside_create_service_id_request_model['apikey'] = 'testString'
-        api_key_inside_create_service_id_request_model['store_value'] = True
-
-        # Set up parameter values
-        account_id = 'testString'
-        name = 'testString'
-        description = 'testString'
-        unique_instance_crns = ['testString']
-        apikey = api_key_inside_create_service_id_request_model
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_id": account_id,
-            "name": name,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.create_service_id(**req_copy)
-
-    def test_create_service_id_value_error_with_retries(self):
-        # Enable retries and run test_create_service_id_value_error.
-        _service.enable_retries()
-        self.test_create_service_id_value_error()
-
-        # Disable retries and run test_create_service_id_value_error.
-        _service.disable_retries()
-        self.test_create_service_id_value_error()
-
-
-class TestGetServiceId:
-    """
-    Test Class for get_service_id
-    """
-
-    @responses.activate
-    def test_get_service_id_all_params(self):
-        """
-        get_service_id()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        id = 'testString'
-        include_history = False
-        include_activity = False
-
-        # Invoke method
-        response = _service.get_service_id(
-            id,
-            include_history=include_history,
-            include_activity=include_activity,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
-        assert 'include_activity={}'.format('true' if include_activity else 'false') in query_string
-
-    def test_get_service_id_all_params_with_retries(self):
-        # Enable retries and run test_get_service_id_all_params.
-        _service.enable_retries()
-        self.test_get_service_id_all_params()
-
-        # Disable retries and run test_get_service_id_all_params.
-        _service.disable_retries()
-        self.test_get_service_id_all_params()
-
-    @responses.activate
-    def test_get_service_id_required_params(self):
-        """
-        test_get_service_id_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        id = 'testString'
-
-        # Invoke method
-        response = _service.get_service_id(
-            id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_service_id_required_params_with_retries(self):
-        # Enable retries and run test_get_service_id_required_params.
-        _service.enable_retries()
-        self.test_get_service_id_required_params()
-
-        # Disable retries and run test_get_service_id_required_params.
-        _service.disable_retries()
-        self.test_get_service_id_required_params()
-
-    @responses.activate
-    def test_get_service_id_value_error(self):
-        """
-        test_get_service_id_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "id": id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.get_service_id(**req_copy)
-
-    def test_get_service_id_value_error_with_retries(self):
-        # Enable retries and run test_get_service_id_value_error.
-        _service.enable_retries()
-        self.test_get_service_id_value_error()
-
-        # Disable retries and run test_get_service_id_value_error.
-        _service.disable_retries()
-        self.test_get_service_id_value_error()
-
-
-class TestUpdateServiceId:
-    """
-    Test Class for update_service_id
-    """
-
-    @responses.activate
-    def test_update_service_id_all_params(self):
-        """
-        update_service_id()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(
-            responses.PUT,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        id = 'testString'
-        if_match = 'testString'
-        name = 'testString'
-        description = 'testString'
-        unique_instance_crns = ['testString']
-
-        # Invoke method
-        response = _service.update_service_id(
-            id,
-            if_match,
-            name=name,
-            description=description,
-            unique_instance_crns=unique_instance_crns,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
-        assert req_body['unique_instance_crns'] == ['testString']
-
-    def test_update_service_id_all_params_with_retries(self):
-        # Enable retries and run test_update_service_id_all_params.
-        _service.enable_retries()
-        self.test_update_service_id_all_params()
-
-        # Disable retries and run test_update_service_id_all_params.
-        _service.disable_retries()
-        self.test_update_service_id_all_params()
-
-    @responses.activate
-    def test_update_service_id_value_error(self):
-        """
-        test_update_service_id_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "disabled": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "support_sessions": true, "action_when_leaked": "action_when_leaked", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(
-            responses.PUT,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        id = 'testString'
-        if_match = 'testString'
-        name = 'testString'
-        description = 'testString'
-        unique_instance_crns = ['testString']
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "id": id,
-            "if_match": if_match,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.update_service_id(**req_copy)
-
-    def test_update_service_id_value_error_with_retries(self):
-        # Enable retries and run test_update_service_id_value_error.
-        _service.enable_retries()
-        self.test_update_service_id_value_error()
-
-        # Disable retries and run test_update_service_id_value_error.
-        _service.disable_retries()
-        self.test_update_service_id_value_error()
-
-
-class TestDeleteServiceId:
-    """
-    Test Class for delete_service_id
-    """
-
-    @responses.activate
-    def test_delete_service_id_all_params(self):
-        """
-        delete_service_id()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/testString')
-        responses.add(
-            responses.DELETE,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        id = 'testString'
-
-        # Invoke method
-        response = _service.delete_service_id(
-            id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 204
-
-    def test_delete_service_id_all_params_with_retries(self):
-        # Enable retries and run test_delete_service_id_all_params.
-        _service.enable_retries()
-        self.test_delete_service_id_all_params()
-
-        # Disable retries and run test_delete_service_id_all_params.
-        _service.disable_retries()
-        self.test_delete_service_id_all_params()
-
-    @responses.activate
-    def test_delete_service_id_value_error(self):
-        """
-        test_delete_service_id_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/testString')
-        responses.add(
-            responses.DELETE,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "id": id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.delete_service_id(**req_copy)
-
-    def test_delete_service_id_value_error_with_retries(self):
-        # Enable retries and run test_delete_service_id_value_error.
-        _service.enable_retries()
-        self.test_delete_service_id_value_error()
-
-        # Disable retries and run test_delete_service_id_value_error.
-        _service.disable_retries()
-        self.test_delete_service_id_value_error()
-
-
-class TestLockServiceId:
-    """
-    Test Class for lock_service_id
-    """
-
-    @responses.activate
-    def test_lock_service_id_all_params(self):
-        """
-        lock_service_id()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/testString/lock')
-        responses.add(
-            responses.POST,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        id = 'testString'
-
-        # Invoke method
-        response = _service.lock_service_id(
-            id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 204
-
-    def test_lock_service_id_all_params_with_retries(self):
-        # Enable retries and run test_lock_service_id_all_params.
-        _service.enable_retries()
-        self.test_lock_service_id_all_params()
-
-        # Disable retries and run test_lock_service_id_all_params.
-        _service.disable_retries()
-        self.test_lock_service_id_all_params()
-
-    @responses.activate
-    def test_lock_service_id_value_error(self):
-        """
-        test_lock_service_id_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/testString/lock')
-        responses.add(
-            responses.POST,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "id": id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.lock_service_id(**req_copy)
-
-    def test_lock_service_id_value_error_with_retries(self):
-        # Enable retries and run test_lock_service_id_value_error.
-        _service.enable_retries()
-        self.test_lock_service_id_value_error()
-
-        # Disable retries and run test_lock_service_id_value_error.
-        _service.disable_retries()
-        self.test_lock_service_id_value_error()
-
-
-class TestUnlockServiceId:
-    """
-    Test Class for unlock_service_id
-    """
-
-    @responses.activate
-    def test_unlock_service_id_all_params(self):
-        """
-        unlock_service_id()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/testString/lock')
-        responses.add(
-            responses.DELETE,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        id = 'testString'
-
-        # Invoke method
-        response = _service.unlock_service_id(
-            id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 204
-
-    def test_unlock_service_id_all_params_with_retries(self):
-        # Enable retries and run test_unlock_service_id_all_params.
-        _service.enable_retries()
-        self.test_unlock_service_id_all_params()
-
-        # Disable retries and run test_unlock_service_id_all_params.
-        _service.disable_retries()
-        self.test_unlock_service_id_all_params()
-
-    @responses.activate
-    def test_unlock_service_id_value_error(self):
-        """
-        test_unlock_service_id_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/serviceids/testString/lock')
-        responses.add(
-            responses.DELETE,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "id": id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.unlock_service_id(**req_copy)
-
-    def test_unlock_service_id_value_error_with_retries(self):
-        # Enable retries and run test_unlock_service_id_value_error.
-        _service.enable_retries()
-        self.test_unlock_service_id_value_error()
-
-        # Disable retries and run test_unlock_service_id_value_error.
-        _service.disable_retries()
-        self.test_unlock_service_id_value_error()
-
-
-# endregion
-##############################################################################
-# End of Service: ServiceIDOperations
-##############################################################################
-
-##############################################################################
-# Start of Service: TrustedProfilesOperations
+# Start of Service: TrustedProfiles
 ##############################################################################
 # region
 
@@ -1883,7 +2429,7 @@ class TestCreateProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "email": "email", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.POST,
             url,
@@ -1896,12 +2442,14 @@ class TestCreateProfile:
         name = 'testString'
         account_id = 'testString'
         description = 'testString'
+        email = 'testString'
 
         # Invoke method
         response = _service.create_profile(
             name,
             account_id,
             description=description,
+            email=email,
             headers={},
         )
 
@@ -1913,6 +2461,7 @@ class TestCreateProfile:
         assert req_body['name'] == 'testString'
         assert req_body['account_id'] == 'testString'
         assert req_body['description'] == 'testString'
+        assert req_body['email'] == 'testString'
 
     def test_create_profile_all_params_with_retries(self):
         # Enable retries and run test_create_profile_all_params.
@@ -1930,7 +2479,7 @@ class TestCreateProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "email": "email", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.POST,
             url,
@@ -1943,6 +2492,7 @@ class TestCreateProfile:
         name = 'testString'
         account_id = 'testString'
         description = 'testString'
+        email = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1976,7 +2526,7 @@ class TestListProfiles:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "email": "email", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
         responses.add(
             responses.GET,
             url,
@@ -2039,7 +2589,7 @@ class TestListProfiles:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "email": "email", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
         responses.add(
             responses.GET,
             url,
@@ -2081,7 +2631,7 @@ class TestListProfiles:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "email": "email", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
         responses.add(
             responses.GET,
             url,
@@ -2124,7 +2674,7 @@ class TestGetProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "email": "email", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -2168,7 +2718,7 @@ class TestGetProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "email": "email", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -2206,7 +2756,7 @@ class TestGetProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "email": "email", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -2249,7 +2799,7 @@ class TestUpdateProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "email": "email", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.PUT,
             url,
@@ -2263,6 +2813,7 @@ class TestUpdateProfile:
         if_match = 'testString'
         name = 'testString'
         description = 'testString'
+        email = 'testString'
 
         # Invoke method
         response = _service.update_profile(
@@ -2270,6 +2821,7 @@ class TestUpdateProfile:
             if_match,
             name=name,
             description=description,
+            email=email,
             headers={},
         )
 
@@ -2280,6 +2832,7 @@ class TestUpdateProfile:
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'testString'
         assert req_body['description'] == 'testString'
+        assert req_body['email'] == 'testString'
 
     def test_update_profile_all_params_with_retries(self):
         # Enable retries and run test_update_profile_all_params.
@@ -2297,7 +2850,7 @@ class TestUpdateProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "email": "email", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.PUT,
             url,
@@ -2311,6 +2864,7 @@ class TestUpdateProfile:
         if_match = 'testString'
         name = 'testString'
         description = 'testString'
+        email = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -3785,7 +4339,259 @@ class TestDeleteProfileIdentity:
 
 # endregion
 ##############################################################################
-# End of Service: TrustedProfilesOperations
+# End of Service: TrustedProfiles
+##############################################################################
+
+##############################################################################
+# Start of Service: Activities
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestCreateReport:
+    """
+    Test Class for create_report
+    """
+
+    @responses.activate
+    def test_create_report_all_params(self):
+        """
+        create_report()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/activity/accounts/testString/report')
+        mock_response = '{"reference": "reference"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        type = 'inactive'
+        duration = '720'
+
+        # Invoke method
+        response = _service.create_report(
+            account_id,
+            type=type,
+            duration=duration,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'type={}'.format(type) in query_string
+        assert 'duration={}'.format(duration) in query_string
+
+    def test_create_report_all_params_with_retries(self):
+        # Enable retries and run test_create_report_all_params.
+        _service.enable_retries()
+        self.test_create_report_all_params()
+
+        # Disable retries and run test_create_report_all_params.
+        _service.disable_retries()
+        self.test_create_report_all_params()
+
+    @responses.activate
+    def test_create_report_required_params(self):
+        """
+        test_create_report_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/activity/accounts/testString/report')
+        mock_response = '{"reference": "reference"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.create_report(
+            account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+
+    def test_create_report_required_params_with_retries(self):
+        # Enable retries and run test_create_report_required_params.
+        _service.enable_retries()
+        self.test_create_report_required_params()
+
+        # Disable retries and run test_create_report_required_params.
+        _service.disable_retries()
+        self.test_create_report_required_params()
+
+    @responses.activate
+    def test_create_report_value_error(self):
+        """
+        test_create_report_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/activity/accounts/testString/report')
+        mock_response = '{"reference": "reference"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_report(**req_copy)
+
+    def test_create_report_value_error_with_retries(self):
+        # Enable retries and run test_create_report_value_error.
+        _service.enable_retries()
+        self.test_create_report_value_error()
+
+        # Disable retries and run test_create_report_value_error.
+        _service.disable_retries()
+        self.test_create_report_value_error()
+
+
+class TestGetReport:
+    """
+    Test Class for get_report
+    """
+
+    @responses.activate
+    def test_get_report_all_params(self):
+        """
+        get_report()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/activity/accounts/testString/report/testString')
+        mock_response = '{"created_by": "created_by", "reference": "reference", "report_duration": "report_duration", "report_start_time": "report_start_time", "report_end_time": "report_end_time", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "last_authn": "last_authn"}], "apikeys": [{"id": "id", "name": "name", "type": "type", "serviceid": {"id": "id", "name": "name"}, "user": {"iam_id": "iam_id", "name": "name", "username": "username", "email": "email"}, "last_authn": "last_authn"}], "serviceids": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "profiles": [{"id": "id", "name": "name", "last_authn": "last_authn"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        reference = 'testString'
+
+        # Invoke method
+        response = _service.get_report(
+            account_id,
+            reference,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_report_all_params_with_retries(self):
+        # Enable retries and run test_get_report_all_params.
+        _service.enable_retries()
+        self.test_get_report_all_params()
+
+        # Disable retries and run test_get_report_all_params.
+        _service.disable_retries()
+        self.test_get_report_all_params()
+
+    @responses.activate
+    def test_get_report_value_error(self):
+        """
+        test_get_report_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/activity/accounts/testString/report/testString')
+        mock_response = '{"created_by": "created_by", "reference": "reference", "report_duration": "report_duration", "report_start_time": "report_start_time", "report_end_time": "report_end_time", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "last_authn": "last_authn"}], "apikeys": [{"id": "id", "name": "name", "type": "type", "serviceid": {"id": "id", "name": "name"}, "user": {"iam_id": "iam_id", "name": "name", "username": "username", "email": "email"}, "last_authn": "last_authn"}], "serviceids": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "profiles": [{"id": "id", "name": "name", "last_authn": "last_authn"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        reference = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "reference": reference,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_report(**req_copy)
+
+    def test_get_report_value_error_with_retries(self):
+        # Enable retries and run test_get_report_value_error.
+        _service.enable_retries()
+        self.test_get_report_value_error()
+
+        # Disable retries and run test_get_report_value_error.
+        _service.disable_retries()
+        self.test_get_report_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: Activities
 ##############################################################################
 
 ##############################################################################
@@ -4082,6 +4888,134 @@ class TestUpdateAccountSettings:
         # Disable retries and run test_update_account_settings_value_error.
         _service.disable_retries()
         self.test_update_account_settings_value_error()
+
+
+class TestGetEffectiveAccountSettings:
+    """
+    Test Class for get_effective_account_settings
+    """
+
+    @responses.activate
+    def test_get_effective_account_settings_all_params(self):
+        """
+        get_effective_account_settings()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/effective_settings/identity')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        include_history = False
+        resolve_user_mfa = False
+
+        # Invoke method
+        response = _service.get_effective_account_settings(
+            account_id,
+            include_history=include_history,
+            resolve_user_mfa=resolve_user_mfa,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+        assert 'resolve_user_mfa={}'.format('true' if resolve_user_mfa else 'false') in query_string
+
+    def test_get_effective_account_settings_all_params_with_retries(self):
+        # Enable retries and run test_get_effective_account_settings_all_params.
+        _service.enable_retries()
+        self.test_get_effective_account_settings_all_params()
+
+        # Disable retries and run test_get_effective_account_settings_all_params.
+        _service.disable_retries()
+        self.test_get_effective_account_settings_all_params()
+
+    @responses.activate
+    def test_get_effective_account_settings_required_params(self):
+        """
+        test_get_effective_account_settings_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/effective_settings/identity')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.get_effective_account_settings(
+            account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_effective_account_settings_required_params_with_retries(self):
+        # Enable retries and run test_get_effective_account_settings_required_params.
+        _service.enable_retries()
+        self.test_get_effective_account_settings_required_params()
+
+        # Disable retries and run test_get_effective_account_settings_required_params.
+        _service.disable_retries()
+        self.test_get_effective_account_settings_required_params()
+
+    @responses.activate
+    def test_get_effective_account_settings_value_error(self):
+        """
+        test_get_effective_account_settings_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/effective_settings/identity')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_effective_account_settings(**req_copy)
+
+    def test_get_effective_account_settings_value_error_with_retries(self):
+        # Enable retries and run test_get_effective_account_settings_value_error.
+        _service.enable_retries()
+        self.test_get_effective_account_settings_value_error()
+
+        # Disable retries and run test_get_effective_account_settings_value_error.
+        _service.disable_retries()
+        self.test_get_effective_account_settings_value_error()
 
 
 # endregion
@@ -4428,7 +5362,7 @@ class TestGetMfaReport:
 ##############################################################################
 
 ##############################################################################
-# Start of Service: AccountSettingsAssignments
+# Start of Service: IdentityPreferences
 ##############################################################################
 # region
 
@@ -4461,18 +5395,1745 @@ class TestNewInstance:
             )
 
 
-class TestListAccountSettingsAssignments:
+class TestUpdatePreferenceOnScopeAccount:
     """
-    Test Class for list_account_settings_assignments
+    Test Class for update_preference_on_scope_account
     """
 
     @responses.activate
-    def test_list_account_settings_assignments_all_params(self):
+    def test_update_preference_on_scope_account_all_params(self):
         """
-        list_account_settings_assignments()
+        update_preference_on_scope_account()
         """
         # Set up mock
-        url = preprocess_url('/v1/account_settings_assignments/')
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+        value_string = 'testString'
+        value_list_of_strings = ['testString']
+
+        # Invoke method
+        response = _service.update_preference_on_scope_account(
+            account_id,
+            iam_id,
+            service,
+            preference_id,
+            value_string,
+            value_list_of_strings=value_list_of_strings,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['value_string'] == 'testString'
+        assert req_body['value_list_of_strings'] == ['testString']
+
+    def test_update_preference_on_scope_account_all_params_with_retries(self):
+        # Enable retries and run test_update_preference_on_scope_account_all_params.
+        _service.enable_retries()
+        self.test_update_preference_on_scope_account_all_params()
+
+        # Disable retries and run test_update_preference_on_scope_account_all_params.
+        _service.disable_retries()
+        self.test_update_preference_on_scope_account_all_params()
+
+    @responses.activate
+    def test_update_preference_on_scope_account_value_error(self):
+        """
+        test_update_preference_on_scope_account_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+        value_string = 'testString'
+        value_list_of_strings = ['testString']
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "iam_id": iam_id,
+            "service": service,
+            "preference_id": preference_id,
+            "value_string": value_string,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_preference_on_scope_account(**req_copy)
+
+    def test_update_preference_on_scope_account_value_error_with_retries(self):
+        # Enable retries and run test_update_preference_on_scope_account_value_error.
+        _service.enable_retries()
+        self.test_update_preference_on_scope_account_value_error()
+
+        # Disable retries and run test_update_preference_on_scope_account_value_error.
+        _service.disable_retries()
+        self.test_update_preference_on_scope_account_value_error()
+
+
+class TestDeletePreferencesOnScopeAccount:
+    """
+    Test Class for delete_preferences_on_scope_account
+    """
+
+    @responses.activate
+    def test_delete_preferences_on_scope_account_all_params(self):
+        """
+        delete_preferences_on_scope_account()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_preferences_on_scope_account(
+            account_id,
+            iam_id,
+            service,
+            preference_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_preferences_on_scope_account_all_params_with_retries(self):
+        # Enable retries and run test_delete_preferences_on_scope_account_all_params.
+        _service.enable_retries()
+        self.test_delete_preferences_on_scope_account_all_params()
+
+        # Disable retries and run test_delete_preferences_on_scope_account_all_params.
+        _service.disable_retries()
+        self.test_delete_preferences_on_scope_account_all_params()
+
+    @responses.activate
+    def test_delete_preferences_on_scope_account_value_error(self):
+        """
+        test_delete_preferences_on_scope_account_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "iam_id": iam_id,
+            "service": service,
+            "preference_id": preference_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_preferences_on_scope_account(**req_copy)
+
+    def test_delete_preferences_on_scope_account_value_error_with_retries(self):
+        # Enable retries and run test_delete_preferences_on_scope_account_value_error.
+        _service.enable_retries()
+        self.test_delete_preferences_on_scope_account_value_error()
+
+        # Disable retries and run test_delete_preferences_on_scope_account_value_error.
+        _service.disable_retries()
+        self.test_delete_preferences_on_scope_account_value_error()
+
+
+class TestGetPreferencesOnScopeAccount:
+    """
+    Test Class for get_preferences_on_scope_account
+    """
+
+    @responses.activate
+    def test_get_preferences_on_scope_account_all_params(self):
+        """
+        get_preferences_on_scope_account()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+
+        # Invoke method
+        response = _service.get_preferences_on_scope_account(
+            account_id,
+            iam_id,
+            service,
+            preference_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_preferences_on_scope_account_all_params_with_retries(self):
+        # Enable retries and run test_get_preferences_on_scope_account_all_params.
+        _service.enable_retries()
+        self.test_get_preferences_on_scope_account_all_params()
+
+        # Disable retries and run test_get_preferences_on_scope_account_all_params.
+        _service.disable_retries()
+        self.test_get_preferences_on_scope_account_all_params()
+
+    @responses.activate
+    def test_get_preferences_on_scope_account_value_error(self):
+        """
+        test_get_preferences_on_scope_account_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
+        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        service = 'testString'
+        preference_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "iam_id": iam_id,
+            "service": service,
+            "preference_id": preference_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_preferences_on_scope_account(**req_copy)
+
+    def test_get_preferences_on_scope_account_value_error_with_retries(self):
+        # Enable retries and run test_get_preferences_on_scope_account_value_error.
+        _service.enable_retries()
+        self.test_get_preferences_on_scope_account_value_error()
+
+        # Disable retries and run test_get_preferences_on_scope_account_value_error.
+        _service.disable_retries()
+        self.test_get_preferences_on_scope_account_value_error()
+
+
+class TestGetAllPreferencesOnScopeAccount:
+    """
+    Test Class for get_all_preferences_on_scope_account
+    """
+
+    @responses.activate
+    def test_get_all_preferences_on_scope_account_all_params(self):
+        """
+        get_all_preferences_on_scope_account()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString')
+        mock_response = '{"preferences": [{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+
+        # Invoke method
+        response = _service.get_all_preferences_on_scope_account(
+            account_id,
+            iam_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_all_preferences_on_scope_account_all_params_with_retries(self):
+        # Enable retries and run test_get_all_preferences_on_scope_account_all_params.
+        _service.enable_retries()
+        self.test_get_all_preferences_on_scope_account_all_params()
+
+        # Disable retries and run test_get_all_preferences_on_scope_account_all_params.
+        _service.disable_retries()
+        self.test_get_all_preferences_on_scope_account_all_params()
+
+    @responses.activate
+    def test_get_all_preferences_on_scope_account_value_error(self):
+        """
+        test_get_all_preferences_on_scope_account_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString')
+        mock_response = '{"preferences": [{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "iam_id": iam_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_all_preferences_on_scope_account(**req_copy)
+
+    def test_get_all_preferences_on_scope_account_value_error_with_retries(self):
+        # Enable retries and run test_get_all_preferences_on_scope_account_value_error.
+        _service.enable_retries()
+        self.test_get_all_preferences_on_scope_account_value_error()
+
+        # Disable retries and run test_get_all_preferences_on_scope_account_value_error.
+        _service.disable_retries()
+        self.test_get_all_preferences_on_scope_account_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: IdentityPreferences
+##############################################################################
+
+##############################################################################
+# Start of Service: TrustedProfileTemplate
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListProfileTemplates:
+    """
+    Test Class for list_profile_templates
+    """
+
+    @responses.activate
+    def test_list_profile_templates_all_params(self):
+        """
+        list_profile_templates()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        limit = '20'
+        pagetoken = 'testString'
+        sort = 'created_at'
+        order = 'asc'
+        include_history = 'false'
+
+        # Invoke method
+        response = _service.list_profile_templates(
+            account_id=account_id,
+            limit=limit,
+            pagetoken=pagetoken,
+            sort=sort,
+            order=order,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'pagetoken={}'.format(pagetoken) in query_string
+        assert 'sort={}'.format(sort) in query_string
+        assert 'order={}'.format(order) in query_string
+        assert 'include_history={}'.format(include_history) in query_string
+
+    def test_list_profile_templates_all_params_with_retries(self):
+        # Enable retries and run test_list_profile_templates_all_params.
+        _service.enable_retries()
+        self.test_list_profile_templates_all_params()
+
+        # Disable retries and run test_list_profile_templates_all_params.
+        _service.disable_retries()
+        self.test_list_profile_templates_all_params()
+
+    @responses.activate
+    def test_list_profile_templates_required_params(self):
+        """
+        test_list_profile_templates_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Invoke method
+        response = _service.list_profile_templates()
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_profile_templates_required_params_with_retries(self):
+        # Enable retries and run test_list_profile_templates_required_params.
+        _service.enable_retries()
+        self.test_list_profile_templates_required_params()
+
+        # Disable retries and run test_list_profile_templates_required_params.
+        _service.disable_retries()
+        self.test_list_profile_templates_required_params()
+
+
+class TestCreateProfileTemplate:
+    """
+    Test Class for create_profile_template
+    """
+
+    @responses.activate
+    def test_create_profile_template_all_params(self):
+        """
+        create_profile_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a ProfileClaimRuleConditions model
+        profile_claim_rule_conditions_model = {}
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
+        trusted_profile_template_claim_rule_model = {}
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
+
+        # Construct a dict representation of a TemplateProfileComponentRequest model
+        template_profile_component_request_model = {}
+        template_profile_component_request_model['name'] = 'testString'
+        template_profile_component_request_model['description'] = 'testString'
+        template_profile_component_request_model['email'] = 'testString'
+        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_request_model['identities'] = [profile_identity_request_model]
+
+        # Construct a dict representation of a PolicyTemplateReference model
+        policy_template_reference_model = {}
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        # Construct a dict representation of a ActionControlsIdentities model
+        action_controls_identities_model = {}
+        action_controls_identities_model['add'] = True
+        action_controls_identities_model['remove'] = True
+
+        # Construct a dict representation of a ActionControlsRules model
+        action_controls_rules_model = {}
+        action_controls_rules_model['add'] = True
+        action_controls_rules_model['remove'] = True
+
+        # Construct a dict representation of a ActionControlsPolicies model
+        action_controls_policies_model = {}
+        action_controls_policies_model['add'] = True
+        action_controls_policies_model['remove'] = True
+
+        # Construct a dict representation of a ActionControls model
+        action_controls_model = {}
+        action_controls_model['identities'] = action_controls_identities_model
+        action_controls_model['rules'] = action_controls_rules_model
+        action_controls_model['policies'] = action_controls_policies_model
+
+        # Set up parameter values
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        profile = template_profile_component_request_model
+        policy_template_references = [policy_template_reference_model]
+        action_controls = action_controls_model
+
+        # Invoke method
+        response = _service.create_profile_template(
+            account_id=account_id,
+            name=name,
+            description=description,
+            profile=profile,
+            policy_template_references=policy_template_references,
+            action_controls=action_controls,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['profile'] == template_profile_component_request_model
+        assert req_body['policy_template_references'] == [policy_template_reference_model]
+        assert req_body['action_controls'] == action_controls_model
+
+    def test_create_profile_template_all_params_with_retries(self):
+        # Enable retries and run test_create_profile_template_all_params.
+        _service.enable_retries()
+        self.test_create_profile_template_all_params()
+
+        # Disable retries and run test_create_profile_template_all_params.
+        _service.disable_retries()
+        self.test_create_profile_template_all_params()
+
+
+class TestGetLatestProfileTemplateVersion:
+    """
+    Test Class for get_latest_profile_template_version
+    """
+
+    @responses.activate
+    def test_get_latest_profile_template_version_all_params(self):
+        """
+        get_latest_profile_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        include_history = False
+
+        # Invoke method
+        response = _service.get_latest_profile_template_version(
+            template_id,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+
+    def test_get_latest_profile_template_version_all_params_with_retries(self):
+        # Enable retries and run test_get_latest_profile_template_version_all_params.
+        _service.enable_retries()
+        self.test_get_latest_profile_template_version_all_params()
+
+        # Disable retries and run test_get_latest_profile_template_version_all_params.
+        _service.disable_retries()
+        self.test_get_latest_profile_template_version_all_params()
+
+    @responses.activate
+    def test_get_latest_profile_template_version_required_params(self):
+        """
+        test_get_latest_profile_template_version_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Invoke method
+        response = _service.get_latest_profile_template_version(
+            template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_latest_profile_template_version_required_params_with_retries(self):
+        # Enable retries and run test_get_latest_profile_template_version_required_params.
+        _service.enable_retries()
+        self.test_get_latest_profile_template_version_required_params()
+
+        # Disable retries and run test_get_latest_profile_template_version_required_params.
+        _service.disable_retries()
+        self.test_get_latest_profile_template_version_required_params()
+
+    @responses.activate
+    def test_get_latest_profile_template_version_value_error(self):
+        """
+        test_get_latest_profile_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_latest_profile_template_version(**req_copy)
+
+    def test_get_latest_profile_template_version_value_error_with_retries(self):
+        # Enable retries and run test_get_latest_profile_template_version_value_error.
+        _service.enable_retries()
+        self.test_get_latest_profile_template_version_value_error()
+
+        # Disable retries and run test_get_latest_profile_template_version_value_error.
+        _service.disable_retries()
+        self.test_get_latest_profile_template_version_value_error()
+
+
+class TestDeleteAllVersionsOfProfileTemplate:
+    """
+    Test Class for delete_all_versions_of_profile_template
+    """
+
+    @responses.activate
+    def test_delete_all_versions_of_profile_template_all_params(self):
+        """
+        delete_all_versions_of_profile_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_all_versions_of_profile_template(
+            template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_all_versions_of_profile_template_all_params_with_retries(self):
+        # Enable retries and run test_delete_all_versions_of_profile_template_all_params.
+        _service.enable_retries()
+        self.test_delete_all_versions_of_profile_template_all_params()
+
+        # Disable retries and run test_delete_all_versions_of_profile_template_all_params.
+        _service.disable_retries()
+        self.test_delete_all_versions_of_profile_template_all_params()
+
+    @responses.activate
+    def test_delete_all_versions_of_profile_template_value_error(self):
+        """
+        test_delete_all_versions_of_profile_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_all_versions_of_profile_template(**req_copy)
+
+    def test_delete_all_versions_of_profile_template_value_error_with_retries(self):
+        # Enable retries and run test_delete_all_versions_of_profile_template_value_error.
+        _service.enable_retries()
+        self.test_delete_all_versions_of_profile_template_value_error()
+
+        # Disable retries and run test_delete_all_versions_of_profile_template_value_error.
+        _service.disable_retries()
+        self.test_delete_all_versions_of_profile_template_value_error()
+
+
+class TestListVersionsOfProfileTemplate:
+    """
+    Test Class for list_versions_of_profile_template
+    """
+
+    @responses.activate
+    def test_list_versions_of_profile_template_all_params(self):
+        """
+        list_versions_of_profile_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        limit = '20'
+        pagetoken = 'testString'
+        sort = 'created_at'
+        order = 'asc'
+        include_history = 'false'
+
+        # Invoke method
+        response = _service.list_versions_of_profile_template(
+            template_id,
+            limit=limit,
+            pagetoken=pagetoken,
+            sort=sort,
+            order=order,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'limit={}'.format(limit) in query_string
+        assert 'pagetoken={}'.format(pagetoken) in query_string
+        assert 'sort={}'.format(sort) in query_string
+        assert 'order={}'.format(order) in query_string
+        assert 'include_history={}'.format(include_history) in query_string
+
+    def test_list_versions_of_profile_template_all_params_with_retries(self):
+        # Enable retries and run test_list_versions_of_profile_template_all_params.
+        _service.enable_retries()
+        self.test_list_versions_of_profile_template_all_params()
+
+        # Disable retries and run test_list_versions_of_profile_template_all_params.
+        _service.disable_retries()
+        self.test_list_versions_of_profile_template_all_params()
+
+    @responses.activate
+    def test_list_versions_of_profile_template_required_params(self):
+        """
+        test_list_versions_of_profile_template_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Invoke method
+        response = _service.list_versions_of_profile_template(
+            template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_versions_of_profile_template_required_params_with_retries(self):
+        # Enable retries and run test_list_versions_of_profile_template_required_params.
+        _service.enable_retries()
+        self.test_list_versions_of_profile_template_required_params()
+
+        # Disable retries and run test_list_versions_of_profile_template_required_params.
+        _service.disable_retries()
+        self.test_list_versions_of_profile_template_required_params()
+
+    @responses.activate
+    def test_list_versions_of_profile_template_value_error(self):
+        """
+        test_list_versions_of_profile_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_versions_of_profile_template(**req_copy)
+
+    def test_list_versions_of_profile_template_value_error_with_retries(self):
+        # Enable retries and run test_list_versions_of_profile_template_value_error.
+        _service.enable_retries()
+        self.test_list_versions_of_profile_template_value_error()
+
+        # Disable retries and run test_list_versions_of_profile_template_value_error.
+        _service.disable_retries()
+        self.test_list_versions_of_profile_template_value_error()
+
+
+class TestCreateProfileTemplateVersion:
+    """
+    Test Class for create_profile_template_version
+    """
+
+    @responses.activate
+    def test_create_profile_template_version_all_params(self):
+        """
+        create_profile_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a ProfileClaimRuleConditions model
+        profile_claim_rule_conditions_model = {}
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
+        trusted_profile_template_claim_rule_model = {}
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
+
+        # Construct a dict representation of a TemplateProfileComponentRequest model
+        template_profile_component_request_model = {}
+        template_profile_component_request_model['name'] = 'testString'
+        template_profile_component_request_model['description'] = 'testString'
+        template_profile_component_request_model['email'] = 'testString'
+        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_request_model['identities'] = [profile_identity_request_model]
+
+        # Construct a dict representation of a PolicyTemplateReference model
+        policy_template_reference_model = {}
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        # Construct a dict representation of a ActionControlsIdentities model
+        action_controls_identities_model = {}
+        action_controls_identities_model['add'] = True
+        action_controls_identities_model['remove'] = True
+
+        # Construct a dict representation of a ActionControlsRules model
+        action_controls_rules_model = {}
+        action_controls_rules_model['add'] = True
+        action_controls_rules_model['remove'] = True
+
+        # Construct a dict representation of a ActionControlsPolicies model
+        action_controls_policies_model = {}
+        action_controls_policies_model['add'] = True
+        action_controls_policies_model['remove'] = True
+
+        # Construct a dict representation of a ActionControls model
+        action_controls_model = {}
+        action_controls_model['identities'] = action_controls_identities_model
+        action_controls_model['rules'] = action_controls_rules_model
+        action_controls_model['policies'] = action_controls_policies_model
+
+        # Set up parameter values
+        template_id = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        profile = template_profile_component_request_model
+        policy_template_references = [policy_template_reference_model]
+        action_controls = action_controls_model
+
+        # Invoke method
+        response = _service.create_profile_template_version(
+            template_id,
+            account_id=account_id,
+            name=name,
+            description=description,
+            profile=profile,
+            policy_template_references=policy_template_references,
+            action_controls=action_controls,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['profile'] == template_profile_component_request_model
+        assert req_body['policy_template_references'] == [policy_template_reference_model]
+        assert req_body['action_controls'] == action_controls_model
+
+    def test_create_profile_template_version_all_params_with_retries(self):
+        # Enable retries and run test_create_profile_template_version_all_params.
+        _service.enable_retries()
+        self.test_create_profile_template_version_all_params()
+
+        # Disable retries and run test_create_profile_template_version_all_params.
+        _service.disable_retries()
+        self.test_create_profile_template_version_all_params()
+
+    @responses.activate
+    def test_create_profile_template_version_value_error(self):
+        """
+        test_create_profile_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a ProfileClaimRuleConditions model
+        profile_claim_rule_conditions_model = {}
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
+        trusted_profile_template_claim_rule_model = {}
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
+
+        # Construct a dict representation of a TemplateProfileComponentRequest model
+        template_profile_component_request_model = {}
+        template_profile_component_request_model['name'] = 'testString'
+        template_profile_component_request_model['description'] = 'testString'
+        template_profile_component_request_model['email'] = 'testString'
+        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_request_model['identities'] = [profile_identity_request_model]
+
+        # Construct a dict representation of a PolicyTemplateReference model
+        policy_template_reference_model = {}
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        # Construct a dict representation of a ActionControlsIdentities model
+        action_controls_identities_model = {}
+        action_controls_identities_model['add'] = True
+        action_controls_identities_model['remove'] = True
+
+        # Construct a dict representation of a ActionControlsRules model
+        action_controls_rules_model = {}
+        action_controls_rules_model['add'] = True
+        action_controls_rules_model['remove'] = True
+
+        # Construct a dict representation of a ActionControlsPolicies model
+        action_controls_policies_model = {}
+        action_controls_policies_model['add'] = True
+        action_controls_policies_model['remove'] = True
+
+        # Construct a dict representation of a ActionControls model
+        action_controls_model = {}
+        action_controls_model['identities'] = action_controls_identities_model
+        action_controls_model['rules'] = action_controls_rules_model
+        action_controls_model['policies'] = action_controls_policies_model
+
+        # Set up parameter values
+        template_id = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        profile = template_profile_component_request_model
+        policy_template_references = [policy_template_reference_model]
+        action_controls = action_controls_model
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_profile_template_version(**req_copy)
+
+    def test_create_profile_template_version_value_error_with_retries(self):
+        # Enable retries and run test_create_profile_template_version_value_error.
+        _service.enable_retries()
+        self.test_create_profile_template_version_value_error()
+
+        # Disable retries and run test_create_profile_template_version_value_error.
+        _service.disable_retries()
+        self.test_create_profile_template_version_value_error()
+
+
+class TestGetProfileTemplateVersion:
+    """
+    Test Class for get_profile_template_version
+    """
+
+    @responses.activate
+    def test_get_profile_template_version_all_params(self):
+        """
+        get_profile_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+        include_history = False
+
+        # Invoke method
+        response = _service.get_profile_template_version(
+            template_id,
+            version,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+
+    def test_get_profile_template_version_all_params_with_retries(self):
+        # Enable retries and run test_get_profile_template_version_all_params.
+        _service.enable_retries()
+        self.test_get_profile_template_version_all_params()
+
+        # Disable retries and run test_get_profile_template_version_all_params.
+        _service.disable_retries()
+        self.test_get_profile_template_version_all_params()
+
+    @responses.activate
+    def test_get_profile_template_version_required_params(self):
+        """
+        test_get_profile_template_version_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.get_profile_template_version(
+            template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_profile_template_version_required_params_with_retries(self):
+        # Enable retries and run test_get_profile_template_version_required_params.
+        _service.enable_retries()
+        self.test_get_profile_template_version_required_params()
+
+        # Disable retries and run test_get_profile_template_version_required_params.
+        _service.disable_retries()
+        self.test_get_profile_template_version_required_params()
+
+    @responses.activate
+    def test_get_profile_template_version_value_error(self):
+        """
+        test_get_profile_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_profile_template_version(**req_copy)
+
+    def test_get_profile_template_version_value_error_with_retries(self):
+        # Enable retries and run test_get_profile_template_version_value_error.
+        _service.enable_retries()
+        self.test_get_profile_template_version_value_error()
+
+        # Disable retries and run test_get_profile_template_version_value_error.
+        _service.disable_retries()
+        self.test_get_profile_template_version_value_error()
+
+
+class TestUpdateProfileTemplateVersion:
+    """
+    Test Class for update_profile_template_version
+    """
+
+    @responses.activate
+    def test_update_profile_template_version_all_params(self):
+        """
+        update_profile_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a ProfileClaimRuleConditions model
+        profile_claim_rule_conditions_model = {}
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
+        trusted_profile_template_claim_rule_model = {}
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
+
+        # Construct a dict representation of a TemplateProfileComponentRequest model
+        template_profile_component_request_model = {}
+        template_profile_component_request_model['name'] = 'testString'
+        template_profile_component_request_model['description'] = 'testString'
+        template_profile_component_request_model['email'] = 'testString'
+        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_request_model['identities'] = [profile_identity_request_model]
+
+        # Construct a dict representation of a PolicyTemplateReference model
+        policy_template_reference_model = {}
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        # Construct a dict representation of a ActionControlsIdentities model
+        action_controls_identities_model = {}
+        action_controls_identities_model['add'] = True
+        action_controls_identities_model['remove'] = True
+
+        # Construct a dict representation of a ActionControlsRules model
+        action_controls_rules_model = {}
+        action_controls_rules_model['add'] = True
+        action_controls_rules_model['remove'] = True
+
+        # Construct a dict representation of a ActionControlsPolicies model
+        action_controls_policies_model = {}
+        action_controls_policies_model['add'] = True
+        action_controls_policies_model['remove'] = True
+
+        # Construct a dict representation of a ActionControls model
+        action_controls_model = {}
+        action_controls_model['identities'] = action_controls_identities_model
+        action_controls_model['rules'] = action_controls_rules_model
+        action_controls_model['policies'] = action_controls_policies_model
+
+        # Set up parameter values
+        if_match = 'testString'
+        template_id = 'testString'
+        version = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        profile = template_profile_component_request_model
+        policy_template_references = [policy_template_reference_model]
+        action_controls = action_controls_model
+
+        # Invoke method
+        response = _service.update_profile_template_version(
+            if_match,
+            template_id,
+            version,
+            account_id=account_id,
+            name=name,
+            description=description,
+            profile=profile,
+            policy_template_references=policy_template_references,
+            action_controls=action_controls,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['profile'] == template_profile_component_request_model
+        assert req_body['policy_template_references'] == [policy_template_reference_model]
+        assert req_body['action_controls'] == action_controls_model
+
+    def test_update_profile_template_version_all_params_with_retries(self):
+        # Enable retries and run test_update_profile_template_version_all_params.
+        _service.enable_retries()
+        self.test_update_profile_template_version_all_params()
+
+        # Disable retries and run test_update_profile_template_version_all_params.
+        _service.disable_retries()
+        self.test_update_profile_template_version_all_params()
+
+    @responses.activate
+    def test_update_profile_template_version_value_error(self):
+        """
+        test_update_profile_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "email": "email", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a ProfileClaimRuleConditions model
+        profile_claim_rule_conditions_model = {}
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
+        trusted_profile_template_claim_rule_model = {}
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
+
+        # Construct a dict representation of a TemplateProfileComponentRequest model
+        template_profile_component_request_model = {}
+        template_profile_component_request_model['name'] = 'testString'
+        template_profile_component_request_model['description'] = 'testString'
+        template_profile_component_request_model['email'] = 'testString'
+        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_request_model['identities'] = [profile_identity_request_model]
+
+        # Construct a dict representation of a PolicyTemplateReference model
+        policy_template_reference_model = {}
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        # Construct a dict representation of a ActionControlsIdentities model
+        action_controls_identities_model = {}
+        action_controls_identities_model['add'] = True
+        action_controls_identities_model['remove'] = True
+
+        # Construct a dict representation of a ActionControlsRules model
+        action_controls_rules_model = {}
+        action_controls_rules_model['add'] = True
+        action_controls_rules_model['remove'] = True
+
+        # Construct a dict representation of a ActionControlsPolicies model
+        action_controls_policies_model = {}
+        action_controls_policies_model['add'] = True
+        action_controls_policies_model['remove'] = True
+
+        # Construct a dict representation of a ActionControls model
+        action_controls_model = {}
+        action_controls_model['identities'] = action_controls_identities_model
+        action_controls_model['rules'] = action_controls_rules_model
+        action_controls_model['policies'] = action_controls_policies_model
+
+        # Set up parameter values
+        if_match = 'testString'
+        template_id = 'testString'
+        version = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        profile = template_profile_component_request_model
+        policy_template_references = [policy_template_reference_model]
+        action_controls = action_controls_model
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "if_match": if_match,
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_profile_template_version(**req_copy)
+
+    def test_update_profile_template_version_value_error_with_retries(self):
+        # Enable retries and run test_update_profile_template_version_value_error.
+        _service.enable_retries()
+        self.test_update_profile_template_version_value_error()
+
+        # Disable retries and run test_update_profile_template_version_value_error.
+        _service.disable_retries()
+        self.test_update_profile_template_version_value_error()
+
+
+class TestDeleteProfileTemplateVersion:
+    """
+    Test Class for delete_profile_template_version
+    """
+
+    @responses.activate
+    def test_delete_profile_template_version_all_params(self):
+        """
+        delete_profile_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.delete_profile_template_version(
+            template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_profile_template_version_all_params_with_retries(self):
+        # Enable retries and run test_delete_profile_template_version_all_params.
+        _service.enable_retries()
+        self.test_delete_profile_template_version_all_params()
+
+        # Disable retries and run test_delete_profile_template_version_all_params.
+        _service.disable_retries()
+        self.test_delete_profile_template_version_all_params()
+
+    @responses.activate
+    def test_delete_profile_template_version_value_error(self):
+        """
+        test_delete_profile_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_profile_template_version(**req_copy)
+
+    def test_delete_profile_template_version_value_error_with_retries(self):
+        # Enable retries and run test_delete_profile_template_version_value_error.
+        _service.enable_retries()
+        self.test_delete_profile_template_version_value_error()
+
+        # Disable retries and run test_delete_profile_template_version_value_error.
+        _service.disable_retries()
+        self.test_delete_profile_template_version_value_error()
+
+
+class TestCommitProfileTemplate:
+    """
+    Test Class for commit_profile_template
+    """
+
+    @responses.activate
+    def test_commit_profile_template_all_params(self):
+        """
+        commit_profile_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString/commit')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.commit_profile_template(
+            template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_commit_profile_template_all_params_with_retries(self):
+        # Enable retries and run test_commit_profile_template_all_params.
+        _service.enable_retries()
+        self.test_commit_profile_template_all_params()
+
+        # Disable retries and run test_commit_profile_template_all_params.
+        _service.disable_retries()
+        self.test_commit_profile_template_all_params()
+
+    @responses.activate
+    def test_commit_profile_template_value_error(self):
+        """
+        test_commit_profile_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString/commit')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.commit_profile_template(**req_copy)
+
+    def test_commit_profile_template_value_error_with_retries(self):
+        # Enable retries and run test_commit_profile_template_value_error.
+        _service.enable_retries()
+        self.test_commit_profile_template_value_error()
+
+        # Disable retries and run test_commit_profile_template_value_error.
+        _service.disable_retries()
+        self.test_commit_profile_template_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: TrustedProfileTemplate
+##############################################################################
+
+##############################################################################
+# Start of Service: TrustedProfileTemplateAssignments
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListTrustedProfileAssignments:
+    """
+    Test Class for list_trusted_profile_assignments
+    """
+
+    @responses.activate
+    def test_list_trusted_profile_assignments_all_params(self):
+        """
+        list_trusted_profile_assignments()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "assignments": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}]}'
         responses.add(
             responses.GET,
@@ -4495,7 +7156,7 @@ class TestListAccountSettingsAssignments:
         include_history = False
 
         # Invoke method
-        response = _service.list_account_settings_assignments(
+        response = _service.list_trusted_profile_assignments(
             account_id=account_id,
             template_id=template_id,
             template_version=template_version,
@@ -4526,22 +7187,22 @@ class TestListAccountSettingsAssignments:
         assert 'order={}'.format(order) in query_string
         assert 'include_history={}'.format('true' if include_history else 'false') in query_string
 
-    def test_list_account_settings_assignments_all_params_with_retries(self):
-        # Enable retries and run test_list_account_settings_assignments_all_params.
+    def test_list_trusted_profile_assignments_all_params_with_retries(self):
+        # Enable retries and run test_list_trusted_profile_assignments_all_params.
         _service.enable_retries()
-        self.test_list_account_settings_assignments_all_params()
+        self.test_list_trusted_profile_assignments_all_params()
 
-        # Disable retries and run test_list_account_settings_assignments_all_params.
+        # Disable retries and run test_list_trusted_profile_assignments_all_params.
         _service.disable_retries()
-        self.test_list_account_settings_assignments_all_params()
+        self.test_list_trusted_profile_assignments_all_params()
 
     @responses.activate
-    def test_list_account_settings_assignments_required_params(self):
+    def test_list_trusted_profile_assignments_required_params(self):
         """
-        test_list_account_settings_assignments_required_params()
+        test_list_trusted_profile_assignments_required_params()
         """
         # Set up mock
-        url = preprocess_url('/v1/account_settings_assignments/')
+        url = preprocess_url('/v1/profile_assignments/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "assignments": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}]}'
         responses.add(
             responses.GET,
@@ -4552,34 +7213,34 @@ class TestListAccountSettingsAssignments:
         )
 
         # Invoke method
-        response = _service.list_account_settings_assignments()
+        response = _service.list_trusted_profile_assignments()
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
-    def test_list_account_settings_assignments_required_params_with_retries(self):
-        # Enable retries and run test_list_account_settings_assignments_required_params.
+    def test_list_trusted_profile_assignments_required_params_with_retries(self):
+        # Enable retries and run test_list_trusted_profile_assignments_required_params.
         _service.enable_retries()
-        self.test_list_account_settings_assignments_required_params()
+        self.test_list_trusted_profile_assignments_required_params()
 
-        # Disable retries and run test_list_account_settings_assignments_required_params.
+        # Disable retries and run test_list_trusted_profile_assignments_required_params.
         _service.disable_retries()
-        self.test_list_account_settings_assignments_required_params()
+        self.test_list_trusted_profile_assignments_required_params()
 
 
-class TestCreateAccountSettingsAssignment:
+class TestCreateTrustedProfileAssignment:
     """
-    Test Class for create_account_settings_assignment
+    Test Class for create_trusted_profile_assignment
     """
 
     @responses.activate
-    def test_create_account_settings_assignment_all_params(self):
+    def test_create_trusted_profile_assignment_all_params(self):
         """
-        create_account_settings_assignment()
+        create_trusted_profile_assignment()
         """
         # Set up mock
-        url = preprocess_url('/v1/account_settings_assignments/')
+        url = preprocess_url('/v1/profile_assignments/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.POST,
@@ -4596,7 +7257,7 @@ class TestCreateAccountSettingsAssignment:
         target = 'testString'
 
         # Invoke method
-        response = _service.create_account_settings_assignment(
+        response = _service.create_trusted_profile_assignment(
             template_id,
             template_version,
             target_type,
@@ -4614,22 +7275,22 @@ class TestCreateAccountSettingsAssignment:
         assert req_body['target_type'] == 'Account'
         assert req_body['target'] == 'testString'
 
-    def test_create_account_settings_assignment_all_params_with_retries(self):
-        # Enable retries and run test_create_account_settings_assignment_all_params.
+    def test_create_trusted_profile_assignment_all_params_with_retries(self):
+        # Enable retries and run test_create_trusted_profile_assignment_all_params.
         _service.enable_retries()
-        self.test_create_account_settings_assignment_all_params()
+        self.test_create_trusted_profile_assignment_all_params()
 
-        # Disable retries and run test_create_account_settings_assignment_all_params.
+        # Disable retries and run test_create_trusted_profile_assignment_all_params.
         _service.disable_retries()
-        self.test_create_account_settings_assignment_all_params()
+        self.test_create_trusted_profile_assignment_all_params()
 
     @responses.activate
-    def test_create_account_settings_assignment_value_error(self):
+    def test_create_trusted_profile_assignment_value_error(self):
         """
-        test_create_account_settings_assignment_value_error()
+        test_create_trusted_profile_assignment_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v1/account_settings_assignments/')
+        url = preprocess_url('/v1/profile_assignments/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.POST,
@@ -4655,30 +7316,30 @@ class TestCreateAccountSettingsAssignment:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.create_account_settings_assignment(**req_copy)
+                _service.create_trusted_profile_assignment(**req_copy)
 
-    def test_create_account_settings_assignment_value_error_with_retries(self):
-        # Enable retries and run test_create_account_settings_assignment_value_error.
+    def test_create_trusted_profile_assignment_value_error_with_retries(self):
+        # Enable retries and run test_create_trusted_profile_assignment_value_error.
         _service.enable_retries()
-        self.test_create_account_settings_assignment_value_error()
+        self.test_create_trusted_profile_assignment_value_error()
 
-        # Disable retries and run test_create_account_settings_assignment_value_error.
+        # Disable retries and run test_create_trusted_profile_assignment_value_error.
         _service.disable_retries()
-        self.test_create_account_settings_assignment_value_error()
+        self.test_create_trusted_profile_assignment_value_error()
 
 
-class TestGetAccountSettingsAssignment:
+class TestGetTrustedProfileAssignment:
     """
-    Test Class for get_account_settings_assignment
+    Test Class for get_trusted_profile_assignment
     """
 
     @responses.activate
-    def test_get_account_settings_assignment_all_params(self):
+    def test_get_trusted_profile_assignment_all_params(self):
         """
-        get_account_settings_assignment()
+        get_trusted_profile_assignment()
         """
         # Set up mock
-        url = preprocess_url('/v1/account_settings_assignments/testString')
+        url = preprocess_url('/v1/profile_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.GET,
@@ -4693,7 +7354,7 @@ class TestGetAccountSettingsAssignment:
         include_history = False
 
         # Invoke method
-        response = _service.get_account_settings_assignment(
+        response = _service.get_trusted_profile_assignment(
             assignment_id,
             include_history=include_history,
             headers={},
@@ -4707,22 +7368,22 @@ class TestGetAccountSettingsAssignment:
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'include_history={}'.format('true' if include_history else 'false') in query_string
 
-    def test_get_account_settings_assignment_all_params_with_retries(self):
-        # Enable retries and run test_get_account_settings_assignment_all_params.
+    def test_get_trusted_profile_assignment_all_params_with_retries(self):
+        # Enable retries and run test_get_trusted_profile_assignment_all_params.
         _service.enable_retries()
-        self.test_get_account_settings_assignment_all_params()
+        self.test_get_trusted_profile_assignment_all_params()
 
-        # Disable retries and run test_get_account_settings_assignment_all_params.
+        # Disable retries and run test_get_trusted_profile_assignment_all_params.
         _service.disable_retries()
-        self.test_get_account_settings_assignment_all_params()
+        self.test_get_trusted_profile_assignment_all_params()
 
     @responses.activate
-    def test_get_account_settings_assignment_required_params(self):
+    def test_get_trusted_profile_assignment_required_params(self):
         """
-        test_get_account_settings_assignment_required_params()
+        test_get_trusted_profile_assignment_required_params()
         """
         # Set up mock
-        url = preprocess_url('/v1/account_settings_assignments/testString')
+        url = preprocess_url('/v1/profile_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.GET,
@@ -4736,7 +7397,7 @@ class TestGetAccountSettingsAssignment:
         assignment_id = 'testString'
 
         # Invoke method
-        response = _service.get_account_settings_assignment(
+        response = _service.get_trusted_profile_assignment(
             assignment_id,
             headers={},
         )
@@ -4745,22 +7406,22 @@ class TestGetAccountSettingsAssignment:
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
-    def test_get_account_settings_assignment_required_params_with_retries(self):
-        # Enable retries and run test_get_account_settings_assignment_required_params.
+    def test_get_trusted_profile_assignment_required_params_with_retries(self):
+        # Enable retries and run test_get_trusted_profile_assignment_required_params.
         _service.enable_retries()
-        self.test_get_account_settings_assignment_required_params()
+        self.test_get_trusted_profile_assignment_required_params()
 
-        # Disable retries and run test_get_account_settings_assignment_required_params.
+        # Disable retries and run test_get_trusted_profile_assignment_required_params.
         _service.disable_retries()
-        self.test_get_account_settings_assignment_required_params()
+        self.test_get_trusted_profile_assignment_required_params()
 
     @responses.activate
-    def test_get_account_settings_assignment_value_error(self):
+    def test_get_trusted_profile_assignment_value_error(self):
         """
-        test_get_account_settings_assignment_value_error()
+        test_get_trusted_profile_assignment_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v1/account_settings_assignments/testString')
+        url = preprocess_url('/v1/profile_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.GET,
@@ -4780,30 +7441,30 @@ class TestGetAccountSettingsAssignment:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.get_account_settings_assignment(**req_copy)
+                _service.get_trusted_profile_assignment(**req_copy)
 
-    def test_get_account_settings_assignment_value_error_with_retries(self):
-        # Enable retries and run test_get_account_settings_assignment_value_error.
+    def test_get_trusted_profile_assignment_value_error_with_retries(self):
+        # Enable retries and run test_get_trusted_profile_assignment_value_error.
         _service.enable_retries()
-        self.test_get_account_settings_assignment_value_error()
+        self.test_get_trusted_profile_assignment_value_error()
 
-        # Disable retries and run test_get_account_settings_assignment_value_error.
+        # Disable retries and run test_get_trusted_profile_assignment_value_error.
         _service.disable_retries()
-        self.test_get_account_settings_assignment_value_error()
+        self.test_get_trusted_profile_assignment_value_error()
 
 
-class TestDeleteAccountSettingsAssignment:
+class TestDeleteTrustedProfileAssignment:
     """
-    Test Class for delete_account_settings_assignment
+    Test Class for delete_trusted_profile_assignment
     """
 
     @responses.activate
-    def test_delete_account_settings_assignment_all_params(self):
+    def test_delete_trusted_profile_assignment_all_params(self):
         """
-        delete_account_settings_assignment()
+        delete_trusted_profile_assignment()
         """
         # Set up mock
-        url = preprocess_url('/v1/account_settings_assignments/testString')
+        url = preprocess_url('/v1/profile_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "status_code": "status_code", "errors": [{"code": "code", "message_code": "message_code", "message": "message", "details": "details"}], "trace": "trace"}'
         responses.add(
             responses.DELETE,
@@ -4817,7 +7478,7 @@ class TestDeleteAccountSettingsAssignment:
         assignment_id = 'testString'
 
         # Invoke method
-        response = _service.delete_account_settings_assignment(
+        response = _service.delete_trusted_profile_assignment(
             assignment_id,
             headers={},
         )
@@ -4826,22 +7487,22 @@ class TestDeleteAccountSettingsAssignment:
         assert len(responses.calls) == 1
         assert response.status_code == 202
 
-    def test_delete_account_settings_assignment_all_params_with_retries(self):
-        # Enable retries and run test_delete_account_settings_assignment_all_params.
+    def test_delete_trusted_profile_assignment_all_params_with_retries(self):
+        # Enable retries and run test_delete_trusted_profile_assignment_all_params.
         _service.enable_retries()
-        self.test_delete_account_settings_assignment_all_params()
+        self.test_delete_trusted_profile_assignment_all_params()
 
-        # Disable retries and run test_delete_account_settings_assignment_all_params.
+        # Disable retries and run test_delete_trusted_profile_assignment_all_params.
         _service.disable_retries()
-        self.test_delete_account_settings_assignment_all_params()
+        self.test_delete_trusted_profile_assignment_all_params()
 
     @responses.activate
-    def test_delete_account_settings_assignment_value_error(self):
+    def test_delete_trusted_profile_assignment_value_error(self):
         """
-        test_delete_account_settings_assignment_value_error()
+        test_delete_trusted_profile_assignment_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v1/account_settings_assignments/testString')
+        url = preprocess_url('/v1/profile_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "status_code": "status_code", "errors": [{"code": "code", "message_code": "message_code", "message": "message", "details": "details"}], "trace": "trace"}'
         responses.add(
             responses.DELETE,
@@ -4861,30 +7522,30 @@ class TestDeleteAccountSettingsAssignment:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.delete_account_settings_assignment(**req_copy)
+                _service.delete_trusted_profile_assignment(**req_copy)
 
-    def test_delete_account_settings_assignment_value_error_with_retries(self):
-        # Enable retries and run test_delete_account_settings_assignment_value_error.
+    def test_delete_trusted_profile_assignment_value_error_with_retries(self):
+        # Enable retries and run test_delete_trusted_profile_assignment_value_error.
         _service.enable_retries()
-        self.test_delete_account_settings_assignment_value_error()
+        self.test_delete_trusted_profile_assignment_value_error()
 
-        # Disable retries and run test_delete_account_settings_assignment_value_error.
+        # Disable retries and run test_delete_trusted_profile_assignment_value_error.
         _service.disable_retries()
-        self.test_delete_account_settings_assignment_value_error()
+        self.test_delete_trusted_profile_assignment_value_error()
 
 
-class TestUpdateAccountSettingsAssignment:
+class TestUpdateTrustedProfileAssignment:
     """
-    Test Class for update_account_settings_assignment
+    Test Class for update_trusted_profile_assignment
     """
 
     @responses.activate
-    def test_update_account_settings_assignment_all_params(self):
+    def test_update_trusted_profile_assignment_all_params(self):
         """
-        update_account_settings_assignment()
+        update_trusted_profile_assignment()
         """
         # Set up mock
-        url = preprocess_url('/v1/account_settings_assignments/testString')
+        url = preprocess_url('/v1/profile_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.PATCH,
@@ -4900,7 +7561,7 @@ class TestUpdateAccountSettingsAssignment:
         template_version = 1
 
         # Invoke method
-        response = _service.update_account_settings_assignment(
+        response = _service.update_trusted_profile_assignment(
             assignment_id,
             if_match,
             template_version,
@@ -4914,22 +7575,22 @@ class TestUpdateAccountSettingsAssignment:
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['template_version'] == 1
 
-    def test_update_account_settings_assignment_all_params_with_retries(self):
-        # Enable retries and run test_update_account_settings_assignment_all_params.
+    def test_update_trusted_profile_assignment_all_params_with_retries(self):
+        # Enable retries and run test_update_trusted_profile_assignment_all_params.
         _service.enable_retries()
-        self.test_update_account_settings_assignment_all_params()
+        self.test_update_trusted_profile_assignment_all_params()
 
-        # Disable retries and run test_update_account_settings_assignment_all_params.
+        # Disable retries and run test_update_trusted_profile_assignment_all_params.
         _service.disable_retries()
-        self.test_update_account_settings_assignment_all_params()
+        self.test_update_trusted_profile_assignment_all_params()
 
     @responses.activate
-    def test_update_account_settings_assignment_value_error(self):
+    def test_update_trusted_profile_assignment_value_error(self):
         """
-        test_update_account_settings_assignment_value_error()
+        test_update_trusted_profile_assignment_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v1/account_settings_assignments/testString')
+        url = preprocess_url('/v1/profile_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.PATCH,
@@ -4953,21 +7614,21 @@ class TestUpdateAccountSettingsAssignment:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.update_account_settings_assignment(**req_copy)
+                _service.update_trusted_profile_assignment(**req_copy)
 
-    def test_update_account_settings_assignment_value_error_with_retries(self):
-        # Enable retries and run test_update_account_settings_assignment_value_error.
+    def test_update_trusted_profile_assignment_value_error_with_retries(self):
+        # Enable retries and run test_update_trusted_profile_assignment_value_error.
         _service.enable_retries()
-        self.test_update_account_settings_assignment_value_error()
+        self.test_update_trusted_profile_assignment_value_error()
 
-        # Disable retries and run test_update_account_settings_assignment_value_error.
+        # Disable retries and run test_update_trusted_profile_assignment_value_error.
         _service.disable_retries()
-        self.test_update_account_settings_assignment_value_error()
+        self.test_update_trusted_profile_assignment_value_error()
 
 
 # endregion
 ##############################################################################
-# End of Service: AccountSettingsAssignments
+# End of Service: TrustedProfileTemplateAssignments
 ##############################################################################
 
 ##############################################################################
@@ -6083,7 +8744,7 @@ class TestCommitAccountSettingsTemplate:
 ##############################################################################
 
 ##############################################################################
-# Start of Service: ActivityOperations
+# Start of Service: AccountSettingsTemplateAssignments
 ##############################################################################
 # region
 
@@ -6116,845 +8777,18 @@ class TestNewInstance:
             )
 
 
-class TestCreateReport:
+class TestListAccountSettingsAssignments:
     """
-    Test Class for create_report
-    """
-
-    @responses.activate
-    def test_create_report_all_params(self):
-        """
-        create_report()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/activity/accounts/testString/report')
-        mock_response = '{"reference": "reference"}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=202,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        type = 'inactive'
-        duration = '720'
-
-        # Invoke method
-        response = _service.create_report(
-            account_id,
-            type=type,
-            duration=duration,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 202
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'type={}'.format(type) in query_string
-        assert 'duration={}'.format(duration) in query_string
-
-    def test_create_report_all_params_with_retries(self):
-        # Enable retries and run test_create_report_all_params.
-        _service.enable_retries()
-        self.test_create_report_all_params()
-
-        # Disable retries and run test_create_report_all_params.
-        _service.disable_retries()
-        self.test_create_report_all_params()
-
-    @responses.activate
-    def test_create_report_required_params(self):
-        """
-        test_create_report_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/activity/accounts/testString/report')
-        mock_response = '{"reference": "reference"}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=202,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-
-        # Invoke method
-        response = _service.create_report(
-            account_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 202
-
-    def test_create_report_required_params_with_retries(self):
-        # Enable retries and run test_create_report_required_params.
-        _service.enable_retries()
-        self.test_create_report_required_params()
-
-        # Disable retries and run test_create_report_required_params.
-        _service.disable_retries()
-        self.test_create_report_required_params()
-
-    @responses.activate
-    def test_create_report_value_error(self):
-        """
-        test_create_report_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/activity/accounts/testString/report')
-        mock_response = '{"reference": "reference"}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=202,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_id": account_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.create_report(**req_copy)
-
-    def test_create_report_value_error_with_retries(self):
-        # Enable retries and run test_create_report_value_error.
-        _service.enable_retries()
-        self.test_create_report_value_error()
-
-        # Disable retries and run test_create_report_value_error.
-        _service.disable_retries()
-        self.test_create_report_value_error()
-
-
-class TestGetReport:
-    """
-    Test Class for get_report
+    Test Class for list_account_settings_assignments
     """
 
     @responses.activate
-    def test_get_report_all_params(self):
+    def test_list_account_settings_assignments_all_params(self):
         """
-        get_report()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/activity/accounts/testString/report/testString')
-        mock_response = '{"created_by": "created_by", "reference": "reference", "report_duration": "report_duration", "report_start_time": "report_start_time", "report_end_time": "report_end_time", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "last_authn": "last_authn"}], "apikeys": [{"id": "id", "name": "name", "type": "type", "serviceid": {"id": "id", "name": "name"}, "user": {"iam_id": "iam_id", "name": "name", "username": "username", "email": "email"}, "last_authn": "last_authn"}], "serviceids": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "profiles": [{"id": "id", "name": "name", "last_authn": "last_authn"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        reference = 'testString'
-
-        # Invoke method
-        response = _service.get_report(
-            account_id,
-            reference,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_report_all_params_with_retries(self):
-        # Enable retries and run test_get_report_all_params.
-        _service.enable_retries()
-        self.test_get_report_all_params()
-
-        # Disable retries and run test_get_report_all_params.
-        _service.disable_retries()
-        self.test_get_report_all_params()
-
-    @responses.activate
-    def test_get_report_value_error(self):
-        """
-        test_get_report_value_error()
+        list_account_settings_assignments()
         """
         # Set up mock
-        url = preprocess_url('/v1/activity/accounts/testString/report/testString')
-        mock_response = '{"created_by": "created_by", "reference": "reference", "report_duration": "report_duration", "report_start_time": "report_start_time", "report_end_time": "report_end_time", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "last_authn": "last_authn"}], "apikeys": [{"id": "id", "name": "name", "type": "type", "serviceid": {"id": "id", "name": "name"}, "user": {"iam_id": "iam_id", "name": "name", "username": "username", "email": "email"}, "last_authn": "last_authn"}], "serviceids": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "profiles": [{"id": "id", "name": "name", "last_authn": "last_authn"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        reference = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_id": account_id,
-            "reference": reference,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.get_report(**req_copy)
-
-    def test_get_report_value_error_with_retries(self):
-        # Enable retries and run test_get_report_value_error.
-        _service.enable_retries()
-        self.test_get_report_value_error()
-
-        # Disable retries and run test_get_report_value_error.
-        _service.disable_retries()
-        self.test_get_report_value_error()
-
-
-# endregion
-##############################################################################
-# End of Service: ActivityOperations
-##############################################################################
-
-##############################################################################
-# Start of Service: EffectiveAccountSettings
-##############################################################################
-# region
-
-
-class TestNewInstance:
-    """
-    Test Class for new_instance
-    """
-
-    def test_new_instance(self):
-        """
-        new_instance()
-        """
-        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
-
-        service = IamIdentityV1.new_instance(
-            service_name='TEST_SERVICE',
-        )
-
-        assert service is not None
-        assert isinstance(service, IamIdentityV1)
-
-    def test_new_instance_without_authenticator(self):
-        """
-        new_instance_without_authenticator()
-        """
-        with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = IamIdentityV1.new_instance(
-                service_name='TEST_SERVICE_NOT_FOUND',
-            )
-
-
-class TestGetEffectiveAccountSettings:
-    """
-    Test Class for get_effective_account_settings
-    """
-
-    @responses.activate
-    def test_get_effective_account_settings_all_params(self):
-        """
-        get_effective_account_settings()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/accounts/testString/effective_settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        include_history = False
-        resolve_user_mfa = False
-
-        # Invoke method
-        response = _service.get_effective_account_settings(
-            account_id,
-            include_history=include_history,
-            resolve_user_mfa=resolve_user_mfa,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
-        assert 'resolve_user_mfa={}'.format('true' if resolve_user_mfa else 'false') in query_string
-
-    def test_get_effective_account_settings_all_params_with_retries(self):
-        # Enable retries and run test_get_effective_account_settings_all_params.
-        _service.enable_retries()
-        self.test_get_effective_account_settings_all_params()
-
-        # Disable retries and run test_get_effective_account_settings_all_params.
-        _service.disable_retries()
-        self.test_get_effective_account_settings_all_params()
-
-    @responses.activate
-    def test_get_effective_account_settings_required_params(self):
-        """
-        test_get_effective_account_settings_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/accounts/testString/effective_settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-
-        # Invoke method
-        response = _service.get_effective_account_settings(
-            account_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_effective_account_settings_required_params_with_retries(self):
-        # Enable retries and run test_get_effective_account_settings_required_params.
-        _service.enable_retries()
-        self.test_get_effective_account_settings_required_params()
-
-        # Disable retries and run test_get_effective_account_settings_required_params.
-        _service.disable_retries()
-        self.test_get_effective_account_settings_required_params()
-
-    @responses.activate
-    def test_get_effective_account_settings_value_error(self):
-        """
-        test_get_effective_account_settings_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/accounts/testString/effective_settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_id": account_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.get_effective_account_settings(**req_copy)
-
-    def test_get_effective_account_settings_value_error_with_retries(self):
-        # Enable retries and run test_get_effective_account_settings_value_error.
-        _service.enable_retries()
-        self.test_get_effective_account_settings_value_error()
-
-        # Disable retries and run test_get_effective_account_settings_value_error.
-        _service.disable_retries()
-        self.test_get_effective_account_settings_value_error()
-
-
-# endregion
-##############################################################################
-# End of Service: EffectiveAccountSettings
-##############################################################################
-
-##############################################################################
-# Start of Service: IdentityPreferences
-##############################################################################
-# region
-
-
-class TestNewInstance:
-    """
-    Test Class for new_instance
-    """
-
-    def test_new_instance(self):
-        """
-        new_instance()
-        """
-        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
-
-        service = IamIdentityV1.new_instance(
-            service_name='TEST_SERVICE',
-        )
-
-        assert service is not None
-        assert isinstance(service, IamIdentityV1)
-
-    def test_new_instance_without_authenticator(self):
-        """
-        new_instance_without_authenticator()
-        """
-        with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = IamIdentityV1.new_instance(
-                service_name='TEST_SERVICE_NOT_FOUND',
-            )
-
-
-class TestUpdatePreferenceOnScopeAccount:
-    """
-    Test Class for update_preference_on_scope_account
-    """
-
-    @responses.activate
-    def test_update_preference_on_scope_account_all_params(self):
-        """
-        update_preference_on_scope_account()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
-        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
-        responses.add(
-            responses.PUT,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        iam_id = 'testString'
-        service = 'testString'
-        preference_id = 'testString'
-        value_string = 'testString'
-        value_list_of_strings = ['testString']
-
-        # Invoke method
-        response = _service.update_preference_on_scope_account(
-            account_id,
-            iam_id,
-            service,
-            preference_id,
-            value_string,
-            value_list_of_strings=value_list_of_strings,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['value_string'] == 'testString'
-        assert req_body['value_list_of_strings'] == ['testString']
-
-    def test_update_preference_on_scope_account_all_params_with_retries(self):
-        # Enable retries and run test_update_preference_on_scope_account_all_params.
-        _service.enable_retries()
-        self.test_update_preference_on_scope_account_all_params()
-
-        # Disable retries and run test_update_preference_on_scope_account_all_params.
-        _service.disable_retries()
-        self.test_update_preference_on_scope_account_all_params()
-
-    @responses.activate
-    def test_update_preference_on_scope_account_value_error(self):
-        """
-        test_update_preference_on_scope_account_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
-        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
-        responses.add(
-            responses.PUT,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        iam_id = 'testString'
-        service = 'testString'
-        preference_id = 'testString'
-        value_string = 'testString'
-        value_list_of_strings = ['testString']
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_id": account_id,
-            "iam_id": iam_id,
-            "service": service,
-            "preference_id": preference_id,
-            "value_string": value_string,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.update_preference_on_scope_account(**req_copy)
-
-    def test_update_preference_on_scope_account_value_error_with_retries(self):
-        # Enable retries and run test_update_preference_on_scope_account_value_error.
-        _service.enable_retries()
-        self.test_update_preference_on_scope_account_value_error()
-
-        # Disable retries and run test_update_preference_on_scope_account_value_error.
-        _service.disable_retries()
-        self.test_update_preference_on_scope_account_value_error()
-
-
-class TestDeletePreferencesOnScopeAccount:
-    """
-    Test Class for delete_preferences_on_scope_account
-    """
-
-    @responses.activate
-    def test_delete_preferences_on_scope_account_all_params(self):
-        """
-        delete_preferences_on_scope_account()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
-        responses.add(
-            responses.DELETE,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        iam_id = 'testString'
-        service = 'testString'
-        preference_id = 'testString'
-
-        # Invoke method
-        response = _service.delete_preferences_on_scope_account(
-            account_id,
-            iam_id,
-            service,
-            preference_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 204
-
-    def test_delete_preferences_on_scope_account_all_params_with_retries(self):
-        # Enable retries and run test_delete_preferences_on_scope_account_all_params.
-        _service.enable_retries()
-        self.test_delete_preferences_on_scope_account_all_params()
-
-        # Disable retries and run test_delete_preferences_on_scope_account_all_params.
-        _service.disable_retries()
-        self.test_delete_preferences_on_scope_account_all_params()
-
-    @responses.activate
-    def test_delete_preferences_on_scope_account_value_error(self):
-        """
-        test_delete_preferences_on_scope_account_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
-        responses.add(
-            responses.DELETE,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        iam_id = 'testString'
-        service = 'testString'
-        preference_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_id": account_id,
-            "iam_id": iam_id,
-            "service": service,
-            "preference_id": preference_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.delete_preferences_on_scope_account(**req_copy)
-
-    def test_delete_preferences_on_scope_account_value_error_with_retries(self):
-        # Enable retries and run test_delete_preferences_on_scope_account_value_error.
-        _service.enable_retries()
-        self.test_delete_preferences_on_scope_account_value_error()
-
-        # Disable retries and run test_delete_preferences_on_scope_account_value_error.
-        _service.disable_retries()
-        self.test_delete_preferences_on_scope_account_value_error()
-
-
-class TestGetPreferencesOnScopeAccount:
-    """
-    Test Class for get_preferences_on_scope_account
-    """
-
-    @responses.activate
-    def test_get_preferences_on_scope_account_all_params(self):
-        """
-        get_preferences_on_scope_account()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
-        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        iam_id = 'testString'
-        service = 'testString'
-        preference_id = 'testString'
-
-        # Invoke method
-        response = _service.get_preferences_on_scope_account(
-            account_id,
-            iam_id,
-            service,
-            preference_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_preferences_on_scope_account_all_params_with_retries(self):
-        # Enable retries and run test_get_preferences_on_scope_account_all_params.
-        _service.enable_retries()
-        self.test_get_preferences_on_scope_account_all_params()
-
-        # Disable retries and run test_get_preferences_on_scope_account_all_params.
-        _service.disable_retries()
-        self.test_get_preferences_on_scope_account_all_params()
-
-    @responses.activate
-    def test_get_preferences_on_scope_account_value_error(self):
-        """
-        test_get_preferences_on_scope_account_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString/testString/testString')
-        mock_response = '{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        iam_id = 'testString'
-        service = 'testString'
-        preference_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_id": account_id,
-            "iam_id": iam_id,
-            "service": service,
-            "preference_id": preference_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.get_preferences_on_scope_account(**req_copy)
-
-    def test_get_preferences_on_scope_account_value_error_with_retries(self):
-        # Enable retries and run test_get_preferences_on_scope_account_value_error.
-        _service.enable_retries()
-        self.test_get_preferences_on_scope_account_value_error()
-
-        # Disable retries and run test_get_preferences_on_scope_account_value_error.
-        _service.disable_retries()
-        self.test_get_preferences_on_scope_account_value_error()
-
-
-class TestGetAllPreferencesOnScopeAccount:
-    """
-    Test Class for get_all_preferences_on_scope_account
-    """
-
-    @responses.activate
-    def test_get_all_preferences_on_scope_account_all_params(self):
-        """
-        get_all_preferences_on_scope_account()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString')
-        mock_response = '{"preferences": [{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        iam_id = 'testString'
-
-        # Invoke method
-        response = _service.get_all_preferences_on_scope_account(
-            account_id,
-            iam_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_all_preferences_on_scope_account_all_params_with_retries(self):
-        # Enable retries and run test_get_all_preferences_on_scope_account_all_params.
-        _service.enable_retries()
-        self.test_get_all_preferences_on_scope_account_all_params()
-
-        # Disable retries and run test_get_all_preferences_on_scope_account_all_params.
-        _service.disable_retries()
-        self.test_get_all_preferences_on_scope_account_all_params()
-
-    @responses.activate
-    def test_get_all_preferences_on_scope_account_value_error(self):
-        """
-        test_get_all_preferences_on_scope_account_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/preferences/accounts/testString/identities/testString')
-        mock_response = '{"preferences": [{"service": "service", "id": "id", "account_id": "account_id", "scope": "scope", "value_string": "value_string", "value_list_of_strings": ["value_list_of_strings"]}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        iam_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_id": account_id,
-            "iam_id": iam_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.get_all_preferences_on_scope_account(**req_copy)
-
-    def test_get_all_preferences_on_scope_account_value_error_with_retries(self):
-        # Enable retries and run test_get_all_preferences_on_scope_account_value_error.
-        _service.enable_retries()
-        self.test_get_all_preferences_on_scope_account_value_error()
-
-        # Disable retries and run test_get_all_preferences_on_scope_account_value_error.
-        _service.disable_retries()
-        self.test_get_all_preferences_on_scope_account_value_error()
-
-
-# endregion
-##############################################################################
-# End of Service: IdentityPreferences
-##############################################################################
-
-##############################################################################
-# Start of Service: TrustedProfileAssignments
-##############################################################################
-# region
-
-
-class TestNewInstance:
-    """
-    Test Class for new_instance
-    """
-
-    def test_new_instance(self):
-        """
-        new_instance()
-        """
-        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
-
-        service = IamIdentityV1.new_instance(
-            service_name='TEST_SERVICE',
-        )
-
-        assert service is not None
-        assert isinstance(service, IamIdentityV1)
-
-    def test_new_instance_without_authenticator(self):
-        """
-        new_instance_without_authenticator()
-        """
-        with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = IamIdentityV1.new_instance(
-                service_name='TEST_SERVICE_NOT_FOUND',
-            )
-
-
-class TestListTrustedProfileAssignments:
-    """
-    Test Class for list_trusted_profile_assignments
-    """
-
-    @responses.activate
-    def test_list_trusted_profile_assignments_all_params(self):
-        """
-        list_trusted_profile_assignments()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_assignments/')
+        url = preprocess_url('/v1/account_settings_assignments/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "assignments": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}]}'
         responses.add(
             responses.GET,
@@ -6977,7 +8811,7 @@ class TestListTrustedProfileAssignments:
         include_history = False
 
         # Invoke method
-        response = _service.list_trusted_profile_assignments(
+        response = _service.list_account_settings_assignments(
             account_id=account_id,
             template_id=template_id,
             template_version=template_version,
@@ -7008,22 +8842,22 @@ class TestListTrustedProfileAssignments:
         assert 'order={}'.format(order) in query_string
         assert 'include_history={}'.format('true' if include_history else 'false') in query_string
 
-    def test_list_trusted_profile_assignments_all_params_with_retries(self):
-        # Enable retries and run test_list_trusted_profile_assignments_all_params.
+    def test_list_account_settings_assignments_all_params_with_retries(self):
+        # Enable retries and run test_list_account_settings_assignments_all_params.
         _service.enable_retries()
-        self.test_list_trusted_profile_assignments_all_params()
+        self.test_list_account_settings_assignments_all_params()
 
-        # Disable retries and run test_list_trusted_profile_assignments_all_params.
+        # Disable retries and run test_list_account_settings_assignments_all_params.
         _service.disable_retries()
-        self.test_list_trusted_profile_assignments_all_params()
+        self.test_list_account_settings_assignments_all_params()
 
     @responses.activate
-    def test_list_trusted_profile_assignments_required_params(self):
+    def test_list_account_settings_assignments_required_params(self):
         """
-        test_list_trusted_profile_assignments_required_params()
+        test_list_account_settings_assignments_required_params()
         """
         # Set up mock
-        url = preprocess_url('/v1/profile_assignments/')
+        url = preprocess_url('/v1/account_settings_assignments/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "assignments": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}]}'
         responses.add(
             responses.GET,
@@ -7034,34 +8868,34 @@ class TestListTrustedProfileAssignments:
         )
 
         # Invoke method
-        response = _service.list_trusted_profile_assignments()
+        response = _service.list_account_settings_assignments()
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
-    def test_list_trusted_profile_assignments_required_params_with_retries(self):
-        # Enable retries and run test_list_trusted_profile_assignments_required_params.
+    def test_list_account_settings_assignments_required_params_with_retries(self):
+        # Enable retries and run test_list_account_settings_assignments_required_params.
         _service.enable_retries()
-        self.test_list_trusted_profile_assignments_required_params()
+        self.test_list_account_settings_assignments_required_params()
 
-        # Disable retries and run test_list_trusted_profile_assignments_required_params.
+        # Disable retries and run test_list_account_settings_assignments_required_params.
         _service.disable_retries()
-        self.test_list_trusted_profile_assignments_required_params()
+        self.test_list_account_settings_assignments_required_params()
 
 
-class TestCreateTrustedProfileAssignment:
+class TestCreateAccountSettingsAssignment:
     """
-    Test Class for create_trusted_profile_assignment
+    Test Class for create_account_settings_assignment
     """
 
     @responses.activate
-    def test_create_trusted_profile_assignment_all_params(self):
+    def test_create_account_settings_assignment_all_params(self):
         """
-        create_trusted_profile_assignment()
+        create_account_settings_assignment()
         """
         # Set up mock
-        url = preprocess_url('/v1/profile_assignments/')
+        url = preprocess_url('/v1/account_settings_assignments/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.POST,
@@ -7078,7 +8912,7 @@ class TestCreateTrustedProfileAssignment:
         target = 'testString'
 
         # Invoke method
-        response = _service.create_trusted_profile_assignment(
+        response = _service.create_account_settings_assignment(
             template_id,
             template_version,
             target_type,
@@ -7096,22 +8930,22 @@ class TestCreateTrustedProfileAssignment:
         assert req_body['target_type'] == 'Account'
         assert req_body['target'] == 'testString'
 
-    def test_create_trusted_profile_assignment_all_params_with_retries(self):
-        # Enable retries and run test_create_trusted_profile_assignment_all_params.
+    def test_create_account_settings_assignment_all_params_with_retries(self):
+        # Enable retries and run test_create_account_settings_assignment_all_params.
         _service.enable_retries()
-        self.test_create_trusted_profile_assignment_all_params()
+        self.test_create_account_settings_assignment_all_params()
 
-        # Disable retries and run test_create_trusted_profile_assignment_all_params.
+        # Disable retries and run test_create_account_settings_assignment_all_params.
         _service.disable_retries()
-        self.test_create_trusted_profile_assignment_all_params()
+        self.test_create_account_settings_assignment_all_params()
 
     @responses.activate
-    def test_create_trusted_profile_assignment_value_error(self):
+    def test_create_account_settings_assignment_value_error(self):
         """
-        test_create_trusted_profile_assignment_value_error()
+        test_create_account_settings_assignment_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v1/profile_assignments/')
+        url = preprocess_url('/v1/account_settings_assignments/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.POST,
@@ -7137,30 +8971,30 @@ class TestCreateTrustedProfileAssignment:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.create_trusted_profile_assignment(**req_copy)
+                _service.create_account_settings_assignment(**req_copy)
 
-    def test_create_trusted_profile_assignment_value_error_with_retries(self):
-        # Enable retries and run test_create_trusted_profile_assignment_value_error.
+    def test_create_account_settings_assignment_value_error_with_retries(self):
+        # Enable retries and run test_create_account_settings_assignment_value_error.
         _service.enable_retries()
-        self.test_create_trusted_profile_assignment_value_error()
+        self.test_create_account_settings_assignment_value_error()
 
-        # Disable retries and run test_create_trusted_profile_assignment_value_error.
+        # Disable retries and run test_create_account_settings_assignment_value_error.
         _service.disable_retries()
-        self.test_create_trusted_profile_assignment_value_error()
+        self.test_create_account_settings_assignment_value_error()
 
 
-class TestGetTrustedProfileAssignment:
+class TestGetAccountSettingsAssignment:
     """
-    Test Class for get_trusted_profile_assignment
+    Test Class for get_account_settings_assignment
     """
 
     @responses.activate
-    def test_get_trusted_profile_assignment_all_params(self):
+    def test_get_account_settings_assignment_all_params(self):
         """
-        get_trusted_profile_assignment()
+        get_account_settings_assignment()
         """
         # Set up mock
-        url = preprocess_url('/v1/profile_assignments/testString')
+        url = preprocess_url('/v1/account_settings_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.GET,
@@ -7175,7 +9009,7 @@ class TestGetTrustedProfileAssignment:
         include_history = False
 
         # Invoke method
-        response = _service.get_trusted_profile_assignment(
+        response = _service.get_account_settings_assignment(
             assignment_id,
             include_history=include_history,
             headers={},
@@ -7189,22 +9023,22 @@ class TestGetTrustedProfileAssignment:
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'include_history={}'.format('true' if include_history else 'false') in query_string
 
-    def test_get_trusted_profile_assignment_all_params_with_retries(self):
-        # Enable retries and run test_get_trusted_profile_assignment_all_params.
+    def test_get_account_settings_assignment_all_params_with_retries(self):
+        # Enable retries and run test_get_account_settings_assignment_all_params.
         _service.enable_retries()
-        self.test_get_trusted_profile_assignment_all_params()
+        self.test_get_account_settings_assignment_all_params()
 
-        # Disable retries and run test_get_trusted_profile_assignment_all_params.
+        # Disable retries and run test_get_account_settings_assignment_all_params.
         _service.disable_retries()
-        self.test_get_trusted_profile_assignment_all_params()
+        self.test_get_account_settings_assignment_all_params()
 
     @responses.activate
-    def test_get_trusted_profile_assignment_required_params(self):
+    def test_get_account_settings_assignment_required_params(self):
         """
-        test_get_trusted_profile_assignment_required_params()
+        test_get_account_settings_assignment_required_params()
         """
         # Set up mock
-        url = preprocess_url('/v1/profile_assignments/testString')
+        url = preprocess_url('/v1/account_settings_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.GET,
@@ -7218,7 +9052,7 @@ class TestGetTrustedProfileAssignment:
         assignment_id = 'testString'
 
         # Invoke method
-        response = _service.get_trusted_profile_assignment(
+        response = _service.get_account_settings_assignment(
             assignment_id,
             headers={},
         )
@@ -7227,22 +9061,22 @@ class TestGetTrustedProfileAssignment:
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
-    def test_get_trusted_profile_assignment_required_params_with_retries(self):
-        # Enable retries and run test_get_trusted_profile_assignment_required_params.
+    def test_get_account_settings_assignment_required_params_with_retries(self):
+        # Enable retries and run test_get_account_settings_assignment_required_params.
         _service.enable_retries()
-        self.test_get_trusted_profile_assignment_required_params()
+        self.test_get_account_settings_assignment_required_params()
 
-        # Disable retries and run test_get_trusted_profile_assignment_required_params.
+        # Disable retries and run test_get_account_settings_assignment_required_params.
         _service.disable_retries()
-        self.test_get_trusted_profile_assignment_required_params()
+        self.test_get_account_settings_assignment_required_params()
 
     @responses.activate
-    def test_get_trusted_profile_assignment_value_error(self):
+    def test_get_account_settings_assignment_value_error(self):
         """
-        test_get_trusted_profile_assignment_value_error()
+        test_get_account_settings_assignment_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v1/profile_assignments/testString')
+        url = preprocess_url('/v1/account_settings_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.GET,
@@ -7262,30 +9096,30 @@ class TestGetTrustedProfileAssignment:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.get_trusted_profile_assignment(**req_copy)
+                _service.get_account_settings_assignment(**req_copy)
 
-    def test_get_trusted_profile_assignment_value_error_with_retries(self):
-        # Enable retries and run test_get_trusted_profile_assignment_value_error.
+    def test_get_account_settings_assignment_value_error_with_retries(self):
+        # Enable retries and run test_get_account_settings_assignment_value_error.
         _service.enable_retries()
-        self.test_get_trusted_profile_assignment_value_error()
+        self.test_get_account_settings_assignment_value_error()
 
-        # Disable retries and run test_get_trusted_profile_assignment_value_error.
+        # Disable retries and run test_get_account_settings_assignment_value_error.
         _service.disable_retries()
-        self.test_get_trusted_profile_assignment_value_error()
+        self.test_get_account_settings_assignment_value_error()
 
 
-class TestDeleteTrustedProfileAssignment:
+class TestDeleteAccountSettingsAssignment:
     """
-    Test Class for delete_trusted_profile_assignment
+    Test Class for delete_account_settings_assignment
     """
 
     @responses.activate
-    def test_delete_trusted_profile_assignment_all_params(self):
+    def test_delete_account_settings_assignment_all_params(self):
         """
-        delete_trusted_profile_assignment()
+        delete_account_settings_assignment()
         """
         # Set up mock
-        url = preprocess_url('/v1/profile_assignments/testString')
+        url = preprocess_url('/v1/account_settings_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "status_code": "status_code", "errors": [{"code": "code", "message_code": "message_code", "message": "message", "details": "details"}], "trace": "trace"}'
         responses.add(
             responses.DELETE,
@@ -7299,7 +9133,7 @@ class TestDeleteTrustedProfileAssignment:
         assignment_id = 'testString'
 
         # Invoke method
-        response = _service.delete_trusted_profile_assignment(
+        response = _service.delete_account_settings_assignment(
             assignment_id,
             headers={},
         )
@@ -7308,22 +9142,22 @@ class TestDeleteTrustedProfileAssignment:
         assert len(responses.calls) == 1
         assert response.status_code == 202
 
-    def test_delete_trusted_profile_assignment_all_params_with_retries(self):
-        # Enable retries and run test_delete_trusted_profile_assignment_all_params.
+    def test_delete_account_settings_assignment_all_params_with_retries(self):
+        # Enable retries and run test_delete_account_settings_assignment_all_params.
         _service.enable_retries()
-        self.test_delete_trusted_profile_assignment_all_params()
+        self.test_delete_account_settings_assignment_all_params()
 
-        # Disable retries and run test_delete_trusted_profile_assignment_all_params.
+        # Disable retries and run test_delete_account_settings_assignment_all_params.
         _service.disable_retries()
-        self.test_delete_trusted_profile_assignment_all_params()
+        self.test_delete_account_settings_assignment_all_params()
 
     @responses.activate
-    def test_delete_trusted_profile_assignment_value_error(self):
+    def test_delete_account_settings_assignment_value_error(self):
         """
-        test_delete_trusted_profile_assignment_value_error()
+        test_delete_account_settings_assignment_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v1/profile_assignments/testString')
+        url = preprocess_url('/v1/account_settings_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "status_code": "status_code", "errors": [{"code": "code", "message_code": "message_code", "message": "message", "details": "details"}], "trace": "trace"}'
         responses.add(
             responses.DELETE,
@@ -7343,30 +9177,30 @@ class TestDeleteTrustedProfileAssignment:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.delete_trusted_profile_assignment(**req_copy)
+                _service.delete_account_settings_assignment(**req_copy)
 
-    def test_delete_trusted_profile_assignment_value_error_with_retries(self):
-        # Enable retries and run test_delete_trusted_profile_assignment_value_error.
+    def test_delete_account_settings_assignment_value_error_with_retries(self):
+        # Enable retries and run test_delete_account_settings_assignment_value_error.
         _service.enable_retries()
-        self.test_delete_trusted_profile_assignment_value_error()
+        self.test_delete_account_settings_assignment_value_error()
 
-        # Disable retries and run test_delete_trusted_profile_assignment_value_error.
+        # Disable retries and run test_delete_account_settings_assignment_value_error.
         _service.disable_retries()
-        self.test_delete_trusted_profile_assignment_value_error()
+        self.test_delete_account_settings_assignment_value_error()
 
 
-class TestUpdateTrustedProfileAssignment:
+class TestUpdateAccountSettingsAssignment:
     """
-    Test Class for update_trusted_profile_assignment
+    Test Class for update_account_settings_assignment
     """
 
     @responses.activate
-    def test_update_trusted_profile_assignment_all_params(self):
+    def test_update_account_settings_assignment_all_params(self):
         """
-        update_trusted_profile_assignment()
+        update_account_settings_assignment()
         """
         # Set up mock
-        url = preprocess_url('/v1/profile_assignments/testString')
+        url = preprocess_url('/v1/account_settings_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.PATCH,
@@ -7382,7 +9216,7 @@ class TestUpdateTrustedProfileAssignment:
         template_version = 1
 
         # Invoke method
-        response = _service.update_trusted_profile_assignment(
+        response = _service.update_account_settings_assignment(
             assignment_id,
             if_match,
             template_version,
@@ -7396,22 +9230,22 @@ class TestUpdateTrustedProfileAssignment:
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['template_version'] == 1
 
-    def test_update_trusted_profile_assignment_all_params_with_retries(self):
-        # Enable retries and run test_update_trusted_profile_assignment_all_params.
+    def test_update_account_settings_assignment_all_params_with_retries(self):
+        # Enable retries and run test_update_account_settings_assignment_all_params.
         _service.enable_retries()
-        self.test_update_trusted_profile_assignment_all_params()
+        self.test_update_account_settings_assignment_all_params()
 
-        # Disable retries and run test_update_trusted_profile_assignment_all_params.
+        # Disable retries and run test_update_account_settings_assignment_all_params.
         _service.disable_retries()
-        self.test_update_trusted_profile_assignment_all_params()
+        self.test_update_account_settings_assignment_all_params()
 
     @responses.activate
-    def test_update_trusted_profile_assignment_value_error(self):
+    def test_update_account_settings_assignment_value_error(self):
         """
-        test_update_trusted_profile_assignment_value_error()
+        test_update_account_settings_assignment_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v1/profile_assignments/testString')
+        url = preprocess_url('/v1/account_settings_assignments/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
         responses.add(
             responses.PATCH,
@@ -7435,1335 +9269,21 @@ class TestUpdateTrustedProfileAssignment:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.update_trusted_profile_assignment(**req_copy)
+                _service.update_account_settings_assignment(**req_copy)
 
-    def test_update_trusted_profile_assignment_value_error_with_retries(self):
-        # Enable retries and run test_update_trusted_profile_assignment_value_error.
+    def test_update_account_settings_assignment_value_error_with_retries(self):
+        # Enable retries and run test_update_account_settings_assignment_value_error.
         _service.enable_retries()
-        self.test_update_trusted_profile_assignment_value_error()
+        self.test_update_account_settings_assignment_value_error()
 
-        # Disable retries and run test_update_trusted_profile_assignment_value_error.
+        # Disable retries and run test_update_account_settings_assignment_value_error.
         _service.disable_retries()
-        self.test_update_trusted_profile_assignment_value_error()
+        self.test_update_account_settings_assignment_value_error()
 
 
 # endregion
 ##############################################################################
-# End of Service: TrustedProfileAssignments
-##############################################################################
-
-##############################################################################
-# Start of Service: TrustedProfileTemplate
-##############################################################################
-# region
-
-
-class TestNewInstance:
-    """
-    Test Class for new_instance
-    """
-
-    def test_new_instance(self):
-        """
-        new_instance()
-        """
-        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
-
-        service = IamIdentityV1.new_instance(
-            service_name='TEST_SERVICE',
-        )
-
-        assert service is not None
-        assert isinstance(service, IamIdentityV1)
-
-    def test_new_instance_without_authenticator(self):
-        """
-        new_instance_without_authenticator()
-        """
-        with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = IamIdentityV1.new_instance(
-                service_name='TEST_SERVICE_NOT_FOUND',
-            )
-
-
-class TestListProfileTemplates:
-    """
-    Test Class for list_profile_templates
-    """
-
-    @responses.activate
-    def test_list_profile_templates_all_params(self):
-        """
-        list_profile_templates()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'testString'
-        limit = '20'
-        pagetoken = 'testString'
-        sort = 'created_at'
-        order = 'asc'
-        include_history = 'false'
-
-        # Invoke method
-        response = _service.list_profile_templates(
-            account_id=account_id,
-            limit=limit,
-            pagetoken=pagetoken,
-            sort=sort,
-            order=order,
-            include_history=include_history,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-        assert 'limit={}'.format(limit) in query_string
-        assert 'pagetoken={}'.format(pagetoken) in query_string
-        assert 'sort={}'.format(sort) in query_string
-        assert 'order={}'.format(order) in query_string
-        assert 'include_history={}'.format(include_history) in query_string
-
-    def test_list_profile_templates_all_params_with_retries(self):
-        # Enable retries and run test_list_profile_templates_all_params.
-        _service.enable_retries()
-        self.test_list_profile_templates_all_params()
-
-        # Disable retries and run test_list_profile_templates_all_params.
-        _service.disable_retries()
-        self.test_list_profile_templates_all_params()
-
-    @responses.activate
-    def test_list_profile_templates_required_params(self):
-        """
-        test_list_profile_templates_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Invoke method
-        response = _service.list_profile_templates()
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_list_profile_templates_required_params_with_retries(self):
-        # Enable retries and run test_list_profile_templates_required_params.
-        _service.enable_retries()
-        self.test_list_profile_templates_required_params()
-
-        # Disable retries and run test_list_profile_templates_required_params.
-        _service.disable_retries()
-        self.test_list_profile_templates_required_params()
-
-
-class TestCreateProfileTemplate:
-    """
-    Test Class for create_profile_template
-    """
-
-    @responses.activate
-    def test_create_profile_template_all_params(self):
-        """
-        create_profile_template()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates')
-        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=201,
-        )
-
-        # Construct a dict representation of a ProfileClaimRuleConditions model
-        profile_claim_rule_conditions_model = {}
-        profile_claim_rule_conditions_model['claim'] = 'testString'
-        profile_claim_rule_conditions_model['operator'] = 'testString'
-        profile_claim_rule_conditions_model['value'] = 'testString'
-
-        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
-        trusted_profile_template_claim_rule_model = {}
-        trusted_profile_template_claim_rule_model['name'] = 'testString'
-        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
-        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
-        trusted_profile_template_claim_rule_model['expiration'] = 38
-        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
-
-        # Construct a dict representation of a ProfileIdentityRequest model
-        profile_identity_request_model = {}
-        profile_identity_request_model['identifier'] = 'testString'
-        profile_identity_request_model['type'] = 'user'
-        profile_identity_request_model['accounts'] = ['testString']
-        profile_identity_request_model['description'] = 'testString'
-
-        # Construct a dict representation of a TemplateProfileComponentRequest model
-        template_profile_component_request_model = {}
-        template_profile_component_request_model['name'] = 'testString'
-        template_profile_component_request_model['description'] = 'testString'
-        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
-        template_profile_component_request_model['identities'] = [profile_identity_request_model]
-
-        # Construct a dict representation of a PolicyTemplateReference model
-        policy_template_reference_model = {}
-        policy_template_reference_model['id'] = 'testString'
-        policy_template_reference_model['version'] = 'testString'
-
-        # Construct a dict representation of a ActionControlsIdentities model
-        action_controls_identities_model = {}
-        action_controls_identities_model['add'] = True
-        action_controls_identities_model['remove'] = True
-
-        # Construct a dict representation of a ActionControlsRules model
-        action_controls_rules_model = {}
-        action_controls_rules_model['add'] = True
-        action_controls_rules_model['remove'] = True
-
-        # Construct a dict representation of a ActionControlsPolicies model
-        action_controls_policies_model = {}
-        action_controls_policies_model['add'] = True
-        action_controls_policies_model['remove'] = True
-
-        # Construct a dict representation of a ActionControls model
-        action_controls_model = {}
-        action_controls_model['identities'] = action_controls_identities_model
-        action_controls_model['rules'] = action_controls_rules_model
-        action_controls_model['policies'] = action_controls_policies_model
-
-        # Set up parameter values
-        account_id = 'testString'
-        name = 'testString'
-        description = 'testString'
-        profile = template_profile_component_request_model
-        policy_template_references = [policy_template_reference_model]
-        action_controls = action_controls_model
-
-        # Invoke method
-        response = _service.create_profile_template(
-            account_id=account_id,
-            name=name,
-            description=description,
-            profile=profile,
-            policy_template_references=policy_template_references,
-            action_controls=action_controls,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 201
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['account_id'] == 'testString'
-        assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
-        assert req_body['profile'] == template_profile_component_request_model
-        assert req_body['policy_template_references'] == [policy_template_reference_model]
-        assert req_body['action_controls'] == action_controls_model
-
-    def test_create_profile_template_all_params_with_retries(self):
-        # Enable retries and run test_create_profile_template_all_params.
-        _service.enable_retries()
-        self.test_create_profile_template_all_params()
-
-        # Disable retries and run test_create_profile_template_all_params.
-        _service.disable_retries()
-        self.test_create_profile_template_all_params()
-
-
-class TestGetLatestProfileTemplateVersion:
-    """
-    Test Class for get_latest_profile_template_version
-    """
-
-    @responses.activate
-    def test_get_latest_profile_template_version_all_params(self):
-        """
-        get_latest_profile_template_version()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString')
-        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-        include_history = False
-
-        # Invoke method
-        response = _service.get_latest_profile_template_version(
-            template_id,
-            include_history=include_history,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
-
-    def test_get_latest_profile_template_version_all_params_with_retries(self):
-        # Enable retries and run test_get_latest_profile_template_version_all_params.
-        _service.enable_retries()
-        self.test_get_latest_profile_template_version_all_params()
-
-        # Disable retries and run test_get_latest_profile_template_version_all_params.
-        _service.disable_retries()
-        self.test_get_latest_profile_template_version_all_params()
-
-    @responses.activate
-    def test_get_latest_profile_template_version_required_params(self):
-        """
-        test_get_latest_profile_template_version_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString')
-        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-
-        # Invoke method
-        response = _service.get_latest_profile_template_version(
-            template_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_latest_profile_template_version_required_params_with_retries(self):
-        # Enable retries and run test_get_latest_profile_template_version_required_params.
-        _service.enable_retries()
-        self.test_get_latest_profile_template_version_required_params()
-
-        # Disable retries and run test_get_latest_profile_template_version_required_params.
-        _service.disable_retries()
-        self.test_get_latest_profile_template_version_required_params()
-
-    @responses.activate
-    def test_get_latest_profile_template_version_value_error(self):
-        """
-        test_get_latest_profile_template_version_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString')
-        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "template_id": template_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.get_latest_profile_template_version(**req_copy)
-
-    def test_get_latest_profile_template_version_value_error_with_retries(self):
-        # Enable retries and run test_get_latest_profile_template_version_value_error.
-        _service.enable_retries()
-        self.test_get_latest_profile_template_version_value_error()
-
-        # Disable retries and run test_get_latest_profile_template_version_value_error.
-        _service.disable_retries()
-        self.test_get_latest_profile_template_version_value_error()
-
-
-class TestDeleteAllVersionsOfProfileTemplate:
-    """
-    Test Class for delete_all_versions_of_profile_template
-    """
-
-    @responses.activate
-    def test_delete_all_versions_of_profile_template_all_params(self):
-        """
-        delete_all_versions_of_profile_template()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString')
-        responses.add(
-            responses.DELETE,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-
-        # Invoke method
-        response = _service.delete_all_versions_of_profile_template(
-            template_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 204
-
-    def test_delete_all_versions_of_profile_template_all_params_with_retries(self):
-        # Enable retries and run test_delete_all_versions_of_profile_template_all_params.
-        _service.enable_retries()
-        self.test_delete_all_versions_of_profile_template_all_params()
-
-        # Disable retries and run test_delete_all_versions_of_profile_template_all_params.
-        _service.disable_retries()
-        self.test_delete_all_versions_of_profile_template_all_params()
-
-    @responses.activate
-    def test_delete_all_versions_of_profile_template_value_error(self):
-        """
-        test_delete_all_versions_of_profile_template_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString')
-        responses.add(
-            responses.DELETE,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "template_id": template_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.delete_all_versions_of_profile_template(**req_copy)
-
-    def test_delete_all_versions_of_profile_template_value_error_with_retries(self):
-        # Enable retries and run test_delete_all_versions_of_profile_template_value_error.
-        _service.enable_retries()
-        self.test_delete_all_versions_of_profile_template_value_error()
-
-        # Disable retries and run test_delete_all_versions_of_profile_template_value_error.
-        _service.disable_retries()
-        self.test_delete_all_versions_of_profile_template_value_error()
-
-
-class TestListVersionsOfProfileTemplate:
-    """
-    Test Class for list_versions_of_profile_template
-    """
-
-    @responses.activate
-    def test_list_versions_of_profile_template_all_params(self):
-        """
-        list_versions_of_profile_template()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-        limit = '20'
-        pagetoken = 'testString'
-        sort = 'created_at'
-        order = 'asc'
-        include_history = 'false'
-
-        # Invoke method
-        response = _service.list_versions_of_profile_template(
-            template_id,
-            limit=limit,
-            pagetoken=pagetoken,
-            sort=sort,
-            order=order,
-            include_history=include_history,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'limit={}'.format(limit) in query_string
-        assert 'pagetoken={}'.format(pagetoken) in query_string
-        assert 'sort={}'.format(sort) in query_string
-        assert 'order={}'.format(order) in query_string
-        assert 'include_history={}'.format(include_history) in query_string
-
-    def test_list_versions_of_profile_template_all_params_with_retries(self):
-        # Enable retries and run test_list_versions_of_profile_template_all_params.
-        _service.enable_retries()
-        self.test_list_versions_of_profile_template_all_params()
-
-        # Disable retries and run test_list_versions_of_profile_template_all_params.
-        _service.disable_retries()
-        self.test_list_versions_of_profile_template_all_params()
-
-    @responses.activate
-    def test_list_versions_of_profile_template_required_params(self):
-        """
-        test_list_versions_of_profile_template_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-
-        # Invoke method
-        response = _service.list_versions_of_profile_template(
-            template_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_list_versions_of_profile_template_required_params_with_retries(self):
-        # Enable retries and run test_list_versions_of_profile_template_required_params.
-        _service.enable_retries()
-        self.test_list_versions_of_profile_template_required_params()
-
-        # Disable retries and run test_list_versions_of_profile_template_required_params.
-        _service.disable_retries()
-        self.test_list_versions_of_profile_template_required_params()
-
-    @responses.activate
-    def test_list_versions_of_profile_template_value_error(self):
-        """
-        test_list_versions_of_profile_template_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "template_id": template_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.list_versions_of_profile_template(**req_copy)
-
-    def test_list_versions_of_profile_template_value_error_with_retries(self):
-        # Enable retries and run test_list_versions_of_profile_template_value_error.
-        _service.enable_retries()
-        self.test_list_versions_of_profile_template_value_error()
-
-        # Disable retries and run test_list_versions_of_profile_template_value_error.
-        _service.disable_retries()
-        self.test_list_versions_of_profile_template_value_error()
-
-
-class TestCreateProfileTemplateVersion:
-    """
-    Test Class for create_profile_template_version
-    """
-
-    @responses.activate
-    def test_create_profile_template_version_all_params(self):
-        """
-        create_profile_template_version()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions')
-        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=201,
-        )
-
-        # Construct a dict representation of a ProfileClaimRuleConditions model
-        profile_claim_rule_conditions_model = {}
-        profile_claim_rule_conditions_model['claim'] = 'testString'
-        profile_claim_rule_conditions_model['operator'] = 'testString'
-        profile_claim_rule_conditions_model['value'] = 'testString'
-
-        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
-        trusted_profile_template_claim_rule_model = {}
-        trusted_profile_template_claim_rule_model['name'] = 'testString'
-        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
-        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
-        trusted_profile_template_claim_rule_model['expiration'] = 38
-        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
-
-        # Construct a dict representation of a ProfileIdentityRequest model
-        profile_identity_request_model = {}
-        profile_identity_request_model['identifier'] = 'testString'
-        profile_identity_request_model['type'] = 'user'
-        profile_identity_request_model['accounts'] = ['testString']
-        profile_identity_request_model['description'] = 'testString'
-
-        # Construct a dict representation of a TemplateProfileComponentRequest model
-        template_profile_component_request_model = {}
-        template_profile_component_request_model['name'] = 'testString'
-        template_profile_component_request_model['description'] = 'testString'
-        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
-        template_profile_component_request_model['identities'] = [profile_identity_request_model]
-
-        # Construct a dict representation of a PolicyTemplateReference model
-        policy_template_reference_model = {}
-        policy_template_reference_model['id'] = 'testString'
-        policy_template_reference_model['version'] = 'testString'
-
-        # Construct a dict representation of a ActionControlsIdentities model
-        action_controls_identities_model = {}
-        action_controls_identities_model['add'] = True
-        action_controls_identities_model['remove'] = True
-
-        # Construct a dict representation of a ActionControlsRules model
-        action_controls_rules_model = {}
-        action_controls_rules_model['add'] = True
-        action_controls_rules_model['remove'] = True
-
-        # Construct a dict representation of a ActionControlsPolicies model
-        action_controls_policies_model = {}
-        action_controls_policies_model['add'] = True
-        action_controls_policies_model['remove'] = True
-
-        # Construct a dict representation of a ActionControls model
-        action_controls_model = {}
-        action_controls_model['identities'] = action_controls_identities_model
-        action_controls_model['rules'] = action_controls_rules_model
-        action_controls_model['policies'] = action_controls_policies_model
-
-        # Set up parameter values
-        template_id = 'testString'
-        account_id = 'testString'
-        name = 'testString'
-        description = 'testString'
-        profile = template_profile_component_request_model
-        policy_template_references = [policy_template_reference_model]
-        action_controls = action_controls_model
-
-        # Invoke method
-        response = _service.create_profile_template_version(
-            template_id,
-            account_id=account_id,
-            name=name,
-            description=description,
-            profile=profile,
-            policy_template_references=policy_template_references,
-            action_controls=action_controls,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 201
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['account_id'] == 'testString'
-        assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
-        assert req_body['profile'] == template_profile_component_request_model
-        assert req_body['policy_template_references'] == [policy_template_reference_model]
-        assert req_body['action_controls'] == action_controls_model
-
-    def test_create_profile_template_version_all_params_with_retries(self):
-        # Enable retries and run test_create_profile_template_version_all_params.
-        _service.enable_retries()
-        self.test_create_profile_template_version_all_params()
-
-        # Disable retries and run test_create_profile_template_version_all_params.
-        _service.disable_retries()
-        self.test_create_profile_template_version_all_params()
-
-    @responses.activate
-    def test_create_profile_template_version_value_error(self):
-        """
-        test_create_profile_template_version_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions')
-        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=201,
-        )
-
-        # Construct a dict representation of a ProfileClaimRuleConditions model
-        profile_claim_rule_conditions_model = {}
-        profile_claim_rule_conditions_model['claim'] = 'testString'
-        profile_claim_rule_conditions_model['operator'] = 'testString'
-        profile_claim_rule_conditions_model['value'] = 'testString'
-
-        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
-        trusted_profile_template_claim_rule_model = {}
-        trusted_profile_template_claim_rule_model['name'] = 'testString'
-        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
-        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
-        trusted_profile_template_claim_rule_model['expiration'] = 38
-        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
-
-        # Construct a dict representation of a ProfileIdentityRequest model
-        profile_identity_request_model = {}
-        profile_identity_request_model['identifier'] = 'testString'
-        profile_identity_request_model['type'] = 'user'
-        profile_identity_request_model['accounts'] = ['testString']
-        profile_identity_request_model['description'] = 'testString'
-
-        # Construct a dict representation of a TemplateProfileComponentRequest model
-        template_profile_component_request_model = {}
-        template_profile_component_request_model['name'] = 'testString'
-        template_profile_component_request_model['description'] = 'testString'
-        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
-        template_profile_component_request_model['identities'] = [profile_identity_request_model]
-
-        # Construct a dict representation of a PolicyTemplateReference model
-        policy_template_reference_model = {}
-        policy_template_reference_model['id'] = 'testString'
-        policy_template_reference_model['version'] = 'testString'
-
-        # Construct a dict representation of a ActionControlsIdentities model
-        action_controls_identities_model = {}
-        action_controls_identities_model['add'] = True
-        action_controls_identities_model['remove'] = True
-
-        # Construct a dict representation of a ActionControlsRules model
-        action_controls_rules_model = {}
-        action_controls_rules_model['add'] = True
-        action_controls_rules_model['remove'] = True
-
-        # Construct a dict representation of a ActionControlsPolicies model
-        action_controls_policies_model = {}
-        action_controls_policies_model['add'] = True
-        action_controls_policies_model['remove'] = True
-
-        # Construct a dict representation of a ActionControls model
-        action_controls_model = {}
-        action_controls_model['identities'] = action_controls_identities_model
-        action_controls_model['rules'] = action_controls_rules_model
-        action_controls_model['policies'] = action_controls_policies_model
-
-        # Set up parameter values
-        template_id = 'testString'
-        account_id = 'testString'
-        name = 'testString'
-        description = 'testString'
-        profile = template_profile_component_request_model
-        policy_template_references = [policy_template_reference_model]
-        action_controls = action_controls_model
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "template_id": template_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.create_profile_template_version(**req_copy)
-
-    def test_create_profile_template_version_value_error_with_retries(self):
-        # Enable retries and run test_create_profile_template_version_value_error.
-        _service.enable_retries()
-        self.test_create_profile_template_version_value_error()
-
-        # Disable retries and run test_create_profile_template_version_value_error.
-        _service.disable_retries()
-        self.test_create_profile_template_version_value_error()
-
-
-class TestGetProfileTemplateVersion:
-    """
-    Test Class for get_profile_template_version
-    """
-
-    @responses.activate
-    def test_get_profile_template_version_all_params(self):
-        """
-        get_profile_template_version()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
-        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-        version = 'testString'
-        include_history = False
-
-        # Invoke method
-        response = _service.get_profile_template_version(
-            template_id,
-            version,
-            include_history=include_history,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
-
-    def test_get_profile_template_version_all_params_with_retries(self):
-        # Enable retries and run test_get_profile_template_version_all_params.
-        _service.enable_retries()
-        self.test_get_profile_template_version_all_params()
-
-        # Disable retries and run test_get_profile_template_version_all_params.
-        _service.disable_retries()
-        self.test_get_profile_template_version_all_params()
-
-    @responses.activate
-    def test_get_profile_template_version_required_params(self):
-        """
-        test_get_profile_template_version_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
-        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-        version = 'testString'
-
-        # Invoke method
-        response = _service.get_profile_template_version(
-            template_id,
-            version,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_profile_template_version_required_params_with_retries(self):
-        # Enable retries and run test_get_profile_template_version_required_params.
-        _service.enable_retries()
-        self.test_get_profile_template_version_required_params()
-
-        # Disable retries and run test_get_profile_template_version_required_params.
-        _service.disable_retries()
-        self.test_get_profile_template_version_required_params()
-
-    @responses.activate
-    def test_get_profile_template_version_value_error(self):
-        """
-        test_get_profile_template_version_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
-        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-        version = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "template_id": template_id,
-            "version": version,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.get_profile_template_version(**req_copy)
-
-    def test_get_profile_template_version_value_error_with_retries(self):
-        # Enable retries and run test_get_profile_template_version_value_error.
-        _service.enable_retries()
-        self.test_get_profile_template_version_value_error()
-
-        # Disable retries and run test_get_profile_template_version_value_error.
-        _service.disable_retries()
-        self.test_get_profile_template_version_value_error()
-
-
-class TestUpdateProfileTemplateVersion:
-    """
-    Test Class for update_profile_template_version
-    """
-
-    @responses.activate
-    def test_update_profile_template_version_all_params(self):
-        """
-        update_profile_template_version()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
-        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(
-            responses.PUT,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Construct a dict representation of a ProfileClaimRuleConditions model
-        profile_claim_rule_conditions_model = {}
-        profile_claim_rule_conditions_model['claim'] = 'testString'
-        profile_claim_rule_conditions_model['operator'] = 'testString'
-        profile_claim_rule_conditions_model['value'] = 'testString'
-
-        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
-        trusted_profile_template_claim_rule_model = {}
-        trusted_profile_template_claim_rule_model['name'] = 'testString'
-        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
-        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
-        trusted_profile_template_claim_rule_model['expiration'] = 38
-        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
-
-        # Construct a dict representation of a ProfileIdentityRequest model
-        profile_identity_request_model = {}
-        profile_identity_request_model['identifier'] = 'testString'
-        profile_identity_request_model['type'] = 'user'
-        profile_identity_request_model['accounts'] = ['testString']
-        profile_identity_request_model['description'] = 'testString'
-
-        # Construct a dict representation of a TemplateProfileComponentRequest model
-        template_profile_component_request_model = {}
-        template_profile_component_request_model['name'] = 'testString'
-        template_profile_component_request_model['description'] = 'testString'
-        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
-        template_profile_component_request_model['identities'] = [profile_identity_request_model]
-
-        # Construct a dict representation of a PolicyTemplateReference model
-        policy_template_reference_model = {}
-        policy_template_reference_model['id'] = 'testString'
-        policy_template_reference_model['version'] = 'testString'
-
-        # Construct a dict representation of a ActionControlsIdentities model
-        action_controls_identities_model = {}
-        action_controls_identities_model['add'] = True
-        action_controls_identities_model['remove'] = True
-
-        # Construct a dict representation of a ActionControlsRules model
-        action_controls_rules_model = {}
-        action_controls_rules_model['add'] = True
-        action_controls_rules_model['remove'] = True
-
-        # Construct a dict representation of a ActionControlsPolicies model
-        action_controls_policies_model = {}
-        action_controls_policies_model['add'] = True
-        action_controls_policies_model['remove'] = True
-
-        # Construct a dict representation of a ActionControls model
-        action_controls_model = {}
-        action_controls_model['identities'] = action_controls_identities_model
-        action_controls_model['rules'] = action_controls_rules_model
-        action_controls_model['policies'] = action_controls_policies_model
-
-        # Set up parameter values
-        if_match = 'testString'
-        template_id = 'testString'
-        version = 'testString'
-        account_id = 'testString'
-        name = 'testString'
-        description = 'testString'
-        profile = template_profile_component_request_model
-        policy_template_references = [policy_template_reference_model]
-        action_controls = action_controls_model
-
-        # Invoke method
-        response = _service.update_profile_template_version(
-            if_match,
-            template_id,
-            version,
-            account_id=account_id,
-            name=name,
-            description=description,
-            profile=profile,
-            policy_template_references=policy_template_references,
-            action_controls=action_controls,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['account_id'] == 'testString'
-        assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
-        assert req_body['profile'] == template_profile_component_request_model
-        assert req_body['policy_template_references'] == [policy_template_reference_model]
-        assert req_body['action_controls'] == action_controls_model
-
-    def test_update_profile_template_version_all_params_with_retries(self):
-        # Enable retries and run test_update_profile_template_version_all_params.
-        _service.enable_retries()
-        self.test_update_profile_template_version_all_params()
-
-        # Disable retries and run test_update_profile_template_version_all_params.
-        _service.disable_retries()
-        self.test_update_profile_template_version_all_params()
-
-    @responses.activate
-    def test_update_profile_template_version_value_error(self):
-        """
-        test_update_profile_template_version_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
-        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "action_controls": {"identities": {"add": false, "remove": true}, "rules": {"add": false, "remove": true}, "policies": {"add": false, "remove": true}}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(
-            responses.PUT,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Construct a dict representation of a ProfileClaimRuleConditions model
-        profile_claim_rule_conditions_model = {}
-        profile_claim_rule_conditions_model['claim'] = 'testString'
-        profile_claim_rule_conditions_model['operator'] = 'testString'
-        profile_claim_rule_conditions_model['value'] = 'testString'
-
-        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
-        trusted_profile_template_claim_rule_model = {}
-        trusted_profile_template_claim_rule_model['name'] = 'testString'
-        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
-        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
-        trusted_profile_template_claim_rule_model['expiration'] = 38
-        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
-
-        # Construct a dict representation of a ProfileIdentityRequest model
-        profile_identity_request_model = {}
-        profile_identity_request_model['identifier'] = 'testString'
-        profile_identity_request_model['type'] = 'user'
-        profile_identity_request_model['accounts'] = ['testString']
-        profile_identity_request_model['description'] = 'testString'
-
-        # Construct a dict representation of a TemplateProfileComponentRequest model
-        template_profile_component_request_model = {}
-        template_profile_component_request_model['name'] = 'testString'
-        template_profile_component_request_model['description'] = 'testString'
-        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
-        template_profile_component_request_model['identities'] = [profile_identity_request_model]
-
-        # Construct a dict representation of a PolicyTemplateReference model
-        policy_template_reference_model = {}
-        policy_template_reference_model['id'] = 'testString'
-        policy_template_reference_model['version'] = 'testString'
-
-        # Construct a dict representation of a ActionControlsIdentities model
-        action_controls_identities_model = {}
-        action_controls_identities_model['add'] = True
-        action_controls_identities_model['remove'] = True
-
-        # Construct a dict representation of a ActionControlsRules model
-        action_controls_rules_model = {}
-        action_controls_rules_model['add'] = True
-        action_controls_rules_model['remove'] = True
-
-        # Construct a dict representation of a ActionControlsPolicies model
-        action_controls_policies_model = {}
-        action_controls_policies_model['add'] = True
-        action_controls_policies_model['remove'] = True
-
-        # Construct a dict representation of a ActionControls model
-        action_controls_model = {}
-        action_controls_model['identities'] = action_controls_identities_model
-        action_controls_model['rules'] = action_controls_rules_model
-        action_controls_model['policies'] = action_controls_policies_model
-
-        # Set up parameter values
-        if_match = 'testString'
-        template_id = 'testString'
-        version = 'testString'
-        account_id = 'testString'
-        name = 'testString'
-        description = 'testString'
-        profile = template_profile_component_request_model
-        policy_template_references = [policy_template_reference_model]
-        action_controls = action_controls_model
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "if_match": if_match,
-            "template_id": template_id,
-            "version": version,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.update_profile_template_version(**req_copy)
-
-    def test_update_profile_template_version_value_error_with_retries(self):
-        # Enable retries and run test_update_profile_template_version_value_error.
-        _service.enable_retries()
-        self.test_update_profile_template_version_value_error()
-
-        # Disable retries and run test_update_profile_template_version_value_error.
-        _service.disable_retries()
-        self.test_update_profile_template_version_value_error()
-
-
-class TestDeleteProfileTemplateVersion:
-    """
-    Test Class for delete_profile_template_version
-    """
-
-    @responses.activate
-    def test_delete_profile_template_version_all_params(self):
-        """
-        delete_profile_template_version()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
-        responses.add(
-            responses.DELETE,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-        version = 'testString'
-
-        # Invoke method
-        response = _service.delete_profile_template_version(
-            template_id,
-            version,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 204
-
-    def test_delete_profile_template_version_all_params_with_retries(self):
-        # Enable retries and run test_delete_profile_template_version_all_params.
-        _service.enable_retries()
-        self.test_delete_profile_template_version_all_params()
-
-        # Disable retries and run test_delete_profile_template_version_all_params.
-        _service.disable_retries()
-        self.test_delete_profile_template_version_all_params()
-
-    @responses.activate
-    def test_delete_profile_template_version_value_error(self):
-        """
-        test_delete_profile_template_version_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
-        responses.add(
-            responses.DELETE,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-        version = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "template_id": template_id,
-            "version": version,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.delete_profile_template_version(**req_copy)
-
-    def test_delete_profile_template_version_value_error_with_retries(self):
-        # Enable retries and run test_delete_profile_template_version_value_error.
-        _service.enable_retries()
-        self.test_delete_profile_template_version_value_error()
-
-        # Disable retries and run test_delete_profile_template_version_value_error.
-        _service.disable_retries()
-        self.test_delete_profile_template_version_value_error()
-
-
-class TestCommitProfileTemplate:
-    """
-    Test Class for commit_profile_template
-    """
-
-    @responses.activate
-    def test_commit_profile_template_all_params(self):
-        """
-        commit_profile_template()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions/testString/commit')
-        responses.add(
-            responses.POST,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-        version = 'testString'
-
-        # Invoke method
-        response = _service.commit_profile_template(
-            template_id,
-            version,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 204
-
-    def test_commit_profile_template_all_params_with_retries(self):
-        # Enable retries and run test_commit_profile_template_all_params.
-        _service.enable_retries()
-        self.test_commit_profile_template_all_params()
-
-        # Disable retries and run test_commit_profile_template_all_params.
-        _service.disable_retries()
-        self.test_commit_profile_template_all_params()
-
-    @responses.activate
-    def test_commit_profile_template_value_error(self):
-        """
-        test_commit_profile_template_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/profile_templates/testString/versions/testString/commit')
-        responses.add(
-            responses.POST,
-            url,
-            status=204,
-        )
-
-        # Set up parameter values
-        template_id = 'testString'
-        version = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "template_id": template_id,
-            "version": version,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.commit_profile_template(**req_copy)
-
-    def test_commit_profile_template_value_error_with_retries(self):
-        # Enable retries and run test_commit_profile_template_value_error.
-        _service.enable_retries()
-        self.test_commit_profile_template_value_error()
-
-        # Disable retries and run test_commit_profile_template_value_error.
-        _service.disable_retries()
-        self.test_commit_profile_template_value_error()
-
-
-# endregion
-##############################################################################
-# End of Service: TrustedProfileTemplate
+# End of Service: AccountSettingsTemplateAssignments
 ##############################################################################
 
 
@@ -11046,6 +11566,7 @@ class TestModel_ServiceId:
         service_id_model_json['created_at'] = '2019-01-01T12:00:00Z'
         service_id_model_json['modified_at'] = '2019-01-01T12:00:00Z'
         service_id_model_json['account_id'] = 'testString'
+        service_id_model_json['group_id'] = 'testString'
         service_id_model_json['name'] = 'testString'
         service_id_model_json['description'] = 'testString'
         service_id_model_json['unique_instance_crns'] = ['testString']
@@ -11067,6 +11588,87 @@ class TestModel_ServiceId:
         # Convert model instance back to dict and verify no loss of data
         service_id_model_json2 = service_id_model.to_dict()
         assert service_id_model_json2 == service_id_model_json
+
+
+class TestModel_ServiceIdGroup:
+    """
+    Test Class for ServiceIdGroup
+    """
+
+    def test_service_id_group_serialization(self):
+        """
+        Test serialization/deserialization for ServiceIdGroup
+        """
+
+        # Construct a json representation of a ServiceIdGroup model
+        service_id_group_model_json = {}
+        service_id_group_model_json['id'] = 'testString'
+        service_id_group_model_json['entity_tag'] = 'testString'
+        service_id_group_model_json['account_id'] = 'testString'
+        service_id_group_model_json['crn'] = 'testString'
+        service_id_group_model_json['name'] = 'testString'
+        service_id_group_model_json['description'] = 'testString'
+        service_id_group_model_json['created_at'] = 'testString'
+        service_id_group_model_json['created_by'] = 'testString'
+        service_id_group_model_json['modified_at'] = 'testString'
+
+        # Construct a model instance of ServiceIdGroup by calling from_dict on the json representation
+        service_id_group_model = ServiceIdGroup.from_dict(service_id_group_model_json)
+        assert service_id_group_model != False
+
+        # Construct a model instance of ServiceIdGroup by calling from_dict on the json representation
+        service_id_group_model_dict = ServiceIdGroup.from_dict(service_id_group_model_json).__dict__
+        service_id_group_model2 = ServiceIdGroup(**service_id_group_model_dict)
+
+        # Verify the model instances are equivalent
+        assert service_id_group_model == service_id_group_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        service_id_group_model_json2 = service_id_group_model.to_dict()
+        assert service_id_group_model_json2 == service_id_group_model_json
+
+
+class TestModel_ServiceIdGroupList:
+    """
+    Test Class for ServiceIdGroupList
+    """
+
+    def test_service_id_group_list_serialization(self):
+        """
+        Test serialization/deserialization for ServiceIdGroupList
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        service_id_group_model = {}  # ServiceIdGroup
+        service_id_group_model['id'] = 'testString'
+        service_id_group_model['entity_tag'] = 'testString'
+        service_id_group_model['account_id'] = 'testString'
+        service_id_group_model['crn'] = 'testString'
+        service_id_group_model['name'] = 'testString'
+        service_id_group_model['description'] = 'testString'
+        service_id_group_model['created_at'] = 'testString'
+        service_id_group_model['created_by'] = 'testString'
+        service_id_group_model['modified_at'] = 'testString'
+
+        # Construct a json representation of a ServiceIdGroupList model
+        service_id_group_list_model_json = {}
+        service_id_group_list_model_json['serviceid_groups'] = [service_id_group_model]
+
+        # Construct a model instance of ServiceIdGroupList by calling from_dict on the json representation
+        service_id_group_list_model = ServiceIdGroupList.from_dict(service_id_group_list_model_json)
+        assert service_id_group_list_model != False
+
+        # Construct a model instance of ServiceIdGroupList by calling from_dict on the json representation
+        service_id_group_list_model_dict = ServiceIdGroupList.from_dict(service_id_group_list_model_json).__dict__
+        service_id_group_list_model2 = ServiceIdGroupList(**service_id_group_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert service_id_group_list_model == service_id_group_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        service_id_group_list_model_json2 = service_id_group_list_model.to_dict()
+        assert service_id_group_list_model_json2 == service_id_group_list_model_json
 
 
 class TestModel_ServiceIdList:
@@ -11136,6 +11738,7 @@ class TestModel_ServiceIdList:
         service_id_model['created_at'] = '2019-01-01T12:00:00Z'
         service_id_model['modified_at'] = '2019-01-01T12:00:00Z'
         service_id_model['account_id'] = 'testString'
+        service_id_model['group_id'] = 'testString'
         service_id_model['name'] = 'testString'
         service_id_model['description'] = 'testString'
         service_id_model['unique_instance_crns'] = ['testString']
@@ -11602,6 +12205,7 @@ class TestModel_TemplateProfileComponentRequest:
         template_profile_component_request_model_json = {}
         template_profile_component_request_model_json['name'] = 'testString'
         template_profile_component_request_model_json['description'] = 'testString'
+        template_profile_component_request_model_json['email'] = 'testString'
         template_profile_component_request_model_json['rules'] = [trusted_profile_template_claim_rule_model]
         template_profile_component_request_model_json['identities'] = [profile_identity_request_model]
 
@@ -11663,6 +12267,7 @@ class TestModel_TemplateProfileComponentResponse:
         template_profile_component_response_model_json['name'] = 'testString'
         template_profile_component_response_model_json['description'] = 'testString'
         template_profile_component_response_model_json['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_response_model_json['email'] = 'testString'
         template_profile_component_response_model_json['identities'] = [profile_identity_response_model]
 
         # Construct a model instance of TemplateProfileComponentResponse by calling from_dict on the json representation
@@ -11732,6 +12337,7 @@ class TestModel_TrustedProfile:
         trusted_profile_model_json['crn'] = 'testString'
         trusted_profile_model_json['name'] = 'testString'
         trusted_profile_model_json['description'] = 'testString'
+        trusted_profile_model_json['email'] = 'testString'
         trusted_profile_model_json['created_at'] = '2019-01-01T12:00:00Z'
         trusted_profile_model_json['modified_at'] = '2019-01-01T12:00:00Z'
         trusted_profile_model_json['iam_id'] = 'testString'
@@ -11854,6 +12460,7 @@ class TestModel_TrustedProfileTemplateList:
         template_profile_component_response_model['name'] = 'testString'
         template_profile_component_response_model['description'] = 'testString'
         template_profile_component_response_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_response_model['email'] = 'testString'
         template_profile_component_response_model['identities'] = [profile_identity_response_model]
 
         policy_template_reference_model = {}  # PolicyTemplateReference
@@ -11968,6 +12575,7 @@ class TestModel_TrustedProfileTemplateResponse:
         template_profile_component_response_model['name'] = 'testString'
         template_profile_component_response_model['description'] = 'testString'
         template_profile_component_response_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_response_model['email'] = 'testString'
         template_profile_component_response_model['identities'] = [profile_identity_response_model]
 
         policy_template_reference_model = {}  # PolicyTemplateReference
@@ -12084,6 +12692,7 @@ class TestModel_TrustedProfilesList:
         trusted_profile_model['crn'] = 'testString'
         trusted_profile_model['name'] = 'testString'
         trusted_profile_model['description'] = 'testString'
+        trusted_profile_model['email'] = 'testString'
         trusted_profile_model['created_at'] = '2019-01-01T12:00:00Z'
         trusted_profile_model['modified_at'] = '2019-01-01T12:00:00Z'
         trusted_profile_model['iam_id'] = 'testString'

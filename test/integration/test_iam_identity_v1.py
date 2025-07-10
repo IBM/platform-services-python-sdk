@@ -37,6 +37,9 @@ apikey_id2 = None
 serviceid_id1 = None
 serviceid_etag1 = None
 
+serviceid_groupid = None
+serviceid_group_etag = None
+
 profile_id1 = None
 profile_id2 = None
 profile_iamId = None
@@ -102,6 +105,7 @@ class TestIamIdentityV1:
 
             cls.apikey_name = 'Python-SDK-IT-ApiKey'
             cls.serviceid_name = 'Python-SDK-IT-ServiceId'
+            cls.serviceid_group_name = 'Python-SDK-IT-ServiceId-group'
             cls.profile_name1 = 'Python-SDK-IT-Profile1'
             cls.profile_name2 = 'Python-SDK-IT-Profile2'
             cls.claimRule_type = 'Profile-SAML'
@@ -664,6 +668,84 @@ class TestIamIdentityV1:
 
         service_id = self.get_service_id(self.iam_identity_service, serviceid_id1)
         assert service_id is None
+
+    @needscredentials
+    def test_create_service_id_group(self):
+        create_service_id_group_response = self.iam_identity_service.create_service_id_group(
+            account_id=self.account_id,
+            name=self.serviceid_group_name,
+            description='PythonSDK test serviceid group',
+        )
+
+        assert create_service_id_group_response.get_status_code() == 201
+        service_id_group = create_service_id_group_response.get_result()
+        assert service_id_group is not None
+        print('\ncreate_service_id() response: ', json.dumps(service_id_group, indent=2))
+
+        global serviceid_groupid
+        serviceid_groupid = service_id_group['id']
+        assert serviceid_groupid is not None
+
+    @needscredentials
+    def test_get_service_id_group(self):
+        assert serviceid_groupid is not None
+
+        get_service_id_group_response = self.iam_identity_service.get_service_id_group(
+            id=serviceid_groupid,
+        )
+
+        assert get_service_id_group_response.get_status_code() == 200
+        service_id_group = get_service_id_group_response.get_result()
+        assert service_id_group is not None
+        print('\nget_service_id() response: ', json.dumps(service_id_group, indent=2))
+
+        assert service_id_group['id'] == serviceid_groupid
+        assert service_id_group['name'] == self.serviceid_group_name
+
+        global serviceid_group_etag
+        serviceid_group_etag = get_service_id_group_response.get_headers()['Etag']
+        serviceid_group_etag is not None
+
+    @needscredentials
+    def test_list_service_id_group(self):
+        list_service_id_group_response = self.iam_identity_service.list_service_id_group(
+            account_id=self.account_id,
+        )
+
+        assert list_service_id_group_response.get_status_code() == 200
+        service_id_group_list = list_service_id_group_response.get_result()
+        print('\nlist_service_ids() response: ', json.dumps(service_id_group_list, indent=2))
+
+    @needscredentials
+    def test_update_service_id_group(self):
+        assert serviceid_groupid is not None
+        assert serviceid_group_etag is not None
+
+        new_description = 'This is an updated description'
+
+        update_service_id_group_response = self.iam_identity_service.update_service_id_group(
+            id=serviceid_groupid,
+            if_match=serviceid_group_etag,
+            name=self.serviceid_group_name,
+            description=new_description,
+        )
+
+        assert update_service_id_group_response.get_status_code() == 200
+        service_id_group = update_service_id_group_response.get_result()
+        assert service_id_group is not None
+        print('\nupdate_service_id() response: ', json.dumps(service_id_group, indent=2))
+        assert service_id_group['description'] == new_description
+
+    @needscredentials
+    def test_delete_service_id_group(self):
+        assert serviceid_groupid is not None
+
+        delete_service_id_group_response = self.iam_identity_service.delete_service_id_group(id=serviceid_groupid)
+
+        assert delete_service_id_group_response.get_status_code() == 204
+
+        service_id_group = self.get_service_id(self.iam_identity_service, serviceid_id1)
+        assert service_id_group is None
 
     @needscredentials
     def test_create_profile1(self):
