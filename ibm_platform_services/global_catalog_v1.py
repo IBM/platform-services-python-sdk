@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.104.0-b4a47c49-20250418-184351
+# IBM OpenAPI SDK Code Generator Version: 3.106.0-09823488-20250707-071701
 
 """
 The catalog service manages offerings across geographies as the system of record. The
@@ -2017,10 +2017,6 @@ class CFMetaData:
           `us-south=123`.
     :param str crn_mask: (optional) Cloud resource name identifying the environment
           containing this service.
-    :param dict user_defined_service: (optional) Deprecated: An extended set of
-          metadata fields that pertain to user-defined services.
-    :param dict extension: (optional) Deprecated: A property-bag like extension to
-          service metadata.
     :param bool paid_only: (optional) Deprecated: Boolean flag indicating if this
           service only offers paid pricing plans rather than the default paygo.
     :param bool custom_create_page_hybrid_enabled: (optional) Boolean flag that
@@ -2046,8 +2042,6 @@ class CFMetaData:
         service_key_supported: Optional[bool] = None,
         cf_guid: Optional[dict] = None,
         crn_mask: Optional[str] = None,
-        user_defined_service: Optional[dict] = None,
-        extension: Optional[dict] = None,
         paid_only: Optional[bool] = None,
         custom_create_page_hybrid_enabled: Optional[bool] = None,
     ) -> None:
@@ -2097,10 +2091,6 @@ class CFMetaData:
                For example, `us-south=123`.
         :param str crn_mask: (optional) Cloud resource name identifying the
                environment containing this service.
-        :param dict user_defined_service: (optional) Deprecated: An extended set of
-               metadata fields that pertain to user-defined services.
-        :param dict extension: (optional) Deprecated: A property-bag like extension
-               to service metadata.
         :param bool paid_only: (optional) Deprecated: Boolean flag indicating if
                this service only offers paid pricing plans rather than the default paygo.
         :param bool custom_create_page_hybrid_enabled: (optional) Boolean flag that
@@ -2122,8 +2112,6 @@ class CFMetaData:
         self.service_key_supported = service_key_supported
         self.cf_guid = cf_guid
         self.crn_mask = crn_mask
-        self.user_defined_service = user_defined_service
-        self.extension = extension
         self.paid_only = paid_only
         self.custom_create_page_hybrid_enabled = custom_create_page_hybrid_enabled
 
@@ -2161,10 +2149,6 @@ class CFMetaData:
             args['cf_guid'] = cf_guid
         if (crn_mask := _dict.get('crn_mask')) is not None:
             args['crn_mask'] = crn_mask
-        if (user_defined_service := _dict.get('user_defined_service')) is not None:
-            args['user_defined_service'] = user_defined_service
-        if (extension := _dict.get('extension')) is not None:
-            args['extension'] = extension
         if (paid_only := _dict.get('paid_only')) is not None:
             args['paid_only'] = paid_only
         if (custom_create_page_hybrid_enabled := _dict.get('custom_create_page_hybrid_enabled')) is not None:
@@ -2209,10 +2193,6 @@ class CFMetaData:
             _dict['cf_guid'] = self.cf_guid
         if hasattr(self, 'crn_mask') and self.crn_mask is not None:
             _dict['crn_mask'] = self.crn_mask
-        if hasattr(self, 'user_defined_service') and self.user_defined_service is not None:
-            _dict['user_defined_service'] = self.user_defined_service
-        if hasattr(self, 'extension') and self.extension is not None:
-            _dict['extension'] = self.extension
         if hasattr(self, 'paid_only') and self.paid_only is not None:
             _dict['paid_only'] = self.paid_only
         if hasattr(self, 'custom_create_page_hybrid_enabled') and self.custom_create_page_hybrid_enabled is not None:

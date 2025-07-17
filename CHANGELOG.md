@@ -1,3 +1,10 @@
+## [0.67.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.67.0...v0.67.1) (2025-07-17)
+
+
+### Bug Fixes
+
+* **Global Catalog:** remove bad metadata fields ([#297](https://github.com/IBM/platform-services-python-sdk/issues/297)) ([c8e49fc](https://github.com/IBM/platform-services-python-sdk/commit/c8e49fcb76b9cb1eaeb0e26c9af071719e9b6a63))
+
 # [0.67.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.66.2...v0.67.0) (2025-07-09)
 
 
