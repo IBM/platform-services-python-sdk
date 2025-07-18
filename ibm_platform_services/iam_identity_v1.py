@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.105.1-067d600b-20250616-154447
+# IBM OpenAPI SDK Code Generator Version: 3.106.0-09823488-20250707-071701
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -12471,9 +12471,9 @@ class TemplateAssignmentResponseResource:
     :param str target: Target account where the IAM resource is created.
     :param TemplateAssignmentResponseResourceDetail profile: (optional)
     :param TemplateAssignmentResponseResourceDetail account_settings: (optional)
-    :param List[TemplateAssignmentResponseResourceDetail] policy_template_refs:
-          (optional) Policy resource(s) included only for trusted profile assignments with
-          policy references.
+    :param List[TemplateAssignmentResponseResourceDetail]
+          policy_template_references: (optional) Policy resource(s) included only for
+          trusted profile assignments with policy references.
     """
 
     def __init__(
@@ -12482,7 +12482,7 @@ class TemplateAssignmentResponseResource:
         *,
         profile: Optional['TemplateAssignmentResponseResourceDetail'] = None,
         account_settings: Optional['TemplateAssignmentResponseResourceDetail'] = None,
-        policy_template_refs: Optional[List['TemplateAssignmentResponseResourceDetail']] = None,
+        policy_template_references: Optional[List['TemplateAssignmentResponseResourceDetail']] = None,
     ) -> None:
         """
         Initialize a TemplateAssignmentResponseResource object.
@@ -12491,14 +12491,14 @@ class TemplateAssignmentResponseResource:
         :param TemplateAssignmentResponseResourceDetail profile: (optional)
         :param TemplateAssignmentResponseResourceDetail account_settings:
                (optional)
-        :param List[TemplateAssignmentResponseResourceDetail] policy_template_refs:
-               (optional) Policy resource(s) included only for trusted profile assignments
-               with policy references.
+        :param List[TemplateAssignmentResponseResourceDetail]
+               policy_template_references: (optional) Policy resource(s) included only for
+               trusted profile assignments with policy references.
         """
         self.target = target
         self.profile = profile
         self.account_settings = account_settings
-        self.policy_template_refs = policy_template_refs
+        self.policy_template_references = policy_template_references
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResponseResource':
@@ -12512,9 +12512,9 @@ class TemplateAssignmentResponseResource:
             args['profile'] = TemplateAssignmentResponseResourceDetail.from_dict(profile)
         if (account_settings := _dict.get('account_settings')) is not None:
             args['account_settings'] = TemplateAssignmentResponseResourceDetail.from_dict(account_settings)
-        if (policy_template_refs := _dict.get('policy_template_refs')) is not None:
-            args['policy_template_refs'] = [
-                TemplateAssignmentResponseResourceDetail.from_dict(v) for v in policy_template_refs
+        if (policy_template_references := _dict.get('policy_template_references')) is not None:
+            args['policy_template_references'] = [
+                TemplateAssignmentResponseResourceDetail.from_dict(v) for v in policy_template_references
             ]
         return cls(**args)
 
@@ -12538,14 +12538,14 @@ class TemplateAssignmentResponseResource:
                 _dict['account_settings'] = self.account_settings
             else:
                 _dict['account_settings'] = self.account_settings.to_dict()
-        if hasattr(self, 'policy_template_refs') and self.policy_template_refs is not None:
-            policy_template_refs_list = []
-            for v in self.policy_template_refs:
+        if hasattr(self, 'policy_template_references') and self.policy_template_references is not None:
+            policy_template_references_list = []
+            for v in self.policy_template_references:
                 if isinstance(v, dict):
-                    policy_template_refs_list.append(v)
+                    policy_template_references_list.append(v)
                 else:
-                    policy_template_refs_list.append(v.to_dict())
-            _dict['policy_template_refs'] = policy_template_refs_list
+                    policy_template_references_list.append(v.to_dict())
+            _dict['policy_template_references'] = policy_template_references_list
         return _dict
 
     def _to_dict(self):
