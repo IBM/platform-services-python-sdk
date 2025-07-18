@@ -1,3 +1,10 @@
+# [0.68.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.67.1...v0.68.0) (2025-07-18)
+
+
+### Features
+
+* **IAM Identity:** adding serviceId Groups API ([#296](https://github.com/IBM/platform-services-python-sdk/issues/296)) ([b9d89d1](https://github.com/IBM/platform-services-python-sdk/commit/b9d89d193fca599951a16c5dae49e2fb86315f15))
+
 ## [0.67.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.67.0...v0.67.1) (2025-07-17)
 
 
