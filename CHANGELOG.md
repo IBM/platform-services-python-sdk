@@ -1,3 +1,10 @@
+## [0.68.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.68.0...v0.68.1) (2025-07-21)
+
+
+### Bug Fixes
+
+* **IAM Identity:** fix incorrect mapping of policy references in IAM Identity templates ([#298](https://github.com/IBM/platform-services-python-sdk/issues/298)) ([c766f4f](https://github.com/IBM/platform-services-python-sdk/commit/c766f4f275a48af8609e07c46dfcaab9fac880d7))
+
 # [0.68.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.67.1...v0.68.0) (2025-07-18)
 
 
