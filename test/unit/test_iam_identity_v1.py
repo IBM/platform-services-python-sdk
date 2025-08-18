@@ -3532,7 +3532,7 @@ class TestCreateLink:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
-        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
         responses.add(
             responses.POST,
             url,
@@ -3546,6 +3546,8 @@ class TestCreateLink:
         create_profile_link_request_link_model['crn'] = 'testString'
         create_profile_link_request_link_model['namespace'] = 'testString'
         create_profile_link_request_link_model['name'] = 'testString'
+        create_profile_link_request_link_model['component_type'] = 'testString'
+        create_profile_link_request_link_model['component_name'] = 'testString'
 
         # Set up parameter values
         profile_id = 'testString'
@@ -3587,7 +3589,7 @@ class TestCreateLink:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
-        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
         responses.add(
             responses.POST,
             url,
@@ -3601,6 +3603,8 @@ class TestCreateLink:
         create_profile_link_request_link_model['crn'] = 'testString'
         create_profile_link_request_link_model['namespace'] = 'testString'
         create_profile_link_request_link_model['name'] = 'testString'
+        create_profile_link_request_link_model['component_type'] = 'testString'
+        create_profile_link_request_link_model['component_name'] = 'testString'
 
         # Set up parameter values
         profile_id = 'testString'
@@ -3641,7 +3645,7 @@ class TestListLinks:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
-        mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}]}'
+        mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}]}'
         responses.add(
             responses.GET,
             url,
@@ -3679,7 +3683,7 @@ class TestListLinks:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
-        mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}]}'
+        mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}]}'
         responses.add(
             responses.GET,
             url,
@@ -3710,6 +3714,145 @@ class TestListLinks:
         self.test_list_links_value_error()
 
 
+class TestDeleteLinkByParameters:
+    """
+    Test Class for delete_link_by_parameters
+    """
+
+    @responses.activate
+    def test_delete_link_by_parameters_all_params(self):
+        """
+        delete_link_by_parameters()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/links')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        profile_id = 'testString'
+        type = 'testString'
+        crn = 'testString'
+        namespace = 'testString'
+        name = 'testString'
+        component_type = 'testString'
+        component_name = 'testString'
+
+        # Invoke method
+        response = _service.delete_link_by_parameters(
+            profile_id,
+            type,
+            crn=crn,
+            namespace=namespace,
+            name=name,
+            component_type=component_type,
+            component_name=component_name,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'type={}'.format(type) in query_string
+        assert 'crn={}'.format(crn) in query_string
+        assert 'namespace={}'.format(namespace) in query_string
+        assert 'name={}'.format(name) in query_string
+        assert 'component_type={}'.format(component_type) in query_string
+        assert 'component_name={}'.format(component_name) in query_string
+
+    def test_delete_link_by_parameters_all_params_with_retries(self):
+        # Enable retries and run test_delete_link_by_parameters_all_params.
+        _service.enable_retries()
+        self.test_delete_link_by_parameters_all_params()
+
+        # Disable retries and run test_delete_link_by_parameters_all_params.
+        _service.disable_retries()
+        self.test_delete_link_by_parameters_all_params()
+
+    @responses.activate
+    def test_delete_link_by_parameters_required_params(self):
+        """
+        test_delete_link_by_parameters_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/links')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        profile_id = 'testString'
+        type = 'testString'
+
+        # Invoke method
+        response = _service.delete_link_by_parameters(
+            profile_id,
+            type,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'type={}'.format(type) in query_string
+
+    def test_delete_link_by_parameters_required_params_with_retries(self):
+        # Enable retries and run test_delete_link_by_parameters_required_params.
+        _service.enable_retries()
+        self.test_delete_link_by_parameters_required_params()
+
+        # Disable retries and run test_delete_link_by_parameters_required_params.
+        _service.disable_retries()
+        self.test_delete_link_by_parameters_required_params()
+
+    @responses.activate
+    def test_delete_link_by_parameters_value_error(self):
+        """
+        test_delete_link_by_parameters_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/links')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        profile_id = 'testString'
+        type = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "profile_id": profile_id,
+            "type": type,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_link_by_parameters(**req_copy)
+
+    def test_delete_link_by_parameters_value_error_with_retries(self):
+        # Enable retries and run test_delete_link_by_parameters_value_error.
+        _service.enable_retries()
+        self.test_delete_link_by_parameters_value_error()
+
+        # Disable retries and run test_delete_link_by_parameters_value_error.
+        _service.disable_retries()
+        self.test_delete_link_by_parameters_value_error()
+
+
 class TestGetLink:
     """
     Test Class for get_link
@@ -3722,7 +3865,7 @@ class TestGetLink:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links/testString')
-        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
         responses.add(
             responses.GET,
             url,
@@ -3762,7 +3905,7 @@ class TestGetLink:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links/testString')
-        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
         responses.add(
             responses.GET,
             url,
@@ -10343,6 +10486,8 @@ class TestModel_CreateProfileLinkRequestLink:
         create_profile_link_request_link_model_json['crn'] = 'testString'
         create_profile_link_request_link_model_json['namespace'] = 'testString'
         create_profile_link_request_link_model_json['name'] = 'testString'
+        create_profile_link_request_link_model_json['component_type'] = 'testString'
+        create_profile_link_request_link_model_json['component_name'] = 'testString'
 
         # Construct a model instance of CreateProfileLinkRequestLink by calling from_dict on the json representation
         create_profile_link_request_link_model = CreateProfileLinkRequestLink.from_dict(
@@ -11183,6 +11328,8 @@ class TestModel_ProfileLink:
         profile_link_link_model['crn'] = 'testString'
         profile_link_link_model['namespace'] = 'testString'
         profile_link_link_model['name'] = 'testString'
+        profile_link_link_model['component_type'] = 'testString'
+        profile_link_link_model['component_name'] = 'testString'
 
         # Construct a json representation of a ProfileLink model
         profile_link_model_json = {}
@@ -11225,6 +11372,8 @@ class TestModel_ProfileLinkLink:
         profile_link_link_model_json['crn'] = 'testString'
         profile_link_link_model_json['namespace'] = 'testString'
         profile_link_link_model_json['name'] = 'testString'
+        profile_link_link_model_json['component_type'] = 'testString'
+        profile_link_link_model_json['component_name'] = 'testString'
 
         # Construct a model instance of ProfileLinkLink by calling from_dict on the json representation
         profile_link_link_model = ProfileLinkLink.from_dict(profile_link_link_model_json)
@@ -11258,6 +11407,8 @@ class TestModel_ProfileLinkList:
         profile_link_link_model['crn'] = 'testString'
         profile_link_link_model['namespace'] = 'testString'
         profile_link_link_model['name'] = 'testString'
+        profile_link_link_model['component_type'] = 'testString'
+        profile_link_link_model['component_name'] = 'testString'
 
         profile_link_model = {}  # ProfileLink
         profile_link_model['id'] = 'testString'

@@ -1085,6 +1085,37 @@ class TestIamIdentityV1:
         assert link is None
 
     @needscredentials
+    def test_delete_link_with_parameters(self):
+        CreateProfileLinkRequestLink = {}
+        CreateProfileLinkRequestLink['crn'] = (
+            'crn:v1:staging:public:iam-identity::a/' + self.account_id + '::computeresource:Fake-Compute-Resource'
+        )
+        CreateProfileLinkRequestLink['component_name'] = 'test_component_name'
+        CreateProfileLinkRequestLink['component_type'] = 'test_component_type'
+
+        create_link_response = self.iam_identity_service.create_link(
+            profile_id=profile_id2, name='Great link', cr_type='CE', link=CreateProfileLinkRequestLink
+        )
+
+        assert create_link_response.get_status_code() == 201
+        link = create_link_response.get_result()
+        assert link is not None
+        print('\ncreate_link() response: ', json.dumps(link, indent=2))
+
+        global link_id
+        link_id = link['id']
+        assert link_id is not None
+
+        delete_link_response = self.iam_identity_service.delete_link_by_parameters(
+            profile_id=profile_id2,
+            type='CE',
+            crn=CreateProfileLinkRequestLink['crn'],
+            component_name='test_component_name',
+            component_type='test_component_type',
+        )
+        assert delete_link_response.get_status_code() == 204
+
+    @needscredentials
     def test_set_identities(self):
         identifiers = []
         accounts = [self.account_id]
@@ -2006,7 +2037,7 @@ class TestIamIdentityV1:
             value_string=self.value_string,
         ).get_result()
         print('\nupdate_preference_on_scope_account() response: ', json.dumps(preference, indent=2))
-        preference is not None
+        assert preference is not None
 
     @needscredentials
     def test_get_preferences_on_scope_account(self):
@@ -2019,7 +2050,7 @@ class TestIamIdentityV1:
             preference_id=self.preference_id1,
         ).get_result()
         print('\nget_preference_on_scope_account() response: ', json.dumps(preference, indent=2))
-        preference is not None
+        assert preference is not None
 
     @needscredentials
     def test_get_all_preferences_on_scope_account(self):
@@ -2029,7 +2060,7 @@ class TestIamIdentityV1:
             account_id=self.account_id, iam_id=self.iam_id_for_preferences
         ).get_result()
         print('\nget_all_preference_on_scope_account() response: ', json.dumps(preference, indent=2))
-        preference is not None
+        assert preference is not None
 
     @needscredentials
     def test_delete_preferences_on_scope_account(self):
