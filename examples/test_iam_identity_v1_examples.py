@@ -898,6 +898,39 @@ class TestIamIdentityV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
+    def test_delete_link_by_parameters_example(self):
+        """
+        delete_link_by_parameters request example
+        """
+        CreateProfileLinkRequestLink = {}
+        CreateProfileLinkRequestLink['crn'] = (
+            'crn:v1:staging:public:iam-identity::a/' + account_id + '::computeresource:Fake-Compute-Resource'
+        )
+        CreateProfileLinkRequestLink['component_name'] = 'test_component_name'
+        CreateProfileLinkRequestLink['component_type'] = 'test_component_type'
+        link = iam_identity_service.create_link(
+            profile_id=profile_id, name='Great link', cr_type='CE', link=CreateProfileLinkRequestLink
+        ).get_result()
+        print(json.dumps(link, indent=2))
+
+        try:
+            # begin-delete_link_by_parameters
+
+            response = iam_identity_service.delete_link_by_parameters(
+                profile_id=profile_id,
+                type='CE',
+                crn=CreateProfileLinkRequestLink['crn'],
+                component_name='test_component_name',
+                component_type='test_component_type',
+            )
+
+            # end-delete_link_by_parameters
+            print('\ndelete_link_by_parameters() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_get_profile_identities(self):
         """
         get_profile_identities request example

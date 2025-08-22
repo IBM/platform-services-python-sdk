@@ -2196,6 +2196,78 @@ class IamIdentityV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    def delete_link_by_parameters(
+        self,
+        profile_id: str,
+        type: str,
+        *,
+        crn: Optional[str] = None,
+        namespace: Optional[str] = None,
+        name: Optional[str] = None,
+        component_type: Optional[str] = None,
+        component_name: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete compute resource link to profile by given parameters.
+
+        Deletes compute resource link of a Trusted Profile matching the given parameters.
+
+        :param str profile_id: The unique ID of the Trusted Profile.
+        :param str type: The compute resource type. Valid values are VSI, BMS,
+               IKS_SA, ROKS_SA, CE.
+        :param str crn: (optional) CRN of the compute resource (IKS/ROKS/VSI/BMS).
+        :param str namespace: (optional) Namespace of the compute resource
+               (IKS/ROKS).
+        :param str name: (optional) Name of the compute resource (IKS/ROKS).
+        :param str component_type: (optional) Component type of the compute
+               resource, only required if type is CE.
+        :param str component_name: (optional) Component name of the compute
+               resource, only required if type is CE.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not profile_id:
+            raise ValueError('profile_id must be provided')
+        if not type:
+            raise ValueError('type must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_link_by_parameters',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'type': type,
+            'crn': crn,
+            'namespace': namespace,
+            'name': name,
+            'component_type': component_type,
+            'component_name': component_name,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['profile-id']
+        path_param_values = self.encode_path_vars(profile_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}/links'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
     def get_link(
         self,
         profile_id: str,
@@ -8665,31 +8737,43 @@ class CreateProfileLinkRequestLink:
     Link details.
 
     :param str crn: The CRN of the compute resource.
-    :param str namespace: The compute resource namespace, only required if cr_type
-          is IKS_SA or ROKS_SA.
+    :param str namespace: (optional) The compute resource namespace, only required
+          if cr_type is IKS_SA or ROKS_SA.
     :param str name: (optional) Name of the compute resource, only required if
           cr_type is IKS_SA or ROKS_SA.
+    :param str component_type: (optional) Component type of the compute resource,
+          only required if cr_type is CE.
+    :param str component_name: (optional) Component name of the compute resource,
+          only required if cr_type is CE.
     """
 
     def __init__(
         self,
         crn: str,
-        namespace: str,
         *,
+        namespace: Optional[str] = None,
         name: Optional[str] = None,
+        component_type: Optional[str] = None,
+        component_name: Optional[str] = None,
     ) -> None:
         """
         Initialize a CreateProfileLinkRequestLink object.
 
         :param str crn: The CRN of the compute resource.
-        :param str namespace: The compute resource namespace, only required if
-               cr_type is IKS_SA or ROKS_SA.
+        :param str namespace: (optional) The compute resource namespace, only
+               required if cr_type is IKS_SA or ROKS_SA.
         :param str name: (optional) Name of the compute resource, only required if
                cr_type is IKS_SA or ROKS_SA.
+        :param str component_type: (optional) Component type of the compute
+               resource, only required if cr_type is CE.
+        :param str component_name: (optional) Component name of the compute
+               resource, only required if cr_type is CE.
         """
         self.crn = crn
         self.namespace = namespace
         self.name = name
+        self.component_type = component_type
+        self.component_name = component_name
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'CreateProfileLinkRequestLink':
@@ -8701,10 +8785,12 @@ class CreateProfileLinkRequestLink:
             raise ValueError('Required property \'crn\' not present in CreateProfileLinkRequestLink JSON')
         if (namespace := _dict.get('namespace')) is not None:
             args['namespace'] = namespace
-        else:
-            raise ValueError('Required property \'namespace\' not present in CreateProfileLinkRequestLink JSON')
         if (name := _dict.get('name')) is not None:
             args['name'] = name
+        if (component_type := _dict.get('component_type')) is not None:
+            args['component_type'] = component_type
+        if (component_name := _dict.get('component_name')) is not None:
+            args['component_name'] = component_name
         return cls(**args)
 
     @classmethod
@@ -8721,6 +8807,10 @@ class CreateProfileLinkRequestLink:
             _dict['namespace'] = self.namespace
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
+        if hasattr(self, 'component_type') and self.component_type is not None:
+            _dict['component_type'] = self.component_type
+        if hasattr(self, 'component_name') and self.component_name is not None:
+            _dict['component_name'] = self.component_name
         return _dict
 
     def _to_dict(self):
@@ -10645,8 +10735,8 @@ class ProfileLink:
     :param datetime modified_at: If set contains a date time string of the last
           modification date in ISO format.
     :param str name: (optional) Optional name of the Link.
-    :param str cr_type: The compute resource type. Valid values are VSI, IKS_SA,
-          ROKS_SA.
+    :param str cr_type: The compute resource type. Valid values are VSI, BMS,
+          IKS_SA, ROKS_SA, CE.
     :param ProfileLinkLink link:
     """
 
@@ -10670,8 +10760,8 @@ class ProfileLink:
                creation date in ISO format.
         :param datetime modified_at: If set contains a date time string of the last
                modification date in ISO format.
-        :param str cr_type: The compute resource type. Valid values are VSI,
-               IKS_SA, ROKS_SA.
+        :param str cr_type: The compute resource type. Valid values are VSI, BMS,
+               IKS_SA, ROKS_SA, CE.
         :param ProfileLinkLink link:
         :param str name: (optional) Optional name of the Link.
         """
@@ -10770,6 +10860,10 @@ class ProfileLinkLink:
           if cr_type is IKS_SA or ROKS_SA.
     :param str name: (optional) Name of the compute resource, only required if
           cr_type is IKS_SA or ROKS_SA.
+    :param str component_type: (optional) Component type of the compute resource,
+          only required if cr_type is CE.
+    :param str component_name: (optional) Component name of the compute resource,
+          only required if cr_type is CE.
     """
 
     def __init__(
@@ -10778,6 +10872,8 @@ class ProfileLinkLink:
         crn: Optional[str] = None,
         namespace: Optional[str] = None,
         name: Optional[str] = None,
+        component_type: Optional[str] = None,
+        component_name: Optional[str] = None,
     ) -> None:
         """
         Initialize a ProfileLinkLink object.
@@ -10787,10 +10883,16 @@ class ProfileLinkLink:
                required if cr_type is IKS_SA or ROKS_SA.
         :param str name: (optional) Name of the compute resource, only required if
                cr_type is IKS_SA or ROKS_SA.
+        :param str component_type: (optional) Component type of the compute
+               resource, only required if cr_type is CE.
+        :param str component_name: (optional) Component name of the compute
+               resource, only required if cr_type is CE.
         """
         self.crn = crn
         self.namespace = namespace
         self.name = name
+        self.component_type = component_type
+        self.component_name = component_name
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ProfileLinkLink':
@@ -10802,6 +10904,10 @@ class ProfileLinkLink:
             args['namespace'] = namespace
         if (name := _dict.get('name')) is not None:
             args['name'] = name
+        if (component_type := _dict.get('component_type')) is not None:
+            args['component_type'] = component_type
+        if (component_name := _dict.get('component_name')) is not None:
+            args['component_name'] = component_name
         return cls(**args)
 
     @classmethod
@@ -10818,6 +10924,10 @@ class ProfileLinkLink:
             _dict['namespace'] = self.namespace
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
+        if hasattr(self, 'component_type') and self.component_type is not None:
+            _dict['component_type'] = self.component_type
+        if hasattr(self, 'component_name') and self.component_name is not None:
+            _dict['component_name'] = self.component_name
         return _dict
 
     def _to_dict(self):
