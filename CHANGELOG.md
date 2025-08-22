@@ -1,3 +1,10 @@
+## [0.68.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.68.1...v0.68.2) (2025-08-22)
+
+
+### Bug Fixes
+
+* **IAM Identity:** add delete link with parameter api ([#299](https://github.com/IBM/platform-services-python-sdk/issues/299)) ([f330d3c](https://github.com/IBM/platform-services-python-sdk/commit/f330d3cc0c075be6e6305eee4882eb29fb05435a))
+
 ## [0.68.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.68.0...v0.68.1) (2025-07-21)
 
 
