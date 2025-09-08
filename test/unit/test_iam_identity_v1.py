@@ -4783,7 +4783,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "entity_tag": "entity_tag", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "restrict_user_domains": [{"realm_id": "IBMid", "invitation_email_allow_patterns": ["invitation_email_allow_patterns"], "restrict_invitation": false}], "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}]}'
         responses.add(
             responses.GET,
             url,
@@ -4795,11 +4795,13 @@ class TestGetAccountSettings:
         # Set up parameter values
         account_id = 'testString'
         include_history = False
+        resolve_user_mfa = False
 
         # Invoke method
         response = _service.get_account_settings(
             account_id,
             include_history=include_history,
+            resolve_user_mfa=resolve_user_mfa,
             headers={},
         )
 
@@ -4810,6 +4812,7 @@ class TestGetAccountSettings:
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+        assert 'resolve_user_mfa={}'.format('true' if resolve_user_mfa else 'false') in query_string
 
     def test_get_account_settings_all_params_with_retries(self):
         # Enable retries and run test_get_account_settings_all_params.
@@ -4827,7 +4830,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "entity_tag": "entity_tag", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "restrict_user_domains": [{"realm_id": "IBMid", "invitation_email_allow_patterns": ["invitation_email_allow_patterns"], "restrict_invitation": false}], "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}]}'
         responses.add(
             responses.GET,
             url,
@@ -4865,7 +4868,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "entity_tag": "entity_tag", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "restrict_user_domains": [{"realm_id": "IBMid", "invitation_email_allow_patterns": ["invitation_email_allow_patterns"], "restrict_invitation": false}], "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}]}'
         responses.add(
             responses.GET,
             url,
@@ -4908,7 +4911,7 @@ class TestUpdateAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "entity_tag": "entity_tag", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "restrict_user_domains": [{"realm_id": "IBMid", "invitation_email_allow_patterns": ["invitation_email_allow_patterns"], "restrict_invitation": false}], "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}]}'
         responses.add(
             responses.PUT,
             url,
@@ -4917,24 +4920,32 @@ class TestUpdateAccountSettings:
             status=200,
         )
 
-        # Construct a dict representation of a AccountSettingsUserMFA model
-        account_settings_user_mfa_model = {}
-        account_settings_user_mfa_model['iam_id'] = 'testString'
-        account_settings_user_mfa_model['mfa'] = 'NONE'
+        # Construct a dict representation of a AccountSettingsUserDomainRestriction model
+        account_settings_user_domain_restriction_model = {}
+        account_settings_user_domain_restriction_model['realm_id'] = 'IBMid'
+        account_settings_user_domain_restriction_model['invitation_email_allow_patterns'] = []
+        account_settings_user_domain_restriction_model['restrict_invitation'] = True
+
+        # Construct a dict representation of a UserMfa model
+        user_mfa_model = {}
+        user_mfa_model['iam_id'] = 'testString'
+        user_mfa_model['mfa'] = 'NONE'
 
         # Set up parameter values
         if_match = 'testString'
         account_id = 'testString'
-        restrict_create_service_id = 'RESTRICTED'
-        restrict_create_platform_apikey = 'RESTRICTED'
+        restrict_create_service_id = 'NOT_SET'
+        restrict_create_platform_apikey = 'NOT_SET'
+        restrict_user_list_visibility = 'NOT_RESTRICTED'
+        restrict_user_domains = [account_settings_user_domain_restriction_model]
         allowed_ip_addresses = 'testString'
         mfa = 'NONE'
-        user_mfa = [account_settings_user_mfa_model]
         session_expiration_in_seconds = '86400'
         session_invalidation_in_seconds = '7200'
         max_sessions_per_identity = 'testString'
         system_access_token_expiration_in_seconds = '3600'
         system_refresh_token_expiration_in_seconds = '259200'
+        user_mfa = [user_mfa_model]
 
         # Invoke method
         response = _service.update_account_settings(
@@ -4942,14 +4953,16 @@ class TestUpdateAccountSettings:
             account_id,
             restrict_create_service_id=restrict_create_service_id,
             restrict_create_platform_apikey=restrict_create_platform_apikey,
+            restrict_user_list_visibility=restrict_user_list_visibility,
+            restrict_user_domains=restrict_user_domains,
             allowed_ip_addresses=allowed_ip_addresses,
             mfa=mfa,
-            user_mfa=user_mfa,
             session_expiration_in_seconds=session_expiration_in_seconds,
             session_invalidation_in_seconds=session_invalidation_in_seconds,
             max_sessions_per_identity=max_sessions_per_identity,
             system_access_token_expiration_in_seconds=system_access_token_expiration_in_seconds,
             system_refresh_token_expiration_in_seconds=system_refresh_token_expiration_in_seconds,
+            user_mfa=user_mfa,
             headers={},
         )
 
@@ -4958,16 +4971,18 @@ class TestUpdateAccountSettings:
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['restrict_create_service_id'] == 'RESTRICTED'
-        assert req_body['restrict_create_platform_apikey'] == 'RESTRICTED'
+        assert req_body['restrict_create_service_id'] == 'NOT_SET'
+        assert req_body['restrict_create_platform_apikey'] == 'NOT_SET'
+        assert req_body['restrict_user_list_visibility'] == 'NOT_RESTRICTED'
+        assert req_body['restrict_user_domains'] == [account_settings_user_domain_restriction_model]
         assert req_body['allowed_ip_addresses'] == 'testString'
         assert req_body['mfa'] == 'NONE'
-        assert req_body['user_mfa'] == [account_settings_user_mfa_model]
         assert req_body['session_expiration_in_seconds'] == '86400'
         assert req_body['session_invalidation_in_seconds'] == '7200'
         assert req_body['max_sessions_per_identity'] == 'testString'
         assert req_body['system_access_token_expiration_in_seconds'] == '3600'
         assert req_body['system_refresh_token_expiration_in_seconds'] == '259200'
+        assert req_body['user_mfa'] == [user_mfa_model]
 
     def test_update_account_settings_all_params_with_retries(self):
         # Enable retries and run test_update_account_settings_all_params.
@@ -4985,7 +5000,7 @@ class TestUpdateAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "entity_tag": "entity_tag", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "restrict_user_domains": [{"realm_id": "IBMid", "invitation_email_allow_patterns": ["invitation_email_allow_patterns"], "restrict_invitation": false}], "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}]}'
         responses.add(
             responses.PUT,
             url,
@@ -4994,24 +5009,32 @@ class TestUpdateAccountSettings:
             status=200,
         )
 
-        # Construct a dict representation of a AccountSettingsUserMFA model
-        account_settings_user_mfa_model = {}
-        account_settings_user_mfa_model['iam_id'] = 'testString'
-        account_settings_user_mfa_model['mfa'] = 'NONE'
+        # Construct a dict representation of a AccountSettingsUserDomainRestriction model
+        account_settings_user_domain_restriction_model = {}
+        account_settings_user_domain_restriction_model['realm_id'] = 'IBMid'
+        account_settings_user_domain_restriction_model['invitation_email_allow_patterns'] = []
+        account_settings_user_domain_restriction_model['restrict_invitation'] = True
+
+        # Construct a dict representation of a UserMfa model
+        user_mfa_model = {}
+        user_mfa_model['iam_id'] = 'testString'
+        user_mfa_model['mfa'] = 'NONE'
 
         # Set up parameter values
         if_match = 'testString'
         account_id = 'testString'
-        restrict_create_service_id = 'RESTRICTED'
-        restrict_create_platform_apikey = 'RESTRICTED'
+        restrict_create_service_id = 'NOT_SET'
+        restrict_create_platform_apikey = 'NOT_SET'
+        restrict_user_list_visibility = 'NOT_RESTRICTED'
+        restrict_user_domains = [account_settings_user_domain_restriction_model]
         allowed_ip_addresses = 'testString'
         mfa = 'NONE'
-        user_mfa = [account_settings_user_mfa_model]
         session_expiration_in_seconds = '86400'
         session_invalidation_in_seconds = '7200'
         max_sessions_per_identity = 'testString'
         system_access_token_expiration_in_seconds = '3600'
         system_refresh_token_expiration_in_seconds = '259200'
+        user_mfa = [user_mfa_model]
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -5045,7 +5068,7 @@ class TestGetEffectiveAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/effective_settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "entity_tag": "entity_tag", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "restrict_user_domains": [{"realm_id": "IBMid", "invitation_email_allow_patterns": ["invitation_email_allow_patterns"], "restrict_invitation": false}], "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}]}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "restrict_user_domains": [{"realm_id": "IBMid", "invitation_email_allow_patterns": ["invitation_email_allow_patterns"], "restrict_invitation": false}], "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}]}]}'
         responses.add(
             responses.GET,
             url,
@@ -5092,7 +5115,7 @@ class TestGetEffectiveAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/effective_settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "entity_tag": "entity_tag", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "restrict_user_domains": [{"realm_id": "IBMid", "invitation_email_allow_patterns": ["invitation_email_allow_patterns"], "restrict_invitation": false}], "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}]}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "restrict_user_domains": [{"realm_id": "IBMid", "invitation_email_allow_patterns": ["invitation_email_allow_patterns"], "restrict_invitation": false}], "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}]}]}'
         responses.add(
             responses.GET,
             url,
@@ -5130,7 +5153,7 @@ class TestGetEffectiveAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/effective_settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "effective": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "account": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "entity_tag": "entity_tag", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "restrict_user_domains": [{"realm_id": "IBMid", "invitation_email_allow_patterns": ["invitation_email_allow_patterns"], "restrict_invitation": false}], "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}]}, "assigned_templates": [{"template_id": "template_id", "template_version": 16, "template_name": "template_name", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "restrict_user_list_visibility": "NOT_RESTRICTED", "restrict_user_domains": [{"realm_id": "IBMid", "invitation_email_allow_patterns": ["invitation_email_allow_patterns"], "restrict_invitation": false}], "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE", "name": "name", "userName": "user_name", "email": "email", "description": "description"}]}]}'
         responses.add(
             responses.GET,
             url,
@@ -7924,10 +7947,10 @@ class TestCreateAccountSettingsTemplate:
             status=201,
         )
 
-        # Construct a dict representation of a AccountSettingsUserMFA model
-        account_settings_user_mfa_model = {}
-        account_settings_user_mfa_model['iam_id'] = 'testString'
-        account_settings_user_mfa_model['mfa'] = 'NONE'
+        # Construct a dict representation of a UserMfa model
+        user_mfa_model = {}
+        user_mfa_model['iam_id'] = 'testString'
+        user_mfa_model['mfa'] = 'NONE'
 
         # Construct a dict representation of a AccountSettingsComponent model
         account_settings_component_model = {}
@@ -7935,7 +7958,7 @@ class TestCreateAccountSettingsTemplate:
         account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
         account_settings_component_model['allowed_ip_addresses'] = 'testString'
         account_settings_component_model['mfa'] = 'NONE'
-        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['user_mfa'] = [user_mfa_model]
         account_settings_component_model['session_expiration_in_seconds'] = '86400'
         account_settings_component_model['session_invalidation_in_seconds'] = '7200'
         account_settings_component_model['max_sessions_per_identity'] = 'testString'
@@ -8335,10 +8358,10 @@ class TestCreateAccountSettingsTemplateVersion:
             status=201,
         )
 
-        # Construct a dict representation of a AccountSettingsUserMFA model
-        account_settings_user_mfa_model = {}
-        account_settings_user_mfa_model['iam_id'] = 'testString'
-        account_settings_user_mfa_model['mfa'] = 'NONE'
+        # Construct a dict representation of a UserMfa model
+        user_mfa_model = {}
+        user_mfa_model['iam_id'] = 'testString'
+        user_mfa_model['mfa'] = 'NONE'
 
         # Construct a dict representation of a AccountSettingsComponent model
         account_settings_component_model = {}
@@ -8346,7 +8369,7 @@ class TestCreateAccountSettingsTemplateVersion:
         account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
         account_settings_component_model['allowed_ip_addresses'] = 'testString'
         account_settings_component_model['mfa'] = 'NONE'
-        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['user_mfa'] = [user_mfa_model]
         account_settings_component_model['session_expiration_in_seconds'] = '86400'
         account_settings_component_model['session_invalidation_in_seconds'] = '7200'
         account_settings_component_model['max_sessions_per_identity'] = 'testString'
@@ -8405,10 +8428,10 @@ class TestCreateAccountSettingsTemplateVersion:
             status=201,
         )
 
-        # Construct a dict representation of a AccountSettingsUserMFA model
-        account_settings_user_mfa_model = {}
-        account_settings_user_mfa_model['iam_id'] = 'testString'
-        account_settings_user_mfa_model['mfa'] = 'NONE'
+        # Construct a dict representation of a UserMfa model
+        user_mfa_model = {}
+        user_mfa_model['iam_id'] = 'testString'
+        user_mfa_model['mfa'] = 'NONE'
 
         # Construct a dict representation of a AccountSettingsComponent model
         account_settings_component_model = {}
@@ -8416,7 +8439,7 @@ class TestCreateAccountSettingsTemplateVersion:
         account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
         account_settings_component_model['allowed_ip_addresses'] = 'testString'
         account_settings_component_model['mfa'] = 'NONE'
-        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['user_mfa'] = [user_mfa_model]
         account_settings_component_model['session_expiration_in_seconds'] = '86400'
         account_settings_component_model['session_invalidation_in_seconds'] = '7200'
         account_settings_component_model['max_sessions_per_identity'] = 'testString'
@@ -8601,10 +8624,10 @@ class TestUpdateAccountSettingsTemplateVersion:
             status=200,
         )
 
-        # Construct a dict representation of a AccountSettingsUserMFA model
-        account_settings_user_mfa_model = {}
-        account_settings_user_mfa_model['iam_id'] = 'testString'
-        account_settings_user_mfa_model['mfa'] = 'NONE'
+        # Construct a dict representation of a UserMfa model
+        user_mfa_model = {}
+        user_mfa_model['iam_id'] = 'testString'
+        user_mfa_model['mfa'] = 'NONE'
 
         # Construct a dict representation of a AccountSettingsComponent model
         account_settings_component_model = {}
@@ -8612,7 +8635,7 @@ class TestUpdateAccountSettingsTemplateVersion:
         account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
         account_settings_component_model['allowed_ip_addresses'] = 'testString'
         account_settings_component_model['mfa'] = 'NONE'
-        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['user_mfa'] = [user_mfa_model]
         account_settings_component_model['session_expiration_in_seconds'] = '86400'
         account_settings_component_model['session_invalidation_in_seconds'] = '7200'
         account_settings_component_model['max_sessions_per_identity'] = 'testString'
@@ -8675,10 +8698,10 @@ class TestUpdateAccountSettingsTemplateVersion:
             status=200,
         )
 
-        # Construct a dict representation of a AccountSettingsUserMFA model
-        account_settings_user_mfa_model = {}
-        account_settings_user_mfa_model['iam_id'] = 'testString'
-        account_settings_user_mfa_model['mfa'] = 'NONE'
+        # Construct a dict representation of a UserMfa model
+        user_mfa_model = {}
+        user_mfa_model['iam_id'] = 'testString'
+        user_mfa_model['mfa'] = 'NONE'
 
         # Construct a dict representation of a AccountSettingsComponent model
         account_settings_component_model = {}
@@ -8686,7 +8709,7 @@ class TestUpdateAccountSettingsTemplateVersion:
         account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
         account_settings_component_model['allowed_ip_addresses'] = 'testString'
         account_settings_component_model['mfa'] = 'NONE'
-        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['user_mfa'] = [user_mfa_model]
         account_settings_component_model['session_expiration_in_seconds'] = '86400'
         account_settings_component_model['session_invalidation_in_seconds'] = '7200'
         account_settings_component_model['max_sessions_per_identity'] = 'testString'
@@ -9479,71 +9502,6 @@ class TestModel_AccountBasedMfaEnrollment:
         assert account_based_mfa_enrollment_model_json2 == account_based_mfa_enrollment_model_json
 
 
-class TestModel_AccountSettingsAccountSection:
-    """
-    Test Class for AccountSettingsAccountSection
-    """
-
-    def test_account_settings_account_section_serialization(self):
-        """
-        Test serialization/deserialization for AccountSettingsAccountSection
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        effective_account_settings_user_mfa_model = {}  # EffectiveAccountSettingsUserMFA
-        effective_account_settings_user_mfa_model['iam_id'] = 'testString'
-        effective_account_settings_user_mfa_model['mfa'] = 'NONE'
-        effective_account_settings_user_mfa_model['name'] = 'testString'
-        effective_account_settings_user_mfa_model['userName'] = 'testString'
-        effective_account_settings_user_mfa_model['email'] = 'testString'
-        effective_account_settings_user_mfa_model['description'] = 'testString'
-
-        enity_history_record_model = {}  # EnityHistoryRecord
-        enity_history_record_model['timestamp'] = 'testString'
-        enity_history_record_model['iam_id'] = 'testString'
-        enity_history_record_model['iam_id_account'] = 'testString'
-        enity_history_record_model['action'] = 'testString'
-        enity_history_record_model['params'] = ['testString']
-        enity_history_record_model['message'] = 'testString'
-
-        # Construct a json representation of a AccountSettingsAccountSection model
-        account_settings_account_section_model_json = {}
-        account_settings_account_section_model_json['account_id'] = 'testString'
-        account_settings_account_section_model_json['restrict_create_service_id'] = 'NOT_SET'
-        account_settings_account_section_model_json['restrict_create_platform_apikey'] = 'NOT_SET'
-        account_settings_account_section_model_json['allowed_ip_addresses'] = 'testString'
-        account_settings_account_section_model_json['mfa'] = 'NONE'
-        account_settings_account_section_model_json['user_mfa'] = [effective_account_settings_user_mfa_model]
-        account_settings_account_section_model_json['history'] = [enity_history_record_model]
-        account_settings_account_section_model_json['session_expiration_in_seconds'] = '86400'
-        account_settings_account_section_model_json['session_invalidation_in_seconds'] = '7200'
-        account_settings_account_section_model_json['max_sessions_per_identity'] = 'testString'
-        account_settings_account_section_model_json['system_access_token_expiration_in_seconds'] = '3600'
-        account_settings_account_section_model_json['system_refresh_token_expiration_in_seconds'] = '259200'
-
-        # Construct a model instance of AccountSettingsAccountSection by calling from_dict on the json representation
-        account_settings_account_section_model = AccountSettingsAccountSection.from_dict(
-            account_settings_account_section_model_json
-        )
-        assert account_settings_account_section_model != False
-
-        # Construct a model instance of AccountSettingsAccountSection by calling from_dict on the json representation
-        account_settings_account_section_model_dict = AccountSettingsAccountSection.from_dict(
-            account_settings_account_section_model_json
-        ).__dict__
-        account_settings_account_section_model2 = AccountSettingsAccountSection(
-            **account_settings_account_section_model_dict
-        )
-
-        # Verify the model instances are equivalent
-        assert account_settings_account_section_model == account_settings_account_section_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        account_settings_account_section_model_json2 = account_settings_account_section_model.to_dict()
-        assert account_settings_account_section_model_json2 == account_settings_account_section_model_json
-
-
 class TestModel_AccountSettingsAssignedTemplatesSection:
     """
     Test Class for AccountSettingsAssignedTemplatesSection
@@ -9556,13 +9514,18 @@ class TestModel_AccountSettingsAssignedTemplatesSection:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        effective_account_settings_user_mfa_model = {}  # EffectiveAccountSettingsUserMFA
-        effective_account_settings_user_mfa_model['iam_id'] = 'testString'
-        effective_account_settings_user_mfa_model['mfa'] = 'NONE'
-        effective_account_settings_user_mfa_model['name'] = 'testString'
-        effective_account_settings_user_mfa_model['userName'] = 'testString'
-        effective_account_settings_user_mfa_model['email'] = 'testString'
-        effective_account_settings_user_mfa_model['description'] = 'testString'
+        account_settings_user_domain_restriction_model = {}  # AccountSettingsUserDomainRestriction
+        account_settings_user_domain_restriction_model['realm_id'] = 'IBMid'
+        account_settings_user_domain_restriction_model['invitation_email_allow_patterns'] = []
+        account_settings_user_domain_restriction_model['restrict_invitation'] = True
+
+        account_settings_user_mfa_response_model = {}  # AccountSettingsUserMFAResponse
+        account_settings_user_mfa_response_model['iam_id'] = 'testString'
+        account_settings_user_mfa_response_model['mfa'] = 'NONE'
+        account_settings_user_mfa_response_model['name'] = 'testString'
+        account_settings_user_mfa_response_model['userName'] = 'testString'
+        account_settings_user_mfa_response_model['email'] = 'testString'
+        account_settings_user_mfa_response_model['description'] = 'testString'
 
         # Construct a json representation of a AccountSettingsAssignedTemplatesSection model
         account_settings_assigned_templates_section_model_json = {}
@@ -9571,14 +9534,18 @@ class TestModel_AccountSettingsAssignedTemplatesSection:
         account_settings_assigned_templates_section_model_json['template_name'] = 'testString'
         account_settings_assigned_templates_section_model_json['restrict_create_service_id'] = 'NOT_SET'
         account_settings_assigned_templates_section_model_json['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_assigned_templates_section_model_json['restrict_user_list_visibility'] = 'NOT_RESTRICTED'
+        account_settings_assigned_templates_section_model_json['restrict_user_domains'] = [
+            account_settings_user_domain_restriction_model
+        ]
         account_settings_assigned_templates_section_model_json['allowed_ip_addresses'] = 'testString'
         account_settings_assigned_templates_section_model_json['mfa'] = 'NONE'
-        account_settings_assigned_templates_section_model_json['user_mfa'] = [effective_account_settings_user_mfa_model]
         account_settings_assigned_templates_section_model_json['session_expiration_in_seconds'] = '86400'
         account_settings_assigned_templates_section_model_json['session_invalidation_in_seconds'] = '7200'
         account_settings_assigned_templates_section_model_json['max_sessions_per_identity'] = 'testString'
         account_settings_assigned_templates_section_model_json['system_access_token_expiration_in_seconds'] = '3600'
         account_settings_assigned_templates_section_model_json['system_refresh_token_expiration_in_seconds'] = '259200'
+        account_settings_assigned_templates_section_model_json['user_mfa'] = [account_settings_user_mfa_response_model]
 
         # Construct a model instance of AccountSettingsAssignedTemplatesSection by calling from_dict on the json representation
         account_settings_assigned_templates_section_model = AccountSettingsAssignedTemplatesSection.from_dict(
@@ -9619,9 +9586,9 @@ class TestModel_AccountSettingsComponent:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        account_settings_user_mfa_model = {}  # AccountSettingsUserMFA
-        account_settings_user_mfa_model['iam_id'] = 'testString'
-        account_settings_user_mfa_model['mfa'] = 'NONE'
+        user_mfa_model = {}  # UserMfa
+        user_mfa_model['iam_id'] = 'testString'
+        user_mfa_model['mfa'] = 'NONE'
 
         # Construct a json representation of a AccountSettingsComponent model
         account_settings_component_model_json = {}
@@ -9629,7 +9596,7 @@ class TestModel_AccountSettingsComponent:
         account_settings_component_model_json['restrict_create_platform_apikey'] = 'NOT_SET'
         account_settings_component_model_json['allowed_ip_addresses'] = 'testString'
         account_settings_component_model_json['mfa'] = 'NONE'
-        account_settings_component_model_json['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model_json['user_mfa'] = [user_mfa_model]
         account_settings_component_model_json['session_expiration_in_seconds'] = '86400'
         account_settings_component_model_json['session_invalidation_in_seconds'] = '7200'
         account_settings_component_model_json['max_sessions_per_identity'] = 'testString'
@@ -9666,21 +9633,22 @@ class TestModel_AccountSettingsEffectiveSection:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        effective_account_settings_user_mfa_model = {}  # EffectiveAccountSettingsUserMFA
-        effective_account_settings_user_mfa_model['iam_id'] = 'testString'
-        effective_account_settings_user_mfa_model['mfa'] = 'NONE'
-        effective_account_settings_user_mfa_model['name'] = 'testString'
-        effective_account_settings_user_mfa_model['userName'] = 'testString'
-        effective_account_settings_user_mfa_model['email'] = 'testString'
-        effective_account_settings_user_mfa_model['description'] = 'testString'
+        account_settings_user_mfa_response_model = {}  # AccountSettingsUserMFAResponse
+        account_settings_user_mfa_response_model['iam_id'] = 'testString'
+        account_settings_user_mfa_response_model['mfa'] = 'NONE'
+        account_settings_user_mfa_response_model['name'] = 'testString'
+        account_settings_user_mfa_response_model['userName'] = 'testString'
+        account_settings_user_mfa_response_model['email'] = 'testString'
+        account_settings_user_mfa_response_model['description'] = 'testString'
 
         # Construct a json representation of a AccountSettingsEffectiveSection model
         account_settings_effective_section_model_json = {}
         account_settings_effective_section_model_json['restrict_create_service_id'] = 'NOT_SET'
         account_settings_effective_section_model_json['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_effective_section_model_json['restrict_user_list_visibility'] = 'NOT_RESTRICTED'
         account_settings_effective_section_model_json['allowed_ip_addresses'] = 'testString'
         account_settings_effective_section_model_json['mfa'] = 'NONE'
-        account_settings_effective_section_model_json['user_mfa'] = [effective_account_settings_user_mfa_model]
+        account_settings_effective_section_model_json['user_mfa'] = [account_settings_user_mfa_response_model]
         account_settings_effective_section_model_json['session_expiration_in_seconds'] = '86400'
         account_settings_effective_section_model_json['session_invalidation_in_seconds'] = '7200'
         account_settings_effective_section_model_json['max_sessions_per_identity'] = 'testString'
@@ -9734,10 +9702,6 @@ class TestModel_AccountSettingsResponse:
         response_context_model['elapsed_time'] = 'testString'
         response_context_model['cluster_name'] = 'testString'
 
-        account_settings_user_mfa_model = {}  # AccountSettingsUserMFA
-        account_settings_user_mfa_model['iam_id'] = 'testString'
-        account_settings_user_mfa_model['mfa'] = 'NONE'
-
         enity_history_record_model = {}  # EnityHistoryRecord
         enity_history_record_model['timestamp'] = 'testString'
         enity_history_record_model['iam_id'] = 'testString'
@@ -9746,22 +9710,37 @@ class TestModel_AccountSettingsResponse:
         enity_history_record_model['params'] = ['testString']
         enity_history_record_model['message'] = 'testString'
 
+        account_settings_user_domain_restriction_model = {}  # AccountSettingsUserDomainRestriction
+        account_settings_user_domain_restriction_model['realm_id'] = 'IBMid'
+        account_settings_user_domain_restriction_model['invitation_email_allow_patterns'] = []
+        account_settings_user_domain_restriction_model['restrict_invitation'] = True
+
+        account_settings_user_mfa_response_model = {}  # AccountSettingsUserMFAResponse
+        account_settings_user_mfa_response_model['iam_id'] = 'testString'
+        account_settings_user_mfa_response_model['mfa'] = 'NONE'
+        account_settings_user_mfa_response_model['name'] = 'testString'
+        account_settings_user_mfa_response_model['userName'] = 'testString'
+        account_settings_user_mfa_response_model['email'] = 'testString'
+        account_settings_user_mfa_response_model['description'] = 'testString'
+
         # Construct a json representation of a AccountSettingsResponse model
         account_settings_response_model_json = {}
         account_settings_response_model_json['context'] = response_context_model
         account_settings_response_model_json['account_id'] = 'testString'
+        account_settings_response_model_json['entity_tag'] = 'testString'
+        account_settings_response_model_json['history'] = [enity_history_record_model]
         account_settings_response_model_json['restrict_create_service_id'] = 'NOT_SET'
         account_settings_response_model_json['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_response_model_json['restrict_user_list_visibility'] = 'NOT_RESTRICTED'
+        account_settings_response_model_json['restrict_user_domains'] = [account_settings_user_domain_restriction_model]
         account_settings_response_model_json['allowed_ip_addresses'] = 'testString'
-        account_settings_response_model_json['entity_tag'] = 'testString'
         account_settings_response_model_json['mfa'] = 'NONE'
-        account_settings_response_model_json['user_mfa'] = [account_settings_user_mfa_model]
-        account_settings_response_model_json['history'] = [enity_history_record_model]
         account_settings_response_model_json['session_expiration_in_seconds'] = '86400'
         account_settings_response_model_json['session_invalidation_in_seconds'] = '7200'
         account_settings_response_model_json['max_sessions_per_identity'] = 'testString'
         account_settings_response_model_json['system_access_token_expiration_in_seconds'] = '3600'
         account_settings_response_model_json['system_refresh_token_expiration_in_seconds'] = '259200'
+        account_settings_response_model_json['user_mfa'] = [account_settings_user_mfa_response_model]
 
         # Construct a model instance of AccountSettingsResponse by calling from_dict on the json representation
         account_settings_response_model = AccountSettingsResponse.from_dict(account_settings_response_model_json)
@@ -9806,16 +9785,16 @@ class TestModel_AccountSettingsTemplateList:
         response_context_model['elapsed_time'] = 'testString'
         response_context_model['cluster_name'] = 'testString'
 
-        account_settings_user_mfa_model = {}  # AccountSettingsUserMFA
-        account_settings_user_mfa_model['iam_id'] = 'testString'
-        account_settings_user_mfa_model['mfa'] = 'NONE'
+        user_mfa_model = {}  # UserMfa
+        user_mfa_model['iam_id'] = 'testString'
+        user_mfa_model['mfa'] = 'NONE'
 
         account_settings_component_model = {}  # AccountSettingsComponent
         account_settings_component_model['restrict_create_service_id'] = 'NOT_SET'
         account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
         account_settings_component_model['allowed_ip_addresses'] = 'testString'
         account_settings_component_model['mfa'] = 'NONE'
-        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['user_mfa'] = [user_mfa_model]
         account_settings_component_model['session_expiration_in_seconds'] = '86400'
         account_settings_component_model['session_invalidation_in_seconds'] = '7200'
         account_settings_component_model['max_sessions_per_identity'] = 'testString'
@@ -9890,16 +9869,16 @@ class TestModel_AccountSettingsTemplateResponse:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        account_settings_user_mfa_model = {}  # AccountSettingsUserMFA
-        account_settings_user_mfa_model['iam_id'] = 'testString'
-        account_settings_user_mfa_model['mfa'] = 'NONE'
+        user_mfa_model = {}  # UserMfa
+        user_mfa_model['iam_id'] = 'testString'
+        user_mfa_model['mfa'] = 'NONE'
 
         account_settings_component_model = {}  # AccountSettingsComponent
         account_settings_component_model['restrict_create_service_id'] = 'NOT_SET'
         account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
         account_settings_component_model['allowed_ip_addresses'] = 'testString'
         account_settings_component_model['mfa'] = 'NONE'
-        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['user_mfa'] = [user_mfa_model]
         account_settings_component_model['session_expiration_in_seconds'] = '86400'
         account_settings_component_model['session_invalidation_in_seconds'] = '7200'
         account_settings_component_model['max_sessions_per_identity'] = 'testString'
@@ -9953,37 +9932,85 @@ class TestModel_AccountSettingsTemplateResponse:
         assert account_settings_template_response_model_json2 == account_settings_template_response_model_json
 
 
-class TestModel_AccountSettingsUserMFA:
+class TestModel_AccountSettingsUserDomainRestriction:
     """
-    Test Class for AccountSettingsUserMFA
+    Test Class for AccountSettingsUserDomainRestriction
     """
 
-    def test_account_settings_user_mfa_serialization(self):
+    def test_account_settings_user_domain_restriction_serialization(self):
         """
-        Test serialization/deserialization for AccountSettingsUserMFA
+        Test serialization/deserialization for AccountSettingsUserDomainRestriction
         """
 
-        # Construct a json representation of a AccountSettingsUserMFA model
-        account_settings_user_mfa_model_json = {}
-        account_settings_user_mfa_model_json['iam_id'] = 'testString'
-        account_settings_user_mfa_model_json['mfa'] = 'NONE'
+        # Construct a json representation of a AccountSettingsUserDomainRestriction model
+        account_settings_user_domain_restriction_model_json = {}
+        account_settings_user_domain_restriction_model_json['realm_id'] = 'IBMid'
+        account_settings_user_domain_restriction_model_json['invitation_email_allow_patterns'] = []
+        account_settings_user_domain_restriction_model_json['restrict_invitation'] = True
 
-        # Construct a model instance of AccountSettingsUserMFA by calling from_dict on the json representation
-        account_settings_user_mfa_model = AccountSettingsUserMFA.from_dict(account_settings_user_mfa_model_json)
-        assert account_settings_user_mfa_model != False
+        # Construct a model instance of AccountSettingsUserDomainRestriction by calling from_dict on the json representation
+        account_settings_user_domain_restriction_model = AccountSettingsUserDomainRestriction.from_dict(
+            account_settings_user_domain_restriction_model_json
+        )
+        assert account_settings_user_domain_restriction_model != False
 
-        # Construct a model instance of AccountSettingsUserMFA by calling from_dict on the json representation
-        account_settings_user_mfa_model_dict = AccountSettingsUserMFA.from_dict(
-            account_settings_user_mfa_model_json
+        # Construct a model instance of AccountSettingsUserDomainRestriction by calling from_dict on the json representation
+        account_settings_user_domain_restriction_model_dict = AccountSettingsUserDomainRestriction.from_dict(
+            account_settings_user_domain_restriction_model_json
         ).__dict__
-        account_settings_user_mfa_model2 = AccountSettingsUserMFA(**account_settings_user_mfa_model_dict)
+        account_settings_user_domain_restriction_model2 = AccountSettingsUserDomainRestriction(
+            **account_settings_user_domain_restriction_model_dict
+        )
 
         # Verify the model instances are equivalent
-        assert account_settings_user_mfa_model == account_settings_user_mfa_model2
+        assert account_settings_user_domain_restriction_model == account_settings_user_domain_restriction_model2
 
         # Convert model instance back to dict and verify no loss of data
-        account_settings_user_mfa_model_json2 = account_settings_user_mfa_model.to_dict()
-        assert account_settings_user_mfa_model_json2 == account_settings_user_mfa_model_json
+        account_settings_user_domain_restriction_model_json2 = account_settings_user_domain_restriction_model.to_dict()
+        assert (
+            account_settings_user_domain_restriction_model_json2 == account_settings_user_domain_restriction_model_json
+        )
+
+
+class TestModel_AccountSettingsUserMFAResponse:
+    """
+    Test Class for AccountSettingsUserMFAResponse
+    """
+
+    def test_account_settings_user_mfa_response_serialization(self):
+        """
+        Test serialization/deserialization for AccountSettingsUserMFAResponse
+        """
+
+        # Construct a json representation of a AccountSettingsUserMFAResponse model
+        account_settings_user_mfa_response_model_json = {}
+        account_settings_user_mfa_response_model_json['iam_id'] = 'testString'
+        account_settings_user_mfa_response_model_json['mfa'] = 'NONE'
+        account_settings_user_mfa_response_model_json['name'] = 'testString'
+        account_settings_user_mfa_response_model_json['userName'] = 'testString'
+        account_settings_user_mfa_response_model_json['email'] = 'testString'
+        account_settings_user_mfa_response_model_json['description'] = 'testString'
+
+        # Construct a model instance of AccountSettingsUserMFAResponse by calling from_dict on the json representation
+        account_settings_user_mfa_response_model = AccountSettingsUserMFAResponse.from_dict(
+            account_settings_user_mfa_response_model_json
+        )
+        assert account_settings_user_mfa_response_model != False
+
+        # Construct a model instance of AccountSettingsUserMFAResponse by calling from_dict on the json representation
+        account_settings_user_mfa_response_model_dict = AccountSettingsUserMFAResponse.from_dict(
+            account_settings_user_mfa_response_model_json
+        ).__dict__
+        account_settings_user_mfa_response_model2 = AccountSettingsUserMFAResponse(
+            **account_settings_user_mfa_response_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert account_settings_user_mfa_response_model == account_settings_user_mfa_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        account_settings_user_mfa_response_model_json2 = account_settings_user_mfa_response_model.to_dict()
+        assert account_settings_user_mfa_response_model_json2 == account_settings_user_mfa_response_model_json
 
 
 class TestModel_ActionControls:
@@ -10536,20 +10563,21 @@ class TestModel_EffectiveAccountSettingsResponse:
         response_context_model['elapsed_time'] = 'testString'
         response_context_model['cluster_name'] = 'testString'
 
-        effective_account_settings_user_mfa_model = {}  # EffectiveAccountSettingsUserMFA
-        effective_account_settings_user_mfa_model['iam_id'] = 'testString'
-        effective_account_settings_user_mfa_model['mfa'] = 'NONE'
-        effective_account_settings_user_mfa_model['name'] = 'testString'
-        effective_account_settings_user_mfa_model['userName'] = 'testString'
-        effective_account_settings_user_mfa_model['email'] = 'testString'
-        effective_account_settings_user_mfa_model['description'] = 'testString'
+        account_settings_user_mfa_response_model = {}  # AccountSettingsUserMFAResponse
+        account_settings_user_mfa_response_model['iam_id'] = 'testString'
+        account_settings_user_mfa_response_model['mfa'] = 'NONE'
+        account_settings_user_mfa_response_model['name'] = 'testString'
+        account_settings_user_mfa_response_model['userName'] = 'testString'
+        account_settings_user_mfa_response_model['email'] = 'testString'
+        account_settings_user_mfa_response_model['description'] = 'testString'
 
         account_settings_effective_section_model = {}  # AccountSettingsEffectiveSection
         account_settings_effective_section_model['restrict_create_service_id'] = 'NOT_SET'
         account_settings_effective_section_model['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_effective_section_model['restrict_user_list_visibility'] = 'NOT_RESTRICTED'
         account_settings_effective_section_model['allowed_ip_addresses'] = 'testString'
         account_settings_effective_section_model['mfa'] = 'NONE'
-        account_settings_effective_section_model['user_mfa'] = [effective_account_settings_user_mfa_model]
+        account_settings_effective_section_model['user_mfa'] = [account_settings_user_mfa_response_model]
         account_settings_effective_section_model['session_expiration_in_seconds'] = '86400'
         account_settings_effective_section_model['session_invalidation_in_seconds'] = '7200'
         account_settings_effective_section_model['max_sessions_per_identity'] = 'testString'
@@ -10564,19 +10592,28 @@ class TestModel_EffectiveAccountSettingsResponse:
         enity_history_record_model['params'] = ['testString']
         enity_history_record_model['message'] = 'testString'
 
-        account_settings_account_section_model = {}  # AccountSettingsAccountSection
-        account_settings_account_section_model['account_id'] = 'testString'
-        account_settings_account_section_model['restrict_create_service_id'] = 'NOT_SET'
-        account_settings_account_section_model['restrict_create_platform_apikey'] = 'NOT_SET'
-        account_settings_account_section_model['allowed_ip_addresses'] = 'testString'
-        account_settings_account_section_model['mfa'] = 'NONE'
-        account_settings_account_section_model['user_mfa'] = [effective_account_settings_user_mfa_model]
-        account_settings_account_section_model['history'] = [enity_history_record_model]
-        account_settings_account_section_model['session_expiration_in_seconds'] = '86400'
-        account_settings_account_section_model['session_invalidation_in_seconds'] = '7200'
-        account_settings_account_section_model['max_sessions_per_identity'] = 'testString'
-        account_settings_account_section_model['system_access_token_expiration_in_seconds'] = '3600'
-        account_settings_account_section_model['system_refresh_token_expiration_in_seconds'] = '259200'
+        account_settings_user_domain_restriction_model = {}  # AccountSettingsUserDomainRestriction
+        account_settings_user_domain_restriction_model['realm_id'] = 'IBMid'
+        account_settings_user_domain_restriction_model['invitation_email_allow_patterns'] = []
+        account_settings_user_domain_restriction_model['restrict_invitation'] = True
+
+        account_settings_response_model = {}  # AccountSettingsResponse
+        account_settings_response_model['context'] = response_context_model
+        account_settings_response_model['account_id'] = 'testString'
+        account_settings_response_model['entity_tag'] = 'testString'
+        account_settings_response_model['history'] = [enity_history_record_model]
+        account_settings_response_model['restrict_create_service_id'] = 'NOT_SET'
+        account_settings_response_model['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_response_model['restrict_user_list_visibility'] = 'NOT_RESTRICTED'
+        account_settings_response_model['restrict_user_domains'] = [account_settings_user_domain_restriction_model]
+        account_settings_response_model['allowed_ip_addresses'] = 'testString'
+        account_settings_response_model['mfa'] = 'NONE'
+        account_settings_response_model['session_expiration_in_seconds'] = '86400'
+        account_settings_response_model['session_invalidation_in_seconds'] = '7200'
+        account_settings_response_model['max_sessions_per_identity'] = 'testString'
+        account_settings_response_model['system_access_token_expiration_in_seconds'] = '3600'
+        account_settings_response_model['system_refresh_token_expiration_in_seconds'] = '259200'
+        account_settings_response_model['user_mfa'] = [account_settings_user_mfa_response_model]
 
         account_settings_assigned_templates_section_model = {}  # AccountSettingsAssignedTemplatesSection
         account_settings_assigned_templates_section_model['template_id'] = 'testString'
@@ -10584,21 +10621,25 @@ class TestModel_EffectiveAccountSettingsResponse:
         account_settings_assigned_templates_section_model['template_name'] = 'testString'
         account_settings_assigned_templates_section_model['restrict_create_service_id'] = 'NOT_SET'
         account_settings_assigned_templates_section_model['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_assigned_templates_section_model['restrict_user_list_visibility'] = 'NOT_RESTRICTED'
+        account_settings_assigned_templates_section_model['restrict_user_domains'] = [
+            account_settings_user_domain_restriction_model
+        ]
         account_settings_assigned_templates_section_model['allowed_ip_addresses'] = 'testString'
         account_settings_assigned_templates_section_model['mfa'] = 'NONE'
-        account_settings_assigned_templates_section_model['user_mfa'] = [effective_account_settings_user_mfa_model]
         account_settings_assigned_templates_section_model['session_expiration_in_seconds'] = '86400'
         account_settings_assigned_templates_section_model['session_invalidation_in_seconds'] = '7200'
         account_settings_assigned_templates_section_model['max_sessions_per_identity'] = 'testString'
         account_settings_assigned_templates_section_model['system_access_token_expiration_in_seconds'] = '3600'
         account_settings_assigned_templates_section_model['system_refresh_token_expiration_in_seconds'] = '259200'
+        account_settings_assigned_templates_section_model['user_mfa'] = [account_settings_user_mfa_response_model]
 
         # Construct a json representation of a EffectiveAccountSettingsResponse model
         effective_account_settings_response_model_json = {}
         effective_account_settings_response_model_json['context'] = response_context_model
         effective_account_settings_response_model_json['account_id'] = 'testString'
         effective_account_settings_response_model_json['effective'] = account_settings_effective_section_model
-        effective_account_settings_response_model_json['account'] = account_settings_account_section_model
+        effective_account_settings_response_model_json['account'] = account_settings_response_model
         effective_account_settings_response_model_json['assigned_templates'] = [
             account_settings_assigned_templates_section_model
         ]
@@ -10623,47 +10664,6 @@ class TestModel_EffectiveAccountSettingsResponse:
         # Convert model instance back to dict and verify no loss of data
         effective_account_settings_response_model_json2 = effective_account_settings_response_model.to_dict()
         assert effective_account_settings_response_model_json2 == effective_account_settings_response_model_json
-
-
-class TestModel_EffectiveAccountSettingsUserMFA:
-    """
-    Test Class for EffectiveAccountSettingsUserMFA
-    """
-
-    def test_effective_account_settings_user_mfa_serialization(self):
-        """
-        Test serialization/deserialization for EffectiveAccountSettingsUserMFA
-        """
-
-        # Construct a json representation of a EffectiveAccountSettingsUserMFA model
-        effective_account_settings_user_mfa_model_json = {}
-        effective_account_settings_user_mfa_model_json['iam_id'] = 'testString'
-        effective_account_settings_user_mfa_model_json['mfa'] = 'NONE'
-        effective_account_settings_user_mfa_model_json['name'] = 'testString'
-        effective_account_settings_user_mfa_model_json['userName'] = 'testString'
-        effective_account_settings_user_mfa_model_json['email'] = 'testString'
-        effective_account_settings_user_mfa_model_json['description'] = 'testString'
-
-        # Construct a model instance of EffectiveAccountSettingsUserMFA by calling from_dict on the json representation
-        effective_account_settings_user_mfa_model = EffectiveAccountSettingsUserMFA.from_dict(
-            effective_account_settings_user_mfa_model_json
-        )
-        assert effective_account_settings_user_mfa_model != False
-
-        # Construct a model instance of EffectiveAccountSettingsUserMFA by calling from_dict on the json representation
-        effective_account_settings_user_mfa_model_dict = EffectiveAccountSettingsUserMFA.from_dict(
-            effective_account_settings_user_mfa_model_json
-        ).__dict__
-        effective_account_settings_user_mfa_model2 = EffectiveAccountSettingsUserMFA(
-            **effective_account_settings_user_mfa_model_dict
-        )
-
-        # Verify the model instances are equivalent
-        assert effective_account_settings_user_mfa_model == effective_account_settings_user_mfa_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        effective_account_settings_user_mfa_model_json2 = effective_account_settings_user_mfa_model.to_dict()
-        assert effective_account_settings_user_mfa_model_json2 == effective_account_settings_user_mfa_model_json
 
 
 class TestModel_EnityHistoryRecord:
@@ -12913,6 +12913,37 @@ class TestModel_UserActivity:
         # Convert model instance back to dict and verify no loss of data
         user_activity_model_json2 = user_activity_model.to_dict()
         assert user_activity_model_json2 == user_activity_model_json
+
+
+class TestModel_UserMfa:
+    """
+    Test Class for UserMfa
+    """
+
+    def test_user_mfa_serialization(self):
+        """
+        Test serialization/deserialization for UserMfa
+        """
+
+        # Construct a json representation of a UserMfa model
+        user_mfa_model_json = {}
+        user_mfa_model_json['iam_id'] = 'testString'
+        user_mfa_model_json['mfa'] = 'NONE'
+
+        # Construct a model instance of UserMfa by calling from_dict on the json representation
+        user_mfa_model = UserMfa.from_dict(user_mfa_model_json)
+        assert user_mfa_model != False
+
+        # Construct a model instance of UserMfa by calling from_dict on the json representation
+        user_mfa_model_dict = UserMfa.from_dict(user_mfa_model_json).__dict__
+        user_mfa_model2 = UserMfa(**user_mfa_model_dict)
+
+        # Verify the model instances are equivalent
+        assert user_mfa_model == user_mfa_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        user_mfa_model_json2 = user_mfa_model.to_dict()
+        assert user_mfa_model_json2 == user_mfa_model_json
 
 
 class TestModel_UserMfaEnrollments:

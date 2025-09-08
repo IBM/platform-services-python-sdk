@@ -50,9 +50,11 @@ iam_identity_service = None
 
 config = None
 
-apikey_name = 'Example-ApiKey'
-serviceid_name = 'Example-ServiceId'
-serviceid_group_name = 'Example-ServiceId'
+now = str(round(time.time() * 1000))
+
+apikey_name = 'Python-SDK-Example-ApiKey-' + now
+serviceid_name = 'Python-SDK-Example-ServiceId-' + now
+serviceid_group_name = 'Python-SDK-Example-ServiceId-' + now
 service = 'console'
 value_string = '/billing'
 preference_id1 = 'landing_page'
@@ -60,7 +62,6 @@ preference_id1 = 'landing_page'
 # config property values
 account_id = None
 iam_id = None
-iam_id_member = None
 apikey = None
 enterprise_account_id = None
 enterprise_subaccount_id = None
@@ -92,12 +93,15 @@ profile_template_version = None
 profile_template_etag = None
 profile_template_assignment_id = None
 profile_template_assignment_etag = None
+profile_template_name = 'Python-SDK-Example-Profile-Template-' + now
+profile_template_profile_name = 'Python-SDK-Example-Profile-From-Template-' + now
 
 account_settings_template_id = None
 account_settings_template_version = None
 account_settings_template_etag = None
 account_settings_template_assignment_id = None
 account_settings_template_assignment_etag = None
+account_settings_template_name = 'Python-SDK-Example-AccountSettings-Template-' + now
 
 iam_id_for_preferences = None
 
@@ -134,9 +138,6 @@ class TestIamIdentityV1Examples:
             global iam_id
             iam_id = config['IAM_ID']
 
-            global iam_id_member
-            iam_id_member = config['IAM_ID_MEMBER']
-
             global apikey
             apikey = config['APIKEY']
 
@@ -145,9 +146,6 @@ class TestIamIdentityV1Examples:
 
             global enterprise_subaccount_id
             enterprise_subaccount_id = config['ENTERPRISE_SUBACCOUNT_ID']
-
-            global iam_id_for_preferences
-            iam_id_for_preferences = config['IAM_ID_FOR_PREFERENCES']
 
         print('Setup complete.')
 
@@ -570,9 +568,7 @@ class TestIamIdentityV1Examples:
             print('\nlist_service_id_group() result:')
             # begin-list_service_id_group
 
-            service_id_group_list = iam_identity_service.list_service_id_group(
-                account_id=account_id, name=serviceid_name
-            ).get_result()
+            service_id_group_list = iam_identity_service.list_service_id_group(account_id=account_id).get_result()
             print(json.dumps(service_id_group_list, indent=2))
 
             # end-list_service_id_group
@@ -637,6 +633,9 @@ class TestIamIdentityV1Examples:
 
             global profile_id
             profile_id = profile['id']
+
+            global iam_id_for_preferences
+            iam_id_for_preferences = profile['iam_id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -968,6 +967,11 @@ class TestIamIdentityV1Examples:
 
             print('\nset_profile_identities() response status code: ', response.get_status_code())
 
+            # delete identity so we can set again in the next test
+            iam_identity_service.delete_profile_identity(
+                profile_id=profile_id, identity_type="user", identifier_id=iam_id
+            )
+
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -983,7 +987,7 @@ class TestIamIdentityV1Examples:
             response = iam_identity_service.set_profile_identity(
                 profile_id=profile_id,
                 identity_type="user",
-                identifier=iam_id_member,
+                identifier=iam_id,
                 type="user",
                 accounts=accounts,
                 description="Identity description",
@@ -1004,7 +1008,7 @@ class TestIamIdentityV1Examples:
             # begin-get_profile_identity
 
             response = iam_identity_service.get_profile_identity(
-                profile_id=profile_id, identity_type="user", identifier_id=iam_id_member
+                profile_id=profile_id, identity_type="user", identifier_id=iam_id
             )
 
             # end-get_profile_identity
@@ -1022,29 +1026,12 @@ class TestIamIdentityV1Examples:
             # begin-delete_profile_identity
 
             response = iam_identity_service.delete_profile_identity(
-                profile_id=profile_id, identity_type="user", identifier_id=iam_id_member
+                profile_id=profile_id, identity_type="user", identifier_id=iam_id
             )
 
             # end-delete_profile_identity
 
             print('\ndelete_profile_identity() response status code: ', response.get_status_code())
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_delete_profile_example(self):
-        """
-        delete_profile request example
-        """
-        try:
-            # begin-delete_profile
-
-            response = iam_identity_service.delete_profile(profile_id=profile_id)
-
-            # end-delete_profile
-
-            print('\ndelete_profile() response status code: ', response.get_status_code())
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1079,13 +1066,21 @@ class TestIamIdentityV1Examples:
             # begin-updateAccountSettings
 
             account_settings_user_mfa = {}
-            account_settings_user_mfa['iam_id'] = iam_id_member
+            account_settings_user_mfa['iam_id'] = iam_id
             account_settings_user_mfa['mfa'] = 'NONE'
+
+            account_settings_user_domain_restriction_model = {}
+            account_settings_user_domain_restriction_model['realm_id'] = 'IBMid'
+            account_settings_user_domain_restriction_model['invitation_email_allow_patterns'] = ['*.*@company.com']
+            account_settings_user_domain_restriction_model['restrict_invitation'] = True
+
             account_settings_response = iam_identity_service.update_account_settings(
                 account_id=account_id,
                 if_match=account_settings_etag,
                 restrict_create_service_id="NOT_RESTRICTED",
                 restrict_create_platform_apikey="NOT_RESTRICTED",
+                restrict_user_list_visibility="NOT_RESTRICTED",
+                restrict_user_domains=[account_settings_user_domain_restriction_model],
                 mfa="NONE",
                 user_mfa=[account_settings_user_mfa],
                 session_expiration_in_seconds="86400",
@@ -1240,12 +1235,12 @@ class TestIamIdentityV1Examples:
             profile_claim_rule['conditions'] = [profile_claim_rule_conditions]
 
             profile = {}
-            profile['name'] = 'Profile-From-Example-Template'
+            profile['name'] = profile_template_profile_name
             profile['description'] = 'Trusted profile created from a template'
             profile['rules'] = [profile_claim_rule]
 
             create_response = iam_identity_service.create_profile_template(
-                name='Example-Profile-Template',
+                name=profile_template_name,
                 description='IAM enterprise trusted profile template example',
                 account_id=enterprise_account_id,
                 profile=profile,
@@ -1317,7 +1312,7 @@ class TestIamIdentityV1Examples:
                 template_id=profile_template_id,
                 version=str(profile_template_version),
                 if_match=profile_template_etag,
-                name='Example-Profile-Template',
+                name=profile_template_name,
                 description='IAM enterprise trusted profile template example - updated',
             )
             profile_template = update_response.get_result()
@@ -1433,14 +1428,14 @@ class TestIamIdentityV1Examples:
             profile_identity['description'] = 'Identity description'
 
             profile = {}
-            profile['name'] = 'Profile-From-Example-Template'
+            profile['name'] = profile_template_profile_name
             profile['description'] = 'Trusted profile created from a template - new version'
             profile['rules'] = [profile_claim_rule]
             profile['identities'] = [profile_identity]
 
             create_response = iam_identity_service.create_profile_template_version(
                 template_id=profile_template_id,
-                name='Example-Profile-Template',
+                name=profile_template_name,
                 description='IAM enterprise trusted profile template example - new version',
                 account_id=enterprise_account_id,
                 profile=profile,
@@ -1586,7 +1581,7 @@ class TestIamIdentityV1Examples:
             account_settings['system_access_token_expiration_in_seconds'] = 3000
 
             create_response = iam_identity_service.create_account_settings_template(
-                name='Example-Account-Settings-Template',
+                name=account_settings_template_name,
                 description='IAM enterprise account settings template example',
                 account_id=enterprise_account_id,
                 account_settings=account_settings,
@@ -1662,7 +1657,7 @@ class TestIamIdentityV1Examples:
                 template_id=account_settings_template_id,
                 version=str(account_settings_template_version),
                 if_match=account_settings_template_etag,
-                name='Example-Account-Settings-Template',
+                name=account_settings_template_name,
                 description='IAM enterprise account settings template example - updated',
                 account_settings=account_settings,
             )
@@ -1769,7 +1764,7 @@ class TestIamIdentityV1Examples:
 
             create_response = iam_identity_service.create_account_settings_template_version(
                 template_id=account_settings_template_id,
-                name='Example-Account-Settings-Template',
+                name=account_settings_template_name,
                 description='IAM enterprise account settings template example - new version',
                 account_id=enterprise_account_id,
                 account_settings=account_settings,
@@ -2000,6 +1995,23 @@ class TestIamIdentityV1Examples:
             # end-delete_preferences_on_scope_account
 
             print('\ndelete_preferences_on_scope_account() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_profile_example(self):
+        """
+        delete_profile request example
+        """
+        try:
+            # begin-delete_profile
+
+            response = iam_identity_service.delete_profile(profile_id=profile_id)
+
+            # end-delete_profile
+
+            print('\ndelete_profile() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
