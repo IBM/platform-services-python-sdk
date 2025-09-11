@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
+# IBM OpenAPI SDK Code Generator Version: 3.100.0-2ad7a784-20250212-162551
 
 """
 Search for resources with the global and shared resource properties repository that is
@@ -36,7 +36,7 @@ import json
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
-from ibm_cloud_sdk_core.utils import convert_list
+from ibm_cloud_sdk_core.utils import convert_list, convert_model
 
 from .common import get_sdk_headers
 
@@ -61,7 +61,9 @@ class GlobalSearchV2(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -84,10 +86,8 @@ class GlobalSearchV2(BaseService):
 
     def search(
         self,
+        body: 'SearchRequest',
         *,
-        query: Optional[str] = None,
-        fields: Optional[List[str]] = None,
-        search_cursor: Optional[str] = None,
         x_request_id: Optional[str] = None,
         x_correlation_id: Optional[str] = None,
         account_id: Optional[str] = None,
@@ -96,7 +96,6 @@ class GlobalSearchV2(BaseService):
         sort: Optional[List[str]] = None,
         is_deleted: Optional[str] = None,
         is_reclaimed: Optional[str] = None,
-        is_public: Optional[str] = None,
         impersonate_user: Optional[str] = None,
         can_tag: Optional[str] = None,
         is_project_resource: Optional[str] = None,
@@ -106,33 +105,24 @@ class GlobalSearchV2(BaseService):
         Find instances of resources (v3).
 
         Find IAM-enabled resources or storage and network resources that run on classic
-        infrastructure in a specific account ID. You can apply query strings if necessary.
-        To filter results, you can insert a string by using the Lucene syntax and the
-        query string is parsed into a series of terms and operators. A term can be a
-        single word or a phrase, in which case the search is performed for all the words,
-        in the same order. To filter for a specific value regardless of the property that
-        contains it, type the search term without specifying a field. Only resources that
-        belong to the account ID and that are accessible by the client are returned.
+        infrastructure in a specific account ID.
         You must use `/v3/resources/search` when you need to fetch more than `10000`
         resource items. On the first call, the operation returns a live cursor on the data
         that you must use on all the subsequent calls to get the next batch of results
         until you get the empty result set.
-        By default, the fields that are returned for every resource are `crn`, `name`,
-        `family`, `type`, and `account_id`. You can specify the subset of the fields you
-        want in your request using the `fields` request body attribute. Set `"fields":
-        ["*"]` to discover the set of fields which are available to request.
+        To filter results, you can apply query strings following the *Lucene* query
+        syntax.
+        By default, the fields that are returned for every resource are **crn**, **name**,
+        **family**, **type**, and **account_id**. You can specify the subset of the fields
+        you want in your request using the `fields` request body attribute. Set `"fields":
+        ["*"]` to discover the complete set of fields which are available to request.
 
-        :param str query: (optional) The Lucene-formatted query string. Default to
-               '*' if not set.
-        :param List[str] fields: (optional) The list of the fields returned by the
-               search. By default, the returned fields are the `account_id`, `name`,
-               `type`, `family`, and `crn`. For all queries, `crn` is always returned. You
-               may set `"fields": ["*"]` to discover the set of fields available to
-               request.
-        :param str search_cursor: (optional) An opaque cursor that is returned on
-               each call and that must be set on the subsequent call to get the next batch
-               of items. If the search returns no items, then the search_cursor is not
-               present in the response.
+        :param SearchRequest body: It contains the query filters on the first
+               operation call, or the search_cursor on next calls. On subsequent calls,
+               set the `search_cursor` to the value returned by the previous call. After
+               the first, you must set only the `search_cursor`. Any other parameter but
+               the `search_cursor` are ignored. The `search_cursor` encodes all the
+               information that needs to get the next batch of `limit` data.
         :param str x_request_id: (optional) An alphanumeric string that is used to
                trace the request. The value  may include ASCII alphanumerics and any of
                following segment separators: space ( ), comma (,), hyphen, (-), and
@@ -169,10 +159,6 @@ class GlobalSearchV2(BaseService):
                (default), true or any. If false, only not reclaimed documents are
                returned; if true, only reclaimed documents are returned; If any, both
                reclaimed and not reclaimed documents are returned.
-        :param str is_public: (optional) Determines if public resources should be
-               included in result set or not. Possible values are false (default), true or
-               any. If false, do not search public resources; if true, search only public
-               resources; If any, search also public resources.
         :param str impersonate_user: (optional) The user on whose behalf the search
                must be performed. Only a GhoST admin can impersonate a user, so be sure
                you set a GhoST admin IAM token in the Authorization header if you set this
@@ -194,6 +180,10 @@ class GlobalSearchV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ScanResult` object
         """
 
+        if body is None:
+            raise ValueError('body must be provided')
+        if isinstance(body, SearchRequest):
+            body = convert_model(body)
         headers = {
             'x-request-id': x_request_id,
             'x-correlation-id': x_correlation_id,
@@ -212,19 +202,12 @@ class GlobalSearchV2(BaseService):
             'sort': convert_list(sort),
             'is_deleted': is_deleted,
             'is_reclaimed': is_reclaimed,
-            'is_public': is_public,
             'impersonate_user': impersonate_user,
             'can_tag': can_tag,
             'is_project_resource': is_project_resource,
         }
 
-        data = {
-            'query': query,
-            'fields': fields,
-            'search_cursor': search_cursor,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
+        data = json.dumps(body)
         headers['content-type'] = 'application/json'
 
         if 'headers' in kwargs:
@@ -261,7 +244,6 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
-
     class IsReclaimed(str, Enum):
         """
         Determines if reclaimed documents should be included in result set or not.
@@ -273,18 +255,6 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
-
-    class IsPublic(str, Enum):
-        """
-        Determines if public resources should be included in result set or not. Possible
-        values are false (default), true or any. If false, do not search public resources;
-        if true, search only public resources; If any, search also public resources.
-        """
-
-        TRUE = 'true'
-        FALSE = 'false'
-        ANY = 'any'
-
     class CanTag(str, Enum):
         """
         Determines if the result set must return the resources that the user can tag or
@@ -296,7 +266,6 @@ class SearchEnums:
 
         TRUE = 'true'
         FALSE = 'false'
-
     class IsProjectResource(str, Enum):
         """
         Determines if documents belonging to Project family should be included in result
@@ -322,6 +291,8 @@ class ResultItem:
     other properties that depend on the resource type.
 
     :param str crn: Resource identifier in CRN format.
+
+    This type supports additional properties of type object.
     """
 
     # The set of defined properties for the class
@@ -330,17 +301,22 @@ class ResultItem:
     def __init__(
         self,
         crn: str,
-        **kwargs,
+        **kwargs: Optional[object],
     ) -> None:
         """
         Initialize a ResultItem object.
 
         :param str crn: Resource identifier in CRN format.
-        :param **kwargs: (optional) Any additional properties.
+        :param object **kwargs: (optional) Additional properties of type object
         """
         self.crn = crn
-        for _key, _value in kwargs.items():
-            setattr(self, _key, _value)
+        for k, v in kwargs.items():
+            if k not in ResultItem._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(k))
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ResultItem':
@@ -350,7 +326,11 @@ class ResultItem:
             args['crn'] = crn
         else:
             raise ValueError('Required property \'crn\' not present in ResultItem JSON')
-        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        for k, v in _dict.items():
+            if k not in cls._properties:
+                    if not isinstance(v, object):
+                        raise ValueError('Value for additional property {} must be of type object'.format(k))
+                    args[k] = v
         return cls(**args)
 
     @classmethod
@@ -363,8 +343,8 @@ class ResultItem:
         _dict = {}
         if hasattr(self, 'crn') and self.crn is not None:
             _dict['crn'] = self.crn
-        for _key in [k for k in vars(self).keys() if k not in ResultItem._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in ResultItem._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def _to_dict(self):
@@ -372,21 +352,23 @@ class ResultItem:
         return self.to_dict()
 
     def get_properties(self) -> Dict:
-        """Return a dictionary of arbitrary properties from this instance of ResultItem"""
+        """Return the additional properties from this instance of ResultItem in the form of a dict."""
         _dict = {}
-
-        for _key in [k for k in vars(self).keys() if k not in ResultItem._properties]:
-            _dict[_key] = getattr(self, _key)
+        for k in [_k for _k in vars(self).keys() if _k not in ResultItem._properties]:
+            _dict[k] = getattr(self, k)
         return _dict
 
     def set_properties(self, _dict: dict):
-        """Set a dictionary of arbitrary properties to this instance of ResultItem"""
-        for _key in [k for k in vars(self).keys() if k not in ResultItem._properties]:
-            delattr(self, _key)
-
-        for _key, _value in _dict.items():
-            if _key not in ResultItem._properties:
-                setattr(self, _key, _value)
+        """Set a dictionary of additional properties in this instance of ResultItem"""
+        for k in [_k for _k in vars(self).keys() if _k not in ResultItem._properties]:
+            delattr(self, k)
+        for k, v in _dict.items():
+            if k not in ResultItem._properties:
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                setattr(self, k, v)
+            else:
+                raise ValueError('Property {} cannot be specified as an additional property'.format(k))
 
     def __str__(self) -> str:
         """Return a `str` version of this ResultItem object."""
@@ -493,5 +475,195 @@ class ScanResult:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'ScanResult') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class SearchRequest:
+    """
+    SearchRequest.
+
+    """
+
+    def __init__(
+        self,
+    ) -> None:
+        """
+        Initialize a SearchRequest object.
+
+        """
+        msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
+            ", ".join(['SearchRequestFirstCall', 'SearchRequestNextCall'])
+        )
+        raise Exception(msg)
+
+
+class SearchRequestFirstCall(SearchRequest):
+    """
+    The request body when calling the first time the v3 search.
+
+    :param str query: The Lucene-formatted query string. Default to '*' if not set.
+    :param List[str] fields: (optional) The list of the fields returned by the
+          search. By default, the returned fields are the `account_id`, `name`, `type`,
+          `family`, and `crn`. For all queries, `crn` is always returned. You may set
+          `"fields": ["*"]` to discover the set of fields available to request.
+    """
+
+    def __init__(
+        self,
+        query: str,
+        *,
+        fields: Optional[List[str]] = None,
+    ) -> None:
+        """
+        Initialize a SearchRequestFirstCall object.
+
+        :param str query: The Lucene-formatted query string. Default to '*' if not
+               set.
+        :param List[str] fields: (optional) The list of the fields returned by the
+               search. By default, the returned fields are the `account_id`, `name`,
+               `type`, `family`, and `crn`. For all queries, `crn` is always returned. You
+               may set `"fields": ["*"]` to discover the set of fields available to
+               request.
+        """
+        # pylint: disable=super-init-not-called
+        self.query = query
+        self.fields = fields
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SearchRequestFirstCall':
+        """Initialize a SearchRequestFirstCall object from a json dictionary."""
+        args = {}
+        if (query := _dict.get('query')) is not None:
+            args['query'] = query
+        else:
+            raise ValueError('Required property \'query\' not present in SearchRequestFirstCall JSON')
+        if (fields := _dict.get('fields')) is not None:
+            args['fields'] = fields
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SearchRequestFirstCall object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'query') and self.query is not None:
+            _dict['query'] = self.query
+        if hasattr(self, 'fields') and self.fields is not None:
+            _dict['fields'] = self.fields
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SearchRequestFirstCall object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SearchRequestFirstCall') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SearchRequestFirstCall') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class SearchRequestNextCall(SearchRequest):
+    """
+    The request body when calling the v3 search as second or next time, in order to
+    retrieve further items.
+
+    :param str search_cursor: An opaque cursor that is returned on each call and
+          that must be set on the subsequent call to get the next batch of items. If the
+          search returns no items, then the search_cursor is not present in the response.
+          NOTE: any other properties present in the body will be ignored.
+    :param str query: (optional) The Lucene-formatted query string. Default to '*'
+          if not set.
+    :param List[str] fields: (optional) The list of the fields returned by the
+          search. By default, the returned fields are the `account_id`, `name`, `type`,
+          `family`, and `crn`. For all queries, `crn` is always returned. You may set
+          `"fields": ["*"]` to discover the set of fields available to request.
+    """
+
+    def __init__(
+        self,
+        search_cursor: str,
+        *,
+        query: Optional[str] = None,
+        fields: Optional[List[str]] = None,
+    ) -> None:
+        """
+        Initialize a SearchRequestNextCall object.
+
+        :param str search_cursor: An opaque cursor that is returned on each call
+               and that must be set on the subsequent call to get the next batch of items.
+               If the search returns no items, then the search_cursor is not present in
+               the response. NOTE: any other properties present in the body will be
+               ignored.
+        :param str query: (optional) The Lucene-formatted query string. Default to
+               '*' if not set.
+        :param List[str] fields: (optional) The list of the fields returned by the
+               search. By default, the returned fields are the `account_id`, `name`,
+               `type`, `family`, and `crn`. For all queries, `crn` is always returned. You
+               may set `"fields": ["*"]` to discover the set of fields available to
+               request.
+        """
+        # pylint: disable=super-init-not-called
+        self.search_cursor = search_cursor
+        self.query = query
+        self.fields = fields
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SearchRequestNextCall':
+        """Initialize a SearchRequestNextCall object from a json dictionary."""
+        args = {}
+        if (search_cursor := _dict.get('search_cursor')) is not None:
+            args['search_cursor'] = search_cursor
+        else:
+            raise ValueError('Required property \'search_cursor\' not present in SearchRequestNextCall JSON')
+        if (query := _dict.get('query')) is not None:
+            args['query'] = query
+        if (fields := _dict.get('fields')) is not None:
+            args['fields'] = fields
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SearchRequestNextCall object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'search_cursor') and self.search_cursor is not None:
+            _dict['search_cursor'] = self.search_cursor
+        if hasattr(self, 'query') and self.query is not None:
+            _dict['query'] = self.query
+        if hasattr(self, 'fields') and self.fields is not None:
+            _dict['fields'] = self.fields
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SearchRequestNextCall object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SearchRequestNextCall') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SearchRequestNextCall') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.global_search_v2 import *
 
 
-_service = GlobalSearchV2(authenticator=NoAuthAuthenticator())
+_service = GlobalSearchV2(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://api.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -42,15 +44,8 @@ def preprocess_url(operation_path: str):
     The returned request URL is used to register the mock response so it needs
     to match the request URL that is formed by the requests library.
     """
-    # First, unquote the path since it might have some quoted/escaped characters in it
-    # due to how the generator inserts the operation paths into the unit test code.
-    operation_path = urllib.parse.unquote(operation_path)
 
-    # Next, quote the path using urllib so that we approximate what will
-    # happen during request processing.
-    operation_path = urllib.parse.quote(operation_path, safe='/')
-
-    # Finally, form the request URL from the base URL and operation path.
+    # Form the request URL from the base URL and operation path.
     request_url = _base_url + operation_path
 
     # If the request url does NOT end with a /, then just return it as-is.
@@ -115,10 +110,13 @@ class TestSearch:
             status=200,
         )
 
+        # Construct a dict representation of a SearchRequestFirstCall model
+        search_request_model = {}
+        search_request_model['query'] = 'testString'
+        search_request_model['fields'] = ['testString']
+
         # Set up parameter values
-        query = 'testString'
-        fields = ['testString']
-        search_cursor = 'testString'
+        body = search_request_model
         x_request_id = 'testString'
         x_correlation_id = 'testString'
         account_id = 'testString'
@@ -127,16 +125,13 @@ class TestSearch:
         sort = ['testString']
         is_deleted = 'false'
         is_reclaimed = 'false'
-        is_public = 'false'
         impersonate_user = 'testString'
         can_tag = 'false'
         is_project_resource = 'false'
 
         # Invoke method
         response = _service.search(
-            query=query,
-            fields=fields,
-            search_cursor=search_cursor,
+            body,
             x_request_id=x_request_id,
             x_correlation_id=x_correlation_id,
             account_id=account_id,
@@ -145,7 +140,6 @@ class TestSearch:
             sort=sort,
             is_deleted=is_deleted,
             is_reclaimed=is_reclaimed,
-            is_public=is_public,
             impersonate_user=impersonate_user,
             can_tag=can_tag,
             is_project_resource=is_project_resource,
@@ -164,15 +158,12 @@ class TestSearch:
         assert 'sort={}'.format(','.join(sort)) in query_string
         assert 'is_deleted={}'.format(is_deleted) in query_string
         assert 'is_reclaimed={}'.format(is_reclaimed) in query_string
-        assert 'is_public={}'.format(is_public) in query_string
         assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'can_tag={}'.format(can_tag) in query_string
         assert 'is_project_resource={}'.format(is_project_resource) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['query'] == 'testString'
-        assert req_body['fields'] == ['testString']
-        assert req_body['search_cursor'] == 'testString'
+        assert req_body == body
 
     def test_search_all_params_with_retries(self):
         # Enable retries and run test_search_all_params.
@@ -199,16 +190,17 @@ class TestSearch:
             status=200,
         )
 
+        # Construct a dict representation of a SearchRequestFirstCall model
+        search_request_model = {}
+        search_request_model['query'] = 'testString'
+        search_request_model['fields'] = ['testString']
+
         # Set up parameter values
-        query = 'testString'
-        fields = ['testString']
-        search_cursor = 'testString'
+        body = search_request_model
 
         # Invoke method
         response = _service.search(
-            query=query,
-            fields=fields,
-            search_cursor=search_cursor,
+            body,
             headers={},
         )
 
@@ -217,9 +209,7 @@ class TestSearch:
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['query'] == 'testString'
-        assert req_body['fields'] == ['testString']
-        assert req_body['search_cursor'] == 'testString'
+        assert req_body == body
 
     def test_search_required_params_with_retries(self):
         # Enable retries and run test_search_required_params.
@@ -229,6 +219,48 @@ class TestSearch:
         # Disable retries and run test_search_required_params.
         _service.disable_retries()
         self.test_search_required_params()
+
+    @responses.activate
+    def test_search_value_error(self):
+        """
+        test_search_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v3/resources/search')
+        mock_response = '{"search_cursor": "search_cursor", "limit": 5, "items": [{"crn": "crn"}]}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a SearchRequestFirstCall model
+        search_request_model = {}
+        search_request_model['query'] = 'testString'
+        search_request_model['fields'] = ['testString']
+
+        # Set up parameter values
+        body = search_request_model
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "body": body,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.search(**req_copy)
+
+    def test_search_value_error_with_retries(self):
+        # Enable retries and run test_search_value_error.
+        _service.enable_retries()
+        self.test_search_value_error()
+
+        # Disable retries and run test_search_value_error.
+        _service.disable_retries()
+        self.test_search_value_error()
 
 
 # endregion
@@ -281,7 +313,7 @@ class TestModel_ResultItem:
         expected_dict = {'foo': 'testString'}
         result_item_model.set_properties(expected_dict)
         actual_dict = result_item_model.get_properties()
-        assert actual_dict == expected_dict
+        assert actual_dict.keys() == expected_dict.keys()
 
 
 class TestModel_ScanResult:
@@ -320,6 +352,69 @@ class TestModel_ScanResult:
         # Convert model instance back to dict and verify no loss of data
         scan_result_model_json2 = scan_result_model.to_dict()
         assert scan_result_model_json2 == scan_result_model_json
+
+
+class TestModel_SearchRequestFirstCall:
+    """
+    Test Class for SearchRequestFirstCall
+    """
+
+    def test_search_request_first_call_serialization(self):
+        """
+        Test serialization/deserialization for SearchRequestFirstCall
+        """
+
+        # Construct a json representation of a SearchRequestFirstCall model
+        search_request_first_call_model_json = {}
+        search_request_first_call_model_json['query'] = 'testString'
+        search_request_first_call_model_json['fields'] = ['testString']
+
+        # Construct a model instance of SearchRequestFirstCall by calling from_dict on the json representation
+        search_request_first_call_model = SearchRequestFirstCall.from_dict(search_request_first_call_model_json)
+        assert search_request_first_call_model != False
+
+        # Construct a model instance of SearchRequestFirstCall by calling from_dict on the json representation
+        search_request_first_call_model_dict = SearchRequestFirstCall.from_dict(search_request_first_call_model_json).__dict__
+        search_request_first_call_model2 = SearchRequestFirstCall(**search_request_first_call_model_dict)
+
+        # Verify the model instances are equivalent
+        assert search_request_first_call_model == search_request_first_call_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        search_request_first_call_model_json2 = search_request_first_call_model.to_dict()
+        assert search_request_first_call_model_json2 == search_request_first_call_model_json
+
+
+class TestModel_SearchRequestNextCall:
+    """
+    Test Class for SearchRequestNextCall
+    """
+
+    def test_search_request_next_call_serialization(self):
+        """
+        Test serialization/deserialization for SearchRequestNextCall
+        """
+
+        # Construct a json representation of a SearchRequestNextCall model
+        search_request_next_call_model_json = {}
+        search_request_next_call_model_json['search_cursor'] = 'testString'
+        search_request_next_call_model_json['query'] = 'testString'
+        search_request_next_call_model_json['fields'] = ['testString']
+
+        # Construct a model instance of SearchRequestNextCall by calling from_dict on the json representation
+        search_request_next_call_model = SearchRequestNextCall.from_dict(search_request_next_call_model_json)
+        assert search_request_next_call_model != False
+
+        # Construct a model instance of SearchRequestNextCall by calling from_dict on the json representation
+        search_request_next_call_model_dict = SearchRequestNextCall.from_dict(search_request_next_call_model_json).__dict__
+        search_request_next_call_model2 = SearchRequestNextCall(**search_request_next_call_model_dict)
+
+        # Verify the model instances are equivalent
+        assert search_request_next_call_model == search_request_next_call_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        search_request_next_call_model_json2 = search_request_next_call_model.to_dict()
+        assert search_request_next_call_model_json2 == search_request_next_call_model_json
 
 
 # endregion
