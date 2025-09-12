@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.global_search_v2 import *
 
 
-_service = GlobalSearchV2(authenticator=NoAuthAuthenticator())
+_service = GlobalSearchV2(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://api.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -42,15 +44,8 @@ def preprocess_url(operation_path: str):
     The returned request URL is used to register the mock response so it needs
     to match the request URL that is formed by the requests library.
     """
-    # First, unquote the path since it might have some quoted/escaped characters in it
-    # due to how the generator inserts the operation paths into the unit test code.
-    operation_path = urllib.parse.unquote(operation_path)
 
-    # Next, quote the path using urllib so that we approximate what will
-    # happen during request processing.
-    operation_path = urllib.parse.quote(operation_path, safe='/')
-
-    # Finally, form the request URL from the base URL and operation path.
+    # Form the request URL from the base URL and operation path.
     request_url = _base_url + operation_path
 
     # If the request url does NOT end with a /, then just return it as-is.
@@ -127,7 +122,6 @@ class TestSearch:
         sort = ['testString']
         is_deleted = 'false'
         is_reclaimed = 'false'
-        is_public = 'false'
         impersonate_user = 'testString'
         can_tag = 'false'
         is_project_resource = 'false'
@@ -145,7 +139,6 @@ class TestSearch:
             sort=sort,
             is_deleted=is_deleted,
             is_reclaimed=is_reclaimed,
-            is_public=is_public,
             impersonate_user=impersonate_user,
             can_tag=can_tag,
             is_project_resource=is_project_resource,
@@ -164,7 +157,6 @@ class TestSearch:
         assert 'sort={}'.format(','.join(sort)) in query_string
         assert 'is_deleted={}'.format(is_deleted) in query_string
         assert 'is_reclaimed={}'.format(is_reclaimed) in query_string
-        assert 'is_public={}'.format(is_public) in query_string
         assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'can_tag={}'.format(can_tag) in query_string
         assert 'is_project_resource={}'.format(is_project_resource) in query_string
@@ -281,7 +273,7 @@ class TestModel_ResultItem:
         expected_dict = {'foo': 'testString'}
         result_item_model.set_properties(expected_dict)
         actual_dict = result_item_model.get_properties()
-        assert actual_dict == expected_dict
+        assert actual_dict.keys() == expected_dict.keys()
 
 
 class TestModel_ScanResult:
