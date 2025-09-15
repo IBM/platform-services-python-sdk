@@ -61,9 +61,7 @@ class GlobalSearchV2(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
@@ -255,6 +253,7 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
+
     class IsReclaimed(str, Enum):
         """
         Determines if reclaimed documents should be included in result set or not.
@@ -266,6 +265,7 @@ class SearchEnums:
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
+
     class CanTag(str, Enum):
         """
         Determines if the result set must return the resources that the user can tag or
@@ -277,6 +277,7 @@ class SearchEnums:
 
         TRUE = 'true'
         FALSE = 'false'
+
     class IsProjectResource(str, Enum):
         """
         Determines if documents belonging to Project family should be included in result
@@ -339,9 +340,9 @@ class ResultItem:
             raise ValueError('Required property \'crn\' not present in ResultItem JSON')
         for k, v in _dict.items():
             if k not in cls._properties:
-                    if not isinstance(v, object):
-                        raise ValueError('Value for additional property {} must be of type object'.format(k))
-                    args[k] = v
+                if not isinstance(v, object):
+                    raise ValueError('Value for additional property {} must be of type object'.format(k))
+                args[k] = v
         return cls(**args)
 
     @classmethod
