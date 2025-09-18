@@ -1,3 +1,10 @@
+## [0.68.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.68.2...v0.68.3) (2025-09-18)
+
+
+### Bug Fixes
+
+* **Global Search:** regenerated services with latest API definition ([#304](https://github.com/IBM/platform-services-python-sdk/issues/304)) ([66585cf](https://github.com/IBM/platform-services-python-sdk/commit/66585cfb0305d78a0b68f80529caa7380edd0842))
+
 ## [0.68.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.68.1...v0.68.2) (2025-08-22)
 
 
