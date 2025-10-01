@@ -80,6 +80,8 @@ class TestIamIdentityV1:
     @classmethod
     def setup_class(cls):
         if os.path.exists(config_file):
+            now = str(round(time.time() * 1000))
+
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
             cls.iam_identity_service = IamIdentityV1.new_instance()
@@ -92,27 +94,24 @@ class TestIamIdentityV1:
 
             cls.account_id = cls.config['ACCOUNT_ID']
             cls.iam_id = cls.config['IAM_ID']
-            cls.iam_id_member = cls.config['IAM_ID_MEMBER']
             cls.apikey = cls.config['APIKEY']
             cls.enterprise_account_id = cls.config['ENTERPRISE_ACCOUNT_ID']
             cls.enterprise_subaccount_id = cls.config['ENTERPRISE_SUBACCOUNT_ID']
-            cls.iam_id_for_preferences = cls.config['IAM_ID_FOR_PREFERENCES']
 
             assert cls.account_id is not None
             assert cls.iam_id is not None
-            assert cls.iam_id_member is not None
             assert cls.apikey is not None
 
-            cls.apikey_name = 'Python-SDK-IT-ApiKey'
-            cls.serviceid_name = 'Python-SDK-IT-ServiceId'
-            cls.serviceid_group_name = 'Python-SDK-IT-ServiceId-group'
-            cls.profile_name1 = 'Python-SDK-IT-Profile1'
-            cls.profile_name2 = 'Python-SDK-IT-Profile2'
+            cls.apikey_name = 'Python-SDK-IT-ApiKey-' + now
+            cls.serviceid_name = 'Python-SDK-IT-ServiceId-' + now
+            cls.serviceid_group_name = 'Python-SDK-IT-ServiceId-group-' + now
+            cls.profile_name1 = 'Python-SDK-IT-Profile1-' + now
+            cls.profile_name2 = 'Python-SDK-IT-Profile2-' + now
             cls.claimRule_type = 'Profile-SAML'
             cls.realm_name = 'https://sdk.test.realm/1234'
-            cls.profile_template_name = 'Python-SDK-IT-TrustedProfileTemplate'
-            cls.profile_template_profile_name = 'Python-SDK-IT-TrustedProfile-FromTemplate'
-            cls.account_settings_template_name = 'Python-SDK-IT-TrustedProfileTemplate'
+            cls.profile_template_name = 'Python-SDK-IT-TrustedProfileTemplate-' + now
+            cls.profile_template_profile_name = 'Python-SDK-IT-TrustedProfile-FromTemplate-' + now
+            cls.account_settings_template_name = 'Python-SDK-IT-TrustedProfileTemplate-' + now
             cls.service = 'console'
             cls.value_string = '/billing'
             cls.preference_id1 = 'landing_page'
@@ -413,7 +412,7 @@ class TestIamIdentityV1:
         pagetoken_present = True
         while pagetoken_present:
             list_api_keys_response = self.iam_identity_service.list_api_keys(
-                account_id=self.account_id, iam_id=self.iam_id, pagesize=1, pagetoken=pagetoken
+                account_id=self.account_id, iam_id=self.iam_id, pagesize=100, pagetoken=pagetoken
             )
             assert list_api_keys_response.get_status_code() == 200
             api_key_list = list_api_keys_response.get_result()
@@ -442,7 +441,7 @@ class TestIamIdentityV1:
         filter = "name co \"Python\""
         while pagetoken_present:
             list_api_keys_response = self.iam_identity_service.list_api_keys(
-                account_id=self.account_id, iam_id=self.iam_id, pagesize=1, pagetoken=pagetoken, filter=filter
+                account_id=self.account_id, iam_id=self.iam_id, pagesize=100, pagetoken=pagetoken, filter=filter
             )
             assert list_api_keys_response.get_status_code() == 200
             api_key_list = list_api_keys_response.get_result()
@@ -778,7 +777,12 @@ class TestIamIdentityV1:
 
         global profile_id2
         profile_id2 = profile['id']
+
+        global iam_id_for_preferences
+        iam_id_for_preferences = profile['iam_id']
+
         assert profile_id2 is not None
+        assert iam_id_for_preferences is not None
 
     @needscredentials
     def test_get_profile(self):
@@ -812,7 +816,7 @@ class TestIamIdentityV1:
         pagetoken_present = True
         while pagetoken_present:
             list_profiles_response = self.iam_identity_service.list_profiles(
-                account_id=self.account_id, pagesize=1, pagetoken=pagetoken, include_history=False
+                account_id=self.account_id, pagesize=100, pagetoken=pagetoken, include_history=False
             )
             assert list_profiles_response.get_status_code() == 200
             profile_list = list_profiles_response.get_result()
@@ -838,7 +842,7 @@ class TestIamIdentityV1:
         filter = "name co \"Python\""
         while pagetoken_present:
             list_profiles_response = self.iam_identity_service.list_profiles(
-                account_id=self.account_id, pagesize=1, pagetoken=pagetoken, include_history=False, filter=filter
+                account_id=self.account_id, pagesize=100, pagetoken=pagetoken, include_history=False, filter=filter
             )
             assert list_profiles_response.get_status_code() == 200
             profile_list = list_profiles_response.get_result()
@@ -1156,15 +1160,19 @@ class TestIamIdentityV1:
 
         assert len(identifiers) == 1
 
+        # delete again so we can set again in future test
+        self.iam_identity_service.delete_profile_identity(
+            profile_id=profile_id2, identity_type="user", identifier_id=self.iam_id
+        )
+
     @needscredentials
     def test_set_identity(self):
-        identifiers = []
         accounts = [self.account_id]
 
         get_identity_response = self.iam_identity_service.set_profile_identity(
             profile_id=profile_id2,
             identity_type="user",
-            identifier=self.iam_id_member,
+            identifier=self.iam_id,
             type="user",
             accounts=accounts,
             description="Identity description",
@@ -1176,10 +1184,8 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_identity(self):
-        identifiers = []
-
         get_identity_response = self.iam_identity_service.get_profile_identity(
-            profile_id=profile_id2, identity_type="user", identifier_id=self.iam_id_member
+            profile_id=profile_id2, identity_type="user", identifier_id=self.iam_id
         )
         assert get_identity_response.get_status_code() == 200
         Identity_list = get_identity_response.get_result()
@@ -1188,23 +1194,10 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_delete_identity(self):
-        identifiers = []
-
         delete_identity_response = self.iam_identity_service.delete_profile_identity(
-            profile_id=profile_id2, identity_type="user", identifier_id=self.iam_id_member
+            profile_id=profile_id2, identity_type="user", identifier_id=self.iam_id
         )
         assert delete_identity_response.get_status_code() == 204
-
-    @needscredentials
-    def test_delete_profile2(self):
-        assert profile_id2 is not None
-
-        delete_profile_response = self.iam_identity_service.delete_profile(profile_id=profile_id2)
-
-        assert delete_profile_response.get_status_code() == 204
-
-        profile = self.get_profile(self.iam_identity_service, profile_id2)
-        assert profile is None
 
     def test_create_profile_bad_request(self):
         with pytest.raises(ApiException) as e:
@@ -1299,7 +1292,7 @@ class TestIamIdentityV1:
         assert account_setting_etag is None
 
         get_account_settings_response = self.iam_identity_service.get_account_settings(
-            account_id=self.account_id, include_history=False
+            account_id=self.account_id, include_history=True
         )
 
         assert get_account_settings_response.get_status_code() == 200
@@ -1309,6 +1302,8 @@ class TestIamIdentityV1:
         assert settings["account_id"] == self.account_id
         assert settings["restrict_create_service_id"] is not None
         assert settings["restrict_create_platform_apikey"] is not None
+        # assert settings["restrict_user_list_visibility"] is not None
+        # assert settings["restrict_user_domains"] is not None
         assert settings["entity_tag"] is not None
         assert settings["mfa"] is not None
         assert settings["user_mfa"] is not None
@@ -1326,14 +1321,21 @@ class TestIamIdentityV1:
         assert account_setting_etag is not None
 
         account_settings_user_mfa = {}
-        account_settings_user_mfa['iam_id'] = self.iam_id_member
+        account_settings_user_mfa['iam_id'] = self.iam_id
         account_settings_user_mfa['mfa'] = 'NONE'
+
+        restrict_user_domain_item = {}
+        restrict_user_domain_item['realm_id'] = 'IBMid'
+        restrict_user_domain_item['restrict_invitation'] = False
+        restrict_user_domain_item['invitation_email_allow_patterns'] = ['*.*@company.com']
 
         update_account_settings_response = self.iam_identity_service.update_account_settings(
             if_match=account_setting_etag,
             account_id=self.account_id,
             restrict_create_service_id="NOT_RESTRICTED",
             restrict_create_platform_apikey="NOT_RESTRICTED",
+            restrict_user_list_visibility="NOT_RESTRICTED",
+            restrict_user_domains=[restrict_user_domain_item],
             # allowed_ip_addresses='testString',
             mfa='NONE',
             user_mfa=[account_settings_user_mfa],
@@ -1352,6 +1354,8 @@ class TestIamIdentityV1:
         assert settings["account_id"] == self.account_id
         assert settings["restrict_create_service_id"] == "NOT_RESTRICTED"
         assert settings["restrict_create_platform_apikey"] == "NOT_RESTRICTED"
+        assert settings["restrict_user_list_visibility"] == "NOT_RESTRICTED"
+        assert settings["restrict_user_domains"] is not None
         assert settings["entity_tag"] != account_setting_etag
         assert settings["mfa"] == "NONE"
         assert settings["user_mfa"] is not None
@@ -2026,11 +2030,11 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_update_preference_on_scope_account(self):
-        assert self.iam_id_for_preferences is not None
+        assert iam_id_for_preferences is not None
         assert self.preference_id1 is not None
 
         preference = self.iam_identity_service.update_preference_on_scope_account(
-            iam_id=self.iam_id_for_preferences,
+            iam_id=iam_id_for_preferences,
             account_id=self.account_id,
             service=self.service,
             preference_id=self.preference_id1,
@@ -2041,10 +2045,10 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_preferences_on_scope_account(self):
-        assert self.iam_id_for_preferences is not None
+        assert iam_id_for_preferences is not None
         assert self.preference_id1 is not None
         preference = self.iam_identity_service.get_preferences_on_scope_account(
-            iam_id=self.iam_id_for_preferences,
+            iam_id=iam_id_for_preferences,
             account_id=self.account_id,
             service=self.service,
             preference_id=self.preference_id1,
@@ -2054,22 +2058,33 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_all_preferences_on_scope_account(self):
-        assert self.iam_id_for_preferences is not None
+        assert iam_id_for_preferences is not None
         assert self.preference_id1 is not None
         preference = self.iam_identity_service.get_all_preferences_on_scope_account(
-            account_id=self.account_id, iam_id=self.iam_id_for_preferences
+            account_id=self.account_id, iam_id=iam_id_for_preferences
         ).get_result()
         print('\nget_all_preference_on_scope_account() response: ', json.dumps(preference, indent=2))
         assert preference is not None
 
     @needscredentials
     def test_delete_preferences_on_scope_account(self):
-        assert self.iam_id_for_preferences is not None
+        assert iam_id_for_preferences is not None
         assert self.preference_id1 is not None
         preference = self.iam_identity_service.delete_preferences_on_scope_account(
-            iam_id=self.iam_id_for_preferences,
+            iam_id=iam_id_for_preferences,
             account_id=self.account_id,
             service=self.service,
             preference_id=self.preference_id1,
         )
         assert preference.get_status_code() == 204
+
+    @needscredentials
+    def test_delete_profile2(self):
+        assert profile_id2 is not None
+
+        delete_profile_response = self.iam_identity_service.delete_profile(profile_id=profile_id2)
+
+        assert delete_profile_response.get_status_code() == 204
+
+        profile = self.get_profile(self.iam_identity_service, profile_id2)
+        assert profile is None
