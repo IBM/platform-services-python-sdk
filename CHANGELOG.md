@@ -1,3 +1,10 @@
+# [0.69.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.68.3...v0.69.0) (2025-10-01)
+
+
+### Features
+
+* **IAM Identity:** add new account settings ([#306](https://github.com/IBM/platform-services-python-sdk/issues/306)) ([eb18405](https://github.com/IBM/platform-services-python-sdk/commit/eb1840508ced7e7bb3dfcf3d3422142e251cb15c))
+
 ## [0.68.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.68.2...v0.68.3) (2025-09-18)
 
 
