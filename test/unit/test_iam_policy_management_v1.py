@@ -4293,7 +4293,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -4352,7 +4352,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -4397,7 +4397,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -4436,8 +4436,8 @@ class TestListPolicyAssignments:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/policy_assignments')
-        mock_response1 = '{"next":{"start":"1"},"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
-        mock_response2 = '{"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -4477,8 +4477,8 @@ class TestListPolicyAssignments:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/policy_assignments')
-        mock_response1 = '{"next":{"start":"1"},"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
-        mock_response2 = '{"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"target":{"type":"Account","id":"id"},"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","resources":[{"target":{"type":"Account","id":"id"},"policy":{"resource_created":{"id":"id"},"status":"status","error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"subject":{"id":"id","type":"iam_id"},"template":{"id":"id","version":"version"},"status":"in_progress"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -4521,7 +4521,7 @@ class TestCreatePolicyTemplateAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.POST,
             url,
@@ -4583,7 +4583,7 @@ class TestCreatePolicyTemplateAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.POST,
             url,
@@ -4643,7 +4643,7 @@ class TestCreatePolicyTemplateAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}]}'
         responses.add(
             responses.POST,
             url,
@@ -4700,7 +4700,7 @@ class TestGetPolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
         responses.add(
             responses.GET,
             url,
@@ -4744,7 +4744,7 @@ class TestGetPolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
         responses.add(
             responses.GET,
             url,
@@ -4789,7 +4789,7 @@ class TestUpdatePolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
         responses.add(
             responses.PATCH,
             url,
@@ -4840,7 +4840,7 @@ class TestUpdatePolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
+        mock_response = '{"target": {"type": "Account", "id": "id"}, "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": {"type": "Account", "id": "id"}, "policy": {"resource_created": {"id": "id"}, "status": "status", "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "subject": {"id": "id", "type": "iam_id"}, "template": {"id": "id", "version": "version"}, "status": "in_progress"}'
         responses.add(
             responses.PATCH,
             url,
@@ -6644,7 +6644,7 @@ class TestListActionControlAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/action_control_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
         responses.add(
             responses.GET,
             url,
@@ -6700,7 +6700,7 @@ class TestListActionControlAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/action_control_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
         responses.add(
             responses.GET,
             url,
@@ -6742,7 +6742,7 @@ class TestListActionControlAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/action_control_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
         responses.add(
             responses.GET,
             url,
@@ -6779,8 +6779,8 @@ class TestListActionControlAssignments:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/action_control_assignments')
-        mock_response1 = '{"next":{"start":"1"},"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
-        mock_response2 = '{"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -6819,8 +6819,8 @@ class TestListActionControlAssignments:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/action_control_assignments')
-        mock_response1 = '{"next":{"start":"1"},"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
-        mock_response2 = '{"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"trace":"trace","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}],"status_code":0}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"action_control":{"resource_created":{"id":"id"},"error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -6862,7 +6862,7 @@ class TestCreateActionControlTemplateAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/action_control_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
         responses.add(
             responses.POST,
             url,
@@ -6918,7 +6918,7 @@ class TestCreateActionControlTemplateAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/action_control_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
         responses.add(
             responses.POST,
             url,
@@ -6972,7 +6972,7 @@ class TestCreateActionControlTemplateAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/action_control_assignments')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
         responses.add(
             responses.POST,
             url,
@@ -7027,7 +7027,7 @@ class TestGetActionControlAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/action_control_assignments/testString')
-        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
         responses.add(
             responses.GET,
             url,
@@ -7065,7 +7065,7 @@ class TestGetActionControlAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/action_control_assignments/testString')
-        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
         responses.add(
             responses.GET,
             url,
@@ -7108,7 +7108,7 @@ class TestUpdateActionControlAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/action_control_assignments/testString')
-        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
         responses.add(
             responses.PATCH,
             url,
@@ -7153,7 +7153,7 @@ class TestUpdateActionControlAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/action_control_assignments/testString')
-        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 0}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "action_control": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
         responses.add(
             responses.PATCH,
             url,
@@ -7266,6 +7266,2010 @@ class TestDeleteActionControlAssignment:
 # endregion
 ##############################################################################
 # End of Service: ActionControlAssignments
+##############################################################################
+
+##############################################################################
+# Start of Service: RoleTemplates
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamPolicyManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamPolicyManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamPolicyManagementV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListRoleTemplates:
+    """
+    Test Class for list_role_templates
+    """
+
+    @responses.activate
+    def test_list_role_templates_all_params(self):
+        """
+        list_role_templates()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "role_templates": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        accept_language = 'default'
+        name = 'testString'
+        role_name = 'testString'
+        role_service_name = 'testString'
+        state = 'active'
+        limit = 50
+        start = 'testString'
+
+        # Invoke method
+        response = _service.list_role_templates(
+            account_id,
+            accept_language=accept_language,
+            name=name,
+            role_name=role_name,
+            role_service_name=role_service_name,
+            state=state,
+            limit=limit,
+            start=start,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'name={}'.format(name) in query_string
+        assert 'role_name={}'.format(role_name) in query_string
+        assert 'role_service_name={}'.format(role_service_name) in query_string
+        assert 'state={}'.format(state) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+    def test_list_role_templates_all_params_with_retries(self):
+        # Enable retries and run test_list_role_templates_all_params.
+        _service.enable_retries()
+        self.test_list_role_templates_all_params()
+
+        # Disable retries and run test_list_role_templates_all_params.
+        _service.disable_retries()
+        self.test_list_role_templates_all_params()
+
+    @responses.activate
+    def test_list_role_templates_required_params(self):
+        """
+        test_list_role_templates_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "role_templates": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.list_role_templates(
+            account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+
+    def test_list_role_templates_required_params_with_retries(self):
+        # Enable retries and run test_list_role_templates_required_params.
+        _service.enable_retries()
+        self.test_list_role_templates_required_params()
+
+        # Disable retries and run test_list_role_templates_required_params.
+        _service.disable_retries()
+        self.test_list_role_templates_required_params()
+
+    @responses.activate
+    def test_list_role_templates_value_error(self):
+        """
+        test_list_role_templates_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "role_templates": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_role_templates(**req_copy)
+
+    def test_list_role_templates_value_error_with_retries(self):
+        # Enable retries and run test_list_role_templates_value_error.
+        _service.enable_retries()
+        self.test_list_role_templates_value_error()
+
+        # Disable retries and run test_list_role_templates_value_error.
+        _service.disable_retries()
+        self.test_list_role_templates_value_error()
+
+    @responses.activate
+    def test_list_role_templates_with_pager_get_next(self):
+        """
+        test_list_role_templates_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/role_templates')
+        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"role_templates":[{"name":"name","description":"description","account_id":"account_id","committed":false,"role":{"name":"name","display_name":"display_name","service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"role_templates":[{"name":"name","description":"description","account_id":"account_id","committed":false,"role":{"name":"name","display_name":"display_name","service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = RoleTemplatesPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            name='testString',
+            role_name='testString',
+            role_service_name='testString',
+            state='active',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_role_templates_with_pager_get_all(self):
+        """
+        test_list_role_templates_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/role_templates')
+        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"role_templates":[{"name":"name","description":"description","account_id":"account_id","committed":false,"role":{"name":"name","display_name":"display_name","service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"role_templates":[{"name":"name","description":"description","account_id":"account_id","committed":false,"role":{"name":"name","display_name":"display_name","service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = RoleTemplatesPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            name='testString',
+            role_name='testString',
+            role_service_name='testString',
+            state='active',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+
+class TestCreateRoleTemplate:
+    """
+    Test Class for create_role_template
+    """
+
+    @responses.activate
+    def test_create_role_template_all_params(self):
+        """
+        create_role_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateRole model
+        template_role_model = {}
+        template_role_model['name'] = 'testString'
+        template_role_model['display_name'] = 'testString'
+        template_role_model['service_name'] = 'testString'
+        template_role_model['description'] = 'testString'
+        template_role_model['actions'] = ['testString']
+
+        # Set up parameter values
+        name = 'testString'
+        account_id = 'testString'
+        description = 'testString'
+        committed = True
+        role = template_role_model
+        accept_language = 'default'
+
+        # Invoke method
+        response = _service.create_role_template(
+            name,
+            account_id,
+            description=description,
+            committed=committed,
+            role=role,
+            accept_language=accept_language,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['account_id'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['committed'] == True
+        assert req_body['role'] == template_role_model
+
+    def test_create_role_template_all_params_with_retries(self):
+        # Enable retries and run test_create_role_template_all_params.
+        _service.enable_retries()
+        self.test_create_role_template_all_params()
+
+        # Disable retries and run test_create_role_template_all_params.
+        _service.disable_retries()
+        self.test_create_role_template_all_params()
+
+    @responses.activate
+    def test_create_role_template_required_params(self):
+        """
+        test_create_role_template_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateRole model
+        template_role_model = {}
+        template_role_model['name'] = 'testString'
+        template_role_model['display_name'] = 'testString'
+        template_role_model['service_name'] = 'testString'
+        template_role_model['description'] = 'testString'
+        template_role_model['actions'] = ['testString']
+
+        # Set up parameter values
+        name = 'testString'
+        account_id = 'testString'
+        description = 'testString'
+        committed = True
+        role = template_role_model
+
+        # Invoke method
+        response = _service.create_role_template(
+            name,
+            account_id,
+            description=description,
+            committed=committed,
+            role=role,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['account_id'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['committed'] == True
+        assert req_body['role'] == template_role_model
+
+    def test_create_role_template_required_params_with_retries(self):
+        # Enable retries and run test_create_role_template_required_params.
+        _service.enable_retries()
+        self.test_create_role_template_required_params()
+
+        # Disable retries and run test_create_role_template_required_params.
+        _service.disable_retries()
+        self.test_create_role_template_required_params()
+
+    @responses.activate
+    def test_create_role_template_value_error(self):
+        """
+        test_create_role_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateRole model
+        template_role_model = {}
+        template_role_model['name'] = 'testString'
+        template_role_model['display_name'] = 'testString'
+        template_role_model['service_name'] = 'testString'
+        template_role_model['description'] = 'testString'
+        template_role_model['actions'] = ['testString']
+
+        # Set up parameter values
+        name = 'testString'
+        account_id = 'testString'
+        description = 'testString'
+        committed = True
+        role = template_role_model
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "name": name,
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_role_template(**req_copy)
+
+    def test_create_role_template_value_error_with_retries(self):
+        # Enable retries and run test_create_role_template_value_error.
+        _service.enable_retries()
+        self.test_create_role_template_value_error()
+
+        # Disable retries and run test_create_role_template_value_error.
+        _service.disable_retries()
+        self.test_create_role_template_value_error()
+
+
+class TestGetRoleTemplate:
+    """
+    Test Class for get_role_template
+    """
+
+    @responses.activate
+    def test_get_role_template_all_params(self):
+        """
+        get_role_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        state = 'active'
+
+        # Invoke method
+        response = _service.get_role_template(
+            role_template_id,
+            state=state,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'state={}'.format(state) in query_string
+
+    def test_get_role_template_all_params_with_retries(self):
+        # Enable retries and run test_get_role_template_all_params.
+        _service.enable_retries()
+        self.test_get_role_template_all_params()
+
+        # Disable retries and run test_get_role_template_all_params.
+        _service.disable_retries()
+        self.test_get_role_template_all_params()
+
+    @responses.activate
+    def test_get_role_template_required_params(self):
+        """
+        test_get_role_template_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+
+        # Invoke method
+        response = _service.get_role_template(
+            role_template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_role_template_required_params_with_retries(self):
+        # Enable retries and run test_get_role_template_required_params.
+        _service.enable_retries()
+        self.test_get_role_template_required_params()
+
+        # Disable retries and run test_get_role_template_required_params.
+        _service.disable_retries()
+        self.test_get_role_template_required_params()
+
+    @responses.activate
+    def test_get_role_template_value_error(self):
+        """
+        test_get_role_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "role_template_id": role_template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_role_template(**req_copy)
+
+    def test_get_role_template_value_error_with_retries(self):
+        # Enable retries and run test_get_role_template_value_error.
+        _service.enable_retries()
+        self.test_get_role_template_value_error()
+
+        # Disable retries and run test_get_role_template_value_error.
+        _service.disable_retries()
+        self.test_get_role_template_value_error()
+
+
+class TestDeleteRoleTemplate:
+    """
+    Test Class for delete_role_template
+    """
+
+    @responses.activate
+    def test_delete_role_template_all_params(self):
+        """
+        delete_role_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_role_template(
+            role_template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_role_template_all_params_with_retries(self):
+        # Enable retries and run test_delete_role_template_all_params.
+        _service.enable_retries()
+        self.test_delete_role_template_all_params()
+
+        # Disable retries and run test_delete_role_template_all_params.
+        _service.disable_retries()
+        self.test_delete_role_template_all_params()
+
+    @responses.activate
+    def test_delete_role_template_value_error(self):
+        """
+        test_delete_role_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "role_template_id": role_template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_role_template(**req_copy)
+
+    def test_delete_role_template_value_error_with_retries(self):
+        # Enable retries and run test_delete_role_template_value_error.
+        _service.enable_retries()
+        self.test_delete_role_template_value_error()
+
+        # Disable retries and run test_delete_role_template_value_error.
+        _service.disable_retries()
+        self.test_delete_role_template_value_error()
+
+
+class TestCreateRoleTemplateVersion:
+    """
+    Test Class for create_role_template_version
+    """
+
+    @responses.activate
+    def test_create_role_template_version_all_params(self):
+        """
+        create_role_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateRole model
+        template_role_model = {}
+        template_role_model['name'] = 'testString'
+        template_role_model['display_name'] = 'testString'
+        template_role_model['service_name'] = 'testString'
+        template_role_model['description'] = 'testString'
+        template_role_model['actions'] = ['testString']
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        role = template_role_model
+        name = 'testString'
+        description = 'testString'
+        committed = True
+
+        # Invoke method
+        response = _service.create_role_template_version(
+            role_template_id,
+            role,
+            name=name,
+            description=description,
+            committed=committed,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['role'] == template_role_model
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['committed'] == True
+
+    def test_create_role_template_version_all_params_with_retries(self):
+        # Enable retries and run test_create_role_template_version_all_params.
+        _service.enable_retries()
+        self.test_create_role_template_version_all_params()
+
+        # Disable retries and run test_create_role_template_version_all_params.
+        _service.disable_retries()
+        self.test_create_role_template_version_all_params()
+
+    @responses.activate
+    def test_create_role_template_version_value_error(self):
+        """
+        test_create_role_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateRole model
+        template_role_model = {}
+        template_role_model['name'] = 'testString'
+        template_role_model['display_name'] = 'testString'
+        template_role_model['service_name'] = 'testString'
+        template_role_model['description'] = 'testString'
+        template_role_model['actions'] = ['testString']
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        role = template_role_model
+        name = 'testString'
+        description = 'testString'
+        committed = True
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "role_template_id": role_template_id,
+            "role": role,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_role_template_version(**req_copy)
+
+    def test_create_role_template_version_value_error_with_retries(self):
+        # Enable retries and run test_create_role_template_version_value_error.
+        _service.enable_retries()
+        self.test_create_role_template_version_value_error()
+
+        # Disable retries and run test_create_role_template_version_value_error.
+        _service.disable_retries()
+        self.test_create_role_template_version_value_error()
+
+
+class TestListRoleTemplateVersions:
+    """
+    Test Class for list_role_template_versions
+    """
+
+    @responses.activate
+    def test_list_role_template_versions_all_params(self):
+        """
+        list_role_template_versions()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        state = 'active'
+        limit = 50
+        start = 'testString'
+
+        # Invoke method
+        response = _service.list_role_template_versions(
+            role_template_id,
+            state=state,
+            limit=limit,
+            start=start,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'state={}'.format(state) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+    def test_list_role_template_versions_all_params_with_retries(self):
+        # Enable retries and run test_list_role_template_versions_all_params.
+        _service.enable_retries()
+        self.test_list_role_template_versions_all_params()
+
+        # Disable retries and run test_list_role_template_versions_all_params.
+        _service.disable_retries()
+        self.test_list_role_template_versions_all_params()
+
+    @responses.activate
+    def test_list_role_template_versions_required_params(self):
+        """
+        test_list_role_template_versions_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+
+        # Invoke method
+        response = _service.list_role_template_versions(
+            role_template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_role_template_versions_required_params_with_retries(self):
+        # Enable retries and run test_list_role_template_versions_required_params.
+        _service.enable_retries()
+        self.test_list_role_template_versions_required_params()
+
+        # Disable retries and run test_list_role_template_versions_required_params.
+        _service.disable_retries()
+        self.test_list_role_template_versions_required_params()
+
+    @responses.activate
+    def test_list_role_template_versions_value_error(self):
+        """
+        test_list_role_template_versions_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "role_template_id": role_template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_role_template_versions(**req_copy)
+
+    def test_list_role_template_versions_value_error_with_retries(self):
+        # Enable retries and run test_list_role_template_versions_value_error.
+        _service.enable_retries()
+        self.test_list_role_template_versions_value_error()
+
+        # Disable retries and run test_list_role_template_versions_value_error.
+        _service.disable_retries()
+        self.test_list_role_template_versions_value_error()
+
+    @responses.activate
+    def test_list_role_template_versions_with_pager_get_next(self):
+        """
+        test_list_role_template_versions_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/role_templates/testString/versions')
+        mock_response1 = '{"next":{"start":"1"},"versions":[{"name":"name","description":"description","account_id":"account_id","committed":false,"role":{"name":"name","display_name":"display_name","service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"versions":[{"name":"name","description":"description","account_id":"account_id","committed":false,"role":{"name":"name","display_name":"display_name","service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = RoleTemplateVersionsPager(
+            client=_service,
+            role_template_id='testString',
+            state='active',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_role_template_versions_with_pager_get_all(self):
+        """
+        test_list_role_template_versions_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/role_templates/testString/versions')
+        mock_response1 = '{"next":{"start":"1"},"versions":[{"name":"name","description":"description","account_id":"account_id","committed":false,"role":{"name":"name","display_name":"display_name","service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"versions":[{"name":"name","description":"description","account_id":"account_id","committed":false,"role":{"name":"name","display_name":"display_name","service_name":"service_name","description":"description","actions":["actions"]},"id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","version":"version","state":"active"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = RoleTemplateVersionsPager(
+            client=_service,
+            role_template_id='testString',
+            state='active',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+
+class TestReplaceRoleTemplate:
+    """
+    Test Class for replace_role_template
+    """
+
+    @responses.activate
+    def test_replace_role_template_all_params(self):
+        """
+        replace_role_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a TemplateRole model
+        template_role_model = {}
+        template_role_model['name'] = 'testString'
+        template_role_model['display_name'] = 'testString'
+        template_role_model['service_name'] = 'testString'
+        template_role_model['description'] = 'testString'
+        template_role_model['actions'] = ['testString']
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        version = 'testString'
+        if_match = 'testString'
+        role = template_role_model
+        name = 'testString'
+        description = 'testString'
+        committed = True
+
+        # Invoke method
+        response = _service.replace_role_template(
+            role_template_id,
+            version,
+            if_match,
+            role,
+            name=name,
+            description=description,
+            committed=committed,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['role'] == template_role_model
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['committed'] == True
+
+    def test_replace_role_template_all_params_with_retries(self):
+        # Enable retries and run test_replace_role_template_all_params.
+        _service.enable_retries()
+        self.test_replace_role_template_all_params()
+
+        # Disable retries and run test_replace_role_template_all_params.
+        _service.disable_retries()
+        self.test_replace_role_template_all_params()
+
+    @responses.activate
+    def test_replace_role_template_value_error(self):
+        """
+        test_replace_role_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a TemplateRole model
+        template_role_model = {}
+        template_role_model['name'] = 'testString'
+        template_role_model['display_name'] = 'testString'
+        template_role_model['service_name'] = 'testString'
+        template_role_model['description'] = 'testString'
+        template_role_model['actions'] = ['testString']
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        version = 'testString'
+        if_match = 'testString'
+        role = template_role_model
+        name = 'testString'
+        description = 'testString'
+        committed = True
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "role_template_id": role_template_id,
+            "version": version,
+            "if_match": if_match,
+            "role": role,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.replace_role_template(**req_copy)
+
+    def test_replace_role_template_value_error_with_retries(self):
+        # Enable retries and run test_replace_role_template_value_error.
+        _service.enable_retries()
+        self.test_replace_role_template_value_error()
+
+        # Disable retries and run test_replace_role_template_value_error.
+        _service.disable_retries()
+        self.test_replace_role_template_value_error()
+
+
+class TestDeleteRoleTemplateVersion:
+    """
+    Test Class for delete_role_template_version
+    """
+
+    @responses.activate
+    def test_delete_role_template_version_all_params(self):
+        """
+        delete_role_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.delete_role_template_version(
+            role_template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_role_template_version_all_params_with_retries(self):
+        # Enable retries and run test_delete_role_template_version_all_params.
+        _service.enable_retries()
+        self.test_delete_role_template_version_all_params()
+
+        # Disable retries and run test_delete_role_template_version_all_params.
+        _service.disable_retries()
+        self.test_delete_role_template_version_all_params()
+
+    @responses.activate
+    def test_delete_role_template_version_value_error(self):
+        """
+        test_delete_role_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "role_template_id": role_template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_role_template_version(**req_copy)
+
+    def test_delete_role_template_version_value_error_with_retries(self):
+        # Enable retries and run test_delete_role_template_version_value_error.
+        _service.enable_retries()
+        self.test_delete_role_template_version_value_error()
+
+        # Disable retries and run test_delete_role_template_version_value_error.
+        _service.disable_retries()
+        self.test_delete_role_template_version_value_error()
+
+
+class TestGetRoleTemplateVersion:
+    """
+    Test Class for get_role_template_version
+    """
+
+    @responses.activate
+    def test_get_role_template_version_all_params(self):
+        """
+        get_role_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.get_role_template_version(
+            role_template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_role_template_version_all_params_with_retries(self):
+        # Enable retries and run test_get_role_template_version_all_params.
+        _service.enable_retries()
+        self.test_get_role_template_version_all_params()
+
+        # Disable retries and run test_get_role_template_version_all_params.
+        _service.disable_retries()
+        self.test_get_role_template_version_all_params()
+
+    @responses.activate
+    def test_get_role_template_version_value_error(self):
+        """
+        test_get_role_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions/testString')
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "committed": false, "role": {"name": "name", "display_name": "display_name", "service_name": "service_name", "description": "description", "actions": ["actions"]}, "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "version": "version", "state": "active"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "role_template_id": role_template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_role_template_version(**req_copy)
+
+    def test_get_role_template_version_value_error_with_retries(self):
+        # Enable retries and run test_get_role_template_version_value_error.
+        _service.enable_retries()
+        self.test_get_role_template_version_value_error()
+
+        # Disable retries and run test_get_role_template_version_value_error.
+        _service.disable_retries()
+        self.test_get_role_template_version_value_error()
+
+
+class TestCommitRoleTemplate:
+    """
+    Test Class for commit_role_template
+    """
+
+    @responses.activate
+    def test_commit_role_template_all_params(self):
+        """
+        commit_role_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions/testString/commit')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.commit_role_template(
+            role_template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_commit_role_template_all_params_with_retries(self):
+        # Enable retries and run test_commit_role_template_all_params.
+        _service.enable_retries()
+        self.test_commit_role_template_all_params()
+
+        # Disable retries and run test_commit_role_template_all_params.
+        _service.disable_retries()
+        self.test_commit_role_template_all_params()
+
+    @responses.activate
+    def test_commit_role_template_value_error(self):
+        """
+        test_commit_role_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_templates/testString/versions/testString/commit')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        role_template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "role_template_id": role_template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.commit_role_template(**req_copy)
+
+    def test_commit_role_template_value_error_with_retries(self):
+        # Enable retries and run test_commit_role_template_value_error.
+        _service.enable_retries()
+        self.test_commit_role_template_value_error()
+
+        # Disable retries and run test_commit_role_template_value_error.
+        _service.disable_retries()
+        self.test_commit_role_template_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: RoleTemplates
+##############################################################################
+
+##############################################################################
+# Start of Service: RoleAssignments
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamPolicyManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamPolicyManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamPolicyManagementV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListRoleAssignments:
+    """
+    Test Class for list_role_assignments
+    """
+
+    @responses.activate
+    def test_list_role_assignments_all_params(self):
+        """
+        list_role_assignments()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "role": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        accept_language = 'default'
+        template_id = 'testString'
+        template_version = 'testString'
+        limit = 50
+        start = 'testString'
+
+        # Invoke method
+        response = _service.list_role_assignments(
+            account_id,
+            accept_language=accept_language,
+            template_id=template_id,
+            template_version=template_version,
+            limit=limit,
+            start=start,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'template_id={}'.format(template_id) in query_string
+        assert 'template_version={}'.format(template_version) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+    def test_list_role_assignments_all_params_with_retries(self):
+        # Enable retries and run test_list_role_assignments_all_params.
+        _service.enable_retries()
+        self.test_list_role_assignments_all_params()
+
+        # Disable retries and run test_list_role_assignments_all_params.
+        _service.disable_retries()
+        self.test_list_role_assignments_all_params()
+
+    @responses.activate
+    def test_list_role_assignments_required_params(self):
+        """
+        test_list_role_assignments_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "role": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.list_role_assignments(
+            account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+
+    def test_list_role_assignments_required_params_with_retries(self):
+        # Enable retries and run test_list_role_assignments_required_params.
+        _service.enable_retries()
+        self.test_list_role_assignments_required_params()
+
+        # Disable retries and run test_list_role_assignments_required_params.
+        _service.disable_retries()
+        self.test_list_role_assignments_required_params()
+
+    @responses.activate
+    def test_list_role_assignments_value_error(self):
+        """
+        test_list_role_assignments_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "role": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_role_assignments(**req_copy)
+
+    def test_list_role_assignments_value_error_with_retries(self):
+        # Enable retries and run test_list_role_assignments_value_error.
+        _service.enable_retries()
+        self.test_list_role_assignments_value_error()
+
+        # Disable retries and run test_list_role_assignments_value_error.
+        _service.disable_retries()
+        self.test_list_role_assignments_value_error()
+
+    @responses.activate
+    def test_list_role_assignments_with_pager_get_next(self):
+        """
+        test_list_role_assignments_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/role_assignments')
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"role":{"resource_created":{"id":"id"},"error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"role":{"resource_created":{"id":"id"},"error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = RoleAssignmentsPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            template_id='testString',
+            template_version='testString',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_role_assignments_with_pager_get_all(self):
+        """
+        test_list_role_assignments_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/role_assignments')
+        mock_response1 = '{"next":{"start":"1"},"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"role":{"resource_created":{"id":"id"},"error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"assignments":[{"id":"id","account_id":"account_id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","operation":"create","resources":[{"target":{"type":"Account","id":"id"},"role":{"resource_created":{"id":"id"},"error_message":{"name":"name","errorCode":"error_code","message":"message","code":"code","errors":[{"code":"insufficent_permissions","message":"message","details":{"conflicts_with":{"etag":"etag","role":"role","policy":"policy"}},"more_info":"more_info"}]}}}],"template":{"id":"id","version":"version"},"target":{"type":"Account","id":"id"},"status":"accepted"}],"total_count":2,"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = RoleAssignmentsPager(
+            client=_service,
+            account_id='testString',
+            accept_language='default',
+            template_id='testString',
+            template_version='testString',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+
+class TestCreateRoleTemplateAssignment:
+    """
+    Test Class for create_role_template_assignment
+    """
+
+    @responses.activate
+    def test_create_role_template_assignment_all_params(self):
+        """
+        create_role_template_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "role": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AssignmentTargetDetails model
+        assignment_target_details_model = {}
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        # Construct a dict representation of a RoleAssignmentTemplate model
+        role_assignment_template_model = {}
+        role_assignment_template_model['id'] = 'testString'
+        role_assignment_template_model['version'] = 'testString'
+
+        # Set up parameter values
+        target = assignment_target_details_model
+        templates = [role_assignment_template_model]
+        accept_language = 'default'
+
+        # Invoke method
+        response = _service.create_role_template_assignment(
+            target,
+            templates,
+            accept_language=accept_language,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['target'] == assignment_target_details_model
+        assert req_body['templates'] == [role_assignment_template_model]
+
+    def test_create_role_template_assignment_all_params_with_retries(self):
+        # Enable retries and run test_create_role_template_assignment_all_params.
+        _service.enable_retries()
+        self.test_create_role_template_assignment_all_params()
+
+        # Disable retries and run test_create_role_template_assignment_all_params.
+        _service.disable_retries()
+        self.test_create_role_template_assignment_all_params()
+
+    @responses.activate
+    def test_create_role_template_assignment_required_params(self):
+        """
+        test_create_role_template_assignment_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "role": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AssignmentTargetDetails model
+        assignment_target_details_model = {}
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        # Construct a dict representation of a RoleAssignmentTemplate model
+        role_assignment_template_model = {}
+        role_assignment_template_model['id'] = 'testString'
+        role_assignment_template_model['version'] = 'testString'
+
+        # Set up parameter values
+        target = assignment_target_details_model
+        templates = [role_assignment_template_model]
+
+        # Invoke method
+        response = _service.create_role_template_assignment(
+            target,
+            templates,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['target'] == assignment_target_details_model
+        assert req_body['templates'] == [role_assignment_template_model]
+
+    def test_create_role_template_assignment_required_params_with_retries(self):
+        # Enable retries and run test_create_role_template_assignment_required_params.
+        _service.enable_retries()
+        self.test_create_role_template_assignment_required_params()
+
+        # Disable retries and run test_create_role_template_assignment_required_params.
+        _service.disable_retries()
+        self.test_create_role_template_assignment_required_params()
+
+    @responses.activate
+    def test_create_role_template_assignment_value_error(self):
+        """
+        test_create_role_template_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments')
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "assignments": [{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "role": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}]}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AssignmentTargetDetails model
+        assignment_target_details_model = {}
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        # Construct a dict representation of a RoleAssignmentTemplate model
+        role_assignment_template_model = {}
+        role_assignment_template_model['id'] = 'testString'
+        role_assignment_template_model['version'] = 'testString'
+
+        # Set up parameter values
+        target = assignment_target_details_model
+        templates = [role_assignment_template_model]
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "target": target,
+            "templates": templates,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_role_template_assignment(**req_copy)
+
+    def test_create_role_template_assignment_value_error_with_retries(self):
+        # Enable retries and run test_create_role_template_assignment_value_error.
+        _service.enable_retries()
+        self.test_create_role_template_assignment_value_error()
+
+        # Disable retries and run test_create_role_template_assignment_value_error.
+        _service.disable_retries()
+        self.test_create_role_template_assignment_value_error()
+
+
+class TestGetRoleAssignment:
+    """
+    Test Class for get_role_assignment
+    """
+
+    @responses.activate
+    def test_get_role_assignment_all_params(self):
+        """
+        get_role_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments/testString')
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "role": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Invoke method
+        response = _service.get_role_assignment(
+            assignment_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_role_assignment_all_params_with_retries(self):
+        # Enable retries and run test_get_role_assignment_all_params.
+        _service.enable_retries()
+        self.test_get_role_assignment_all_params()
+
+        # Disable retries and run test_get_role_assignment_all_params.
+        _service.disable_retries()
+        self.test_get_role_assignment_all_params()
+
+    @responses.activate
+    def test_get_role_assignment_value_error(self):
+        """
+        test_get_role_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments/testString')
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "role": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_role_assignment(**req_copy)
+
+    def test_get_role_assignment_value_error_with_retries(self):
+        # Enable retries and run test_get_role_assignment_value_error.
+        _service.enable_retries()
+        self.test_get_role_assignment_value_error()
+
+        # Disable retries and run test_get_role_assignment_value_error.
+        _service.disable_retries()
+        self.test_get_role_assignment_value_error()
+
+
+class TestUpdateRoleAssignment:
+    """
+    Test Class for update_role_assignment
+    """
+
+    @responses.activate
+    def test_update_role_assignment_all_params(self):
+        """
+        update_role_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments/testString')
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "role": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        if_match = 'testString'
+        template_version = 'testString'
+
+        # Invoke method
+        response = _service.update_role_assignment(
+            assignment_id,
+            if_match,
+            template_version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['template_version'] == 'testString'
+
+    def test_update_role_assignment_all_params_with_retries(self):
+        # Enable retries and run test_update_role_assignment_all_params.
+        _service.enable_retries()
+        self.test_update_role_assignment_all_params()
+
+        # Disable retries and run test_update_role_assignment_all_params.
+        _service.disable_retries()
+        self.test_update_role_assignment_all_params()
+
+    @responses.activate
+    def test_update_role_assignment_value_error(self):
+        """
+        test_update_role_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments/testString')
+        mock_response = '{"id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "operation": "create", "resources": [{"target": {"type": "Account", "id": "id"}, "role": {"resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "code": "code", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}]}}}], "template": {"id": "id", "version": "version"}, "target": {"type": "Account", "id": "id"}, "status": "accepted"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        if_match = 'testString'
+        template_version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+            "if_match": if_match,
+            "template_version": template_version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_role_assignment(**req_copy)
+
+    def test_update_role_assignment_value_error_with_retries(self):
+        # Enable retries and run test_update_role_assignment_value_error.
+        _service.enable_retries()
+        self.test_update_role_assignment_value_error()
+
+        # Disable retries and run test_update_role_assignment_value_error.
+        _service.disable_retries()
+        self.test_update_role_assignment_value_error()
+
+
+class TestDeleteRoleAssignment:
+    """
+    Test Class for delete_role_assignment
+    """
+
+    @responses.activate
+    def test_delete_role_assignment_all_params(self):
+        """
+        delete_role_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_role_assignment(
+            assignment_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_role_assignment_all_params_with_retries(self):
+        # Enable retries and run test_delete_role_assignment_all_params.
+        _service.enable_retries()
+        self.test_delete_role_assignment_all_params()
+
+        # Disable retries and run test_delete_role_assignment_all_params.
+        _service.disable_retries()
+        self.test_delete_role_assignment_all_params()
+
+    @responses.activate
+    def test_delete_role_assignment_value_error(self):
+        """
+        test_delete_role_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/role_assignments/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_role_assignment(**req_copy)
+
+    def test_delete_role_assignment_value_error_with_retries(self):
+        # Enable retries and run test_delete_role_assignment_value_error.
+        _service.enable_retries()
+        self.test_delete_role_assignment_value_error()
+
+        # Disable retries and run test_delete_role_assignment_value_error.
+        _service.disable_retries()
+        self.test_delete_role_assignment_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: RoleAssignments
 ##############################################################################
 
 
@@ -7465,16 +9469,18 @@ class TestModel_ActionControlAssignmentResource:
         error_object_model['details'] = error_details_model
         error_object_model['more_info'] = 'testString'
 
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 0
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
 
         action_control_assignment_resource_action_control_model = {}  # ActionControlAssignmentResourceActionControl
         action_control_assignment_resource_action_control_model['resource_created'] = (
             action_control_assignment_resource_created_model
         )
-        action_control_assignment_resource_action_control_model['error_message'] = error_response_model
+        action_control_assignment_resource_action_control_model['error_message'] = assignment_resource_error_model
 
         # Construct a json representation of a ActionControlAssignmentResource model
         action_control_assignment_resource_model_json = {}
@@ -7534,17 +9540,19 @@ class TestModel_ActionControlAssignmentResourceActionControl:
         error_object_model['details'] = error_details_model
         error_object_model['more_info'] = 'testString'
 
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 0
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
 
         # Construct a json representation of a ActionControlAssignmentResourceActionControl model
         action_control_assignment_resource_action_control_model_json = {}
         action_control_assignment_resource_action_control_model_json['resource_created'] = (
             action_control_assignment_resource_created_model
         )
-        action_control_assignment_resource_action_control_model_json['error_message'] = error_response_model
+        action_control_assignment_resource_action_control_model_json['error_message'] = assignment_resource_error_model
 
         # Construct a model instance of ActionControlAssignmentResourceActionControl by calling from_dict on the json representation
         action_control_assignment_resource_action_control_model = (
@@ -7868,6 +9876,58 @@ class TestModel_AssignmentResourceCreated:
         assert assignment_resource_created_model_json2 == assignment_resource_created_model_json
 
 
+class TestModel_AssignmentResourceError:
+    """
+    Test Class for AssignmentResourceError
+    """
+
+    def test_assignment_resource_error_serialization(self):
+        """
+        Test serialization/deserialization for AssignmentResourceError
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        # Construct a json representation of a AssignmentResourceError model
+        assignment_resource_error_model_json = {}
+        assignment_resource_error_model_json['name'] = 'testString'
+        assignment_resource_error_model_json['errorCode'] = 'testString'
+        assignment_resource_error_model_json['message'] = 'testString'
+        assignment_resource_error_model_json['code'] = 'testString'
+        assignment_resource_error_model_json['errors'] = [error_object_model]
+
+        # Construct a model instance of AssignmentResourceError by calling from_dict on the json representation
+        assignment_resource_error_model = AssignmentResourceError.from_dict(assignment_resource_error_model_json)
+        assert assignment_resource_error_model != False
+
+        # Construct a model instance of AssignmentResourceError by calling from_dict on the json representation
+        assignment_resource_error_model_dict = AssignmentResourceError.from_dict(
+            assignment_resource_error_model_json
+        ).__dict__
+        assignment_resource_error_model2 = AssignmentResourceError(**assignment_resource_error_model_dict)
+
+        # Verify the model instances are equivalent
+        assert assignment_resource_error_model == assignment_resource_error_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        assignment_resource_error_model_json2 = assignment_resource_error_model.to_dict()
+        assert assignment_resource_error_model_json2 == assignment_resource_error_model_json
+
+
 class TestModel_AssignmentTargetDetails:
     """
     Test Class for AssignmentTargetDetails
@@ -8155,54 +10215,6 @@ class TestModel_ErrorObject:
         # Convert model instance back to dict and verify no loss of data
         error_object_model_json2 = error_object_model.to_dict()
         assert error_object_model_json2 == error_object_model_json
-
-
-class TestModel_ErrorResponse:
-    """
-    Test Class for ErrorResponse
-    """
-
-    def test_error_response_serialization(self):
-        """
-        Test serialization/deserialization for ErrorResponse
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        conflicts_with_model = {}  # ConflictsWith
-        conflicts_with_model['etag'] = 'testString'
-        conflicts_with_model['role'] = 'testString'
-        conflicts_with_model['policy'] = 'testString'
-
-        error_details_model = {}  # ErrorDetails
-        error_details_model['conflicts_with'] = conflicts_with_model
-
-        error_object_model = {}  # ErrorObject
-        error_object_model['code'] = 'insufficent_permissions'
-        error_object_model['message'] = 'testString'
-        error_object_model['details'] = error_details_model
-        error_object_model['more_info'] = 'testString'
-
-        # Construct a json representation of a ErrorResponse model
-        error_response_model_json = {}
-        error_response_model_json['trace'] = 'testString'
-        error_response_model_json['errors'] = [error_object_model]
-        error_response_model_json['status_code'] = 0
-
-        # Construct a model instance of ErrorResponse by calling from_dict on the json representation
-        error_response_model = ErrorResponse.from_dict(error_response_model_json)
-        assert error_response_model != False
-
-        # Construct a model instance of ErrorResponse by calling from_dict on the json representation
-        error_response_model_dict = ErrorResponse.from_dict(error_response_model_json).__dict__
-        error_response_model2 = ErrorResponse(**error_response_model_dict)
-
-        # Verify the model instances are equivalent
-        assert error_response_model == error_response_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        error_response_model_json2 = error_response_model.to_dict()
-        assert error_response_model_json2 == error_response_model_json
 
 
 class TestModel_ExternalAccountIdentityInteraction:
@@ -8667,16 +10679,18 @@ class TestModel_PolicyAssignmentResourcePolicy:
         error_object_model['details'] = error_details_model
         error_object_model['more_info'] = 'testString'
 
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 0
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
 
         # Construct a json representation of a PolicyAssignmentResourcePolicy model
         policy_assignment_resource_policy_model_json = {}
         policy_assignment_resource_policy_model_json['resource_created'] = assignment_resource_created_model
         policy_assignment_resource_policy_model_json['status'] = 'testString'
-        policy_assignment_resource_policy_model_json['error_message'] = error_response_model
+        policy_assignment_resource_policy_model_json['error_message'] = assignment_resource_error_model
 
         # Construct a model instance of PolicyAssignmentResourcePolicy by calling from_dict on the json representation
         policy_assignment_resource_policy_model = PolicyAssignmentResourcePolicy.from_dict(
@@ -8729,15 +10743,17 @@ class TestModel_PolicyAssignmentResources:
         error_object_model['details'] = error_details_model
         error_object_model['more_info'] = 'testString'
 
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 0
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
         policy_assignment_resource_policy_model['status'] = 'testString'
-        policy_assignment_resource_policy_model['error_message'] = error_response_model
+        policy_assignment_resource_policy_model['error_message'] = assignment_resource_error_model
 
         # Construct a json representation of a PolicyAssignmentResources model
         policy_assignment_resources_model_json = {}
@@ -8795,15 +10811,17 @@ class TestModel_PolicyAssignmentV1:
         error_object_model['details'] = error_details_model
         error_object_model['more_info'] = 'testString'
 
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 0
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
         policy_assignment_resource_policy_model['status'] = 'testString'
-        policy_assignment_resource_policy_model['error_message'] = error_response_model
+        policy_assignment_resource_policy_model['error_message'] = assignment_resource_error_model
 
         policy_assignment_v1_resources_model = {}  # PolicyAssignmentV1Resources
         policy_assignment_v1_resources_model['target'] = assignment_target_details_model
@@ -8880,15 +10898,17 @@ class TestModel_PolicyAssignmentV1Collection:
         error_object_model['details'] = error_details_model
         error_object_model['more_info'] = 'testString'
 
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 0
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
         policy_assignment_resource_policy_model['status'] = 'testString'
-        policy_assignment_resource_policy_model['error_message'] = error_response_model
+        policy_assignment_resource_policy_model['error_message'] = assignment_resource_error_model
 
         policy_assignment_v1_resources_model = {}  # PolicyAssignmentV1Resources
         policy_assignment_v1_resources_model['target'] = assignment_target_details_model
@@ -8970,15 +10990,17 @@ class TestModel_PolicyAssignmentV1Resources:
         error_object_model['details'] = error_details_model
         error_object_model['more_info'] = 'testString'
 
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 0
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
         policy_assignment_resource_policy_model['status'] = 'testString'
-        policy_assignment_resource_policy_model['error_message'] = error_response_model
+        policy_assignment_resource_policy_model['error_message'] = assignment_resource_error_model
 
         # Construct a json representation of a PolicyAssignmentV1Resources model
         policy_assignment_v1_resources_model_json = {}
@@ -9355,15 +11377,17 @@ class TestModel_PolicyTemplateAssignmentCollection:
         error_object_model['details'] = error_details_model
         error_object_model['more_info'] = 'testString'
 
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 0
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
         policy_assignment_resource_policy_model['status'] = 'testString'
-        policy_assignment_resource_policy_model['error_message'] = error_response_model
+        policy_assignment_resource_policy_model['error_message'] = assignment_resource_error_model
 
         policy_assignment_v1_resources_model = {}  # PolicyAssignmentV1Resources
         policy_assignment_v1_resources_model['target'] = assignment_target_details_model
@@ -9937,6 +11961,302 @@ class TestModel_RoleAction:
         assert role_action_model_json2 == role_action_model_json
 
 
+class TestModel_RoleAssignment:
+    """
+    Test Class for RoleAssignment
+    """
+
+    def test_role_assignment_serialization(self):
+        """
+        Test serialization/deserialization for RoleAssignment
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        role_assignment_template_model = {}  # RoleAssignmentTemplate
+        role_assignment_template_model['id'] = 'testString'
+        role_assignment_template_model['version'] = 'testString'
+
+        assignment_target_details_model = {}  # AssignmentTargetDetails
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        # Construct a json representation of a RoleAssignment model
+        role_assignment_model_json = {}
+        role_assignment_model_json['template'] = role_assignment_template_model
+        role_assignment_model_json['target'] = assignment_target_details_model
+
+        # Construct a model instance of RoleAssignment by calling from_dict on the json representation
+        role_assignment_model = RoleAssignment.from_dict(role_assignment_model_json)
+        assert role_assignment_model != False
+
+        # Construct a model instance of RoleAssignment by calling from_dict on the json representation
+        role_assignment_model_dict = RoleAssignment.from_dict(role_assignment_model_json).__dict__
+        role_assignment_model2 = RoleAssignment(**role_assignment_model_dict)
+
+        # Verify the model instances are equivalent
+        assert role_assignment_model == role_assignment_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_assignment_model_json2 = role_assignment_model.to_dict()
+        assert role_assignment_model_json2 == role_assignment_model_json
+
+
+class TestModel_RoleAssignmentCollection:
+    """
+    Test Class for RoleAssignmentCollection
+    """
+
+    def test_role_assignment_collection_serialization(self):
+        """
+        Test serialization/deserialization for RoleAssignmentCollection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
+
+        role_assignment_template_model = {}  # RoleAssignmentTemplate
+        role_assignment_template_model['id'] = 'testString'
+        role_assignment_template_model['version'] = 'testString'
+
+        assignment_target_details_model = {}  # AssignmentTargetDetails
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        role_assignment_model = {}  # RoleAssignment
+        role_assignment_model['template'] = role_assignment_template_model
+        role_assignment_model['target'] = assignment_target_details_model
+
+        # Construct a json representation of a RoleAssignmentCollection model
+        role_assignment_collection_model_json = {}
+        role_assignment_collection_model_json['limit'] = 1
+        role_assignment_collection_model_json['first'] = first_model
+        role_assignment_collection_model_json['next'] = next_model
+        role_assignment_collection_model_json['previous'] = previous_model
+        role_assignment_collection_model_json['assignments'] = [role_assignment_model]
+
+        # Construct a model instance of RoleAssignmentCollection by calling from_dict on the json representation
+        role_assignment_collection_model = RoleAssignmentCollection.from_dict(role_assignment_collection_model_json)
+        assert role_assignment_collection_model != False
+
+        # Construct a model instance of RoleAssignmentCollection by calling from_dict on the json representation
+        role_assignment_collection_model_dict = RoleAssignmentCollection.from_dict(
+            role_assignment_collection_model_json
+        ).__dict__
+        role_assignment_collection_model2 = RoleAssignmentCollection(**role_assignment_collection_model_dict)
+
+        # Verify the model instances are equivalent
+        assert role_assignment_collection_model == role_assignment_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_assignment_collection_model_json2 = role_assignment_collection_model.to_dict()
+        assert role_assignment_collection_model_json2 == role_assignment_collection_model_json
+
+
+class TestModel_RoleAssignmentResource:
+    """
+    Test Class for RoleAssignmentResource
+    """
+
+    def test_role_assignment_resource_serialization(self):
+        """
+        Test serialization/deserialization for RoleAssignmentResource
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        assignment_target_details_model = {}  # AssignmentTargetDetails
+        assignment_target_details_model['type'] = 'Account'
+        assignment_target_details_model['id'] = 'testString'
+
+        role_assignment_resource_created_model = {}  # RoleAssignmentResourceCreated
+        role_assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
+
+        role_assignment_resource_role_model = {}  # RoleAssignmentResourceRole
+        role_assignment_resource_role_model['resource_created'] = role_assignment_resource_created_model
+        role_assignment_resource_role_model['error_message'] = assignment_resource_error_model
+
+        # Construct a json representation of a RoleAssignmentResource model
+        role_assignment_resource_model_json = {}
+        role_assignment_resource_model_json['target'] = assignment_target_details_model
+        role_assignment_resource_model_json['role'] = role_assignment_resource_role_model
+
+        # Construct a model instance of RoleAssignmentResource by calling from_dict on the json representation
+        role_assignment_resource_model = RoleAssignmentResource.from_dict(role_assignment_resource_model_json)
+        assert role_assignment_resource_model != False
+
+        # Construct a model instance of RoleAssignmentResource by calling from_dict on the json representation
+        role_assignment_resource_model_dict = RoleAssignmentResource.from_dict(
+            role_assignment_resource_model_json
+        ).__dict__
+        role_assignment_resource_model2 = RoleAssignmentResource(**role_assignment_resource_model_dict)
+
+        # Verify the model instances are equivalent
+        assert role_assignment_resource_model == role_assignment_resource_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_assignment_resource_model_json2 = role_assignment_resource_model.to_dict()
+        assert role_assignment_resource_model_json2 == role_assignment_resource_model_json
+
+
+class TestModel_RoleAssignmentResourceCreated:
+    """
+    Test Class for RoleAssignmentResourceCreated
+    """
+
+    def test_role_assignment_resource_created_serialization(self):
+        """
+        Test serialization/deserialization for RoleAssignmentResourceCreated
+        """
+
+        # Construct a json representation of a RoleAssignmentResourceCreated model
+        role_assignment_resource_created_model_json = {}
+        role_assignment_resource_created_model_json['id'] = 'testString'
+
+        # Construct a model instance of RoleAssignmentResourceCreated by calling from_dict on the json representation
+        role_assignment_resource_created_model = RoleAssignmentResourceCreated.from_dict(
+            role_assignment_resource_created_model_json
+        )
+        assert role_assignment_resource_created_model != False
+
+        # Construct a model instance of RoleAssignmentResourceCreated by calling from_dict on the json representation
+        role_assignment_resource_created_model_dict = RoleAssignmentResourceCreated.from_dict(
+            role_assignment_resource_created_model_json
+        ).__dict__
+        role_assignment_resource_created_model2 = RoleAssignmentResourceCreated(
+            **role_assignment_resource_created_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert role_assignment_resource_created_model == role_assignment_resource_created_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_assignment_resource_created_model_json2 = role_assignment_resource_created_model.to_dict()
+        assert role_assignment_resource_created_model_json2 == role_assignment_resource_created_model_json
+
+
+class TestModel_RoleAssignmentResourceRole:
+    """
+    Test Class for RoleAssignmentResourceRole
+    """
+
+    def test_role_assignment_resource_role_serialization(self):
+        """
+        Test serialization/deserialization for RoleAssignmentResourceRole
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        role_assignment_resource_created_model = {}  # RoleAssignmentResourceCreated
+        role_assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
+
+        # Construct a json representation of a RoleAssignmentResourceRole model
+        role_assignment_resource_role_model_json = {}
+        role_assignment_resource_role_model_json['resource_created'] = role_assignment_resource_created_model
+        role_assignment_resource_role_model_json['error_message'] = assignment_resource_error_model
+
+        # Construct a model instance of RoleAssignmentResourceRole by calling from_dict on the json representation
+        role_assignment_resource_role_model = RoleAssignmentResourceRole.from_dict(
+            role_assignment_resource_role_model_json
+        )
+        assert role_assignment_resource_role_model != False
+
+        # Construct a model instance of RoleAssignmentResourceRole by calling from_dict on the json representation
+        role_assignment_resource_role_model_dict = RoleAssignmentResourceRole.from_dict(
+            role_assignment_resource_role_model_json
+        ).__dict__
+        role_assignment_resource_role_model2 = RoleAssignmentResourceRole(**role_assignment_resource_role_model_dict)
+
+        # Verify the model instances are equivalent
+        assert role_assignment_resource_role_model == role_assignment_resource_role_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_assignment_resource_role_model_json2 = role_assignment_resource_role_model.to_dict()
+        assert role_assignment_resource_role_model_json2 == role_assignment_resource_role_model_json
+
+
+class TestModel_RoleAssignmentTemplate:
+    """
+    Test Class for RoleAssignmentTemplate
+    """
+
+    def test_role_assignment_template_serialization(self):
+        """
+        Test serialization/deserialization for RoleAssignmentTemplate
+        """
+
+        # Construct a json representation of a RoleAssignmentTemplate model
+        role_assignment_template_model_json = {}
+        role_assignment_template_model_json['id'] = 'testString'
+        role_assignment_template_model_json['version'] = 'testString'
+
+        # Construct a model instance of RoleAssignmentTemplate by calling from_dict on the json representation
+        role_assignment_template_model = RoleAssignmentTemplate.from_dict(role_assignment_template_model_json)
+        assert role_assignment_template_model != False
+
+        # Construct a model instance of RoleAssignmentTemplate by calling from_dict on the json representation
+        role_assignment_template_model_dict = RoleAssignmentTemplate.from_dict(
+            role_assignment_template_model_json
+        ).__dict__
+        role_assignment_template_model2 = RoleAssignmentTemplate(**role_assignment_template_model_dict)
+
+        # Verify the model instances are equivalent
+        assert role_assignment_template_model == role_assignment_template_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_assignment_template_model_json2 = role_assignment_template_model.to_dict()
+        assert role_assignment_template_model_json2 == role_assignment_template_model_json
+
+
 class TestModel_RoleCollection:
     """
     Test Class for RoleCollection
@@ -9982,6 +12302,179 @@ class TestModel_RoleCollection:
         # Convert model instance back to dict and verify no loss of data
         role_collection_model_json2 = role_collection_model.to_dict()
         assert role_collection_model_json2 == role_collection_model_json
+
+
+class TestModel_RoleTemplate:
+    """
+    Test Class for RoleTemplate
+    """
+
+    def test_role_template_serialization(self):
+        """
+        Test serialization/deserialization for RoleTemplate
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        template_role_model = {}  # TemplateRole
+        template_role_model['name'] = 'testString'
+        template_role_model['display_name'] = 'testString'
+        template_role_model['service_name'] = 'testString'
+        template_role_model['description'] = 'testString'
+        template_role_model['actions'] = ['testString']
+
+        # Construct a json representation of a RoleTemplate model
+        role_template_model_json = {}
+        role_template_model_json['name'] = 'testString'
+        role_template_model_json['description'] = 'testString'
+        role_template_model_json['account_id'] = 'testString'
+        role_template_model_json['committed'] = True
+        role_template_model_json['role'] = template_role_model
+        role_template_model_json['version'] = 'testString'
+        role_template_model_json['state'] = 'active'
+
+        # Construct a model instance of RoleTemplate by calling from_dict on the json representation
+        role_template_model = RoleTemplate.from_dict(role_template_model_json)
+        assert role_template_model != False
+
+        # Construct a model instance of RoleTemplate by calling from_dict on the json representation
+        role_template_model_dict = RoleTemplate.from_dict(role_template_model_json).__dict__
+        role_template_model2 = RoleTemplate(**role_template_model_dict)
+
+        # Verify the model instances are equivalent
+        assert role_template_model == role_template_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_template_model_json2 = role_template_model.to_dict()
+        assert role_template_model_json2 == role_template_model_json
+
+
+class TestModel_RoleTemplateCollection:
+    """
+    Test Class for RoleTemplateCollection
+    """
+
+    def test_role_template_collection_serialization(self):
+        """
+        Test serialization/deserialization for RoleTemplateCollection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
+
+        template_role_model = {}  # TemplateRole
+        template_role_model['name'] = 'testString'
+        template_role_model['display_name'] = 'testString'
+        template_role_model['service_name'] = 'testString'
+        template_role_model['description'] = 'testString'
+        template_role_model['actions'] = ['testString']
+
+        role_template_model = {}  # RoleTemplate
+        role_template_model['name'] = 'testString'
+        role_template_model['description'] = 'testString'
+        role_template_model['account_id'] = 'testString'
+        role_template_model['committed'] = True
+        role_template_model['role'] = template_role_model
+        role_template_model['version'] = 'testString'
+        role_template_model['state'] = 'active'
+
+        # Construct a json representation of a RoleTemplateCollection model
+        role_template_collection_model_json = {}
+        role_template_collection_model_json['limit'] = 1
+        role_template_collection_model_json['first'] = first_model
+        role_template_collection_model_json['next'] = next_model
+        role_template_collection_model_json['previous'] = previous_model
+        role_template_collection_model_json['role_templates'] = [role_template_model]
+
+        # Construct a model instance of RoleTemplateCollection by calling from_dict on the json representation
+        role_template_collection_model = RoleTemplateCollection.from_dict(role_template_collection_model_json)
+        assert role_template_collection_model != False
+
+        # Construct a model instance of RoleTemplateCollection by calling from_dict on the json representation
+        role_template_collection_model_dict = RoleTemplateCollection.from_dict(
+            role_template_collection_model_json
+        ).__dict__
+        role_template_collection_model2 = RoleTemplateCollection(**role_template_collection_model_dict)
+
+        # Verify the model instances are equivalent
+        assert role_template_collection_model == role_template_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_template_collection_model_json2 = role_template_collection_model.to_dict()
+        assert role_template_collection_model_json2 == role_template_collection_model_json
+
+
+class TestModel_RoleTemplateVersionsCollection:
+    """
+    Test Class for RoleTemplateVersionsCollection
+    """
+
+    def test_role_template_versions_collection_serialization(self):
+        """
+        Test serialization/deserialization for RoleTemplateVersionsCollection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        first_model = {}  # First
+
+        next_model = {}  # Next
+        next_model['start'] = 'testString'
+
+        previous_model = {}  # Previous
+        previous_model['start'] = 'testString'
+
+        template_role_model = {}  # TemplateRole
+        template_role_model['name'] = 'testString'
+        template_role_model['display_name'] = 'testString'
+        template_role_model['service_name'] = 'testString'
+        template_role_model['description'] = 'testString'
+        template_role_model['actions'] = ['testString']
+
+        role_template_model = {}  # RoleTemplate
+        role_template_model['name'] = 'testString'
+        role_template_model['description'] = 'testString'
+        role_template_model['account_id'] = 'testString'
+        role_template_model['committed'] = True
+        role_template_model['role'] = template_role_model
+        role_template_model['version'] = 'testString'
+        role_template_model['state'] = 'active'
+
+        # Construct a json representation of a RoleTemplateVersionsCollection model
+        role_template_versions_collection_model_json = {}
+        role_template_versions_collection_model_json['limit'] = 1
+        role_template_versions_collection_model_json['first'] = first_model
+        role_template_versions_collection_model_json['next'] = next_model
+        role_template_versions_collection_model_json['previous'] = previous_model
+        role_template_versions_collection_model_json['versions'] = [role_template_model]
+
+        # Construct a model instance of RoleTemplateVersionsCollection by calling from_dict on the json representation
+        role_template_versions_collection_model = RoleTemplateVersionsCollection.from_dict(
+            role_template_versions_collection_model_json
+        )
+        assert role_template_versions_collection_model != False
+
+        # Construct a model instance of RoleTemplateVersionsCollection by calling from_dict on the json representation
+        role_template_versions_collection_model_dict = RoleTemplateVersionsCollection.from_dict(
+            role_template_versions_collection_model_json
+        ).__dict__
+        role_template_versions_collection_model2 = RoleTemplateVersionsCollection(
+            **role_template_versions_collection_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert role_template_versions_collection_model == role_template_versions_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_template_versions_collection_model_json2 = role_template_versions_collection_model.to_dict()
+        assert role_template_versions_collection_model_json2 == role_template_versions_collection_model_json
 
 
 class TestModel_Roles:
@@ -10252,6 +12745,40 @@ class TestModel_TemplatePolicy:
         # Convert model instance back to dict and verify no loss of data
         template_policy_model_json2 = template_policy_model.to_dict()
         assert template_policy_model_json2 == template_policy_model_json
+
+
+class TestModel_TemplateRole:
+    """
+    Test Class for TemplateRole
+    """
+
+    def test_template_role_serialization(self):
+        """
+        Test serialization/deserialization for TemplateRole
+        """
+
+        # Construct a json representation of a TemplateRole model
+        template_role_model_json = {}
+        template_role_model_json['name'] = 'testString'
+        template_role_model_json['display_name'] = 'testString'
+        template_role_model_json['service_name'] = 'testString'
+        template_role_model_json['description'] = 'testString'
+        template_role_model_json['actions'] = ['testString']
+
+        # Construct a model instance of TemplateRole by calling from_dict on the json representation
+        template_role_model = TemplateRole.from_dict(template_role_model_json)
+        assert template_role_model != False
+
+        # Construct a model instance of TemplateRole by calling from_dict on the json representation
+        template_role_model_dict = TemplateRole.from_dict(template_role_model_json).__dict__
+        template_role_model2 = TemplateRole(**template_role_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_role_model == template_role_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_role_model_json2 = template_role_model.to_dict()
+        assert template_role_model_json2 == template_role_model_json
 
 
 class TestModel_V2Policy:
@@ -10906,15 +13433,17 @@ class TestModel_PolicyTemplateAssignmentItemsPolicyAssignment:
         error_object_model['details'] = error_details_model
         error_object_model['more_info'] = 'testString'
 
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 0
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
         policy_assignment_resource_policy_model['status'] = 'testString'
-        policy_assignment_resource_policy_model['error_message'] = error_response_model
+        policy_assignment_resource_policy_model['error_message'] = assignment_resource_error_model
 
         policy_assignment_resources_model = {}  # PolicyAssignmentResources
         policy_assignment_resources_model['target'] = 'testString'
@@ -10997,15 +13526,17 @@ class TestModel_PolicyTemplateAssignmentItemsPolicyAssignmentV1:
         error_object_model['details'] = error_details_model
         error_object_model['more_info'] = 'testString'
 
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 0
+        assignment_resource_error_model = {}  # AssignmentResourceError
+        assignment_resource_error_model['name'] = 'testString'
+        assignment_resource_error_model['errorCode'] = 'testString'
+        assignment_resource_error_model['message'] = 'testString'
+        assignment_resource_error_model['code'] = 'testString'
+        assignment_resource_error_model['errors'] = [error_object_model]
 
         policy_assignment_resource_policy_model = {}  # PolicyAssignmentResourcePolicy
         policy_assignment_resource_policy_model['resource_created'] = assignment_resource_created_model
         policy_assignment_resource_policy_model['status'] = 'testString'
-        policy_assignment_resource_policy_model['error_message'] = error_response_model
+        policy_assignment_resource_policy_model['error_message'] = assignment_resource_error_model
 
         policy_assignment_v1_resources_model = {}  # PolicyAssignmentV1Resources
         policy_assignment_v1_resources_model['target'] = assignment_target_details_model

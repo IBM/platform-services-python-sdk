@@ -152,6 +152,12 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         cls.testActionControlTemplateUpdateVersion = ""
         cls.testActionControlTemplateETag = ""
         cls.testActionControlAssignmentEtag = ""
+        cls.testRoleTemplateName = 'TestRole' + cls.testTemplatePrefix + str(random.randint(0, 99999))
+        cls.testRoleTemplateId = ""
+        cls.testRoleTemplateVersion = ""
+        cls.testRoleTemplateEtag = ""
+        cls.testRoleTemplateAssignmentId = ""
+        cls.testRoleTemplateAssignmentEtag = ""
 
         print('\nSetup complete.')
 
@@ -1316,4 +1322,319 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         response = self.service.delete_action_control_template(
             action_control_template_id=self.testActionControlTemplateId,
         )
+        assert response.get_status_code() == 204
+
+    def test_52_create_role_template(self):
+        # Construct a dict representation of a TemplateRole model
+        template_role_model = {
+            'name': self.testCustomRoleName,
+            'display_name': 'SDK Test Custom Role',
+            'service_name': 'iam-groups',
+            'description': 'SDK Test Custom Role',
+            'actions': ['iam-groups.groups.read'],
+        }
+
+        response = self.service.create_role_template(
+            name=self.testRoleTemplateName,
+            account_id=self.testAccountId,
+            description='SDK Role Template Desc',
+            role=template_role_model,
+        )
+
+        assert response is not None
+
+        assert response.get_status_code() == 201
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = RoleTemplate.from_dict(result_dict)
+        print("Create Role Template: ", result)
+
+        assert result is not None
+
+        self.__class__.testRoleTemplateId = result.id
+        self.__class__.testRoleTemplateVersion = result.version
+
+    def test_53_get_role_template(self):
+        response = self.service.get_role_template(
+            role_template_id=self.testRoleTemplateId,
+            state='active',
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = RoleTemplate.from_dict(result_dict)
+        print("Get Role Template: ", result)
+
+        self.__class__.testRoleTemplateEtag = response.get_headers().get(self.etagHeader)
+
+    def test_54_replace_role_template(self):
+        # Construct a dict representation of a TemplateRole model
+        template_role_model = {
+            'name': self.testCustomRoleName,
+            'display_name': 'SDK Test Custom Role',
+            'service_name': 'iam-groups',
+            'description': 'SDK Test Custom Role',
+            'actions': ['iam-groups.groups.delete'],
+        }
+
+        response = self.service.replace_role_template(
+            role_template_id=self.testRoleTemplateId,
+            version=self.testRoleTemplateVersion,
+            if_match=self.testRoleTemplateEtag,
+            role=template_role_model,
+            description='SDK Replace Role Template Desc',
+            committed=True,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = RoleTemplate.from_dict(result_dict)
+        assert result is not None
+        print("Replace Role Template: ", result)
+
+    def test_55_list_role_templates(self):
+        response = self.service.list_role_templates(
+            account_id=self.testAccountId,
+            state='active',
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = RoleTemplateCollection.from_dict(result_dict)
+        assert result is not None
+        print("List Role Template: ", result)
+
+    def test_56_list_role_templates_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = RoleTemplatesPager(
+            client=self.service,
+            account_id=self.testAccountId,
+            state='active',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = RoleTemplatesPager(
+            client=self.service,
+            account_id=self.testAccountId,
+            state='active',
+            limit=10,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_role_templates() returned a total of {len(all_results)} items(s) using RoleTemplatesPager.')
+
+    def test_57_create_role_template_version(self):
+        # Construct a dict representation of a TemplateRole model
+        template_role_model = {
+            'name': 'SDKTestRoleVer',
+            'display_name': 'SDK Test Custom Role ver',
+            'service_name': 'iam-groups',
+            'description': 'SDK Test Custom Role ver',
+            'actions': ['iam-groups.groups.delete', 'iam-groups.groups.create'],
+        }
+
+        response = self.service.create_role_template_version(
+            role_template_id=self.testRoleTemplateId,
+            role=template_role_model,
+            description='iam-groups role version test',
+        )
+
+        assert response.get_status_code() == 201
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = RoleTemplate.from_dict(result_dict)
+        assert result is not None
+
+        self.__class__.testRoleTemplateVersion = result.version
+        print("Create Role Template Version: ", result)
+
+    def test_58_list_role_template_versions(self):
+        response = self.service.list_role_template_versions(
+            role_template_id=self.testRoleTemplateId,
+            state='active',
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = RoleTemplateVersionsCollection.from_dict(result_dict)
+        assert result is not None
+        print("List Role Template Versions: ", result)
+
+    def test_59_list_role_template_versions_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = RoleTemplateVersionsPager(
+            client=self.service,
+            role_template_id=self.testRoleTemplateId,
+            state='active',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = RoleTemplateVersionsPager(
+            client=self.service,
+            role_template_id=self.testRoleTemplateId,
+            state='active',
+            limit=10,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(
+            f'\nlist_role_template_versions() returned a total of {len(all_results)} items(s) using RoleTemplateVersionsPager.'
+        )
+
+    def test_60_get_role_template_version(self):
+        response = self.service.get_role_template_version(
+            role_template_id=self.testRoleTemplateId,
+            version=self.testRoleTemplateVersion,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = RoleTemplate.from_dict(result_dict)
+        assert result is not None
+        print("List Role Template Versions: ", result)
+
+    def test_61_commit_role_template(self):
+        response = self.service.commit_role_template(
+            role_template_id=self.testRoleTemplateId,
+            version=self.testRoleTemplateVersion,
+        )
+
+        assert response.get_status_code() == 204
+
+    def test_62_create_role_template_assignment(self):
+        # Construct a dict representation of a AssignmentTargetDetails model
+        assignment_target_details_model = {
+            'type': 'Account',
+            'id': self.testTargetAccountId,
+        }
+        # Construct a dict representation of a RoleAssignmentTemplate model
+        role_assignment_template_model = {
+            'id': self.testRoleTemplateId,
+            'version': self.testRoleTemplateVersion,
+        }
+
+        response = self.service.create_role_template_assignment(
+            target=assignment_target_details_model,
+            templates=[role_assignment_template_model],
+        )
+
+        assert response.get_status_code() == 201
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = RoleAssignmentCollection.from_dict(result_dict)
+        assert result is not None
+        self.__class__.testRoleTemplateAssignmentId = result.assignments[0].id
+        self.__class__.testRoleTemplateAssignmentEtag = response.get_headers().get(self.etagHeader)
+
+        print("Create Role Template Assignment: ", result)
+
+    def test_63_get_role_assignment(self):
+        assert self.testRoleTemplateAssignmentId
+        print("Assignment ID: ", self.testRoleTemplateAssignmentId)
+        response = self.service.get_role_assignment(
+            assignment_id=self.testRoleTemplateAssignmentId,
+        )
+
+        assert response.get_status_code() == 200
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+    def test_64_list_role_assignments(self):
+        response = self.service.list_role_assignments(
+            account_id=self.testAccountId,
+        )
+
+        assert response.get_status_code() == 200
+        role_assignment_collection = response.get_result()
+        assert role_assignment_collection is not None
+
+    def test_65_list_role_assignments_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = RoleAssignmentsPager(
+            client=self.service,
+            account_id=self.testAccountId,
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = RoleAssignmentsPager(
+            client=self.service,
+            account_id=self.testAccountId,
+            limit=10,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_role_assignments() returned a total of {len(all_results)} items(s) using RoleAssignmentsPager.')
+
+    def test_66_update_role_assignment(self):
+        response = self.service.update_role_assignment(
+            assignment_id=self.testRoleTemplateAssignmentId,
+            if_match=self.testRoleTemplateAssignmentEtag,
+            template_version=self.testRoleTemplateVersion,
+        )
+
+        assert response.get_status_code() == 200
+        role_assignment = response.get_result()
+        assert role_assignment is not None
+
+    def test_67_delete_role_assignment(self):
+        response = self.service.delete_role_assignment(
+            assignment_id=self.testRoleTemplateAssignmentId,
+        )
+
+        assert response.get_status_code() == 204
+
+    def test_68_delete_role_template_version(self):
+        response = self.service.delete_role_template_version(
+            role_template_id=self.testRoleTemplateId,
+            version=self.testRoleTemplateVersion,
+        )
+
+        assert response.get_status_code() == 204
+
+    def test_69_delete_role_template(self):
+        response = self.service.delete_role_template(
+            role_template_id=self.testRoleTemplateId,
+        )
+
         assert response.get_status_code() == 204
