@@ -1,3 +1,10 @@
+# [0.70.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.69.0...v0.70.0) (2025-10-27)
+
+
+### Features
+
+* **IAM Policy Management:** add enterprise custom role ([#307](https://github.com/IBM/platform-services-python-sdk/issues/307)) ([d48dd9a](https://github.com/IBM/platform-services-python-sdk/commit/d48dd9a44a5bdffd851e8407c298a33502f1d4b7))
+
 # [0.69.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.68.3...v0.69.0) (2025-10-01)
 
 
