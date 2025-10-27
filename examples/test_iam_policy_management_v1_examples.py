@@ -67,6 +67,11 @@ example_action_control_template_version = None
 example_basic_action_control_template_version = None
 example_action_control_assignment_id = None
 example_action_control_assignment_etag = None
+example_role_template_id = None
+example_role_template_version = None
+example_role_template_etag = None
+example_role_template_assignment_id = None
+example_role_template_assignment_etag = None
 
 
 ##############################################################################
@@ -1425,6 +1430,388 @@ class TestIamPolicyManagementV1Examples:
 
             # end-delete_action_control_template
             print('\ndelete_action_control_template() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_create_role_template_example(self):
+        """
+        create_role_template request example
+        """
+        try:
+            print('\ncreate_role_template() result:')
+
+            # begin-create_role_template
+
+            response = iam_policy_management_service.create_role_template(
+                name='SDKRoleTemplateExample',
+                account_id=example_account_id,
+            )
+            role_template = response.get_result()
+
+            global example_role_template_id
+            example_role_template_id = role_template['id']
+            global example_role_template_version
+            example_role_template_version = role_template['version']
+
+            print(json.dumps(role_template, indent=2))
+
+            # end-create_role_template
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_get_role_template_example(self):
+        """
+        get_role_template request example
+        """
+        try:
+            print('\nget_role_template() result:')
+
+            # begin-get_role_template
+
+            response = iam_policy_management_service.get_role_template(
+                role_template_id=example_role_template_id,
+            )
+            role_template = response.get_result()
+
+            global example_role_template_etag
+            example_role_template_etag = response.get_headers().get("Etag")
+
+            print(json.dumps(role_template, indent=2))
+
+            # end-get_role_template
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_replace_role_template_example(self):
+        """
+        replace_role_template request example
+        """
+        try:
+            print('\nreplace_role_template() result:')
+
+            # begin-replace_role_template
+
+            template_role_model = {
+                'name': 'SDKRoleTemplateExampleRe',
+                'display_name': 'am-test-service',
+                'service_name': 'am-test-service',
+                'actions': ['am-test-service.test.delete'],
+            }
+
+            response = iam_policy_management_service.replace_role_template(
+                role_template_id=example_role_template_id,
+                version=example_role_template_version,
+                if_match=example_role_template_etag,
+                role=template_role_model,
+            )
+            role_template = response.get_result()
+
+            print(json.dumps(role_template, indent=2))
+
+            # end-replace_role_template
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_list_role_templates_example(self):
+        """
+        list_role_templates request example
+        """
+        try:
+            print('\nlist_role_templates() result:')
+
+            # begin-list_role_templates
+
+            all_results = []
+            pager = RoleTemplatesPager(
+                client=iam_policy_management_service,
+                account_id=example_account_id,
+                state='active',
+                limit=10,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
+
+            print(json.dumps(all_results, indent=2))
+
+            # end-list_role_templates
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_create_role_template_version_example(self):
+        """
+        create_role_template_version request example
+        """
+        try:
+            print('\ncreate_role_template_version() result:')
+
+            # begin-create_role_template_version
+
+            template_role_model = {
+                'name': 'SDKRoleTemplateExampleVer',
+                'display_name': 'am-test-service',
+                'service_name': 'am-test-service',
+                'actions': ['am-test-service.test.delete', 'am-test-service.test.create'],
+            }
+
+            response = iam_policy_management_service.create_role_template_version(
+                role_template_id=example_role_template_id,
+                role=template_role_model,
+            )
+            role_template = response.get_result()
+
+            global example_role_template_version
+            example_role_template_version = role_template['version']
+
+            print(json.dumps(role_template, indent=2))
+
+            # end-create_role_template_version
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_list_role_template_versions_example(self):
+        """
+        list_role_template_versions request example
+        """
+        try:
+            print('\nlist_role_template_versions() result:')
+
+            # begin-list_role_template_versions
+
+            all_results = []
+            pager = RoleTemplateVersionsPager(
+                client=iam_policy_management_service,
+                role_template_id=example_role_template_id,
+                state='active',
+                limit=10,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
+
+            print(json.dumps(all_results, indent=2))
+
+            # end-list_role_template_versions
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_get_role_template_version_example(self):
+        """
+        get_role_template_version request example
+        """
+        try:
+            print('\nget_role_template_version() result:')
+
+            # begin-get_role_template_version
+
+            response = iam_policy_management_service.get_role_template_version(
+                role_template_id=example_role_template_id,
+                version=example_role_template_version,
+            )
+            role_template = response.get_result()
+
+            print(json.dumps(role_template, indent=2))
+
+            # end-get_role_template_version
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_commit_role_template_example(self):
+        """
+        commit_role_template request example
+        """
+        try:
+            # begin-commit_role_template
+
+            response = iam_policy_management_service.commit_role_template(
+                role_template_id=example_role_template_id,
+                version=example_role_template_version,
+            )
+
+            # end-commit_role_template
+            print('\ncommit_role_template() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_create_role_template_assignment_example(self):
+        """
+        create_role_template_assignment request example
+        """
+        try:
+            print('\ncreate_role_template_assignment() result:')
+
+            # begin-create_role_template_assignment
+
+            assignment_target_details_model = {
+                'type': 'Account',
+                'id': example_target_account_id,
+            }
+
+            role_assignment_template_model = {
+                'id': example_role_template_id,
+                'version': example_role_template_version,
+            }
+
+            response = iam_policy_management_service.create_role_template_assignment(
+                target=assignment_target_details_model,
+                templates=[role_assignment_template_model],
+            )
+            role_assignment_collection = response.get_result()
+
+            global example_role_template_assignment_id
+            example_role_template_assignment_id = role_assignment_collection['assignments'][0]['id']
+            global example_role_template_assignment_etag
+            example_role_template_assignment_etag = response.get_headers().get("Etag")
+
+            print(json.dumps(role_assignment_collection, indent=2))
+
+            # end-create_role_template_assignment
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_list_role_assignments_example(self):
+        """
+        list_role_assignments request example
+        """
+        try:
+            print('\nlist_role_assignments() result:')
+
+            # begin-list_role_assignments
+
+            all_results = []
+            pager = RoleAssignmentsPager(
+                client=iam_policy_management_service,
+                account_id=example_account_id,
+                limit=10,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
+
+            print(json.dumps(all_results, indent=2))
+
+            # end-list_role_assignments
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_get_role_assignment_example(self):
+        """
+        get_role_assignment request example
+        """
+        try:
+            print('\nget_role_assignment() result:')
+
+            # begin-get_role_assignment
+
+            response = iam_policy_management_service.get_role_assignment(
+                assignment_id=example_role_template_assignment_id,
+            )
+            role_assignment = response.get_result()
+
+            print(json.dumps(role_assignment, indent=2))
+
+            # end-get_role_assignment
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_update_role_assignment_example(self):
+        """
+        update_role_assignment request example
+        """
+        try:
+            print('\nupdate_role_assignment() result:')
+
+            # begin-update_role_assignment
+
+            response = iam_policy_management_service.update_role_assignment(
+                assignment_id=example_role_template_assignment_id,
+                if_match=example_role_template_assignment_etag,
+                template_version=example_role_template_version,
+            )
+            role_assignment = response.get_result()
+
+            print(json.dumps(role_assignment, indent=2))
+
+            # end-update_role_assignment
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_delete_role_assignment_example(self):
+        """
+        delete_role_assignment request example
+        """
+        try:
+            # begin-delete_role_assignment
+
+            response = iam_policy_management_service.delete_role_assignment(
+                assignment_id=example_role_template_assignment_id,
+            )
+
+            # end-delete_role_assignment
+            print('\ndelete_role_assignment() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_delete_role_template_version_example(self):
+        """
+        delete_role_template_version request example
+        """
+        try:
+            # begin-delete_role_template_version
+
+            response = iam_policy_management_service.delete_role_template_version(
+                role_template_id=example_role_template_id,
+                version=example_role_template_version,
+            )
+
+            # end-delete_role_template_version
+            print('\ndelete_role_template_version() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    # @needscredentials
+    def test_delete_role_template_example(self):
+        """
+        delete_role_template request example
+        """
+        try:
+            # begin-delete_role_template
+
+            response = iam_policy_management_service.delete_role_template(
+                role_template_id=example_role_template_id,
+            )
+
+            # end-delete_role_template
+            print('\ndelete_role_template() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))

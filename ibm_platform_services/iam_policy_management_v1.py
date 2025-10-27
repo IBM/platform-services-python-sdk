@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.103.0-e8b84313-20250402-201816
+# IBM OpenAPI SDK Code Generator Version: 3.107.1-41b0fbd0-20250825-080732
 
 """
 IAM Policy Management API
@@ -3774,6 +3774,971 @@ class IamPolicyManagementV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    #########################
+    # Role Templates
+    #########################
+
+    def list_role_templates(
+        self,
+        account_id: str,
+        *,
+        accept_language: Optional[str] = None,
+        name: Optional[str] = None,
+        role_name: Optional[str] = None,
+        role_service_name: Optional[str] = None,
+        state: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List role templates by attributes.
+
+        List role templates and filter by attributes by using query parameters. The
+        following attributes are supported:
+        `account_id`, `name`, `role_name`, `role_service_name`, `state`, `limit`, `start`.
+        `account_id` is a required query parameter. Only role templates that have the
+        specified attributes and that the caller has read access to are returned. If the
+        caller does not have read access to any role templates an empty array is returned.
+
+        :param str account_id: The account GUID that the role templates belong to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str name: (optional) The role template name.
+        :param str role_name: (optional) The template role name.
+        :param str role_service_name: (optional) The template role service name.
+        :param str state: (optional) The role template state.
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        :param str start: (optional) Page token that refers to the page of the
+               collection to return.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `RoleTemplateCollection` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {
+            'Accept-Language': accept_language,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_role_templates',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'name': name,
+            'role_name': role_name,
+            'role_service_name': role_service_name,
+            'state': state,
+            'limit': limit,
+            'start': start,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/role_templates'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_role_template(
+        self,
+        name: str,
+        account_id: str,
+        *,
+        description: Optional[str] = None,
+        committed: Optional[bool] = None,
+        role: Optional['TemplateRole'] = None,
+        accept_language: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create role template.
+
+        Create a role template. Role templates define roles from an existing system or
+        service defined role.
+
+        :param str name: Required field when creating a new template. Otherwise,
+               this field is optional. If the field is included, it changes the name value
+               for all existing versions of the template.
+        :param str account_id: Enterprise account ID where this template is
+               created.
+        :param str description: (optional) Description of the role template. This
+               is shown to users in the enterprise account. Use this to describe the
+               purpose or context of the role for enterprise users managing IAM templates.
+        :param bool committed: (optional) Committed status of the template. If
+               committed is set to true, then the template version can no longer be
+               updated.
+        :param TemplateRole role: (optional) The role properties that are created
+               in an action resource when the template is assigned.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `RoleTemplate` object
+        """
+
+        if name is None:
+            raise ValueError('name must be provided')
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        if role is not None:
+            role = convert_model(role)
+        headers = {
+            'Accept-Language': accept_language,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_role_template',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'account_id': account_id,
+            'description': description,
+            'committed': committed,
+            'role': role,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/role_templates'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_role_template(
+        self,
+        role_template_id: str,
+        *,
+        state: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Retrieve the latest version of a role template.
+
+        Retrieve the latest version of a role template by providing a role template ID.
+
+        :param str role_template_id: Role template ID.
+        :param str state: (optional) The role template state.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `RoleTemplate` object
+        """
+
+        if not role_template_id:
+            raise ValueError('role_template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_role_template',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'state': state,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['role_template_id']
+        path_param_values = self.encode_path_vars(role_template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/role_templates/{role_template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_role_template(
+        self,
+        role_template_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete a Role template.
+
+        Delete a role template by providing the role template ID. This deletes all
+        versions of this template. A role template can't be deleted if any version of the
+        template is assigned to one or more child accounts. You must remove the role
+        assignments first.
+
+        :param str role_template_id: Role template ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not role_template_id:
+            raise ValueError('role_template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_role_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['role_template_id']
+        path_param_values = self.encode_path_vars(role_template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/role_templates/{role_template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_role_template_version(
+        self,
+        role_template_id: str,
+        role: 'TemplateRole',
+        *,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        committed: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create a new role template version.
+
+        Create a new version of a role template. Use this if you need to make updates to a
+        role template that is committed.
+
+        :param str role_template_id: The role template ID.
+        :param TemplateRole role: The role properties that are created in an action
+               resource when the template is assigned.
+        :param str name: (optional) Required field when creating a new template.
+               Otherwise, this field is optional. If the field is included, it will change
+               the name value for all existing versions of the template.
+        :param str description: (optional) Description of the role template. This
+               is shown to users in the enterprise account. Use this to describe the
+               purpose or context of the role for enterprise users managing IAM templates.
+        :param bool committed: (optional) Committed status of the template version.
+               If committed is set to true, then the template version can no longer be
+               updated.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `RoleTemplate` object
+        """
+
+        if not role_template_id:
+            raise ValueError('role_template_id must be provided')
+        if role is None:
+            raise ValueError('role must be provided')
+        role = convert_model(role)
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_role_template_version',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'role': role,
+            'name': name,
+            'description': description,
+            'committed': committed,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['role_template_id']
+        path_param_values = self.encode_path_vars(role_template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/role_templates/{role_template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_role_template_versions(
+        self,
+        role_template_id: str,
+        *,
+        state: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Retrieve role template versions.
+
+        Retrieve the versions of a role template by providing a role template ID.
+
+        :param str role_template_id: The role template ID.
+        :param str state: (optional) Role template state.
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        :param str start: (optional) Page token that refers to the page of the
+               collection to return.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `RoleTemplateVersionsCollection` object
+        """
+
+        if not role_template_id:
+            raise ValueError('role_template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_role_template_versions',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'state': state,
+            'limit': limit,
+            'start': start,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['role_template_id']
+        path_param_values = self.encode_path_vars(role_template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/role_templates/{role_template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def replace_role_template(
+        self,
+        role_template_id: str,
+        version: str,
+        if_match: str,
+        role: 'TemplateRole',
+        *,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        committed: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update a role template version.
+
+        Update a specific version of a role template. You can use this only if the version
+        isn't committed.
+
+        :param str role_template_id: Role template ID.
+        :param str version: Role template version.
+        :param str if_match: The revision number for updating a role template
+               version must match the Etag value of the existing role template version.
+               The Etag can be retrieved using the GET
+               /v1/role_templates/{template_id}/versions/{version} API and looking at the
+               Etag response header.
+        :param TemplateRole role: The role properties that are created in an action
+               resource when the template is assigned.
+        :param str name: (optional) Required field when creating a new template.
+               Otherwise, this field is optional. If the field is included, it will change
+               the name value for all existing versions of the template.
+        :param str description: (optional) Description of the role template. This
+               is shown to users in the enterprise account. Use this to describe the
+               purpose or context of the role for enterprise users managing IAM templates.
+        :param bool committed: (optional) Committed status of the template version.
+               If committed is set to true, then the template version can no longer be
+               updated.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `RoleTemplate` object
+        """
+
+        if not role_template_id:
+            raise ValueError('role_template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if role is None:
+            raise ValueError('role must be provided')
+        role = convert_model(role)
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='replace_role_template',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'role': role,
+            'name': name,
+            'description': description,
+            'committed': committed,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['role_template_id', 'version']
+        path_param_values = self.encode_path_vars(role_template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/role_templates/{role_template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_role_template_version(
+        self,
+        role_template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete a role template version.
+
+        Delete a specific version of a role template by providing a role template ID and
+        version number. You can't delete a role template version that is assigned to one
+        or more child accounts. You must remove the role assignments first.
+
+        :param str role_template_id: Role template ID.
+        :param str version: Role template version.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not role_template_id:
+            raise ValueError('role_template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_role_template_version',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['role_template_id', 'version']
+        path_param_values = self.encode_path_vars(role_template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/role_templates/{role_template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_role_template_version(
+        self,
+        role_template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Retrieve a role template version.
+
+        Retrieve a role template by providing a role template ID and version number.
+
+        :param str role_template_id: Role template ID.
+        :param str version: Role template version.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `RoleTemplate` object
+        """
+
+        if not role_template_id:
+            raise ValueError('role_template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_role_template_version',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['role_template_id', 'version']
+        path_param_values = self.encode_path_vars(role_template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/role_templates/{role_template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def commit_role_template(
+        self,
+        role_template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Commit a role template version.
+
+        Commit a role template version. You cannot make any further changes to the role
+        template once it's committed. If you have to make updates after committing a
+        version, create a new version.
+
+        :param str role_template_id: Role template ID.
+        :param str version: The role template version.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not role_template_id:
+            raise ValueError('role_template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='commit_role_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['role_template_id', 'version']
+        path_param_values = self.encode_path_vars(role_template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/role_templates/{role_template_id}/versions/{version}/commit'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Role Assignments
+    #########################
+
+    def list_role_assignments(
+        self,
+        account_id: str,
+        *,
+        accept_language: Optional[str] = None,
+        template_id: Optional[str] = None,
+        template_version: Optional[str] = None,
+        limit: Optional[int] = None,
+        start: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get role template assignments.
+
+        Get role template assignments by attributes. The following attributes are
+        supported:
+        `account_id`, `template_id`, `template_version`, `target`, `target_type`, `limit`,
+        `start`.
+        `account_id` is a required query parameter. Only role template assignments with
+        the specified attributes and  accessible by the caller are returned. If the caller
+        does not have read access to any role template assignments, an empty array is
+        returned.
+
+        :param str account_id: The account GUID in which the role assignment
+               belongs to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str template_id: (optional) Optional template ID.
+        :param str template_version: (optional) Optional role template version.
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        :param str start: (optional) Page token that refers to the page of the
+               collection to return.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `RoleAssignmentCollection` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {
+            'Accept-Language': accept_language,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_role_assignments',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'template_id': template_id,
+            'template_version': template_version,
+            'limit': limit,
+            'start': start,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/role_assignments'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_role_template_assignment(
+        self,
+        target: 'AssignmentTargetDetails',
+        templates: List['RoleAssignmentTemplate'],
+        *,
+        accept_language: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create a role template assignment.
+
+        Assign a role template to child accounts and account groups. This creates the role
+        in the accounts and account groups that you specify.
+
+        :param AssignmentTargetDetails target: assignment target account and type.
+        :param List[RoleAssignmentTemplate] templates: List of role template
+               details for role assignment.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `RoleAssignmentCollection` object
+        """
+
+        if target is None:
+            raise ValueError('target must be provided')
+        if templates is None:
+            raise ValueError('templates must be provided')
+        target = convert_model(target)
+        templates = [convert_model(x) for x in templates]
+        headers = {
+            'Accept-Language': accept_language,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_role_template_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'target': target,
+            'templates': templates,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/role_assignments'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_role_assignment(
+        self,
+        assignment_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Retrieve a role assignment.
+
+        Retrieve a role template assignment by providing a role assignment ID.
+
+        :param str assignment_id: Role template assignment ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `RoleAssignment` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_role_assignment',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/role_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_role_assignment(
+        self,
+        assignment_id: str,
+        if_match: str,
+        template_version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update a role assignment.
+
+        Update a role assignment by providing a role assignment ID.
+
+        :param str assignment_id: Role template assignment ID.
+        :param str if_match: The revision number for updating a role assignment and
+               must match the Etag value of the existing role assignment. The Etag can be
+               retrieved using the GET /v1/role_assignments/{assignment_id} API and
+               looking at the Etag response header.
+        :param str template_version: The version number of the template used to
+               identify different versions of same template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `RoleAssignment` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_role_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_version': template_version,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/role_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_role_assignment(
+        self,
+        assignment_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Remove a role assignment.
+
+        Remove a role template assignment by providing a role assignment ID. You can't
+        delete a role assignment if the status is "in_progress".
+
+        :param str assignment_id: Role template assignment ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_role_assignment',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/role_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
 
 class ListPoliciesEnums:
     """
@@ -3976,6 +4941,48 @@ class ListActionControlTemplateVersionsEnums:
     class State(str, Enum):
         """
         Action control template state.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
+
+
+class ListRoleTemplatesEnums:
+    """
+    Enums for list_role_templates parameters.
+    """
+
+    class State(str, Enum):
+        """
+        The role template state.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
+
+
+class GetRoleTemplateEnums:
+    """
+    Enums for get_role_template parameters.
+    """
+
+    class State(str, Enum):
+        """
+        The role template state.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
+
+
+class ListRoleTemplateVersionsEnums:
+    """
+    Enums for list_role_template_versions parameters.
+    """
+
+    class State(str, Enum):
+        """
+        Role template state.
         """
 
         ACTIVE = 'active'
@@ -4443,21 +5450,23 @@ class ActionControlAssignmentResourceActionControl:
 
     :param ActionControlAssignmentResourceCreated resource_created: (optional) On
           success, it includes the action control assigned.
-    :param ErrorResponse error_message: (optional) The error response from API.
+    :param AssignmentResourceError error_message: (optional) Body parameters for
+          assignment error.
     """
 
     def __init__(
         self,
         *,
         resource_created: Optional['ActionControlAssignmentResourceCreated'] = None,
-        error_message: Optional['ErrorResponse'] = None,
+        error_message: Optional['AssignmentResourceError'] = None,
     ) -> None:
         """
         Initialize a ActionControlAssignmentResourceActionControl object.
 
         :param ActionControlAssignmentResourceCreated resource_created: (optional)
                On success, it includes the action control assigned.
-        :param ErrorResponse error_message: (optional) The error response from API.
+        :param AssignmentResourceError error_message: (optional) Body parameters
+               for assignment error.
         """
         self.resource_created = resource_created
         self.error_message = error_message
@@ -4469,7 +5478,7 @@ class ActionControlAssignmentResourceActionControl:
         if (resource_created := _dict.get('resource_created')) is not None:
             args['resource_created'] = ActionControlAssignmentResourceCreated.from_dict(resource_created)
         if (error_message := _dict.get('error_message')) is not None:
-            args['error_message'] = ErrorResponse.from_dict(error_message)
+            args['error_message'] = AssignmentResourceError.from_dict(error_message)
         return cls(**args)
 
     @classmethod
@@ -5122,6 +6131,105 @@ class AssignmentResourceCreated:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'AssignmentResourceCreated') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class AssignmentResourceError:
+    """
+    Body parameters for assignment error.
+
+    :param str name: (optional) Name of the error.
+    :param str error_code: (optional) error code.
+    :param str message: (optional) Error message detailing the nature of the error.
+    :param str code: (optional) Internal status code for the error.
+    :param List[ErrorObject] errors: (optional) The errors encountered during the
+          response.
+    """
+
+    def __init__(
+        self,
+        *,
+        name: Optional[str] = None,
+        error_code: Optional[str] = None,
+        message: Optional[str] = None,
+        code: Optional[str] = None,
+        errors: Optional[List['ErrorObject']] = None,
+    ) -> None:
+        """
+        Initialize a AssignmentResourceError object.
+
+        :param str name: (optional) Name of the error.
+        :param str error_code: (optional) error code.
+        :param str message: (optional) Error message detailing the nature of the
+               error.
+        :param str code: (optional) Internal status code for the error.
+        :param List[ErrorObject] errors: (optional) The errors encountered during
+               the response.
+        """
+        self.name = name
+        self.error_code = error_code
+        self.message = message
+        self.code = code
+        self.errors = errors
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AssignmentResourceError':
+        """Initialize a AssignmentResourceError object from a json dictionary."""
+        args = {}
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (error_code := _dict.get('errorCode')) is not None:
+            args['error_code'] = error_code
+        if (message := _dict.get('message')) is not None:
+            args['message'] = message
+        if (code := _dict.get('code')) is not None:
+            args['code'] = code
+        if (errors := _dict.get('errors')) is not None:
+            args['errors'] = [ErrorObject.from_dict(v) for v in errors]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AssignmentResourceError object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'error_code') and self.error_code is not None:
+            _dict['errorCode'] = self.error_code
+        if hasattr(self, 'message') and self.message is not None:
+            _dict['message'] = self.message
+        if hasattr(self, 'code') and self.code is not None:
+            _dict['code'] = self.code
+        if hasattr(self, 'errors') and self.errors is not None:
+            errors_list = []
+            for v in self.errors:
+                if isinstance(v, dict):
+                    errors_list.append(v)
+                else:
+                    errors_list.append(v.to_dict())
+            _dict['errors'] = errors_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AssignmentResourceError object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AssignmentResourceError') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AssignmentResourceError') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -5867,92 +6975,9 @@ class ErrorObject:
         RESOURCE_NOT_FOUND = 'resource_not_found'
         ACTION_CONTROL_TEMPLATE_NOT_FOUND = 'action_control_template_not_found'
         ACTION_CONTROL_ASSIGNMENT_NOT_FOUND = 'action_control_assignment_not_found'
-
-
-class ErrorResponse:
-    """
-    The error response from API.
-
-    :param str trace: The unique transaction ID for the request.
-    :param List[ErrorObject] errors: The errors encountered during the response.
-    :param int status_code: The HTTP error code of the response.
-    """
-
-    def __init__(
-        self,
-        trace: str,
-        errors: List['ErrorObject'],
-        status_code: int,
-    ) -> None:
-        """
-        Initialize a ErrorResponse object.
-
-        :param str trace: The unique transaction ID for the request.
-        :param List[ErrorObject] errors: The errors encountered during the
-               response.
-        :param int status_code: The HTTP error code of the response.
-        """
-        self.trace = trace
-        self.errors = errors
-        self.status_code = status_code
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ErrorResponse':
-        """Initialize a ErrorResponse object from a json dictionary."""
-        args = {}
-        if (trace := _dict.get('trace')) is not None:
-            args['trace'] = trace
-        else:
-            raise ValueError('Required property \'trace\' not present in ErrorResponse JSON')
-        if (errors := _dict.get('errors')) is not None:
-            args['errors'] = [ErrorObject.from_dict(v) for v in errors]
-        else:
-            raise ValueError('Required property \'errors\' not present in ErrorResponse JSON')
-        if (status_code := _dict.get('status_code')) is not None:
-            args['status_code'] = status_code
-        else:
-            raise ValueError('Required property \'status_code\' not present in ErrorResponse JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a ErrorResponse object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'trace') and self.trace is not None:
-            _dict['trace'] = self.trace
-        if hasattr(self, 'errors') and self.errors is not None:
-            errors_list = []
-            for v in self.errors:
-                if isinstance(v, dict):
-                    errors_list.append(v)
-                else:
-                    errors_list.append(v.to_dict())
-            _dict['errors'] = errors_list
-        if hasattr(self, 'status_code') and self.status_code is not None:
-            _dict['status_code'] = self.status_code
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this ErrorResponse object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'ErrorResponse') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'ErrorResponse') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
+        ROLE_TEMPLATE_CONFLICT_ERROR = 'role_template_conflict_error'
+        ROLE_TEMPLATE_NOT_FOUND = 'role_template_not_found'
+        ROLE_ASSIGNMENT_NOT_FOUND = 'role_assignment_not_found'
 
 
 class ExternalAccountIdentityInteraction:
@@ -6875,7 +7900,8 @@ class PolicyAssignmentResourcePolicy:
     :param AssignmentResourceCreated resource_created: (optional) On success,
           includes the  policy that is assigned.
     :param str status: (optional) policy status.
-    :param ErrorResponse error_message: (optional) The error response from API.
+    :param AssignmentResourceError error_message: (optional) Body parameters for
+          assignment error.
     """
 
     def __init__(
@@ -6883,7 +7909,7 @@ class PolicyAssignmentResourcePolicy:
         *,
         resource_created: Optional['AssignmentResourceCreated'] = None,
         status: Optional[str] = None,
-        error_message: Optional['ErrorResponse'] = None,
+        error_message: Optional['AssignmentResourceError'] = None,
     ) -> None:
         """
         Initialize a PolicyAssignmentResourcePolicy object.
@@ -6891,7 +7917,8 @@ class PolicyAssignmentResourcePolicy:
         :param AssignmentResourceCreated resource_created: (optional) On success,
                includes the  policy that is assigned.
         :param str status: (optional) policy status.
-        :param ErrorResponse error_message: (optional) The error response from API.
+        :param AssignmentResourceError error_message: (optional) Body parameters
+               for assignment error.
         """
         self.resource_created = resource_created
         self.status = status
@@ -6906,7 +7933,7 @@ class PolicyAssignmentResourcePolicy:
         if (status := _dict.get('status')) is not None:
             args['status'] = status
         if (error_message := _dict.get('error_message')) is not None:
-            args['error_message'] = ErrorResponse.from_dict(error_message)
+            args['error_message'] = AssignmentResourceError.from_dict(error_message)
         return cls(**args)
 
     @classmethod
@@ -9151,6 +10178,581 @@ class RoleAction:
         return not self == other
 
 
+class RoleAssignment:
+    """
+    The set of properties associated with the assigned role template.
+
+    :param str id: (optional) Action control assignment ID.
+    :param str account_id: (optional) The account GUID that the role assignments
+          belong to.
+    :param str href: (optional) The href URL that links to the role assignments API
+          by role assignment ID.
+    :param datetime created_at: (optional) The UTC timestamp when the role
+          assignment was created.
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
+          role assignment.
+    :param datetime last_modified_at: (optional) The UTC timestamp when the role
+          assignment was last modified.
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
+          modified the role assignment.
+    :param str operation: (optional) The current operation of the role assignment.
+    :param List[RoleAssignmentResource] resources: (optional) Resources created when
+          role template is assigned.
+    :param RoleAssignmentTemplate template: The role template id and version that
+          will be assigned.
+    :param AssignmentTargetDetails target: assignment target account and type.
+    :param str status: (optional) The role assignment status.
+    """
+
+    def __init__(
+        self,
+        template: 'RoleAssignmentTemplate',
+        target: 'AssignmentTargetDetails',
+        *,
+        id: Optional[str] = None,
+        account_id: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+        operation: Optional[str] = None,
+        resources: Optional[List['RoleAssignmentResource']] = None,
+        status: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a RoleAssignment object.
+
+        :param RoleAssignmentTemplate template: The role template id and version
+               that will be assigned.
+        :param AssignmentTargetDetails target: assignment target account and type.
+        """
+        self.id = id
+        self.account_id = account_id
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+        self.operation = operation
+        self.resources = resources
+        self.template = template
+        self.target = target
+        self.status = status
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleAssignment':
+        """Initialize a RoleAssignment object from a json dictionary."""
+        args = {}
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (operation := _dict.get('operation')) is not None:
+            args['operation'] = operation
+        if (resources := _dict.get('resources')) is not None:
+            args['resources'] = [RoleAssignmentResource.from_dict(v) for v in resources]
+        if (template := _dict.get('template')) is not None:
+            args['template'] = RoleAssignmentTemplate.from_dict(template)
+        else:
+            raise ValueError('Required property \'template\' not present in RoleAssignment JSON')
+        if (target := _dict.get('target')) is not None:
+            args['target'] = AssignmentTargetDetails.from_dict(target)
+        else:
+            raise ValueError('Required property \'target\' not present in RoleAssignment JSON')
+        if (status := _dict.get('status')) is not None:
+            args['status'] = status
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleAssignment object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and getattr(self, 'id') is not None:
+            _dict['id'] = getattr(self, 'id')
+        if hasattr(self, 'account_id') and getattr(self, 'account_id') is not None:
+            _dict['account_id'] = getattr(self, 'account_id')
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
+            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
+        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
+            _dict['created_by_id'] = getattr(self, 'created_by_id')
+        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
+            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
+        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
+            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
+        if hasattr(self, 'operation') and getattr(self, 'operation') is not None:
+            _dict['operation'] = getattr(self, 'operation')
+        if hasattr(self, 'resources') and getattr(self, 'resources') is not None:
+            resources_list = []
+            for v in getattr(self, 'resources'):
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
+        if hasattr(self, 'template') and self.template is not None:
+            if isinstance(self.template, dict):
+                _dict['template'] = self.template
+            else:
+                _dict['template'] = self.template.to_dict()
+        if hasattr(self, 'target') and self.target is not None:
+            if isinstance(self.target, dict):
+                _dict['target'] = self.target
+            else:
+                _dict['target'] = self.target.to_dict()
+        if hasattr(self, 'status') and getattr(self, 'status') is not None:
+            _dict['status'] = getattr(self, 'status')
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleAssignment object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleAssignment') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleAssignment') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class OperationEnum(str, Enum):
+        """
+        The current operation of the role assignment.
+        """
+
+        CREATE = 'create'
+        APPLY = 'apply'
+        UPDATE = 'update'
+        REMOVE = 'remove'
+
+    class StatusEnum(str, Enum):
+        """
+        The role assignment status.
+        """
+
+        ACCEPTED = 'accepted'
+        FAILURE = 'failure'
+        IN_PROGRESS = 'in_progress'
+        SUPERSEDED = 'superseded'
+
+
+class RoleAssignmentCollection:
+    """
+    A collection of role assignments.
+
+    :param int limit: (optional) The number of documents to include per each page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to the following page of
+          requested collection.
+    :param Previous previous: (optional) Details with linking href to previous page
+          of requested collection.
+    :param List[RoleAssignment] assignments: List of role assignments.
+    """
+
+    def __init__(
+        self,
+        assignments: List['RoleAssignment'],
+        *,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
+    ) -> None:
+        """
+        Initialize a RoleAssignmentCollection object.
+
+        :param List[RoleAssignment] assignments: List of role assignments.
+        :param int limit: (optional) The number of documents to include per each
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to the following
+               page of requested collection.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
+        """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
+        self.assignments = assignments
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleAssignmentCollection':
+        """Initialize a RoleAssignmentCollection object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
+        if (assignments := _dict.get('assignments')) is not None:
+            args['assignments'] = [RoleAssignment.from_dict(v) for v in assignments]
+        else:
+            raise ValueError('Required property \'assignments\' not present in RoleAssignmentCollection JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleAssignmentCollection object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'assignments') and self.assignments is not None:
+            assignments_list = []
+            for v in self.assignments:
+                if isinstance(v, dict):
+                    assignments_list.append(v)
+                else:
+                    assignments_list.append(v.to_dict())
+            _dict['assignments'] = assignments_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleAssignmentCollection object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleAssignmentCollection') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleAssignmentCollection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class RoleAssignmentResource:
+    """
+    The role assignment resources and target where the template is assigned.
+
+    :param AssignmentTargetDetails target: assignment target account and type.
+    :param RoleAssignmentResourceRole role: (optional) Set of properties of the
+          assigned resource or error message if assignment failed.
+    """
+
+    def __init__(
+        self,
+        target: 'AssignmentTargetDetails',
+        *,
+        role: Optional['RoleAssignmentResourceRole'] = None,
+    ) -> None:
+        """
+        Initialize a RoleAssignmentResource object.
+
+        :param AssignmentTargetDetails target: assignment target account and type.
+        :param RoleAssignmentResourceRole role: (optional) Set of properties of the
+               assigned resource or error message if assignment failed.
+        """
+        self.target = target
+        self.role = role
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleAssignmentResource':
+        """Initialize a RoleAssignmentResource object from a json dictionary."""
+        args = {}
+        if (target := _dict.get('target')) is not None:
+            args['target'] = AssignmentTargetDetails.from_dict(target)
+        else:
+            raise ValueError('Required property \'target\' not present in RoleAssignmentResource JSON')
+        if (role := _dict.get('role')) is not None:
+            args['role'] = RoleAssignmentResourceRole.from_dict(role)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleAssignmentResource object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'target') and self.target is not None:
+            if isinstance(self.target, dict):
+                _dict['target'] = self.target
+            else:
+                _dict['target'] = self.target.to_dict()
+        if hasattr(self, 'role') and self.role is not None:
+            if isinstance(self.role, dict):
+                _dict['role'] = self.role
+            else:
+                _dict['role'] = self.role.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleAssignmentResource object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleAssignmentResource') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleAssignmentResource') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class RoleAssignmentResourceCreated:
+    """
+    On success, it includes the action control assigned.
+
+    :param str id: (optional) role id.
+    """
+
+    def __init__(
+        self,
+        *,
+        id: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a RoleAssignmentResourceCreated object.
+
+        :param str id: (optional) role id.
+        """
+        self.id = id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleAssignmentResourceCreated':
+        """Initialize a RoleAssignmentResourceCreated object from a json dictionary."""
+        args = {}
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleAssignmentResourceCreated object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleAssignmentResourceCreated object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleAssignmentResourceCreated') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleAssignmentResourceCreated') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class RoleAssignmentResourceRole:
+    """
+    Set of properties of the assigned resource or error message if assignment failed.
+
+    :param RoleAssignmentResourceCreated resource_created: (optional) On success, it
+          includes the action control assigned.
+    :param AssignmentResourceError error_message: (optional) Body parameters for
+          assignment error.
+    """
+
+    def __init__(
+        self,
+        *,
+        resource_created: Optional['RoleAssignmentResourceCreated'] = None,
+        error_message: Optional['AssignmentResourceError'] = None,
+    ) -> None:
+        """
+        Initialize a RoleAssignmentResourceRole object.
+
+        :param RoleAssignmentResourceCreated resource_created: (optional) On
+               success, it includes the action control assigned.
+        :param AssignmentResourceError error_message: (optional) Body parameters
+               for assignment error.
+        """
+        self.resource_created = resource_created
+        self.error_message = error_message
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleAssignmentResourceRole':
+        """Initialize a RoleAssignmentResourceRole object from a json dictionary."""
+        args = {}
+        if (resource_created := _dict.get('resource_created')) is not None:
+            args['resource_created'] = RoleAssignmentResourceCreated.from_dict(resource_created)
+        if (error_message := _dict.get('error_message')) is not None:
+            args['error_message'] = AssignmentResourceError.from_dict(error_message)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleAssignmentResourceRole object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'resource_created') and self.resource_created is not None:
+            if isinstance(self.resource_created, dict):
+                _dict['resource_created'] = self.resource_created
+            else:
+                _dict['resource_created'] = self.resource_created.to_dict()
+        if hasattr(self, 'error_message') and self.error_message is not None:
+            if isinstance(self.error_message, dict):
+                _dict['error_message'] = self.error_message
+            else:
+                _dict['error_message'] = self.error_message.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleAssignmentResourceRole object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleAssignmentResourceRole') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleAssignmentResourceRole') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class RoleAssignmentTemplate:
+    """
+    The role template id and version that will be assigned.
+
+    :param str id: Action control template ID.
+    :param str version: Action control template version.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        version: str,
+    ) -> None:
+        """
+        Initialize a RoleAssignmentTemplate object.
+
+        :param str id: Action control template ID.
+        :param str version: Action control template version.
+        """
+        self.id = id
+        self.version = version
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleAssignmentTemplate':
+        """Initialize a RoleAssignmentTemplate object from a json dictionary."""
+        args = {}
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        else:
+            raise ValueError('Required property \'id\' not present in RoleAssignmentTemplate JSON')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
+        else:
+            raise ValueError('Required property \'version\' not present in RoleAssignmentTemplate JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleAssignmentTemplate object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleAssignmentTemplate object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleAssignmentTemplate') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleAssignmentTemplate') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class RoleCollection:
     """
     A collection of roles returned by the 'list roles' operation.
@@ -9244,6 +10846,426 @@ class RoleCollection:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'RoleCollection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class RoleTemplate:
+    """
+    The set of properties associated with the role template.
+
+    :param str name: Required field when creating a new template. Otherwise, this
+          field is optional. If the field is included, it changes the name value for all
+          existing versions of the template.
+    :param str description: Description of the role template. This is shown to users
+          in the enterprise account. Use this to describe the purpose or context of the
+          role for enterprise users managing IAM templates.
+    :param str account_id: Enterprise account ID where this template is created.
+    :param bool committed: (optional) Committed status of the template. If committed
+          is set to true, then the template version can no longer be updated.
+    :param TemplateRole role: (optional) The role properties that are created in an
+          action resource when the template is assigned.
+    :param str id: (optional) The role template ID.
+    :param str href: (optional) The href URL that links to the role templates API by
+          role template ID.
+    :param datetime created_at: (optional) The UTC timestamp when the role template
+          was created.
+    :param str created_by_id: (optional) The IAM ID of the entity that created the
+          role template.
+    :param datetime last_modified_at: (optional) The UTC timestamp when the role
+          template was last modified.
+    :param str last_modified_by_id: (optional) The IAM ID of the entity that last
+          modified the role template.
+    :param str version: The version number of the template used to identify
+          different versions of same template.
+    :param str state: State of role template.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        account_id: str,
+        version: str,
+        state: str,
+        *,
+        committed: Optional[bool] = None,
+        role: Optional['TemplateRole'] = None,
+        id: Optional[str] = None,
+        href: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a RoleTemplate object.
+
+        :param str name: Required field when creating a new template. Otherwise,
+               this field is optional. If the field is included, it changes the name value
+               for all existing versions of the template.
+        :param str description: Description of the role template. This is shown to
+               users in the enterprise account. Use this to describe the purpose or
+               context of the role for enterprise users managing IAM templates.
+        :param str account_id: Enterprise account ID where this template is
+               created.
+        :param str version: The version number of the template used to identify
+               different versions of same template.
+        :param str state: State of role template.
+        :param bool committed: (optional) Committed status of the template. If
+               committed is set to true, then the template version can no longer be
+               updated.
+        :param TemplateRole role: (optional) The role properties that are created
+               in an action resource when the template is assigned.
+        """
+        self.name = name
+        self.description = description
+        self.account_id = account_id
+        self.committed = committed
+        self.role = role
+        self.id = id
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+        self.version = version
+        self.state = state
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleTemplate':
+        """Initialize a RoleTemplate object from a json dictionary."""
+        args = {}
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        else:
+            raise ValueError('Required property \'name\' not present in RoleTemplate JSON')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        else:
+            raise ValueError('Required property \'description\' not present in RoleTemplate JSON')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        else:
+            raise ValueError('Required property \'account_id\' not present in RoleTemplate JSON')
+        if (committed := _dict.get('committed')) is not None:
+            args['committed'] = committed
+        if (role := _dict.get('role')) is not None:
+            args['role'] = TemplateRole.from_dict(role)
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (href := _dict.get('href')) is not None:
+            args['href'] = href
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (created_by_id := _dict.get('created_by_id')) is not None:
+            args['created_by_id'] = created_by_id
+        if (last_modified_at := _dict.get('last_modified_at')) is not None:
+            args['last_modified_at'] = string_to_datetime(last_modified_at)
+        if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
+            args['last_modified_by_id'] = last_modified_by_id
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
+        else:
+            raise ValueError('Required property \'version\' not present in RoleTemplate JSON')
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        else:
+            raise ValueError('Required property \'state\' not present in RoleTemplate JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleTemplate object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'committed') and self.committed is not None:
+            _dict['committed'] = self.committed
+        if hasattr(self, 'role') and self.role is not None:
+            if isinstance(self.role, dict):
+                _dict['role'] = self.role
+            else:
+                _dict['role'] = self.role.to_dict()
+        if hasattr(self, 'id') and getattr(self, 'id') is not None:
+            _dict['id'] = getattr(self, 'id')
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
+            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
+        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
+            _dict['created_by_id'] = getattr(self, 'created_by_id')
+        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
+            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
+        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
+            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleTemplate object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleTemplate') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleTemplate') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class StateEnum(str, Enum):
+        """
+        State of role template.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
+
+
+class RoleTemplateCollection:
+    """
+    A collection of role templates.
+
+    :param int limit: (optional) The number of documents to include per each page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to the following page of
+          requested collection.
+    :param Previous previous: (optional) Details with linking href to previous page
+          of requested collection.
+    :param List[RoleTemplate] role_templates: List of role templates.
+    """
+
+    def __init__(
+        self,
+        role_templates: List['RoleTemplate'],
+        *,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
+    ) -> None:
+        """
+        Initialize a RoleTemplateCollection object.
+
+        :param List[RoleTemplate] role_templates: List of role templates.
+        :param int limit: (optional) The number of documents to include per each
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to the following
+               page of requested collection.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
+        """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
+        self.role_templates = role_templates
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleTemplateCollection':
+        """Initialize a RoleTemplateCollection object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
+        if (role_templates := _dict.get('role_templates')) is not None:
+            args['role_templates'] = [RoleTemplate.from_dict(v) for v in role_templates]
+        else:
+            raise ValueError('Required property \'role_templates\' not present in RoleTemplateCollection JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleTemplateCollection object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'role_templates') and self.role_templates is not None:
+            role_templates_list = []
+            for v in self.role_templates:
+                if isinstance(v, dict):
+                    role_templates_list.append(v)
+                else:
+                    role_templates_list.append(v.to_dict())
+            _dict['role_templates'] = role_templates_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleTemplateCollection object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleTemplateCollection') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleTemplateCollection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class RoleTemplateVersionsCollection:
+    """
+    A collection of versions for a specific role template.
+
+    :param int limit: (optional) The number of documents to include per each page of
+          the collection.
+    :param First first: (optional) Details with linking href to first page of
+          requested collection.
+    :param Next next: (optional) Details with href linking to the following page of
+          requested collection.
+    :param Previous previous: (optional) Details with linking href to previous page
+          of requested collection.
+    :param List[RoleTemplate] versions: List of role templates versions.
+    """
+
+    def __init__(
+        self,
+        versions: List['RoleTemplate'],
+        *,
+        limit: Optional[int] = None,
+        first: Optional['First'] = None,
+        next: Optional['Next'] = None,
+        previous: Optional['Previous'] = None,
+    ) -> None:
+        """
+        Initialize a RoleTemplateVersionsCollection object.
+
+        :param List[RoleTemplate] versions: List of role templates versions.
+        :param int limit: (optional) The number of documents to include per each
+               page of the collection.
+        :param First first: (optional) Details with linking href to first page of
+               requested collection.
+        :param Next next: (optional) Details with href linking to the following
+               page of requested collection.
+        :param Previous previous: (optional) Details with linking href to previous
+               page of requested collection.
+        """
+        self.limit = limit
+        self.first = first
+        self.next = next
+        self.previous = previous
+        self.versions = versions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleTemplateVersionsCollection':
+        """Initialize a RoleTemplateVersionsCollection object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        if (first := _dict.get('first')) is not None:
+            args['first'] = First.from_dict(first)
+        if (next := _dict.get('next')) is not None:
+            args['next'] = Next.from_dict(next)
+        if (previous := _dict.get('previous')) is not None:
+            args['previous'] = Previous.from_dict(previous)
+        if (versions := _dict.get('versions')) is not None:
+            args['versions'] = [RoleTemplate.from_dict(v) for v in versions]
+        else:
+            raise ValueError('Required property \'versions\' not present in RoleTemplateVersionsCollection JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleTemplateVersionsCollection object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'versions') and self.versions is not None:
+            versions_list = []
+            for v in self.versions:
+                if isinstance(v, dict):
+                    versions_list.append(v)
+                else:
+                    versions_list.append(v.to_dict())
+            _dict['versions'] = versions_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleTemplateVersionsCollection object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleTemplateVersionsCollection') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleTemplateVersionsCollection') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -9878,6 +11900,109 @@ class TemplatePolicy:
 
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
+
+
+class TemplateRole:
+    """
+    The role properties that are created in an action resource when the template is
+    assigned.
+
+    :param str name: The name of the role that is used in the CRN. This must be
+          alphanumeric and capitalized.
+    :param str display_name: The display the name of the role that is shown in the
+          console.
+    :param str service_name: The service name that the role refers.
+    :param str description: (optional) Description of the role.
+    :param List[str] actions: The actions of the role.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        display_name: str,
+        service_name: str,
+        actions: List[str],
+        *,
+        description: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a TemplateRole object.
+
+        :param str name: The name of the role that is used in the CRN. This must be
+               alphanumeric and capitalized.
+        :param str display_name: The display the name of the role that is shown in
+               the console.
+        :param str service_name: The service name that the role refers.
+        :param List[str] actions: The actions of the role.
+        :param str description: (optional) Description of the role.
+        """
+        self.name = name
+        self.display_name = display_name
+        self.service_name = service_name
+        self.description = description
+        self.actions = actions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateRole':
+        """Initialize a TemplateRole object from a json dictionary."""
+        args = {}
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        else:
+            raise ValueError('Required property \'name\' not present in TemplateRole JSON')
+        if (display_name := _dict.get('display_name')) is not None:
+            args['display_name'] = display_name
+        else:
+            raise ValueError('Required property \'display_name\' not present in TemplateRole JSON')
+        if (service_name := _dict.get('service_name')) is not None:
+            args['service_name'] = service_name
+        else:
+            raise ValueError('Required property \'service_name\' not present in TemplateRole JSON')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (actions := _dict.get('actions')) is not None:
+            args['actions'] = actions
+        else:
+            raise ValueError('Required property \'actions\' not present in TemplateRole JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateRole object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'display_name') and self.display_name is not None:
+            _dict['display_name'] = self.display_name
+        if hasattr(self, 'service_name') and self.service_name is not None:
+            _dict['service_name'] = self.service_name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'actions') and self.actions is not None:
+            _dict['actions'] = self.actions
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateRole object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateRole') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateRole') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class V2Policy:
@@ -12650,6 +14775,272 @@ class ActionControlAssignmentsPager:
         Returns all results by invoking get_next() repeatedly
         until all pages of results have been retrieved.
         :return: A List[dict], where each element is a dict that represents an instance of ActionControlAssignment.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class RoleTemplatesPager:
+    """
+    RoleTemplatesPager can be used to simplify the use of the "list_role_templates" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamPolicyManagementV1,
+        account_id: str,
+        accept_language: str = None,
+        name: str = None,
+        role_name: str = None,
+        role_service_name: str = None,
+        state: str = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a RoleTemplatesPager object.
+        :param str account_id: The account GUID that the role templates belong to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str name: (optional) The role template name.
+        :param str role_name: (optional) The template role name.
+        :param str role_service_name: (optional) The template role service name.
+        :param str state: (optional) The role template state.
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._accept_language = accept_language
+        self._name = name
+        self._role_name = role_name
+        self._role_service_name = role_service_name
+        self._state = state
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of RoleTemplate.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_role_templates(
+            account_id=self._account_id,
+            accept_language=self._accept_language,
+            name=self._name,
+            role_name=self._role_name,
+            role_service_name=self._role_service_name,
+            state=self._state,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = next_page_link.get('start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('role_templates')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of RoleTemplate.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class RoleTemplateVersionsPager:
+    """
+    RoleTemplateVersionsPager can be used to simplify the use of the "list_role_template_versions" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamPolicyManagementV1,
+        role_template_id: str,
+        state: str = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a RoleTemplateVersionsPager object.
+        :param str role_template_id: The role template ID.
+        :param str state: (optional) Role template state.
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._role_template_id = role_template_id
+        self._state = state
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of RoleTemplate.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_role_template_versions(
+            role_template_id=self._role_template_id,
+            state=self._state,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = next_page_link.get('start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('versions')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of RoleTemplate.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class RoleAssignmentsPager:
+    """
+    RoleAssignmentsPager can be used to simplify the use of the "list_role_assignments" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: IamPolicyManagementV1,
+        account_id: str,
+        accept_language: str = None,
+        template_id: str = None,
+        template_version: str = None,
+        limit: int = None,
+    ) -> None:
+        """
+        Initialize a RoleAssignmentsPager object.
+        :param str account_id: The account GUID in which the role assignment
+               belongs to.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str template_id: (optional) Optional template ID.
+        :param str template_version: (optional) Optional role template version.
+        :param int limit: (optional) The number of documents to include in the
+               collection.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._accept_language = accept_language
+        self._template_id = template_id
+        self._template_version = template_version
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of RoleAssignment.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_role_assignments(
+            account_id=self._account_id,
+            accept_language=self._accept_language,
+            template_id=self._template_id,
+            template_version=self._template_version,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = next_page_link.get('start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('assignments')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of RoleAssignment.
         :rtype: List[dict]
         """
         results = []
