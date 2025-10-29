@@ -171,7 +171,7 @@ class TestIamIdentityV1Examples:
                     profile_template_assignment_etag is not None
                     break
             except ApiException as e:
-                if e.code == 404:
+                if getattr(e, "status_code", None) == 404:
                     finished = True
                     break
             time.sleep(10)
@@ -191,7 +191,7 @@ class TestIamIdentityV1Examples:
                     account_settings_template_assignment_etag is not None
                     break
             except ApiException as e:
-                if e.code == 404:
+                if getattr(e, "status_code", None) == 404:
                     finished = True
                     break
             time.sleep(10)
@@ -1576,15 +1576,42 @@ class TestIamIdentityV1Examples:
             print('\ncreate_account_settings_template() result:')
             # begin-create_account_settings_template
 
-            account_settings = {}
-            account_settings['mfa'] = 'LEVEL1'
-            account_settings['system_access_token_expiration_in_seconds'] = 3000
+            # Construct a dict representation of a UserMfa model
+            user_mfa_model = {
+                'iam_id': iam_id,
+                'mfa': 'LEVEL2',
+            }
+            # Construct a dict representation of a AccountSettingsUserDomainRestriction model
+            account_settings_user_domain_restriction_model = {
+                'realm_id': 'IBMid',
+                'invitation_email_allow_patterns': ["*.*@ibm.com"],
+                'restrict_invitation': True,
+            }
+            # Construct a dict representation of a TemplateAccountSettingsRestrictUserDomains model
+            template_account_settings_restrict_user_domains_model = {
+                'account_sufficient': True,
+                'restrictions': [account_settings_user_domain_restriction_model],
+            }
+            # Construct a dict representation of a TemplateAccountSettings model
+            template_account_settings_model = {
+                'restrict_create_service_id': 'NOT_SET',
+                'restrict_create_platform_apikey': 'NOT_SET',
+                'mfa': 'LEVEL1',
+                'user_mfa': [user_mfa_model],
+                'session_expiration_in_seconds': '86400',
+                'session_invalidation_in_seconds': '7200',
+                'max_sessions_per_identity': '10',
+                'system_access_token_expiration_in_seconds': '3600',
+                'system_refresh_token_expiration_in_seconds': '259200',
+                'restrict_user_list_visibility': 'RESTRICTED',
+                'restrict_user_domains': template_account_settings_restrict_user_domains_model,
+            }
 
             create_response = iam_identity_service.create_account_settings_template(
                 name=account_settings_template_name,
                 description='IAM enterprise account settings template example',
                 account_id=enterprise_account_id,
-                account_settings=account_settings,
+                account_settings=template_account_settings_model,
             )
             account_settings_template = create_response.get_result()
             print('\ncreate_account_settings_template() response: ', json.dumps(account_settings_template, indent=2))
@@ -1648,9 +1675,36 @@ class TestIamIdentityV1Examples:
             global account_settings_template_etag
             # begin-update_account_settings_template_version
 
-            account_settings = {}
-            account_settings['mfa'] = 'LEVEL1'
-            account_settings['system_access_token_expiration_in_seconds'] = 3000
+            # Construct a dict representation of a UserMfa model
+            user_mfa_model = {
+                'iam_id': iam_id,
+                'mfa': 'LEVEL1',
+            }
+            # Construct a dict representation of a AccountSettingsUserDomainRestriction model
+            account_settings_user_domain_restriction_model = {
+                'realm_id': 'IBMid',
+                'invitation_email_allow_patterns': ["*.*@sap.com"],
+                'restrict_invitation': True,
+            }
+            # Construct a dict representation of a TemplateAccountSettingsRestrictUserDomains model
+            template_account_settings_restrict_user_domains_model = {
+                'account_sufficient': False,
+                'restrictions': [account_settings_user_domain_restriction_model],
+            }
+            # Construct a dict representation of a TemplateAccountSettings model
+            template_account_settings_model = {
+                'restrict_create_service_id': 'NOT_RESTRICTED',
+                'restrict_create_platform_apikey': 'NOT_RESTRICTED',
+                'mfa': 'LEVEL2',
+                'user_mfa': [user_mfa_model],
+                'session_expiration_in_seconds': '72400',
+                'session_invalidation_in_seconds': '6000',
+                'max_sessions_per_identity': '5',
+                'system_access_token_expiration_in_seconds': '3000',
+                'system_refresh_token_expiration_in_seconds': '200000',
+                'restrict_user_list_visibility': 'NOT_RESTRICTED',
+                'restrict_user_domains': template_account_settings_restrict_user_domains_model,
+            }
 
             update_response = iam_identity_service.update_account_settings_template_version(
                 account_id=enterprise_account_id,
@@ -1659,7 +1713,7 @@ class TestIamIdentityV1Examples:
                 if_match=account_settings_template_etag,
                 name=account_settings_template_name,
                 description='IAM enterprise account settings template example - updated',
-                account_settings=account_settings,
+                account_settings=template_account_settings_model,
             )
             account_settings_template = update_response.get_result()
             print('\nupdate_account_settings_template() response: ', json.dumps(account_settings_template, indent=2))
@@ -1761,6 +1815,18 @@ class TestIamIdentityV1Examples:
             account_settings['system_access_token_expiration_in_seconds'] = 2600
             account_settings['restrict_create_platform_apikey'] = 'RESTRICTED'
             account_settings['restrict_create_service_id'] = 'RESTRICTED'
+            account_settings['session_expiration_in_seconds'] = 75000
+            account_settings['session_invalidation_in_seconds'] = 5000
+            account_settings['max_sessions_per_identity'] = '7'
+            account_settings['restrict_user_list_visibility'] = 'RESTRICTED'
+            account_settings_user_mfa = {}
+            account_settings_user_mfa['iam_id'] = iam_id
+            account_settings_user_mfa['mfa'] = 'LEVEL2'
+            account_settings['user_mfa'] = [account_settings_user_mfa]
+            account_settings_user_domain_restriction_model = {}
+            account_settings_user_domain_restriction_model['realm_id'] = 'IBMid'
+            account_settings_user_domain_restriction_model['invitation_email_allow_patterns'] = ['*.*@example.com']
+            account_settings_user_domain_restriction_model['restrict_invitation'] = True
 
             create_response = iam_identity_service.create_account_settings_template_version(
                 template_id=account_settings_template_id,
