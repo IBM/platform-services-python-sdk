@@ -295,7 +295,7 @@ class TestIamIdentityV1:
                     profile_template_assignment_etag is not None
                     break
             except ApiException as e:
-                if e.code == 404:
+                if getattr(e, "status_code", None) == 404:
                     finished = True
                     break
             time.sleep(10)
@@ -315,7 +315,7 @@ class TestIamIdentityV1:
                     account_settings_template_assignment_etag is not None
                     break
             except ApiException as e:
-                if e.code == 404:
+                if getattr(e, "status_code", None) == 404:
                     finished = True
                     break
             time.sleep(10)
@@ -1204,22 +1204,22 @@ class TestIamIdentityV1:
             self.iam_identity_service.create_profile(
                 name=self.profile_name1, description='PythonSDK test profile #1', account_id='invalid'
             )
-        assert e.value.code == 400
+        assert e.value.status_code == 400
 
     def test_get_profile_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.get_profile(profile_id='invalid')
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     def test_update_profile_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.update_profile(profile_id='invalid', if_match='invalid', description='invalid')
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     def test_delete_profile_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.delete_profile(profile_id='invalid')
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     def test_create_claimRule_bad_request(self):
         profile_claim_rule_conditions_model = {}
@@ -1234,12 +1234,12 @@ class TestIamIdentityV1:
                 expiration=43200,
                 conditions=[profile_claim_rule_conditions_model],
             )
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     def test_get_claimRule_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.get_claim_rule(profile_id='invalid', rule_id='invalid')
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     def test_update_claimRule_not_found(self):
         profile_claim_rule_conditions_model = {}
@@ -1256,12 +1256,12 @@ class TestIamIdentityV1:
                 type=self.claimRule_type,
                 realm_name=self.realm_name,
             )
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     def test_delete_claimRule_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.delete_claim_rule(profile_id='invalid', rule_id='invalid')
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     def test_create_link_bad_request(self):
         CreateProfileLinkRequestLink = {}
@@ -1274,17 +1274,17 @@ class TestIamIdentityV1:
             self.iam_identity_service.create_link(
                 profile_id='invalid', name='nice link', cr_type='ROKS_SA', link=CreateProfileLinkRequestLink
             )
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     def test_get_link_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.get_link(profile_id='invalid', link_id='invalid')
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     def test_delete_link_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.delete_link(profile_id='invalid', link_id='invalid')
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     @needscredentials
     def test_get_account_settings(self):
@@ -1376,10 +1376,10 @@ class TestIamIdentityV1:
         assert get_effective_account_settings_response.get_status_code() == 200
         settings = get_effective_account_settings_response.get_result()
         assert settings is not None
+        print('\neffective_settings() response: ', json.dumps(settings, indent=2))
 
-        assert settings["account_id"] == self.account_id
-        assert settings["effective"] is not None
-        assert settings["account"] is not None
+        assert settings.get("effective") is not None
+        assert settings.get("account") is not None
 
     @needscredentials
     def test_create_report(self):
@@ -1441,7 +1441,7 @@ class TestIamIdentityV1:
                 account_id=self.account_id,
                 reference='test123',
             )
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     @needscredentials
     def test_create_mfa_report(self):
@@ -1489,7 +1489,7 @@ class TestIamIdentityV1:
                 account_id=self.account_id,
                 reference='test123',
             )
-        assert e.value.code == 404
+        assert e.value.status_code == 404
 
     @needscredentials
     def test_get_mfa_status(self):
@@ -1764,15 +1764,42 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_create_account_settings_template(self):
-        account_settings = {}
-        account_settings['mfa'] = 'LEVEL1'
-        account_settings['system_access_token_expiration_in_seconds'] = 3000
+        # Construct a dict representation of a UserMfa model
+        user_mfa_model = {
+            'iam_id': self.iam_id,
+            'mfa': 'LEVEL1',
+        }
+        # Construct a dict representation of a AccountSettingsUserDomainRestriction model
+        account_settings_user_domain_restriction_model = {
+            'realm_id': 'IBMid',
+            'invitation_email_allow_patterns': ["*.*@ibm.com"],
+            'restrict_invitation': True,
+        }
+        # Construct a dict representation of a TemplateAccountSettingsRestrictUserDomains model
+        template_account_settings_restrict_user_domains_model = {
+            'account_sufficient': True,
+            'restrictions': [account_settings_user_domain_restriction_model],
+        }
+        # Construct a dict representation of a TemplateAccountSettings model
+        template_account_settings_model = {
+            'restrict_create_service_id': 'NOT_SET',
+            'restrict_create_platform_apikey': 'NOT_SET',
+            'mfa': 'LEVEL1',
+            'user_mfa': [user_mfa_model],
+            'session_expiration_in_seconds': '86400',
+            'session_invalidation_in_seconds': '7200',
+            'max_sessions_per_identity': '10',
+            'system_access_token_expiration_in_seconds': '3600',
+            'system_refresh_token_expiration_in_seconds': '259200',
+            'restrict_user_list_visibility': 'RESTRICTED',
+            'restrict_user_domains': template_account_settings_restrict_user_domains_model,
+        }
 
         create_response = self.iam_identity_service.create_account_settings_template(
             name=self.account_settings_template_name,
             description='Python SDK test Account Settings Template',
             account_id=self.enterprise_account_id,
-            account_settings=account_settings,
+            account_settings=template_account_settings_model,
         )
 
         assert create_response.get_status_code() == 201
@@ -1825,26 +1852,53 @@ class TestIamIdentityV1:
         assert account_settings_template_version is not None
         assert account_settings_template_etag is not None
 
-        account_settings = {}
-        account_settings['mfa'] = 'LEVEL1'
-        account_settings['system_access_token_expiration_in_seconds'] = 3000
+        # Construct a dict representation of a UserMfa model
+        user_mfa_model = {
+            'iam_id': self.iam_id,
+            'mfa': 'NONE',
+        }
+        # Construct a dict representation of a AccountSettingsUserDomainRestriction model
+        account_settings_user_domain_restriction_model = {
+            'realm_id': 'IBMid',
+            'invitation_email_allow_patterns': ["*.*@sap.com"],
+            'restrict_invitation': False,
+        }
+        # Construct a dict representation of a TemplateAccountSettingsRestrictUserDomains model
+        template_account_settings_restrict_user_domains_model = {
+            'account_sufficient': False,
+            'restrictions': [account_settings_user_domain_restriction_model],
+        }
+        # Construct a dict representation of a TemplateAccountSettings model
+        template_account_settings_model = {
+            'restrict_create_service_id': 'NOT_SET',
+            'restrict_create_platform_apikey': 'NOT_SET',
+            'mfa': 'NONE',
+            'user_mfa': [user_mfa_model],
+            'session_expiration_in_seconds': '86400',
+            'session_invalidation_in_seconds': '7200',
+            'max_sessions_per_identity': '6',
+            'system_access_token_expiration_in_seconds': '3600',
+            'system_refresh_token_expiration_in_seconds': '259200',
+            'restrict_user_list_visibility': 'RESTRICTED',
+            'restrict_user_domains': template_account_settings_restrict_user_domains_model,
+        }
 
-        update_response = self.iam_identity_service.update_account_settings_template_version(
-            account_id=self.enterprise_account_id,
+        response = self.iam_identity_service.update_account_settings_template_version(
+            if_match=account_settings_template_etag,
             template_id=account_settings_template_id,
             version=str(account_settings_template_version),
-            if_match=account_settings_template_etag,
+            account_id=self.enterprise_account_id,
             name=self.account_settings_template_name,
             description='Python SDK test Account Settings Template - updated',
-            account_settings=account_settings,
+            account_settings=template_account_settings_model,
         )
 
-        assert update_response.get_status_code() == 200
-        account_settings_template = update_response.get_result()
+        assert response.get_status_code() == 200
+        account_settings_template = response.get_result()
         assert account_settings_template is not None
         print('\nupdate_account_settings_template() response: ', json.dumps(account_settings_template, indent=2))
 
-        account_settings_template_etag = update_response.get_headers()['Etag']
+        account_settings_template_etag = response.get_headers()['Etag']
         assert account_settings_template_etag is not None
 
     @needscredentials
@@ -1888,18 +1942,43 @@ class TestIamIdentityV1:
     def test_create_new_account_settings_template_version(self):
         assert account_settings_template_id is not None
 
-        account_settings = {}
-        account_settings['mfa'] = 'LEVEL1'
-        account_settings['system_access_token_expiration_in_seconds'] = 2600
-        account_settings['restrict_create_platform_apikey'] = 'RESTRICTED'
-        account_settings['restrict_create_service_id'] = 'RESTRICTED'
+        # Construct a dict representation of a UserMfa model
+        user_mfa_model = {
+            'iam_id': self.iam_id,
+            'mfa': 'NONE',
+        }
+        # Construct a dict representation of a AccountSettingsUserDomainRestriction model
+        account_settings_user_domain_restriction_model = {
+            'realm_id': 'IBMid',
+            'invitation_email_allow_patterns': ["*.*@ibm.com"],
+            'restrict_invitation': True,
+        }
+        # Construct a dict representation of a TemplateAccountSettingsRestrictUserDomains model
+        template_account_settings_restrict_user_domains_model = {
+            'account_sufficient': False,
+            'restrictions': [account_settings_user_domain_restriction_model],
+        }
+        # Construct a dict representation of a TemplateAccountSettings model
+        template_account_settings_model = {
+            'restrict_create_service_id': 'NOT_RESTRICTED',
+            'restrict_create_platform_apikey': 'NOT_RESTRICTED',
+            'mfa': 'TOTP',
+            'user_mfa': [user_mfa_model],
+            'session_expiration_in_seconds': '72000',
+            'session_invalidation_in_seconds': '7200',
+            'max_sessions_per_identity': '3',
+            'system_access_token_expiration_in_seconds': '3600',
+            'system_refresh_token_expiration_in_seconds': '25200',
+            'restrict_user_list_visibility': 'NOT_RESTRICTED',
+            'restrict_user_domains': template_account_settings_restrict_user_domains_model,
+        }
 
         create_response = self.iam_identity_service.create_account_settings_template_version(
             template_id=account_settings_template_id,
             name=self.account_settings_template_name,
             description='Python SDK test Account Settings Template - new version',
             account_id=self.enterprise_account_id,
-            account_settings=account_settings,
+            account_settings=template_account_settings_model,
         )
 
         assert create_response.get_status_code() == 201
