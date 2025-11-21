@@ -1,6 +1,5 @@
 # This workflow is responsible for:
-# - publishing artifacts to Maven Central
-# - building and publishing javadocs to the git repository.
+# - publishing the Python Package to PyPI.
 # It is triggered when a new release is created.
 
 name: publish
