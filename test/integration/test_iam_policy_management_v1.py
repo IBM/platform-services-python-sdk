@@ -158,6 +158,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         cls.testRoleTemplateEtag = ""
         cls.testRoleTemplateAssignmentId = ""
         cls.testRoleTemplateAssignmentEtag = ""
+        cls.testRolePolicyTemplateId = ""
+        cls.testRolePolicyTemplateName = cls.testTemplatePrefix + str(random.randint(0, 99999))
 
         print('\nSetup complete.')
 
@@ -1356,7 +1358,47 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         self.__class__.testRoleTemplateId = result.id
         self.__class__.testRoleTemplateVersion = result.version
 
-    def test_53_get_role_template(self):
+    def test_53_create_role_policy_template(self):
+        print("self.testRoleTemplateId", self.testRoleTemplateId)
+        print("self.__class__.testRoleTemplateId", self.__class__.testRoleTemplateId)
+        self.__class__.testPolicyControl = TemplateControl(
+            grant=TemplateGrant(
+                roles=[Roles(role_id=self.__class__.testViewerRoleCrn)],
+                role_template_references=[
+                    RoleTemplateReferencesItem(id=self.testRoleTemplateId, version=self.testRoleTemplateVersion)
+                ],
+            )
+        )
+        self.__class__.testTemplatePolicy = TemplatePolicy(
+            type='access',
+            control=self.testPolicyControl,
+            resource=V2PolicyResource(
+                attributes=[
+                    V2PolicyResourceAttribute(key='serviceName', value='iam-groups', operator='stringEquals'),
+                ],
+            ),
+            description='SDK Test Policy',
+        )
+        response = self.service.create_policy_template(
+            name=self.testRolePolicyTemplateName,
+            account_id=self.testAccountId,
+            policy=self.testTemplatePolicy,
+            description='SDK Test Policy Template',
+        )
+        assert response is not None
+
+        assert response.get_status_code() == 201
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = PolicyTemplate.from_dict(result_dict)
+        assert result is not None
+
+        self.__class__.testRolePolicyTemplateId = result.id
+        assert result.state == "active"
+
+    def test_54_get_role_template(self):
         response = self.service.get_role_template(
             role_template_id=self.testRoleTemplateId,
             state='active',
@@ -1371,10 +1413,9 @@ class TestIamPolicyManagementV1(unittest.TestCase):
 
         self.__class__.testRoleTemplateEtag = response.get_headers().get(self.etagHeader)
 
-    def test_54_replace_role_template(self):
+    def test_55_replace_role_template(self):
         # Construct a dict representation of a TemplateRole model
         template_role_model = {
-            'name': self.testCustomRoleName,
             'display_name': 'SDK Test Custom Role',
             'service_name': 'iam-groups',
             'description': 'SDK Test Custom Role',
@@ -1398,7 +1439,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result is not None
         print("Replace Role Template: ", result)
 
-    def test_55_list_role_templates(self):
+    def test_56_list_role_templates(self):
         response = self.service.list_role_templates(
             account_id=self.testAccountId,
             state='active',
@@ -1412,7 +1453,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result is not None
         print("List Role Template: ", result)
 
-    def test_56_list_role_templates_with_pager(self):
+    def test_57_list_role_templates_with_pager(self):
         all_results = []
 
         # Test get_next().
@@ -1440,12 +1481,10 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert len(all_results) == len(all_items)
         print(f'\nlist_role_templates() returned a total of {len(all_results)} items(s) using RoleTemplatesPager.')
 
-    def test_57_create_role_template_version(self):
+    def test_58_create_role_template_version(self):
         # Construct a dict representation of a TemplateRole model
         template_role_model = {
-            'name': 'SDKTestRoleVer',
             'display_name': 'SDK Test Custom Role ver',
-            'service_name': 'iam-groups',
             'description': 'SDK Test Custom Role ver',
             'actions': ['iam-groups.groups.delete', 'iam-groups.groups.create'],
         }
@@ -1466,7 +1505,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         self.__class__.testRoleTemplateVersion = result.version
         print("Create Role Template Version: ", result)
 
-    def test_58_list_role_template_versions(self):
+    def test_59_list_role_template_versions(self):
         response = self.service.list_role_template_versions(
             role_template_id=self.testRoleTemplateId,
             state='active',
@@ -1480,7 +1519,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result is not None
         print("List Role Template Versions: ", result)
 
-    def test_59_list_role_template_versions_with_pager(self):
+    def test_60_list_role_template_versions_with_pager(self):
         all_results = []
 
         # Test get_next().
@@ -1510,7 +1549,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             f'\nlist_role_template_versions() returned a total of {len(all_results)} items(s) using RoleTemplateVersionsPager.'
         )
 
-    def test_60_get_role_template_version(self):
+    def test_61_get_role_template_version(self):
         response = self.service.get_role_template_version(
             role_template_id=self.testRoleTemplateId,
             version=self.testRoleTemplateVersion,
@@ -1524,7 +1563,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result is not None
         print("List Role Template Versions: ", result)
 
-    def test_61_commit_role_template(self):
+    def test_62_commit_role_template(self):
         response = self.service.commit_role_template(
             role_template_id=self.testRoleTemplateId,
             version=self.testRoleTemplateVersion,
@@ -1532,7 +1571,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
 
         assert response.get_status_code() == 204
 
-    def test_62_create_role_template_assignment(self):
+    def test_63_create_role_template_assignment(self):
         # Construct a dict representation of a AssignmentTargetDetails model
         assignment_target_details_model = {
             'type': 'Account',
@@ -1560,7 +1599,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
 
         print("Create Role Template Assignment: ", result)
 
-    def test_63_get_role_assignment(self):
+    def test_64_get_role_assignment(self):
         assert self.testRoleTemplateAssignmentId
         print("Assignment ID: ", self.testRoleTemplateAssignmentId)
         response = self.service.get_role_assignment(
@@ -1571,7 +1610,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result_dict = response.get_result()
         assert result_dict is not None
 
-    def test_64_list_role_assignments(self):
+    def test_65_list_role_assignments(self):
         response = self.service.list_role_assignments(
             account_id=self.testAccountId,
         )
@@ -1580,7 +1619,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         role_assignment_collection = response.get_result()
         assert role_assignment_collection is not None
 
-    def test_65_list_role_assignments_with_pager(self):
+    def test_66_list_role_assignments_with_pager(self):
         all_results = []
 
         # Test get_next().
@@ -1606,7 +1645,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert len(all_results) == len(all_items)
         print(f'\nlist_role_assignments() returned a total of {len(all_results)} items(s) using RoleAssignmentsPager.')
 
-    def test_66_update_role_assignment(self):
+    def test_67_update_role_assignment(self):
         response = self.service.update_role_assignment(
             assignment_id=self.testRoleTemplateAssignmentId,
             if_match=self.testRoleTemplateAssignmentEtag,
@@ -1617,14 +1656,20 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         role_assignment = response.get_result()
         assert role_assignment is not None
 
-    def test_67_delete_role_assignment(self):
+    def test_68_delete_role_assignment(self):
         response = self.service.delete_role_assignment(
             assignment_id=self.testRoleTemplateAssignmentId,
         )
 
         assert response.get_status_code() == 204
 
-    def test_68_delete_role_template_version(self):
+    def test_69_delete_role_policy_template(self):
+        response = self.service.delete_policy_template(
+            policy_template_id=self.testRolePolicyTemplateId,
+        )
+        assert response.get_status_code() == 204
+
+    def test_70_delete_role_template_version(self):
         response = self.service.delete_role_template_version(
             role_template_id=self.testRoleTemplateId,
             version=self.testRoleTemplateVersion,
@@ -1632,7 +1677,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
 
         assert response.get_status_code() == 204
 
-    def test_69_delete_role_template(self):
+    def test_71_delete_role_template(self):
         response = self.service.delete_role_template(
             role_template_id=self.testRoleTemplateId,
         )
