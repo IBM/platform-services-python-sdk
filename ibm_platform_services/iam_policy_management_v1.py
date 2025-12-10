@@ -2073,10 +2073,10 @@ class IamPolicyManagementV1(BaseService):
         :param str policy_template_id: The policy template ID.
         :param str version: The policy template version.
         :param str if_match: The revision number for updating a policy template
-               version and must match the ETag value of the existing policy template
+               version and must match the Etag value of the existing policy template
                version. The Etag can be retrieved using the GET
                /v1/policy_templates/{policy_template_id}/versions/{version} API and
-               looking at the ETag response header.
+               looking at the Etag response header.
         :param TemplatePolicy policy: The core set of properties associated with
                the template's policy object.
         :param str name: (optional) Required field when creating a new template.
@@ -3872,7 +3872,7 @@ class IamPolicyManagementV1(BaseService):
         *,
         description: Optional[str] = None,
         committed: Optional[bool] = None,
-        role: Optional['TemplateRole'] = None,
+        role: Optional['RoleTemplatePrototypeRole'] = None,
         accept_language: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
@@ -3893,8 +3893,8 @@ class IamPolicyManagementV1(BaseService):
         :param bool committed: (optional) Committed status of the template. If
                committed is set to true, then the template version can no longer be
                updated.
-        :param TemplateRole role: (optional) The role properties that are created
-               in an action resource when the template is assigned.
+        :param RoleTemplatePrototypeRole role: (optional) The role properties that
+               are created in an action resource when the template is assigned.
         :param str accept_language: (optional) Language code for translations
                * `default` - English
                * `de` -  German (Standard)
@@ -4056,10 +4056,10 @@ class IamPolicyManagementV1(BaseService):
     def create_role_template_version(
         self,
         role_template_id: str,
-        role: 'TemplateRole',
         *,
         name: Optional[str] = None,
         description: Optional[str] = None,
+        role: Optional['TemplateRole'] = None,
         committed: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
@@ -4070,14 +4070,14 @@ class IamPolicyManagementV1(BaseService):
         role template that is committed.
 
         :param str role_template_id: The role template ID.
-        :param TemplateRole role: The role properties that are created in an action
-               resource when the template is assigned.
         :param str name: (optional) Required field when creating a new template.
                Otherwise, this field is optional. If the field is included, it will change
                the name value for all existing versions of the template.
         :param str description: (optional) Description of the role template. This
                is shown to users in the enterprise account. Use this to describe the
                purpose or context of the role for enterprise users managing IAM templates.
+        :param TemplateRole role: (optional) The role properties that are created
+               in an action resource when the template is assigned.
         :param bool committed: (optional) Committed status of the template version.
                If committed is set to true, then the template version can no longer be
                updated.
@@ -4088,9 +4088,8 @@ class IamPolicyManagementV1(BaseService):
 
         if not role_template_id:
             raise ValueError('role_template_id must be provided')
-        if role is None:
-            raise ValueError('role must be provided')
-        role = convert_model(role)
+        if role is not None:
+            role = convert_model(role)
         headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -4100,9 +4099,9 @@ class IamPolicyManagementV1(BaseService):
         headers.update(sdk_headers)
 
         data = {
-            'role': role,
             'name': name,
             'description': description,
+            'role': role,
             'committed': committed,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
@@ -4193,10 +4192,10 @@ class IamPolicyManagementV1(BaseService):
         role_template_id: str,
         version: str,
         if_match: str,
-        role: 'TemplateRole',
         *,
         name: Optional[str] = None,
         description: Optional[str] = None,
+        role: Optional['TemplateRole'] = None,
         committed: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
@@ -4213,14 +4212,14 @@ class IamPolicyManagementV1(BaseService):
                The Etag can be retrieved using the GET
                /v1/role_templates/{template_id}/versions/{version} API and looking at the
                Etag response header.
-        :param TemplateRole role: The role properties that are created in an action
-               resource when the template is assigned.
         :param str name: (optional) Required field when creating a new template.
                Otherwise, this field is optional. If the field is included, it will change
                the name value for all existing versions of the template.
         :param str description: (optional) Description of the role template. This
                is shown to users in the enterprise account. Use this to describe the
                purpose or context of the role for enterprise users managing IAM templates.
+        :param TemplateRole role: (optional) The role properties that are created
+               in an action resource when the template is assigned.
         :param bool committed: (optional) Committed status of the template version.
                If committed is set to true, then the template version can no longer be
                updated.
@@ -4235,9 +4234,8 @@ class IamPolicyManagementV1(BaseService):
             raise ValueError('version must be provided')
         if not if_match:
             raise ValueError('if_match must be provided')
-        if role is None:
-            raise ValueError('role must be provided')
-        role = convert_model(role)
+        if role is not None:
+            role = convert_model(role)
         headers = {
             'If-Match': if_match,
         }
@@ -4249,9 +4247,9 @@ class IamPolicyManagementV1(BaseService):
         headers.update(sdk_headers)
 
         data = {
-            'role': role,
             'name': name,
             'description': description,
+            'role': role,
             'committed': committed,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
@@ -10552,7 +10550,7 @@ class RoleAssignmentResource:
 
 class RoleAssignmentResourceCreated:
     """
-    On success, it includes the action control assigned.
+    On success, it includes the role assigned.
 
     :param str id: (optional) role id.
     """
@@ -10613,7 +10611,7 @@ class RoleAssignmentResourceRole:
     Set of properties of the assigned resource or error message if assignment failed.
 
     :param RoleAssignmentResourceCreated resource_created: (optional) On success, it
-          includes the action control assigned.
+          includes the role assigned.
     :param AssignmentResourceError error_message: (optional) Body parameters for
           assignment error.
     """
@@ -10628,7 +10626,7 @@ class RoleAssignmentResourceRole:
         Initialize a RoleAssignmentResourceRole object.
 
         :param RoleAssignmentResourceCreated resource_created: (optional) On
-               success, it includes the action control assigned.
+               success, it includes the role assigned.
         :param AssignmentResourceError error_message: (optional) Body parameters
                for assignment error.
         """
@@ -10863,8 +10861,8 @@ class RoleTemplate:
     :param str account_id: Enterprise account ID where this template is created.
     :param bool committed: (optional) Committed status of the template. If committed
           is set to true, then the template version can no longer be updated.
-    :param TemplateRole role: (optional) The role properties that are created in an
-          action resource when the template is assigned.
+    :param RoleTemplatePrototypeRole role: (optional) The role properties that are
+          created in an action resource when the template is assigned.
     :param str id: (optional) The role template ID.
     :param str href: (optional) The href URL that links to the role templates API by
           role template ID.
@@ -10884,13 +10882,13 @@ class RoleTemplate:
     def __init__(
         self,
         name: str,
-        description: str,
         account_id: str,
         version: str,
         state: str,
         *,
+        description: Optional[str] = None,
         committed: Optional[bool] = None,
-        role: Optional['TemplateRole'] = None,
+        role: Optional['RoleTemplatePrototypeRole'] = None,
         id: Optional[str] = None,
         href: Optional[str] = None,
         created_at: Optional[datetime] = None,
@@ -10915,8 +10913,8 @@ class RoleTemplate:
         :param bool committed: (optional) Committed status of the template. If
                committed is set to true, then the template version can no longer be
                updated.
-        :param TemplateRole role: (optional) The role properties that are created
-               in an action resource when the template is assigned.
+        :param RoleTemplatePrototypeRole role: (optional) The role properties that
+               are created in an action resource when the template is assigned.
         """
         self.name = name
         self.description = description
@@ -10942,8 +10940,6 @@ class RoleTemplate:
             raise ValueError('Required property \'name\' not present in RoleTemplate JSON')
         if (description := _dict.get('description')) is not None:
             args['description'] = description
-        else:
-            raise ValueError('Required property \'description\' not present in RoleTemplate JSON')
         if (account_id := _dict.get('account_id')) is not None:
             args['account_id'] = account_id
         else:
@@ -10951,7 +10947,7 @@ class RoleTemplate:
         if (committed := _dict.get('committed')) is not None:
             args['committed'] = committed
         if (role := _dict.get('role')) is not None:
-            args['role'] = TemplateRole.from_dict(role)
+            args['role'] = RoleTemplatePrototypeRole.from_dict(role)
         if (id := _dict.get('id')) is not None:
             args['id'] = id
         if (href := _dict.get('href')) is not None:
@@ -11151,6 +11147,176 @@ class RoleTemplateCollection:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'RoleTemplateCollection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class RoleTemplatePrototypeRole:
+    """
+    The role properties that are created in an action resource when the template is
+    assigned.
+
+    :param str name: The name of the role that is used in the CRN. This must be
+          alphanumeric and capitalized.
+    :param str display_name: The display the name of the role that is shown in the
+          console.
+    :param str service_name: (optional) The service name that the role refers.
+    :param str description: (optional) Description of the role.
+    :param List[str] actions: The actions of the role.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        display_name: str,
+        actions: List[str],
+        *,
+        service_name: Optional[str] = None,
+        description: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a RoleTemplatePrototypeRole object.
+
+        :param str name: The name of the role that is used in the CRN. This must be
+               alphanumeric and capitalized.
+        :param str display_name: The display the name of the role that is shown in
+               the console.
+        :param List[str] actions: The actions of the role.
+        :param str service_name: (optional) The service name that the role refers.
+        :param str description: (optional) Description of the role.
+        """
+        self.name = name
+        self.display_name = display_name
+        self.service_name = service_name
+        self.description = description
+        self.actions = actions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleTemplatePrototypeRole':
+        """Initialize a RoleTemplatePrototypeRole object from a json dictionary."""
+        args = {}
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        else:
+            raise ValueError('Required property \'name\' not present in RoleTemplatePrototypeRole JSON')
+        if (display_name := _dict.get('display_name')) is not None:
+            args['display_name'] = display_name
+        else:
+            raise ValueError('Required property \'display_name\' not present in RoleTemplatePrototypeRole JSON')
+        if (service_name := _dict.get('service_name')) is not None:
+            args['service_name'] = service_name
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
+        if (actions := _dict.get('actions')) is not None:
+            args['actions'] = actions
+        else:
+            raise ValueError('Required property \'actions\' not present in RoleTemplatePrototypeRole JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleTemplatePrototypeRole object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'display_name') and self.display_name is not None:
+            _dict['display_name'] = self.display_name
+        if hasattr(self, 'service_name') and self.service_name is not None:
+            _dict['service_name'] = self.service_name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'actions') and self.actions is not None:
+            _dict['actions'] = self.actions
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleTemplatePrototypeRole object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleTemplatePrototypeRole') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleTemplatePrototypeRole') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class RoleTemplateReferencesItem:
+    """
+    A role template reference associated with a policy template.
+
+    :param str id: The role template ID.
+    :param str version: Role template version.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        version: str,
+    ) -> None:
+        """
+        Initialize a RoleTemplateReferencesItem object.
+
+        :param str id: The role template ID.
+        :param str version: Role template version.
+        """
+        self.id = id
+        self.version = version
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleTemplateReferencesItem':
+        """Initialize a RoleTemplateReferencesItem object from a json dictionary."""
+        args = {}
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        else:
+            raise ValueError('Required property \'id\' not present in RoleTemplateReferencesItem JSON')
+        if (version := _dict.get('version')) is not None:
+            args['version'] = version
+        else:
+            raise ValueError('Required property \'version\' not present in RoleTemplateReferencesItem JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleTemplateReferencesItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleTemplateReferencesItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleTemplateReferencesItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleTemplateReferencesItem') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -11590,6 +11756,68 @@ class TemplateActionControl:
         return not self == other
 
 
+class TemplateControl:
+    """
+    Specifies the type of access that is granted by the policy.
+
+    :param TemplateGrant grant: Permission is granted by the policy.
+    """
+
+    def __init__(
+        self,
+        grant: 'TemplateGrant',
+    ) -> None:
+        """
+        Initialize a TemplateControl object.
+
+        :param TemplateGrant grant: Permission is granted by the policy.
+        """
+        self.grant = grant
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateControl':
+        """Initialize a TemplateControl object from a json dictionary."""
+        args = {}
+        if (grant := _dict.get('grant')) is not None:
+            args['grant'] = grant
+        else:
+            raise ValueError('Required property \'grant\' not present in TemplateControl JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateControl object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'grant') and self.grant is not None:
+            if isinstance(self.grant, dict):
+                _dict['grant'] = self.grant
+            else:
+                _dict['grant'] = self.grant.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateControl object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateControl') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateControl') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class TemplateCountData:
     """
     policy template count details.
@@ -11662,6 +11890,90 @@ class TemplateCountData:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'TemplateCountData') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateGrant:
+    """
+    Permission is granted by the policy.
+
+    :param List[Roles] roles: (optional) A set of role Cloud Resource Names (CRNs)
+          granted by the policy.
+    :param List[RoleTemplateReferencesItem] role_template_references: (optional) A
+          set of role template reference IDs granted by the policy.
+    """
+
+    def __init__(
+        self,
+        *,
+        roles: Optional[List['Roles']] = None,
+        role_template_references: Optional[List['RoleTemplateReferencesItem']] = None,
+    ) -> None:
+        """
+        Initialize a TemplateGrant object.
+
+        :param List[Roles] roles: (optional) A set of role Cloud Resource Names
+               (CRNs) granted by the policy.
+        :param List[RoleTemplateReferencesItem] role_template_references:
+               (optional) A set of role template reference IDs granted by the policy.
+        """
+        self.roles = roles
+        self.role_template_references = role_template_references
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateGrant':
+        """Initialize a TemplateGrant object from a json dictionary."""
+        args = {}
+        if (roles := _dict.get('roles')) is not None:
+            args['roles'] = [Roles.from_dict(v) for v in roles]
+        if (role_template_references := _dict.get('role_template_references')) is not None:
+            args['role_template_references'] = [
+                RoleTemplateReferencesItem.from_dict(v) for v in role_template_references
+            ]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateGrant object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'roles') and self.roles is not None:
+            roles_list = []
+            for v in self.roles:
+                if isinstance(v, dict):
+                    roles_list.append(v)
+                else:
+                    roles_list.append(v.to_dict())
+            _dict['roles'] = roles_list
+        if hasattr(self, 'role_template_references') and self.role_template_references is not None:
+            role_template_references_list = []
+            for v in self.role_template_references:
+                if isinstance(v, dict):
+                    role_template_references_list.append(v)
+                else:
+                    role_template_references_list.append(v.to_dict())
+            _dict['role_template_references'] = role_template_references_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateGrant object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateGrant') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateGrant') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -11775,8 +12087,8 @@ class TemplatePolicy:
           'time-based-conditions:weekly:custom-hours'.
     :param V2PolicyRule rule: (optional) Additional access conditions associated
           with the policy.
-    :param Control control: (optional) Specifies the type of access that is granted
-          by the policy.
+    :param TemplateControl control: (optional) Specifies the type of access that is
+          granted by the policy.
     """
 
     def __init__(
@@ -11788,7 +12100,7 @@ class TemplatePolicy:
         subject: Optional['V2PolicySubject'] = None,
         pattern: Optional[str] = None,
         rule: Optional['V2PolicyRule'] = None,
-        control: Optional['Control'] = None,
+        control: Optional['TemplateControl'] = None,
     ) -> None:
         """
         Initialize a TemplatePolicy object.
@@ -11806,8 +12118,8 @@ class TemplatePolicy:
                'time-based-conditions:weekly:custom-hours'.
         :param V2PolicyRule rule: (optional) Additional access conditions
                associated with the policy.
-        :param Control control: (optional) Specifies the type of access that is
-               granted by the policy.
+        :param TemplateControl control: (optional) Specifies the type of access
+               that is granted by the policy.
         """
         self.type = type
         self.description = description
@@ -11836,7 +12148,7 @@ class TemplatePolicy:
         if (rule := _dict.get('rule')) is not None:
             args['rule'] = rule
         if (control := _dict.get('control')) is not None:
-            args['control'] = Control.from_dict(control)
+            args['control'] = TemplateControl.from_dict(control)
         return cls(**args)
 
     @classmethod
@@ -11907,36 +12219,30 @@ class TemplateRole:
     The role properties that are created in an action resource when the template is
     assigned.
 
-    :param str name: The name of the role that is used in the CRN. This must be
-          alphanumeric and capitalized.
     :param str display_name: The display the name of the role that is shown in the
           console.
-    :param str service_name: The service name that the role refers.
+    :param str service_name: (optional) The service name that the role refers.
     :param str description: (optional) Description of the role.
     :param List[str] actions: The actions of the role.
     """
 
     def __init__(
         self,
-        name: str,
         display_name: str,
-        service_name: str,
         actions: List[str],
         *,
+        service_name: Optional[str] = None,
         description: Optional[str] = None,
     ) -> None:
         """
         Initialize a TemplateRole object.
 
-        :param str name: The name of the role that is used in the CRN. This must be
-               alphanumeric and capitalized.
         :param str display_name: The display the name of the role that is shown in
                the console.
-        :param str service_name: The service name that the role refers.
         :param List[str] actions: The actions of the role.
+        :param str service_name: (optional) The service name that the role refers.
         :param str description: (optional) Description of the role.
         """
-        self.name = name
         self.display_name = display_name
         self.service_name = service_name
         self.description = description
@@ -11946,18 +12252,12 @@ class TemplateRole:
     def from_dict(cls, _dict: Dict) -> 'TemplateRole':
         """Initialize a TemplateRole object from a json dictionary."""
         args = {}
-        if (name := _dict.get('name')) is not None:
-            args['name'] = name
-        else:
-            raise ValueError('Required property \'name\' not present in TemplateRole JSON')
         if (display_name := _dict.get('display_name')) is not None:
             args['display_name'] = display_name
         else:
             raise ValueError('Required property \'display_name\' not present in TemplateRole JSON')
         if (service_name := _dict.get('service_name')) is not None:
             args['service_name'] = service_name
-        else:
-            raise ValueError('Required property \'service_name\' not present in TemplateRole JSON')
         if (description := _dict.get('description')) is not None:
             args['description'] = description
         if (actions := _dict.get('actions')) is not None:
@@ -11974,8 +12274,6 @@ class TemplateRole:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
         if hasattr(self, 'display_name') and self.display_name is not None:
             _dict['display_name'] = self.display_name
         if hasattr(self, 'service_name') and self.service_name is not None:
@@ -13773,6 +14071,146 @@ class PolicyTemplateAssignmentItemsPolicyAssignmentV1(PolicyTemplateAssignmentIt
         SUCCEEDED = 'succeeded'
         SUCCEED_WITH_ERRORS = 'succeed_with_errors'
         FAILED = 'failed'
+
+
+class TemplateGrantRoleReferences(TemplateGrant):
+    """
+    TemplateGrantRoleReferences.
+
+    :param List[RoleTemplateReferencesItem] role_template_references: A set of role
+          template reference IDs granted by the policy.
+    """
+
+    def __init__(
+        self,
+        role_template_references: List['RoleTemplateReferencesItem'],
+    ) -> None:
+        """
+        Initialize a TemplateGrantRoleReferences object.
+
+        :param List[RoleTemplateReferencesItem] role_template_references: A set of
+               role template reference IDs granted by the policy.
+        """
+        # pylint: disable=super-init-not-called
+        self.role_template_references = role_template_references
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateGrantRoleReferences':
+        """Initialize a TemplateGrantRoleReferences object from a json dictionary."""
+        args = {}
+        if (role_template_references := _dict.get('role_template_references')) is not None:
+            args['role_template_references'] = [
+                RoleTemplateReferencesItem.from_dict(v) for v in role_template_references
+            ]
+        else:
+            raise ValueError(
+                'Required property \'role_template_references\' not present in TemplateGrantRoleReferences JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateGrantRoleReferences object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'role_template_references') and self.role_template_references is not None:
+            role_template_references_list = []
+            for v in self.role_template_references:
+                if isinstance(v, dict):
+                    role_template_references_list.append(v)
+                else:
+                    role_template_references_list.append(v.to_dict())
+            _dict['role_template_references'] = role_template_references_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateGrantRoleReferences object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateGrantRoleReferences') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateGrantRoleReferences') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateGrantRoles(TemplateGrant):
+    """
+    TemplateGrantRoles.
+
+    :param List[Roles] roles: A set of role Cloud Resource Names (CRNs) granted by
+          the policy.
+    """
+
+    def __init__(
+        self,
+        roles: List['Roles'],
+    ) -> None:
+        """
+        Initialize a TemplateGrantRoles object.
+
+        :param List[Roles] roles: A set of role Cloud Resource Names (CRNs) granted
+               by the policy.
+        """
+        # pylint: disable=super-init-not-called
+        self.roles = roles
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateGrantRoles':
+        """Initialize a TemplateGrantRoles object from a json dictionary."""
+        args = {}
+        if (roles := _dict.get('roles')) is not None:
+            args['roles'] = [Roles.from_dict(v) for v in roles]
+        else:
+            raise ValueError('Required property \'roles\' not present in TemplateGrantRoles JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateGrantRoles object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'roles') and self.roles is not None:
+            roles_list = []
+            for v in self.roles:
+                if isinstance(v, dict):
+                    roles_list.append(v)
+                else:
+                    roles_list.append(v.to_dict())
+            _dict['roles'] = roles_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateGrantRoles object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateGrantRoles') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateGrantRoles') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class V2PolicyRuleRuleAttribute(V2PolicyRule):

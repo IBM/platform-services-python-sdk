@@ -72,6 +72,7 @@ example_role_template_version = None
 example_role_template_etag = None
 example_role_template_assignment_id = None
 example_role_template_assignment_etag = None
+example_role_policy_template_id = None
 
 
 ##############################################################################
@@ -1443,10 +1444,17 @@ class TestIamPolicyManagementV1Examples:
             print('\ncreate_role_template() result:')
 
             # begin-create_role_template
-
+            template_role_model = {
+                'name': 'SDKCustomRoleName',
+                'display_name': 'SDK Test Custom Role',
+                'service_name': 'am-test-service',
+                'description': 'SDK Test Custom Role',
+                'actions': ['am-test-service.test.create'],
+            }
             response = iam_policy_management_service.create_role_template(
                 name='SDKRoleTemplateExample',
                 account_id=example_account_id,
+                role=template_role_model,
             )
             role_template = response.get_result()
 
@@ -1458,6 +1466,61 @@ class TestIamPolicyManagementV1Examples:
             print(json.dumps(role_template, indent=2))
 
             # end-create_role_template
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_role_policy_template_example(self):
+        """
+        create_role_policy_template request example
+        """
+        try:
+            print('\ncreate_role_policy_template() result:')
+            # begin-create_role_policy_template
+
+            policy_resource_model = {
+                'attributes': [
+                    {
+                        'key': 'serviceName',
+                        'operator': 'stringEquals',
+                        'value': 'am-test-service',
+                    }
+                ],
+            }
+
+            control_model = TemplateControl(
+                grant=TemplateGrant(
+                    roles=[
+                        {
+                            'role_id': 'crn:v1:bluemix:public:iam::::role:Viewer',
+                        }
+                    ],
+                    role_template_references=[
+                        {'id': example_role_template_id, 'version': example_role_template_version}
+                    ],
+                )
+            )
+
+            template_policy_model = {
+                'type': 'access',
+                'resource': policy_resource_model,
+                'control': control_model.to_dict(),
+            }
+
+            response = iam_policy_management_service.create_policy_template(
+                name='SDKExamplesTest',
+                account_id=example_account_id,
+                policy=template_policy_model,
+            )
+            policy_template = response.get_result()
+
+            global example_role_policy_template_id
+            example_role_policy_template_id = policy_template['id']
+
+            print(json.dumps(policy_template, indent=2))
+
+            # end-create_policy_template
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1498,7 +1561,6 @@ class TestIamPolicyManagementV1Examples:
             # begin-replace_role_template
 
             template_role_model = {
-                'name': 'SDKRoleTemplateExampleRe',
                 'display_name': 'am-test-service',
                 'service_name': 'am-test-service',
                 'actions': ['am-test-service.test.delete'],
@@ -1558,9 +1620,7 @@ class TestIamPolicyManagementV1Examples:
             # begin-create_role_template_version
 
             template_role_model = {
-                'name': 'SDKRoleTemplateExampleVer',
                 'display_name': 'am-test-service',
-                'service_name': 'am-test-service',
                 'actions': ['am-test-service.test.delete', 'am-test-service.test.create'],
             }
 
@@ -1775,6 +1835,24 @@ class TestIamPolicyManagementV1Examples:
 
             # end-delete_role_assignment
             print('\ndelete_role_assignment() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_role_policy_template_example(self):
+        """
+        delete_role_policy_template request example
+        """
+        try:
+            # begin-delete_role_policy_template
+
+            response = iam_policy_management_service.delete_policy_template(
+                policy_template_id=example_role_policy_template_id,
+            )
+
+            # end-delete_policy_template
+            print('\ndelete_role_policy_template() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
