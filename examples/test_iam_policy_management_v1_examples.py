@@ -1480,21 +1480,27 @@ class TestIamPolicyManagementV1Examples:
             # begin-create_role_policy_template
 
             policy_resource_model = {
-                'attributes': [{
-                    'key': 'serviceName',
-                    'operator': 'stringEquals',
-                    'value': 'am-test-service',
-                }],
+                'attributes': [
+                    {
+                        'key': 'serviceName',
+                        'operator': 'stringEquals',
+                        'value': 'am-test-service',
+                    }
+                ],
             }
 
-            control_model = TemplateControl(grant=TemplateGrant(
-                roles=[{
-                    'role_id': 'crn:v1:bluemix:public:iam::::role:Viewer',
-                }],
-                role_template_references=[{
-                    'id': example_role_template_id, 'version': example_role_template_version
-                }]
-            ))
+            control_model = TemplateControl(
+                grant=TemplateGrant(
+                    roles=[
+                        {
+                            'role_id': 'crn:v1:bluemix:public:iam::::role:Viewer',
+                        }
+                    ],
+                    role_template_references=[
+                        {'id': example_role_template_id, 'version': example_role_template_version}
+                    ],
+                )
+            )
 
             template_policy_model = {
                 'type': 'access',

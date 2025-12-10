@@ -2619,7 +2619,7 @@ class TestListPolicyTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -2687,7 +2687,7 @@ class TestListPolicyTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -2729,7 +2729,7 @@ class TestListPolicyTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "policy_templates": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -2766,8 +2766,8 @@ class TestListPolicyTemplates:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/policy_templates')
-        mock_response1 = '{"next":{"start":"1"},"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}],"role_template_references":[{"id":"id","version":"version"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
-        mock_response2 = '{"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}],"role_template_references":[{"id":"id","version":"version"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"start":"1"},"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -2810,8 +2810,8 @@ class TestListPolicyTemplates:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/policy_templates')
-        mock_response1 = '{"next":{"start":"1"},"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}],"role_template_references":[{"id":"id","version":"version"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
-        mock_response2 = '{"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}],"role_template_references":[{"id":"id","version":"version"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"start":"1"},"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"policy_templates":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -2857,7 +2857,7 @@ class TestCreatePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -2903,15 +2903,9 @@ class TestCreatePolicyTemplate:
         roles_model = {}
         roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a RoleTemplateReferencesItem model
-        role_template_references_item_model = {}
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        # Construct a dict representation of a TemplateGrant model
+        # Construct a dict representation of a TemplateGrantRoles model
         template_grant_model = {}
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         # Construct a dict representation of a TemplateControl model
         template_control_model = {}
@@ -2973,7 +2967,7 @@ class TestCreatePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -3019,15 +3013,9 @@ class TestCreatePolicyTemplate:
         roles_model = {}
         roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a RoleTemplateReferencesItem model
-        role_template_references_item_model = {}
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        # Construct a dict representation of a TemplateGrant model
+        # Construct a dict representation of a TemplateGrantRoles model
         template_grant_model = {}
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         # Construct a dict representation of a TemplateControl model
         template_control_model = {}
@@ -3087,7 +3075,7 @@ class TestCreatePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -3133,15 +3121,9 @@ class TestCreatePolicyTemplate:
         roles_model = {}
         roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a RoleTemplateReferencesItem model
-        role_template_references_item_model = {}
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        # Construct a dict representation of a TemplateGrant model
+        # Construct a dict representation of a TemplateGrantRoles model
         template_grant_model = {}
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         # Construct a dict representation of a TemplateControl model
         template_control_model = {}
@@ -3197,7 +3179,7 @@ class TestGetPolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -3241,7 +3223,7 @@ class TestGetPolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -3279,7 +3261,7 @@ class TestGetPolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -3397,7 +3379,7 @@ class TestCreatePolicyTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -3443,15 +3425,9 @@ class TestCreatePolicyTemplateVersion:
         roles_model = {}
         roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a RoleTemplateReferencesItem model
-        role_template_references_item_model = {}
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        # Construct a dict representation of a TemplateGrant model
+        # Construct a dict representation of a TemplateGrantRoles model
         template_grant_model = {}
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         # Construct a dict representation of a TemplateControl model
         template_control_model = {}
@@ -3510,7 +3486,7 @@ class TestCreatePolicyTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "counts": {"template": {"current": 7, "limit": 5}, "version": {"current": 7, "limit": 5}}}'
         responses.add(
             responses.POST,
             url,
@@ -3556,15 +3532,9 @@ class TestCreatePolicyTemplateVersion:
         roles_model = {}
         roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a RoleTemplateReferencesItem model
-        role_template_references_item_model = {}
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        # Construct a dict representation of a TemplateGrant model
+        # Construct a dict representation of a TemplateGrantRoles model
         template_grant_model = {}
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         # Construct a dict representation of a TemplateControl model
         template_control_model = {}
@@ -3619,7 +3589,7 @@ class TestListPolicyTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3669,7 +3639,7 @@ class TestListPolicyTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3707,7 +3677,7 @@ class TestListPolicyTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 1, "first": {"href": "href"}, "next": {"href": "href", "start": "start"}, "previous": {"href": "href", "start": "start"}, "versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3744,8 +3714,8 @@ class TestListPolicyTemplateVersions:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response1 = '{"next":{"start":"1"},"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}],"role_template_references":[{"id":"id","version":"version"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
-        mock_response2 = '{"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}],"role_template_references":[{"id":"id","version":"version"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"start":"1"},"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -3782,8 +3752,8 @@ class TestListPolicyTemplateVersions:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/policy_templates/testString/versions')
-        mock_response1 = '{"next":{"start":"1"},"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}],"role_template_references":[{"id":"id","version":"version"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
-        mock_response2 = '{"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}],"role_template_references":[{"id":"id","version":"version"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"start":"1"},"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"policy":{"type":"access","description":"description","resource":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}],"tags":[{"key":"key","value":"value","operator":"stringEquals"}]},"subject":{"attributes":[{"key":"key","operator":"stringEquals","value":"anyValue"}]},"pattern":"pattern","rule":{"key":"key","operator":"stringEquals","value":"anyValue"},"control":{"grant":{"roles":[{"role_id":"role_id"}]}}},"state":"active","id":"id","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -3823,7 +3793,7 @@ class TestReplacePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.PUT,
             url,
@@ -3869,15 +3839,9 @@ class TestReplacePolicyTemplate:
         roles_model = {}
         roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a RoleTemplateReferencesItem model
-        role_template_references_item_model = {}
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        # Construct a dict representation of a TemplateGrant model
+        # Construct a dict representation of a TemplateGrantRoles model
         template_grant_model = {}
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         # Construct a dict representation of a TemplateControl model
         template_control_model = {}
@@ -3940,7 +3904,7 @@ class TestReplacePolicyTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.PUT,
             url,
@@ -3986,15 +3950,9 @@ class TestReplacePolicyTemplate:
         roles_model = {}
         roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a RoleTemplateReferencesItem model
-        role_template_references_item_model = {}
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        # Construct a dict representation of a TemplateGrant model
+        # Construct a dict representation of a TemplateGrantRoles model
         template_grant_model = {}
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         # Construct a dict representation of a TemplateControl model
         template_control_model = {}
@@ -4132,7 +4090,7 @@ class TestGetPolicyTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -4172,7 +4130,7 @@ class TestGetPolicyTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_templates/testString/versions/testString')
-        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}], "role_template_references": [{"id": "id", "version": "version"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "policy": {"type": "access", "description": "description", "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "stringEquals", "value": "anyValue"}, "control": {"grant": {"roles": [{"role_id": "role_id"}]}}}, "state": "active", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -11331,13 +11289,8 @@ class TestModel_PolicyTemplate:
         roles_model = {}  # Roles
         roles_model['role_id'] = 'testString'
 
-        role_template_references_item_model = {}  # RoleTemplateReferencesItem
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        template_grant_model = {}  # TemplateGrant
+        template_grant_model = {}  # TemplateGrantRoles
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         template_control_model = {}  # TemplateControl
         template_control_model['grant'] = template_grant_model
@@ -11527,13 +11480,8 @@ class TestModel_PolicyTemplateCollection:
         roles_model = {}  # Roles
         roles_model['role_id'] = 'testString'
 
-        role_template_references_item_model = {}  # RoleTemplateReferencesItem
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        template_grant_model = {}  # TemplateGrant
+        template_grant_model = {}  # TemplateGrantRoles
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         template_control_model = {}  # TemplateControl
         template_control_model['grant'] = template_grant_model
@@ -11624,13 +11572,8 @@ class TestModel_PolicyTemplateLimitData:
         roles_model = {}  # Roles
         roles_model['role_id'] = 'testString'
 
-        role_template_references_item_model = {}  # RoleTemplateReferencesItem
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        template_grant_model = {}  # TemplateGrant
+        template_grant_model = {}  # TemplateGrantRoles
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         template_control_model = {}  # TemplateControl
         template_control_model['grant'] = template_grant_model
@@ -11800,13 +11743,8 @@ class TestModel_PolicyTemplateVersionsCollection:
         roles_model = {}  # Roles
         roles_model['role_id'] = 'testString'
 
-        role_template_references_item_model = {}  # RoleTemplateReferencesItem
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        template_grant_model = {}  # TemplateGrant
+        template_grant_model = {}  # TemplateGrantRoles
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         template_control_model = {}  # TemplateControl
         template_control_model['grant'] = template_grant_model
@@ -12748,13 +12686,8 @@ class TestModel_TemplateControl:
         roles_model = {}  # Roles
         roles_model['role_id'] = 'testString'
 
-        role_template_references_item_model = {}  # RoleTemplateReferencesItem
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        template_grant_model = {}  # TemplateGrant
+        template_grant_model = {}  # TemplateGrantRoles
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         # Construct a json representation of a TemplateControl model
         template_control_model_json = {}
@@ -12809,46 +12742,6 @@ class TestModel_TemplateCountData:
         # Convert model instance back to dict and verify no loss of data
         template_count_data_model_json2 = template_count_data_model.to_dict()
         assert template_count_data_model_json2 == template_count_data_model_json
-
-
-class TestModel_TemplateGrant:
-    """
-    Test Class for TemplateGrant
-    """
-
-    def test_template_grant_serialization(self):
-        """
-        Test serialization/deserialization for TemplateGrant
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        roles_model = {}  # Roles
-        roles_model['role_id'] = 'testString'
-
-        role_template_references_item_model = {}  # RoleTemplateReferencesItem
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        # Construct a json representation of a TemplateGrant model
-        template_grant_model_json = {}
-        template_grant_model_json['roles'] = [roles_model]
-        template_grant_model_json['role_template_references'] = [role_template_references_item_model]
-
-        # Construct a model instance of TemplateGrant by calling from_dict on the json representation
-        template_grant_model = TemplateGrant.from_dict(template_grant_model_json)
-        assert template_grant_model != False
-
-        # Construct a model instance of TemplateGrant by calling from_dict on the json representation
-        template_grant_model_dict = TemplateGrant.from_dict(template_grant_model_json).__dict__
-        template_grant_model2 = TemplateGrant(**template_grant_model_dict)
-
-        # Verify the model instances are equivalent
-        assert template_grant_model == template_grant_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        template_grant_model_json2 = template_grant_model.to_dict()
-        assert template_grant_model_json2 == template_grant_model_json
 
 
 class TestModel_TemplateMetadata:
@@ -12927,13 +12820,8 @@ class TestModel_TemplatePolicy:
         roles_model = {}  # Roles
         roles_model['role_id'] = 'testString'
 
-        role_template_references_item_model = {}  # RoleTemplateReferencesItem
-        role_template_references_item_model['id'] = 'testString'
-        role_template_references_item_model['version'] = 'testString'
-
-        template_grant_model = {}  # TemplateGrant
+        template_grant_model = {}  # TemplateGrantRoles
         template_grant_model['roles'] = [roles_model]
-        template_grant_model['role_template_references'] = [role_template_references_item_model]
 
         template_control_model = {}  # TemplateControl
         template_control_model['grant'] = template_grant_model
@@ -13806,6 +13694,81 @@ class TestModel_PolicyTemplateAssignmentItemsPolicyAssignmentV1:
             policy_template_assignment_items_policy_assignment_v1_model_json2
             == policy_template_assignment_items_policy_assignment_v1_model_json
         )
+
+
+class TestModel_TemplateGrantRoleReferences:
+    """
+    Test Class for TemplateGrantRoleReferences
+    """
+
+    def test_template_grant_role_references_serialization(self):
+        """
+        Test serialization/deserialization for TemplateGrantRoleReferences
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        role_template_references_item_model = {}  # RoleTemplateReferencesItem
+        role_template_references_item_model['id'] = 'testString'
+        role_template_references_item_model['version'] = 'testString'
+
+        # Construct a json representation of a TemplateGrantRoleReferences model
+        template_grant_role_references_model_json = {}
+        template_grant_role_references_model_json['role_template_references'] = [role_template_references_item_model]
+
+        # Construct a model instance of TemplateGrantRoleReferences by calling from_dict on the json representation
+        template_grant_role_references_model = TemplateGrantRoleReferences.from_dict(
+            template_grant_role_references_model_json
+        )
+        assert template_grant_role_references_model != False
+
+        # Construct a model instance of TemplateGrantRoleReferences by calling from_dict on the json representation
+        template_grant_role_references_model_dict = TemplateGrantRoleReferences.from_dict(
+            template_grant_role_references_model_json
+        ).__dict__
+        template_grant_role_references_model2 = TemplateGrantRoleReferences(**template_grant_role_references_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_grant_role_references_model == template_grant_role_references_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_grant_role_references_model_json2 = template_grant_role_references_model.to_dict()
+        assert template_grant_role_references_model_json2 == template_grant_role_references_model_json
+
+
+class TestModel_TemplateGrantRoles:
+    """
+    Test Class for TemplateGrantRoles
+    """
+
+    def test_template_grant_roles_serialization(self):
+        """
+        Test serialization/deserialization for TemplateGrantRoles
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
+
+        # Construct a json representation of a TemplateGrantRoles model
+        template_grant_roles_model_json = {}
+        template_grant_roles_model_json['roles'] = [roles_model]
+
+        # Construct a model instance of TemplateGrantRoles by calling from_dict on the json representation
+        template_grant_roles_model = TemplateGrantRoles.from_dict(template_grant_roles_model_json)
+        assert template_grant_roles_model != False
+
+        # Construct a model instance of TemplateGrantRoles by calling from_dict on the json representation
+        template_grant_roles_model_dict = TemplateGrantRoles.from_dict(template_grant_roles_model_json).__dict__
+        template_grant_roles_model2 = TemplateGrantRoles(**template_grant_roles_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_grant_roles_model == template_grant_roles_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_grant_roles_model_json2 = template_grant_roles_model.to_dict()
+        assert template_grant_roles_model_json2 == template_grant_roles_model_json
 
 
 class TestModel_V2PolicyRuleRuleAttribute:

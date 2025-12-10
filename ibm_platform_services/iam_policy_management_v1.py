@@ -10882,11 +10882,11 @@ class RoleTemplate:
     def __init__(
         self,
         name: str,
-        description: str,
         account_id: str,
         version: str,
         state: str,
         *,
+        description: Optional[str] = None,
         committed: Optional[bool] = None,
         role: Optional['RoleTemplatePrototypeRole'] = None,
         id: Optional[str] = None,
@@ -10940,8 +10940,6 @@ class RoleTemplate:
             raise ValueError('Required property \'name\' not present in RoleTemplate JSON')
         if (description := _dict.get('description')) is not None:
             args['description'] = description
-        else:
-            raise ValueError('Required property \'description\' not present in RoleTemplate JSON')
         if (account_id := _dict.get('account_id')) is not None:
             args['account_id'] = account_id
         else:
@@ -11781,7 +11779,7 @@ class TemplateControl:
         """Initialize a TemplateControl object from a json dictionary."""
         args = {}
         if (grant := _dict.get('grant')) is not None:
-            args['grant'] = TemplateGrant.from_dict(grant)
+            args['grant'] = grant
         else:
             raise ValueError('Required property \'grant\' not present in TemplateControl JSON')
         return cls(**args)
@@ -14073,6 +14071,146 @@ class PolicyTemplateAssignmentItemsPolicyAssignmentV1(PolicyTemplateAssignmentIt
         SUCCEEDED = 'succeeded'
         SUCCEED_WITH_ERRORS = 'succeed_with_errors'
         FAILED = 'failed'
+
+
+class TemplateGrantRoleReferences(TemplateGrant):
+    """
+    TemplateGrantRoleReferences.
+
+    :param List[RoleTemplateReferencesItem] role_template_references: A set of role
+          template reference IDs granted by the policy.
+    """
+
+    def __init__(
+        self,
+        role_template_references: List['RoleTemplateReferencesItem'],
+    ) -> None:
+        """
+        Initialize a TemplateGrantRoleReferences object.
+
+        :param List[RoleTemplateReferencesItem] role_template_references: A set of
+               role template reference IDs granted by the policy.
+        """
+        # pylint: disable=super-init-not-called
+        self.role_template_references = role_template_references
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateGrantRoleReferences':
+        """Initialize a TemplateGrantRoleReferences object from a json dictionary."""
+        args = {}
+        if (role_template_references := _dict.get('role_template_references')) is not None:
+            args['role_template_references'] = [
+                RoleTemplateReferencesItem.from_dict(v) for v in role_template_references
+            ]
+        else:
+            raise ValueError(
+                'Required property \'role_template_references\' not present in TemplateGrantRoleReferences JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateGrantRoleReferences object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'role_template_references') and self.role_template_references is not None:
+            role_template_references_list = []
+            for v in self.role_template_references:
+                if isinstance(v, dict):
+                    role_template_references_list.append(v)
+                else:
+                    role_template_references_list.append(v.to_dict())
+            _dict['role_template_references'] = role_template_references_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateGrantRoleReferences object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateGrantRoleReferences') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateGrantRoleReferences') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateGrantRoles(TemplateGrant):
+    """
+    TemplateGrantRoles.
+
+    :param List[Roles] roles: A set of role Cloud Resource Names (CRNs) granted by
+          the policy.
+    """
+
+    def __init__(
+        self,
+        roles: List['Roles'],
+    ) -> None:
+        """
+        Initialize a TemplateGrantRoles object.
+
+        :param List[Roles] roles: A set of role Cloud Resource Names (CRNs) granted
+               by the policy.
+        """
+        # pylint: disable=super-init-not-called
+        self.roles = roles
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateGrantRoles':
+        """Initialize a TemplateGrantRoles object from a json dictionary."""
+        args = {}
+        if (roles := _dict.get('roles')) is not None:
+            args['roles'] = [Roles.from_dict(v) for v in roles]
+        else:
+            raise ValueError('Required property \'roles\' not present in TemplateGrantRoles JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateGrantRoles object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'roles') and self.roles is not None:
+            roles_list = []
+            for v in self.roles:
+                if isinstance(v, dict):
+                    roles_list.append(v)
+                else:
+                    roles_list.append(v.to_dict())
+            _dict['roles'] = roles_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateGrantRoles object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateGrantRoles') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateGrantRoles') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class V2PolicyRuleRuleAttribute(V2PolicyRule):
