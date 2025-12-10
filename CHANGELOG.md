@@ -1,3 +1,10 @@
+# [0.72.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.71.0...v0.72.0) (2025-12-10)
+
+
+### Features
+
+* **IAM Policy Management:** re-gen service after recent API changes for role template references ([#312](https://github.com/IBM/platform-services-python-sdk/issues/312)) ([f364299](https://github.com/IBM/platform-services-python-sdk/commit/f3642994ff92b2e84938be6583e95f42d70b26c1))
+
 # [0.71.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.70.0...v0.71.0) (2025-10-30)
 
 
