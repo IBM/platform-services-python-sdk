@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.86.0-bc6f14b3-20240221-193958
+# IBM OpenAPI SDK Code Generator Version: 3.108.0-56772134-20251111-102802
 
 """
 With the Context Based Restrictions API, you can:
@@ -1290,19 +1290,20 @@ class AccountSettings:
     :param str crn: The account settings CRN.
     :param int rule_count_limit: the max number of rules allowed for the account.
     :param int zone_count_limit: the max number of zones allowed for the account.
-    :param int tags_rule_count_limit: (optional) the max number of rules with tags
-          allowed for the account.
+    :param int tags_rule_count_limit: the max number of rules with tags allowed for
+          the account.
     :param int current_rule_count: the current number of rules used by the account.
     :param int current_zone_count: the current number of zones used by the account.
-    :param int current_tags_rule_count: (optional) the current number of rules with
-          tags used by the account.
+    :param int current_tags_rule_count: the current number of rules with tags used
+          by the account.
     :param str href: The href link to the resource.
-    :param datetime created_at: The time the resource was created.
-    :param str created_by_id: IAM ID of the user or service which created the
-          resource.
-    :param datetime last_modified_at: The last time the resource was modified.
-    :param str last_modified_by_id: IAM ID of the user or service which modified the
-          resource.
+    :param datetime created_at: (optional) The time the resource was created.
+    :param str created_by_id: (optional) IAM ID of the user or service which created
+          the resource.
+    :param datetime last_modified_at: (optional) The last time the resource was
+          modified.
+    :param str last_modified_by_id: (optional) IAM ID of the user or service which
+          modified the resource.
     """
 
     def __init__(
@@ -1311,16 +1312,16 @@ class AccountSettings:
         crn: str,
         rule_count_limit: int,
         zone_count_limit: int,
+        tags_rule_count_limit: int,
         current_rule_count: int,
         current_zone_count: int,
+        current_tags_rule_count: int,
         href: str,
-        created_at: datetime,
-        created_by_id: str,
-        last_modified_at: datetime,
-        last_modified_by_id: str,
         *,
-        tags_rule_count_limit: Optional[int] = None,
-        current_tags_rule_count: Optional[int] = None,
+        created_at: Optional[datetime] = None,
+        created_by_id: Optional[str] = None,
+        last_modified_at: Optional[datetime] = None,
+        last_modified_by_id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AccountSettings object.
@@ -1331,21 +1332,22 @@ class AccountSettings:
                account.
         :param int zone_count_limit: the max number of zones allowed for the
                account.
+        :param int tags_rule_count_limit: the max number of rules with tags allowed
+               for the account.
         :param int current_rule_count: the current number of rules used by the
                account.
         :param int current_zone_count: the current number of zones used by the
                account.
+        :param int current_tags_rule_count: the current number of rules with tags
+               used by the account.
         :param str href: The href link to the resource.
-        :param datetime created_at: The time the resource was created.
-        :param str created_by_id: IAM ID of the user or service which created the
-               resource.
-        :param datetime last_modified_at: The last time the resource was modified.
-        :param str last_modified_by_id: IAM ID of the user or service which
-               modified the resource.
-        :param int tags_rule_count_limit: (optional) the max number of rules with
-               tags allowed for the account.
-        :param int current_tags_rule_count: (optional) the current number of rules
-               with tags used by the account.
+        :param datetime created_at: (optional) The time the resource was created.
+        :param str created_by_id: (optional) IAM ID of the user or service which
+               created the resource.
+        :param datetime last_modified_at: (optional) The last time the resource was
+               modified.
+        :param str last_modified_by_id: (optional) IAM ID of the user or service
+               which modified the resource.
         """
         self.id = id
         self.crn = crn
@@ -1383,6 +1385,8 @@ class AccountSettings:
             raise ValueError('Required property \'zone_count_limit\' not present in AccountSettings JSON')
         if (tags_rule_count_limit := _dict.get('tags_rule_count_limit')) is not None:
             args['tags_rule_count_limit'] = tags_rule_count_limit
+        else:
+            raise ValueError('Required property \'tags_rule_count_limit\' not present in AccountSettings JSON')
         if (current_rule_count := _dict.get('current_rule_count')) is not None:
             args['current_rule_count'] = current_rule_count
         else:
@@ -1393,26 +1397,20 @@ class AccountSettings:
             raise ValueError('Required property \'current_zone_count\' not present in AccountSettings JSON')
         if (current_tags_rule_count := _dict.get('current_tags_rule_count')) is not None:
             args['current_tags_rule_count'] = current_tags_rule_count
+        else:
+            raise ValueError('Required property \'current_tags_rule_count\' not present in AccountSettings JSON')
         if (href := _dict.get('href')) is not None:
             args['href'] = href
         else:
             raise ValueError('Required property \'href\' not present in AccountSettings JSON')
         if (created_at := _dict.get('created_at')) is not None:
             args['created_at'] = string_to_datetime(created_at)
-        else:
-            raise ValueError('Required property \'created_at\' not present in AccountSettings JSON')
         if (created_by_id := _dict.get('created_by_id')) is not None:
             args['created_by_id'] = created_by_id
-        else:
-            raise ValueError('Required property \'created_by_id\' not present in AccountSettings JSON')
         if (last_modified_at := _dict.get('last_modified_at')) is not None:
             args['last_modified_at'] = string_to_datetime(last_modified_at)
-        else:
-            raise ValueError('Required property \'last_modified_at\' not present in AccountSettings JSON')
         if (last_modified_by_id := _dict.get('last_modified_by_id')) is not None:
             args['last_modified_by_id'] = last_modified_by_id
-        else:
-            raise ValueError('Required property \'last_modified_by_id\' not present in AccountSettings JSON')
         return cls(**args)
 
     @classmethod
@@ -2462,6 +2460,7 @@ class ServiceRefTarget:
     :param str service_type: (optional) The type of the service.
     :param List[ServiceRefTargetLocationsItem] locations: (optional) The locations
           the service is available.
+    :param str display_name: (optional) The display name of the service.
     """
 
     def __init__(
@@ -2470,6 +2469,7 @@ class ServiceRefTarget:
         *,
         service_type: Optional[str] = None,
         locations: Optional[List['ServiceRefTargetLocationsItem']] = None,
+        display_name: Optional[str] = None,
     ) -> None:
         """
         Initialize a ServiceRefTarget object.
@@ -2478,10 +2478,12 @@ class ServiceRefTarget:
         :param str service_type: (optional) The type of the service.
         :param List[ServiceRefTargetLocationsItem] locations: (optional) The
                locations the service is available.
+        :param str display_name: (optional) The display name of the service.
         """
         self.service_name = service_name
         self.service_type = service_type
         self.locations = locations
+        self.display_name = display_name
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ServiceRefTarget':
@@ -2495,6 +2497,8 @@ class ServiceRefTarget:
             args['service_type'] = service_type
         if (locations := _dict.get('locations')) is not None:
             args['locations'] = [ServiceRefTargetLocationsItem.from_dict(v) for v in locations]
+        if (display_name := _dict.get('display_name')) is not None:
+            args['display_name'] = display_name
         return cls(**args)
 
     @classmethod
@@ -2517,6 +2521,8 @@ class ServiceRefTarget:
                 else:
                     locations_list.append(v.to_dict())
             _dict['locations'] = locations_list
+        if hasattr(self, 'display_name') and self.display_name is not None:
+            _dict['display_name'] = self.display_name
         return _dict
 
     def _to_dict(self):
@@ -3251,22 +3257,27 @@ class AddressIPAddress(Address):
 
     :param str type: The type of address.
     :param str value: The IP address.
+    :param str id: (optional) The address id (for use by terraform only).
     """
 
     def __init__(
         self,
         type: str,
         value: str,
+        *,
+        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AddressIPAddress object.
 
         :param str type: The type of address.
         :param str value: The IP address.
+        :param str id: (optional) The address id (for use by terraform only).
         """
         # pylint: disable=super-init-not-called
         self.type = type
         self.value = value
+        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AddressIPAddress':
@@ -3280,6 +3291,8 @@ class AddressIPAddress(Address):
             args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressIPAddress JSON')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -3294,6 +3307,8 @@ class AddressIPAddress(Address):
             _dict['type'] = self.type
         if hasattr(self, 'value') and self.value is not None:
             _dict['value'] = self.value
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
         return _dict
 
     def _to_dict(self):
@@ -3328,22 +3343,27 @@ class AddressIPAddressRange(Address):
 
     :param str type: The type of address.
     :param str value: The ip range in <first-ip>-<last-ip> format.
+    :param str id: (optional) The address id (for use by terraform only).
     """
 
     def __init__(
         self,
         type: str,
         value: str,
+        *,
+        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AddressIPAddressRange object.
 
         :param str type: The type of address.
         :param str value: The ip range in <first-ip>-<last-ip> format.
+        :param str id: (optional) The address id (for use by terraform only).
         """
         # pylint: disable=super-init-not-called
         self.type = type
         self.value = value
+        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AddressIPAddressRange':
@@ -3357,6 +3377,8 @@ class AddressIPAddressRange(Address):
             args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressIPAddressRange JSON')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -3371,6 +3393,8 @@ class AddressIPAddressRange(Address):
             _dict['type'] = self.type
         if hasattr(self, 'value') and self.value is not None:
             _dict['value'] = self.value
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
         return _dict
 
     def _to_dict(self):
@@ -3405,22 +3429,27 @@ class AddressServiceRef(Address):
 
     :param str type: The type of address.
     :param ServiceRefValue ref: A service reference value.
+    :param str id: (optional) The address id (for use by terraform only).
     """
 
     def __init__(
         self,
         type: str,
         ref: 'ServiceRefValue',
+        *,
+        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AddressServiceRef object.
 
         :param str type: The type of address.
         :param ServiceRefValue ref: A service reference value.
+        :param str id: (optional) The address id (for use by terraform only).
         """
         # pylint: disable=super-init-not-called
         self.type = type
         self.ref = ref
+        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AddressServiceRef':
@@ -3434,6 +3463,8 @@ class AddressServiceRef(Address):
             args['ref'] = ServiceRefValue.from_dict(ref)
         else:
             raise ValueError('Required property \'ref\' not present in AddressServiceRef JSON')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -3451,6 +3482,8 @@ class AddressServiceRef(Address):
                 _dict['ref'] = self.ref
             else:
                 _dict['ref'] = self.ref.to_dict()
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
         return _dict
 
     def _to_dict(self):
@@ -3485,22 +3518,27 @@ class AddressSubnet(Address):
 
     :param str type: The type of address.
     :param str value: The subnet in CIDR format.
+    :param str id: (optional) The address id (for use by terraform only).
     """
 
     def __init__(
         self,
         type: str,
         value: str,
+        *,
+        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AddressSubnet object.
 
         :param str type: The type of address.
         :param str value: The subnet in CIDR format.
+        :param str id: (optional) The address id (for use by terraform only).
         """
         # pylint: disable=super-init-not-called
         self.type = type
         self.value = value
+        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AddressSubnet':
@@ -3514,6 +3552,8 @@ class AddressSubnet(Address):
             args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressSubnet JSON')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -3528,6 +3568,8 @@ class AddressSubnet(Address):
             _dict['type'] = self.type
         if hasattr(self, 'value') and self.value is not None:
             _dict['value'] = self.value
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
         return _dict
 
     def _to_dict(self):
@@ -3562,22 +3604,27 @@ class AddressVPC(Address):
 
     :param str type: The type of address.
     :param str value: The VPC CRN.
+    :param str id: (optional) The address id (for use by terraform only).
     """
 
     def __init__(
         self,
         type: str,
         value: str,
+        *,
+        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AddressVPC object.
 
         :param str type: The type of address.
         :param str value: The VPC CRN.
+        :param str id: (optional) The address id (for use by terraform only).
         """
         # pylint: disable=super-init-not-called
         self.type = type
         self.value = value
+        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AddressVPC':
@@ -3591,6 +3638,8 @@ class AddressVPC(Address):
             args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressVPC JSON')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -3605,6 +3654,8 @@ class AddressVPC(Address):
             _dict['type'] = self.type
         if hasattr(self, 'value') and self.value is not None:
             _dict['value'] = self.value
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
         return _dict
 
     def _to_dict(self):
