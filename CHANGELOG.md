@@ -1,3 +1,10 @@
+# [0.73.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.72.0...v0.73.0) (2026-01-13)
+
+
+### Features
+
+* **IAM Identity:** add apikey expiration ([#314](https://github.com/IBM/platform-services-python-sdk/issues/314)) ([07eb9a7](https://github.com/IBM/platform-services-python-sdk/commit/07eb9a70ccf860ffda0c11e8e89c6811945e03dc))
+
 # [0.72.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.71.0...v0.72.0) (2025-12-10)
 
 

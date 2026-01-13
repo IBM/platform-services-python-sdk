@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2025.
+# (C) Copyright IBM Corp. 2026.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -919,6 +919,7 @@ class IamIdentityV1(BaseService):
         store_value: Optional[bool] = None,
         support_sessions: Optional[bool] = None,
         action_when_leaked: Optional[str] = None,
+        expires_at: Optional[str] = None,
         entity_lock: Optional[str] = None,
         entity_disable: Optional[str] = None,
         **kwargs,
@@ -954,6 +955,8 @@ class IamIdentityV1(BaseService):
                access, delete or rotate the API key. Available only for user API keys.
         :param str action_when_leaked: (optional) Defines the action to take when
                API key is leaked, valid values are 'none', 'disable' and 'delete'.
+        :param str expires_at: (optional) Date and time when the API key becomes
+               invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
         :param str entity_lock: (optional) Indicates if the API key is locked for
                further write operations. False by default.
         :param str entity_disable: (optional) Indicates if the API key is disabled.
@@ -987,6 +990,7 @@ class IamIdentityV1(BaseService):
             'store_value': store_value,
             'support_sessions': support_sessions,
             'action_when_leaked': action_when_leaked,
+            'expires_at': expires_at,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1127,6 +1131,7 @@ class IamIdentityV1(BaseService):
         description: Optional[str] = None,
         support_sessions: Optional[bool] = None,
         action_when_leaked: Optional[str] = None,
+        expires_at: Optional[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1155,6 +1160,8 @@ class IamIdentityV1(BaseService):
                access, delete or rotate the API key. Available only for user API keys.
         :param str action_when_leaked: (optional) Defines the action to take when
                API key is leaked, valid values are 'none', 'disable' and 'delete'.
+        :param str expires_at: (optional) Date and time when the API key becomes
+               invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ApiKey` object
@@ -1179,6 +1186,7 @@ class IamIdentityV1(BaseService):
             'description': description,
             'support_sessions': support_sessions,
             'action_when_leaked': action_when_leaked,
+            'expires_at': expires_at,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -7750,6 +7758,8 @@ class ApiKey:
           delete or rotate the API key. Available only for user API keys.
     :param str action_when_leaked: (optional) Defines the action to take when API
           key is leaked, valid values are 'none', 'disable' and 'delete'.
+    :param str expires_at: (optional) Date and time when the API key becomes
+          invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
     :param str description: (optional) The optional description of the API key. The
           'description' property is only available if a description was provided during a
           create of an API key.
@@ -7783,6 +7793,7 @@ class ApiKey:
         modified_at: Optional[datetime] = None,
         support_sessions: Optional[bool] = None,
         action_when_leaked: Optional[str] = None,
+        expires_at: Optional[str] = None,
         description: Optional[str] = None,
         history: Optional[List['EnityHistoryRecord']] = None,
         activity: Optional['Activity'] = None,
@@ -7826,6 +7837,8 @@ class ApiKey:
                access, delete or rotate the API key. Available only for user API keys.
         :param str action_when_leaked: (optional) Defines the action to take when
                API key is leaked, valid values are 'none', 'disable' and 'delete'.
+        :param str expires_at: (optional) Date and time when the API key becomes
+               invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
         :param str description: (optional) The optional description of the API key.
                The 'description' property is only available if a description was provided
                during a create of an API key.
@@ -7844,6 +7857,7 @@ class ApiKey:
         self.name = name
         self.support_sessions = support_sessions
         self.action_when_leaked = action_when_leaked
+        self.expires_at = expires_at
         self.description = description
         self.iam_id = iam_id
         self.account_id = account_id
@@ -7889,6 +7903,8 @@ class ApiKey:
             args['support_sessions'] = support_sessions
         if (action_when_leaked := _dict.get('action_when_leaked')) is not None:
             args['action_when_leaked'] = action_when_leaked
+        if (expires_at := _dict.get('expires_at')) is not None:
+            args['expires_at'] = expires_at
         if (description := _dict.get('description')) is not None:
             args['description'] = description
         if (iam_id := _dict.get('iam_id')) is not None:
@@ -7944,6 +7960,8 @@ class ApiKey:
             _dict['support_sessions'] = self.support_sessions
         if hasattr(self, 'action_when_leaked') and self.action_when_leaked is not None:
             _dict['action_when_leaked'] = self.action_when_leaked
+        if hasattr(self, 'expires_at') and self.expires_at is not None:
+            _dict['expires_at'] = self.expires_at
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
         if hasattr(self, 'iam_id') and self.iam_id is not None:
@@ -8007,6 +8025,10 @@ class ApiKeyInsideCreateServiceIdRequest:
           key value is retrievable in the future by using the Get details of an API key
           request. If you create an API key for a user, you must specify `false` or omit
           the value. We don't allow storing of API keys for users.
+    :param str action_when_leaked: (optional) Defines the action to take when API
+          key is leaked, valid values are 'none', 'disable' and 'delete'.
+    :param str expires_at: (optional) Date and time when the API key becomes
+          invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
     """
 
     def __init__(
@@ -8016,6 +8038,8 @@ class ApiKeyInsideCreateServiceIdRequest:
         description: Optional[str] = None,
         apikey: Optional[str] = None,
         store_value: Optional[bool] = None,
+        action_when_leaked: Optional[str] = None,
+        expires_at: Optional[str] = None,
     ) -> None:
         """
         Initialize a ApiKeyInsideCreateServiceIdRequest object.
@@ -8037,11 +8061,17 @@ class ApiKeyInsideCreateServiceIdRequest:
                API key value is retrievable in the future by using the Get details of an
                API key request. If you create an API key for a user, you must specify
                `false` or omit the value. We don't allow storing of API keys for users.
+        :param str action_when_leaked: (optional) Defines the action to take when
+               API key is leaked, valid values are 'none', 'disable' and 'delete'.
+        :param str expires_at: (optional) Date and time when the API key becomes
+               invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
         """
         self.name = name
         self.description = description
         self.apikey = apikey
         self.store_value = store_value
+        self.action_when_leaked = action_when_leaked
+        self.expires_at = expires_at
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ApiKeyInsideCreateServiceIdRequest':
@@ -8057,6 +8087,10 @@ class ApiKeyInsideCreateServiceIdRequest:
             args['apikey'] = apikey
         if (store_value := _dict.get('store_value')) is not None:
             args['store_value'] = store_value
+        if (action_when_leaked := _dict.get('action_when_leaked')) is not None:
+            args['action_when_leaked'] = action_when_leaked
+        if (expires_at := _dict.get('expires_at')) is not None:
+            args['expires_at'] = expires_at
         return cls(**args)
 
     @classmethod
@@ -8075,6 +8109,10 @@ class ApiKeyInsideCreateServiceIdRequest:
             _dict['apikey'] = self.apikey
         if hasattr(self, 'store_value') and self.store_value is not None:
             _dict['store_value'] = self.store_value
+        if hasattr(self, 'action_when_leaked') and self.action_when_leaked is not None:
+            _dict['action_when_leaked'] = self.action_when_leaked
+        if hasattr(self, 'expires_at') and self.expires_at is not None:
+            _dict['expires_at'] = self.expires_at
         return _dict
 
     def _to_dict(self):
@@ -9630,90 +9668,6 @@ class MfaEnrollmentTypeStatus:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'MfaEnrollmentTypeStatus') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class MfaEnrollments:
-    """
-    MfaEnrollments.
-
-    :param str effective_mfa_type: currently effective mfa type i.e. id_based_mfa or
-          account_based_mfa.
-    :param IdBasedMfaEnrollment id_based_mfa: (optional)
-    :param AccountBasedMfaEnrollment account_based_mfa: (optional)
-    """
-
-    def __init__(
-        self,
-        effective_mfa_type: str,
-        *,
-        id_based_mfa: Optional['IdBasedMfaEnrollment'] = None,
-        account_based_mfa: Optional['AccountBasedMfaEnrollment'] = None,
-    ) -> None:
-        """
-        Initialize a MfaEnrollments object.
-
-        :param str effective_mfa_type: currently effective mfa type i.e.
-               id_based_mfa or account_based_mfa.
-        :param IdBasedMfaEnrollment id_based_mfa: (optional)
-        :param AccountBasedMfaEnrollment account_based_mfa: (optional)
-        """
-        self.effective_mfa_type = effective_mfa_type
-        self.id_based_mfa = id_based_mfa
-        self.account_based_mfa = account_based_mfa
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'MfaEnrollments':
-        """Initialize a MfaEnrollments object from a json dictionary."""
-        args = {}
-        if (effective_mfa_type := _dict.get('effective_mfa_type')) is not None:
-            args['effective_mfa_type'] = effective_mfa_type
-        else:
-            raise ValueError('Required property \'effective_mfa_type\' not present in MfaEnrollments JSON')
-        if (id_based_mfa := _dict.get('id_based_mfa')) is not None:
-            args['id_based_mfa'] = IdBasedMfaEnrollment.from_dict(id_based_mfa)
-        if (account_based_mfa := _dict.get('account_based_mfa')) is not None:
-            args['account_based_mfa'] = AccountBasedMfaEnrollment.from_dict(account_based_mfa)
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a MfaEnrollments object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'effective_mfa_type') and self.effective_mfa_type is not None:
-            _dict['effective_mfa_type'] = self.effective_mfa_type
-        if hasattr(self, 'id_based_mfa') and self.id_based_mfa is not None:
-            if isinstance(self.id_based_mfa, dict):
-                _dict['id_based_mfa'] = self.id_based_mfa
-            else:
-                _dict['id_based_mfa'] = self.id_based_mfa.to_dict()
-        if hasattr(self, 'account_based_mfa') and self.account_based_mfa is not None:
-            if isinstance(self.account_based_mfa, dict):
-                _dict['account_based_mfa'] = self.account_based_mfa
-            else:
-                _dict['account_based_mfa'] = self.account_based_mfa.to_dict()
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this MfaEnrollments object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'MfaEnrollments') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'MfaEnrollments') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -14267,14 +14221,19 @@ class UserReportMfaEnrollmentStatus:
     :param str name: (optional) Name of the user.
     :param str username: Username of the user.
     :param str email: (optional) Email of the user.
-    :param MfaEnrollments enrollments:
+    :param str effective_mfa_type: currently effective mfa type i.e. id_based_mfa or
+          account_based_mfa.
+    :param IdBasedMfaEnrollment id_based_mfa:
+    :param AccountBasedMfaEnrollment account_based_mfa:
     """
 
     def __init__(
         self,
         iam_id: str,
         username: str,
-        enrollments: 'MfaEnrollments',
+        effective_mfa_type: str,
+        id_based_mfa: 'IdBasedMfaEnrollment',
+        account_based_mfa: 'AccountBasedMfaEnrollment',
         *,
         name: Optional[str] = None,
         email: Optional[str] = None,
@@ -14284,7 +14243,10 @@ class UserReportMfaEnrollmentStatus:
 
         :param str iam_id: IAMid of the user.
         :param str username: Username of the user.
-        :param MfaEnrollments enrollments:
+        :param str effective_mfa_type: currently effective mfa type i.e.
+               id_based_mfa or account_based_mfa.
+        :param IdBasedMfaEnrollment id_based_mfa:
+        :param AccountBasedMfaEnrollment account_based_mfa:
         :param str name: (optional) Name of the user.
         :param str email: (optional) Email of the user.
         """
@@ -14292,7 +14254,9 @@ class UserReportMfaEnrollmentStatus:
         self.name = name
         self.username = username
         self.email = email
-        self.enrollments = enrollments
+        self.effective_mfa_type = effective_mfa_type
+        self.id_based_mfa = id_based_mfa
+        self.account_based_mfa = account_based_mfa
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'UserReportMfaEnrollmentStatus':
@@ -14310,10 +14274,22 @@ class UserReportMfaEnrollmentStatus:
             raise ValueError('Required property \'username\' not present in UserReportMfaEnrollmentStatus JSON')
         if (email := _dict.get('email')) is not None:
             args['email'] = email
-        if (enrollments := _dict.get('enrollments')) is not None:
-            args['enrollments'] = MfaEnrollments.from_dict(enrollments)
+        if (effective_mfa_type := _dict.get('effective_mfa_type')) is not None:
+            args['effective_mfa_type'] = effective_mfa_type
         else:
-            raise ValueError('Required property \'enrollments\' not present in UserReportMfaEnrollmentStatus JSON')
+            raise ValueError(
+                'Required property \'effective_mfa_type\' not present in UserReportMfaEnrollmentStatus JSON'
+            )
+        if (id_based_mfa := _dict.get('id_based_mfa')) is not None:
+            args['id_based_mfa'] = IdBasedMfaEnrollment.from_dict(id_based_mfa)
+        else:
+            raise ValueError('Required property \'id_based_mfa\' not present in UserReportMfaEnrollmentStatus JSON')
+        if (account_based_mfa := _dict.get('account_based_mfa')) is not None:
+            args['account_based_mfa'] = AccountBasedMfaEnrollment.from_dict(account_based_mfa)
+        else:
+            raise ValueError(
+                'Required property \'account_based_mfa\' not present in UserReportMfaEnrollmentStatus JSON'
+            )
         return cls(**args)
 
     @classmethod
@@ -14332,11 +14308,18 @@ class UserReportMfaEnrollmentStatus:
             _dict['username'] = self.username
         if hasattr(self, 'email') and self.email is not None:
             _dict['email'] = self.email
-        if hasattr(self, 'enrollments') and self.enrollments is not None:
-            if isinstance(self.enrollments, dict):
-                _dict['enrollments'] = self.enrollments
+        if hasattr(self, 'effective_mfa_type') and self.effective_mfa_type is not None:
+            _dict['effective_mfa_type'] = self.effective_mfa_type
+        if hasattr(self, 'id_based_mfa') and self.id_based_mfa is not None:
+            if isinstance(self.id_based_mfa, dict):
+                _dict['id_based_mfa'] = self.id_based_mfa
             else:
-                _dict['enrollments'] = self.enrollments.to_dict()
+                _dict['id_based_mfa'] = self.id_based_mfa.to_dict()
+        if hasattr(self, 'account_based_mfa') and self.account_based_mfa is not None:
+            if isinstance(self.account_based_mfa, dict):
+                _dict['account_based_mfa'] = self.account_based_mfa
+            else:
+                _dict['account_based_mfa'] = self.account_based_mfa.to_dict()
         return _dict
 
     def _to_dict(self):

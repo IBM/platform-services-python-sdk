@@ -328,6 +328,7 @@ class TestIamIdentityV1:
             iam_id=self.iam_id,
             description='PythonSDK test apikey #1',
             account_id=self.account_id,
+            expires_at='2049-01-02T18:30:00+0000',
         )
 
         assert create_api_key_response.get_status_code() == 201
@@ -467,7 +468,10 @@ class TestIamIdentityV1:
 
         new_description = 'This is an updated description'
         update_api_key_response = self.iam_identity_service.update_api_key(
-            id=apikey_id1, if_match=apikey_etag1, description=new_description
+            id=apikey_id1,
+            if_match=apikey_etag1,
+            description=new_description,
+            expires_at='2049-01-02T18:30:00+0000',
         )
 
         assert update_api_key_response.get_status_code() == 200
@@ -552,10 +556,17 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_create_service_id(self):
+        api_key_inside_create_service_id_request_model = {
+            'name': 'API Key Name',
+            'store_value': True,
+            'expires_at': '2049-01-02T18:30:00+0000',
+        }
+
         create_service_id_response = self.iam_identity_service.create_service_id(
             account_id=self.account_id,
             name=self.serviceid_name,
             description='PythonSDK test serviceid',
+            apikey=api_key_inside_create_service_id_request_model,
         )
 
         assert create_service_id_response.get_status_code() == 201
