@@ -79,7 +79,7 @@ class TestContextBasedRestrictionsV1:
             'ref': {
                 'account_id': TestContextBasedRestrictionsV1.test_account_id,
                 'service_name': 'containers-kubernetes',
-                'location': 'us-south',
+                'location': 'dal',
             },
         }
 
