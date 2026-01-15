@@ -1,3 +1,10 @@
+## [0.73.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.73.0...v0.73.1) (2026-01-15)
+
+
+### Bug Fixes
+
+* **Context-Based Restrictions:** add display name to service ref response ([#313](https://github.com/IBM/platform-services-python-sdk/issues/313)) ([d3d7f8c](https://github.com/IBM/platform-services-python-sdk/commit/d3d7f8cbeb11bdec090a39c5ba8146adadb3d391))
+
 # [0.73.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.72.0...v0.73.0) (2026-01-13)
 
 
