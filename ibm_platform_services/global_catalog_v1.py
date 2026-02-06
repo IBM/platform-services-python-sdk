@@ -68,6 +68,7 @@ class GlobalCatalogV1(BaseService):
     def __init__(
         self,
         authenticator: Authenticator = None,
+        disable_ssl_verification: bool = False
     ) -> None:
         """
         Construct a new client for the Global Catalog service.
@@ -76,7 +77,8 @@ class GlobalCatalogV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator,
+                             disable_ssl_verification=disable_ssl_verification)
 
     #########################
     # Object

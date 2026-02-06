@@ -76,7 +76,8 @@ class GlobalSearchV2(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator,
+                             disable_ssl_verification=authenticator.token_manager.disable_ssl_verification)
 
     #########################
     # Search
