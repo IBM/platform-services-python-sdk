@@ -46,6 +46,7 @@ IBM Cloud services:
 
 Service Name | Module Name | Service Class Name
 --- | --- | ---
+[Account Management](https://test.cloud.ibm.com/apidocs/account-management) | account_management_v4 | AccountManagementV4
 [Case Management](https://cloud.ibm.com/apidocs/case-management?code=python) | case_management_v1 | CaseManagementV1
 [Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog?code=python) | catalog_management_v1 | CatalogManagementV1
 [Context Based Restrictions](https://cloud.ibm.com/apidocs/context-based-restrictions?code=python) | context_based_restrictions_v1 | ContextBasedRestrictionsV1
