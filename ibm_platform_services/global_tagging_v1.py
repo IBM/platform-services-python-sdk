@@ -1628,6 +1628,7 @@ class TagResultsItem:
     :param str resource_id: The CRN or IMS ID of the resource.
     :param bool is_error: (optional) It is `true` if the operation exits with an
           error.
+    :param str message: (optional) Error message returned when the operation fails.
     """
 
     def __init__(
@@ -1635,6 +1636,7 @@ class TagResultsItem:
         resource_id: str,
         *,
         is_error: Optional[bool] = None,
+        message: Optional[str] = None,
     ) -> None:
         """
         Initialize a TagResultsItem object.
@@ -1642,9 +1644,11 @@ class TagResultsItem:
         :param str resource_id: The CRN or IMS ID of the resource.
         :param bool is_error: (optional) It is `true` if the operation exits with
                an error.
+        :param str message: (optional) Error message returned when the operation fails.
         """
         self.resource_id = resource_id
         self.is_error = is_error
+        self.message = message
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'TagResultsItem':
@@ -1656,6 +1660,8 @@ class TagResultsItem:
             raise ValueError('Required property \'resource_id\' not present in TagResultsItem JSON')
         if (is_error := _dict.get('is_error')) is not None:
             args['is_error'] = is_error
+        if (message := _dict.get('message')) is not None:
+            args['message'] = message
         return cls(**args)
 
     @classmethod
