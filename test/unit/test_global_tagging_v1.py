@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2025.
+# (C) Copyright IBM Corp. 2026.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.global_tagging_v1 import *
 
 
-_service = GlobalTaggingV1(authenticator=NoAuthAuthenticator())
+_service = GlobalTaggingV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://tags.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -573,7 +575,7 @@ class TestAttachTag:
         """
         # Set up mock
         url = preprocess_url('/v3/tags/attach')
-        mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
+        mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true, "message": "message"}]}'
         responses.add(
             responses.POST,
             url,
@@ -651,7 +653,7 @@ class TestAttachTag:
         """
         # Set up mock
         url = preprocess_url('/v3/tags/attach')
-        mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
+        mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true, "message": "message"}]}'
         responses.add(
             responses.POST,
             url,
@@ -716,7 +718,7 @@ class TestDetachTag:
         """
         # Set up mock
         url = preprocess_url('/v3/tags/detach')
-        mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
+        mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true, "message": "message"}]}'
         responses.add(
             responses.POST,
             url,
@@ -788,7 +790,7 @@ class TestDetachTag:
         """
         # Set up mock
         url = preprocess_url('/v3/tags/detach')
-        mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
+        mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true, "message": "message"}]}'
         responses.add(
             responses.POST,
             url,
@@ -905,18 +907,12 @@ class TestModel_CreateTagResultsResultsItem:
         create_tag_results_results_item_model_json['is_error'] = True
 
         # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
-        create_tag_results_results_item_model = CreateTagResultsResultsItem.from_dict(
-            create_tag_results_results_item_model_json
-        )
+        create_tag_results_results_item_model = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json)
         assert create_tag_results_results_item_model != False
 
         # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
-        create_tag_results_results_item_model_dict = CreateTagResultsResultsItem.from_dict(
-            create_tag_results_results_item_model_json
-        ).__dict__
-        create_tag_results_results_item_model2 = CreateTagResultsResultsItem(
-            **create_tag_results_results_item_model_dict
-        )
+        create_tag_results_results_item_model_dict = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json).__dict__
+        create_tag_results_results_item_model2 = CreateTagResultsResultsItem(**create_tag_results_results_item_model_dict)
 
         # Verify the model instances are equivalent
         assert create_tag_results_results_item_model == create_tag_results_results_item_model2
@@ -1216,10 +1212,9 @@ class TestModel_TagResults:
         # Construct dict forms of any model objects needed in order to build this model.
 
         tag_results_item_model = {}  # TagResultsItem
-        tag_results_item_model['resource_id'] = (
-            'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
-        )
+        tag_results_item_model['resource_id'] = 'crn:v1:staging:public:resource-controller::a/5c2ac0d93c69e82c6c9c7c78dc4beda3::resource-group:1c061f4485b34360a8f8ee049880dc13'
         tag_results_item_model['is_error'] = False
+        tag_results_item_model['message'] = 'testString'
 
         # Construct a json representation of a TagResults model
         tag_results_model_json = {}
@@ -1255,6 +1250,7 @@ class TestModel_TagResultsItem:
         tag_results_item_model_json = {}
         tag_results_item_model_json['resource_id'] = 'testString'
         tag_results_item_model_json['is_error'] = True
+        tag_results_item_model_json['message'] = 'testString'
 
         # Construct a model instance of TagResultsItem by calling from_dict on the json representation
         tag_results_item_model = TagResultsItem.from_dict(tag_results_item_model_json)

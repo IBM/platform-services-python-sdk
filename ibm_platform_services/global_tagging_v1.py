@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2025.
+# (C) Copyright IBM Corp. 2026.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.105.0-3c13b041-20250605-193116
+# IBM OpenAPI SDK Code Generator Version: 3.111.0-1bfb72c2-20260206-185521
 
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete, or
@@ -63,7 +63,9 @@ class GlobalTaggingV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -680,7 +682,6 @@ class ListTagsEnums:
         USER = 'user'
         SERVICE = 'service'
         ACCESS = 'access'
-
     class Providers(str, Enum):
         """
         Select a provider. Supported values are `ghost` and `ims`. To list both Global
@@ -691,7 +692,6 @@ class ListTagsEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class OrderByName(str, Enum):
         """
         Order the output by tag name.
@@ -726,7 +726,6 @@ class DeleteTagAllEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -752,7 +751,6 @@ class DeleteTagEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -1051,9 +1049,9 @@ class DeleteTagResultsItem:
             args['is_error'] = is_error
         for k, v in _dict.items():
             if k not in cls._properties:
-                if not isinstance(v, object):
-                    raise ValueError('Value for additional property {} must be of type object'.format(k))
-                args[k] = v
+                    if not isinstance(v, object):
+                        raise ValueError('Value for additional property {} must be of type object'.format(k))
+                    args[k] = v
         return cls(**args)
 
     @classmethod
@@ -1116,6 +1114,7 @@ class DeleteTagResultsItem:
 
         GHOST = 'ghost'
         IMS = 'ims'
+
 
 
 class DeleteTagsResult:
@@ -1644,7 +1643,8 @@ class TagResultsItem:
         :param str resource_id: The CRN or IMS ID of the resource.
         :param bool is_error: (optional) It is `true` if the operation exits with
                an error.
-        :param str message: (optional) Error message returned when the operation fails.
+        :param str message: (optional) Error message returned when the operation
+               fails.
         """
         self.resource_id = resource_id
         self.is_error = is_error
@@ -1676,6 +1676,8 @@ class TagResultsItem:
             _dict['resource_id'] = self.resource_id
         if hasattr(self, 'is_error') and self.is_error is not None:
             _dict['is_error'] = self.is_error
+        if hasattr(self, 'message') and self.message is not None:
+            _dict['message'] = self.message
         return _dict
 
     def _to_dict(self):
