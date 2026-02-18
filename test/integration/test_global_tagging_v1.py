@@ -329,7 +329,7 @@ class TestGlobalTaggingV1:
         print('\ndelete_tag(user) result: ', json.dumps(delete_tag_results.to_dict(), indent=2))
 
         for item in delete_tag_results.results:
-            assert item.is_error is False
+            assert item.is_error is True  # tags are already deleted at detach time if not attached to any resource
 
     @needscredentials
     def test_delete_tag_access(self):

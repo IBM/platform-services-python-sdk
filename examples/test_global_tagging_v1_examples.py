@@ -128,8 +128,10 @@ class TestGlobalTaggingV1Examples:
             print('\nattach_tag() result:')
             # begin-attach_tag
 
+            resource_model = {'resource_id': resource_crn}
+
             tag_results = global_tagging_service.attach_tag(
-                tag_names=['tag_test_1', 'tag_test_2'], tag_type='user'
+                resources=[resource_model], tag_names=['tag_test_1', 'tag_test_2'], tag_type='user'
             ).get_result()
 
             print(json.dumps(tag_results, indent=2))
@@ -148,8 +150,10 @@ class TestGlobalTaggingV1Examples:
             print('\ndetach_tag() result:')
             # begin-detach_tag
 
+            resource_model = {'resource_id': resource_crn}
+
             tag_results = global_tagging_service.detach_tag(
-                tag_names=['tag_test_1', 'tag_test_2'], tag_type='user'
+                resources=[resource_model], tag_names=['tag_test_1', 'tag_test_2'], tag_type='user'
             ).get_result()
 
             print(json.dumps(tag_results, indent=2))
