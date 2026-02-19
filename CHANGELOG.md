@@ -1,3 +1,10 @@
+## [0.73.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.73.2...v0.73.3) (2026-02-19)
+
+
+### Bug Fixes
+
+* **Global Tagging:** add `message` field to `TagResultsItem` ([#320](https://github.com/IBM/platform-services-python-sdk/issues/320)) ([b7a7a95](https://github.com/IBM/platform-services-python-sdk/commit/b7a7a95f828a55bfdf8cec4de4cffd57b69952a1))
+
 ## [0.73.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.73.1...v0.73.2) (2026-02-03)
 
 
