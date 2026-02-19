@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2025.
+# (C) Copyright IBM Corp. 2026.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.105.0-3c13b041-20250605-193116
+# IBM OpenAPI SDK Code Generator Version: 3.111.0-1bfb72c2-20260206-185521
 
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete, or
@@ -1628,6 +1628,7 @@ class TagResultsItem:
     :param str resource_id: The CRN or IMS ID of the resource.
     :param bool is_error: (optional) It is `true` if the operation exits with an
           error.
+    :param str message: (optional) Error message returned when the operation fails.
     """
 
     def __init__(
@@ -1635,6 +1636,7 @@ class TagResultsItem:
         resource_id: str,
         *,
         is_error: Optional[bool] = None,
+        message: Optional[str] = None,
     ) -> None:
         """
         Initialize a TagResultsItem object.
@@ -1642,9 +1644,12 @@ class TagResultsItem:
         :param str resource_id: The CRN or IMS ID of the resource.
         :param bool is_error: (optional) It is `true` if the operation exits with
                an error.
+        :param str message: (optional) Error message returned when the operation
+               fails.
         """
         self.resource_id = resource_id
         self.is_error = is_error
+        self.message = message
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'TagResultsItem':
@@ -1656,6 +1661,8 @@ class TagResultsItem:
             raise ValueError('Required property \'resource_id\' not present in TagResultsItem JSON')
         if (is_error := _dict.get('is_error')) is not None:
             args['is_error'] = is_error
+        if (message := _dict.get('message')) is not None:
+            args['message'] = message
         return cls(**args)
 
     @classmethod
@@ -1670,6 +1677,8 @@ class TagResultsItem:
             _dict['resource_id'] = self.resource_id
         if hasattr(self, 'is_error') and self.is_error is not None:
             _dict['is_error'] = self.is_error
+        if hasattr(self, 'message') and self.message is not None:
+            _dict['message'] = self.message
         return _dict
 
     def _to_dict(self):
