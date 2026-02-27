@@ -1,3 +1,10 @@
+# [0.74.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.73.3...v0.74.0) (2026-02-27)
+
+
+### Features
+
+* **Account Management:** add new service to the project ([#319](https://github.com/IBM/platform-services-python-sdk/issues/319)) ([5bd4c16](https://github.com/IBM/platform-services-python-sdk/commit/5bd4c16e350f5c4176fa1d04c22bda693d602bb7))
+
 ## [0.73.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.73.2...v0.73.3) (2026-02-19)
 
 
