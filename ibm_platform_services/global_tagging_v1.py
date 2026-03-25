@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.111.0-1bfb72c2-20260206-185521
+# IBM OpenAPI SDK Code Generator Version: 3.113.1-d76630af-20260320-135953
 
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete, or

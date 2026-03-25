@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2025.
+# (C) Copyright IBM Corp. 2026.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.100.0-2ad7a784-20250212-162551
+# IBM OpenAPI SDK Code Generator Version: 3.113.1-d76630af-20260320-135953
 
 """
 Search for resources with the global and shared resource properties repository that is
