@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.111.0-1bfb72c2-20260206-185521
+# IBM OpenAPI SDK Code Generator Version: 3.113.1-d76630af-20260320-135953
 
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete, or
@@ -63,7 +63,9 @@ class GlobalTaggingV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -680,7 +682,6 @@ class ListTagsEnums:
         USER = 'user'
         SERVICE = 'service'
         ACCESS = 'access'
-
     class Providers(str, Enum):
         """
         Select a provider. Supported values are `ghost` and `ims`. To list both Global
@@ -691,7 +692,6 @@ class ListTagsEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class OrderByName(str, Enum):
         """
         Order the output by tag name.
@@ -726,7 +726,6 @@ class DeleteTagAllEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -752,7 +751,6 @@ class DeleteTagEnums:
 
         GHOST = 'ghost'
         IMS = 'ims'
-
     class TagType(str, Enum):
         """
         The type of the tag. Supported values are `user`, `service` and `access`.
@@ -1051,9 +1049,9 @@ class DeleteTagResultsItem:
             args['is_error'] = is_error
         for k, v in _dict.items():
             if k not in cls._properties:
-                if not isinstance(v, object):
-                    raise ValueError('Value for additional property {} must be of type object'.format(k))
-                args[k] = v
+                    if not isinstance(v, object):
+                        raise ValueError('Value for additional property {} must be of type object'.format(k))
+                    args[k] = v
         return cls(**args)
 
     @classmethod
@@ -1116,6 +1114,7 @@ class DeleteTagResultsItem:
 
         GHOST = 'ghost'
         IMS = 'ims'
+
 
 
 class DeleteTagsResult:
