@@ -3549,7 +3549,7 @@ class TestCreateLink:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
-        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "is_cross_account": true, "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
         responses.add(
             responses.POST,
             url,
@@ -3571,6 +3571,7 @@ class TestCreateLink:
         cr_type = 'testString'
         link = create_profile_link_request_link_model
         name = 'testString'
+        is_cross_account = True
 
         # Invoke method
         response = _service.create_link(
@@ -3578,6 +3579,7 @@ class TestCreateLink:
             cr_type,
             link,
             name=name,
+            is_cross_account=is_cross_account,
             headers={},
         )
 
@@ -3589,6 +3591,7 @@ class TestCreateLink:
         assert req_body['cr_type'] == 'testString'
         assert req_body['link'] == create_profile_link_request_link_model
         assert req_body['name'] == 'testString'
+        assert req_body['is_cross_account'] == True
 
     def test_create_link_all_params_with_retries(self):
         # Enable retries and run test_create_link_all_params.
@@ -3606,7 +3609,7 @@ class TestCreateLink:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
-        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "is_cross_account": true, "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
         responses.add(
             responses.POST,
             url,
@@ -3628,6 +3631,7 @@ class TestCreateLink:
         cr_type = 'testString'
         link = create_profile_link_request_link_model
         name = 'testString'
+        is_cross_account = True
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -3662,7 +3666,7 @@ class TestListLinks:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
-        mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}]}'
+        mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "is_cross_account": true, "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}]}'
         responses.add(
             responses.GET,
             url,
@@ -3700,7 +3704,7 @@ class TestListLinks:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
-        mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}]}'
+        mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "is_cross_account": true, "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}]}'
         responses.add(
             responses.GET,
             url,
@@ -3882,7 +3886,7 @@ class TestGetLink:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links/testString')
-        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "is_cross_account": true, "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
         responses.add(
             responses.GET,
             url,
@@ -3922,7 +3926,7 @@ class TestGetLink:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links/testString')
-        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
+        mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "is_cross_account": true, "link": {"crn": "crn", "namespace": "namespace", "name": "name", "component_type": "component_type", "component_name": "component_name"}}'
         responses.add(
             responses.GET,
             url,
@@ -9544,11 +9548,432 @@ class TestUpdateAccountSettingsAssignment:
 # End of Service: AccountSettingsTemplateAssignments
 ##############################################################################
 
+##############################################################################
+# Start of Service: AccountLimits
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestGetAccountLimits:
+    """
+    Test Class for get_account_limits
+    """
+
+    @responses.activate
+    def test_get_account_limits_all_params(self):
+        """
+        get_account_limits()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/limits/identity')
+        mock_response = '{"serviceid_groups": {"limit": 5, "count": 5}, "serviceids_per_group": {"limit": 5, "serviceid_groups": [{"group_id": "group_id", "count": 5}]}, "profiles": {"limit": 5, "count": 5}, "apikeys_per_identity": {"limit": 5, "identities": [{"iam_id": "iam_id", "count": 5}]}, "profile_templates": {"limit": 5, "count": 5}, "account_settings_templates": {"limit": 5, "count": 5}, "template_versions_per_template": {"limit": 5, "templates": [{"template_id": "template_id", "count": 5}]}, "idps": {"limit": 5, "count": 5}, "claim_rules_per_group": {"limit": 5, "access_groups": [{"group_id": "group_id", "count": 5}]}, "claim_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_links": {"limit": 5, "count": 5}, "cr_links_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_rules": {"limit": 5, "count": 5}, "cr_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        serviceid_groups = True
+        serviceids_per_group = 'testString'
+        profiles = 'testString'
+        apikeys_per_identity = 'testString'
+        templates = 'testString'
+        template_versions_per_template = 'testString'
+        idps = 'testString'
+        claim_rules_per_group = 'testString'
+        claim_rules_per_profile = 'testString'
+        cr_links = 'testString'
+        cr_links_per_profile = 'testString'
+        cr_rules = 'testString'
+        cr_rules_per_profile = 'testString'
+
+        # Invoke method
+        response = _service.get_account_limits(
+            account_id,
+            serviceid_groups=serviceid_groups,
+            serviceids_per_group=serviceids_per_group,
+            profiles=profiles,
+            apikeys_per_identity=apikeys_per_identity,
+            templates=templates,
+            template_versions_per_template=template_versions_per_template,
+            idps=idps,
+            claim_rules_per_group=claim_rules_per_group,
+            claim_rules_per_profile=claim_rules_per_profile,
+            cr_links=cr_links,
+            cr_links_per_profile=cr_links_per_profile,
+            cr_rules=cr_rules,
+            cr_rules_per_profile=cr_rules_per_profile,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'serviceid_groups={}'.format('true' if serviceid_groups else 'false') in query_string
+        assert 'serviceids_per_group={}'.format(serviceids_per_group) in query_string
+        assert 'profiles={}'.format(profiles) in query_string
+        assert 'apikeys_per_identity={}'.format(apikeys_per_identity) in query_string
+        assert 'templates={}'.format(templates) in query_string
+        assert 'template_versions_per_template={}'.format(template_versions_per_template) in query_string
+        assert 'idps={}'.format(idps) in query_string
+        assert 'claim_rules_per_group={}'.format(claim_rules_per_group) in query_string
+        assert 'claim_rules_per_profile={}'.format(claim_rules_per_profile) in query_string
+        assert 'cr_links={}'.format(cr_links) in query_string
+        assert 'cr_links_per_profile={}'.format(cr_links_per_profile) in query_string
+        assert 'cr_rules={}'.format(cr_rules) in query_string
+        assert 'cr_rules_per_profile={}'.format(cr_rules_per_profile) in query_string
+
+    def test_get_account_limits_all_params_with_retries(self):
+        # Enable retries and run test_get_account_limits_all_params.
+        _service.enable_retries()
+        self.test_get_account_limits_all_params()
+
+        # Disable retries and run test_get_account_limits_all_params.
+        _service.disable_retries()
+        self.test_get_account_limits_all_params()
+
+    @responses.activate
+    def test_get_account_limits_required_params(self):
+        """
+        test_get_account_limits_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/limits/identity')
+        mock_response = '{"serviceid_groups": {"limit": 5, "count": 5}, "serviceids_per_group": {"limit": 5, "serviceid_groups": [{"group_id": "group_id", "count": 5}]}, "profiles": {"limit": 5, "count": 5}, "apikeys_per_identity": {"limit": 5, "identities": [{"iam_id": "iam_id", "count": 5}]}, "profile_templates": {"limit": 5, "count": 5}, "account_settings_templates": {"limit": 5, "count": 5}, "template_versions_per_template": {"limit": 5, "templates": [{"template_id": "template_id", "count": 5}]}, "idps": {"limit": 5, "count": 5}, "claim_rules_per_group": {"limit": 5, "access_groups": [{"group_id": "group_id", "count": 5}]}, "claim_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_links": {"limit": 5, "count": 5}, "cr_links_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_rules": {"limit": 5, "count": 5}, "cr_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.get_account_limits(
+            account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_account_limits_required_params_with_retries(self):
+        # Enable retries and run test_get_account_limits_required_params.
+        _service.enable_retries()
+        self.test_get_account_limits_required_params()
+
+        # Disable retries and run test_get_account_limits_required_params.
+        _service.disable_retries()
+        self.test_get_account_limits_required_params()
+
+    @responses.activate
+    def test_get_account_limits_value_error(self):
+        """
+        test_get_account_limits_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/limits/identity')
+        mock_response = '{"serviceid_groups": {"limit": 5, "count": 5}, "serviceids_per_group": {"limit": 5, "serviceid_groups": [{"group_id": "group_id", "count": 5}]}, "profiles": {"limit": 5, "count": 5}, "apikeys_per_identity": {"limit": 5, "identities": [{"iam_id": "iam_id", "count": 5}]}, "profile_templates": {"limit": 5, "count": 5}, "account_settings_templates": {"limit": 5, "count": 5}, "template_versions_per_template": {"limit": 5, "templates": [{"template_id": "template_id", "count": 5}]}, "idps": {"limit": 5, "count": 5}, "claim_rules_per_group": {"limit": 5, "access_groups": [{"group_id": "group_id", "count": 5}]}, "claim_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_links": {"limit": 5, "count": 5}, "cr_links_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_rules": {"limit": 5, "count": 5}, "cr_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_account_limits(**req_copy)
+
+    def test_get_account_limits_value_error_with_retries(self):
+        # Enable retries and run test_get_account_limits_value_error.
+        _service.enable_retries()
+        self.test_get_account_limits_value_error()
+
+        # Disable retries and run test_get_account_limits_value_error.
+        _service.disable_retries()
+        self.test_get_account_limits_value_error()
+
+
+class TestBulkListAccountEntityConsumption:
+    """
+    Test Class for bulk_list_account_entity_consumption
+    """
+
+    @responses.activate
+    def test_bulk_list_account_entity_consumption_all_params(self):
+        """
+        bulk_list_account_entity_consumption()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/limits/identity')
+        mock_response = '{"serviceid_groups": {"limit": 5, "count": 5}, "serviceids_per_group": {"limit": 5, "serviceid_groups": [{"group_id": "group_id", "count": 5}]}, "profiles": {"limit": 5, "count": 5}, "apikeys_per_identity": {"limit": 5, "identities": [{"iam_id": "iam_id", "count": 5}]}, "profile_templates": {"limit": 5, "count": 5}, "account_settings_templates": {"limit": 5, "count": 5}, "template_versions_per_template": {"limit": 5, "templates": [{"template_id": "template_id", "count": 5}]}, "idps": {"limit": 5, "count": 5}, "claim_rules_per_group": {"limit": 5, "access_groups": [{"group_id": "group_id", "count": 5}]}, "claim_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_links": {"limit": 5, "count": 5}, "cr_links_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_rules": {"limit": 5, "count": 5}, "cr_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        serviceid_groups = True
+        serviceids_per_group = [
+            'ServiceIdGroup-12345678-1234-1234-1234-123456789abc',
+            'ServiceIdGroup-12345678-1234-1234-1234-123456789def',
+        ]
+        profiles = True
+        apikeys_per_identity = ['iam-ServiceId-12345678-1234-1234-1234-123456789def', 'IBMid-1234567ABC']
+        templates = True
+        template_versions_per_template = [
+            'AccountSettingsTemplate-12345678-1234-1234-1234-123456789abc',
+            'ProfileTemplate-12345678-1234-1234-1234-123456789def',
+        ]
+        idps = True
+        claim_rules_per_group = [
+            'AccessGroupId-12345678-1234-1234-1234-123456789abc',
+            'AccessGroupId-12345678-1234-1234-1234-123456789def',
+        ]
+        claim_rules_per_profile = ['Profile-12345678-1234-1234-123456789abc', 'Profile-12345678-1234-1234-123456789def']
+        cr_links = True
+        cr_links_per_profile = ['Profile-12345678-1234-1234-123456789abc', 'Profile-12345678-1234-1234-123456789def']
+        cr_rules = True
+        cr_rules_per_profile = ['Profile-12345678-1234-1234-123456789abc', 'Profile-12345678-1234-1234-123456789def']
+
+        # Invoke method
+        response = _service.bulk_list_account_entity_consumption(
+            account_id,
+            serviceid_groups=serviceid_groups,
+            serviceids_per_group=serviceids_per_group,
+            profiles=profiles,
+            apikeys_per_identity=apikeys_per_identity,
+            templates=templates,
+            template_versions_per_template=template_versions_per_template,
+            idps=idps,
+            claim_rules_per_group=claim_rules_per_group,
+            claim_rules_per_profile=claim_rules_per_profile,
+            cr_links=cr_links,
+            cr_links_per_profile=cr_links_per_profile,
+            cr_rules=cr_rules,
+            cr_rules_per_profile=cr_rules_per_profile,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['serviceid_groups'] == True
+        assert req_body['serviceids_per_group'] == [
+            'ServiceIdGroup-12345678-1234-1234-1234-123456789abc',
+            'ServiceIdGroup-12345678-1234-1234-1234-123456789def',
+        ]
+        assert req_body['profiles'] == True
+        assert req_body['apikeys_per_identity'] == [
+            'iam-ServiceId-12345678-1234-1234-1234-123456789def',
+            'IBMid-1234567ABC',
+        ]
+        assert req_body['templates'] == True
+        assert req_body['template_versions_per_template'] == [
+            'AccountSettingsTemplate-12345678-1234-1234-1234-123456789abc',
+            'ProfileTemplate-12345678-1234-1234-1234-123456789def',
+        ]
+        assert req_body['idps'] == True
+        assert req_body['claim_rules_per_group'] == [
+            'AccessGroupId-12345678-1234-1234-1234-123456789abc',
+            'AccessGroupId-12345678-1234-1234-1234-123456789def',
+        ]
+        assert req_body['claim_rules_per_profile'] == [
+            'Profile-12345678-1234-1234-123456789abc',
+            'Profile-12345678-1234-1234-123456789def',
+        ]
+        assert req_body['cr_links'] == True
+        assert req_body['cr_links_per_profile'] == [
+            'Profile-12345678-1234-1234-123456789abc',
+            'Profile-12345678-1234-1234-123456789def',
+        ]
+        assert req_body['cr_rules'] == True
+        assert req_body['cr_rules_per_profile'] == [
+            'Profile-12345678-1234-1234-123456789abc',
+            'Profile-12345678-1234-1234-123456789def',
+        ]
+
+    def test_bulk_list_account_entity_consumption_all_params_with_retries(self):
+        # Enable retries and run test_bulk_list_account_entity_consumption_all_params.
+        _service.enable_retries()
+        self.test_bulk_list_account_entity_consumption_all_params()
+
+        # Disable retries and run test_bulk_list_account_entity_consumption_all_params.
+        _service.disable_retries()
+        self.test_bulk_list_account_entity_consumption_all_params()
+
+    @responses.activate
+    def test_bulk_list_account_entity_consumption_required_params(self):
+        """
+        test_bulk_list_account_entity_consumption_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/limits/identity')
+        mock_response = '{"serviceid_groups": {"limit": 5, "count": 5}, "serviceids_per_group": {"limit": 5, "serviceid_groups": [{"group_id": "group_id", "count": 5}]}, "profiles": {"limit": 5, "count": 5}, "apikeys_per_identity": {"limit": 5, "identities": [{"iam_id": "iam_id", "count": 5}]}, "profile_templates": {"limit": 5, "count": 5}, "account_settings_templates": {"limit": 5, "count": 5}, "template_versions_per_template": {"limit": 5, "templates": [{"template_id": "template_id", "count": 5}]}, "idps": {"limit": 5, "count": 5}, "claim_rules_per_group": {"limit": 5, "access_groups": [{"group_id": "group_id", "count": 5}]}, "claim_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_links": {"limit": 5, "count": 5}, "cr_links_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_rules": {"limit": 5, "count": 5}, "cr_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.bulk_list_account_entity_consumption(
+            account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_bulk_list_account_entity_consumption_required_params_with_retries(self):
+        # Enable retries and run test_bulk_list_account_entity_consumption_required_params.
+        _service.enable_retries()
+        self.test_bulk_list_account_entity_consumption_required_params()
+
+        # Disable retries and run test_bulk_list_account_entity_consumption_required_params.
+        _service.disable_retries()
+        self.test_bulk_list_account_entity_consumption_required_params()
+
+    @responses.activate
+    def test_bulk_list_account_entity_consumption_value_error(self):
+        """
+        test_bulk_list_account_entity_consumption_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/accounts/testString/limits/identity')
+        mock_response = '{"serviceid_groups": {"limit": 5, "count": 5}, "serviceids_per_group": {"limit": 5, "serviceid_groups": [{"group_id": "group_id", "count": 5}]}, "profiles": {"limit": 5, "count": 5}, "apikeys_per_identity": {"limit": 5, "identities": [{"iam_id": "iam_id", "count": 5}]}, "profile_templates": {"limit": 5, "count": 5}, "account_settings_templates": {"limit": 5, "count": 5}, "template_versions_per_template": {"limit": 5, "templates": [{"template_id": "template_id", "count": 5}]}, "idps": {"limit": 5, "count": 5}, "claim_rules_per_group": {"limit": 5, "access_groups": [{"group_id": "group_id", "count": 5}]}, "claim_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_links": {"limit": 5, "count": 5}, "cr_links_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}, "cr_rules": {"limit": 5, "count": 5}, "cr_rules_per_profile": {"limit": 5, "profiles": [{"profile_id": "profile_id", "count": 5}]}}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.bulk_list_account_entity_consumption(**req_copy)
+
+    def test_bulk_list_account_entity_consumption_value_error_with_retries(self):
+        # Enable retries and run test_bulk_list_account_entity_consumption_value_error.
+        _service.enable_retries()
+        self.test_bulk_list_account_entity_consumption_value_error()
+
+        # Disable retries and run test_bulk_list_account_entity_consumption_value_error.
+        _service.disable_retries()
+        self.test_bulk_list_account_entity_consumption_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: AccountLimits
+##############################################################################
+
 
 ##############################################################################
 # Start of Model Tests
 ##############################################################################
 # region
+
+
+class TestModel_AccessGroupCount:
+    """
+    Test Class for AccessGroupCount
+    """
+
+    def test_access_group_count_serialization(self):
+        """
+        Test serialization/deserialization for AccessGroupCount
+        """
+
+        # Construct a json representation of a AccessGroupCount model
+        access_group_count_model_json = {}
+        access_group_count_model_json['group_id'] = 'testString'
+        access_group_count_model_json['count'] = 38
+
+        # Construct a model instance of AccessGroupCount by calling from_dict on the json representation
+        access_group_count_model = AccessGroupCount.from_dict(access_group_count_model_json)
+        assert access_group_count_model != False
+
+        # Construct a model instance of AccessGroupCount by calling from_dict on the json representation
+        access_group_count_model_dict = AccessGroupCount.from_dict(access_group_count_model_json).__dict__
+        access_group_count_model2 = AccessGroupCount(**access_group_count_model_dict)
+
+        # Verify the model instances are equivalent
+        assert access_group_count_model == access_group_count_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        access_group_count_model_json2 = access_group_count_model.to_dict()
+        assert access_group_count_model_json2 == access_group_count_model_json
 
 
 class TestModel_AccountBasedMfaEnrollment:
@@ -11005,6 +11430,545 @@ class TestModel_IdBasedMfaEnrollment:
         assert id_based_mfa_enrollment_model_json2 == id_based_mfa_enrollment_model_json
 
 
+class TestModel_IdentityCount:
+    """
+    Test Class for IdentityCount
+    """
+
+    def test_identity_count_serialization(self):
+        """
+        Test serialization/deserialization for IdentityCount
+        """
+
+        # Construct a json representation of a IdentityCount model
+        identity_count_model_json = {}
+        identity_count_model_json['iam_id'] = 'testString'
+        identity_count_model_json['count'] = 38
+
+        # Construct a model instance of IdentityCount by calling from_dict on the json representation
+        identity_count_model = IdentityCount.from_dict(identity_count_model_json)
+        assert identity_count_model != False
+
+        # Construct a model instance of IdentityCount by calling from_dict on the json representation
+        identity_count_model_dict = IdentityCount.from_dict(identity_count_model_json).__dict__
+        identity_count_model2 = IdentityCount(**identity_count_model_dict)
+
+        # Verify the model instances are equivalent
+        assert identity_count_model == identity_count_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_count_model_json2 = identity_count_model.to_dict()
+        assert identity_count_model_json2 == identity_count_model_json
+
+
+class TestModel_IdentityLimitsUsageResponse:
+    """
+    Test Class for IdentityLimitsUsageResponse
+    """
+
+    def test_identity_limits_usage_response_serialization(self):
+        """
+        Test serialization/deserialization for IdentityLimitsUsageResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        limit_count_model = {}  # LimitCount
+        limit_count_model['limit'] = 38
+        limit_count_model['count'] = 38
+
+        service_id_group_count_model = {}  # ServiceIdGroupCount
+        service_id_group_count_model['group_id'] = 'testString'
+        service_id_group_count_model['count'] = 38
+
+        identity_limits_usage_response_serviceids_per_group_model = {}  # IdentityLimitsUsageResponseServiceidsPerGroup
+        identity_limits_usage_response_serviceids_per_group_model['limit'] = 38
+        identity_limits_usage_response_serviceids_per_group_model['serviceid_groups'] = [service_id_group_count_model]
+
+        identity_count_model = {}  # IdentityCount
+        identity_count_model['iam_id'] = 'testString'
+        identity_count_model['count'] = 38
+
+        identity_limits_usage_response_apikeys_per_identity_model = {}  # IdentityLimitsUsageResponseApikeysPerIdentity
+        identity_limits_usage_response_apikeys_per_identity_model['limit'] = 38
+        identity_limits_usage_response_apikeys_per_identity_model['identities'] = [identity_count_model]
+
+        template_count_model = {}  # TemplateCount
+        template_count_model['template_id'] = 'testString'
+        template_count_model['count'] = 38
+
+        identity_limits_usage_response_template_versions_per_template_model = (
+            {}
+        )  # IdentityLimitsUsageResponseTemplateVersionsPerTemplate
+        identity_limits_usage_response_template_versions_per_template_model['limit'] = 38
+        identity_limits_usage_response_template_versions_per_template_model['templates'] = [template_count_model]
+
+        access_group_count_model = {}  # AccessGroupCount
+        access_group_count_model['group_id'] = 'testString'
+        access_group_count_model['count'] = 38
+
+        identity_limits_usage_response_claim_rules_per_group_model = {}  # IdentityLimitsUsageResponseClaimRulesPerGroup
+        identity_limits_usage_response_claim_rules_per_group_model['limit'] = 38
+        identity_limits_usage_response_claim_rules_per_group_model['access_groups'] = [access_group_count_model]
+
+        profile_count_model = {}  # ProfileCount
+        profile_count_model['profile_id'] = 'testString'
+        profile_count_model['count'] = 38
+
+        identity_limits_usage_response_claim_rules_per_profile_model = (
+            {}
+        )  # IdentityLimitsUsageResponseClaimRulesPerProfile
+        identity_limits_usage_response_claim_rules_per_profile_model['limit'] = 38
+        identity_limits_usage_response_claim_rules_per_profile_model['profiles'] = [profile_count_model]
+
+        identity_limits_usage_response_cr_links_per_profile_model = {}  # IdentityLimitsUsageResponseCrLinksPerProfile
+        identity_limits_usage_response_cr_links_per_profile_model['limit'] = 38
+        identity_limits_usage_response_cr_links_per_profile_model['profiles'] = [profile_count_model]
+
+        identity_limits_usage_response_cr_rules_per_profile_model = {}  # IdentityLimitsUsageResponseCrRulesPerProfile
+        identity_limits_usage_response_cr_rules_per_profile_model['limit'] = 38
+        identity_limits_usage_response_cr_rules_per_profile_model['profiles'] = [profile_count_model]
+
+        # Construct a json representation of a IdentityLimitsUsageResponse model
+        identity_limits_usage_response_model_json = {}
+        identity_limits_usage_response_model_json['serviceid_groups'] = limit_count_model
+        identity_limits_usage_response_model_json['serviceids_per_group'] = (
+            identity_limits_usage_response_serviceids_per_group_model
+        )
+        identity_limits_usage_response_model_json['profiles'] = limit_count_model
+        identity_limits_usage_response_model_json['apikeys_per_identity'] = (
+            identity_limits_usage_response_apikeys_per_identity_model
+        )
+        identity_limits_usage_response_model_json['profile_templates'] = limit_count_model
+        identity_limits_usage_response_model_json['account_settings_templates'] = limit_count_model
+        identity_limits_usage_response_model_json['template_versions_per_template'] = (
+            identity_limits_usage_response_template_versions_per_template_model
+        )
+        identity_limits_usage_response_model_json['idps'] = limit_count_model
+        identity_limits_usage_response_model_json['claim_rules_per_group'] = (
+            identity_limits_usage_response_claim_rules_per_group_model
+        )
+        identity_limits_usage_response_model_json['claim_rules_per_profile'] = (
+            identity_limits_usage_response_claim_rules_per_profile_model
+        )
+        identity_limits_usage_response_model_json['cr_links'] = limit_count_model
+        identity_limits_usage_response_model_json['cr_links_per_profile'] = (
+            identity_limits_usage_response_cr_links_per_profile_model
+        )
+        identity_limits_usage_response_model_json['cr_rules'] = limit_count_model
+        identity_limits_usage_response_model_json['cr_rules_per_profile'] = (
+            identity_limits_usage_response_cr_rules_per_profile_model
+        )
+
+        # Construct a model instance of IdentityLimitsUsageResponse by calling from_dict on the json representation
+        identity_limits_usage_response_model = IdentityLimitsUsageResponse.from_dict(
+            identity_limits_usage_response_model_json
+        )
+        assert identity_limits_usage_response_model != False
+
+        # Construct a model instance of IdentityLimitsUsageResponse by calling from_dict on the json representation
+        identity_limits_usage_response_model_dict = IdentityLimitsUsageResponse.from_dict(
+            identity_limits_usage_response_model_json
+        ).__dict__
+        identity_limits_usage_response_model2 = IdentityLimitsUsageResponse(**identity_limits_usage_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert identity_limits_usage_response_model == identity_limits_usage_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_limits_usage_response_model_json2 = identity_limits_usage_response_model.to_dict()
+        assert identity_limits_usage_response_model_json2 == identity_limits_usage_response_model_json
+
+
+class TestModel_IdentityLimitsUsageResponseApikeysPerIdentity:
+    """
+    Test Class for IdentityLimitsUsageResponseApikeysPerIdentity
+    """
+
+    def test_identity_limits_usage_response_apikeys_per_identity_serialization(self):
+        """
+        Test serialization/deserialization for IdentityLimitsUsageResponseApikeysPerIdentity
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        identity_count_model = {}  # IdentityCount
+        identity_count_model['iam_id'] = 'testString'
+        identity_count_model['count'] = 38
+
+        # Construct a json representation of a IdentityLimitsUsageResponseApikeysPerIdentity model
+        identity_limits_usage_response_apikeys_per_identity_model_json = {}
+        identity_limits_usage_response_apikeys_per_identity_model_json['limit'] = 38
+        identity_limits_usage_response_apikeys_per_identity_model_json['identities'] = [identity_count_model]
+
+        # Construct a model instance of IdentityLimitsUsageResponseApikeysPerIdentity by calling from_dict on the json representation
+        identity_limits_usage_response_apikeys_per_identity_model = (
+            IdentityLimitsUsageResponseApikeysPerIdentity.from_dict(
+                identity_limits_usage_response_apikeys_per_identity_model_json
+            )
+        )
+        assert identity_limits_usage_response_apikeys_per_identity_model != False
+
+        # Construct a model instance of IdentityLimitsUsageResponseApikeysPerIdentity by calling from_dict on the json representation
+        identity_limits_usage_response_apikeys_per_identity_model_dict = (
+            IdentityLimitsUsageResponseApikeysPerIdentity.from_dict(
+                identity_limits_usage_response_apikeys_per_identity_model_json
+            ).__dict__
+        )
+        identity_limits_usage_response_apikeys_per_identity_model2 = IdentityLimitsUsageResponseApikeysPerIdentity(
+            **identity_limits_usage_response_apikeys_per_identity_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            identity_limits_usage_response_apikeys_per_identity_model
+            == identity_limits_usage_response_apikeys_per_identity_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_limits_usage_response_apikeys_per_identity_model_json2 = (
+            identity_limits_usage_response_apikeys_per_identity_model.to_dict()
+        )
+        assert (
+            identity_limits_usage_response_apikeys_per_identity_model_json2
+            == identity_limits_usage_response_apikeys_per_identity_model_json
+        )
+
+
+class TestModel_IdentityLimitsUsageResponseClaimRulesPerGroup:
+    """
+    Test Class for IdentityLimitsUsageResponseClaimRulesPerGroup
+    """
+
+    def test_identity_limits_usage_response_claim_rules_per_group_serialization(self):
+        """
+        Test serialization/deserialization for IdentityLimitsUsageResponseClaimRulesPerGroup
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        access_group_count_model = {}  # AccessGroupCount
+        access_group_count_model['group_id'] = 'testString'
+        access_group_count_model['count'] = 38
+
+        # Construct a json representation of a IdentityLimitsUsageResponseClaimRulesPerGroup model
+        identity_limits_usage_response_claim_rules_per_group_model_json = {}
+        identity_limits_usage_response_claim_rules_per_group_model_json['limit'] = 38
+        identity_limits_usage_response_claim_rules_per_group_model_json['access_groups'] = [access_group_count_model]
+
+        # Construct a model instance of IdentityLimitsUsageResponseClaimRulesPerGroup by calling from_dict on the json representation
+        identity_limits_usage_response_claim_rules_per_group_model = (
+            IdentityLimitsUsageResponseClaimRulesPerGroup.from_dict(
+                identity_limits_usage_response_claim_rules_per_group_model_json
+            )
+        )
+        assert identity_limits_usage_response_claim_rules_per_group_model != False
+
+        # Construct a model instance of IdentityLimitsUsageResponseClaimRulesPerGroup by calling from_dict on the json representation
+        identity_limits_usage_response_claim_rules_per_group_model_dict = (
+            IdentityLimitsUsageResponseClaimRulesPerGroup.from_dict(
+                identity_limits_usage_response_claim_rules_per_group_model_json
+            ).__dict__
+        )
+        identity_limits_usage_response_claim_rules_per_group_model2 = IdentityLimitsUsageResponseClaimRulesPerGroup(
+            **identity_limits_usage_response_claim_rules_per_group_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            identity_limits_usage_response_claim_rules_per_group_model
+            == identity_limits_usage_response_claim_rules_per_group_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_limits_usage_response_claim_rules_per_group_model_json2 = (
+            identity_limits_usage_response_claim_rules_per_group_model.to_dict()
+        )
+        assert (
+            identity_limits_usage_response_claim_rules_per_group_model_json2
+            == identity_limits_usage_response_claim_rules_per_group_model_json
+        )
+
+
+class TestModel_IdentityLimitsUsageResponseClaimRulesPerProfile:
+    """
+    Test Class for IdentityLimitsUsageResponseClaimRulesPerProfile
+    """
+
+    def test_identity_limits_usage_response_claim_rules_per_profile_serialization(self):
+        """
+        Test serialization/deserialization for IdentityLimitsUsageResponseClaimRulesPerProfile
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        profile_count_model = {}  # ProfileCount
+        profile_count_model['profile_id'] = 'testString'
+        profile_count_model['count'] = 38
+
+        # Construct a json representation of a IdentityLimitsUsageResponseClaimRulesPerProfile model
+        identity_limits_usage_response_claim_rules_per_profile_model_json = {}
+        identity_limits_usage_response_claim_rules_per_profile_model_json['limit'] = 38
+        identity_limits_usage_response_claim_rules_per_profile_model_json['profiles'] = [profile_count_model]
+
+        # Construct a model instance of IdentityLimitsUsageResponseClaimRulesPerProfile by calling from_dict on the json representation
+        identity_limits_usage_response_claim_rules_per_profile_model = (
+            IdentityLimitsUsageResponseClaimRulesPerProfile.from_dict(
+                identity_limits_usage_response_claim_rules_per_profile_model_json
+            )
+        )
+        assert identity_limits_usage_response_claim_rules_per_profile_model != False
+
+        # Construct a model instance of IdentityLimitsUsageResponseClaimRulesPerProfile by calling from_dict on the json representation
+        identity_limits_usage_response_claim_rules_per_profile_model_dict = (
+            IdentityLimitsUsageResponseClaimRulesPerProfile.from_dict(
+                identity_limits_usage_response_claim_rules_per_profile_model_json
+            ).__dict__
+        )
+        identity_limits_usage_response_claim_rules_per_profile_model2 = IdentityLimitsUsageResponseClaimRulesPerProfile(
+            **identity_limits_usage_response_claim_rules_per_profile_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            identity_limits_usage_response_claim_rules_per_profile_model
+            == identity_limits_usage_response_claim_rules_per_profile_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_limits_usage_response_claim_rules_per_profile_model_json2 = (
+            identity_limits_usage_response_claim_rules_per_profile_model.to_dict()
+        )
+        assert (
+            identity_limits_usage_response_claim_rules_per_profile_model_json2
+            == identity_limits_usage_response_claim_rules_per_profile_model_json
+        )
+
+
+class TestModel_IdentityLimitsUsageResponseCrLinksPerProfile:
+    """
+    Test Class for IdentityLimitsUsageResponseCrLinksPerProfile
+    """
+
+    def test_identity_limits_usage_response_cr_links_per_profile_serialization(self):
+        """
+        Test serialization/deserialization for IdentityLimitsUsageResponseCrLinksPerProfile
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        profile_count_model = {}  # ProfileCount
+        profile_count_model['profile_id'] = 'testString'
+        profile_count_model['count'] = 38
+
+        # Construct a json representation of a IdentityLimitsUsageResponseCrLinksPerProfile model
+        identity_limits_usage_response_cr_links_per_profile_model_json = {}
+        identity_limits_usage_response_cr_links_per_profile_model_json['limit'] = 38
+        identity_limits_usage_response_cr_links_per_profile_model_json['profiles'] = [profile_count_model]
+
+        # Construct a model instance of IdentityLimitsUsageResponseCrLinksPerProfile by calling from_dict on the json representation
+        identity_limits_usage_response_cr_links_per_profile_model = (
+            IdentityLimitsUsageResponseCrLinksPerProfile.from_dict(
+                identity_limits_usage_response_cr_links_per_profile_model_json
+            )
+        )
+        assert identity_limits_usage_response_cr_links_per_profile_model != False
+
+        # Construct a model instance of IdentityLimitsUsageResponseCrLinksPerProfile by calling from_dict on the json representation
+        identity_limits_usage_response_cr_links_per_profile_model_dict = (
+            IdentityLimitsUsageResponseCrLinksPerProfile.from_dict(
+                identity_limits_usage_response_cr_links_per_profile_model_json
+            ).__dict__
+        )
+        identity_limits_usage_response_cr_links_per_profile_model2 = IdentityLimitsUsageResponseCrLinksPerProfile(
+            **identity_limits_usage_response_cr_links_per_profile_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            identity_limits_usage_response_cr_links_per_profile_model
+            == identity_limits_usage_response_cr_links_per_profile_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_limits_usage_response_cr_links_per_profile_model_json2 = (
+            identity_limits_usage_response_cr_links_per_profile_model.to_dict()
+        )
+        assert (
+            identity_limits_usage_response_cr_links_per_profile_model_json2
+            == identity_limits_usage_response_cr_links_per_profile_model_json
+        )
+
+
+class TestModel_IdentityLimitsUsageResponseCrRulesPerProfile:
+    """
+    Test Class for IdentityLimitsUsageResponseCrRulesPerProfile
+    """
+
+    def test_identity_limits_usage_response_cr_rules_per_profile_serialization(self):
+        """
+        Test serialization/deserialization for IdentityLimitsUsageResponseCrRulesPerProfile
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        profile_count_model = {}  # ProfileCount
+        profile_count_model['profile_id'] = 'testString'
+        profile_count_model['count'] = 38
+
+        # Construct a json representation of a IdentityLimitsUsageResponseCrRulesPerProfile model
+        identity_limits_usage_response_cr_rules_per_profile_model_json = {}
+        identity_limits_usage_response_cr_rules_per_profile_model_json['limit'] = 38
+        identity_limits_usage_response_cr_rules_per_profile_model_json['profiles'] = [profile_count_model]
+
+        # Construct a model instance of IdentityLimitsUsageResponseCrRulesPerProfile by calling from_dict on the json representation
+        identity_limits_usage_response_cr_rules_per_profile_model = (
+            IdentityLimitsUsageResponseCrRulesPerProfile.from_dict(
+                identity_limits_usage_response_cr_rules_per_profile_model_json
+            )
+        )
+        assert identity_limits_usage_response_cr_rules_per_profile_model != False
+
+        # Construct a model instance of IdentityLimitsUsageResponseCrRulesPerProfile by calling from_dict on the json representation
+        identity_limits_usage_response_cr_rules_per_profile_model_dict = (
+            IdentityLimitsUsageResponseCrRulesPerProfile.from_dict(
+                identity_limits_usage_response_cr_rules_per_profile_model_json
+            ).__dict__
+        )
+        identity_limits_usage_response_cr_rules_per_profile_model2 = IdentityLimitsUsageResponseCrRulesPerProfile(
+            **identity_limits_usage_response_cr_rules_per_profile_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            identity_limits_usage_response_cr_rules_per_profile_model
+            == identity_limits_usage_response_cr_rules_per_profile_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_limits_usage_response_cr_rules_per_profile_model_json2 = (
+            identity_limits_usage_response_cr_rules_per_profile_model.to_dict()
+        )
+        assert (
+            identity_limits_usage_response_cr_rules_per_profile_model_json2
+            == identity_limits_usage_response_cr_rules_per_profile_model_json
+        )
+
+
+class TestModel_IdentityLimitsUsageResponseServiceidsPerGroup:
+    """
+    Test Class for IdentityLimitsUsageResponseServiceidsPerGroup
+    """
+
+    def test_identity_limits_usage_response_serviceids_per_group_serialization(self):
+        """
+        Test serialization/deserialization for IdentityLimitsUsageResponseServiceidsPerGroup
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        service_id_group_count_model = {}  # ServiceIdGroupCount
+        service_id_group_count_model['group_id'] = 'testString'
+        service_id_group_count_model['count'] = 38
+
+        # Construct a json representation of a IdentityLimitsUsageResponseServiceidsPerGroup model
+        identity_limits_usage_response_serviceids_per_group_model_json = {}
+        identity_limits_usage_response_serviceids_per_group_model_json['limit'] = 38
+        identity_limits_usage_response_serviceids_per_group_model_json['serviceid_groups'] = [
+            service_id_group_count_model
+        ]
+
+        # Construct a model instance of IdentityLimitsUsageResponseServiceidsPerGroup by calling from_dict on the json representation
+        identity_limits_usage_response_serviceids_per_group_model = (
+            IdentityLimitsUsageResponseServiceidsPerGroup.from_dict(
+                identity_limits_usage_response_serviceids_per_group_model_json
+            )
+        )
+        assert identity_limits_usage_response_serviceids_per_group_model != False
+
+        # Construct a model instance of IdentityLimitsUsageResponseServiceidsPerGroup by calling from_dict on the json representation
+        identity_limits_usage_response_serviceids_per_group_model_dict = (
+            IdentityLimitsUsageResponseServiceidsPerGroup.from_dict(
+                identity_limits_usage_response_serviceids_per_group_model_json
+            ).__dict__
+        )
+        identity_limits_usage_response_serviceids_per_group_model2 = IdentityLimitsUsageResponseServiceidsPerGroup(
+            **identity_limits_usage_response_serviceids_per_group_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            identity_limits_usage_response_serviceids_per_group_model
+            == identity_limits_usage_response_serviceids_per_group_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_limits_usage_response_serviceids_per_group_model_json2 = (
+            identity_limits_usage_response_serviceids_per_group_model.to_dict()
+        )
+        assert (
+            identity_limits_usage_response_serviceids_per_group_model_json2
+            == identity_limits_usage_response_serviceids_per_group_model_json
+        )
+
+
+class TestModel_IdentityLimitsUsageResponseTemplateVersionsPerTemplate:
+    """
+    Test Class for IdentityLimitsUsageResponseTemplateVersionsPerTemplate
+    """
+
+    def test_identity_limits_usage_response_template_versions_per_template_serialization(self):
+        """
+        Test serialization/deserialization for IdentityLimitsUsageResponseTemplateVersionsPerTemplate
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        template_count_model = {}  # TemplateCount
+        template_count_model['template_id'] = 'testString'
+        template_count_model['count'] = 38
+
+        # Construct a json representation of a IdentityLimitsUsageResponseTemplateVersionsPerTemplate model
+        identity_limits_usage_response_template_versions_per_template_model_json = {}
+        identity_limits_usage_response_template_versions_per_template_model_json['limit'] = 38
+        identity_limits_usage_response_template_versions_per_template_model_json['templates'] = [template_count_model]
+
+        # Construct a model instance of IdentityLimitsUsageResponseTemplateVersionsPerTemplate by calling from_dict on the json representation
+        identity_limits_usage_response_template_versions_per_template_model = (
+            IdentityLimitsUsageResponseTemplateVersionsPerTemplate.from_dict(
+                identity_limits_usage_response_template_versions_per_template_model_json
+            )
+        )
+        assert identity_limits_usage_response_template_versions_per_template_model != False
+
+        # Construct a model instance of IdentityLimitsUsageResponseTemplateVersionsPerTemplate by calling from_dict on the json representation
+        identity_limits_usage_response_template_versions_per_template_model_dict = (
+            IdentityLimitsUsageResponseTemplateVersionsPerTemplate.from_dict(
+                identity_limits_usage_response_template_versions_per_template_model_json
+            ).__dict__
+        )
+        identity_limits_usage_response_template_versions_per_template_model2 = (
+            IdentityLimitsUsageResponseTemplateVersionsPerTemplate(
+                **identity_limits_usage_response_template_versions_per_template_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            identity_limits_usage_response_template_versions_per_template_model
+            == identity_limits_usage_response_template_versions_per_template_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        identity_limits_usage_response_template_versions_per_template_model_json2 = (
+            identity_limits_usage_response_template_versions_per_template_model.to_dict()
+        )
+        assert (
+            identity_limits_usage_response_template_versions_per_template_model_json2
+            == identity_limits_usage_response_template_versions_per_template_model_json
+        )
+
+
 class TestModel_IdentityPreferenceResponse:
     """
     Test Class for IdentityPreferenceResponse
@@ -11086,6 +12050,37 @@ class TestModel_IdentityPreferencesResponse:
         # Convert model instance back to dict and verify no loss of data
         identity_preferences_response_model_json2 = identity_preferences_response_model.to_dict()
         assert identity_preferences_response_model_json2 == identity_preferences_response_model_json
+
+
+class TestModel_LimitCount:
+    """
+    Test Class for LimitCount
+    """
+
+    def test_limit_count_serialization(self):
+        """
+        Test serialization/deserialization for LimitCount
+        """
+
+        # Construct a json representation of a LimitCount model
+        limit_count_model_json = {}
+        limit_count_model_json['limit'] = 38
+        limit_count_model_json['count'] = 38
+
+        # Construct a model instance of LimitCount by calling from_dict on the json representation
+        limit_count_model = LimitCount.from_dict(limit_count_model_json)
+        assert limit_count_model != False
+
+        # Construct a model instance of LimitCount by calling from_dict on the json representation
+        limit_count_model_dict = LimitCount.from_dict(limit_count_model_json).__dict__
+        limit_count_model2 = LimitCount(**limit_count_model_dict)
+
+        # Verify the model instances are equivalent
+        assert limit_count_model == limit_count_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        limit_count_model_json2 = limit_count_model.to_dict()
+        assert limit_count_model_json2 == limit_count_model_json
 
 
 class TestModel_MfaEnrollmentTypeStatus:
@@ -11299,6 +12294,37 @@ class TestModel_ProfileClaimRuleList:
         assert profile_claim_rule_list_model_json2 == profile_claim_rule_list_model_json
 
 
+class TestModel_ProfileCount:
+    """
+    Test Class for ProfileCount
+    """
+
+    def test_profile_count_serialization(self):
+        """
+        Test serialization/deserialization for ProfileCount
+        """
+
+        # Construct a json representation of a ProfileCount model
+        profile_count_model_json = {}
+        profile_count_model_json['profile_id'] = 'testString'
+        profile_count_model_json['count'] = 38
+
+        # Construct a model instance of ProfileCount by calling from_dict on the json representation
+        profile_count_model = ProfileCount.from_dict(profile_count_model_json)
+        assert profile_count_model != False
+
+        # Construct a model instance of ProfileCount by calling from_dict on the json representation
+        profile_count_model_dict = ProfileCount.from_dict(profile_count_model_json).__dict__
+        profile_count_model2 = ProfileCount(**profile_count_model_dict)
+
+        # Verify the model instances are equivalent
+        assert profile_count_model == profile_count_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        profile_count_model_json2 = profile_count_model.to_dict()
+        assert profile_count_model_json2 == profile_count_model_json
+
+
 class TestModel_ProfileIdentitiesResponse:
     """
     Test Class for ProfileIdentitiesResponse
@@ -11439,6 +12465,7 @@ class TestModel_ProfileLink:
         profile_link_model_json['modified_at'] = '2019-01-01T12:00:00Z'
         profile_link_model_json['name'] = 'testString'
         profile_link_model_json['cr_type'] = 'testString'
+        profile_link_model_json['is_cross_account'] = True
         profile_link_model_json['link'] = profile_link_link_model
 
         # Construct a model instance of ProfileLink by calling from_dict on the json representation
@@ -11517,6 +12544,7 @@ class TestModel_ProfileLinkList:
         profile_link_model['modified_at'] = '2019-01-01T12:00:00Z'
         profile_link_model['name'] = 'testString'
         profile_link_model['cr_type'] = 'testString'
+        profile_link_model['is_cross_account'] = True
         profile_link_model['link'] = profile_link_link_model
 
         # Construct a json representation of a ProfileLinkList model
@@ -11875,6 +12903,37 @@ class TestModel_ServiceIdGroup:
         # Convert model instance back to dict and verify no loss of data
         service_id_group_model_json2 = service_id_group_model.to_dict()
         assert service_id_group_model_json2 == service_id_group_model_json
+
+
+class TestModel_ServiceIdGroupCount:
+    """
+    Test Class for ServiceIdGroupCount
+    """
+
+    def test_service_id_group_count_serialization(self):
+        """
+        Test serialization/deserialization for ServiceIdGroupCount
+        """
+
+        # Construct a json representation of a ServiceIdGroupCount model
+        service_id_group_count_model_json = {}
+        service_id_group_count_model_json['group_id'] = 'testString'
+        service_id_group_count_model_json['count'] = 38
+
+        # Construct a model instance of ServiceIdGroupCount by calling from_dict on the json representation
+        service_id_group_count_model = ServiceIdGroupCount.from_dict(service_id_group_count_model_json)
+        assert service_id_group_count_model != False
+
+        # Construct a model instance of ServiceIdGroupCount by calling from_dict on the json representation
+        service_id_group_count_model_dict = ServiceIdGroupCount.from_dict(service_id_group_count_model_json).__dict__
+        service_id_group_count_model2 = ServiceIdGroupCount(**service_id_group_count_model_dict)
+
+        # Verify the model instances are equivalent
+        assert service_id_group_count_model == service_id_group_count_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        service_id_group_count_model_json2 = service_id_group_count_model.to_dict()
+        assert service_id_group_count_model_json2 == service_id_group_count_model_json
 
 
 class TestModel_ServiceIdGroupList:
@@ -12537,6 +13596,37 @@ class TestModel_TemplateAssignmentResponseResourceDetail:
             template_assignment_response_resource_detail_model_json2
             == template_assignment_response_resource_detail_model_json
         )
+
+
+class TestModel_TemplateCount:
+    """
+    Test Class for TemplateCount
+    """
+
+    def test_template_count_serialization(self):
+        """
+        Test serialization/deserialization for TemplateCount
+        """
+
+        # Construct a json representation of a TemplateCount model
+        template_count_model_json = {}
+        template_count_model_json['template_id'] = 'testString'
+        template_count_model_json['count'] = 38
+
+        # Construct a model instance of TemplateCount by calling from_dict on the json representation
+        template_count_model = TemplateCount.from_dict(template_count_model_json)
+        assert template_count_model != False
+
+        # Construct a model instance of TemplateCount by calling from_dict on the json representation
+        template_count_model_dict = TemplateCount.from_dict(template_count_model_json).__dict__
+        template_count_model2 = TemplateCount(**template_count_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_count_model == template_count_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_count_model_json2 = template_count_model.to_dict()
+        assert template_count_model_json2 == template_count_model_json
 
 
 class TestModel_TemplateProfileComponentRequest:

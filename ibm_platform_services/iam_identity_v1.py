@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.107.1-41b0fbd0-20250825-080732
+# IBM OpenAPI SDK Code Generator Version: 3.113.0-3f9df07a-20260317-160650
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -957,6 +957,9 @@ class IamIdentityV1(BaseService):
                API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param str expires_at: (optional) Date and time when the API key becomes
                invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
+               **WARNING** An API key will be permanently and irrevocably deleted when
+               both the expires_at and modified_at timestamps are more than ninety (90)
+               days in the past, regardless of the key’s locked status or any other state.
         :param str entity_lock: (optional) Indicates if the API key is locked for
                further write operations. False by default.
         :param str entity_disable: (optional) Indicates if the API key is disabled.
@@ -1162,6 +1165,9 @@ class IamIdentityV1(BaseService):
                API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param str expires_at: (optional) Date and time when the API key becomes
                invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
+               **WARNING** An API key will be permanently and irrevocably deleted when
+               both the expires_at and modified_at timestamps are more than ninety (90)
+               days in the past, regardless of the key’s locked status or any other state.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ApiKey` object
@@ -2098,6 +2104,7 @@ class IamIdentityV1(BaseService):
         link: 'CreateProfileLinkRequestLink',
         *,
         name: Optional[str] = None,
+        is_cross_account: Optional[bool] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2112,6 +2119,9 @@ class IamIdentityV1(BaseService):
                IKS_SA, ROKS_SA.
         :param CreateProfileLinkRequestLink link: Link details.
         :param str name: (optional) Optional name of the Link.
+        :param bool is_cross_account: (optional) Flag to indicate that the link
+               provides cross account access. If not provided then the account scope of
+               the CRN must match the Profile's account.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ProfileLink` object
@@ -2136,6 +2146,7 @@ class IamIdentityV1(BaseService):
             'cr_type': cr_type,
             'link': link,
             'name': name,
+            'is_cross_account': is_cross_account,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -2905,7 +2916,7 @@ class IamIdentityV1(BaseService):
                  * TOTP4ALL - For all users
                  * LEVEL1 - Email-based MFA for all users
                  * LEVEL2 - TOTP-based MFA for all users
-                 * LEVEL3 - U2F MFA for all users.
+                 * LEVEL3 - Security Key MFA for all users.
         :param List[UserMfa] user_mfa: (optional) List of users that are exempted
                from the MFA requirement of the account.
         :param str session_expiration_in_seconds: (optional) Defines the session
@@ -5391,6 +5402,213 @@ class IamIdentityV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    #########################
+    # Account Limits
+    #########################
+
+    def get_account_limits(
+        self,
+        account_id: str,
+        *,
+        serviceid_groups: Optional[bool] = None,
+        serviceids_per_group: Optional[str] = None,
+        profiles: Optional[str] = None,
+        apikeys_per_identity: Optional[str] = None,
+        templates: Optional[str] = None,
+        template_versions_per_template: Optional[str] = None,
+        idps: Optional[str] = None,
+        claim_rules_per_group: Optional[str] = None,
+        claim_rules_per_profile: Optional[str] = None,
+        cr_links: Optional[str] = None,
+        cr_links_per_profile: Optional[str] = None,
+        cr_rules: Optional[str] = None,
+        cr_rules_per_profile: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get account entity limits.
+
+        Returns the details of an account's entity limits with query parameters for
+        consumption details.
+
+        :param str account_id: Unique ID of the account.
+        :param bool serviceid_groups: (optional) Boolean to include serviceid group
+               consumption.
+        :param str serviceids_per_group: (optional) Comma seperated list of
+               ServiceID groups to include for consumption.
+        :param str profiles: (optional) Boolean to include trusted profiles
+               consumption.
+        :param str apikeys_per_identity: (optional) Comma seperated list of IAM IDs
+               to include for API key consumption.
+        :param str templates: (optional) Boolean to include template consumption.
+        :param str template_versions_per_template: (optional) Comma seperated list
+               of template IDs to include for template version consumption.
+        :param str idps: (optional) Boolean to include identity provider
+               consumption.
+        :param str claim_rules_per_group: (optional) Comma seperated list of access
+               groups to include for claim rules consumption.
+        :param str claim_rules_per_profile: (optional) Comma seperated list of
+               profiles to include for claim rules consumption.
+        :param str cr_links: (optional) Boolean to include compute resource links
+               consumption.
+        :param str cr_links_per_profile: (optional) Comma seperated list of profile
+               IDs to include for cr links consumption.
+        :param str cr_rules: (optional) Boolean to include compute resource rules
+               consumption.
+        :param str cr_rules_per_profile: (optional) Comma seperated list of profile
+               IDs to include for cr rules consumption.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `IdentityLimitsUsageResponse` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_account_limits',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'serviceid_groups': serviceid_groups,
+            'serviceids_per_group': serviceids_per_group,
+            'profiles': profiles,
+            'apikeys_per_identity': apikeys_per_identity,
+            'templates': templates,
+            'template_versions_per_template': template_versions_per_template,
+            'idps': idps,
+            'claim_rules_per_group': claim_rules_per_group,
+            'claim_rules_per_profile': claim_rules_per_profile,
+            'cr_links': cr_links,
+            'cr_links_per_profile': cr_links_per_profile,
+            'cr_rules': cr_rules,
+            'cr_rules_per_profile': cr_rules_per_profile,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/accounts/{account_id}/limits/identity'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def bulk_list_account_entity_consumption(
+        self,
+        account_id: str,
+        *,
+        serviceid_groups: Optional[bool] = None,
+        serviceids_per_group: Optional[List[str]] = None,
+        profiles: Optional[bool] = None,
+        apikeys_per_identity: Optional[List[str]] = None,
+        templates: Optional[bool] = None,
+        template_versions_per_template: Optional[List[str]] = None,
+        idps: Optional[bool] = None,
+        claim_rules_per_group: Optional[List[str]] = None,
+        claim_rules_per_profile: Optional[List[str]] = None,
+        cr_links: Optional[bool] = None,
+        cr_links_per_profile: Optional[List[str]] = None,
+        cr_rules: Optional[bool] = None,
+        cr_rules_per_profile: Optional[List[str]] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get account entity limits via POST request.
+
+        Returns the details of an account's entity limits using a body for larger list of
+        parameters for consumption details.
+
+        :param str account_id: Unique ID of the account.
+        :param bool serviceid_groups: (optional) Flag to include service ID groups
+               usage.
+        :param List[str] serviceids_per_group: (optional) List of service ID group
+               IDs to get usage for.
+        :param bool profiles: (optional) Flag to include trusted profiles usage.
+        :param List[str] apikeys_per_identity: (optional) List of identity IDs to
+               get API key usage for.
+        :param bool templates: (optional) Flag to include templates usage.
+        :param List[str] template_versions_per_template: (optional) List of
+               template IDs to get version usage for.
+        :param bool idps: (optional) Flag to include identity providers usage.
+        :param List[str] claim_rules_per_group: (optional) List of access group IDs
+               to get claim rules usage for.
+        :param List[str] claim_rules_per_profile: (optional) List of profile IDs to
+               get claim rules usage for.
+        :param bool cr_links: (optional) Flag to include compute resource links
+               usage.
+        :param List[str] cr_links_per_profile: (optional) List of profile IDs to
+               get compute resource links usage for.
+        :param bool cr_rules: (optional) Flag to include compute resource rules
+               usage.
+        :param List[str] cr_rules_per_profile: (optional) List of profile IDs to
+               get compute resource rules usage for.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `IdentityLimitsUsageResponse` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='bulk_list_account_entity_consumption',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'serviceid_groups': serviceid_groups,
+            'serviceids_per_group': serviceids_per_group,
+            'profiles': profiles,
+            'apikeys_per_identity': apikeys_per_identity,
+            'templates': templates,
+            'template_versions_per_template': template_versions_per_template,
+            'idps': idps,
+            'claim_rules_per_group': claim_rules_per_group,
+            'claim_rules_per_profile': claim_rules_per_profile,
+            'cr_links': cr_links,
+            'cr_links_per_profile': cr_links_per_profile,
+            'cr_rules': cr_rules,
+            'cr_rules_per_profile': cr_rules_per_profile,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/accounts/{account_id}/limits/identity'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
 
 class ListServiceIdsEnums:
     """
@@ -5660,6 +5878,72 @@ class ListAccountSettingsAssignmentsEnums:
 ##############################################################################
 
 
+class AccessGroupCount:
+    """
+    Claim rule count for a specific access group.
+
+    :param str group_id: (optional) Access group identifier.
+    :param int count: (optional) Number of claim rules for the access group.
+    """
+
+    def __init__(
+        self,
+        *,
+        group_id: Optional[str] = None,
+        count: Optional[int] = None,
+    ) -> None:
+        """
+        Initialize a AccessGroupCount object.
+
+        :param str group_id: (optional) Access group identifier.
+        :param int count: (optional) Number of claim rules for the access group.
+        """
+        self.group_id = group_id
+        self.count = count
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccessGroupCount':
+        """Initialize a AccessGroupCount object from a json dictionary."""
+        args = {}
+        if (group_id := _dict.get('group_id')) is not None:
+            args['group_id'] = group_id
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccessGroupCount object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'group_id') and self.group_id is not None:
+            _dict['group_id'] = self.group_id
+        if hasattr(self, 'count') and self.count is not None:
+            _dict['count'] = self.count
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccessGroupCount object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccessGroupCount') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccessGroupCount') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class AccountBasedMfaEnrollment:
     """
     AccountBasedMfaEnrollment.
@@ -5786,7 +6070,7 @@ class AccountSettingsAssignedTemplatesSection:
             * TOTP4ALL - For all users
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
-            * LEVEL3 - U2F MFA for all users.
+            * LEVEL3 - Security Key MFA for all users.
     :param str session_expiration_in_seconds: (optional) Defines the session
           expiration in seconds for the account. Valid values:
             * Any whole number between between '900' and '86400'
@@ -5868,7 +6152,7 @@ class AccountSettingsAssignedTemplatesSection:
                  * TOTP4ALL - For all users
                  * LEVEL1 - Email-based MFA for all users
                  * LEVEL2 - TOTP-based MFA for all users
-                 * LEVEL3 - U2F MFA for all users.
+                 * LEVEL3 - Security Key MFA for all users.
         :param str session_expiration_in_seconds: (optional) Defines the session
                expiration in seconds for the account. Valid values:
                  * Any whole number between between '900' and '86400'
@@ -6081,7 +6365,7 @@ class AccountSettingsAssignedTemplatesSection:
           * TOTP4ALL - For all users
           * LEVEL1 - Email-based MFA for all users
           * LEVEL2 - TOTP-based MFA for all users
-          * LEVEL3 - U2F MFA for all users.
+          * LEVEL3 - Security Key MFA for all users.
         """
 
         NONE = 'NONE'
@@ -6140,7 +6424,7 @@ class AccountSettingsEffectiveSection:
             * TOTP4ALL - For all users
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
-            * LEVEL3 - U2F MFA for all users.
+            * LEVEL3 - Security Key MFA for all users.
     :param List[AccountSettingsUserMFAResponse] user_mfa: (optional) List of users
           that are exempted from the MFA requirement of the account.
     :param str session_expiration_in_seconds: (optional) Defines the session
@@ -6212,7 +6496,7 @@ class AccountSettingsEffectiveSection:
                  * TOTP4ALL - For all users
                  * LEVEL1 - Email-based MFA for all users
                  * LEVEL2 - TOTP-based MFA for all users
-                 * LEVEL3 - U2F MFA for all users.
+                 * LEVEL3 - Security Key MFA for all users.
         :param List[AccountSettingsUserMFAResponse] user_mfa: (optional) List of
                users that are exempted from the MFA requirement of the account.
         :param str session_expiration_in_seconds: (optional) Defines the session
@@ -6391,7 +6675,7 @@ class AccountSettingsEffectiveSection:
           * TOTP4ALL - For all users
           * LEVEL1 - Email-based MFA for all users
           * LEVEL2 - TOTP-based MFA for all users
-          * LEVEL3 - U2F MFA for all users.
+          * LEVEL3 - Security Key MFA for all users.
         """
 
         NONE = 'NONE'
@@ -6434,7 +6718,7 @@ class AccountSettingsResponse:
             * TOTP4ALL - For all users
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
-            * LEVEL3 - U2F MFA for all users.
+            * LEVEL3 - Security Key MFA for all users.
     :param str session_expiration_in_seconds: Defines the session expiration in
           seconds for the account. Valid values:
             * Any whole number between between '900' and '86400'
@@ -6515,7 +6799,7 @@ class AccountSettingsResponse:
                  * TOTP4ALL - For all users
                  * LEVEL1 - Email-based MFA for all users
                  * LEVEL2 - TOTP-based MFA for all users
-                 * LEVEL3 - U2F MFA for all users.
+                 * LEVEL3 - Security Key MFA for all users.
         :param str session_expiration_in_seconds: Defines the session expiration in
                seconds for the account. Valid values:
                  * Any whole number between between '900' and '86400'
@@ -6782,7 +7066,7 @@ class AccountSettingsResponse:
           * TOTP4ALL - For all users
           * LEVEL1 - Email-based MFA for all users
           * LEVEL2 - TOTP-based MFA for all users
-          * LEVEL3 - U2F MFA for all users.
+          * LEVEL3 - Security Key MFA for all users.
         """
 
         NONE = 'NONE'
@@ -7241,7 +7525,7 @@ class AccountSettingsUserMFAResponse:
             * TOTP4ALL - For all users
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
-            * LEVEL3 - U2F MFA for all users.
+            * LEVEL3 - Security Key MFA for all users.
     :param str name: (optional) name of the user account.
     :param str user_name: (optional) userName of the user.
     :param str email: (optional) email of the user.
@@ -7269,7 +7553,7 @@ class AccountSettingsUserMFAResponse:
                  * TOTP4ALL - For all users
                  * LEVEL1 - Email-based MFA for all users
                  * LEVEL2 - TOTP-based MFA for all users
-                 * LEVEL3 - U2F MFA for all users.
+                 * LEVEL3 - Security Key MFA for all users.
         :param str name: (optional) name of the user account.
         :param str user_name: (optional) userName of the user.
         :param str email: (optional) email of the user.
@@ -7353,7 +7637,7 @@ class AccountSettingsUserMFAResponse:
           * TOTP4ALL - For all users
           * LEVEL1 - Email-based MFA for all users
           * LEVEL2 - TOTP-based MFA for all users
-          * LEVEL3 - U2F MFA for all users.
+          * LEVEL3 - Security Key MFA for all users.
         """
 
         NONE = 'NONE'
@@ -7759,7 +8043,10 @@ class ApiKey:
     :param str action_when_leaked: (optional) Defines the action to take when API
           key is leaked, valid values are 'none', 'disable' and 'delete'.
     :param str expires_at: (optional) Date and time when the API key becomes
-          invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
+          invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'. **WARNING** An
+          API key will be permanently and irrevocably deleted when both the expires_at and
+          modified_at timestamps are more than ninety (90) days in the past, regardless of
+          the key’s locked status or any other state.
     :param str description: (optional) The optional description of the API key. The
           'description' property is only available if a description was provided during a
           create of an API key.
@@ -7839,6 +8126,9 @@ class ApiKey:
                API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param str expires_at: (optional) Date and time when the API key becomes
                invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
+               **WARNING** An API key will be permanently and irrevocably deleted when
+               both the expires_at and modified_at timestamps are more than ninety (90)
+               days in the past, regardless of the key’s locked status or any other state.
         :param str description: (optional) The optional description of the API key.
                The 'description' property is only available if a description was provided
                during a create of an API key.
@@ -8028,7 +8318,10 @@ class ApiKeyInsideCreateServiceIdRequest:
     :param str action_when_leaked: (optional) Defines the action to take when API
           key is leaked, valid values are 'none', 'disable' and 'delete'.
     :param str expires_at: (optional) Date and time when the API key becomes
-          invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
+          invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'. **WARNING** An
+          API key will be permanently and irrevocably deleted when both the expires_at and
+          modified_at timestamps are more than ninety (90) days in the past, regardless of
+          the key’s locked status or any other state.
     """
 
     def __init__(
@@ -8065,6 +8358,9 @@ class ApiKeyInsideCreateServiceIdRequest:
                API key is leaked, valid values are 'none', 'disable' and 'delete'.
         :param str expires_at: (optional) Date and time when the API key becomes
                invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
+               **WARNING** An API key will be permanently and irrevocably deleted when
+               both the expires_at and modified_at timestamps are more than ninety (90)
+               days in the past, regardless of the key’s locked status or any other state.
         """
         self.name = name
         self.description = description
@@ -9213,7 +9509,7 @@ class IdBasedMfaEnrollment:
             * TOTP4ALL - For all users
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
-            * LEVEL3 - U2F MFA for all users.
+            * LEVEL3 - Security Key MFA for all users.
     :param str trait_user_specific: (optional) MFA trait definitions as follows:
             * NONE - No MFA trait set
             * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
@@ -9221,7 +9517,7 @@ class IdBasedMfaEnrollment:
             * TOTP4ALL - For all users
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
-            * LEVEL3 - U2F MFA for all users.
+            * LEVEL3 - Security Key MFA for all users.
     :param str trait_effective: MFA trait definitions as follows:
             * NONE - No MFA trait set
             * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
@@ -9229,7 +9525,7 @@ class IdBasedMfaEnrollment:
             * TOTP4ALL - For all users
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
-            * LEVEL3 - U2F MFA for all users.
+            * LEVEL3 - Security Key MFA for all users.
     :param bool complies: The enrollment complies to the effective requirement.
     :param str comply_state: (optional) Defines comply state for the account. Valid
           values:
@@ -9259,7 +9555,7 @@ class IdBasedMfaEnrollment:
                  * TOTP4ALL - For all users
                  * LEVEL1 - Email-based MFA for all users
                  * LEVEL2 - TOTP-based MFA for all users
-                 * LEVEL3 - U2F MFA for all users.
+                 * LEVEL3 - Security Key MFA for all users.
         :param str trait_effective: MFA trait definitions as follows:
                  * NONE - No MFA trait set
                  * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
@@ -9267,7 +9563,7 @@ class IdBasedMfaEnrollment:
                  * TOTP4ALL - For all users
                  * LEVEL1 - Email-based MFA for all users
                  * LEVEL2 - TOTP-based MFA for all users
-                 * LEVEL3 - U2F MFA for all users.
+                 * LEVEL3 - Security Key MFA for all users.
         :param bool complies: The enrollment complies to the effective requirement.
         :param str trait_user_specific: (optional) MFA trait definitions as
                follows:
@@ -9277,7 +9573,7 @@ class IdBasedMfaEnrollment:
                  * TOTP4ALL - For all users
                  * LEVEL1 - Email-based MFA for all users
                  * LEVEL2 - TOTP-based MFA for all users
-                 * LEVEL3 - U2F MFA for all users.
+                 * LEVEL3 - Security Key MFA for all users.
         :param str comply_state: (optional) Defines comply state for the account.
                Valid values:
                  * NO - User does not comply in the given account.
@@ -9361,7 +9657,7 @@ class IdBasedMfaEnrollment:
           * TOTP4ALL - For all users
           * LEVEL1 - Email-based MFA for all users
           * LEVEL2 - TOTP-based MFA for all users
-          * LEVEL3 - U2F MFA for all users.
+          * LEVEL3 - Security Key MFA for all users.
         """
 
         NONE = 'NONE'
@@ -9381,7 +9677,7 @@ class IdBasedMfaEnrollment:
           * TOTP4ALL - For all users
           * LEVEL1 - Email-based MFA for all users
           * LEVEL2 - TOTP-based MFA for all users
-          * LEVEL3 - U2F MFA for all users.
+          * LEVEL3 - Security Key MFA for all users.
         """
 
         NONE = 'NONE'
@@ -9401,7 +9697,7 @@ class IdBasedMfaEnrollment:
           * TOTP4ALL - For all users
           * LEVEL1 - Email-based MFA for all users
           * LEVEL2 - TOTP-based MFA for all users
-          * LEVEL3 - U2F MFA for all users.
+          * LEVEL3 - Security Key MFA for all users.
         """
 
         NONE = 'NONE'
@@ -9425,6 +9721,858 @@ class IdBasedMfaEnrollment:
         NO = 'NO'
         ACCOUNT = 'ACCOUNT'
         CROSS_ACCOUNT = 'CROSS_ACCOUNT'
+
+
+class IdentityCount:
+    """
+    API key count for a specific identity.
+
+    :param str iam_id: (optional) IAM identifier of the identity.
+    :param int count: (optional) Number of API keys for the identity.
+    """
+
+    def __init__(
+        self,
+        *,
+        iam_id: Optional[str] = None,
+        count: Optional[int] = None,
+    ) -> None:
+        """
+        Initialize a IdentityCount object.
+
+        :param str iam_id: (optional) IAM identifier of the identity.
+        :param int count: (optional) Number of API keys for the identity.
+        """
+        self.iam_id = iam_id
+        self.count = count
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityCount':
+        """Initialize a IdentityCount object from a json dictionary."""
+        args = {}
+        if (iam_id := _dict.get('iam_id')) is not None:
+            args['iam_id'] = iam_id
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityCount object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'iam_id') and self.iam_id is not None:
+            _dict['iam_id'] = self.iam_id
+        if hasattr(self, 'count') and self.count is not None:
+            _dict['count'] = self.count
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityCount object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityCount') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityCount') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class IdentityLimitsUsageResponse:
+    """
+    Response body format for identity limits usage.
+
+    :param LimitCount serviceid_groups: (optional) Limit and current usage count for
+          a resource.
+    :param IdentityLimitsUsageResponseServiceidsPerGroup serviceids_per_group:
+          (optional) Usage count for service IDs per group.
+    :param LimitCount profiles: (optional) Limit and current usage count for a
+          resource.
+    :param IdentityLimitsUsageResponseApikeysPerIdentity apikeys_per_identity:
+          (optional) Usage count for API keys per identity.
+    :param LimitCount profile_templates: (optional) Limit and current usage count
+          for a resource.
+    :param LimitCount account_settings_templates: (optional) Limit and current usage
+          count for a resource.
+    :param IdentityLimitsUsageResponseTemplateVersionsPerTemplate
+          template_versions_per_template: (optional) Usage count for template versions per
+          template.
+    :param LimitCount idps: (optional) Limit and current usage count for a resource.
+    :param IdentityLimitsUsageResponseClaimRulesPerGroup claim_rules_per_group:
+          (optional) Usage count for claim rules per access group.
+    :param IdentityLimitsUsageResponseClaimRulesPerProfile claim_rules_per_profile:
+          (optional) Usage count for claim rules per profile.
+    :param LimitCount cr_links: (optional) Limit and current usage count for a
+          resource.
+    :param IdentityLimitsUsageResponseCrLinksPerProfile cr_links_per_profile:
+          (optional) Usage count for compute resource links per profile.
+    :param LimitCount cr_rules: (optional) Limit and current usage count for a
+          resource.
+    :param IdentityLimitsUsageResponseCrRulesPerProfile cr_rules_per_profile:
+          (optional) Usage count for compute resource rules per profile.
+    """
+
+    def __init__(
+        self,
+        *,
+        serviceid_groups: Optional['LimitCount'] = None,
+        serviceids_per_group: Optional['IdentityLimitsUsageResponseServiceidsPerGroup'] = None,
+        profiles: Optional['LimitCount'] = None,
+        apikeys_per_identity: Optional['IdentityLimitsUsageResponseApikeysPerIdentity'] = None,
+        profile_templates: Optional['LimitCount'] = None,
+        account_settings_templates: Optional['LimitCount'] = None,
+        template_versions_per_template: Optional['IdentityLimitsUsageResponseTemplateVersionsPerTemplate'] = None,
+        idps: Optional['LimitCount'] = None,
+        claim_rules_per_group: Optional['IdentityLimitsUsageResponseClaimRulesPerGroup'] = None,
+        claim_rules_per_profile: Optional['IdentityLimitsUsageResponseClaimRulesPerProfile'] = None,
+        cr_links: Optional['LimitCount'] = None,
+        cr_links_per_profile: Optional['IdentityLimitsUsageResponseCrLinksPerProfile'] = None,
+        cr_rules: Optional['LimitCount'] = None,
+        cr_rules_per_profile: Optional['IdentityLimitsUsageResponseCrRulesPerProfile'] = None,
+    ) -> None:
+        """
+        Initialize a IdentityLimitsUsageResponse object.
+
+        :param LimitCount serviceid_groups: (optional) Limit and current usage
+               count for a resource.
+        :param IdentityLimitsUsageResponseServiceidsPerGroup serviceids_per_group:
+               (optional) Usage count for service IDs per group.
+        :param LimitCount profiles: (optional) Limit and current usage count for a
+               resource.
+        :param IdentityLimitsUsageResponseApikeysPerIdentity apikeys_per_identity:
+               (optional) Usage count for API keys per identity.
+        :param LimitCount profile_templates: (optional) Limit and current usage
+               count for a resource.
+        :param LimitCount account_settings_templates: (optional) Limit and current
+               usage count for a resource.
+        :param IdentityLimitsUsageResponseTemplateVersionsPerTemplate
+               template_versions_per_template: (optional) Usage count for template
+               versions per template.
+        :param LimitCount idps: (optional) Limit and current usage count for a
+               resource.
+        :param IdentityLimitsUsageResponseClaimRulesPerGroup claim_rules_per_group:
+               (optional) Usage count for claim rules per access group.
+        :param IdentityLimitsUsageResponseClaimRulesPerProfile
+               claim_rules_per_profile: (optional) Usage count for claim rules per
+               profile.
+        :param LimitCount cr_links: (optional) Limit and current usage count for a
+               resource.
+        :param IdentityLimitsUsageResponseCrLinksPerProfile cr_links_per_profile:
+               (optional) Usage count for compute resource links per profile.
+        :param LimitCount cr_rules: (optional) Limit and current usage count for a
+               resource.
+        :param IdentityLimitsUsageResponseCrRulesPerProfile cr_rules_per_profile:
+               (optional) Usage count for compute resource rules per profile.
+        """
+        self.serviceid_groups = serviceid_groups
+        self.serviceids_per_group = serviceids_per_group
+        self.profiles = profiles
+        self.apikeys_per_identity = apikeys_per_identity
+        self.profile_templates = profile_templates
+        self.account_settings_templates = account_settings_templates
+        self.template_versions_per_template = template_versions_per_template
+        self.idps = idps
+        self.claim_rules_per_group = claim_rules_per_group
+        self.claim_rules_per_profile = claim_rules_per_profile
+        self.cr_links = cr_links
+        self.cr_links_per_profile = cr_links_per_profile
+        self.cr_rules = cr_rules
+        self.cr_rules_per_profile = cr_rules_per_profile
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityLimitsUsageResponse':
+        """Initialize a IdentityLimitsUsageResponse object from a json dictionary."""
+        args = {}
+        if (serviceid_groups := _dict.get('serviceid_groups')) is not None:
+            args['serviceid_groups'] = LimitCount.from_dict(serviceid_groups)
+        if (serviceids_per_group := _dict.get('serviceids_per_group')) is not None:
+            args['serviceids_per_group'] = IdentityLimitsUsageResponseServiceidsPerGroup.from_dict(serviceids_per_group)
+        if (profiles := _dict.get('profiles')) is not None:
+            args['profiles'] = LimitCount.from_dict(profiles)
+        if (apikeys_per_identity := _dict.get('apikeys_per_identity')) is not None:
+            args['apikeys_per_identity'] = IdentityLimitsUsageResponseApikeysPerIdentity.from_dict(apikeys_per_identity)
+        if (profile_templates := _dict.get('profile_templates')) is not None:
+            args['profile_templates'] = LimitCount.from_dict(profile_templates)
+        if (account_settings_templates := _dict.get('account_settings_templates')) is not None:
+            args['account_settings_templates'] = LimitCount.from_dict(account_settings_templates)
+        if (template_versions_per_template := _dict.get('template_versions_per_template')) is not None:
+            args['template_versions_per_template'] = IdentityLimitsUsageResponseTemplateVersionsPerTemplate.from_dict(
+                template_versions_per_template
+            )
+        if (idps := _dict.get('idps')) is not None:
+            args['idps'] = LimitCount.from_dict(idps)
+        if (claim_rules_per_group := _dict.get('claim_rules_per_group')) is not None:
+            args['claim_rules_per_group'] = IdentityLimitsUsageResponseClaimRulesPerGroup.from_dict(
+                claim_rules_per_group
+            )
+        if (claim_rules_per_profile := _dict.get('claim_rules_per_profile')) is not None:
+            args['claim_rules_per_profile'] = IdentityLimitsUsageResponseClaimRulesPerProfile.from_dict(
+                claim_rules_per_profile
+            )
+        if (cr_links := _dict.get('cr_links')) is not None:
+            args['cr_links'] = LimitCount.from_dict(cr_links)
+        if (cr_links_per_profile := _dict.get('cr_links_per_profile')) is not None:
+            args['cr_links_per_profile'] = IdentityLimitsUsageResponseCrLinksPerProfile.from_dict(cr_links_per_profile)
+        if (cr_rules := _dict.get('cr_rules')) is not None:
+            args['cr_rules'] = LimitCount.from_dict(cr_rules)
+        if (cr_rules_per_profile := _dict.get('cr_rules_per_profile')) is not None:
+            args['cr_rules_per_profile'] = IdentityLimitsUsageResponseCrRulesPerProfile.from_dict(cr_rules_per_profile)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityLimitsUsageResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'serviceid_groups') and self.serviceid_groups is not None:
+            if isinstance(self.serviceid_groups, dict):
+                _dict['serviceid_groups'] = self.serviceid_groups
+            else:
+                _dict['serviceid_groups'] = self.serviceid_groups.to_dict()
+        if hasattr(self, 'serviceids_per_group') and self.serviceids_per_group is not None:
+            if isinstance(self.serviceids_per_group, dict):
+                _dict['serviceids_per_group'] = self.serviceids_per_group
+            else:
+                _dict['serviceids_per_group'] = self.serviceids_per_group.to_dict()
+        if hasattr(self, 'profiles') and self.profiles is not None:
+            if isinstance(self.profiles, dict):
+                _dict['profiles'] = self.profiles
+            else:
+                _dict['profiles'] = self.profiles.to_dict()
+        if hasattr(self, 'apikeys_per_identity') and self.apikeys_per_identity is not None:
+            if isinstance(self.apikeys_per_identity, dict):
+                _dict['apikeys_per_identity'] = self.apikeys_per_identity
+            else:
+                _dict['apikeys_per_identity'] = self.apikeys_per_identity.to_dict()
+        if hasattr(self, 'profile_templates') and self.profile_templates is not None:
+            if isinstance(self.profile_templates, dict):
+                _dict['profile_templates'] = self.profile_templates
+            else:
+                _dict['profile_templates'] = self.profile_templates.to_dict()
+        if hasattr(self, 'account_settings_templates') and self.account_settings_templates is not None:
+            if isinstance(self.account_settings_templates, dict):
+                _dict['account_settings_templates'] = self.account_settings_templates
+            else:
+                _dict['account_settings_templates'] = self.account_settings_templates.to_dict()
+        if hasattr(self, 'template_versions_per_template') and self.template_versions_per_template is not None:
+            if isinstance(self.template_versions_per_template, dict):
+                _dict['template_versions_per_template'] = self.template_versions_per_template
+            else:
+                _dict['template_versions_per_template'] = self.template_versions_per_template.to_dict()
+        if hasattr(self, 'idps') and self.idps is not None:
+            if isinstance(self.idps, dict):
+                _dict['idps'] = self.idps
+            else:
+                _dict['idps'] = self.idps.to_dict()
+        if hasattr(self, 'claim_rules_per_group') and self.claim_rules_per_group is not None:
+            if isinstance(self.claim_rules_per_group, dict):
+                _dict['claim_rules_per_group'] = self.claim_rules_per_group
+            else:
+                _dict['claim_rules_per_group'] = self.claim_rules_per_group.to_dict()
+        if hasattr(self, 'claim_rules_per_profile') and self.claim_rules_per_profile is not None:
+            if isinstance(self.claim_rules_per_profile, dict):
+                _dict['claim_rules_per_profile'] = self.claim_rules_per_profile
+            else:
+                _dict['claim_rules_per_profile'] = self.claim_rules_per_profile.to_dict()
+        if hasattr(self, 'cr_links') and self.cr_links is not None:
+            if isinstance(self.cr_links, dict):
+                _dict['cr_links'] = self.cr_links
+            else:
+                _dict['cr_links'] = self.cr_links.to_dict()
+        if hasattr(self, 'cr_links_per_profile') and self.cr_links_per_profile is not None:
+            if isinstance(self.cr_links_per_profile, dict):
+                _dict['cr_links_per_profile'] = self.cr_links_per_profile
+            else:
+                _dict['cr_links_per_profile'] = self.cr_links_per_profile.to_dict()
+        if hasattr(self, 'cr_rules') and self.cr_rules is not None:
+            if isinstance(self.cr_rules, dict):
+                _dict['cr_rules'] = self.cr_rules
+            else:
+                _dict['cr_rules'] = self.cr_rules.to_dict()
+        if hasattr(self, 'cr_rules_per_profile') and self.cr_rules_per_profile is not None:
+            if isinstance(self.cr_rules_per_profile, dict):
+                _dict['cr_rules_per_profile'] = self.cr_rules_per_profile
+            else:
+                _dict['cr_rules_per_profile'] = self.cr_rules_per_profile.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityLimitsUsageResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityLimitsUsageResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityLimitsUsageResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class IdentityLimitsUsageResponseApikeysPerIdentity:
+    """
+    Usage count for API keys per identity.
+
+    :param int limit: Maximum allowed API keys per identity.
+    :param List[IdentityCount] identities: (optional) List of identities with their
+          API key usage counts.
+    """
+
+    def __init__(
+        self,
+        limit: int,
+        *,
+        identities: Optional[List['IdentityCount']] = None,
+    ) -> None:
+        """
+        Initialize a IdentityLimitsUsageResponseApikeysPerIdentity object.
+
+        :param int limit: Maximum allowed API keys per identity.
+        :param List[IdentityCount] identities: (optional) List of identities with
+               their API key usage counts.
+        """
+        self.limit = limit
+        self.identities = identities
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityLimitsUsageResponseApikeysPerIdentity':
+        """Initialize a IdentityLimitsUsageResponseApikeysPerIdentity object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        else:
+            raise ValueError(
+                'Required property \'limit\' not present in IdentityLimitsUsageResponseApikeysPerIdentity JSON'
+            )
+        if (identities := _dict.get('identities')) is not None:
+            args['identities'] = [IdentityCount.from_dict(v) for v in identities]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityLimitsUsageResponseApikeysPerIdentity object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'identities') and self.identities is not None:
+            identities_list = []
+            for v in self.identities:
+                if isinstance(v, dict):
+                    identities_list.append(v)
+                else:
+                    identities_list.append(v.to_dict())
+            _dict['identities'] = identities_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityLimitsUsageResponseApikeysPerIdentity object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityLimitsUsageResponseApikeysPerIdentity') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityLimitsUsageResponseApikeysPerIdentity') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class IdentityLimitsUsageResponseClaimRulesPerGroup:
+    """
+    Usage count for claim rules per access group.
+
+    :param int limit: Maximum allowed claim rules per access group.
+    :param List[AccessGroupCount] access_groups: (optional) List of access groups
+          with their claim rules usage counts.
+    """
+
+    def __init__(
+        self,
+        limit: int,
+        *,
+        access_groups: Optional[List['AccessGroupCount']] = None,
+    ) -> None:
+        """
+        Initialize a IdentityLimitsUsageResponseClaimRulesPerGroup object.
+
+        :param int limit: Maximum allowed claim rules per access group.
+        :param List[AccessGroupCount] access_groups: (optional) List of access
+               groups with their claim rules usage counts.
+        """
+        self.limit = limit
+        self.access_groups = access_groups
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityLimitsUsageResponseClaimRulesPerGroup':
+        """Initialize a IdentityLimitsUsageResponseClaimRulesPerGroup object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        else:
+            raise ValueError(
+                'Required property \'limit\' not present in IdentityLimitsUsageResponseClaimRulesPerGroup JSON'
+            )
+        if (access_groups := _dict.get('access_groups')) is not None:
+            args['access_groups'] = [AccessGroupCount.from_dict(v) for v in access_groups]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityLimitsUsageResponseClaimRulesPerGroup object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'access_groups') and self.access_groups is not None:
+            access_groups_list = []
+            for v in self.access_groups:
+                if isinstance(v, dict):
+                    access_groups_list.append(v)
+                else:
+                    access_groups_list.append(v.to_dict())
+            _dict['access_groups'] = access_groups_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityLimitsUsageResponseClaimRulesPerGroup object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityLimitsUsageResponseClaimRulesPerGroup') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityLimitsUsageResponseClaimRulesPerGroup') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class IdentityLimitsUsageResponseClaimRulesPerProfile:
+    """
+    Usage count for claim rules per profile.
+
+    :param int limit: Maximum allowed claim rules per profile.
+    :param List[ProfileCount] profiles: (optional) List of profiles with their claim
+          rules usage counts.
+    """
+
+    def __init__(
+        self,
+        limit: int,
+        *,
+        profiles: Optional[List['ProfileCount']] = None,
+    ) -> None:
+        """
+        Initialize a IdentityLimitsUsageResponseClaimRulesPerProfile object.
+
+        :param int limit: Maximum allowed claim rules per profile.
+        :param List[ProfileCount] profiles: (optional) List of profiles with their
+               claim rules usage counts.
+        """
+        self.limit = limit
+        self.profiles = profiles
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityLimitsUsageResponseClaimRulesPerProfile':
+        """Initialize a IdentityLimitsUsageResponseClaimRulesPerProfile object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        else:
+            raise ValueError(
+                'Required property \'limit\' not present in IdentityLimitsUsageResponseClaimRulesPerProfile JSON'
+            )
+        if (profiles := _dict.get('profiles')) is not None:
+            args['profiles'] = [ProfileCount.from_dict(v) for v in profiles]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityLimitsUsageResponseClaimRulesPerProfile object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'profiles') and self.profiles is not None:
+            profiles_list = []
+            for v in self.profiles:
+                if isinstance(v, dict):
+                    profiles_list.append(v)
+                else:
+                    profiles_list.append(v.to_dict())
+            _dict['profiles'] = profiles_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityLimitsUsageResponseClaimRulesPerProfile object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityLimitsUsageResponseClaimRulesPerProfile') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityLimitsUsageResponseClaimRulesPerProfile') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class IdentityLimitsUsageResponseCrLinksPerProfile:
+    """
+    Usage count for compute resource links per profile.
+
+    :param int limit: Maximum allowed compute resource links per profile.
+    :param List[ProfileCount] profiles: (optional) List of profiles with their
+          compute resource links usage counts.
+    """
+
+    def __init__(
+        self,
+        limit: int,
+        *,
+        profiles: Optional[List['ProfileCount']] = None,
+    ) -> None:
+        """
+        Initialize a IdentityLimitsUsageResponseCrLinksPerProfile object.
+
+        :param int limit: Maximum allowed compute resource links per profile.
+        :param List[ProfileCount] profiles: (optional) List of profiles with their
+               compute resource links usage counts.
+        """
+        self.limit = limit
+        self.profiles = profiles
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityLimitsUsageResponseCrLinksPerProfile':
+        """Initialize a IdentityLimitsUsageResponseCrLinksPerProfile object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        else:
+            raise ValueError(
+                'Required property \'limit\' not present in IdentityLimitsUsageResponseCrLinksPerProfile JSON'
+            )
+        if (profiles := _dict.get('profiles')) is not None:
+            args['profiles'] = [ProfileCount.from_dict(v) for v in profiles]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityLimitsUsageResponseCrLinksPerProfile object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'profiles') and self.profiles is not None:
+            profiles_list = []
+            for v in self.profiles:
+                if isinstance(v, dict):
+                    profiles_list.append(v)
+                else:
+                    profiles_list.append(v.to_dict())
+            _dict['profiles'] = profiles_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityLimitsUsageResponseCrLinksPerProfile object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityLimitsUsageResponseCrLinksPerProfile') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityLimitsUsageResponseCrLinksPerProfile') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class IdentityLimitsUsageResponseCrRulesPerProfile:
+    """
+    Usage count for compute resource rules per profile.
+
+    :param int limit: Maximum allowed compute resource rules per profile.
+    :param List[ProfileCount] profiles: (optional) List of profiles with their
+          compute resource rules usage counts.
+    """
+
+    def __init__(
+        self,
+        limit: int,
+        *,
+        profiles: Optional[List['ProfileCount']] = None,
+    ) -> None:
+        """
+        Initialize a IdentityLimitsUsageResponseCrRulesPerProfile object.
+
+        :param int limit: Maximum allowed compute resource rules per profile.
+        :param List[ProfileCount] profiles: (optional) List of profiles with their
+               compute resource rules usage counts.
+        """
+        self.limit = limit
+        self.profiles = profiles
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityLimitsUsageResponseCrRulesPerProfile':
+        """Initialize a IdentityLimitsUsageResponseCrRulesPerProfile object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        else:
+            raise ValueError(
+                'Required property \'limit\' not present in IdentityLimitsUsageResponseCrRulesPerProfile JSON'
+            )
+        if (profiles := _dict.get('profiles')) is not None:
+            args['profiles'] = [ProfileCount.from_dict(v) for v in profiles]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityLimitsUsageResponseCrRulesPerProfile object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'profiles') and self.profiles is not None:
+            profiles_list = []
+            for v in self.profiles:
+                if isinstance(v, dict):
+                    profiles_list.append(v)
+                else:
+                    profiles_list.append(v.to_dict())
+            _dict['profiles'] = profiles_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityLimitsUsageResponseCrRulesPerProfile object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityLimitsUsageResponseCrRulesPerProfile') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityLimitsUsageResponseCrRulesPerProfile') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class IdentityLimitsUsageResponseServiceidsPerGroup:
+    """
+    Usage count for service IDs per group.
+
+    :param int limit: Maximum allowed service IDs per group.
+    :param List[ServiceIdGroupCount] serviceid_groups: (optional) List of service ID
+          groups with their usage counts.
+    """
+
+    def __init__(
+        self,
+        limit: int,
+        *,
+        serviceid_groups: Optional[List['ServiceIdGroupCount']] = None,
+    ) -> None:
+        """
+        Initialize a IdentityLimitsUsageResponseServiceidsPerGroup object.
+
+        :param int limit: Maximum allowed service IDs per group.
+        :param List[ServiceIdGroupCount] serviceid_groups: (optional) List of
+               service ID groups with their usage counts.
+        """
+        self.limit = limit
+        self.serviceid_groups = serviceid_groups
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityLimitsUsageResponseServiceidsPerGroup':
+        """Initialize a IdentityLimitsUsageResponseServiceidsPerGroup object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        else:
+            raise ValueError(
+                'Required property \'limit\' not present in IdentityLimitsUsageResponseServiceidsPerGroup JSON'
+            )
+        if (serviceid_groups := _dict.get('serviceid_groups')) is not None:
+            args['serviceid_groups'] = [ServiceIdGroupCount.from_dict(v) for v in serviceid_groups]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityLimitsUsageResponseServiceidsPerGroup object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'serviceid_groups') and self.serviceid_groups is not None:
+            serviceid_groups_list = []
+            for v in self.serviceid_groups:
+                if isinstance(v, dict):
+                    serviceid_groups_list.append(v)
+                else:
+                    serviceid_groups_list.append(v.to_dict())
+            _dict['serviceid_groups'] = serviceid_groups_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityLimitsUsageResponseServiceidsPerGroup object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityLimitsUsageResponseServiceidsPerGroup') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityLimitsUsageResponseServiceidsPerGroup') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class IdentityLimitsUsageResponseTemplateVersionsPerTemplate:
+    """
+    Usage count for template versions per template.
+
+    :param int limit: Maximum allowed versions per template.
+    :param List[TemplateCount] templates: (optional) List of templates with their
+          version usage counts.
+    """
+
+    def __init__(
+        self,
+        limit: int,
+        *,
+        templates: Optional[List['TemplateCount']] = None,
+    ) -> None:
+        """
+        Initialize a IdentityLimitsUsageResponseTemplateVersionsPerTemplate object.
+
+        :param int limit: Maximum allowed versions per template.
+        :param List[TemplateCount] templates: (optional) List of templates with
+               their version usage counts.
+        """
+        self.limit = limit
+        self.templates = templates
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdentityLimitsUsageResponseTemplateVersionsPerTemplate':
+        """Initialize a IdentityLimitsUsageResponseTemplateVersionsPerTemplate object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        else:
+            raise ValueError(
+                'Required property \'limit\' not present in IdentityLimitsUsageResponseTemplateVersionsPerTemplate JSON'
+            )
+        if (templates := _dict.get('templates')) is not None:
+            args['templates'] = [TemplateCount.from_dict(v) for v in templates]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdentityLimitsUsageResponseTemplateVersionsPerTemplate object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'templates') and self.templates is not None:
+            templates_list = []
+            for v in self.templates:
+                if isinstance(v, dict):
+                    templates_list.append(v)
+                else:
+                    templates_list.append(v.to_dict())
+            _dict['templates'] = templates_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdentityLimitsUsageResponseTemplateVersionsPerTemplate object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdentityLimitsUsageResponseTemplateVersionsPerTemplate') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdentityLimitsUsageResponseTemplateVersionsPerTemplate') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class IdentityPreferenceResponse:
@@ -9599,6 +10747,74 @@ class IdentityPreferencesResponse:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'IdentityPreferencesResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class LimitCount:
+    """
+    Limit and current usage count for a resource.
+
+    :param int limit: Maximum allowed value for the resource.
+    :param int count: (optional) Current usage count for the resource.
+    """
+
+    def __init__(
+        self,
+        limit: int,
+        *,
+        count: Optional[int] = None,
+    ) -> None:
+        """
+        Initialize a LimitCount object.
+
+        :param int limit: Maximum allowed value for the resource.
+        :param int count: (optional) Current usage count for the resource.
+        """
+        self.limit = limit
+        self.count = count
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'LimitCount':
+        """Initialize a LimitCount object from a json dictionary."""
+        args = {}
+        if (limit := _dict.get('limit')) is not None:
+            args['limit'] = limit
+        else:
+            raise ValueError('Required property \'limit\' not present in LimitCount JSON')
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a LimitCount object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'count') and self.count is not None:
+            _dict['count'] = self.count
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this LimitCount object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'LimitCount') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'LimitCount') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -10065,6 +11281,73 @@ class ProfileClaimRuleList:
         return not self == other
 
 
+class ProfileCount:
+    """
+    Resource count for a specific profile.
+
+    :param str profile_id: (optional) Profile identifier.
+    :param int count: (optional) Number of resources associated with the profile.
+    """
+
+    def __init__(
+        self,
+        *,
+        profile_id: Optional[str] = None,
+        count: Optional[int] = None,
+    ) -> None:
+        """
+        Initialize a ProfileCount object.
+
+        :param str profile_id: (optional) Profile identifier.
+        :param int count: (optional) Number of resources associated with the
+               profile.
+        """
+        self.profile_id = profile_id
+        self.count = count
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ProfileCount':
+        """Initialize a ProfileCount object from a json dictionary."""
+        args = {}
+        if (profile_id := _dict.get('profile_id')) is not None:
+            args['profile_id'] = profile_id
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ProfileCount object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'profile_id') and self.profile_id is not None:
+            _dict['profile_id'] = self.profile_id
+        if hasattr(self, 'count') and self.count is not None:
+            _dict['count'] = self.count
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ProfileCount object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ProfileCount') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ProfileCount') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class ProfileIdentitiesResponse:
     """
     ProfileIdentitiesResponse.
@@ -10388,6 +11671,9 @@ class ProfileLink:
     :param str name: (optional) Optional name of the Link.
     :param str cr_type: The compute resource type. Valid values are VSI, BMS,
           IKS_SA, ROKS_SA, CE.
+    :param bool is_cross_account: (optional) Flag to indicate that the link provides
+          cross account access. If not provided then the account scope of the CRN must
+          match the Profile's account.
     :param ProfileLinkLink link:
     """
 
@@ -10401,6 +11687,7 @@ class ProfileLink:
         link: 'ProfileLinkLink',
         *,
         name: Optional[str] = None,
+        is_cross_account: Optional[bool] = None,
     ) -> None:
         """
         Initialize a ProfileLink object.
@@ -10415,6 +11702,9 @@ class ProfileLink:
                IKS_SA, ROKS_SA, CE.
         :param ProfileLinkLink link:
         :param str name: (optional) Optional name of the Link.
+        :param bool is_cross_account: (optional) Flag to indicate that the link
+               provides cross account access. If not provided then the account scope of
+               the CRN must match the Profile's account.
         """
         self.id = id
         self.entity_tag = entity_tag
@@ -10422,6 +11712,7 @@ class ProfileLink:
         self.modified_at = modified_at
         self.name = name
         self.cr_type = cr_type
+        self.is_cross_account = is_cross_account
         self.link = link
 
     @classmethod
@@ -10450,6 +11741,8 @@ class ProfileLink:
             args['cr_type'] = cr_type
         else:
             raise ValueError('Required property \'cr_type\' not present in ProfileLink JSON')
+        if (is_cross_account := _dict.get('is_cross_account')) is not None:
+            args['is_cross_account'] = is_cross_account
         if (link := _dict.get('link')) is not None:
             args['link'] = ProfileLinkLink.from_dict(link)
         else:
@@ -10476,6 +11769,8 @@ class ProfileLink:
             _dict['name'] = self.name
         if hasattr(self, 'cr_type') and self.cr_type is not None:
             _dict['cr_type'] = self.cr_type
+        if hasattr(self, 'is_cross_account') and self.is_cross_account is not None:
+            _dict['is_cross_account'] = self.is_cross_account
         if hasattr(self, 'link') and self.link is not None:
             if isinstance(self.link, dict):
                 _dict['link'] = self.link
@@ -11523,6 +12818,72 @@ class ServiceIdGroup:
         return not self == other
 
 
+class ServiceIdGroupCount:
+    """
+    Service ID count for a specific group.
+
+    :param str group_id: (optional) Service ID group identifier.
+    :param int count: (optional) Number of service IDs in the group.
+    """
+
+    def __init__(
+        self,
+        *,
+        group_id: Optional[str] = None,
+        count: Optional[int] = None,
+    ) -> None:
+        """
+        Initialize a ServiceIdGroupCount object.
+
+        :param str group_id: (optional) Service ID group identifier.
+        :param int count: (optional) Number of service IDs in the group.
+        """
+        self.group_id = group_id
+        self.count = count
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ServiceIdGroupCount':
+        """Initialize a ServiceIdGroupCount object from a json dictionary."""
+        args = {}
+        if (group_id := _dict.get('group_id')) is not None:
+            args['group_id'] = group_id
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ServiceIdGroupCount object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'group_id') and self.group_id is not None:
+            _dict['group_id'] = self.group_id
+        if hasattr(self, 'count') and self.count is not None:
+            _dict['count'] = self.count
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ServiceIdGroupCount object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ServiceIdGroupCount') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ServiceIdGroupCount') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class ServiceIdGroupList:
     """
     ServiceIdGroupList.
@@ -11746,7 +13107,7 @@ class TemplateAccountSettings:
             * TOTP4ALL - For all users
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
-            * LEVEL3 - U2F MFA for all users.
+            * LEVEL3 - Security Key MFA for all users.
     :param List[UserMfa] user_mfa: (optional) List of users that are exempted from
           the MFA requirement of the account.
     :param str session_expiration_in_seconds: (optional) Defines the session
@@ -11822,7 +13183,7 @@ class TemplateAccountSettings:
                  * TOTP4ALL - For all users
                  * LEVEL1 - Email-based MFA for all users
                  * LEVEL2 - TOTP-based MFA for all users
-                 * LEVEL3 - U2F MFA for all users.
+                 * LEVEL3 - Security Key MFA for all users.
         :param List[UserMfa] user_mfa: (optional) List of users that are exempted
                from the MFA requirement of the account.
         :param str session_expiration_in_seconds: (optional) Defines the session
@@ -12006,7 +13367,7 @@ class TemplateAccountSettings:
           * TOTP4ALL - For all users
           * LEVEL1 - Email-based MFA for all users
           * LEVEL2 - TOTP-based MFA for all users
-          * LEVEL3 - U2F MFA for all users.
+          * LEVEL3 - Security Key MFA for all users.
         """
 
         NONE = 'NONE'
@@ -12822,6 +14183,72 @@ class TemplateAssignmentResponseResourceDetail:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'TemplateAssignmentResponseResourceDetail') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateCount:
+    """
+    Version count for a specific template.
+
+    :param str template_id: (optional) Template identifier.
+    :param int count: (optional) Number of versions for the template.
+    """
+
+    def __init__(
+        self,
+        *,
+        template_id: Optional[str] = None,
+        count: Optional[int] = None,
+    ) -> None:
+        """
+        Initialize a TemplateCount object.
+
+        :param str template_id: (optional) Template identifier.
+        :param int count: (optional) Number of versions for the template.
+        """
+        self.template_id = template_id
+        self.count = count
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateCount':
+        """Initialize a TemplateCount object from a json dictionary."""
+        args = {}
+        if (template_id := _dict.get('template_id')) is not None:
+            args['template_id'] = template_id
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateCount object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template_id') and self.template_id is not None:
+            _dict['template_id'] = self.template_id
+        if hasattr(self, 'count') and self.count is not None:
+            _dict['count'] = self.count
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateCount object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateCount') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateCount') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -14033,7 +15460,7 @@ class UserMfa:
             * TOTP4ALL - For all users
             * LEVEL1 - Email-based MFA for all users
             * LEVEL2 - TOTP-based MFA for all users
-            * LEVEL3 - U2F MFA for all users.
+            * LEVEL3 - Security Key MFA for all users.
     """
 
     def __init__(
@@ -14053,7 +15480,7 @@ class UserMfa:
                  * TOTP4ALL - For all users
                  * LEVEL1 - Email-based MFA for all users
                  * LEVEL2 - TOTP-based MFA for all users
-                 * LEVEL3 - U2F MFA for all users.
+                 * LEVEL3 - Security Key MFA for all users.
         """
         self.iam_id = iam_id
         self.mfa = mfa
@@ -14109,7 +15536,7 @@ class UserMfa:
           * TOTP4ALL - For all users
           * LEVEL1 - Email-based MFA for all users
           * LEVEL2 - TOTP-based MFA for all users
-          * LEVEL3 - U2F MFA for all users.
+          * LEVEL3 - Security Key MFA for all users.
         """
 
         NONE = 'NONE'

@@ -2082,6 +2082,58 @@ class TestIamIdentityV1Examples:
         except ApiException as e:
             pytest.fail(str(e))
 
+    @needscredentials
+    def test_get_account_limits_example(self):
+        """
+        get_account_limits request example
+        """
+        try:
+            print('\nget_account_limits() result:')
+
+            # begin-getAccountLimits
+
+            response = iam_identity_service.get_account_limits(
+                account_id=account_id,
+            )
+            identity_limits_usage_response = response.get_result()
+
+            print(json.dumps(identity_limits_usage_response, indent=2))
+
+            # end-getAccountLimits
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_bulk_list_account_entity_consumption_example(self):
+        """
+        bulk_list_account_entity_consumption request example
+        """
+        try:
+            print('\nbulk_list_account_entity_consumption() result:')
+
+            # begin-bulkListAccountEntityConsumption
+
+            response = iam_identity_service.bulk_list_account_entity_consumption(
+                account_id=account_id,
+                serviceid_groups=True,
+                serviceids_per_group=['ServiceIdGroup-12345678-1234-1234-1234-123456789abc'],
+                profiles=True,
+                apikeys_per_identity=['iam-ServiceId-12345678-1234-1234-1234-123456789def'],
+                templates=True,
+                template_versions_per_template=['AccountSettingsTemplate-12345678-1234-1234-1234-123456789abc'],
+                idps=True,
+                claim_rules_per_group=['AccessGroupId-12345678-1234-1234-1234-123456789abc'],
+            )
+            identity_limits_usage_response = response.get_result()
+
+            print(json.dumps(identity_limits_usage_response, indent=2))
+
+            # end-bulkListAccountEntityConsumption
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

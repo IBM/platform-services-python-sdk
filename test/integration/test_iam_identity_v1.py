@@ -2178,3 +2178,31 @@ class TestIamIdentityV1:
 
         profile = self.get_profile(self.iam_identity_service, profile_id2)
         assert profile is None
+
+    @needscredentials
+    def test_get_account_limits(self):
+        response = self.iam_identity_service.get_account_limits(
+            account_id=self.account_id,
+        )
+
+        assert response.get_status_code() == 200
+        identity_limits_usage_response = response.get_result()
+        assert identity_limits_usage_response is not None
+
+    @needscredentials
+    def test_bulk_list_account_entity_consumption(self):
+        response = self.iam_identity_service.bulk_list_account_entity_consumption(
+            account_id=self.account_id,
+            serviceid_groups=True,
+            serviceids_per_group=['ServiceIdGroup-12345678-1234-1234-1234-123456789abc'],
+            profiles=True,
+            apikeys_per_identity=['iam-ServiceId-12345678-1234-1234-1234-123456789def'],
+            templates=True,
+            template_versions_per_template=['AccountSettingsTemplate-12345678-1234-1234-1234-123456789abc'],
+            idps=True,
+            claim_rules_per_group=['AccessGroupId-12345678-1234-1234-1234-123456789abc'],
+        )
+
+        assert response.get_status_code() == 200
+        identity_limits_usage_response = response.get_result()
+        assert identity_limits_usage_response is not None
