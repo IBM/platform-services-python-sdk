@@ -1,3 +1,10 @@
+# [0.75.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.74.0...v0.75.0) (2026-04-07)
+
+
+### Features
+
+* **IAM Identity:** add support for limits/cross account ([#323](https://github.com/IBM/platform-services-python-sdk/issues/323)) ([0610332](https://github.com/IBM/platform-services-python-sdk/commit/06103325b6d8bb356563d47dd32e233b90e8ee12))
+
 # [0.74.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.73.3...v0.74.0) (2026-02-27)
 
 
