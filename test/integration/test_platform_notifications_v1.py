@@ -23,6 +23,14 @@ import pytest
 from ibm_platform_services.platform_notifications_v1 import *
 
 # Config file name
+# required variables in platform_notifications_v1.env
+# PLATFORM_NOTIFICATIONS_URL
+# PLATFORM_NOTIFICATIONS_AUTH_TYPE
+# PLATFORM_NOTIFICATIONS_AUTH_URL
+# PLATFORM_NOTIFICATIONS_APIKEY
+# PLATFORM_NOTIFICATIONS_ACCOUNT_ID
+# PLATFORM_NOTIFICATIONS_DESTINATION_ID
+# PLATFORM_NOTIFICATIONS_IAM_ID
 config_file = 'platform_notifications_v1.env'
 
 account_id = ''
