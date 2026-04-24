@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.iam_identity_v1 import *
 
 
-_service = IamIdentityV1(authenticator=NoAuthAuthenticator())
+_service = IamIdentityV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://iam.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -7982,9 +7984,7 @@ class TestCreateAccountSettingsTemplate:
         # Construct a dict representation of a TemplateAccountSettingsRestrictUserDomains model
         template_account_settings_restrict_user_domains_model = {}
         template_account_settings_restrict_user_domains_model['account_sufficient'] = True
-        template_account_settings_restrict_user_domains_model['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        template_account_settings_restrict_user_domains_model['restrictions'] = [account_settings_user_domain_restriction_model]
 
         # Construct a dict representation of a TemplateAccountSettings model
         template_account_settings_model = {}
@@ -8408,9 +8408,7 @@ class TestCreateAccountSettingsTemplateVersion:
         # Construct a dict representation of a TemplateAccountSettingsRestrictUserDomains model
         template_account_settings_restrict_user_domains_model = {}
         template_account_settings_restrict_user_domains_model['account_sufficient'] = True
-        template_account_settings_restrict_user_domains_model['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        template_account_settings_restrict_user_domains_model['restrictions'] = [account_settings_user_domain_restriction_model]
 
         # Construct a dict representation of a TemplateAccountSettings model
         template_account_settings_model = {}
@@ -8493,9 +8491,7 @@ class TestCreateAccountSettingsTemplateVersion:
         # Construct a dict representation of a TemplateAccountSettingsRestrictUserDomains model
         template_account_settings_restrict_user_domains_model = {}
         template_account_settings_restrict_user_domains_model['account_sufficient'] = True
-        template_account_settings_restrict_user_domains_model['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        template_account_settings_restrict_user_domains_model['restrictions'] = [account_settings_user_domain_restriction_model]
 
         # Construct a dict representation of a TemplateAccountSettings model
         template_account_settings_model = {}
@@ -8704,9 +8700,7 @@ class TestUpdateAccountSettingsTemplateVersion:
         # Construct a dict representation of a TemplateAccountSettingsRestrictUserDomains model
         template_account_settings_restrict_user_domains_model = {}
         template_account_settings_restrict_user_domains_model['account_sufficient'] = True
-        template_account_settings_restrict_user_domains_model['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        template_account_settings_restrict_user_domains_model['restrictions'] = [account_settings_user_domain_restriction_model]
 
         # Construct a dict representation of a TemplateAccountSettings model
         template_account_settings_model = {}
@@ -8793,9 +8787,7 @@ class TestUpdateAccountSettingsTemplateVersion:
         # Construct a dict representation of a TemplateAccountSettingsRestrictUserDomains model
         template_account_settings_restrict_user_domains_model = {}
         template_account_settings_restrict_user_domains_model['account_sufficient'] = True
-        template_account_settings_restrict_user_domains_model['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        template_account_settings_restrict_user_domains_model['restrictions'] = [account_settings_user_domain_restriction_model]
 
         # Construct a dict representation of a TemplateAccountSettings model
         template_account_settings_model = {}
@@ -9767,22 +9759,13 @@ class TestBulkListAccountEntityConsumption:
         # Set up parameter values
         account_id = 'testString'
         serviceid_groups = True
-        serviceids_per_group = [
-            'ServiceIdGroup-12345678-1234-1234-1234-123456789abc',
-            'ServiceIdGroup-12345678-1234-1234-1234-123456789def',
-        ]
+        serviceids_per_group = ['ServiceIdGroup-12345678-1234-1234-1234-123456789abc', 'ServiceIdGroup-12345678-1234-1234-1234-123456789def']
         profiles = True
         apikeys_per_identity = ['iam-ServiceId-12345678-1234-1234-1234-123456789def', 'IBMid-1234567ABC']
         templates = True
-        template_versions_per_template = [
-            'AccountSettingsTemplate-12345678-1234-1234-1234-123456789abc',
-            'ProfileTemplate-12345678-1234-1234-1234-123456789def',
-        ]
+        template_versions_per_template = ['AccountSettingsTemplate-12345678-1234-1234-1234-123456789abc', 'ProfileTemplate-12345678-1234-1234-1234-123456789def']
         idps = True
-        claim_rules_per_group = [
-            'AccessGroupId-12345678-1234-1234-1234-123456789abc',
-            'AccessGroupId-12345678-1234-1234-1234-123456789def',
-        ]
+        claim_rules_per_group = ['AccessGroupId-12345678-1234-1234-1234-123456789abc', 'AccessGroupId-12345678-1234-1234-1234-123456789def']
         claim_rules_per_profile = ['Profile-12345678-1234-1234-123456789abc', 'Profile-12345678-1234-1234-123456789def']
         cr_links = True
         cr_links_per_profile = ['Profile-12345678-1234-1234-123456789abc', 'Profile-12345678-1234-1234-123456789def']
@@ -9814,39 +9797,18 @@ class TestBulkListAccountEntityConsumption:
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['serviceid_groups'] == True
-        assert req_body['serviceids_per_group'] == [
-            'ServiceIdGroup-12345678-1234-1234-1234-123456789abc',
-            'ServiceIdGroup-12345678-1234-1234-1234-123456789def',
-        ]
+        assert req_body['serviceids_per_group'] == ['ServiceIdGroup-12345678-1234-1234-1234-123456789abc', 'ServiceIdGroup-12345678-1234-1234-1234-123456789def']
         assert req_body['profiles'] == True
-        assert req_body['apikeys_per_identity'] == [
-            'iam-ServiceId-12345678-1234-1234-1234-123456789def',
-            'IBMid-1234567ABC',
-        ]
+        assert req_body['apikeys_per_identity'] == ['iam-ServiceId-12345678-1234-1234-1234-123456789def', 'IBMid-1234567ABC']
         assert req_body['templates'] == True
-        assert req_body['template_versions_per_template'] == [
-            'AccountSettingsTemplate-12345678-1234-1234-1234-123456789abc',
-            'ProfileTemplate-12345678-1234-1234-1234-123456789def',
-        ]
+        assert req_body['template_versions_per_template'] == ['AccountSettingsTemplate-12345678-1234-1234-1234-123456789abc', 'ProfileTemplate-12345678-1234-1234-1234-123456789def']
         assert req_body['idps'] == True
-        assert req_body['claim_rules_per_group'] == [
-            'AccessGroupId-12345678-1234-1234-1234-123456789abc',
-            'AccessGroupId-12345678-1234-1234-1234-123456789def',
-        ]
-        assert req_body['claim_rules_per_profile'] == [
-            'Profile-12345678-1234-1234-123456789abc',
-            'Profile-12345678-1234-1234-123456789def',
-        ]
+        assert req_body['claim_rules_per_group'] == ['AccessGroupId-12345678-1234-1234-1234-123456789abc', 'AccessGroupId-12345678-1234-1234-1234-123456789def']
+        assert req_body['claim_rules_per_profile'] == ['Profile-12345678-1234-1234-123456789abc', 'Profile-12345678-1234-1234-123456789def']
         assert req_body['cr_links'] == True
-        assert req_body['cr_links_per_profile'] == [
-            'Profile-12345678-1234-1234-123456789abc',
-            'Profile-12345678-1234-1234-123456789def',
-        ]
+        assert req_body['cr_links_per_profile'] == ['Profile-12345678-1234-1234-123456789abc', 'Profile-12345678-1234-1234-123456789def']
         assert req_body['cr_rules'] == True
-        assert req_body['cr_rules_per_profile'] == [
-            'Profile-12345678-1234-1234-123456789abc',
-            'Profile-12345678-1234-1234-123456789def',
-        ]
+        assert req_body['cr_rules_per_profile'] == ['Profile-12345678-1234-1234-123456789abc', 'Profile-12345678-1234-1234-123456789def']
 
     def test_bulk_list_account_entity_consumption_all_params_with_retries(self):
         # Enable retries and run test_bulk_list_account_entity_consumption_all_params.
@@ -10000,15 +9962,11 @@ class TestModel_AccountBasedMfaEnrollment:
         account_based_mfa_enrollment_model_json['complies'] = True
 
         # Construct a model instance of AccountBasedMfaEnrollment by calling from_dict on the json representation
-        account_based_mfa_enrollment_model = AccountBasedMfaEnrollment.from_dict(
-            account_based_mfa_enrollment_model_json
-        )
+        account_based_mfa_enrollment_model = AccountBasedMfaEnrollment.from_dict(account_based_mfa_enrollment_model_json)
         assert account_based_mfa_enrollment_model != False
 
         # Construct a model instance of AccountBasedMfaEnrollment by calling from_dict on the json representation
-        account_based_mfa_enrollment_model_dict = AccountBasedMfaEnrollment.from_dict(
-            account_based_mfa_enrollment_model_json
-        ).__dict__
+        account_based_mfa_enrollment_model_dict = AccountBasedMfaEnrollment.from_dict(account_based_mfa_enrollment_model_json).__dict__
         account_based_mfa_enrollment_model2 = AccountBasedMfaEnrollment(**account_based_mfa_enrollment_model_dict)
 
         # Verify the model instances are equivalent
@@ -10044,13 +10002,9 @@ class TestModel_AccountSettingsAssignedTemplatesSection:
         account_settings_user_domain_restriction_model['invitation_email_allow_patterns'] = []
         account_settings_user_domain_restriction_model['restrict_invitation'] = True
 
-        assigned_templates_account_settings_restrict_user_domains_model = (
-            {}
-        )  # AssignedTemplatesAccountSettingsRestrictUserDomains
+        assigned_templates_account_settings_restrict_user_domains_model = {}  # AssignedTemplatesAccountSettingsRestrictUserDomains
         assigned_templates_account_settings_restrict_user_domains_model['account_sufficient'] = True
-        assigned_templates_account_settings_restrict_user_domains_model['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        assigned_templates_account_settings_restrict_user_domains_model['restrictions'] = [account_settings_user_domain_restriction_model]
 
         # Construct a json representation of a AccountSettingsAssignedTemplatesSection model
         account_settings_assigned_templates_section_model_json = {}
@@ -10068,35 +10022,22 @@ class TestModel_AccountSettingsAssignedTemplatesSection:
         account_settings_assigned_templates_section_model_json['system_refresh_token_expiration_in_seconds'] = '259200'
         account_settings_assigned_templates_section_model_json['restrict_user_list_visibility'] = 'RESTRICTED'
         account_settings_assigned_templates_section_model_json['user_mfa'] = [account_settings_user_mfa_response_model]
-        account_settings_assigned_templates_section_model_json['restrict_user_domains'] = (
-            assigned_templates_account_settings_restrict_user_domains_model
-        )
+        account_settings_assigned_templates_section_model_json['restrict_user_domains'] = assigned_templates_account_settings_restrict_user_domains_model
 
         # Construct a model instance of AccountSettingsAssignedTemplatesSection by calling from_dict on the json representation
-        account_settings_assigned_templates_section_model = AccountSettingsAssignedTemplatesSection.from_dict(
-            account_settings_assigned_templates_section_model_json
-        )
+        account_settings_assigned_templates_section_model = AccountSettingsAssignedTemplatesSection.from_dict(account_settings_assigned_templates_section_model_json)
         assert account_settings_assigned_templates_section_model != False
 
         # Construct a model instance of AccountSettingsAssignedTemplatesSection by calling from_dict on the json representation
-        account_settings_assigned_templates_section_model_dict = AccountSettingsAssignedTemplatesSection.from_dict(
-            account_settings_assigned_templates_section_model_json
-        ).__dict__
-        account_settings_assigned_templates_section_model2 = AccountSettingsAssignedTemplatesSection(
-            **account_settings_assigned_templates_section_model_dict
-        )
+        account_settings_assigned_templates_section_model_dict = AccountSettingsAssignedTemplatesSection.from_dict(account_settings_assigned_templates_section_model_json).__dict__
+        account_settings_assigned_templates_section_model2 = AccountSettingsAssignedTemplatesSection(**account_settings_assigned_templates_section_model_dict)
 
         # Verify the model instances are equivalent
         assert account_settings_assigned_templates_section_model == account_settings_assigned_templates_section_model2
 
         # Convert model instance back to dict and verify no loss of data
-        account_settings_assigned_templates_section_model_json2 = (
-            account_settings_assigned_templates_section_model.to_dict()
-        )
-        assert (
-            account_settings_assigned_templates_section_model_json2
-            == account_settings_assigned_templates_section_model_json
-        )
+        account_settings_assigned_templates_section_model_json2 = account_settings_assigned_templates_section_model.to_dict()
+        assert account_settings_assigned_templates_section_model_json2 == account_settings_assigned_templates_section_model_json
 
 
 class TestModel_AccountSettingsEffectiveSection:
@@ -10134,18 +10075,12 @@ class TestModel_AccountSettingsEffectiveSection:
         account_settings_effective_section_model_json['system_refresh_token_expiration_in_seconds'] = '259200'
 
         # Construct a model instance of AccountSettingsEffectiveSection by calling from_dict on the json representation
-        account_settings_effective_section_model = AccountSettingsEffectiveSection.from_dict(
-            account_settings_effective_section_model_json
-        )
+        account_settings_effective_section_model = AccountSettingsEffectiveSection.from_dict(account_settings_effective_section_model_json)
         assert account_settings_effective_section_model != False
 
         # Construct a model instance of AccountSettingsEffectiveSection by calling from_dict on the json representation
-        account_settings_effective_section_model_dict = AccountSettingsEffectiveSection.from_dict(
-            account_settings_effective_section_model_json
-        ).__dict__
-        account_settings_effective_section_model2 = AccountSettingsEffectiveSection(
-            **account_settings_effective_section_model_dict
-        )
+        account_settings_effective_section_model_dict = AccountSettingsEffectiveSection.from_dict(account_settings_effective_section_model_json).__dict__
+        account_settings_effective_section_model2 = AccountSettingsEffectiveSection(**account_settings_effective_section_model_dict)
 
         # Verify the model instances are equivalent
         assert account_settings_effective_section_model == account_settings_effective_section_model2
@@ -10225,9 +10160,7 @@ class TestModel_AccountSettingsResponse:
         assert account_settings_response_model != False
 
         # Construct a model instance of AccountSettingsResponse by calling from_dict on the json representation
-        account_settings_response_model_dict = AccountSettingsResponse.from_dict(
-            account_settings_response_model_json
-        ).__dict__
+        account_settings_response_model_dict = AccountSettingsResponse.from_dict(account_settings_response_model_json).__dict__
         account_settings_response_model2 = AccountSettingsResponse(**account_settings_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -10274,9 +10207,7 @@ class TestModel_AccountSettingsTemplateList:
 
         template_account_settings_restrict_user_domains_model = {}  # TemplateAccountSettingsRestrictUserDomains
         template_account_settings_restrict_user_domains_model['account_sufficient'] = True
-        template_account_settings_restrict_user_domains_model['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        template_account_settings_restrict_user_domains_model['restrictions'] = [account_settings_user_domain_restriction_model]
 
         template_account_settings_model = {}  # TemplateAccountSettings
         template_account_settings_model['restrict_create_service_id'] = 'NOT_SET'
@@ -10324,20 +10255,14 @@ class TestModel_AccountSettingsTemplateList:
         account_settings_template_list_model_json['first'] = 'testString'
         account_settings_template_list_model_json['previous'] = 'testString'
         account_settings_template_list_model_json['next'] = 'testString'
-        account_settings_template_list_model_json['account_settings_templates'] = [
-            account_settings_template_response_model
-        ]
+        account_settings_template_list_model_json['account_settings_templates'] = [account_settings_template_response_model]
 
         # Construct a model instance of AccountSettingsTemplateList by calling from_dict on the json representation
-        account_settings_template_list_model = AccountSettingsTemplateList.from_dict(
-            account_settings_template_list_model_json
-        )
+        account_settings_template_list_model = AccountSettingsTemplateList.from_dict(account_settings_template_list_model_json)
         assert account_settings_template_list_model != False
 
         # Construct a model instance of AccountSettingsTemplateList by calling from_dict on the json representation
-        account_settings_template_list_model_dict = AccountSettingsTemplateList.from_dict(
-            account_settings_template_list_model_json
-        ).__dict__
+        account_settings_template_list_model_dict = AccountSettingsTemplateList.from_dict(account_settings_template_list_model_json).__dict__
         account_settings_template_list_model2 = AccountSettingsTemplateList(**account_settings_template_list_model_dict)
 
         # Verify the model instances are equivalent
@@ -10371,9 +10296,7 @@ class TestModel_AccountSettingsTemplateResponse:
 
         template_account_settings_restrict_user_domains_model = {}  # TemplateAccountSettingsRestrictUserDomains
         template_account_settings_restrict_user_domains_model['account_sufficient'] = True
-        template_account_settings_restrict_user_domains_model['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        template_account_settings_restrict_user_domains_model['restrictions'] = [account_settings_user_domain_restriction_model]
 
         template_account_settings_model = {}  # TemplateAccountSettings
         template_account_settings_model['restrict_create_service_id'] = 'NOT_SET'
@@ -10415,18 +10338,12 @@ class TestModel_AccountSettingsTemplateResponse:
         account_settings_template_response_model_json['last_modified_by_id'] = 'testString'
 
         # Construct a model instance of AccountSettingsTemplateResponse by calling from_dict on the json representation
-        account_settings_template_response_model = AccountSettingsTemplateResponse.from_dict(
-            account_settings_template_response_model_json
-        )
+        account_settings_template_response_model = AccountSettingsTemplateResponse.from_dict(account_settings_template_response_model_json)
         assert account_settings_template_response_model != False
 
         # Construct a model instance of AccountSettingsTemplateResponse by calling from_dict on the json representation
-        account_settings_template_response_model_dict = AccountSettingsTemplateResponse.from_dict(
-            account_settings_template_response_model_json
-        ).__dict__
-        account_settings_template_response_model2 = AccountSettingsTemplateResponse(
-            **account_settings_template_response_model_dict
-        )
+        account_settings_template_response_model_dict = AccountSettingsTemplateResponse.from_dict(account_settings_template_response_model_json).__dict__
+        account_settings_template_response_model2 = AccountSettingsTemplateResponse(**account_settings_template_response_model_dict)
 
         # Verify the model instances are equivalent
         assert account_settings_template_response_model == account_settings_template_response_model2
@@ -10453,27 +10370,19 @@ class TestModel_AccountSettingsUserDomainRestriction:
         account_settings_user_domain_restriction_model_json['restrict_invitation'] = True
 
         # Construct a model instance of AccountSettingsUserDomainRestriction by calling from_dict on the json representation
-        account_settings_user_domain_restriction_model = AccountSettingsUserDomainRestriction.from_dict(
-            account_settings_user_domain_restriction_model_json
-        )
+        account_settings_user_domain_restriction_model = AccountSettingsUserDomainRestriction.from_dict(account_settings_user_domain_restriction_model_json)
         assert account_settings_user_domain_restriction_model != False
 
         # Construct a model instance of AccountSettingsUserDomainRestriction by calling from_dict on the json representation
-        account_settings_user_domain_restriction_model_dict = AccountSettingsUserDomainRestriction.from_dict(
-            account_settings_user_domain_restriction_model_json
-        ).__dict__
-        account_settings_user_domain_restriction_model2 = AccountSettingsUserDomainRestriction(
-            **account_settings_user_domain_restriction_model_dict
-        )
+        account_settings_user_domain_restriction_model_dict = AccountSettingsUserDomainRestriction.from_dict(account_settings_user_domain_restriction_model_json).__dict__
+        account_settings_user_domain_restriction_model2 = AccountSettingsUserDomainRestriction(**account_settings_user_domain_restriction_model_dict)
 
         # Verify the model instances are equivalent
         assert account_settings_user_domain_restriction_model == account_settings_user_domain_restriction_model2
 
         # Convert model instance back to dict and verify no loss of data
         account_settings_user_domain_restriction_model_json2 = account_settings_user_domain_restriction_model.to_dict()
-        assert (
-            account_settings_user_domain_restriction_model_json2 == account_settings_user_domain_restriction_model_json
-        )
+        assert account_settings_user_domain_restriction_model_json2 == account_settings_user_domain_restriction_model_json
 
 
 class TestModel_AccountSettingsUserMFAResponse:
@@ -10496,18 +10405,12 @@ class TestModel_AccountSettingsUserMFAResponse:
         account_settings_user_mfa_response_model_json['description'] = 'testString'
 
         # Construct a model instance of AccountSettingsUserMFAResponse by calling from_dict on the json representation
-        account_settings_user_mfa_response_model = AccountSettingsUserMFAResponse.from_dict(
-            account_settings_user_mfa_response_model_json
-        )
+        account_settings_user_mfa_response_model = AccountSettingsUserMFAResponse.from_dict(account_settings_user_mfa_response_model_json)
         assert account_settings_user_mfa_response_model != False
 
         # Construct a model instance of AccountSettingsUserMFAResponse by calling from_dict on the json representation
-        account_settings_user_mfa_response_model_dict = AccountSettingsUserMFAResponse.from_dict(
-            account_settings_user_mfa_response_model_json
-        ).__dict__
-        account_settings_user_mfa_response_model2 = AccountSettingsUserMFAResponse(
-            **account_settings_user_mfa_response_model_dict
-        )
+        account_settings_user_mfa_response_model_dict = AccountSettingsUserMFAResponse.from_dict(account_settings_user_mfa_response_model_json).__dict__
+        account_settings_user_mfa_response_model2 = AccountSettingsUserMFAResponse(**account_settings_user_mfa_response_model_dict)
 
         # Verify the model instances are equivalent
         assert account_settings_user_mfa_response_model == account_settings_user_mfa_response_model2
@@ -10583,9 +10486,7 @@ class TestModel_ActionControlsIdentities:
         assert action_controls_identities_model != False
 
         # Construct a model instance of ActionControlsIdentities by calling from_dict on the json representation
-        action_controls_identities_model_dict = ActionControlsIdentities.from_dict(
-            action_controls_identities_model_json
-        ).__dict__
+        action_controls_identities_model_dict = ActionControlsIdentities.from_dict(action_controls_identities_model_json).__dict__
         action_controls_identities_model2 = ActionControlsIdentities(**action_controls_identities_model_dict)
 
         # Verify the model instances are equivalent
@@ -10616,9 +10517,7 @@ class TestModel_ActionControlsPolicies:
         assert action_controls_policies_model != False
 
         # Construct a model instance of ActionControlsPolicies by calling from_dict on the json representation
-        action_controls_policies_model_dict = ActionControlsPolicies.from_dict(
-            action_controls_policies_model_json
-        ).__dict__
+        action_controls_policies_model_dict = ActionControlsPolicies.from_dict(action_controls_policies_model_json).__dict__
         action_controls_policies_model2 = ActionControlsPolicies(**action_controls_policies_model_dict)
 
         # Verify the model instances are equivalent
@@ -10786,27 +10685,19 @@ class TestModel_ApiKeyInsideCreateServiceIdRequest:
         api_key_inside_create_service_id_request_model_json['expires_at'] = 'testString'
 
         # Construct a model instance of ApiKeyInsideCreateServiceIdRequest by calling from_dict on the json representation
-        api_key_inside_create_service_id_request_model = ApiKeyInsideCreateServiceIdRequest.from_dict(
-            api_key_inside_create_service_id_request_model_json
-        )
+        api_key_inside_create_service_id_request_model = ApiKeyInsideCreateServiceIdRequest.from_dict(api_key_inside_create_service_id_request_model_json)
         assert api_key_inside_create_service_id_request_model != False
 
         # Construct a model instance of ApiKeyInsideCreateServiceIdRequest by calling from_dict on the json representation
-        api_key_inside_create_service_id_request_model_dict = ApiKeyInsideCreateServiceIdRequest.from_dict(
-            api_key_inside_create_service_id_request_model_json
-        ).__dict__
-        api_key_inside_create_service_id_request_model2 = ApiKeyInsideCreateServiceIdRequest(
-            **api_key_inside_create_service_id_request_model_dict
-        )
+        api_key_inside_create_service_id_request_model_dict = ApiKeyInsideCreateServiceIdRequest.from_dict(api_key_inside_create_service_id_request_model_json).__dict__
+        api_key_inside_create_service_id_request_model2 = ApiKeyInsideCreateServiceIdRequest(**api_key_inside_create_service_id_request_model_dict)
 
         # Verify the model instances are equivalent
         assert api_key_inside_create_service_id_request_model == api_key_inside_create_service_id_request_model2
 
         # Convert model instance back to dict and verify no loss of data
         api_key_inside_create_service_id_request_model_json2 = api_key_inside_create_service_id_request_model.to_dict()
-        assert (
-            api_key_inside_create_service_id_request_model_json2 == api_key_inside_create_service_id_request_model_json
-        )
+        assert api_key_inside_create_service_id_request_model_json2 == api_key_inside_create_service_id_request_model_json
 
 
 class TestModel_ApiKeyList:
@@ -10960,9 +10851,7 @@ class TestModel_ApikeyActivityServiceid:
         assert apikey_activity_serviceid_model != False
 
         # Construct a model instance of ApikeyActivityServiceid by calling from_dict on the json representation
-        apikey_activity_serviceid_model_dict = ApikeyActivityServiceid.from_dict(
-            apikey_activity_serviceid_model_json
-        ).__dict__
+        apikey_activity_serviceid_model_dict = ApikeyActivityServiceid.from_dict(apikey_activity_serviceid_model_json).__dict__
         apikey_activity_serviceid_model2 = ApikeyActivityServiceid(**apikey_activity_serviceid_model_dict)
 
         # Verify the model instances are equivalent
@@ -11026,44 +10915,22 @@ class TestModel_AssignedTemplatesAccountSettingsRestrictUserDomains:
         # Construct a json representation of a AssignedTemplatesAccountSettingsRestrictUserDomains model
         assigned_templates_account_settings_restrict_user_domains_model_json = {}
         assigned_templates_account_settings_restrict_user_domains_model_json['account_sufficient'] = True
-        assigned_templates_account_settings_restrict_user_domains_model_json['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        assigned_templates_account_settings_restrict_user_domains_model_json['restrictions'] = [account_settings_user_domain_restriction_model]
 
         # Construct a model instance of AssignedTemplatesAccountSettingsRestrictUserDomains by calling from_dict on the json representation
-        assigned_templates_account_settings_restrict_user_domains_model = (
-            AssignedTemplatesAccountSettingsRestrictUserDomains.from_dict(
-                assigned_templates_account_settings_restrict_user_domains_model_json
-            )
-        )
+        assigned_templates_account_settings_restrict_user_domains_model = AssignedTemplatesAccountSettingsRestrictUserDomains.from_dict(assigned_templates_account_settings_restrict_user_domains_model_json)
         assert assigned_templates_account_settings_restrict_user_domains_model != False
 
         # Construct a model instance of AssignedTemplatesAccountSettingsRestrictUserDomains by calling from_dict on the json representation
-        assigned_templates_account_settings_restrict_user_domains_model_dict = (
-            AssignedTemplatesAccountSettingsRestrictUserDomains.from_dict(
-                assigned_templates_account_settings_restrict_user_domains_model_json
-            ).__dict__
-        )
-        assigned_templates_account_settings_restrict_user_domains_model2 = (
-            AssignedTemplatesAccountSettingsRestrictUserDomains(
-                **assigned_templates_account_settings_restrict_user_domains_model_dict
-            )
-        )
+        assigned_templates_account_settings_restrict_user_domains_model_dict = AssignedTemplatesAccountSettingsRestrictUserDomains.from_dict(assigned_templates_account_settings_restrict_user_domains_model_json).__dict__
+        assigned_templates_account_settings_restrict_user_domains_model2 = AssignedTemplatesAccountSettingsRestrictUserDomains(**assigned_templates_account_settings_restrict_user_domains_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            assigned_templates_account_settings_restrict_user_domains_model
-            == assigned_templates_account_settings_restrict_user_domains_model2
-        )
+        assert assigned_templates_account_settings_restrict_user_domains_model == assigned_templates_account_settings_restrict_user_domains_model2
 
         # Convert model instance back to dict and verify no loss of data
-        assigned_templates_account_settings_restrict_user_domains_model_json2 = (
-            assigned_templates_account_settings_restrict_user_domains_model.to_dict()
-        )
-        assert (
-            assigned_templates_account_settings_restrict_user_domains_model_json2
-            == assigned_templates_account_settings_restrict_user_domains_model_json
-        )
+        assigned_templates_account_settings_restrict_user_domains_model_json2 = assigned_templates_account_settings_restrict_user_domains_model.to_dict()
+        assert assigned_templates_account_settings_restrict_user_domains_model_json2 == assigned_templates_account_settings_restrict_user_domains_model_json
 
 
 class TestModel_CreateProfileLinkRequestLink:
@@ -11085,18 +10952,12 @@ class TestModel_CreateProfileLinkRequestLink:
         create_profile_link_request_link_model_json['component_name'] = 'testString'
 
         # Construct a model instance of CreateProfileLinkRequestLink by calling from_dict on the json representation
-        create_profile_link_request_link_model = CreateProfileLinkRequestLink.from_dict(
-            create_profile_link_request_link_model_json
-        )
+        create_profile_link_request_link_model = CreateProfileLinkRequestLink.from_dict(create_profile_link_request_link_model_json)
         assert create_profile_link_request_link_model != False
 
         # Construct a model instance of CreateProfileLinkRequestLink by calling from_dict on the json representation
-        create_profile_link_request_link_model_dict = CreateProfileLinkRequestLink.from_dict(
-            create_profile_link_request_link_model_json
-        ).__dict__
-        create_profile_link_request_link_model2 = CreateProfileLinkRequestLink(
-            **create_profile_link_request_link_model_dict
-        )
+        create_profile_link_request_link_model_dict = CreateProfileLinkRequestLink.from_dict(create_profile_link_request_link_model_json).__dict__
+        create_profile_link_request_link_model2 = CreateProfileLinkRequestLink(**create_profile_link_request_link_model_dict)
 
         # Verify the model instances are equivalent
         assert create_profile_link_request_link_model == create_profile_link_request_link_model2
@@ -11183,13 +11044,9 @@ class TestModel_EffectiveAccountSettingsResponse:
         account_settings_response_model['user_mfa'] = [account_settings_user_mfa_response_model]
         account_settings_response_model['restrict_user_domains'] = [account_settings_user_domain_restriction_model]
 
-        assigned_templates_account_settings_restrict_user_domains_model = (
-            {}
-        )  # AssignedTemplatesAccountSettingsRestrictUserDomains
+        assigned_templates_account_settings_restrict_user_domains_model = {}  # AssignedTemplatesAccountSettingsRestrictUserDomains
         assigned_templates_account_settings_restrict_user_domains_model['account_sufficient'] = True
-        assigned_templates_account_settings_restrict_user_domains_model['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        assigned_templates_account_settings_restrict_user_domains_model['restrictions'] = [account_settings_user_domain_restriction_model]
 
         account_settings_assigned_templates_section_model = {}  # AccountSettingsAssignedTemplatesSection
         account_settings_assigned_templates_section_model['template_id'] = 'testString'
@@ -11206,9 +11063,7 @@ class TestModel_EffectiveAccountSettingsResponse:
         account_settings_assigned_templates_section_model['system_refresh_token_expiration_in_seconds'] = '259200'
         account_settings_assigned_templates_section_model['restrict_user_list_visibility'] = 'RESTRICTED'
         account_settings_assigned_templates_section_model['user_mfa'] = [account_settings_user_mfa_response_model]
-        account_settings_assigned_templates_section_model['restrict_user_domains'] = (
-            assigned_templates_account_settings_restrict_user_domains_model
-        )
+        account_settings_assigned_templates_section_model['restrict_user_domains'] = assigned_templates_account_settings_restrict_user_domains_model
 
         # Construct a json representation of a EffectiveAccountSettingsResponse model
         effective_account_settings_response_model_json = {}
@@ -11216,23 +11071,15 @@ class TestModel_EffectiveAccountSettingsResponse:
         effective_account_settings_response_model_json['account_id'] = 'testString'
         effective_account_settings_response_model_json['effective'] = account_settings_effective_section_model
         effective_account_settings_response_model_json['account'] = account_settings_response_model
-        effective_account_settings_response_model_json['assigned_templates'] = [
-            account_settings_assigned_templates_section_model
-        ]
+        effective_account_settings_response_model_json['assigned_templates'] = [account_settings_assigned_templates_section_model]
 
         # Construct a model instance of EffectiveAccountSettingsResponse by calling from_dict on the json representation
-        effective_account_settings_response_model = EffectiveAccountSettingsResponse.from_dict(
-            effective_account_settings_response_model_json
-        )
+        effective_account_settings_response_model = EffectiveAccountSettingsResponse.from_dict(effective_account_settings_response_model_json)
         assert effective_account_settings_response_model != False
 
         # Construct a model instance of EffectiveAccountSettingsResponse by calling from_dict on the json representation
-        effective_account_settings_response_model_dict = EffectiveAccountSettingsResponse.from_dict(
-            effective_account_settings_response_model_json
-        ).__dict__
-        effective_account_settings_response_model2 = EffectiveAccountSettingsResponse(
-            **effective_account_settings_response_model_dict
-        )
+        effective_account_settings_response_model_dict = EffectiveAccountSettingsResponse.from_dict(effective_account_settings_response_model_json).__dict__
+        effective_account_settings_response_model2 = EffectiveAccountSettingsResponse(**effective_account_settings_response_model_dict)
 
         # Verify the model instances are equivalent
         assert effective_account_settings_response_model == effective_account_settings_response_model2
@@ -11497,9 +11344,7 @@ class TestModel_IdentityLimitsUsageResponse:
         template_count_model['template_id'] = 'testString'
         template_count_model['count'] = 38
 
-        identity_limits_usage_response_template_versions_per_template_model = (
-            {}
-        )  # IdentityLimitsUsageResponseTemplateVersionsPerTemplate
+        identity_limits_usage_response_template_versions_per_template_model = {}  # IdentityLimitsUsageResponseTemplateVersionsPerTemplate
         identity_limits_usage_response_template_versions_per_template_model['limit'] = 38
         identity_limits_usage_response_template_versions_per_template_model['templates'] = [template_count_model]
 
@@ -11515,9 +11360,7 @@ class TestModel_IdentityLimitsUsageResponse:
         profile_count_model['profile_id'] = 'testString'
         profile_count_model['count'] = 38
 
-        identity_limits_usage_response_claim_rules_per_profile_model = (
-            {}
-        )  # IdentityLimitsUsageResponseClaimRulesPerProfile
+        identity_limits_usage_response_claim_rules_per_profile_model = {}  # IdentityLimitsUsageResponseClaimRulesPerProfile
         identity_limits_usage_response_claim_rules_per_profile_model['limit'] = 38
         identity_limits_usage_response_claim_rules_per_profile_model['profiles'] = [profile_count_model]
 
@@ -11532,44 +11375,26 @@ class TestModel_IdentityLimitsUsageResponse:
         # Construct a json representation of a IdentityLimitsUsageResponse model
         identity_limits_usage_response_model_json = {}
         identity_limits_usage_response_model_json['serviceid_groups'] = limit_count_model
-        identity_limits_usage_response_model_json['serviceids_per_group'] = (
-            identity_limits_usage_response_serviceids_per_group_model
-        )
+        identity_limits_usage_response_model_json['serviceids_per_group'] = identity_limits_usage_response_serviceids_per_group_model
         identity_limits_usage_response_model_json['profiles'] = limit_count_model
-        identity_limits_usage_response_model_json['apikeys_per_identity'] = (
-            identity_limits_usage_response_apikeys_per_identity_model
-        )
+        identity_limits_usage_response_model_json['apikeys_per_identity'] = identity_limits_usage_response_apikeys_per_identity_model
         identity_limits_usage_response_model_json['profile_templates'] = limit_count_model
         identity_limits_usage_response_model_json['account_settings_templates'] = limit_count_model
-        identity_limits_usage_response_model_json['template_versions_per_template'] = (
-            identity_limits_usage_response_template_versions_per_template_model
-        )
+        identity_limits_usage_response_model_json['template_versions_per_template'] = identity_limits_usage_response_template_versions_per_template_model
         identity_limits_usage_response_model_json['idps'] = limit_count_model
-        identity_limits_usage_response_model_json['claim_rules_per_group'] = (
-            identity_limits_usage_response_claim_rules_per_group_model
-        )
-        identity_limits_usage_response_model_json['claim_rules_per_profile'] = (
-            identity_limits_usage_response_claim_rules_per_profile_model
-        )
+        identity_limits_usage_response_model_json['claim_rules_per_group'] = identity_limits_usage_response_claim_rules_per_group_model
+        identity_limits_usage_response_model_json['claim_rules_per_profile'] = identity_limits_usage_response_claim_rules_per_profile_model
         identity_limits_usage_response_model_json['cr_links'] = limit_count_model
-        identity_limits_usage_response_model_json['cr_links_per_profile'] = (
-            identity_limits_usage_response_cr_links_per_profile_model
-        )
+        identity_limits_usage_response_model_json['cr_links_per_profile'] = identity_limits_usage_response_cr_links_per_profile_model
         identity_limits_usage_response_model_json['cr_rules'] = limit_count_model
-        identity_limits_usage_response_model_json['cr_rules_per_profile'] = (
-            identity_limits_usage_response_cr_rules_per_profile_model
-        )
+        identity_limits_usage_response_model_json['cr_rules_per_profile'] = identity_limits_usage_response_cr_rules_per_profile_model
 
         # Construct a model instance of IdentityLimitsUsageResponse by calling from_dict on the json representation
-        identity_limits_usage_response_model = IdentityLimitsUsageResponse.from_dict(
-            identity_limits_usage_response_model_json
-        )
+        identity_limits_usage_response_model = IdentityLimitsUsageResponse.from_dict(identity_limits_usage_response_model_json)
         assert identity_limits_usage_response_model != False
 
         # Construct a model instance of IdentityLimitsUsageResponse by calling from_dict on the json representation
-        identity_limits_usage_response_model_dict = IdentityLimitsUsageResponse.from_dict(
-            identity_limits_usage_response_model_json
-        ).__dict__
+        identity_limits_usage_response_model_dict = IdentityLimitsUsageResponse.from_dict(identity_limits_usage_response_model_json).__dict__
         identity_limits_usage_response_model2 = IdentityLimitsUsageResponse(**identity_limits_usage_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -11602,37 +11427,19 @@ class TestModel_IdentityLimitsUsageResponseApikeysPerIdentity:
         identity_limits_usage_response_apikeys_per_identity_model_json['identities'] = [identity_count_model]
 
         # Construct a model instance of IdentityLimitsUsageResponseApikeysPerIdentity by calling from_dict on the json representation
-        identity_limits_usage_response_apikeys_per_identity_model = (
-            IdentityLimitsUsageResponseApikeysPerIdentity.from_dict(
-                identity_limits_usage_response_apikeys_per_identity_model_json
-            )
-        )
+        identity_limits_usage_response_apikeys_per_identity_model = IdentityLimitsUsageResponseApikeysPerIdentity.from_dict(identity_limits_usage_response_apikeys_per_identity_model_json)
         assert identity_limits_usage_response_apikeys_per_identity_model != False
 
         # Construct a model instance of IdentityLimitsUsageResponseApikeysPerIdentity by calling from_dict on the json representation
-        identity_limits_usage_response_apikeys_per_identity_model_dict = (
-            IdentityLimitsUsageResponseApikeysPerIdentity.from_dict(
-                identity_limits_usage_response_apikeys_per_identity_model_json
-            ).__dict__
-        )
-        identity_limits_usage_response_apikeys_per_identity_model2 = IdentityLimitsUsageResponseApikeysPerIdentity(
-            **identity_limits_usage_response_apikeys_per_identity_model_dict
-        )
+        identity_limits_usage_response_apikeys_per_identity_model_dict = IdentityLimitsUsageResponseApikeysPerIdentity.from_dict(identity_limits_usage_response_apikeys_per_identity_model_json).__dict__
+        identity_limits_usage_response_apikeys_per_identity_model2 = IdentityLimitsUsageResponseApikeysPerIdentity(**identity_limits_usage_response_apikeys_per_identity_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            identity_limits_usage_response_apikeys_per_identity_model
-            == identity_limits_usage_response_apikeys_per_identity_model2
-        )
+        assert identity_limits_usage_response_apikeys_per_identity_model == identity_limits_usage_response_apikeys_per_identity_model2
 
         # Convert model instance back to dict and verify no loss of data
-        identity_limits_usage_response_apikeys_per_identity_model_json2 = (
-            identity_limits_usage_response_apikeys_per_identity_model.to_dict()
-        )
-        assert (
-            identity_limits_usage_response_apikeys_per_identity_model_json2
-            == identity_limits_usage_response_apikeys_per_identity_model_json
-        )
+        identity_limits_usage_response_apikeys_per_identity_model_json2 = identity_limits_usage_response_apikeys_per_identity_model.to_dict()
+        assert identity_limits_usage_response_apikeys_per_identity_model_json2 == identity_limits_usage_response_apikeys_per_identity_model_json
 
 
 class TestModel_IdentityLimitsUsageResponseClaimRulesPerGroup:
@@ -11657,37 +11464,19 @@ class TestModel_IdentityLimitsUsageResponseClaimRulesPerGroup:
         identity_limits_usage_response_claim_rules_per_group_model_json['access_groups'] = [access_group_count_model]
 
         # Construct a model instance of IdentityLimitsUsageResponseClaimRulesPerGroup by calling from_dict on the json representation
-        identity_limits_usage_response_claim_rules_per_group_model = (
-            IdentityLimitsUsageResponseClaimRulesPerGroup.from_dict(
-                identity_limits_usage_response_claim_rules_per_group_model_json
-            )
-        )
+        identity_limits_usage_response_claim_rules_per_group_model = IdentityLimitsUsageResponseClaimRulesPerGroup.from_dict(identity_limits_usage_response_claim_rules_per_group_model_json)
         assert identity_limits_usage_response_claim_rules_per_group_model != False
 
         # Construct a model instance of IdentityLimitsUsageResponseClaimRulesPerGroup by calling from_dict on the json representation
-        identity_limits_usage_response_claim_rules_per_group_model_dict = (
-            IdentityLimitsUsageResponseClaimRulesPerGroup.from_dict(
-                identity_limits_usage_response_claim_rules_per_group_model_json
-            ).__dict__
-        )
-        identity_limits_usage_response_claim_rules_per_group_model2 = IdentityLimitsUsageResponseClaimRulesPerGroup(
-            **identity_limits_usage_response_claim_rules_per_group_model_dict
-        )
+        identity_limits_usage_response_claim_rules_per_group_model_dict = IdentityLimitsUsageResponseClaimRulesPerGroup.from_dict(identity_limits_usage_response_claim_rules_per_group_model_json).__dict__
+        identity_limits_usage_response_claim_rules_per_group_model2 = IdentityLimitsUsageResponseClaimRulesPerGroup(**identity_limits_usage_response_claim_rules_per_group_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            identity_limits_usage_response_claim_rules_per_group_model
-            == identity_limits_usage_response_claim_rules_per_group_model2
-        )
+        assert identity_limits_usage_response_claim_rules_per_group_model == identity_limits_usage_response_claim_rules_per_group_model2
 
         # Convert model instance back to dict and verify no loss of data
-        identity_limits_usage_response_claim_rules_per_group_model_json2 = (
-            identity_limits_usage_response_claim_rules_per_group_model.to_dict()
-        )
-        assert (
-            identity_limits_usage_response_claim_rules_per_group_model_json2
-            == identity_limits_usage_response_claim_rules_per_group_model_json
-        )
+        identity_limits_usage_response_claim_rules_per_group_model_json2 = identity_limits_usage_response_claim_rules_per_group_model.to_dict()
+        assert identity_limits_usage_response_claim_rules_per_group_model_json2 == identity_limits_usage_response_claim_rules_per_group_model_json
 
 
 class TestModel_IdentityLimitsUsageResponseClaimRulesPerProfile:
@@ -11712,37 +11501,19 @@ class TestModel_IdentityLimitsUsageResponseClaimRulesPerProfile:
         identity_limits_usage_response_claim_rules_per_profile_model_json['profiles'] = [profile_count_model]
 
         # Construct a model instance of IdentityLimitsUsageResponseClaimRulesPerProfile by calling from_dict on the json representation
-        identity_limits_usage_response_claim_rules_per_profile_model = (
-            IdentityLimitsUsageResponseClaimRulesPerProfile.from_dict(
-                identity_limits_usage_response_claim_rules_per_profile_model_json
-            )
-        )
+        identity_limits_usage_response_claim_rules_per_profile_model = IdentityLimitsUsageResponseClaimRulesPerProfile.from_dict(identity_limits_usage_response_claim_rules_per_profile_model_json)
         assert identity_limits_usage_response_claim_rules_per_profile_model != False
 
         # Construct a model instance of IdentityLimitsUsageResponseClaimRulesPerProfile by calling from_dict on the json representation
-        identity_limits_usage_response_claim_rules_per_profile_model_dict = (
-            IdentityLimitsUsageResponseClaimRulesPerProfile.from_dict(
-                identity_limits_usage_response_claim_rules_per_profile_model_json
-            ).__dict__
-        )
-        identity_limits_usage_response_claim_rules_per_profile_model2 = IdentityLimitsUsageResponseClaimRulesPerProfile(
-            **identity_limits_usage_response_claim_rules_per_profile_model_dict
-        )
+        identity_limits_usage_response_claim_rules_per_profile_model_dict = IdentityLimitsUsageResponseClaimRulesPerProfile.from_dict(identity_limits_usage_response_claim_rules_per_profile_model_json).__dict__
+        identity_limits_usage_response_claim_rules_per_profile_model2 = IdentityLimitsUsageResponseClaimRulesPerProfile(**identity_limits_usage_response_claim_rules_per_profile_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            identity_limits_usage_response_claim_rules_per_profile_model
-            == identity_limits_usage_response_claim_rules_per_profile_model2
-        )
+        assert identity_limits_usage_response_claim_rules_per_profile_model == identity_limits_usage_response_claim_rules_per_profile_model2
 
         # Convert model instance back to dict and verify no loss of data
-        identity_limits_usage_response_claim_rules_per_profile_model_json2 = (
-            identity_limits_usage_response_claim_rules_per_profile_model.to_dict()
-        )
-        assert (
-            identity_limits_usage_response_claim_rules_per_profile_model_json2
-            == identity_limits_usage_response_claim_rules_per_profile_model_json
-        )
+        identity_limits_usage_response_claim_rules_per_profile_model_json2 = identity_limits_usage_response_claim_rules_per_profile_model.to_dict()
+        assert identity_limits_usage_response_claim_rules_per_profile_model_json2 == identity_limits_usage_response_claim_rules_per_profile_model_json
 
 
 class TestModel_IdentityLimitsUsageResponseCrLinksPerProfile:
@@ -11767,37 +11538,19 @@ class TestModel_IdentityLimitsUsageResponseCrLinksPerProfile:
         identity_limits_usage_response_cr_links_per_profile_model_json['profiles'] = [profile_count_model]
 
         # Construct a model instance of IdentityLimitsUsageResponseCrLinksPerProfile by calling from_dict on the json representation
-        identity_limits_usage_response_cr_links_per_profile_model = (
-            IdentityLimitsUsageResponseCrLinksPerProfile.from_dict(
-                identity_limits_usage_response_cr_links_per_profile_model_json
-            )
-        )
+        identity_limits_usage_response_cr_links_per_profile_model = IdentityLimitsUsageResponseCrLinksPerProfile.from_dict(identity_limits_usage_response_cr_links_per_profile_model_json)
         assert identity_limits_usage_response_cr_links_per_profile_model != False
 
         # Construct a model instance of IdentityLimitsUsageResponseCrLinksPerProfile by calling from_dict on the json representation
-        identity_limits_usage_response_cr_links_per_profile_model_dict = (
-            IdentityLimitsUsageResponseCrLinksPerProfile.from_dict(
-                identity_limits_usage_response_cr_links_per_profile_model_json
-            ).__dict__
-        )
-        identity_limits_usage_response_cr_links_per_profile_model2 = IdentityLimitsUsageResponseCrLinksPerProfile(
-            **identity_limits_usage_response_cr_links_per_profile_model_dict
-        )
+        identity_limits_usage_response_cr_links_per_profile_model_dict = IdentityLimitsUsageResponseCrLinksPerProfile.from_dict(identity_limits_usage_response_cr_links_per_profile_model_json).__dict__
+        identity_limits_usage_response_cr_links_per_profile_model2 = IdentityLimitsUsageResponseCrLinksPerProfile(**identity_limits_usage_response_cr_links_per_profile_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            identity_limits_usage_response_cr_links_per_profile_model
-            == identity_limits_usage_response_cr_links_per_profile_model2
-        )
+        assert identity_limits_usage_response_cr_links_per_profile_model == identity_limits_usage_response_cr_links_per_profile_model2
 
         # Convert model instance back to dict and verify no loss of data
-        identity_limits_usage_response_cr_links_per_profile_model_json2 = (
-            identity_limits_usage_response_cr_links_per_profile_model.to_dict()
-        )
-        assert (
-            identity_limits_usage_response_cr_links_per_profile_model_json2
-            == identity_limits_usage_response_cr_links_per_profile_model_json
-        )
+        identity_limits_usage_response_cr_links_per_profile_model_json2 = identity_limits_usage_response_cr_links_per_profile_model.to_dict()
+        assert identity_limits_usage_response_cr_links_per_profile_model_json2 == identity_limits_usage_response_cr_links_per_profile_model_json
 
 
 class TestModel_IdentityLimitsUsageResponseCrRulesPerProfile:
@@ -11822,37 +11575,19 @@ class TestModel_IdentityLimitsUsageResponseCrRulesPerProfile:
         identity_limits_usage_response_cr_rules_per_profile_model_json['profiles'] = [profile_count_model]
 
         # Construct a model instance of IdentityLimitsUsageResponseCrRulesPerProfile by calling from_dict on the json representation
-        identity_limits_usage_response_cr_rules_per_profile_model = (
-            IdentityLimitsUsageResponseCrRulesPerProfile.from_dict(
-                identity_limits_usage_response_cr_rules_per_profile_model_json
-            )
-        )
+        identity_limits_usage_response_cr_rules_per_profile_model = IdentityLimitsUsageResponseCrRulesPerProfile.from_dict(identity_limits_usage_response_cr_rules_per_profile_model_json)
         assert identity_limits_usage_response_cr_rules_per_profile_model != False
 
         # Construct a model instance of IdentityLimitsUsageResponseCrRulesPerProfile by calling from_dict on the json representation
-        identity_limits_usage_response_cr_rules_per_profile_model_dict = (
-            IdentityLimitsUsageResponseCrRulesPerProfile.from_dict(
-                identity_limits_usage_response_cr_rules_per_profile_model_json
-            ).__dict__
-        )
-        identity_limits_usage_response_cr_rules_per_profile_model2 = IdentityLimitsUsageResponseCrRulesPerProfile(
-            **identity_limits_usage_response_cr_rules_per_profile_model_dict
-        )
+        identity_limits_usage_response_cr_rules_per_profile_model_dict = IdentityLimitsUsageResponseCrRulesPerProfile.from_dict(identity_limits_usage_response_cr_rules_per_profile_model_json).__dict__
+        identity_limits_usage_response_cr_rules_per_profile_model2 = IdentityLimitsUsageResponseCrRulesPerProfile(**identity_limits_usage_response_cr_rules_per_profile_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            identity_limits_usage_response_cr_rules_per_profile_model
-            == identity_limits_usage_response_cr_rules_per_profile_model2
-        )
+        assert identity_limits_usage_response_cr_rules_per_profile_model == identity_limits_usage_response_cr_rules_per_profile_model2
 
         # Convert model instance back to dict and verify no loss of data
-        identity_limits_usage_response_cr_rules_per_profile_model_json2 = (
-            identity_limits_usage_response_cr_rules_per_profile_model.to_dict()
-        )
-        assert (
-            identity_limits_usage_response_cr_rules_per_profile_model_json2
-            == identity_limits_usage_response_cr_rules_per_profile_model_json
-        )
+        identity_limits_usage_response_cr_rules_per_profile_model_json2 = identity_limits_usage_response_cr_rules_per_profile_model.to_dict()
+        assert identity_limits_usage_response_cr_rules_per_profile_model_json2 == identity_limits_usage_response_cr_rules_per_profile_model_json
 
 
 class TestModel_IdentityLimitsUsageResponseServiceidsPerGroup:
@@ -11874,42 +11609,22 @@ class TestModel_IdentityLimitsUsageResponseServiceidsPerGroup:
         # Construct a json representation of a IdentityLimitsUsageResponseServiceidsPerGroup model
         identity_limits_usage_response_serviceids_per_group_model_json = {}
         identity_limits_usage_response_serviceids_per_group_model_json['limit'] = 38
-        identity_limits_usage_response_serviceids_per_group_model_json['serviceid_groups'] = [
-            service_id_group_count_model
-        ]
+        identity_limits_usage_response_serviceids_per_group_model_json['serviceid_groups'] = [service_id_group_count_model]
 
         # Construct a model instance of IdentityLimitsUsageResponseServiceidsPerGroup by calling from_dict on the json representation
-        identity_limits_usage_response_serviceids_per_group_model = (
-            IdentityLimitsUsageResponseServiceidsPerGroup.from_dict(
-                identity_limits_usage_response_serviceids_per_group_model_json
-            )
-        )
+        identity_limits_usage_response_serviceids_per_group_model = IdentityLimitsUsageResponseServiceidsPerGroup.from_dict(identity_limits_usage_response_serviceids_per_group_model_json)
         assert identity_limits_usage_response_serviceids_per_group_model != False
 
         # Construct a model instance of IdentityLimitsUsageResponseServiceidsPerGroup by calling from_dict on the json representation
-        identity_limits_usage_response_serviceids_per_group_model_dict = (
-            IdentityLimitsUsageResponseServiceidsPerGroup.from_dict(
-                identity_limits_usage_response_serviceids_per_group_model_json
-            ).__dict__
-        )
-        identity_limits_usage_response_serviceids_per_group_model2 = IdentityLimitsUsageResponseServiceidsPerGroup(
-            **identity_limits_usage_response_serviceids_per_group_model_dict
-        )
+        identity_limits_usage_response_serviceids_per_group_model_dict = IdentityLimitsUsageResponseServiceidsPerGroup.from_dict(identity_limits_usage_response_serviceids_per_group_model_json).__dict__
+        identity_limits_usage_response_serviceids_per_group_model2 = IdentityLimitsUsageResponseServiceidsPerGroup(**identity_limits_usage_response_serviceids_per_group_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            identity_limits_usage_response_serviceids_per_group_model
-            == identity_limits_usage_response_serviceids_per_group_model2
-        )
+        assert identity_limits_usage_response_serviceids_per_group_model == identity_limits_usage_response_serviceids_per_group_model2
 
         # Convert model instance back to dict and verify no loss of data
-        identity_limits_usage_response_serviceids_per_group_model_json2 = (
-            identity_limits_usage_response_serviceids_per_group_model.to_dict()
-        )
-        assert (
-            identity_limits_usage_response_serviceids_per_group_model_json2
-            == identity_limits_usage_response_serviceids_per_group_model_json
-        )
+        identity_limits_usage_response_serviceids_per_group_model_json2 = identity_limits_usage_response_serviceids_per_group_model.to_dict()
+        assert identity_limits_usage_response_serviceids_per_group_model_json2 == identity_limits_usage_response_serviceids_per_group_model_json
 
 
 class TestModel_IdentityLimitsUsageResponseTemplateVersionsPerTemplate:
@@ -11934,39 +11649,19 @@ class TestModel_IdentityLimitsUsageResponseTemplateVersionsPerTemplate:
         identity_limits_usage_response_template_versions_per_template_model_json['templates'] = [template_count_model]
 
         # Construct a model instance of IdentityLimitsUsageResponseTemplateVersionsPerTemplate by calling from_dict on the json representation
-        identity_limits_usage_response_template_versions_per_template_model = (
-            IdentityLimitsUsageResponseTemplateVersionsPerTemplate.from_dict(
-                identity_limits_usage_response_template_versions_per_template_model_json
-            )
-        )
+        identity_limits_usage_response_template_versions_per_template_model = IdentityLimitsUsageResponseTemplateVersionsPerTemplate.from_dict(identity_limits_usage_response_template_versions_per_template_model_json)
         assert identity_limits_usage_response_template_versions_per_template_model != False
 
         # Construct a model instance of IdentityLimitsUsageResponseTemplateVersionsPerTemplate by calling from_dict on the json representation
-        identity_limits_usage_response_template_versions_per_template_model_dict = (
-            IdentityLimitsUsageResponseTemplateVersionsPerTemplate.from_dict(
-                identity_limits_usage_response_template_versions_per_template_model_json
-            ).__dict__
-        )
-        identity_limits_usage_response_template_versions_per_template_model2 = (
-            IdentityLimitsUsageResponseTemplateVersionsPerTemplate(
-                **identity_limits_usage_response_template_versions_per_template_model_dict
-            )
-        )
+        identity_limits_usage_response_template_versions_per_template_model_dict = IdentityLimitsUsageResponseTemplateVersionsPerTemplate.from_dict(identity_limits_usage_response_template_versions_per_template_model_json).__dict__
+        identity_limits_usage_response_template_versions_per_template_model2 = IdentityLimitsUsageResponseTemplateVersionsPerTemplate(**identity_limits_usage_response_template_versions_per_template_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            identity_limits_usage_response_template_versions_per_template_model
-            == identity_limits_usage_response_template_versions_per_template_model2
-        )
+        assert identity_limits_usage_response_template_versions_per_template_model == identity_limits_usage_response_template_versions_per_template_model2
 
         # Convert model instance back to dict and verify no loss of data
-        identity_limits_usage_response_template_versions_per_template_model_json2 = (
-            identity_limits_usage_response_template_versions_per_template_model.to_dict()
-        )
-        assert (
-            identity_limits_usage_response_template_versions_per_template_model_json2
-            == identity_limits_usage_response_template_versions_per_template_model_json
-        )
+        identity_limits_usage_response_template_versions_per_template_model_json2 = identity_limits_usage_response_template_versions_per_template_model.to_dict()
+        assert identity_limits_usage_response_template_versions_per_template_model_json2 == identity_limits_usage_response_template_versions_per_template_model_json
 
 
 class TestModel_IdentityPreferenceResponse:
@@ -11989,15 +11684,11 @@ class TestModel_IdentityPreferenceResponse:
         identity_preference_response_model_json['value_list_of_strings'] = ['testString']
 
         # Construct a model instance of IdentityPreferenceResponse by calling from_dict on the json representation
-        identity_preference_response_model = IdentityPreferenceResponse.from_dict(
-            identity_preference_response_model_json
-        )
+        identity_preference_response_model = IdentityPreferenceResponse.from_dict(identity_preference_response_model_json)
         assert identity_preference_response_model != False
 
         # Construct a model instance of IdentityPreferenceResponse by calling from_dict on the json representation
-        identity_preference_response_model_dict = IdentityPreferenceResponse.from_dict(
-            identity_preference_response_model_json
-        ).__dict__
+        identity_preference_response_model_dict = IdentityPreferenceResponse.from_dict(identity_preference_response_model_json).__dict__
         identity_preference_response_model2 = IdentityPreferenceResponse(**identity_preference_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -12033,15 +11724,11 @@ class TestModel_IdentityPreferencesResponse:
         identity_preferences_response_model_json['preferences'] = [identity_preference_response_model]
 
         # Construct a model instance of IdentityPreferencesResponse by calling from_dict on the json representation
-        identity_preferences_response_model = IdentityPreferencesResponse.from_dict(
-            identity_preferences_response_model_json
-        )
+        identity_preferences_response_model = IdentityPreferencesResponse.from_dict(identity_preferences_response_model_json)
         assert identity_preferences_response_model != False
 
         # Construct a model instance of IdentityPreferencesResponse by calling from_dict on the json representation
-        identity_preferences_response_model_dict = IdentityPreferencesResponse.from_dict(
-            identity_preferences_response_model_json
-        ).__dict__
+        identity_preferences_response_model_dict = IdentityPreferencesResponse.from_dict(identity_preferences_response_model_json).__dict__
         identity_preferences_response_model2 = IdentityPreferencesResponse(**identity_preferences_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -12103,9 +11790,7 @@ class TestModel_MfaEnrollmentTypeStatus:
         assert mfa_enrollment_type_status_model != False
 
         # Construct a model instance of MfaEnrollmentTypeStatus by calling from_dict on the json representation
-        mfa_enrollment_type_status_model_dict = MfaEnrollmentTypeStatus.from_dict(
-            mfa_enrollment_type_status_model_json
-        ).__dict__
+        mfa_enrollment_type_status_model_dict = MfaEnrollmentTypeStatus.from_dict(mfa_enrollment_type_status_model_json).__dict__
         mfa_enrollment_type_status_model2 = MfaEnrollmentTypeStatus(**mfa_enrollment_type_status_model_dict)
 
         # Verify the model instances are equivalent
@@ -12136,9 +11821,7 @@ class TestModel_PolicyTemplateReference:
         assert policy_template_reference_model != False
 
         # Construct a model instance of PolicyTemplateReference by calling from_dict on the json representation
-        policy_template_reference_model_dict = PolicyTemplateReference.from_dict(
-            policy_template_reference_model_json
-        ).__dict__
+        policy_template_reference_model_dict = PolicyTemplateReference.from_dict(policy_template_reference_model_json).__dict__
         policy_template_reference_model2 = PolicyTemplateReference(**policy_template_reference_model_dict)
 
         # Verify the model instances are equivalent
@@ -12212,15 +11895,11 @@ class TestModel_ProfileClaimRuleConditions:
         profile_claim_rule_conditions_model_json['value'] = 'testString'
 
         # Construct a model instance of ProfileClaimRuleConditions by calling from_dict on the json representation
-        profile_claim_rule_conditions_model = ProfileClaimRuleConditions.from_dict(
-            profile_claim_rule_conditions_model_json
-        )
+        profile_claim_rule_conditions_model = ProfileClaimRuleConditions.from_dict(profile_claim_rule_conditions_model_json)
         assert profile_claim_rule_conditions_model != False
 
         # Construct a model instance of ProfileClaimRuleConditions by calling from_dict on the json representation
-        profile_claim_rule_conditions_model_dict = ProfileClaimRuleConditions.from_dict(
-            profile_claim_rule_conditions_model_json
-        ).__dict__
+        profile_claim_rule_conditions_model_dict = ProfileClaimRuleConditions.from_dict(profile_claim_rule_conditions_model_json).__dict__
         profile_claim_rule_conditions_model2 = ProfileClaimRuleConditions(**profile_claim_rule_conditions_model_dict)
 
         # Verify the model instances are equivalent
@@ -12354,9 +12033,7 @@ class TestModel_ProfileIdentitiesResponse:
         assert profile_identities_response_model != False
 
         # Construct a model instance of ProfileIdentitiesResponse by calling from_dict on the json representation
-        profile_identities_response_model_dict = ProfileIdentitiesResponse.from_dict(
-            profile_identities_response_model_json
-        ).__dict__
+        profile_identities_response_model_dict = ProfileIdentitiesResponse.from_dict(profile_identities_response_model_json).__dict__
         profile_identities_response_model2 = ProfileIdentitiesResponse(**profile_identities_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -12389,9 +12066,7 @@ class TestModel_ProfileIdentityRequest:
         assert profile_identity_request_model != False
 
         # Construct a model instance of ProfileIdentityRequest by calling from_dict on the json representation
-        profile_identity_request_model_dict = ProfileIdentityRequest.from_dict(
-            profile_identity_request_model_json
-        ).__dict__
+        profile_identity_request_model_dict = ProfileIdentityRequest.from_dict(profile_identity_request_model_json).__dict__
         profile_identity_request_model2 = ProfileIdentityRequest(**profile_identity_request_model_dict)
 
         # Verify the model instances are equivalent
@@ -12425,9 +12100,7 @@ class TestModel_ProfileIdentityResponse:
         assert profile_identity_response_model != False
 
         # Construct a model instance of ProfileIdentityResponse by calling from_dict on the json representation
-        profile_identity_response_model_dict = ProfileIdentityResponse.from_dict(
-            profile_identity_response_model_json
-        ).__dict__
+        profile_identity_response_model_dict = ProfileIdentityResponse.from_dict(profile_identity_response_model_json).__dict__
         profile_identity_response_model2 = ProfileIdentityResponse(**profile_identity_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -12685,15 +12358,11 @@ class TestModel_ReportMfaEnrollmentStatus:
         report_mfa_enrollment_status_model_json['users'] = [user_report_mfa_enrollment_status_model]
 
         # Construct a model instance of ReportMfaEnrollmentStatus by calling from_dict on the json representation
-        report_mfa_enrollment_status_model = ReportMfaEnrollmentStatus.from_dict(
-            report_mfa_enrollment_status_model_json
-        )
+        report_mfa_enrollment_status_model = ReportMfaEnrollmentStatus.from_dict(report_mfa_enrollment_status_model_json)
         assert report_mfa_enrollment_status_model != False
 
         # Construct a model instance of ReportMfaEnrollmentStatus by calling from_dict on the json representation
-        report_mfa_enrollment_status_model_dict = ReportMfaEnrollmentStatus.from_dict(
-            report_mfa_enrollment_status_model_json
-        ).__dict__
+        report_mfa_enrollment_status_model_dict = ReportMfaEnrollmentStatus.from_dict(report_mfa_enrollment_status_model_json).__dict__
         report_mfa_enrollment_status_model2 = ReportMfaEnrollmentStatus(**report_mfa_enrollment_status_model_dict)
 
         # Verify the model instances are equivalent
@@ -13104,9 +12773,7 @@ class TestModel_TemplateAccountSettings:
 
         template_account_settings_restrict_user_domains_model = {}  # TemplateAccountSettingsRestrictUserDomains
         template_account_settings_restrict_user_domains_model['account_sufficient'] = True
-        template_account_settings_restrict_user_domains_model['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        template_account_settings_restrict_user_domains_model['restrictions'] = [account_settings_user_domain_restriction_model]
 
         # Construct a json representation of a TemplateAccountSettings model
         template_account_settings_model_json = {}
@@ -13121,18 +12788,14 @@ class TestModel_TemplateAccountSettings:
         template_account_settings_model_json['system_access_token_expiration_in_seconds'] = '3600'
         template_account_settings_model_json['system_refresh_token_expiration_in_seconds'] = '259200'
         template_account_settings_model_json['restrict_user_list_visibility'] = 'RESTRICTED'
-        template_account_settings_model_json['restrict_user_domains'] = (
-            template_account_settings_restrict_user_domains_model
-        )
+        template_account_settings_model_json['restrict_user_domains'] = template_account_settings_restrict_user_domains_model
 
         # Construct a model instance of TemplateAccountSettings by calling from_dict on the json representation
         template_account_settings_model = TemplateAccountSettings.from_dict(template_account_settings_model_json)
         assert template_account_settings_model != False
 
         # Construct a model instance of TemplateAccountSettings by calling from_dict on the json representation
-        template_account_settings_model_dict = TemplateAccountSettings.from_dict(
-            template_account_settings_model_json
-        ).__dict__
+        template_account_settings_model_dict = TemplateAccountSettings.from_dict(template_account_settings_model_json).__dict__
         template_account_settings_model2 = TemplateAccountSettings(**template_account_settings_model_dict)
 
         # Verify the model instances are equivalent
@@ -13163,40 +12826,22 @@ class TestModel_TemplateAccountSettingsRestrictUserDomains:
         # Construct a json representation of a TemplateAccountSettingsRestrictUserDomains model
         template_account_settings_restrict_user_domains_model_json = {}
         template_account_settings_restrict_user_domains_model_json['account_sufficient'] = True
-        template_account_settings_restrict_user_domains_model_json['restrictions'] = [
-            account_settings_user_domain_restriction_model
-        ]
+        template_account_settings_restrict_user_domains_model_json['restrictions'] = [account_settings_user_domain_restriction_model]
 
         # Construct a model instance of TemplateAccountSettingsRestrictUserDomains by calling from_dict on the json representation
-        template_account_settings_restrict_user_domains_model = TemplateAccountSettingsRestrictUserDomains.from_dict(
-            template_account_settings_restrict_user_domains_model_json
-        )
+        template_account_settings_restrict_user_domains_model = TemplateAccountSettingsRestrictUserDomains.from_dict(template_account_settings_restrict_user_domains_model_json)
         assert template_account_settings_restrict_user_domains_model != False
 
         # Construct a model instance of TemplateAccountSettingsRestrictUserDomains by calling from_dict on the json representation
-        template_account_settings_restrict_user_domains_model_dict = (
-            TemplateAccountSettingsRestrictUserDomains.from_dict(
-                template_account_settings_restrict_user_domains_model_json
-            ).__dict__
-        )
-        template_account_settings_restrict_user_domains_model2 = TemplateAccountSettingsRestrictUserDomains(
-            **template_account_settings_restrict_user_domains_model_dict
-        )
+        template_account_settings_restrict_user_domains_model_dict = TemplateAccountSettingsRestrictUserDomains.from_dict(template_account_settings_restrict_user_domains_model_json).__dict__
+        template_account_settings_restrict_user_domains_model2 = TemplateAccountSettingsRestrictUserDomains(**template_account_settings_restrict_user_domains_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            template_account_settings_restrict_user_domains_model
-            == template_account_settings_restrict_user_domains_model2
-        )
+        assert template_account_settings_restrict_user_domains_model == template_account_settings_restrict_user_domains_model2
 
         # Convert model instance back to dict and verify no loss of data
-        template_account_settings_restrict_user_domains_model_json2 = (
-            template_account_settings_restrict_user_domains_model.to_dict()
-        )
-        assert (
-            template_account_settings_restrict_user_domains_model_json2
-            == template_account_settings_restrict_user_domains_model_json
-        )
+        template_account_settings_restrict_user_domains_model_json2 = template_account_settings_restrict_user_domains_model.to_dict()
+        assert template_account_settings_restrict_user_domains_model_json2 == template_account_settings_restrict_user_domains_model_json
 
 
 class TestModel_TemplateAssignmentListResponse:
@@ -13243,12 +12888,8 @@ class TestModel_TemplateAssignmentListResponse:
         template_assignment_response_resource_model = {}  # TemplateAssignmentResponseResource
         template_assignment_response_resource_model['target'] = 'testString'
         template_assignment_response_resource_model['profile'] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model['account_settings'] = (
-            template_assignment_response_resource_detail_model
-        )
-        template_assignment_response_resource_model['policy_template_references'] = [
-            template_assignment_response_resource_detail_model
-        ]
+        template_assignment_response_resource_model['account_settings'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model['policy_template_references'] = [template_assignment_response_resource_detail_model]
 
         enity_history_record_model = {}  # EnityHistoryRecord
         enity_history_record_model['timestamp'] = 'testString'
@@ -13287,18 +12928,12 @@ class TestModel_TemplateAssignmentListResponse:
         template_assignment_list_response_model_json['assignments'] = [template_assignment_response_model]
 
         # Construct a model instance of TemplateAssignmentListResponse by calling from_dict on the json representation
-        template_assignment_list_response_model = TemplateAssignmentListResponse.from_dict(
-            template_assignment_list_response_model_json
-        )
+        template_assignment_list_response_model = TemplateAssignmentListResponse.from_dict(template_assignment_list_response_model_json)
         assert template_assignment_list_response_model != False
 
         # Construct a model instance of TemplateAssignmentListResponse by calling from_dict on the json representation
-        template_assignment_list_response_model_dict = TemplateAssignmentListResponse.from_dict(
-            template_assignment_list_response_model_json
-        ).__dict__
-        template_assignment_list_response_model2 = TemplateAssignmentListResponse(
-            **template_assignment_list_response_model_dict
-        )
+        template_assignment_list_response_model_dict = TemplateAssignmentListResponse.from_dict(template_assignment_list_response_model_json).__dict__
+        template_assignment_list_response_model2 = TemplateAssignmentListResponse(**template_assignment_list_response_model_dict)
 
         # Verify the model instances are equivalent
         assert template_assignment_list_response_model == template_assignment_list_response_model2
@@ -13323,15 +12958,11 @@ class TestModel_TemplateAssignmentResource:
         template_assignment_resource_model_json['id'] = 'testString'
 
         # Construct a model instance of TemplateAssignmentResource by calling from_dict on the json representation
-        template_assignment_resource_model = TemplateAssignmentResource.from_dict(
-            template_assignment_resource_model_json
-        )
+        template_assignment_resource_model = TemplateAssignmentResource.from_dict(template_assignment_resource_model_json)
         assert template_assignment_resource_model != False
 
         # Construct a model instance of TemplateAssignmentResource by calling from_dict on the json representation
-        template_assignment_resource_model_dict = TemplateAssignmentResource.from_dict(
-            template_assignment_resource_model_json
-        ).__dict__
+        template_assignment_resource_model_dict = TemplateAssignmentResource.from_dict(template_assignment_resource_model_json).__dict__
         template_assignment_resource_model2 = TemplateAssignmentResource(**template_assignment_resource_model_dict)
 
         # Verify the model instances are equivalent
@@ -13360,18 +12991,12 @@ class TestModel_TemplateAssignmentResourceError:
         template_assignment_resource_error_model_json['statusCode'] = 'testString'
 
         # Construct a model instance of TemplateAssignmentResourceError by calling from_dict on the json representation
-        template_assignment_resource_error_model = TemplateAssignmentResourceError.from_dict(
-            template_assignment_resource_error_model_json
-        )
+        template_assignment_resource_error_model = TemplateAssignmentResourceError.from_dict(template_assignment_resource_error_model_json)
         assert template_assignment_resource_error_model != False
 
         # Construct a model instance of TemplateAssignmentResourceError by calling from_dict on the json representation
-        template_assignment_resource_error_model_dict = TemplateAssignmentResourceError.from_dict(
-            template_assignment_resource_error_model_json
-        ).__dict__
-        template_assignment_resource_error_model2 = TemplateAssignmentResourceError(
-            **template_assignment_resource_error_model_dict
-        )
+        template_assignment_resource_error_model_dict = TemplateAssignmentResourceError.from_dict(template_assignment_resource_error_model_json).__dict__
+        template_assignment_resource_error_model2 = TemplateAssignmentResourceError(**template_assignment_resource_error_model_dict)
 
         # Verify the model instances are equivalent
         assert template_assignment_resource_error_model == template_assignment_resource_error_model2
@@ -13425,12 +13050,8 @@ class TestModel_TemplateAssignmentResponse:
         template_assignment_response_resource_model = {}  # TemplateAssignmentResponseResource
         template_assignment_response_resource_model['target'] = 'testString'
         template_assignment_response_resource_model['profile'] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model['account_settings'] = (
-            template_assignment_response_resource_detail_model
-        )
-        template_assignment_response_resource_model['policy_template_references'] = [
-            template_assignment_response_resource_detail_model
-        ]
+        template_assignment_response_resource_model['account_settings'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model['policy_template_references'] = [template_assignment_response_resource_detail_model]
 
         enity_history_record_model = {}  # EnityHistoryRecord
         enity_history_record_model['timestamp'] = 'testString'
@@ -13460,15 +13081,11 @@ class TestModel_TemplateAssignmentResponse:
         template_assignment_response_model_json['entity_tag'] = 'testString'
 
         # Construct a model instance of TemplateAssignmentResponse by calling from_dict on the json representation
-        template_assignment_response_model = TemplateAssignmentResponse.from_dict(
-            template_assignment_response_model_json
-        )
+        template_assignment_response_model = TemplateAssignmentResponse.from_dict(template_assignment_response_model_json)
         assert template_assignment_response_model != False
 
         # Construct a model instance of TemplateAssignmentResponse by calling from_dict on the json representation
-        template_assignment_response_model_dict = TemplateAssignmentResponse.from_dict(
-            template_assignment_response_model_json
-        ).__dict__
+        template_assignment_response_model_dict = TemplateAssignmentResponse.from_dict(template_assignment_response_model_json).__dict__
         template_assignment_response_model2 = TemplateAssignmentResponse(**template_assignment_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -13511,26 +13128,16 @@ class TestModel_TemplateAssignmentResponseResource:
         template_assignment_response_resource_model_json = {}
         template_assignment_response_resource_model_json['target'] = 'testString'
         template_assignment_response_resource_model_json['profile'] = template_assignment_response_resource_detail_model
-        template_assignment_response_resource_model_json['account_settings'] = (
-            template_assignment_response_resource_detail_model
-        )
-        template_assignment_response_resource_model_json['policy_template_references'] = [
-            template_assignment_response_resource_detail_model
-        ]
+        template_assignment_response_resource_model_json['account_settings'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model_json['policy_template_references'] = [template_assignment_response_resource_detail_model]
 
         # Construct a model instance of TemplateAssignmentResponseResource by calling from_dict on the json representation
-        template_assignment_response_resource_model = TemplateAssignmentResponseResource.from_dict(
-            template_assignment_response_resource_model_json
-        )
+        template_assignment_response_resource_model = TemplateAssignmentResponseResource.from_dict(template_assignment_response_resource_model_json)
         assert template_assignment_response_resource_model != False
 
         # Construct a model instance of TemplateAssignmentResponseResource by calling from_dict on the json representation
-        template_assignment_response_resource_model_dict = TemplateAssignmentResponseResource.from_dict(
-            template_assignment_response_resource_model_json
-        ).__dict__
-        template_assignment_response_resource_model2 = TemplateAssignmentResponseResource(
-            **template_assignment_response_resource_model_dict
-        )
+        template_assignment_response_resource_model_dict = TemplateAssignmentResponseResource.from_dict(template_assignment_response_resource_model_json).__dict__
+        template_assignment_response_resource_model2 = TemplateAssignmentResponseResource(**template_assignment_response_resource_model_dict)
 
         # Verify the model instances are equivalent
         assert template_assignment_response_resource_model == template_assignment_response_resource_model2
@@ -13566,36 +13173,23 @@ class TestModel_TemplateAssignmentResponseResourceDetail:
         template_assignment_response_resource_detail_model_json['id'] = 'testString'
         template_assignment_response_resource_detail_model_json['version'] = 'testString'
         template_assignment_response_resource_detail_model_json['resource_created'] = template_assignment_resource_model
-        template_assignment_response_resource_detail_model_json['error_message'] = (
-            template_assignment_resource_error_model
-        )
+        template_assignment_response_resource_detail_model_json['error_message'] = template_assignment_resource_error_model
         template_assignment_response_resource_detail_model_json['status'] = 'testString'
 
         # Construct a model instance of TemplateAssignmentResponseResourceDetail by calling from_dict on the json representation
-        template_assignment_response_resource_detail_model = TemplateAssignmentResponseResourceDetail.from_dict(
-            template_assignment_response_resource_detail_model_json
-        )
+        template_assignment_response_resource_detail_model = TemplateAssignmentResponseResourceDetail.from_dict(template_assignment_response_resource_detail_model_json)
         assert template_assignment_response_resource_detail_model != False
 
         # Construct a model instance of TemplateAssignmentResponseResourceDetail by calling from_dict on the json representation
-        template_assignment_response_resource_detail_model_dict = TemplateAssignmentResponseResourceDetail.from_dict(
-            template_assignment_response_resource_detail_model_json
-        ).__dict__
-        template_assignment_response_resource_detail_model2 = TemplateAssignmentResponseResourceDetail(
-            **template_assignment_response_resource_detail_model_dict
-        )
+        template_assignment_response_resource_detail_model_dict = TemplateAssignmentResponseResourceDetail.from_dict(template_assignment_response_resource_detail_model_json).__dict__
+        template_assignment_response_resource_detail_model2 = TemplateAssignmentResponseResourceDetail(**template_assignment_response_resource_detail_model_dict)
 
         # Verify the model instances are equivalent
         assert template_assignment_response_resource_detail_model == template_assignment_response_resource_detail_model2
 
         # Convert model instance back to dict and verify no loss of data
-        template_assignment_response_resource_detail_model_json2 = (
-            template_assignment_response_resource_detail_model.to_dict()
-        )
-        assert (
-            template_assignment_response_resource_detail_model_json2
-            == template_assignment_response_resource_detail_model_json
-        )
+        template_assignment_response_resource_detail_model_json2 = template_assignment_response_resource_detail_model.to_dict()
+        assert template_assignment_response_resource_detail_model_json2 == template_assignment_response_resource_detail_model_json
 
 
 class TestModel_TemplateCount:
@@ -13668,18 +13262,12 @@ class TestModel_TemplateProfileComponentRequest:
         template_profile_component_request_model_json['identities'] = [profile_identity_request_model]
 
         # Construct a model instance of TemplateProfileComponentRequest by calling from_dict on the json representation
-        template_profile_component_request_model = TemplateProfileComponentRequest.from_dict(
-            template_profile_component_request_model_json
-        )
+        template_profile_component_request_model = TemplateProfileComponentRequest.from_dict(template_profile_component_request_model_json)
         assert template_profile_component_request_model != False
 
         # Construct a model instance of TemplateProfileComponentRequest by calling from_dict on the json representation
-        template_profile_component_request_model_dict = TemplateProfileComponentRequest.from_dict(
-            template_profile_component_request_model_json
-        ).__dict__
-        template_profile_component_request_model2 = TemplateProfileComponentRequest(
-            **template_profile_component_request_model_dict
-        )
+        template_profile_component_request_model_dict = TemplateProfileComponentRequest.from_dict(template_profile_component_request_model_json).__dict__
+        template_profile_component_request_model2 = TemplateProfileComponentRequest(**template_profile_component_request_model_dict)
 
         # Verify the model instances are equivalent
         assert template_profile_component_request_model == template_profile_component_request_model2
@@ -13729,18 +13317,12 @@ class TestModel_TemplateProfileComponentResponse:
         template_profile_component_response_model_json['identities'] = [profile_identity_response_model]
 
         # Construct a model instance of TemplateProfileComponentResponse by calling from_dict on the json representation
-        template_profile_component_response_model = TemplateProfileComponentResponse.from_dict(
-            template_profile_component_response_model_json
-        )
+        template_profile_component_response_model = TemplateProfileComponentResponse.from_dict(template_profile_component_response_model_json)
         assert template_profile_component_response_model != False
 
         # Construct a model instance of TemplateProfileComponentResponse by calling from_dict on the json representation
-        template_profile_component_response_model_dict = TemplateProfileComponentResponse.from_dict(
-            template_profile_component_response_model_json
-        ).__dict__
-        template_profile_component_response_model2 = TemplateProfileComponentResponse(
-            **template_profile_component_response_model_dict
-        )
+        template_profile_component_response_model_dict = TemplateProfileComponentResponse.from_dict(template_profile_component_response_model_json).__dict__
+        template_profile_component_response_model2 = TemplateProfileComponentResponse(**template_profile_component_response_model_dict)
 
         # Verify the model instances are equivalent
         assert template_profile_component_response_model == template_profile_component_response_model2
@@ -13849,18 +13431,12 @@ class TestModel_TrustedProfileTemplateClaimRule:
         trusted_profile_template_claim_rule_model_json['conditions'] = [profile_claim_rule_conditions_model]
 
         # Construct a model instance of TrustedProfileTemplateClaimRule by calling from_dict on the json representation
-        trusted_profile_template_claim_rule_model = TrustedProfileTemplateClaimRule.from_dict(
-            trusted_profile_template_claim_rule_model_json
-        )
+        trusted_profile_template_claim_rule_model = TrustedProfileTemplateClaimRule.from_dict(trusted_profile_template_claim_rule_model_json)
         assert trusted_profile_template_claim_rule_model != False
 
         # Construct a model instance of TrustedProfileTemplateClaimRule by calling from_dict on the json representation
-        trusted_profile_template_claim_rule_model_dict = TrustedProfileTemplateClaimRule.from_dict(
-            trusted_profile_template_claim_rule_model_json
-        ).__dict__
-        trusted_profile_template_claim_rule_model2 = TrustedProfileTemplateClaimRule(
-            **trusted_profile_template_claim_rule_model_dict
-        )
+        trusted_profile_template_claim_rule_model_dict = TrustedProfileTemplateClaimRule.from_dict(trusted_profile_template_claim_rule_model_json).__dict__
+        trusted_profile_template_claim_rule_model2 = TrustedProfileTemplateClaimRule(**trusted_profile_template_claim_rule_model_dict)
 
         # Verify the model instances are equivalent
         assert trusted_profile_template_claim_rule_model == trusted_profile_template_claim_rule_model2
@@ -13979,15 +13555,11 @@ class TestModel_TrustedProfileTemplateList:
         trusted_profile_template_list_model_json['profile_templates'] = [trusted_profile_template_response_model]
 
         # Construct a model instance of TrustedProfileTemplateList by calling from_dict on the json representation
-        trusted_profile_template_list_model = TrustedProfileTemplateList.from_dict(
-            trusted_profile_template_list_model_json
-        )
+        trusted_profile_template_list_model = TrustedProfileTemplateList.from_dict(trusted_profile_template_list_model_json)
         assert trusted_profile_template_list_model != False
 
         # Construct a model instance of TrustedProfileTemplateList by calling from_dict on the json representation
-        trusted_profile_template_list_model_dict = TrustedProfileTemplateList.from_dict(
-            trusted_profile_template_list_model_json
-        ).__dict__
+        trusted_profile_template_list_model_dict = TrustedProfileTemplateList.from_dict(trusted_profile_template_list_model_json).__dict__
         trusted_profile_template_list_model2 = TrustedProfileTemplateList(**trusted_profile_template_list_model_dict)
 
         # Verify the model instances are equivalent
@@ -14085,18 +13657,12 @@ class TestModel_TrustedProfileTemplateResponse:
         trusted_profile_template_response_model_json['last_modified_by_id'] = 'testString'
 
         # Construct a model instance of TrustedProfileTemplateResponse by calling from_dict on the json representation
-        trusted_profile_template_response_model = TrustedProfileTemplateResponse.from_dict(
-            trusted_profile_template_response_model_json
-        )
+        trusted_profile_template_response_model = TrustedProfileTemplateResponse.from_dict(trusted_profile_template_response_model_json)
         assert trusted_profile_template_response_model != False
 
         # Construct a model instance of TrustedProfileTemplateResponse by calling from_dict on the json representation
-        trusted_profile_template_response_model_dict = TrustedProfileTemplateResponse.from_dict(
-            trusted_profile_template_response_model_json
-        ).__dict__
-        trusted_profile_template_response_model2 = TrustedProfileTemplateResponse(
-            **trusted_profile_template_response_model_dict
-        )
+        trusted_profile_template_response_model_dict = TrustedProfileTemplateResponse.from_dict(trusted_profile_template_response_model_json).__dict__
+        trusted_profile_template_response_model2 = TrustedProfileTemplateResponse(**trusted_profile_template_response_model_dict)
 
         # Verify the model instances are equivalent
         assert trusted_profile_template_response_model == trusted_profile_template_response_model2
@@ -14345,18 +13911,12 @@ class TestModel_UserReportMfaEnrollmentStatus:
         user_report_mfa_enrollment_status_model_json['account_based_mfa'] = account_based_mfa_enrollment_model
 
         # Construct a model instance of UserReportMfaEnrollmentStatus by calling from_dict on the json representation
-        user_report_mfa_enrollment_status_model = UserReportMfaEnrollmentStatus.from_dict(
-            user_report_mfa_enrollment_status_model_json
-        )
+        user_report_mfa_enrollment_status_model = UserReportMfaEnrollmentStatus.from_dict(user_report_mfa_enrollment_status_model_json)
         assert user_report_mfa_enrollment_status_model != False
 
         # Construct a model instance of UserReportMfaEnrollmentStatus by calling from_dict on the json representation
-        user_report_mfa_enrollment_status_model_dict = UserReportMfaEnrollmentStatus.from_dict(
-            user_report_mfa_enrollment_status_model_json
-        ).__dict__
-        user_report_mfa_enrollment_status_model2 = UserReportMfaEnrollmentStatus(
-            **user_report_mfa_enrollment_status_model_dict
-        )
+        user_report_mfa_enrollment_status_model_dict = UserReportMfaEnrollmentStatus.from_dict(user_report_mfa_enrollment_status_model_json).__dict__
+        user_report_mfa_enrollment_status_model2 = UserReportMfaEnrollmentStatus(**user_report_mfa_enrollment_status_model_dict)
 
         # Verify the model instances are equivalent
         assert user_report_mfa_enrollment_status_model == user_report_mfa_enrollment_status_model2

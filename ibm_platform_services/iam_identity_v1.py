@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.113.0-3f9df07a-20260317-160650
+# IBM OpenAPI SDK Code Generator Version: 3.113.1-d76630af-20260320-135953
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -56,7 +56,9 @@ class IamIdentityV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -1796,7 +1798,7 @@ class IamIdentityV1(BaseService):
                'Profile-SAML'.
         :param str cr_type: (optional) The compute resource type the rule applies
                to, required only if type is specified as 'Profile-CR'. Valid values are
-               VSI, IKS_SA, ROKS_SA.
+               VSI, PVS, IKS_SA, ROKS_SA.
         :param int expiration: (optional) Session expiration in seconds, only
                required if type is 'Profile-SAML'.
         :param dict headers: A `dict` containing the request headers
@@ -1985,7 +1987,7 @@ class IamIdentityV1(BaseService):
                'Profile-SAML'.
         :param str cr_type: (optional) The compute resource type the rule applies
                to, required only if type is specified as 'Profile-CR'. Valid values are
-               VSI, IKS_SA, ROKS_SA.
+               VSI, PVS, IKS_SA, ROKS_SA.
         :param int expiration: (optional) Session expiration in seconds, only
                required if type is 'Profile-SAML'.
         :param dict headers: A `dict` containing the request headers
@@ -2115,7 +2117,7 @@ class IamIdentityV1(BaseService):
         trusted profile.
 
         :param str profile_id: ID of the trusted profile.
-        :param str cr_type: The compute resource type. Valid values are VSI,
+        :param str cr_type: The compute resource type. Valid values are VSI, PVS,
                IKS_SA, ROKS_SA.
         :param CreateProfileLinkRequestLink link: Link details.
         :param str name: (optional) Optional name of the Link.
@@ -2233,7 +2235,7 @@ class IamIdentityV1(BaseService):
         Deletes compute resource link of a Trusted Profile matching the given parameters.
 
         :param str profile_id: The unique ID of the Trusted Profile.
-        :param str type: The compute resource type. Valid values are VSI, BMS,
+        :param str type: The compute resource type. Valid values are VSI, PVS, BMS,
                IKS_SA, ROKS_SA, CE.
         :param str crn: (optional) CRN of the compute resource (IKS/ROKS/VSI/BMS).
         :param str namespace: (optional) Namespace of the compute resource
@@ -3331,9 +3333,7 @@ class IamIdentityV1(BaseService):
         path_param_keys = ['account_id', 'iam_id', 'service', 'preference_id']
         path_param_values = self.encode_path_vars(account_id, iam_id, service, preference_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}'.format(
-            **path_param_dict
-        )
+        url = '/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}'.format(**path_param_dict)
         request = self.prepare_request(
             method='PUT',
             url=url,
@@ -3392,9 +3392,7 @@ class IamIdentityV1(BaseService):
         path_param_keys = ['account_id', 'iam_id', 'service', 'preference_id']
         path_param_values = self.encode_path_vars(account_id, iam_id, service, preference_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}'.format(
-            **path_param_dict
-        )
+        url = '/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}'.format(**path_param_dict)
         request = self.prepare_request(
             method='DELETE',
             url=url,
@@ -3463,9 +3461,7 @@ class IamIdentityV1(BaseService):
         path_param_keys = ['account_id', 'iam_id', 'service', 'preference_id']
         path_param_values = self.encode_path_vars(account_id, iam_id, service, preference_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}'.format(
-            **path_param_dict
-        )
+        url = '/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}'.format(**path_param_dict)
         request = self.prepare_request(
             method='GET',
             url=url,
@@ -5637,7 +5633,6 @@ class ListApiKeysEnums:
 
         ENTITY = 'entity'
         ACCOUNT = 'account'
-
     class Type(str, Enum):
         """
         Optional parameter to filter the type of the queried API keys. Can be 'user' or
@@ -5646,7 +5641,6 @@ class ListApiKeysEnums:
 
         USER = 'user'
         SERVICEID = 'serviceid'
-
     class Order(str, Enum):
         """
         Optional sort order, valid values are asc and desc. Default: asc.
@@ -5729,7 +5723,6 @@ class ListProfileTemplatesEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -5753,7 +5746,6 @@ class ListVersionsOfProfileTemplateEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -5775,7 +5767,6 @@ class ListTrustedProfileAssignmentsEnums:
 
         ACCOUNT = 'Account'
         ACCOUNTGROUP = 'AccountGroup'
-
     class Sort(str, Enum):
         """
         If specified, the items are sorted by the value of this property.
@@ -5784,7 +5775,6 @@ class ListTrustedProfileAssignmentsEnums:
         TEMPLATE_ID = 'template_id'
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
-
     class Order(str, Enum):
         """
         Sort order.
@@ -5808,7 +5798,6 @@ class ListAccountSettingsTemplatesEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -5832,7 +5821,6 @@ class ListVersionsOfAccountSettingsTemplateEnums:
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
         NAME = 'name'
-
     class Order(str, Enum):
         """
         Optional sort order.
@@ -5854,7 +5842,6 @@ class ListAccountSettingsAssignmentsEnums:
 
         ACCOUNT = 'Account'
         ACCOUNTGROUP = 'AccountGroup'
-
     class Sort(str, Enum):
         """
         If specified, the items are sorted by the value of this property.
@@ -5863,7 +5850,6 @@ class ListAccountSettingsAssignmentsEnums:
         TEMPLATE_ID = 'template_id'
         CREATED_AT = 'created_at'
         LAST_MODIFIED_AT = 'last_modified_at'
-
     class Order(str, Enum):
         """
         Sort order.
@@ -6210,21 +6196,15 @@ class AccountSettingsAssignedTemplatesSection:
         if (template_id := _dict.get('template_id')) is not None:
             args['template_id'] = template_id
         else:
-            raise ValueError(
-                'Required property \'template_id\' not present in AccountSettingsAssignedTemplatesSection JSON'
-            )
+            raise ValueError('Required property \'template_id\' not present in AccountSettingsAssignedTemplatesSection JSON')
         if (template_version := _dict.get('template_version')) is not None:
             args['template_version'] = template_version
         else:
-            raise ValueError(
-                'Required property \'template_version\' not present in AccountSettingsAssignedTemplatesSection JSON'
-            )
+            raise ValueError('Required property \'template_version\' not present in AccountSettingsAssignedTemplatesSection JSON')
         if (template_name := _dict.get('template_name')) is not None:
             args['template_name'] = template_name
         else:
-            raise ValueError(
-                'Required property \'template_name\' not present in AccountSettingsAssignedTemplatesSection JSON'
-            )
+            raise ValueError('Required property \'template_name\' not present in AccountSettingsAssignedTemplatesSection JSON')
         if (restrict_create_service_id := _dict.get('restrict_create_service_id')) is not None:
             args['restrict_create_service_id'] = restrict_create_service_id
         if (restrict_create_platform_apikey := _dict.get('restrict_create_platform_apikey')) is not None:
@@ -6239,22 +6219,16 @@ class AccountSettingsAssignedTemplatesSection:
             args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
             args['max_sessions_per_identity'] = max_sessions_per_identity
-        if (
-            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
-        ) is not None:
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
             args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
-        if (
-            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
-        ) is not None:
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
             args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         if (restrict_user_list_visibility := _dict.get('restrict_user_list_visibility')) is not None:
             args['restrict_user_list_visibility'] = restrict_user_list_visibility
         if (user_mfa := _dict.get('user_mfa')) is not None:
             args['user_mfa'] = [AccountSettingsUserMFAResponse.from_dict(v) for v in user_mfa]
         if (restrict_user_domains := _dict.get('restrict_user_domains')) is not None:
-            args['restrict_user_domains'] = AssignedTemplatesAccountSettingsRestrictUserDomains.from_dict(
-                restrict_user_domains
-            )
+            args['restrict_user_domains'] = AssignedTemplatesAccountSettingsRestrictUserDomains.from_dict(restrict_user_domains)
         return cls(**args)
 
     @classmethod
@@ -6285,15 +6259,9 @@ class AccountSettingsAssignedTemplatesSection:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         if hasattr(self, 'restrict_user_list_visibility') and self.restrict_user_list_visibility is not None:
             _dict['restrict_user_list_visibility'] = self.restrict_user_list_visibility
@@ -6343,6 +6311,7 @@ class AccountSettingsAssignedTemplatesSection:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating the resource is access controlled. Valid values:
@@ -6355,6 +6324,7 @@ class AccountSettingsAssignedTemplatesSection:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -6376,6 +6346,7 @@ class AccountSettingsAssignedTemplatesSection:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
+
     class RestrictUserListVisibilityEnum(str, Enum):
         """
         Defines whether or not user visibility is access controlled. Valid values:
@@ -6390,6 +6361,7 @@ class AccountSettingsAssignedTemplatesSection:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
 
 class AccountSettingsEffectiveSection:
@@ -6555,13 +6527,9 @@ class AccountSettingsEffectiveSection:
             args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
             args['max_sessions_per_identity'] = max_sessions_per_identity
-        if (
-            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
-        ) is not None:
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
             args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
-        if (
-            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
-        ) is not None:
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
             args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         return cls(**args)
 
@@ -6597,15 +6565,9 @@ class AccountSettingsEffectiveSection:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         return _dict
 
@@ -6640,6 +6602,7 @@ class AccountSettingsEffectiveSection:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating the resource is access controlled. Valid values:
@@ -6653,6 +6616,7 @@ class AccountSettingsEffectiveSection:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictUserListVisibilityEnum(str, Enum):
         """
         Defines whether or not user visibility is access controlled. Valid values:
@@ -6665,6 +6629,7 @@ class AccountSettingsEffectiveSection:
 
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         RESTRICTED = 'RESTRICTED'
+
 
     class MfaEnum(str, Enum):
         """
@@ -6685,6 +6650,7 @@ class AccountSettingsEffectiveSection:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class AccountSettingsResponse:
@@ -6875,15 +6841,11 @@ class AccountSettingsResponse:
         if (restrict_create_service_id := _dict.get('restrict_create_service_id')) is not None:
             args['restrict_create_service_id'] = restrict_create_service_id
         else:
-            raise ValueError(
-                'Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON')
         if (restrict_create_platform_apikey := _dict.get('restrict_create_platform_apikey')) is not None:
             args['restrict_create_platform_apikey'] = restrict_create_platform_apikey
         else:
-            raise ValueError(
-                'Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON')
         if (allowed_ip_addresses := _dict.get('allowed_ip_addresses')) is not None:
             args['allowed_ip_addresses'] = allowed_ip_addresses
         else:
@@ -6895,51 +6857,33 @@ class AccountSettingsResponse:
         if (session_expiration_in_seconds := _dict.get('session_expiration_in_seconds')) is not None:
             args['session_expiration_in_seconds'] = session_expiration_in_seconds
         else:
-            raise ValueError(
-                'Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
         if (session_invalidation_in_seconds := _dict.get('session_invalidation_in_seconds')) is not None:
             args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         else:
-            raise ValueError(
-                'Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON')
         if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
             args['max_sessions_per_identity'] = max_sessions_per_identity
         else:
-            raise ValueError(
-                'Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON'
-            )
-        if (
-            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
-        ) is not None:
+            raise ValueError('Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON')
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
             args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
         else:
-            raise ValueError(
-                'Required property \'system_access_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
-        if (
-            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
-        ) is not None:
+            raise ValueError('Required property \'system_access_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
             args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         else:
-            raise ValueError(
-                'Required property \'system_refresh_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'system_refresh_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
         if (restrict_user_list_visibility := _dict.get('restrict_user_list_visibility')) is not None:
             args['restrict_user_list_visibility'] = restrict_user_list_visibility
         else:
-            raise ValueError(
-                'Required property \'restrict_user_list_visibility\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'restrict_user_list_visibility\' not present in AccountSettingsResponse JSON')
         if (user_mfa := _dict.get('user_mfa')) is not None:
             args['user_mfa'] = [AccountSettingsUserMFAResponse.from_dict(v) for v in user_mfa]
         else:
             raise ValueError('Required property \'user_mfa\' not present in AccountSettingsResponse JSON')
         if (restrict_user_domains := _dict.get('restrict_user_domains')) is not None:
-            args['restrict_user_domains'] = [
-                AccountSettingsUserDomainRestriction.from_dict(v) for v in restrict_user_domains
-            ]
+            args['restrict_user_domains'] = [AccountSettingsUserDomainRestriction.from_dict(v) for v in restrict_user_domains]
         else:
             raise ValueError('Required property \'restrict_user_domains\' not present in AccountSettingsResponse JSON')
         return cls(**args)
@@ -6983,15 +6927,9 @@ class AccountSettingsResponse:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         if hasattr(self, 'restrict_user_list_visibility') and self.restrict_user_list_visibility is not None:
             _dict['restrict_user_list_visibility'] = self.restrict_user_list_visibility
@@ -7044,6 +6982,7 @@ class AccountSettingsResponse:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating the resource is access controlled. Valid values:
@@ -7056,6 +6995,7 @@ class AccountSettingsResponse:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -7077,6 +7017,7 @@ class AccountSettingsResponse:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
+
     class RestrictUserListVisibilityEnum(str, Enum):
         """
         Defines whether or not user visibility is access controlled. Valid values:
@@ -7089,6 +7030,7 @@ class AccountSettingsResponse:
 
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         RESTRICTED = 'RESTRICTED'
+
 
 
 class AccountSettingsTemplateList:
@@ -7165,13 +7107,9 @@ class AccountSettingsTemplateList:
         if (next := _dict.get('next')) is not None:
             args['next'] = next
         if (account_settings_templates := _dict.get('account_settings_templates')) is not None:
-            args['account_settings_templates'] = [
-                AccountSettingsTemplateResponse.from_dict(v) for v in account_settings_templates
-            ]
+            args['account_settings_templates'] = [AccountSettingsTemplateResponse.from_dict(v) for v in account_settings_templates]
         else:
-            raise ValueError(
-                'Required property \'account_settings_templates\' not present in AccountSettingsTemplateList JSON'
-            )
+            raise ValueError('Required property \'account_settings_templates\' not present in AccountSettingsTemplateList JSON')
         return cls(**args)
 
     @classmethod
@@ -7337,9 +7275,7 @@ class AccountSettingsTemplateResponse:
         if (account_settings := _dict.get('account_settings')) is not None:
             args['account_settings'] = TemplateAccountSettings.from_dict(account_settings)
         else:
-            raise ValueError(
-                'Required property \'account_settings\' not present in AccountSettingsTemplateResponse JSON'
-            )
+            raise ValueError('Required property \'account_settings\' not present in AccountSettingsTemplateResponse JSON')
         if (history := _dict.get('history')) is not None:
             args['history'] = [EnityHistoryRecord.from_dict(v) for v in history]
         if (entity_tag := _dict.get('entity_tag')) is not None:
@@ -7647,6 +7583,7 @@ class AccountSettingsUserMFAResponse:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class ActionControls:
@@ -9061,9 +8998,7 @@ class EffectiveAccountSettingsResponse:
         else:
             raise ValueError('Required property \'account\' not present in EffectiveAccountSettingsResponse JSON')
         if (assigned_templates := _dict.get('assigned_templates')) is not None:
-            args['assigned_templates'] = [
-                AccountSettingsAssignedTemplatesSection.from_dict(v) for v in assigned_templates
-            ]
+            args['assigned_templates'] = [AccountSettingsAssignedTemplatesSection.from_dict(v) for v in assigned_templates]
         return cls(**args)
 
     @classmethod
@@ -9668,6 +9603,7 @@ class IdBasedMfaEnrollment:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
+
     class TraitUserSpecificEnum(str, Enum):
         """
         MFA trait definitions as follows:
@@ -9687,6 +9623,7 @@ class IdBasedMfaEnrollment:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
     class TraitEffectiveEnum(str, Enum):
         """
@@ -9708,6 +9645,7 @@ class IdBasedMfaEnrollment:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
+
     class ComplyStateEnum(str, Enum):
         """
         Defines comply state for the account. Valid values:
@@ -9721,6 +9659,7 @@ class IdBasedMfaEnrollment:
         NO = 'NO'
         ACCOUNT = 'ACCOUNT'
         CROSS_ACCOUNT = 'CROSS_ACCOUNT'
+
 
 
 class IdentityCount:
@@ -9907,19 +9846,13 @@ class IdentityLimitsUsageResponse:
         if (account_settings_templates := _dict.get('account_settings_templates')) is not None:
             args['account_settings_templates'] = LimitCount.from_dict(account_settings_templates)
         if (template_versions_per_template := _dict.get('template_versions_per_template')) is not None:
-            args['template_versions_per_template'] = IdentityLimitsUsageResponseTemplateVersionsPerTemplate.from_dict(
-                template_versions_per_template
-            )
+            args['template_versions_per_template'] = IdentityLimitsUsageResponseTemplateVersionsPerTemplate.from_dict(template_versions_per_template)
         if (idps := _dict.get('idps')) is not None:
             args['idps'] = LimitCount.from_dict(idps)
         if (claim_rules_per_group := _dict.get('claim_rules_per_group')) is not None:
-            args['claim_rules_per_group'] = IdentityLimitsUsageResponseClaimRulesPerGroup.from_dict(
-                claim_rules_per_group
-            )
+            args['claim_rules_per_group'] = IdentityLimitsUsageResponseClaimRulesPerGroup.from_dict(claim_rules_per_group)
         if (claim_rules_per_profile := _dict.get('claim_rules_per_profile')) is not None:
-            args['claim_rules_per_profile'] = IdentityLimitsUsageResponseClaimRulesPerProfile.from_dict(
-                claim_rules_per_profile
-            )
+            args['claim_rules_per_profile'] = IdentityLimitsUsageResponseClaimRulesPerProfile.from_dict(claim_rules_per_profile)
         if (cr_links := _dict.get('cr_links')) is not None:
             args['cr_links'] = LimitCount.from_dict(cr_links)
         if (cr_links_per_profile := _dict.get('cr_links_per_profile')) is not None:
@@ -10061,9 +9994,7 @@ class IdentityLimitsUsageResponseApikeysPerIdentity:
         if (limit := _dict.get('limit')) is not None:
             args['limit'] = limit
         else:
-            raise ValueError(
-                'Required property \'limit\' not present in IdentityLimitsUsageResponseApikeysPerIdentity JSON'
-            )
+            raise ValueError('Required property \'limit\' not present in IdentityLimitsUsageResponseApikeysPerIdentity JSON')
         if (identities := _dict.get('identities')) is not None:
             args['identities'] = [IdentityCount.from_dict(v) for v in identities]
         return cls(**args)
@@ -10139,9 +10070,7 @@ class IdentityLimitsUsageResponseClaimRulesPerGroup:
         if (limit := _dict.get('limit')) is not None:
             args['limit'] = limit
         else:
-            raise ValueError(
-                'Required property \'limit\' not present in IdentityLimitsUsageResponseClaimRulesPerGroup JSON'
-            )
+            raise ValueError('Required property \'limit\' not present in IdentityLimitsUsageResponseClaimRulesPerGroup JSON')
         if (access_groups := _dict.get('access_groups')) is not None:
             args['access_groups'] = [AccessGroupCount.from_dict(v) for v in access_groups]
         return cls(**args)
@@ -10217,9 +10146,7 @@ class IdentityLimitsUsageResponseClaimRulesPerProfile:
         if (limit := _dict.get('limit')) is not None:
             args['limit'] = limit
         else:
-            raise ValueError(
-                'Required property \'limit\' not present in IdentityLimitsUsageResponseClaimRulesPerProfile JSON'
-            )
+            raise ValueError('Required property \'limit\' not present in IdentityLimitsUsageResponseClaimRulesPerProfile JSON')
         if (profiles := _dict.get('profiles')) is not None:
             args['profiles'] = [ProfileCount.from_dict(v) for v in profiles]
         return cls(**args)
@@ -10295,9 +10222,7 @@ class IdentityLimitsUsageResponseCrLinksPerProfile:
         if (limit := _dict.get('limit')) is not None:
             args['limit'] = limit
         else:
-            raise ValueError(
-                'Required property \'limit\' not present in IdentityLimitsUsageResponseCrLinksPerProfile JSON'
-            )
+            raise ValueError('Required property \'limit\' not present in IdentityLimitsUsageResponseCrLinksPerProfile JSON')
         if (profiles := _dict.get('profiles')) is not None:
             args['profiles'] = [ProfileCount.from_dict(v) for v in profiles]
         return cls(**args)
@@ -10373,9 +10298,7 @@ class IdentityLimitsUsageResponseCrRulesPerProfile:
         if (limit := _dict.get('limit')) is not None:
             args['limit'] = limit
         else:
-            raise ValueError(
-                'Required property \'limit\' not present in IdentityLimitsUsageResponseCrRulesPerProfile JSON'
-            )
+            raise ValueError('Required property \'limit\' not present in IdentityLimitsUsageResponseCrRulesPerProfile JSON')
         if (profiles := _dict.get('profiles')) is not None:
             args['profiles'] = [ProfileCount.from_dict(v) for v in profiles]
         return cls(**args)
@@ -10451,9 +10374,7 @@ class IdentityLimitsUsageResponseServiceidsPerGroup:
         if (limit := _dict.get('limit')) is not None:
             args['limit'] = limit
         else:
-            raise ValueError(
-                'Required property \'limit\' not present in IdentityLimitsUsageResponseServiceidsPerGroup JSON'
-            )
+            raise ValueError('Required property \'limit\' not present in IdentityLimitsUsageResponseServiceidsPerGroup JSON')
         if (serviceid_groups := _dict.get('serviceid_groups')) is not None:
             args['serviceid_groups'] = [ServiceIdGroupCount.from_dict(v) for v in serviceid_groups]
         return cls(**args)
@@ -10529,9 +10450,7 @@ class IdentityLimitsUsageResponseTemplateVersionsPerTemplate:
         if (limit := _dict.get('limit')) is not None:
             args['limit'] = limit
         else:
-            raise ValueError(
-                'Required property \'limit\' not present in IdentityLimitsUsageResponseTemplateVersionsPerTemplate JSON'
-            )
+            raise ValueError('Required property \'limit\' not present in IdentityLimitsUsageResponseTemplateVersionsPerTemplate JSON')
         if (templates := _dict.get('templates')) is not None:
             args['templates'] = [TemplateCount.from_dict(v) for v in templates]
         return cls(**args)
@@ -10973,7 +10892,7 @@ class ProfileClaimRule:
           applies to.
     :param int expiration: Session expiration in seconds.
     :param str cr_type: (optional) The compute resource type. Not required if type
-          is Profile-SAML. Valid values are VSI, IKS_SA, ROKS_SA.
+          is Profile-SAML. Valid values are VSI, PVS, IKS_SA, ROKS_SA.
     :param List[ProfileClaimRuleConditions] conditions: Conditions of this claim
           rule.
     """
@@ -11010,7 +10929,7 @@ class ProfileClaimRule:
         :param str realm_name: (optional) The realm name of the Idp this claim rule
                applies to.
         :param str cr_type: (optional) The compute resource type. Not required if
-               type is Profile-SAML. Valid values are VSI, IKS_SA, ROKS_SA.
+               type is Profile-SAML. Valid values are VSI, PVS, IKS_SA, ROKS_SA.
         """
         self.id = id
         self.entity_tag = entity_tag
@@ -11535,6 +11454,7 @@ class ProfileIdentityRequest:
         CRN = 'crn'
 
 
+
 class ProfileIdentityResponse:
     """
     ProfileIdentityResponse.
@@ -11658,6 +11578,7 @@ class ProfileIdentityResponse:
         CRN = 'crn'
 
 
+
 class ProfileLink:
     """
     Link details.
@@ -11669,7 +11590,7 @@ class ProfileLink:
     :param datetime modified_at: If set contains a date time string of the last
           modification date in ISO format.
     :param str name: (optional) Optional name of the Link.
-    :param str cr_type: The compute resource type. Valid values are VSI, BMS,
+    :param str cr_type: The compute resource type. Valid values are VSI, PVS, BMS,
           IKS_SA, ROKS_SA, CE.
     :param bool is_cross_account: (optional) Flag to indicate that the link provides
           cross account access. If not provided then the account scope of the CRN must
@@ -11698,8 +11619,8 @@ class ProfileLink:
                creation date in ISO format.
         :param datetime modified_at: If set contains a date time string of the last
                modification date in ISO format.
-        :param str cr_type: The compute resource type. Valid values are VSI, BMS,
-               IKS_SA, ROKS_SA, CE.
+        :param str cr_type: The compute resource type. Valid values are VSI, PVS,
+               BMS, IKS_SA, ROKS_SA, CE.
         :param ProfileLinkLink link:
         :param str name: (optional) Optional name of the Link.
         :param bool is_cross_account: (optional) Flag to indicate that the link
@@ -13251,13 +13172,9 @@ class TemplateAccountSettings:
             args['session_invalidation_in_seconds'] = session_invalidation_in_seconds
         if (max_sessions_per_identity := _dict.get('max_sessions_per_identity')) is not None:
             args['max_sessions_per_identity'] = max_sessions_per_identity
-        if (
-            system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')
-        ) is not None:
+        if (system_access_token_expiration_in_seconds := _dict.get('system_access_token_expiration_in_seconds')) is not None:
             args['system_access_token_expiration_in_seconds'] = system_access_token_expiration_in_seconds
-        if (
-            system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')
-        ) is not None:
+        if (system_refresh_token_expiration_in_seconds := _dict.get('system_refresh_token_expiration_in_seconds')) is not None:
             args['system_refresh_token_expiration_in_seconds'] = system_refresh_token_expiration_in_seconds
         if (restrict_user_list_visibility := _dict.get('restrict_user_list_visibility')) is not None:
             args['restrict_user_list_visibility'] = restrict_user_list_visibility
@@ -13295,15 +13212,9 @@ class TemplateAccountSettings:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         if hasattr(self, 'restrict_user_list_visibility') and self.restrict_user_list_visibility is not None:
             _dict['restrict_user_list_visibility'] = self.restrict_user_list_visibility
@@ -13345,6 +13256,7 @@ class TemplateAccountSettings:
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
 
+
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
         Defines whether or not creating the resource is access controlled. Valid values:
@@ -13357,6 +13269,7 @@ class TemplateAccountSettings:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -13378,6 +13291,7 @@ class TemplateAccountSettings:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
+
     class RestrictUserListVisibilityEnum(str, Enum):
         """
         Defines whether or not user visibility is access controlled. Valid values:
@@ -13392,6 +13306,7 @@ class TemplateAccountSettings:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
 
 class TemplateAccountSettingsRestrictUserDomains:
@@ -14025,9 +13940,7 @@ class TemplateAssignmentResponseResource:
         if (account_settings := _dict.get('account_settings')) is not None:
             args['account_settings'] = TemplateAssignmentResponseResourceDetail.from_dict(account_settings)
         if (policy_template_references := _dict.get('policy_template_references')) is not None:
-            args['policy_template_references'] = [
-                TemplateAssignmentResponseResourceDetail.from_dict(v) for v in policy_template_references
-            ]
+            args['policy_template_references'] = [TemplateAssignmentResponseResourceDetail.from_dict(v) for v in policy_template_references]
         return cls(**args)
 
     @classmethod
@@ -14137,9 +14050,7 @@ class TemplateAssignmentResponseResourceDetail:
         if (status := _dict.get('status')) is not None:
             args['status'] = status
         else:
-            raise ValueError(
-                'Required property \'status\' not present in TemplateAssignmentResponseResourceDetail JSON'
-            )
+            raise ValueError('Required property \'status\' not present in TemplateAssignmentResponseResourceDetail JSON')
         return cls(**args)
 
     @classmethod
@@ -14870,6 +14781,7 @@ class TrustedProfileTemplateClaimRule:
         PROFILE_SAML = 'Profile-SAML'
 
 
+
 class TrustedProfileTemplateList:
     """
     TrustedProfileTemplateList.
@@ -15127,9 +15039,7 @@ class TrustedProfileTemplateResponse:
         if (profile := _dict.get('profile')) is not None:
             args['profile'] = TemplateProfileComponentResponse.from_dict(profile)
         if (policy_template_references := _dict.get('policy_template_references')) is not None:
-            args['policy_template_references'] = [
-                PolicyTemplateReference.from_dict(v) for v in policy_template_references
-            ]
+            args['policy_template_references'] = [PolicyTemplateReference.from_dict(v) for v in policy_template_references]
         if (action_controls := _dict.get('action_controls')) is not None:
             args['action_controls'] = ActionControls.from_dict(action_controls)
         if (history := _dict.get('history')) is not None:
@@ -15548,6 +15458,7 @@ class UserMfa:
         LEVEL3 = 'LEVEL3'
 
 
+
 class UserMfaEnrollments:
     """
     UserMfaEnrollments.
@@ -15704,9 +15615,7 @@ class UserReportMfaEnrollmentStatus:
         if (effective_mfa_type := _dict.get('effective_mfa_type')) is not None:
             args['effective_mfa_type'] = effective_mfa_type
         else:
-            raise ValueError(
-                'Required property \'effective_mfa_type\' not present in UserReportMfaEnrollmentStatus JSON'
-            )
+            raise ValueError('Required property \'effective_mfa_type\' not present in UserReportMfaEnrollmentStatus JSON')
         if (id_based_mfa := _dict.get('id_based_mfa')) is not None:
             args['id_based_mfa'] = IdBasedMfaEnrollment.from_dict(id_based_mfa)
         else:
@@ -15714,9 +15623,7 @@ class UserReportMfaEnrollmentStatus:
         if (account_based_mfa := _dict.get('account_based_mfa')) is not None:
             args['account_based_mfa'] = AccountBasedMfaEnrollment.from_dict(account_based_mfa)
         else:
-            raise ValueError(
-                'Required property \'account_based_mfa\' not present in UserReportMfaEnrollmentStatus JSON'
-            )
+            raise ValueError('Required property \'account_based_mfa\' not present in UserReportMfaEnrollmentStatus JSON')
         return cls(**args)
 
     @classmethod
