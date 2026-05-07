@@ -38,6 +38,7 @@ destination_id = ''
 iam_id = ''
 service_url = ''
 
+
 class TestPlatformNotificationsV1:
     """
     Integration Test Class for PlatformNotificationsV1
@@ -48,8 +49,7 @@ class TestPlatformNotificationsV1:
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-            cls.platform_notifications_service = PlatformNotificationsV1.new_instance(
-            )
+            cls.platform_notifications_service = PlatformNotificationsV1.new_instance()
             assert cls.platform_notifications_service is not None
 
             cls.config = read_external_sources(PlatformNotificationsV1.DEFAULT_SERVICE_NAME)
@@ -98,7 +98,7 @@ class TestPlatformNotificationsV1:
         )
 
         assert response.get_status_code() == 204
-    
+
     @needscredentials
     def test_create_distribution_list_destination(self):
         # Construct a dict representation of a AddDestinationPrototypeEventNotificationDestinationPrototype model
@@ -295,7 +295,6 @@ class TestPlatformNotificationsV1:
         assert response.get_status_code() == 200
         acknowledgement = response.get_result()
         assert acknowledgement is not None
-
 
     @needscredentials
     def test_delete_notification_preferences(self):

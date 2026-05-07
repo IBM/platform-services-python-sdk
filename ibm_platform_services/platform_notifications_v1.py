@@ -56,9 +56,7 @@ class PlatformNotificationsV1(BaseService):
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
@@ -470,7 +468,9 @@ class PlatformNotificationsV1(BaseService):
         if billing_and_usage_payments is not None:
             billing_and_usage_payments = convert_model(billing_and_usage_payments)
         if billing_and_usage_subscriptions_and_promo_codes is not None:
-            billing_and_usage_subscriptions_and_promo_codes = convert_model(billing_and_usage_subscriptions_and_promo_codes)
+            billing_and_usage_subscriptions_and_promo_codes = convert_model(
+                billing_and_usage_subscriptions_and_promo_codes
+            )
         if billing_and_usage_spending_alerts is not None:
             billing_and_usage_spending_alerts = convert_model(billing_and_usage_spending_alerts)
         if resourceactivity_normal is not None:
@@ -733,7 +733,9 @@ class PlatformNotificationsV1(BaseService):
         if billing_and_usage_payments is not None:
             billing_and_usage_payments = convert_model(billing_and_usage_payments)
         if billing_and_usage_subscriptions_and_promo_codes is not None:
-            billing_and_usage_subscriptions_and_promo_codes = convert_model(billing_and_usage_subscriptions_and_promo_codes)
+            billing_and_usage_subscriptions_and_promo_codes = convert_model(
+                billing_and_usage_subscriptions_and_promo_codes
+            )
         if billing_and_usage_spending_alerts is not None:
             billing_and_usage_spending_alerts = convert_model(billing_and_usage_spending_alerts)
         if resourceactivity_normal is not None:
@@ -1488,7 +1490,6 @@ class Notification:
         PROVISIONING = 'provisioning'
         ACCOUNT = 'account'
 
-
     class StateEnum(str, Enum):
         """
         The current state of the notification.
@@ -1499,7 +1500,6 @@ class Notification:
         COMPLETE = 'complete'
         RESOLVED = 'resolved'
 
-
     class CompletionCodeEnum(str, Enum):
         """
         The completion code of the notification.
@@ -1508,7 +1508,6 @@ class Notification:
         SUCCESSFUL = 'successful'
         FAILED = 'failed'
         CANCELLED = 'cancelled'
-
 
 
 class NotificationCollection:
@@ -1859,7 +1858,6 @@ class PreferenceValueWithUpdates:
         EMAIL = 'email'
 
 
-
 class PreferenceValueWithoutUpdates:
     """
     Preference settings for notification types that do not support updates.
@@ -1925,7 +1923,6 @@ class PreferenceValueWithoutUpdates:
         """
 
         EMAIL = 'email'
-
 
 
 class PreferencesObject:
@@ -2126,10 +2123,18 @@ class PreferencesObject:
             args['billing_and_usage_invoices'] = PreferenceValueWithoutUpdates.from_dict(billing_and_usage_invoices)
         if (billing_and_usage_payments := _dict.get('billing_and_usage_payments')) is not None:
             args['billing_and_usage_payments'] = PreferenceValueWithoutUpdates.from_dict(billing_and_usage_payments)
-        if (billing_and_usage_subscriptions_and_promo_codes := _dict.get('billing_and_usage_subscriptions_and_promo_codes')) is not None:
-            args['billing_and_usage_subscriptions_and_promo_codes'] = PreferenceValueWithoutUpdates.from_dict(billing_and_usage_subscriptions_and_promo_codes)
+        if (
+            billing_and_usage_subscriptions_and_promo_codes := _dict.get(
+                'billing_and_usage_subscriptions_and_promo_codes'
+            )
+        ) is not None:
+            args['billing_and_usage_subscriptions_and_promo_codes'] = PreferenceValueWithoutUpdates.from_dict(
+                billing_and_usage_subscriptions_and_promo_codes
+            )
         if (billing_and_usage_spending_alerts := _dict.get('billing_and_usage_spending_alerts')) is not None:
-            args['billing_and_usage_spending_alerts'] = PreferenceValueWithoutUpdates.from_dict(billing_and_usage_spending_alerts)
+            args['billing_and_usage_spending_alerts'] = PreferenceValueWithoutUpdates.from_dict(
+                billing_and_usage_spending_alerts
+            )
         if (resourceactivity_normal := _dict.get('resourceactivity_normal')) is not None:
             args['resourceactivity_normal'] = PreferenceValueWithoutUpdates.from_dict(resourceactivity_normal)
         if (ordering_review := _dict.get('ordering_review')) is not None:
@@ -2226,11 +2231,18 @@ class PreferencesObject:
                 _dict['billing_and_usage_payments'] = self.billing_and_usage_payments
             else:
                 _dict['billing_and_usage_payments'] = self.billing_and_usage_payments.to_dict()
-        if hasattr(self, 'billing_and_usage_subscriptions_and_promo_codes') and self.billing_and_usage_subscriptions_and_promo_codes is not None:
+        if (
+            hasattr(self, 'billing_and_usage_subscriptions_and_promo_codes')
+            and self.billing_and_usage_subscriptions_and_promo_codes is not None
+        ):
             if isinstance(self.billing_and_usage_subscriptions_and_promo_codes, dict):
-                _dict['billing_and_usage_subscriptions_and_promo_codes'] = self.billing_and_usage_subscriptions_and_promo_codes
+                _dict['billing_and_usage_subscriptions_and_promo_codes'] = (
+                    self.billing_and_usage_subscriptions_and_promo_codes
+                )
             else:
-                _dict['billing_and_usage_subscriptions_and_promo_codes'] = self.billing_and_usage_subscriptions_and_promo_codes.to_dict()
+                _dict['billing_and_usage_subscriptions_and_promo_codes'] = (
+                    self.billing_and_usage_subscriptions_and_promo_codes.to_dict()
+                )
         if hasattr(self, 'billing_and_usage_spending_alerts') and self.billing_and_usage_spending_alerts is not None:
             if isinstance(self.billing_and_usage_spending_alerts, dict):
                 _dict['billing_and_usage_spending_alerts'] = self.billing_and_usage_spending_alerts
@@ -2334,10 +2346,14 @@ class TestDestinationRequestBodyPrototype:
     @classmethod
     def _get_class_by_discriminator(cls, _dict: Dict) -> object:
         mapping = {}
-        mapping['event_notifications'] = 'TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype'
+        mapping['event_notifications'] = (
+            'TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype'
+        )
         disc_value = _dict.get('destination_type')
         if disc_value is None:
-            raise ValueError('Discriminator property \'destination_type\' not found in TestDestinationRequestBodyPrototype JSON')
+            raise ValueError(
+                'Discriminator property \'destination_type\' not found in TestDestinationRequestBodyPrototype JSON'
+            )
         class_name = mapping.get(disc_value, disc_value)
         try:
             disc_class = getattr(sys.modules[__name__], class_name)
@@ -2521,11 +2537,15 @@ class AddDestinationPrototypeEventNotificationDestinationPrototype(AddDestinatio
         if (destination_id := _dict.get('destination_id')) is not None:
             args['destination_id'] = destination_id
         else:
-            raise ValueError('Required property \'destination_id\' not present in AddDestinationPrototypeEventNotificationDestinationPrototype JSON')
+            raise ValueError(
+                'Required property \'destination_id\' not present in AddDestinationPrototypeEventNotificationDestinationPrototype JSON'
+            )
         if (destination_type := _dict.get('destination_type')) is not None:
             args['destination_type'] = destination_type
         else:
-            raise ValueError('Required property \'destination_type\' not present in AddDestinationPrototypeEventNotificationDestinationPrototype JSON')
+            raise ValueError(
+                'Required property \'destination_type\' not present in AddDestinationPrototypeEventNotificationDestinationPrototype JSON'
+            )
         return cls(**args)
 
     @classmethod
@@ -2568,7 +2588,6 @@ class AddDestinationPrototypeEventNotificationDestinationPrototype(AddDestinatio
         EVENT_NOTIFICATIONS = 'event_notifications'
 
 
-
 class AddDestinationEventNotificationDestination(AddDestination):
     """
     An Event Notifications destination entry in the distribution list.
@@ -2599,11 +2618,15 @@ class AddDestinationEventNotificationDestination(AddDestination):
         if (destination_id := _dict.get('destination_id')) is not None:
             args['destination_id'] = destination_id
         else:
-            raise ValueError('Required property \'destination_id\' not present in AddDestinationEventNotificationDestination JSON')
+            raise ValueError(
+                'Required property \'destination_id\' not present in AddDestinationEventNotificationDestination JSON'
+            )
         if (destination_type := _dict.get('destination_type')) is not None:
             args['destination_type'] = destination_type
         else:
-            raise ValueError('Required property \'destination_type\' not present in AddDestinationEventNotificationDestination JSON')
+            raise ValueError(
+                'Required property \'destination_type\' not present in AddDestinationEventNotificationDestination JSON'
+            )
         return cls(**args)
 
     @classmethod
@@ -2646,8 +2669,9 @@ class AddDestinationEventNotificationDestination(AddDestination):
         EVENT_NOTIFICATIONS = 'event_notifications'
 
 
-
-class TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype(TestDestinationRequestBodyPrototype):
+class TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype(
+    TestDestinationRequestBodyPrototype
+):
     """
     Request body for testing an Event Notifications destination.
 
@@ -2671,17 +2695,23 @@ class TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequest
         self.notification_type = notification_type
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype':
+    def from_dict(
+        cls, _dict: Dict
+    ) -> 'TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype':
         """Initialize a TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype object from a json dictionary."""
         args = {}
         if (destination_type := _dict.get('destination_type')) is not None:
             args['destination_type'] = destination_type
         else:
-            raise ValueError('Required property \'destination_type\' not present in TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype JSON')
+            raise ValueError(
+                'Required property \'destination_type\' not present in TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype JSON'
+            )
         if (notification_type := _dict.get('notification_type')) is not None:
             args['notification_type'] = notification_type
         else:
-            raise ValueError('Required property \'notification_type\' not present in TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype JSON')
+            raise ValueError(
+                'Required property \'notification_type\' not present in TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype JSON'
+            )
         return cls(**args)
 
     @classmethod
@@ -2706,13 +2736,17 @@ class TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequest
         """Return a `str` version of this TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype') -> bool:
+    def __eq__(
+        self, other: 'TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype'
+    ) -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype') -> bool:
+    def __ne__(
+        self, other: 'TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype'
+    ) -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -2722,7 +2756,6 @@ class TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequest
         """
 
         EVENT_NOTIFICATIONS = 'event_notifications'
-
 
     class NotificationTypeEnum(str, Enum):
         """

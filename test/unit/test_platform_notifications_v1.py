@@ -29,9 +29,7 @@ import urllib
 from ibm_platform_services.platform_notifications_v1 import *
 
 
-_service = PlatformNotificationsV1(
-    authenticator=NoAuthAuthenticator()
-)
+_service = PlatformNotificationsV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://notifications.cloud.ibm.com/api'
 _service.set_service_url(_base_url)
@@ -182,7 +180,9 @@ class TestCreateDistributionListDestination:
         """
         # Set up mock
         url = preprocess_url('/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations')
-        mock_response = '{"destination_id": "12345678-1234-1234-1234-123456789012", "destination_type": "event_notifications"}'
+        mock_response = (
+            '{"destination_id": "12345678-1234-1234-1234-123456789012", "destination_type": "event_notifications"}'
+        )
         responses.add(
             responses.POST,
             url,
@@ -230,7 +230,9 @@ class TestCreateDistributionListDestination:
         """
         # Set up mock
         url = preprocess_url('/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations')
-        mock_response = '{"destination_id": "12345678-1234-1234-1234-123456789012", "destination_type": "event_notifications"}'
+        mock_response = (
+            '{"destination_id": "12345678-1234-1234-1234-123456789012", "destination_type": "event_notifications"}'
+        )
         responses.add(
             responses.POST,
             url,
@@ -279,8 +281,12 @@ class TestGetDistributionListDestination:
         get_distribution_list_destination()
         """
         # Set up mock
-        url = preprocess_url('/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012')
-        mock_response = '{"destination_id": "12345678-1234-1234-1234-123456789012", "destination_type": "event_notifications"}'
+        url = preprocess_url(
+            '/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012'
+        )
+        mock_response = (
+            '{"destination_id": "12345678-1234-1234-1234-123456789012", "destination_type": "event_notifications"}'
+        )
         responses.add(
             responses.GET,
             url,
@@ -319,8 +325,12 @@ class TestGetDistributionListDestination:
         test_get_distribution_list_destination_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012')
-        mock_response = '{"destination_id": "12345678-1234-1234-1234-123456789012", "destination_type": "event_notifications"}'
+        url = preprocess_url(
+            '/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012'
+        )
+        mock_response = (
+            '{"destination_id": "12345678-1234-1234-1234-123456789012", "destination_type": "event_notifications"}'
+        )
         responses.add(
             responses.GET,
             url,
@@ -364,7 +374,9 @@ class TestDeleteDistributionListDestination:
         delete_distribution_list_destination()
         """
         # Set up mock
-        url = preprocess_url('/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012')
+        url = preprocess_url(
+            '/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012'
+        )
         responses.add(
             responses.DELETE,
             url,
@@ -401,7 +413,9 @@ class TestDeleteDistributionListDestination:
         test_delete_distribution_list_destination_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012')
+        url = preprocess_url(
+            '/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012'
+        )
         responses.add(
             responses.DELETE,
             url,
@@ -443,7 +457,9 @@ class TestTestDistributionListDestination:
         test_distribution_list_destination()
         """
         # Set up mock
-        url = preprocess_url('/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012/test')
+        url = preprocess_url(
+            '/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012/test'
+        )
         mock_response = '{"message": "success"}'
         responses.add(
             responses.POST,
@@ -493,7 +509,9 @@ class TestTestDistributionListDestination:
         test_test_distribution_list_destination_value_error()
         """
         # Set up mock
-        url = preprocess_url('/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012/test')
+        url = preprocess_url(
+            '/v1/distribution_lists/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6/destinations/12345678-1234-1234-1234-123456789012/test'
+        )
         mock_response = '{"message": "success"}'
         responses.add(
             responses.POST,
@@ -1670,7 +1688,9 @@ class TestGetAcknowledgement:
         """
         # Set up mock
         url = preprocess_url('/v1/notifications/acknowledgement')
-        mock_response = '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
+        mock_response = (
+            '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
+        )
         responses.add(
             responses.GET,
             url,
@@ -1712,7 +1732,9 @@ class TestGetAcknowledgement:
         """
         # Set up mock
         url = preprocess_url('/v1/notifications/acknowledgement')
-        mock_response = '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
+        mock_response = (
+            '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
+        )
         responses.add(
             responses.GET,
             url,
@@ -1750,7 +1772,9 @@ class TestReplaceNotificationAcknowledgement:
         """
         # Set up mock
         url = preprocess_url('/v1/notifications/acknowledgement')
-        mock_response = '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
+        mock_response = (
+            '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
+        )
         responses.add(
             responses.PUT,
             url,
@@ -1797,7 +1821,9 @@ class TestReplaceNotificationAcknowledgement:
         """
         # Set up mock
         url = preprocess_url('/v1/notifications/acknowledgement')
-        mock_response = '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
+        mock_response = (
+            '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
+        )
         responses.add(
             responses.PUT,
             url,
@@ -1838,7 +1864,9 @@ class TestReplaceNotificationAcknowledgement:
         """
         # Set up mock
         url = preprocess_url('/v1/notifications/acknowledgement')
-        mock_response = '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
+        mock_response = (
+            '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
+        )
         responses.add(
             responses.PUT,
             url,
@@ -1906,7 +1934,9 @@ class TestModel_AddDestinationCollection:
         assert add_destination_collection_model != False
 
         # Construct a model instance of AddDestinationCollection by calling from_dict on the json representation
-        add_destination_collection_model_dict = AddDestinationCollection.from_dict(add_destination_collection_model_json).__dict__
+        add_destination_collection_model_dict = AddDestinationCollection.from_dict(
+            add_destination_collection_model_json
+        ).__dict__
         add_destination_collection_model2 = AddDestinationCollection(**add_destination_collection_model_dict)
 
         # Verify the model instances are equivalent
@@ -1930,7 +1960,9 @@ class TestModel_Notification:
         # Construct a json representation of a Notification model
         notification_model_json = {}
         notification_model_json['title'] = 'System Maintenance Scheduled'
-        notification_model_json['body'] = 'Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.'
+        notification_model_json['body'] = (
+            'Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.'
+        )
         notification_model_json['id'] = '12345'
         notification_model_json['category'] = 'maintenance'
         notification_model_json['component_names'] = ['event-notifications', 'ibm-cloud']
@@ -1980,7 +2012,9 @@ class TestModel_NotificationCollection:
         pagination_link_model['href'] = 'https://api.example.com/v1/notifications?limit=50'
 
         pagination_link_with_token_model = {}  # PaginationLinkWithToken
-        pagination_link_with_token_model['href'] = 'https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50'
+        pagination_link_with_token_model['href'] = (
+            'https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50'
+        )
         pagination_link_with_token_model['start'] = '3fe78a36b9aa7f26'
 
         notification_model = {}  # Notification
@@ -2018,7 +2052,9 @@ class TestModel_NotificationCollection:
         assert notification_collection_model != False
 
         # Construct a model instance of NotificationCollection by calling from_dict on the json representation
-        notification_collection_model_dict = NotificationCollection.from_dict(notification_collection_model_json).__dict__
+        notification_collection_model_dict = NotificationCollection.from_dict(
+            notification_collection_model_json
+        ).__dict__
         notification_collection_model2 = NotificationCollection(**notification_collection_model_dict)
 
         # Verify the model instances are equivalent
@@ -2071,7 +2107,9 @@ class TestModel_PaginationLinkWithToken:
 
         # Construct a json representation of a PaginationLinkWithToken model
         pagination_link_with_token_model_json = {}
-        pagination_link_with_token_model_json['href'] = 'https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50'
+        pagination_link_with_token_model_json['href'] = (
+            'https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50'
+        )
         pagination_link_with_token_model_json['start'] = '3fe78a36b9aa7f26'
 
         # Construct a model instance of PaginationLinkWithToken by calling from_dict on the json representation
@@ -2079,7 +2117,9 @@ class TestModel_PaginationLinkWithToken:
         assert pagination_link_with_token_model != False
 
         # Construct a model instance of PaginationLinkWithToken by calling from_dict on the json representation
-        pagination_link_with_token_model_dict = PaginationLinkWithToken.from_dict(pagination_link_with_token_model_json).__dict__
+        pagination_link_with_token_model_dict = PaginationLinkWithToken.from_dict(
+            pagination_link_with_token_model_json
+        ).__dict__
         pagination_link_with_token_model2 = PaginationLinkWithToken(**pagination_link_with_token_model_dict)
 
         # Verify the model instances are equivalent
@@ -2106,11 +2146,15 @@ class TestModel_PreferenceValueWithUpdates:
         preference_value_with_updates_model_json['updates'] = True
 
         # Construct a model instance of PreferenceValueWithUpdates by calling from_dict on the json representation
-        preference_value_with_updates_model = PreferenceValueWithUpdates.from_dict(preference_value_with_updates_model_json)
+        preference_value_with_updates_model = PreferenceValueWithUpdates.from_dict(
+            preference_value_with_updates_model_json
+        )
         assert preference_value_with_updates_model != False
 
         # Construct a model instance of PreferenceValueWithUpdates by calling from_dict on the json representation
-        preference_value_with_updates_model_dict = PreferenceValueWithUpdates.from_dict(preference_value_with_updates_model_json).__dict__
+        preference_value_with_updates_model_dict = PreferenceValueWithUpdates.from_dict(
+            preference_value_with_updates_model_json
+        ).__dict__
         preference_value_with_updates_model2 = PreferenceValueWithUpdates(**preference_value_with_updates_model_dict)
 
         # Verify the model instances are equivalent
@@ -2136,12 +2180,18 @@ class TestModel_PreferenceValueWithoutUpdates:
         preference_value_without_updates_model_json['channels'] = ['email']
 
         # Construct a model instance of PreferenceValueWithoutUpdates by calling from_dict on the json representation
-        preference_value_without_updates_model = PreferenceValueWithoutUpdates.from_dict(preference_value_without_updates_model_json)
+        preference_value_without_updates_model = PreferenceValueWithoutUpdates.from_dict(
+            preference_value_without_updates_model_json
+        )
         assert preference_value_without_updates_model != False
 
         # Construct a model instance of PreferenceValueWithoutUpdates by calling from_dict on the json representation
-        preference_value_without_updates_model_dict = PreferenceValueWithoutUpdates.from_dict(preference_value_without_updates_model_json).__dict__
-        preference_value_without_updates_model2 = PreferenceValueWithoutUpdates(**preference_value_without_updates_model_dict)
+        preference_value_without_updates_model_dict = PreferenceValueWithoutUpdates.from_dict(
+            preference_value_without_updates_model_json
+        ).__dict__
+        preference_value_without_updates_model2 = PreferenceValueWithoutUpdates(
+            **preference_value_without_updates_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert preference_value_without_updates_model == preference_value_without_updates_model2
@@ -2186,7 +2236,9 @@ class TestModel_PreferencesObject:
         preferences_object_model_json['billing_and_usage_order'] = preference_value_without_updates_model
         preferences_object_model_json['billing_and_usage_invoices'] = preference_value_without_updates_model
         preferences_object_model_json['billing_and_usage_payments'] = preference_value_without_updates_model
-        preferences_object_model_json['billing_and_usage_subscriptions_and_promo_codes'] = preference_value_without_updates_model
+        preferences_object_model_json['billing_and_usage_subscriptions_and_promo_codes'] = (
+            preference_value_without_updates_model
+        )
         preferences_object_model_json['billing_and_usage_spending_alerts'] = preference_value_without_updates_model
         preferences_object_model_json['resourceactivity_normal'] = preference_value_without_updates_model
         preferences_object_model_json['ordering_review'] = preference_value_without_updates_model
@@ -2228,11 +2280,15 @@ class TestModel_TestDestinationResponseBody:
         test_destination_response_body_model_json['message'] = 'success'
 
         # Construct a model instance of TestDestinationResponseBody by calling from_dict on the json representation
-        test_destination_response_body_model = TestDestinationResponseBody.from_dict(test_destination_response_body_model_json)
+        test_destination_response_body_model = TestDestinationResponseBody.from_dict(
+            test_destination_response_body_model_json
+        )
         assert test_destination_response_body_model != False
 
         # Construct a model instance of TestDestinationResponseBody by calling from_dict on the json representation
-        test_destination_response_body_model_dict = TestDestinationResponseBody.from_dict(test_destination_response_body_model_json).__dict__
+        test_destination_response_body_model_dict = TestDestinationResponseBody.from_dict(
+            test_destination_response_body_model_json
+        ).__dict__
         test_destination_response_body_model2 = TestDestinationResponseBody(**test_destination_response_body_model_dict)
 
         # Verify the model instances are equivalent
@@ -2287,23 +2343,47 @@ class TestModel_AddDestinationPrototypeEventNotificationDestinationPrototype:
 
         # Construct a json representation of a AddDestinationPrototypeEventNotificationDestinationPrototype model
         add_destination_prototype_event_notification_destination_prototype_model_json = {}
-        add_destination_prototype_event_notification_destination_prototype_model_json['destination_id'] = '12345678-1234-1234-1234-123456789012'
-        add_destination_prototype_event_notification_destination_prototype_model_json['destination_type'] = 'event_notifications'
+        add_destination_prototype_event_notification_destination_prototype_model_json['destination_id'] = (
+            '12345678-1234-1234-1234-123456789012'
+        )
+        add_destination_prototype_event_notification_destination_prototype_model_json['destination_type'] = (
+            'event_notifications'
+        )
 
         # Construct a model instance of AddDestinationPrototypeEventNotificationDestinationPrototype by calling from_dict on the json representation
-        add_destination_prototype_event_notification_destination_prototype_model = AddDestinationPrototypeEventNotificationDestinationPrototype.from_dict(add_destination_prototype_event_notification_destination_prototype_model_json)
+        add_destination_prototype_event_notification_destination_prototype_model = (
+            AddDestinationPrototypeEventNotificationDestinationPrototype.from_dict(
+                add_destination_prototype_event_notification_destination_prototype_model_json
+            )
+        )
         assert add_destination_prototype_event_notification_destination_prototype_model != False
 
         # Construct a model instance of AddDestinationPrototypeEventNotificationDestinationPrototype by calling from_dict on the json representation
-        add_destination_prototype_event_notification_destination_prototype_model_dict = AddDestinationPrototypeEventNotificationDestinationPrototype.from_dict(add_destination_prototype_event_notification_destination_prototype_model_json).__dict__
-        add_destination_prototype_event_notification_destination_prototype_model2 = AddDestinationPrototypeEventNotificationDestinationPrototype(**add_destination_prototype_event_notification_destination_prototype_model_dict)
+        add_destination_prototype_event_notification_destination_prototype_model_dict = (
+            AddDestinationPrototypeEventNotificationDestinationPrototype.from_dict(
+                add_destination_prototype_event_notification_destination_prototype_model_json
+            ).__dict__
+        )
+        add_destination_prototype_event_notification_destination_prototype_model2 = (
+            AddDestinationPrototypeEventNotificationDestinationPrototype(
+                **add_destination_prototype_event_notification_destination_prototype_model_dict
+            )
+        )
 
         # Verify the model instances are equivalent
-        assert add_destination_prototype_event_notification_destination_prototype_model == add_destination_prototype_event_notification_destination_prototype_model2
+        assert (
+            add_destination_prototype_event_notification_destination_prototype_model
+            == add_destination_prototype_event_notification_destination_prototype_model2
+        )
 
         # Convert model instance back to dict and verify no loss of data
-        add_destination_prototype_event_notification_destination_prototype_model_json2 = add_destination_prototype_event_notification_destination_prototype_model.to_dict()
-        assert add_destination_prototype_event_notification_destination_prototype_model_json2 == add_destination_prototype_event_notification_destination_prototype_model_json
+        add_destination_prototype_event_notification_destination_prototype_model_json2 = (
+            add_destination_prototype_event_notification_destination_prototype_model.to_dict()
+        )
+        assert (
+            add_destination_prototype_event_notification_destination_prototype_model_json2
+            == add_destination_prototype_event_notification_destination_prototype_model_json
+        )
 
 
 class TestModel_AddDestinationEventNotificationDestination:
@@ -2318,23 +2398,41 @@ class TestModel_AddDestinationEventNotificationDestination:
 
         # Construct a json representation of a AddDestinationEventNotificationDestination model
         add_destination_event_notification_destination_model_json = {}
-        add_destination_event_notification_destination_model_json['destination_id'] = '12345678-1234-1234-1234-123456789012'
+        add_destination_event_notification_destination_model_json['destination_id'] = (
+            '12345678-1234-1234-1234-123456789012'
+        )
         add_destination_event_notification_destination_model_json['destination_type'] = 'event_notifications'
 
         # Construct a model instance of AddDestinationEventNotificationDestination by calling from_dict on the json representation
-        add_destination_event_notification_destination_model = AddDestinationEventNotificationDestination.from_dict(add_destination_event_notification_destination_model_json)
+        add_destination_event_notification_destination_model = AddDestinationEventNotificationDestination.from_dict(
+            add_destination_event_notification_destination_model_json
+        )
         assert add_destination_event_notification_destination_model != False
 
         # Construct a model instance of AddDestinationEventNotificationDestination by calling from_dict on the json representation
-        add_destination_event_notification_destination_model_dict = AddDestinationEventNotificationDestination.from_dict(add_destination_event_notification_destination_model_json).__dict__
-        add_destination_event_notification_destination_model2 = AddDestinationEventNotificationDestination(**add_destination_event_notification_destination_model_dict)
+        add_destination_event_notification_destination_model_dict = (
+            AddDestinationEventNotificationDestination.from_dict(
+                add_destination_event_notification_destination_model_json
+            ).__dict__
+        )
+        add_destination_event_notification_destination_model2 = AddDestinationEventNotificationDestination(
+            **add_destination_event_notification_destination_model_dict
+        )
 
         # Verify the model instances are equivalent
-        assert add_destination_event_notification_destination_model == add_destination_event_notification_destination_model2
+        assert (
+            add_destination_event_notification_destination_model
+            == add_destination_event_notification_destination_model2
+        )
 
         # Convert model instance back to dict and verify no loss of data
-        add_destination_event_notification_destination_model_json2 = add_destination_event_notification_destination_model.to_dict()
-        assert add_destination_event_notification_destination_model_json2 == add_destination_event_notification_destination_model_json
+        add_destination_event_notification_destination_model_json2 = (
+            add_destination_event_notification_destination_model.to_dict()
+        )
+        assert (
+            add_destination_event_notification_destination_model_json2
+            == add_destination_event_notification_destination_model_json
+        )
 
 
 class TestModel_TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype:
@@ -2342,30 +2440,55 @@ class TestModel_TestDestinationRequestBodyPrototypeTestEventNotificationDestinat
     Test Class for TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype
     """
 
-    def test_test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_serialization(self):
+    def test_test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_serialization(
+        self,
+    ):
         """
         Test serialization/deserialization for TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype
         """
 
         # Construct a json representation of a TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype model
-        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json = {}
-        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json['destination_type'] = 'event_notifications'
-        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json['notification_type'] = 'incident'
+        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json = (
+            {}
+        )
+        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json[
+            'destination_type'
+        ] = 'event_notifications'
+        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json[
+            'notification_type'
+        ] = 'incident'
 
         # Construct a model instance of TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype by calling from_dict on the json representation
-        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model = TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype.from_dict(test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json)
-        assert test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model != False
+        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model = TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype.from_dict(
+            test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json
+        )
+        assert (
+            test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model
+            != False
+        )
 
         # Construct a model instance of TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype by calling from_dict on the json representation
-        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_dict = TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype.from_dict(test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json).__dict__
-        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model2 = TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype(**test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_dict)
+        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_dict = TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype.from_dict(
+            test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json
+        ).__dict__
+        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model2 = TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype(
+            **test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_dict
+        )
 
         # Verify the model instances are equivalent
-        assert test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model == test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model2
+        assert (
+            test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model
+            == test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model2
+        )
 
         # Convert model instance back to dict and verify no loss of data
-        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json2 = test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model.to_dict()
-        assert test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json2 == test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json
+        test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json2 = (
+            test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model.to_dict()
+        )
+        assert (
+            test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json2
+            == test_destination_request_body_prototype_test_event_notification_destination_request_body_prototype_model_json
+        )
 
 
 # endregion

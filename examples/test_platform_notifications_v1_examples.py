@@ -59,8 +59,7 @@ class TestPlatformNotificationsV1Examples:
 
             # begin-common
 
-            platform_notifications_service = PlatformNotificationsV1.new_instance(
-            )
+            platform_notifications_service = PlatformNotificationsV1.new_instance()
 
             # end-common
             assert platform_notifications_service is not None
@@ -68,6 +67,14 @@ class TestPlatformNotificationsV1Examples:
             # Load the configuration
             global config
             config = read_external_sources(PlatformNotificationsV1.DEFAULT_SERVICE_NAME)
+            global account_id, destination_id, iam_id, service_url
+            account_id = config['ACCOUNT_ID']
+            destination_id = config['DESTINATION_ID']
+            iam_id = config['IAM_ID']
+            service_url = config['SERVICE_URL']
+            # Set service URL if provided in config
+            if service_url:
+                platform_notifications_service.set_service_url(service_url)
 
         print('Setup complete.')
 
@@ -86,7 +93,7 @@ class TestPlatformNotificationsV1Examples:
             # begin-list_distribution_list_destinations
 
             response = platform_notifications_service.list_distribution_list_destinations(
-                account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
+                account_id=account_id,
             )
             add_destination_collection = response.get_result()
 
@@ -108,12 +115,12 @@ class TestPlatformNotificationsV1Examples:
             # begin-create_distribution_list_destination
 
             add_destination_prototype_model = {
-                'destination_id': '12345678-1234-1234-1234-123456789012',
+                'destination_id': destination_id,
                 'destination_type': 'event_notifications',
             }
 
             response = platform_notifications_service.create_distribution_list_destination(
-                account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
+                account_id=account_id,
                 add_destination_prototype=add_destination_prototype_model,
             )
             add_destination = response.get_result()
@@ -136,8 +143,8 @@ class TestPlatformNotificationsV1Examples:
             # begin-get_distribution_list_destination
 
             response = platform_notifications_service.get_distribution_list_destination(
-                account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
-                destination_id='12345678-1234-1234-1234-123456789012',
+                account_id=account_id,
+                destination_id=destination_id,
             )
             add_destination = response.get_result()
 
@@ -164,8 +171,8 @@ class TestPlatformNotificationsV1Examples:
             }
 
             response = platform_notifications_service.test_distribution_list_destination(
-                account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
-                destination_id='12345678-1234-1234-1234-123456789012',
+                account_id=account_id,
+                destination_id=destination_id,
                 test_destination_request_body_prototype=test_destination_request_body_prototype_model,
             )
             test_destination_response_body = response.get_result()
@@ -197,10 +204,10 @@ class TestPlatformNotificationsV1Examples:
             }
 
             response = platform_notifications_service.create_preferences(
-                iam_id='IBMid-1234567890',
+                iam_id=iam_id,
                 incident_severity1=preference_value_with_updates_model,
                 ordering_review=preference_value_without_updates_model,
-                account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
+                account_id=account_id,
             )
             preferences_object = response.get_result()
 
@@ -222,8 +229,8 @@ class TestPlatformNotificationsV1Examples:
             # begin-get_preferences
 
             response = platform_notifications_service.get_preferences(
-                iam_id='IBMid-1234567890',
-                account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
+                iam_id=iam_id,
+                account_id=account_id,
             )
             preferences_object = response.get_result()
 
@@ -254,10 +261,10 @@ class TestPlatformNotificationsV1Examples:
             }
 
             response = platform_notifications_service.replace_notification_preferences(
-                iam_id='IBMid-1234567890',
+                iam_id=iam_id,
                 incident_severity1=preference_value_with_updates_model,
                 ordering_review=preference_value_without_updates_model,
-                account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
+                account_id=account_id,
             )
             preferences_object = response.get_result()
 
@@ -281,7 +288,7 @@ class TestPlatformNotificationsV1Examples:
             all_results = []
             pager = NotificationsPager(
                 client=platform_notifications_service,
-                account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
+                account_id=account_id,
                 limit=50,
             )
             while pager.has_next():
@@ -306,7 +313,7 @@ class TestPlatformNotificationsV1Examples:
             # begin-get_acknowledgement
 
             response = platform_notifications_service.get_acknowledgement(
-                account_id='1369339417d906e5620b8d861d40cfd7',
+                account_id=account_id,
             )
             acknowledgement = response.get_result()
 
@@ -329,7 +336,7 @@ class TestPlatformNotificationsV1Examples:
 
             response = platform_notifications_service.replace_notification_acknowledgement(
                 last_acknowledged_id='1772804159452',
-                account_id='1369339417d906e5620b8d861d40cfd7',
+                account_id=account_id,
             )
             acknowledgement = response.get_result()
 
@@ -349,8 +356,8 @@ class TestPlatformNotificationsV1Examples:
             # begin-delete_distribution_list_destination
 
             response = platform_notifications_service.delete_distribution_list_destination(
-                account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
-                destination_id='12345678-1234-1234-1234-123456789012',
+                account_id=account_id,
+                destination_id=destination_id,
             )
 
             # end-delete_distribution_list_destination
@@ -368,8 +375,8 @@ class TestPlatformNotificationsV1Examples:
             # begin-delete_notification_preferences
 
             response = platform_notifications_service.delete_notification_preferences(
-                iam_id='IBMid-1234567890',
-                account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
+                iam_id=iam_id,
+                account_id=account_id,
             )
 
             # end-delete_notification_preferences
