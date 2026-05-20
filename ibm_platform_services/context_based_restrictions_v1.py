@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2025.
+# (C) Copyright IBM Corp. 2026.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.108.0-56772134-20251111-102802
+# IBM OpenAPI SDK Code Generator Version: 3.114.4-9b56d441-20260612-210048
 
 """
 With the Context Based Restrictions API, you can:
@@ -1555,7 +1555,16 @@ class Address:
         :param str type: (optional) The type of address.
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef'])
+            ", ".join(
+                [
+                    'AddressIPAddress',
+                    'AddressIPAddressRange',
+                    'AddressSubnet',
+                    'AddressVPC',
+                    'AddressServiceRef',
+                    'AddressInstance',
+                ]
+            )
         )
         raise Exception(msg)
 
@@ -1566,7 +1575,16 @@ class Address:
         if disc_class != cls:
             return disc_class.from_dict(_dict)
         msg = "Cannot convert dictionary into an instance of base class 'Address'. The discriminator value should map to a valid subclass: {1}".format(
-            ", ".join(['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef'])
+            ", ".join(
+                [
+                    'AddressIPAddress',
+                    'AddressIPAddressRange',
+                    'AddressSubnet',
+                    'AddressVPC',
+                    'AddressServiceRef',
+                    'AddressInstance',
+                ]
+            )
         )
         raise Exception(msg)
 
@@ -1583,6 +1601,7 @@ class Address:
         mapping['subnet'] = 'AddressSubnet'
         mapping['vpc'] = 'AddressVPC'
         mapping['serviceRef'] = 'AddressServiceRef'
+        mapping['instance'] = 'AddressInstance'
         disc_value = _dict.get('type')
         if disc_value is None:
             raise ValueError('Discriminator property \'type\' not found in Address JSON')
@@ -1605,6 +1624,7 @@ class Address:
         SUBNET = 'subnet'
         VPC = 'vpc'
         SERVICEREF = 'serviceRef'
+        INSTANCE = 'instance'
 
 
 class NewRuleOperations:
@@ -3257,27 +3277,22 @@ class AddressIPAddress(Address):
 
     :param str type: The type of address.
     :param str value: The IP address.
-    :param str id: (optional) The address id (for use by terraform only).
     """
 
     def __init__(
         self,
         type: str,
         value: str,
-        *,
-        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AddressIPAddress object.
 
         :param str type: The type of address.
         :param str value: The IP address.
-        :param str id: (optional) The address id (for use by terraform only).
         """
         # pylint: disable=super-init-not-called
         self.type = type
         self.value = value
-        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AddressIPAddress':
@@ -3291,8 +3306,6 @@ class AddressIPAddress(Address):
             args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressIPAddress JSON')
-        if (id := _dict.get('id')) is not None:
-            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -3307,8 +3320,6 @@ class AddressIPAddress(Address):
             _dict['type'] = self.type
         if hasattr(self, 'value') and self.value is not None:
             _dict['value'] = self.value
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
         return _dict
 
     def _to_dict(self):
@@ -3343,27 +3354,22 @@ class AddressIPAddressRange(Address):
 
     :param str type: The type of address.
     :param str value: The ip range in <first-ip>-<last-ip> format.
-    :param str id: (optional) The address id (for use by terraform only).
     """
 
     def __init__(
         self,
         type: str,
         value: str,
-        *,
-        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AddressIPAddressRange object.
 
         :param str type: The type of address.
         :param str value: The ip range in <first-ip>-<last-ip> format.
-        :param str id: (optional) The address id (for use by terraform only).
         """
         # pylint: disable=super-init-not-called
         self.type = type
         self.value = value
-        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AddressIPAddressRange':
@@ -3377,8 +3383,6 @@ class AddressIPAddressRange(Address):
             args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressIPAddressRange JSON')
-        if (id := _dict.get('id')) is not None:
-            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -3393,8 +3397,6 @@ class AddressIPAddressRange(Address):
             _dict['type'] = self.type
         if hasattr(self, 'value') and self.value is not None:
             _dict['value'] = self.value
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
         return _dict
 
     def _to_dict(self):
@@ -3423,33 +3425,105 @@ class AddressIPAddressRange(Address):
         IPRANGE = 'ipRange'
 
 
+class AddressInstance(Address):
+    """
+    A single Instance address.
+
+    :param str type: The type of address.
+    :param str value: The instance CRN.
+    """
+
+    def __init__(
+        self,
+        type: str,
+        value: str,
+    ) -> None:
+        """
+        Initialize a AddressInstance object.
+
+        :param str type: The type of address.
+        :param str value: The instance CRN.
+        """
+        # pylint: disable=super-init-not-called
+        self.type = type
+        self.value = value
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AddressInstance':
+        """Initialize a AddressInstance object from a json dictionary."""
+        args = {}
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        else:
+            raise ValueError('Required property \'type\' not present in AddressInstance JSON')
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
+        else:
+            raise ValueError('Required property \'value\' not present in AddressInstance JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AddressInstance object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AddressInstance object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AddressInstance') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AddressInstance') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        The type of address.
+        """
+
+        INSTANCE = 'instance'
+
+
 class AddressServiceRef(Address):
     """
     A service reference.
 
     :param str type: The type of address.
     :param ServiceRefValue ref: A service reference value.
-    :param str id: (optional) The address id (for use by terraform only).
     """
 
     def __init__(
         self,
         type: str,
         ref: 'ServiceRefValue',
-        *,
-        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AddressServiceRef object.
 
         :param str type: The type of address.
         :param ServiceRefValue ref: A service reference value.
-        :param str id: (optional) The address id (for use by terraform only).
         """
         # pylint: disable=super-init-not-called
         self.type = type
         self.ref = ref
-        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AddressServiceRef':
@@ -3463,8 +3537,6 @@ class AddressServiceRef(Address):
             args['ref'] = ServiceRefValue.from_dict(ref)
         else:
             raise ValueError('Required property \'ref\' not present in AddressServiceRef JSON')
-        if (id := _dict.get('id')) is not None:
-            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -3482,8 +3554,6 @@ class AddressServiceRef(Address):
                 _dict['ref'] = self.ref
             else:
                 _dict['ref'] = self.ref.to_dict()
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
         return _dict
 
     def _to_dict(self):
@@ -3518,27 +3588,22 @@ class AddressSubnet(Address):
 
     :param str type: The type of address.
     :param str value: The subnet in CIDR format.
-    :param str id: (optional) The address id (for use by terraform only).
     """
 
     def __init__(
         self,
         type: str,
         value: str,
-        *,
-        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AddressSubnet object.
 
         :param str type: The type of address.
         :param str value: The subnet in CIDR format.
-        :param str id: (optional) The address id (for use by terraform only).
         """
         # pylint: disable=super-init-not-called
         self.type = type
         self.value = value
-        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AddressSubnet':
@@ -3552,8 +3617,6 @@ class AddressSubnet(Address):
             args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressSubnet JSON')
-        if (id := _dict.get('id')) is not None:
-            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -3568,8 +3631,6 @@ class AddressSubnet(Address):
             _dict['type'] = self.type
         if hasattr(self, 'value') and self.value is not None:
             _dict['value'] = self.value
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
         return _dict
 
     def _to_dict(self):
@@ -3604,27 +3665,22 @@ class AddressVPC(Address):
 
     :param str type: The type of address.
     :param str value: The VPC CRN.
-    :param str id: (optional) The address id (for use by terraform only).
     """
 
     def __init__(
         self,
         type: str,
         value: str,
-        *,
-        id: Optional[str] = None,
     ) -> None:
         """
         Initialize a AddressVPC object.
 
         :param str type: The type of address.
         :param str value: The VPC CRN.
-        :param str id: (optional) The address id (for use by terraform only).
         """
         # pylint: disable=super-init-not-called
         self.type = type
         self.value = value
-        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AddressVPC':
@@ -3638,8 +3694,6 @@ class AddressVPC(Address):
             args['value'] = value
         else:
             raise ValueError('Required property \'value\' not present in AddressVPC JSON')
-        if (id := _dict.get('id')) is not None:
-            args['id'] = id
         return cls(**args)
 
     @classmethod
@@ -3654,8 +3708,6 @@ class AddressVPC(Address):
             _dict['type'] = self.type
         if hasattr(self, 'value') and self.value is not None:
             _dict['value'] = self.value
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
         return _dict
 
     def _to_dict(self):
