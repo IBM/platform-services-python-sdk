@@ -41,6 +41,14 @@ platform_notifications_service = None
 
 config = None
 
+account_id = None
+
+destination_id = None
+
+iam_id = None
+
+service_url = None
+
 
 ##############################################################################
 # Start of Examples for Service: PlatformNotificationsV1
