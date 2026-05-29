@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.113.0-3f9df07a-20260317-160650
+# IBM OpenAPI SDK Code Generator Version: 3.113.1-d76630af-20260320-135953
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -1796,7 +1796,7 @@ class IamIdentityV1(BaseService):
                'Profile-SAML'.
         :param str cr_type: (optional) The compute resource type the rule applies
                to, required only if type is specified as 'Profile-CR'. Valid values are
-               VSI, IKS_SA, ROKS_SA.
+               VSI, PVS, IKS_SA, ROKS_SA.
         :param int expiration: (optional) Session expiration in seconds, only
                required if type is 'Profile-SAML'.
         :param dict headers: A `dict` containing the request headers
@@ -1985,7 +1985,7 @@ class IamIdentityV1(BaseService):
                'Profile-SAML'.
         :param str cr_type: (optional) The compute resource type the rule applies
                to, required only if type is specified as 'Profile-CR'. Valid values are
-               VSI, IKS_SA, ROKS_SA.
+               VSI, PVS, IKS_SA, ROKS_SA.
         :param int expiration: (optional) Session expiration in seconds, only
                required if type is 'Profile-SAML'.
         :param dict headers: A `dict` containing the request headers
@@ -2115,7 +2115,7 @@ class IamIdentityV1(BaseService):
         trusted profile.
 
         :param str profile_id: ID of the trusted profile.
-        :param str cr_type: The compute resource type. Valid values are VSI,
+        :param str cr_type: The compute resource type. Valid values are VSI, PVS,
                IKS_SA, ROKS_SA.
         :param CreateProfileLinkRequestLink link: Link details.
         :param str name: (optional) Optional name of the Link.
@@ -2233,7 +2233,7 @@ class IamIdentityV1(BaseService):
         Deletes compute resource link of a Trusted Profile matching the given parameters.
 
         :param str profile_id: The unique ID of the Trusted Profile.
-        :param str type: The compute resource type. Valid values are VSI, BMS,
+        :param str type: The compute resource type. Valid values are VSI, PVS, BMS,
                IKS_SA, ROKS_SA, CE.
         :param str crn: (optional) CRN of the compute resource (IKS/ROKS/VSI/BMS).
         :param str namespace: (optional) Namespace of the compute resource
@@ -3241,8 +3241,8 @@ class IamIdentityV1(BaseService):
         iam_id: str,
         service: str,
         preference_id: str,
-        value_string: str,
         *,
+        value_string: Optional[str] = None,
         value_list_of_strings: Optional[List[str]] = None,
         **kwargs,
     ) -> DetailedResponse:
@@ -3286,9 +3286,9 @@ class IamIdentityV1(BaseService):
         :param str iam_id: IAM id to update the preference for.
         :param str service: Service of the preference to be updated.
         :param str preference_id: Identifier of preference to be updated.
-        :param str value_string: contains a string value of the preference. only
-               one value property is set, either 'value_string' or 'value_list_of_strings'
-               is present.
+        :param str value_string: (optional) contains a string value of the
+               preference. only one value property is set, either 'value_string' or
+               'value_list_of_strings' is present.
         :param List[str] value_list_of_strings: (optional) contains a list of
                string values of the preference. only one value property is set, either
                'value_string' or 'value_list_of_strings' is present.
@@ -3305,8 +3305,6 @@ class IamIdentityV1(BaseService):
             raise ValueError('service must be provided')
         if not preference_id:
             raise ValueError('preference_id must be provided')
-        if value_string is None:
-            raise ValueError('value_string must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -10587,7 +10585,7 @@ class IdentityPreferenceResponse:
     :param str value_string: (optional) String value of the preference, only one
           value property is set, either 'value_string' or 'value_list_of_strings' is
           present.
-    :param List[str] value_list_of_strings: (optional) List of value of the
+    :param List[str] value_list_of_strings: (optional) List of values of the
           preference, only one value property is set, either 'value_string' or
           'value_list_of_strings' is present.
     """
@@ -10614,7 +10612,7 @@ class IdentityPreferenceResponse:
         :param str value_string: (optional) String value of the preference, only
                one value property is set, either 'value_string' or 'value_list_of_strings'
                is present.
-        :param List[str] value_list_of_strings: (optional) List of value of the
+        :param List[str] value_list_of_strings: (optional) List of values of the
                preference, only one value property is set, either 'value_string' or
                'value_list_of_strings' is present.
         """
@@ -10973,7 +10971,7 @@ class ProfileClaimRule:
           applies to.
     :param int expiration: Session expiration in seconds.
     :param str cr_type: (optional) The compute resource type. Not required if type
-          is Profile-SAML. Valid values are VSI, IKS_SA, ROKS_SA.
+          is Profile-SAML. Valid values are VSI, PVS, IKS_SA, ROKS_SA.
     :param List[ProfileClaimRuleConditions] conditions: Conditions of this claim
           rule.
     """
@@ -11010,7 +11008,7 @@ class ProfileClaimRule:
         :param str realm_name: (optional) The realm name of the Idp this claim rule
                applies to.
         :param str cr_type: (optional) The compute resource type. Not required if
-               type is Profile-SAML. Valid values are VSI, IKS_SA, ROKS_SA.
+               type is Profile-SAML. Valid values are VSI, PVS, IKS_SA, ROKS_SA.
         """
         self.id = id
         self.entity_tag = entity_tag
@@ -11669,7 +11667,7 @@ class ProfileLink:
     :param datetime modified_at: If set contains a date time string of the last
           modification date in ISO format.
     :param str name: (optional) Optional name of the Link.
-    :param str cr_type: The compute resource type. Valid values are VSI, BMS,
+    :param str cr_type: The compute resource type. Valid values are VSI, PVS, BMS,
           IKS_SA, ROKS_SA, CE.
     :param bool is_cross_account: (optional) Flag to indicate that the link provides
           cross account access. If not provided then the account scope of the CRN must
@@ -11698,8 +11696,8 @@ class ProfileLink:
                creation date in ISO format.
         :param datetime modified_at: If set contains a date time string of the last
                modification date in ISO format.
-        :param str cr_type: The compute resource type. Valid values are VSI, BMS,
-               IKS_SA, ROKS_SA, CE.
+        :param str cr_type: The compute resource type. Valid values are VSI, PVS,
+               BMS, IKS_SA, ROKS_SA, CE.
         :param ProfileLinkLink link:
         :param str name: (optional) Optional name of the Link.
         :param bool is_cross_account: (optional) Flag to indicate that the link

@@ -30,7 +30,6 @@ import responses
 import urllib
 from ibm_platform_services.iam_identity_v1 import *
 
-
 _service = IamIdentityV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://iam.cloud.ibm.com'
@@ -5617,7 +5616,7 @@ class TestUpdatePreferenceOnScopeAccount:
             iam_id,
             service,
             preference_id,
-            value_string,
+            value_string=value_string,
             value_list_of_strings=value_list_of_strings,
             headers={},
         )
@@ -5669,7 +5668,6 @@ class TestUpdatePreferenceOnScopeAccount:
             "iam_id": iam_id,
             "service": service,
             "preference_id": preference_id,
-            "value_string": value_string,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
