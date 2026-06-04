@@ -91,6 +91,78 @@ class TestPlatformNotificationsV1Examples:
     )
 
     @needscredentials
+    def test_list_notifications_example(self):
+        """
+        list_notifications request example
+        """
+        try:
+            print('\nlist_notifications() result:')
+
+            # begin-list_notifications
+
+            all_results = []
+            pager = NotificationsPager(
+                client=platform_notifications_service,
+                account_id=account_id,
+                limit=50,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
+
+            print(json.dumps(all_results, indent=2))
+
+            # end-list_notifications
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_acknowledgement_example(self):
+        """
+        get_acknowledgement request example
+        """
+        try:
+            print('\nget_acknowledgement() result:')
+
+            # begin-get_acknowledgement
+
+            response = platform_notifications_service.get_acknowledgement(
+                account_id=account_id,
+            )
+            acknowledgement = response.get_result()
+
+            print(json.dumps(acknowledgement, indent=2))
+
+            # end-get_acknowledgement
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_replace_notification_acknowledgement_example(self):
+        """
+        replace_notification_acknowledgement request example
+        """
+        try:
+            print('\nreplace_notification_acknowledgement() result:')
+
+            # begin-replace_notification_acknowledgement
+
+            response = platform_notifications_service.replace_notification_acknowledgement(
+                last_acknowledged=1772804159452,
+                account_id=account_id,
+            )
+            acknowledgement = response.get_result()
+
+            print(json.dumps(acknowledgement, indent=2))
+
+            # end-replace_notification_acknowledgement
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_list_distribution_list_destinations_example(self):
         """
         list_distribution_list_destinations request example
@@ -279,78 +351,6 @@ class TestPlatformNotificationsV1Examples:
             print(json.dumps(preferences_object, indent=2))
 
             # end-replace_notification_preferences
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_list_notifications_example(self):
-        """
-        list_notifications request example
-        """
-        try:
-            print('\nlist_notifications() result:')
-
-            # begin-list_notifications
-
-            all_results = []
-            pager = NotificationsPager(
-                client=platform_notifications_service,
-                account_id=account_id,
-                limit=50,
-            )
-            while pager.has_next():
-                next_page = pager.get_next()
-                assert next_page is not None
-                all_results.extend(next_page)
-
-            print(json.dumps(all_results, indent=2))
-
-            # end-list_notifications
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_get_acknowledgement_example(self):
-        """
-        get_acknowledgement request example
-        """
-        try:
-            print('\nget_acknowledgement() result:')
-
-            # begin-get_acknowledgement
-
-            response = platform_notifications_service.get_acknowledgement(
-                account_id=account_id,
-            )
-            acknowledgement = response.get_result()
-
-            print(json.dumps(acknowledgement, indent=2))
-
-            # end-get_acknowledgement
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_replace_notification_acknowledgement_example(self):
-        """
-        replace_notification_acknowledgement request example
-        """
-        try:
-            print('\nreplace_notification_acknowledgement() result:')
-
-            # begin-replace_notification_acknowledgement
-
-            response = platform_notifications_service.replace_notification_acknowledgement(
-                last_acknowledged_id='1772804159452',
-                account_id=account_id,
-            )
-            acknowledgement = response.get_result()
-
-            print(json.dumps(acknowledgement, indent=2))
-
-            # end-replace_notification_acknowledgement
 
         except ApiException as e:
             pytest.fail(str(e))

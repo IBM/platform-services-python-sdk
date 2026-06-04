@@ -54,6 +54,413 @@ def preprocess_url(operation_path: str):
 
 
 ##############################################################################
+# Start of Service: Notifications
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = PlatformNotificationsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, PlatformNotificationsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = PlatformNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListNotifications:
+    """
+    Test Class for list_notifications
+    """
+
+    @responses.activate
+    def test_list_notifications_all_params(self):
+        """
+        list_notifications()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/notifications')
+        mock_response = '{"limit": 50, "total_count": 232, "first": {"href": "https://notifications.cloud.ibm.com/api/v1/notifications?limit=50"}, "previous": {"href": "https://notifications.cloud.ibm.com/api/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "next": {"href": "https://notifications.cloud.ibm.com/api/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "last": {"href": "https://notifications.cloud.ibm.com/api/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "notifications": [{"title": "System Maintenance Scheduled", "body": "Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.", "id": "12345", "category": "maintenance", "component_names": ["component_names"], "start_time": 1771791490, "is_global": false, "state": "new", "regions": ["regions"], "crn_masks": ["crn_masks"], "record_id": "rec-67890", "source_id": "src-11111", "completion_code": "successful", "end_time": 1771791490, "update_time": 1771791490, "severity": 2, "lucene_query": "region:us-south AND service_name:event-notifications", "resource_link": "https://cloud.ibm.com/status/incident/12345", "creation_timestamp": 1772804159452}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
+        start = '3fe78a36b9aa7f26'
+        limit = 50
+
+        # Invoke method
+        response = _service.list_notifications(
+            account_id=account_id,
+            start=start,
+            limit=limit,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'start={}'.format(start) in query_string
+        assert 'limit={}'.format(limit) in query_string
+
+    def test_list_notifications_all_params_with_retries(self):
+        # Enable retries and run test_list_notifications_all_params.
+        _service.enable_retries()
+        self.test_list_notifications_all_params()
+
+        # Disable retries and run test_list_notifications_all_params.
+        _service.disable_retries()
+        self.test_list_notifications_all_params()
+
+    @responses.activate
+    def test_list_notifications_required_params(self):
+        """
+        test_list_notifications_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/notifications')
+        mock_response = '{"limit": 50, "total_count": 232, "first": {"href": "https://notifications.cloud.ibm.com/api/v1/notifications?limit=50"}, "previous": {"href": "https://notifications.cloud.ibm.com/api/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "next": {"href": "https://notifications.cloud.ibm.com/api/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "last": {"href": "https://notifications.cloud.ibm.com/api/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "notifications": [{"title": "System Maintenance Scheduled", "body": "Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.", "id": "12345", "category": "maintenance", "component_names": ["component_names"], "start_time": 1771791490, "is_global": false, "state": "new", "regions": ["regions"], "crn_masks": ["crn_masks"], "record_id": "rec-67890", "source_id": "src-11111", "completion_code": "successful", "end_time": 1771791490, "update_time": 1771791490, "severity": 2, "lucene_query": "region:us-south AND service_name:event-notifications", "resource_link": "https://cloud.ibm.com/status/incident/12345", "creation_timestamp": 1772804159452}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Invoke method
+        response = _service.list_notifications()
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_notifications_required_params_with_retries(self):
+        # Enable retries and run test_list_notifications_required_params.
+        _service.enable_retries()
+        self.test_list_notifications_required_params()
+
+        # Disable retries and run test_list_notifications_required_params.
+        _service.disable_retries()
+        self.test_list_notifications_required_params()
+
+    @responses.activate
+    def test_list_notifications_with_pager_get_next(self):
+        """
+        test_list_notifications_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/notifications')
+        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"notifications":[{"title":"System Maintenance Scheduled","body":"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.","id":"12345","category":"maintenance","component_names":["component_names"],"start_time":1771791490,"is_global":false,"state":"new","regions":["regions"],"crn_masks":["crn_masks"],"record_id":"rec-67890","source_id":"src-11111","completion_code":"successful","end_time":1771791490,"update_time":1771791490,"severity":2,"lucene_query":"region:us-south AND service_name:event-notifications","resource_link":"https://cloud.ibm.com/status/incident/12345","creation_timestamp":1772804159452}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"notifications":[{"title":"System Maintenance Scheduled","body":"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.","id":"12345","category":"maintenance","component_names":["component_names"],"start_time":1771791490,"is_global":false,"state":"new","regions":["regions"],"crn_masks":["crn_masks"],"record_id":"rec-67890","source_id":"src-11111","completion_code":"successful","end_time":1771791490,"update_time":1771791490,"severity":2,"lucene_query":"region:us-south AND service_name:event-notifications","resource_link":"https://cloud.ibm.com/status/incident/12345","creation_timestamp":1772804159452}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = NotificationsPager(
+            client=_service,
+            account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
+            limit=50,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_notifications_with_pager_get_all(self):
+        """
+        test_list_notifications_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/notifications')
+        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"notifications":[{"title":"System Maintenance Scheduled","body":"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.","id":"12345","category":"maintenance","component_names":["component_names"],"start_time":1771791490,"is_global":false,"state":"new","regions":["regions"],"crn_masks":["crn_masks"],"record_id":"rec-67890","source_id":"src-11111","completion_code":"successful","end_time":1771791490,"update_time":1771791490,"severity":2,"lucene_query":"region:us-south AND service_name:event-notifications","resource_link":"https://cloud.ibm.com/status/incident/12345","creation_timestamp":1772804159452}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"notifications":[{"title":"System Maintenance Scheduled","body":"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.","id":"12345","category":"maintenance","component_names":["component_names"],"start_time":1771791490,"is_global":false,"state":"new","regions":["regions"],"crn_masks":["crn_masks"],"record_id":"rec-67890","source_id":"src-11111","completion_code":"successful","end_time":1771791490,"update_time":1771791490,"severity":2,"lucene_query":"region:us-south AND service_name:event-notifications","resource_link":"https://cloud.ibm.com/status/incident/12345","creation_timestamp":1772804159452}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = NotificationsPager(
+            client=_service,
+            account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
+            limit=50,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+
+class TestGetAcknowledgement:
+    """
+    Test Class for get_acknowledgement
+    """
+
+    @responses.activate
+    def test_get_acknowledgement_all_params(self):
+        """
+        get_acknowledgement()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/notifications/acknowledgement')
+        mock_response = '{"has_unread": true, "last_acknowledged": 1772804159452}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
+
+        # Invoke method
+        response = _service.get_acknowledgement(
+            account_id=account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+
+    def test_get_acknowledgement_all_params_with_retries(self):
+        # Enable retries and run test_get_acknowledgement_all_params.
+        _service.enable_retries()
+        self.test_get_acknowledgement_all_params()
+
+        # Disable retries and run test_get_acknowledgement_all_params.
+        _service.disable_retries()
+        self.test_get_acknowledgement_all_params()
+
+    @responses.activate
+    def test_get_acknowledgement_required_params(self):
+        """
+        test_get_acknowledgement_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/notifications/acknowledgement')
+        mock_response = '{"has_unread": true, "last_acknowledged": 1772804159452}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Invoke method
+        response = _service.get_acknowledgement()
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_acknowledgement_required_params_with_retries(self):
+        # Enable retries and run test_get_acknowledgement_required_params.
+        _service.enable_retries()
+        self.test_get_acknowledgement_required_params()
+
+        # Disable retries and run test_get_acknowledgement_required_params.
+        _service.disable_retries()
+        self.test_get_acknowledgement_required_params()
+
+
+class TestReplaceNotificationAcknowledgement:
+    """
+    Test Class for replace_notification_acknowledgement
+    """
+
+    @responses.activate
+    def test_replace_notification_acknowledgement_all_params(self):
+        """
+        replace_notification_acknowledgement()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/notifications/acknowledgement')
+        mock_response = '{"has_unread": true, "last_acknowledged": 1772804159452}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        last_acknowledged = 1772804159452
+        account_id = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
+
+        # Invoke method
+        response = _service.replace_notification_acknowledgement(
+            last_acknowledged,
+            account_id=account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['last_acknowledged'] == 1772804159452
+
+    def test_replace_notification_acknowledgement_all_params_with_retries(self):
+        # Enable retries and run test_replace_notification_acknowledgement_all_params.
+        _service.enable_retries()
+        self.test_replace_notification_acknowledgement_all_params()
+
+        # Disable retries and run test_replace_notification_acknowledgement_all_params.
+        _service.disable_retries()
+        self.test_replace_notification_acknowledgement_all_params()
+
+    @responses.activate
+    def test_replace_notification_acknowledgement_required_params(self):
+        """
+        test_replace_notification_acknowledgement_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/notifications/acknowledgement')
+        mock_response = '{"has_unread": true, "last_acknowledged": 1772804159452}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        last_acknowledged = 1772804159452
+
+        # Invoke method
+        response = _service.replace_notification_acknowledgement(
+            last_acknowledged,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['last_acknowledged'] == 1772804159452
+
+    def test_replace_notification_acknowledgement_required_params_with_retries(self):
+        # Enable retries and run test_replace_notification_acknowledgement_required_params.
+        _service.enable_retries()
+        self.test_replace_notification_acknowledgement_required_params()
+
+        # Disable retries and run test_replace_notification_acknowledgement_required_params.
+        _service.disable_retries()
+        self.test_replace_notification_acknowledgement_required_params()
+
+    @responses.activate
+    def test_replace_notification_acknowledgement_value_error(self):
+        """
+        test_replace_notification_acknowledgement_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/notifications/acknowledgement')
+        mock_response = '{"has_unread": true, "last_acknowledged": 1772804159452}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        last_acknowledged = 1772804159452
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "last_acknowledged": last_acknowledged,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.replace_notification_acknowledgement(**req_copy)
+
+    def test_replace_notification_acknowledgement_value_error_with_retries(self):
+        # Enable retries and run test_replace_notification_acknowledgement_value_error.
+        _service.enable_retries()
+        self.test_replace_notification_acknowledgement_value_error()
+
+        # Disable retries and run test_replace_notification_acknowledgement_value_error.
+        _service.disable_retries()
+        self.test_replace_notification_acknowledgement_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: Notifications
+##############################################################################
+
+##############################################################################
 # Start of Service: DistributionLists
 ##############################################################################
 # region
@@ -591,6 +998,131 @@ class TestNewInstance:
             )
 
 
+class TestGetPreferences:
+    """
+    Test Class for get_preferences
+    """
+
+    @responses.activate
+    def test_get_preferences_all_params(self):
+        """
+        get_preferences()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/notifications/IBMid-1234567890/preferences')
+        mock_response = '{"incident_severity1": {"channels": ["email"], "updates": true}, "incident_severity2": {"channels": ["email"], "updates": true}, "incident_severity3": {"channels": ["email"], "updates": true}, "incident_severity4": {"channels": ["email"], "updates": true}, "maintenance_high": {"channels": ["email"], "updates": true}, "maintenance_medium": {"channels": ["email"], "updates": true}, "maintenance_low": {"channels": ["email"], "updates": true}, "announcements_major": {"channels": ["email"]}, "announcements_minor": {"channels": ["email"]}, "security_normal": {"channels": ["email"]}, "account_normal": {"channels": ["email"]}, "billing_and_usage_order": {"channels": ["email"]}, "billing_and_usage_invoices": {"channels": ["email"]}, "billing_and_usage_payments": {"channels": ["email"]}, "billing_and_usage_subscriptions_and_promo_codes": {"channels": ["email"]}, "billing_and_usage_spending_alerts": {"channels": ["email"]}, "resourceactivity_normal": {"channels": ["email"]}, "ordering_review": {"channels": ["email"]}, "ordering_approved": {"channels": ["email"]}, "ordering_approved_vsi": {"channels": ["email"]}, "ordering_approved_server": {"channels": ["email"]}, "provisioning_reload_complete": {"channels": ["email"]}, "provisioning_complete_vsi": {"channels": ["email"]}, "provisioning_complete_server": {"channels": ["email"]}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        iam_id = 'IBMid-1234567890'
+        account_id = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
+
+        # Invoke method
+        response = _service.get_preferences(
+            iam_id,
+            account_id=account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+
+    def test_get_preferences_all_params_with_retries(self):
+        # Enable retries and run test_get_preferences_all_params.
+        _service.enable_retries()
+        self.test_get_preferences_all_params()
+
+        # Disable retries and run test_get_preferences_all_params.
+        _service.disable_retries()
+        self.test_get_preferences_all_params()
+
+    @responses.activate
+    def test_get_preferences_required_params(self):
+        """
+        test_get_preferences_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/notifications/IBMid-1234567890/preferences')
+        mock_response = '{"incident_severity1": {"channels": ["email"], "updates": true}, "incident_severity2": {"channels": ["email"], "updates": true}, "incident_severity3": {"channels": ["email"], "updates": true}, "incident_severity4": {"channels": ["email"], "updates": true}, "maintenance_high": {"channels": ["email"], "updates": true}, "maintenance_medium": {"channels": ["email"], "updates": true}, "maintenance_low": {"channels": ["email"], "updates": true}, "announcements_major": {"channels": ["email"]}, "announcements_minor": {"channels": ["email"]}, "security_normal": {"channels": ["email"]}, "account_normal": {"channels": ["email"]}, "billing_and_usage_order": {"channels": ["email"]}, "billing_and_usage_invoices": {"channels": ["email"]}, "billing_and_usage_payments": {"channels": ["email"]}, "billing_and_usage_subscriptions_and_promo_codes": {"channels": ["email"]}, "billing_and_usage_spending_alerts": {"channels": ["email"]}, "resourceactivity_normal": {"channels": ["email"]}, "ordering_review": {"channels": ["email"]}, "ordering_approved": {"channels": ["email"]}, "ordering_approved_vsi": {"channels": ["email"]}, "ordering_approved_server": {"channels": ["email"]}, "provisioning_reload_complete": {"channels": ["email"]}, "provisioning_complete_vsi": {"channels": ["email"]}, "provisioning_complete_server": {"channels": ["email"]}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        iam_id = 'IBMid-1234567890'
+
+        # Invoke method
+        response = _service.get_preferences(
+            iam_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_preferences_required_params_with_retries(self):
+        # Enable retries and run test_get_preferences_required_params.
+        _service.enable_retries()
+        self.test_get_preferences_required_params()
+
+        # Disable retries and run test_get_preferences_required_params.
+        _service.disable_retries()
+        self.test_get_preferences_required_params()
+
+    @responses.activate
+    def test_get_preferences_value_error(self):
+        """
+        test_get_preferences_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/notifications/IBMid-1234567890/preferences')
+        mock_response = '{"incident_severity1": {"channels": ["email"], "updates": true}, "incident_severity2": {"channels": ["email"], "updates": true}, "incident_severity3": {"channels": ["email"], "updates": true}, "incident_severity4": {"channels": ["email"], "updates": true}, "maintenance_high": {"channels": ["email"], "updates": true}, "maintenance_medium": {"channels": ["email"], "updates": true}, "maintenance_low": {"channels": ["email"], "updates": true}, "announcements_major": {"channels": ["email"]}, "announcements_minor": {"channels": ["email"]}, "security_normal": {"channels": ["email"]}, "account_normal": {"channels": ["email"]}, "billing_and_usage_order": {"channels": ["email"]}, "billing_and_usage_invoices": {"channels": ["email"]}, "billing_and_usage_payments": {"channels": ["email"]}, "billing_and_usage_subscriptions_and_promo_codes": {"channels": ["email"]}, "billing_and_usage_spending_alerts": {"channels": ["email"]}, "resourceactivity_normal": {"channels": ["email"]}, "ordering_review": {"channels": ["email"]}, "ordering_approved": {"channels": ["email"]}, "ordering_approved_vsi": {"channels": ["email"]}, "ordering_approved_server": {"channels": ["email"]}, "provisioning_reload_complete": {"channels": ["email"]}, "provisioning_complete_vsi": {"channels": ["email"]}, "provisioning_complete_server": {"channels": ["email"]}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        iam_id = 'IBMid-1234567890'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "iam_id": iam_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_preferences(**req_copy)
+
+    def test_get_preferences_value_error_with_retries(self):
+        # Enable retries and run test_get_preferences_value_error.
+        _service.enable_retries()
+        self.test_get_preferences_value_error()
+
+        # Disable retries and run test_get_preferences_value_error.
+        _service.disable_retries()
+        self.test_get_preferences_value_error()
+
+
 class TestCreatePreferences:
     """
     Test Class for create_preferences
@@ -913,131 +1445,6 @@ class TestCreatePreferences:
         # Disable retries and run test_create_preferences_value_error.
         _service.disable_retries()
         self.test_create_preferences_value_error()
-
-
-class TestGetPreferences:
-    """
-    Test Class for get_preferences
-    """
-
-    @responses.activate
-    def test_get_preferences_all_params(self):
-        """
-        get_preferences()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/notifications/IBMid-1234567890/preferences')
-        mock_response = '{"incident_severity1": {"channels": ["email"], "updates": true}, "incident_severity2": {"channels": ["email"], "updates": true}, "incident_severity3": {"channels": ["email"], "updates": true}, "incident_severity4": {"channels": ["email"], "updates": true}, "maintenance_high": {"channels": ["email"], "updates": true}, "maintenance_medium": {"channels": ["email"], "updates": true}, "maintenance_low": {"channels": ["email"], "updates": true}, "announcements_major": {"channels": ["email"]}, "announcements_minor": {"channels": ["email"]}, "security_normal": {"channels": ["email"]}, "account_normal": {"channels": ["email"]}, "billing_and_usage_order": {"channels": ["email"]}, "billing_and_usage_invoices": {"channels": ["email"]}, "billing_and_usage_payments": {"channels": ["email"]}, "billing_and_usage_subscriptions_and_promo_codes": {"channels": ["email"]}, "billing_and_usage_spending_alerts": {"channels": ["email"]}, "resourceactivity_normal": {"channels": ["email"]}, "ordering_review": {"channels": ["email"]}, "ordering_approved": {"channels": ["email"]}, "ordering_approved_vsi": {"channels": ["email"]}, "ordering_approved_server": {"channels": ["email"]}, "provisioning_reload_complete": {"channels": ["email"]}, "provisioning_complete_vsi": {"channels": ["email"]}, "provisioning_complete_server": {"channels": ["email"]}}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        iam_id = 'IBMid-1234567890'
-        account_id = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
-
-        # Invoke method
-        response = _service.get_preferences(
-            iam_id,
-            account_id=account_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-
-    def test_get_preferences_all_params_with_retries(self):
-        # Enable retries and run test_get_preferences_all_params.
-        _service.enable_retries()
-        self.test_get_preferences_all_params()
-
-        # Disable retries and run test_get_preferences_all_params.
-        _service.disable_retries()
-        self.test_get_preferences_all_params()
-
-    @responses.activate
-    def test_get_preferences_required_params(self):
-        """
-        test_get_preferences_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/notifications/IBMid-1234567890/preferences')
-        mock_response = '{"incident_severity1": {"channels": ["email"], "updates": true}, "incident_severity2": {"channels": ["email"], "updates": true}, "incident_severity3": {"channels": ["email"], "updates": true}, "incident_severity4": {"channels": ["email"], "updates": true}, "maintenance_high": {"channels": ["email"], "updates": true}, "maintenance_medium": {"channels": ["email"], "updates": true}, "maintenance_low": {"channels": ["email"], "updates": true}, "announcements_major": {"channels": ["email"]}, "announcements_minor": {"channels": ["email"]}, "security_normal": {"channels": ["email"]}, "account_normal": {"channels": ["email"]}, "billing_and_usage_order": {"channels": ["email"]}, "billing_and_usage_invoices": {"channels": ["email"]}, "billing_and_usage_payments": {"channels": ["email"]}, "billing_and_usage_subscriptions_and_promo_codes": {"channels": ["email"]}, "billing_and_usage_spending_alerts": {"channels": ["email"]}, "resourceactivity_normal": {"channels": ["email"]}, "ordering_review": {"channels": ["email"]}, "ordering_approved": {"channels": ["email"]}, "ordering_approved_vsi": {"channels": ["email"]}, "ordering_approved_server": {"channels": ["email"]}, "provisioning_reload_complete": {"channels": ["email"]}, "provisioning_complete_vsi": {"channels": ["email"]}, "provisioning_complete_server": {"channels": ["email"]}}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        iam_id = 'IBMid-1234567890'
-
-        # Invoke method
-        response = _service.get_preferences(
-            iam_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_preferences_required_params_with_retries(self):
-        # Enable retries and run test_get_preferences_required_params.
-        _service.enable_retries()
-        self.test_get_preferences_required_params()
-
-        # Disable retries and run test_get_preferences_required_params.
-        _service.disable_retries()
-        self.test_get_preferences_required_params()
-
-    @responses.activate
-    def test_get_preferences_value_error(self):
-        """
-        test_get_preferences_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/notifications/IBMid-1234567890/preferences')
-        mock_response = '{"incident_severity1": {"channels": ["email"], "updates": true}, "incident_severity2": {"channels": ["email"], "updates": true}, "incident_severity3": {"channels": ["email"], "updates": true}, "incident_severity4": {"channels": ["email"], "updates": true}, "maintenance_high": {"channels": ["email"], "updates": true}, "maintenance_medium": {"channels": ["email"], "updates": true}, "maintenance_low": {"channels": ["email"], "updates": true}, "announcements_major": {"channels": ["email"]}, "announcements_minor": {"channels": ["email"]}, "security_normal": {"channels": ["email"]}, "account_normal": {"channels": ["email"]}, "billing_and_usage_order": {"channels": ["email"]}, "billing_and_usage_invoices": {"channels": ["email"]}, "billing_and_usage_payments": {"channels": ["email"]}, "billing_and_usage_subscriptions_and_promo_codes": {"channels": ["email"]}, "billing_and_usage_spending_alerts": {"channels": ["email"]}, "resourceactivity_normal": {"channels": ["email"]}, "ordering_review": {"channels": ["email"]}, "ordering_approved": {"channels": ["email"]}, "ordering_approved_vsi": {"channels": ["email"]}, "ordering_approved_server": {"channels": ["email"]}, "provisioning_reload_complete": {"channels": ["email"]}, "provisioning_complete_vsi": {"channels": ["email"]}, "provisioning_complete_server": {"channels": ["email"]}}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        iam_id = 'IBMid-1234567890'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "iam_id": iam_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.get_preferences(**req_copy)
-
-    def test_get_preferences_value_error_with_retries(self):
-        # Enable retries and run test_get_preferences_value_error.
-        _service.enable_retries()
-        self.test_get_preferences_value_error()
-
-        # Disable retries and run test_get_preferences_value_error.
-        _service.disable_retries()
-        self.test_get_preferences_value_error()
 
 
 class TestReplaceNotificationPreferences:
@@ -1485,428 +1892,42 @@ class TestDeleteNotificationPreferences:
 # End of Service: UserPreferences
 ##############################################################################
 
-##############################################################################
-# Start of Service: Notifications
-##############################################################################
-# region
-
-
-class TestNewInstance:
-    """
-    Test Class for new_instance
-    """
-
-    def test_new_instance(self):
-        """
-        new_instance()
-        """
-        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
-
-        service = PlatformNotificationsV1.new_instance(
-            service_name='TEST_SERVICE',
-        )
-
-        assert service is not None
-        assert isinstance(service, PlatformNotificationsV1)
-
-    def test_new_instance_without_authenticator(self):
-        """
-        new_instance_without_authenticator()
-        """
-        with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = PlatformNotificationsV1.new_instance(
-                service_name='TEST_SERVICE_NOT_FOUND',
-            )
-
-
-class TestListNotifications:
-    """
-    Test Class for list_notifications
-    """
-
-    @responses.activate
-    def test_list_notifications_all_params(self):
-        """
-        list_notifications()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/notifications')
-        mock_response = '{"limit": 50, "total_count": 232, "first": {"href": "https://api.example.com/v1/notifications?limit=50"}, "previous": {"href": "https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "next": {"href": "https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "last": {"href": "https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "notifications": [{"title": "System Maintenance Scheduled", "body": "Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.", "id": "12345", "category": "maintenance", "component_names": ["component_names"], "start_time": 1771791490, "is_global": false, "state": "new", "regions": ["regions"], "crn_masks": ["crn_masks"], "record_id": "rec-67890", "source_id": "src-11111", "completion_code": "successful", "end_time": 1771791490, "update_time": 1771791490, "severity": 2, "lucene_query": "region:us-south AND service_name:event-notifications", "resource_link": "https://cloud.ibm.com/status/incident/12345"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
-        start = '3fe78a36b9aa7f26'
-        limit = 50
-
-        # Invoke method
-        response = _service.list_notifications(
-            account_id=account_id,
-            start=start,
-            limit=limit,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-        assert 'start={}'.format(start) in query_string
-        assert 'limit={}'.format(limit) in query_string
-
-    def test_list_notifications_all_params_with_retries(self):
-        # Enable retries and run test_list_notifications_all_params.
-        _service.enable_retries()
-        self.test_list_notifications_all_params()
-
-        # Disable retries and run test_list_notifications_all_params.
-        _service.disable_retries()
-        self.test_list_notifications_all_params()
-
-    @responses.activate
-    def test_list_notifications_required_params(self):
-        """
-        test_list_notifications_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/notifications')
-        mock_response = '{"limit": 50, "total_count": 232, "first": {"href": "https://api.example.com/v1/notifications?limit=50"}, "previous": {"href": "https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "next": {"href": "https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "last": {"href": "https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50", "start": "3fe78a36b9aa7f26"}, "notifications": [{"title": "System Maintenance Scheduled", "body": "Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.", "id": "12345", "category": "maintenance", "component_names": ["component_names"], "start_time": 1771791490, "is_global": false, "state": "new", "regions": ["regions"], "crn_masks": ["crn_masks"], "record_id": "rec-67890", "source_id": "src-11111", "completion_code": "successful", "end_time": 1771791490, "update_time": 1771791490, "severity": 2, "lucene_query": "region:us-south AND service_name:event-notifications", "resource_link": "https://cloud.ibm.com/status/incident/12345"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Invoke method
-        response = _service.list_notifications()
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_list_notifications_required_params_with_retries(self):
-        # Enable retries and run test_list_notifications_required_params.
-        _service.enable_retries()
-        self.test_list_notifications_required_params()
-
-        # Disable retries and run test_list_notifications_required_params.
-        _service.disable_retries()
-        self.test_list_notifications_required_params()
-
-    @responses.activate
-    def test_list_notifications_with_pager_get_next(self):
-        """
-        test_list_notifications_with_pager_get_next()
-        """
-        # Set up a two-page mock response
-        url = preprocess_url('/v1/notifications')
-        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"notifications":[{"title":"System Maintenance Scheduled","body":"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.","id":"12345","category":"maintenance","component_names":["component_names"],"start_time":1771791490,"is_global":false,"state":"new","regions":["regions"],"crn_masks":["crn_masks"],"record_id":"rec-67890","source_id":"src-11111","completion_code":"successful","end_time":1771791490,"update_time":1771791490,"severity":2,"lucene_query":"region:us-south AND service_name:event-notifications","resource_link":"https://cloud.ibm.com/status/incident/12345"}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"notifications":[{"title":"System Maintenance Scheduled","body":"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.","id":"12345","category":"maintenance","component_names":["component_names"],"start_time":1771791490,"is_global":false,"state":"new","regions":["regions"],"crn_masks":["crn_masks"],"record_id":"rec-67890","source_id":"src-11111","completion_code":"successful","end_time":1771791490,"update_time":1771791490,"severity":2,"lucene_query":"region:us-south AND service_name:event-notifications","resource_link":"https://cloud.ibm.com/status/incident/12345"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response1,
-            content_type='application/json',
-            status=200,
-        )
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response2,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Exercise the pager class for this operation
-        all_results = []
-        pager = NotificationsPager(
-            client=_service,
-            account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
-            limit=50,
-        )
-        while pager.has_next():
-            next_page = pager.get_next()
-            assert next_page is not None
-            all_results.extend(next_page)
-        assert len(all_results) == 2
-
-    @responses.activate
-    def test_list_notifications_with_pager_get_all(self):
-        """
-        test_list_notifications_with_pager_get_all()
-        """
-        # Set up a two-page mock response
-        url = preprocess_url('/v1/notifications')
-        mock_response1 = '{"next":{"start":"1"},"total_count":2,"limit":1,"notifications":[{"title":"System Maintenance Scheduled","body":"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.","id":"12345","category":"maintenance","component_names":["component_names"],"start_time":1771791490,"is_global":false,"state":"new","regions":["regions"],"crn_masks":["crn_masks"],"record_id":"rec-67890","source_id":"src-11111","completion_code":"successful","end_time":1771791490,"update_time":1771791490,"severity":2,"lucene_query":"region:us-south AND service_name:event-notifications","resource_link":"https://cloud.ibm.com/status/incident/12345"}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"notifications":[{"title":"System Maintenance Scheduled","body":"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.","id":"12345","category":"maintenance","component_names":["component_names"],"start_time":1771791490,"is_global":false,"state":"new","regions":["regions"],"crn_masks":["crn_masks"],"record_id":"rec-67890","source_id":"src-11111","completion_code":"successful","end_time":1771791490,"update_time":1771791490,"severity":2,"lucene_query":"region:us-south AND service_name:event-notifications","resource_link":"https://cloud.ibm.com/status/incident/12345"}]}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response1,
-            content_type='application/json',
-            status=200,
-        )
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response2,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Exercise the pager class for this operation
-        pager = NotificationsPager(
-            client=_service,
-            account_id='a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
-            limit=50,
-        )
-        all_results = pager.get_all()
-        assert all_results is not None
-        assert len(all_results) == 2
-
-
-class TestGetAcknowledgement:
-    """
-    Test Class for get_acknowledgement
-    """
-
-    @responses.activate
-    def test_get_acknowledgement_all_params(self):
-        """
-        get_acknowledgement()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/notifications/acknowledgement')
-        mock_response = (
-            '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
-        )
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        account_id = '1369339417d906e5620b8d861d40cfd7'
-
-        # Invoke method
-        response = _service.get_acknowledgement(
-            account_id=account_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-
-    def test_get_acknowledgement_all_params_with_retries(self):
-        # Enable retries and run test_get_acknowledgement_all_params.
-        _service.enable_retries()
-        self.test_get_acknowledgement_all_params()
-
-        # Disable retries and run test_get_acknowledgement_all_params.
-        _service.disable_retries()
-        self.test_get_acknowledgement_all_params()
-
-    @responses.activate
-    def test_get_acknowledgement_required_params(self):
-        """
-        test_get_acknowledgement_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/notifications/acknowledgement')
-        mock_response = (
-            '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
-        )
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Invoke method
-        response = _service.get_acknowledgement()
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_acknowledgement_required_params_with_retries(self):
-        # Enable retries and run test_get_acknowledgement_required_params.
-        _service.enable_retries()
-        self.test_get_acknowledgement_required_params()
-
-        # Disable retries and run test_get_acknowledgement_required_params.
-        _service.disable_retries()
-        self.test_get_acknowledgement_required_params()
-
-
-class TestReplaceNotificationAcknowledgement:
-    """
-    Test Class for replace_notification_acknowledgement
-    """
-
-    @responses.activate
-    def test_replace_notification_acknowledgement_all_params(self):
-        """
-        replace_notification_acknowledgement()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/notifications/acknowledgement')
-        mock_response = (
-            '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
-        )
-        responses.add(
-            responses.PUT,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        last_acknowledged_id = '1772804159452'
-        account_id = '1369339417d906e5620b8d861d40cfd7'
-
-        # Invoke method
-        response = _service.replace_notification_acknowledgement(
-            last_acknowledged_id,
-            account_id=account_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['last_acknowledged_id'] == '1772804159452'
-
-    def test_replace_notification_acknowledgement_all_params_with_retries(self):
-        # Enable retries and run test_replace_notification_acknowledgement_all_params.
-        _service.enable_retries()
-        self.test_replace_notification_acknowledgement_all_params()
-
-        # Disable retries and run test_replace_notification_acknowledgement_all_params.
-        _service.disable_retries()
-        self.test_replace_notification_acknowledgement_all_params()
-
-    @responses.activate
-    def test_replace_notification_acknowledgement_required_params(self):
-        """
-        test_replace_notification_acknowledgement_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/notifications/acknowledgement')
-        mock_response = (
-            '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
-        )
-        responses.add(
-            responses.PUT,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        last_acknowledged_id = '1772804159452'
-
-        # Invoke method
-        response = _service.replace_notification_acknowledgement(
-            last_acknowledged_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['last_acknowledged_id'] == '1772804159452'
-
-    def test_replace_notification_acknowledgement_required_params_with_retries(self):
-        # Enable retries and run test_replace_notification_acknowledgement_required_params.
-        _service.enable_retries()
-        self.test_replace_notification_acknowledgement_required_params()
-
-        # Disable retries and run test_replace_notification_acknowledgement_required_params.
-        _service.disable_retries()
-        self.test_replace_notification_acknowledgement_required_params()
-
-    @responses.activate
-    def test_replace_notification_acknowledgement_value_error(self):
-        """
-        test_replace_notification_acknowledgement_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/notifications/acknowledgement')
-        mock_response = (
-            '{"has_unread": true, "latest_notification_id": "1678901234000", "last_acknowledged_id": "1678800000000"}'
-        )
-        responses.add(
-            responses.PUT,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        last_acknowledged_id = '1772804159452'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "last_acknowledged_id": last_acknowledged_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.replace_notification_acknowledgement(**req_copy)
-
-    def test_replace_notification_acknowledgement_value_error_with_retries(self):
-        # Enable retries and run test_replace_notification_acknowledgement_value_error.
-        _service.enable_retries()
-        self.test_replace_notification_acknowledgement_value_error()
-
-        # Disable retries and run test_replace_notification_acknowledgement_value_error.
-        _service.disable_retries()
-        self.test_replace_notification_acknowledgement_value_error()
-
-
-# endregion
-##############################################################################
-# End of Service: Notifications
-##############################################################################
-
 
 ##############################################################################
 # Start of Model Tests
 ##############################################################################
 # region
+
+
+class TestModel_Acknowledgement:
+    """
+    Test Class for Acknowledgement
+    """
+
+    def test_acknowledgement_serialization(self):
+        """
+        Test serialization/deserialization for Acknowledgement
+        """
+
+        # Construct a json representation of a Acknowledgement model
+        acknowledgement_model_json = {}
+        acknowledgement_model_json['has_unread'] = True
+        acknowledgement_model_json['last_acknowledged'] = 1772804159452
+
+        # Construct a model instance of Acknowledgement by calling from_dict on the json representation
+        acknowledgement_model = Acknowledgement.from_dict(acknowledgement_model_json)
+        assert acknowledgement_model != False
+
+        # Construct a model instance of Acknowledgement by calling from_dict on the json representation
+        acknowledgement_model_dict = Acknowledgement.from_dict(acknowledgement_model_json).__dict__
+        acknowledgement_model2 = Acknowledgement(**acknowledgement_model_dict)
+
+        # Verify the model instances are equivalent
+        assert acknowledgement_model == acknowledgement_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        acknowledgement_model_json2 = acknowledgement_model.to_dict()
+        assert acknowledgement_model_json2 == acknowledgement_model_json
 
 
 class TestModel_AddDestinationCollection:
@@ -1979,6 +2000,7 @@ class TestModel_Notification:
         notification_model_json['severity'] = 2
         notification_model_json['lucene_query'] = 'region:us-south AND service_name:event-notifications'
         notification_model_json['resource_link'] = 'https://cloud.ibm.com/status/incident/12345'
+        notification_model_json['creation_timestamp'] = 1772804159452
 
         # Construct a model instance of Notification by calling from_dict on the json representation
         notification_model = Notification.from_dict(notification_model_json)
@@ -2009,11 +2031,11 @@ class TestModel_NotificationCollection:
         # Construct dict forms of any model objects needed in order to build this model.
 
         pagination_link_model = {}  # PaginationLink
-        pagination_link_model['href'] = 'https://api.example.com/v1/notifications?limit=50'
+        pagination_link_model['href'] = 'https://notifications.cloud.ibm.com/api/v1/notifications?limit=50'
 
         pagination_link_with_token_model = {}  # PaginationLinkWithToken
         pagination_link_with_token_model['href'] = (
-            'https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50'
+            'https://notifications.cloud.ibm.com/api/v1/notifications?start=3fe78a36b9aa7f26&limit=50'
         )
         pagination_link_with_token_model['start'] = '3fe78a36b9aa7f26'
 
@@ -2036,6 +2058,7 @@ class TestModel_NotificationCollection:
         notification_model['severity'] = 2
         notification_model['lucene_query'] = 'region:us-south AND service_name:event-notifications'
         notification_model['resource_link'] = 'https://cloud.ibm.com/status/incident/12345'
+        notification_model['creation_timestamp'] = 1772804159452
 
         # Construct a json representation of a NotificationCollection model
         notification_collection_model_json = {}
@@ -2077,7 +2100,7 @@ class TestModel_PaginationLink:
 
         # Construct a json representation of a PaginationLink model
         pagination_link_model_json = {}
-        pagination_link_model_json['href'] = 'https://api.example.com/v1/notifications?limit=50'
+        pagination_link_model_json['href'] = 'https://notifications.cloud.ibm.com/api/v1/notifications?limit=50'
 
         # Construct a model instance of PaginationLink by calling from_dict on the json representation
         pagination_link_model = PaginationLink.from_dict(pagination_link_model_json)
@@ -2108,7 +2131,7 @@ class TestModel_PaginationLinkWithToken:
         # Construct a json representation of a PaginationLinkWithToken model
         pagination_link_with_token_model_json = {}
         pagination_link_with_token_model_json['href'] = (
-            'https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50'
+            'https://notifications.cloud.ibm.com/api/v1/notifications?start=3fe78a36b9aa7f26&limit=50'
         )
         pagination_link_with_token_model_json['start'] = '3fe78a36b9aa7f26'
 
@@ -2297,38 +2320,6 @@ class TestModel_TestDestinationResponseBody:
         # Convert model instance back to dict and verify no loss of data
         test_destination_response_body_model_json2 = test_destination_response_body_model.to_dict()
         assert test_destination_response_body_model_json2 == test_destination_response_body_model_json
-
-
-class TestModel_Acknowledgement:
-    """
-    Test Class for Acknowledgement
-    """
-
-    def test_acknowledgement_serialization(self):
-        """
-        Test serialization/deserialization for Acknowledgement
-        """
-
-        # Construct a json representation of a Acknowledgement model
-        acknowledgement_model_json = {}
-        acknowledgement_model_json['has_unread'] = True
-        acknowledgement_model_json['latest_notification_id'] = '1678901234000'
-        acknowledgement_model_json['last_acknowledged_id'] = '1678800000000'
-
-        # Construct a model instance of Acknowledgement by calling from_dict on the json representation
-        acknowledgement_model = Acknowledgement.from_dict(acknowledgement_model_json)
-        assert acknowledgement_model != False
-
-        # Construct a model instance of Acknowledgement by calling from_dict on the json representation
-        acknowledgement_model_dict = Acknowledgement.from_dict(acknowledgement_model_json).__dict__
-        acknowledgement_model2 = Acknowledgement(**acknowledgement_model_dict)
-
-        # Verify the model instances are equivalent
-        assert acknowledgement_model == acknowledgement_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        acknowledgement_model_json2 = acknowledgement_model.to_dict()
-        assert acknowledgement_model_json2 == acknowledgement_model_json
 
 
 class TestModel_AddDestinationPrototypeEventNotificationDestinationPrototype:

@@ -17,8 +17,11 @@
 # IBM OpenAPI SDK Code Generator Version: 3.108.0-56772134-20251111-102802
 
 """
-**This API is currently in beta and subject to change.**
-API for managing notification distribution lists for IBM Cloud accounts.
+API for IBM Cloud account notifications, providing capabilities to:
+- View notifications
+- Get and update acknowledgements
+- Manage user communication preferences
+- Manage notification distribution lists
 
 API Version: 1.0.0
 """
@@ -74,7 +77,172 @@ class PlatformNotificationsV1(BaseService):
         BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
-    # Distribution Lists
+    # Notifications
+    #########################
+
+    def list_notifications(
+        self,
+        *,
+        account_id: Optional[str] = None,
+        start: Optional[str] = None,
+        limit: Optional[int] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get user notifications.
+
+        Retrieve all notifications for the requested user.
+
+        :param str account_id: (optional) The IBM Cloud account ID. If not
+               provided, the account ID from the bearer token will be used.
+        :param str start: (optional) An opaque page token that specifies the
+               resource to start the page on or after. If unspecified, the first page of
+               results is returned.
+        :param int limit: (optional) The maximum number of items to return per
+               page. If unspecified, a default limit of 50 is used.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `NotificationCollection` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_notifications',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'start': start,
+            'limit': limit,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/notifications'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_acknowledgement(
+        self,
+        *,
+        account_id: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get acknowledgement.
+
+        Retrieve the ID of the last notification acknowledged by the user for a specific
+        account.
+
+        :param str account_id: (optional) The IBM Cloud account ID. If not
+               provided, the account ID from the bearer token will be used.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Acknowledgement` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_acknowledgement',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/notifications/acknowledgement'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def replace_notification_acknowledgement(
+        self,
+        last_acknowledged: int,
+        *,
+        account_id: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update acknowledgement.
+
+        Update the ID of the last notification acknowledged by the user for a specific
+        account.
+
+        :param int last_acknowledged: The timestamp of the last acknowledgement.
+        :param str account_id: (optional) The IBM Cloud account ID. If not
+               provided, the account ID from the bearer token will be used.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Acknowledgement` object
+        """
+
+        if last_acknowledged is None:
+            raise ValueError('last_acknowledged must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='replace_notification_acknowledgement',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+        }
+
+        data = {
+            'last_acknowledged': last_acknowledged,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/notifications/acknowledgement'
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # distributionLists
     #########################
 
     def list_distribution_list_destinations(
@@ -235,7 +403,7 @@ class PlatformNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Delete destination entry.
+        Delete a destination entry.
 
         Remove a destination entry.
 
@@ -283,7 +451,7 @@ class PlatformNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Test destination entry.
+        Test a destination entry.
 
         Send a test notification to a destination in the distribution list. This allows
         you to verify that the destination is properly configured and can receive
@@ -337,8 +505,62 @@ class PlatformNotificationsV1(BaseService):
         return response
 
     #########################
-    # User Preferences
+    # userPreferences
     #########################
+
+    def get_preferences(
+        self,
+        iam_id: str,
+        *,
+        account_id: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get all communication preferences.
+
+        Retrieve all communication preferences of a user in an account.
+
+        :param str iam_id: The IAM ID of the user. Must match the IAM ID in the
+               bearer token.
+        :param str account_id: (optional) The IBM Cloud account ID. If not
+               provided, the account ID from the bearer token will be used.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `PreferencesObject` object
+        """
+
+        if not iam_id:
+            raise ValueError('iam_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_preferences',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['iam_id']
+        path_param_values = self.encode_path_vars(iam_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/notifications/{iam_id}/preferences'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
 
     def create_preferences(
         self,
@@ -546,60 +768,6 @@ class PlatformNotificationsV1(BaseService):
             headers=headers,
             params=params,
             data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def get_preferences(
-        self,
-        iam_id: str,
-        *,
-        account_id: Optional[str] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Get all communication preferences for a user in an account.
-
-        Retrieve all communication preferences of a user in an account.
-
-        :param str iam_id: The IAM ID of the user. Must match the IAM ID in the
-               bearer token.
-        :param str account_id: (optional) The IBM Cloud account ID. If not
-               provided, the account ID from the bearer token will be used.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `PreferencesObject` object
-        """
-
-        if not iam_id:
-            raise ValueError('iam_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='get_preferences',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'account_id': account_id,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['iam_id']
-        path_param_values = self.encode_path_vars(iam_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/notifications/{iam_id}/preferences'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
         )
 
         response = self.send(request, **kwargs)
@@ -824,9 +992,9 @@ class PlatformNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Resets all preferences to their default values.
+        Reset all preferences to their default values.
 
-        Delete all communication preferences for the specified account, and resets all
+        Delete all communication preferences for the specified account, and reset all
         preferences to their default values.
 
         :param str iam_id: The IAM ID of the user. Must match the IAM ID in the
@@ -870,175 +1038,80 @@ class PlatformNotificationsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    #########################
-    # Notifications
-    #########################
-
-    def list_notifications(
-        self,
-        *,
-        account_id: Optional[str] = None,
-        start: Optional[str] = None,
-        limit: Optional[int] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Get user notifications.
-
-        Retrieve all notifications for the requested user.
-
-        :param str account_id: (optional) The IBM Cloud account ID. If not
-               provided, the account ID from the bearer token will be used.
-        :param str start: (optional) An opaque page token that specifies the
-               resource to start the page on or after. If unspecified, the first page of
-               results is returned.
-        :param int limit: (optional) The maximum number of items to return per
-               page. If unspecified, a default limit of 50 is used.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `NotificationCollection` object
-        """
-
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='list_notifications',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'account_id': account_id,
-            'start': start,
-            'limit': limit,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v1/notifications'
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def get_acknowledgement(
-        self,
-        *,
-        account_id: Optional[str] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Get user's last acknowledged notification Id.
-
-        Retrieve the ID of the last notification acknowledged by the user for a specific
-        account.
-
-        :param str account_id: (optional) The account ID to retrieve
-               acknowledgement for.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `Acknowledgement` object
-        """
-
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='get_acknowledgement',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'account_id': account_id,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v1/notifications/acknowledgement'
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def replace_notification_acknowledgement(
-        self,
-        last_acknowledged_id: str,
-        *,
-        account_id: Optional[str] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Update user's last acknowledged notification.
-
-        Update the ID of the last notification acknowledged by the user for a specific
-        account.
-
-        :param str last_acknowledged_id: The ID of a notification.
-        :param str account_id: (optional) The account ID to update acknowledgement
-               for.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `Acknowledgement` object
-        """
-
-        if last_acknowledged_id is None:
-            raise ValueError('last_acknowledged_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='replace_notification_acknowledgement',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'account_id': account_id,
-        }
-
-        data = {
-            'last_acknowledged_id': last_acknowledged_id,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v1/notifications/acknowledgement'
-        request = self.prepare_request(
-            method='PUT',
-            url=url,
-            headers=headers,
-            params=params,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
 
 ##############################################################################
 # Models
 ##############################################################################
+
+
+class Acknowledgement:
+    """
+    Status indicating whether the user has unread notifications.
+
+    :param bool has_unread: Indicates whether the user has unread notifications.
+    :param int last_acknowledged: The timestamp of the last acknowledgement.
+    """
+
+    def __init__(
+        self,
+        has_unread: bool,
+        last_acknowledged: int,
+    ) -> None:
+        """
+        Initialize a Acknowledgement object.
+
+        :param bool has_unread: Indicates whether the user has unread
+               notifications.
+        :param int last_acknowledged: The timestamp of the last acknowledgement.
+        """
+        self.has_unread = has_unread
+        self.last_acknowledged = last_acknowledged
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Acknowledgement':
+        """Initialize a Acknowledgement object from a json dictionary."""
+        args = {}
+        if (has_unread := _dict.get('has_unread')) is not None:
+            args['has_unread'] = has_unread
+        else:
+            raise ValueError('Required property \'has_unread\' not present in Acknowledgement JSON')
+        if (last_acknowledged := _dict.get('last_acknowledged')) is not None:
+            args['last_acknowledged'] = last_acknowledged
+        else:
+            raise ValueError('Required property \'last_acknowledged\' not present in Acknowledgement JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Acknowledgement object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'has_unread') and self.has_unread is not None:
+            _dict['has_unread'] = self.has_unread
+        if hasattr(self, 'last_acknowledged') and self.last_acknowledged is not None:
+            _dict['last_acknowledged'] = self.last_acknowledged
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Acknowledgement object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Acknowledgement') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Acknowledgement') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class AddDestination:
@@ -1218,21 +1291,21 @@ class Notification:
     :param str category: The category of the notification.
     :param List[str] component_names: Array of component/service names affected by
           this notification.
-    :param int start_time: The start time of the notification in Unix timestamp
-          (milliseconds).
+    :param int start_time: (optional) The start time of the notification in Unix
+          timestamp (seconds).
     :param bool is_global: Indicates if the notification is global.
-    :param str state: The current state of the notification.
+    :param str state: (optional) The current state of the notification.
     :param List[str] regions: Array of region identifiers affected by this
           notification.
     :param List[str] crn_masks: Array of CRN masks that define the scope of affected
           resources.
     :param str record_id: (optional) The record identifier for tracking purposes.
     :param str source_id: (optional) The source identifier of the notification.
-    :param str completion_code: The completion code of the notification.
+    :param str completion_code: (optional) The completion code of the notification.
     :param int end_time: (optional) The end time of the notification in Unix
-          timestamp (milliseconds).
-    :param int update_time: The last update time of the notification in Unix
-          timestamp (milliseconds).
+          timestamp (seconds).
+    :param int update_time: (optional) The last update time of the notification in
+          Unix timestamp (seconds).
     :param int severity: The severity level of the notification (0-3). The display
           value depends on the notification type:
           **Incidents:**
@@ -1253,6 +1326,7 @@ class Notification:
     :param str resource_link: (optional) Link to additional resource information or
           documentation. Takes precedence over lucene_query when both are available.
           Mutually exclusive with lucene_query.
+    :param int creation_timestamp: The timestamp when the notification was created.
     """
 
     def __init__(
@@ -1262,18 +1336,19 @@ class Notification:
         id: str,
         category: str,
         component_names: List[str],
-        start_time: int,
         is_global: bool,
-        state: str,
         regions: List[str],
         crn_masks: List[str],
-        completion_code: str,
-        update_time: int,
         severity: int,
+        creation_timestamp: int,
         *,
+        start_time: Optional[int] = None,
+        state: Optional[str] = None,
         record_id: Optional[str] = None,
         source_id: Optional[str] = None,
+        completion_code: Optional[str] = None,
         end_time: Optional[int] = None,
+        update_time: Optional[int] = None,
         lucene_query: Optional[str] = None,
         resource_link: Optional[str] = None,
     ) -> None:
@@ -1286,17 +1361,11 @@ class Notification:
         :param str category: The category of the notification.
         :param List[str] component_names: Array of component/service names affected
                by this notification.
-        :param int start_time: The start time of the notification in Unix timestamp
-               (milliseconds).
         :param bool is_global: Indicates if the notification is global.
-        :param str state: The current state of the notification.
         :param List[str] regions: Array of region identifiers affected by this
                notification.
         :param List[str] crn_masks: Array of CRN masks that define the scope of
                affected resources.
-        :param str completion_code: The completion code of the notification.
-        :param int update_time: The last update time of the notification in Unix
-               timestamp (milliseconds).
         :param int severity: The severity level of the notification (0-3). The
                display value depends on the notification type:
                **Incidents:**
@@ -1311,11 +1380,20 @@ class Notification:
                **Announcements:**
                - 1 = Major
                - 0 = Minor.
+        :param int creation_timestamp: The timestamp when the notification was
+               created.
+        :param int start_time: (optional) The start time of the notification in
+               Unix timestamp (seconds).
+        :param str state: (optional) The current state of the notification.
         :param str record_id: (optional) The record identifier for tracking
                purposes.
         :param str source_id: (optional) The source identifier of the notification.
+        :param str completion_code: (optional) The completion code of the
+               notification.
         :param int end_time: (optional) The end time of the notification in Unix
-               timestamp (milliseconds).
+               timestamp (seconds).
+        :param int update_time: (optional) The last update time of the notification
+               in Unix timestamp (seconds).
         :param str lucene_query: (optional) Lucene query string for filtering
                affected resources. Only present when instance targets are specified and
                resource_link is not available. Mutually exclusive with resource_link.
@@ -1341,6 +1419,7 @@ class Notification:
         self.severity = severity
         self.lucene_query = lucene_query
         self.resource_link = resource_link
+        self.creation_timestamp = creation_timestamp
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Notification':
@@ -1368,16 +1447,12 @@ class Notification:
             raise ValueError('Required property \'component_names\' not present in Notification JSON')
         if (start_time := _dict.get('start_time')) is not None:
             args['start_time'] = start_time
-        else:
-            raise ValueError('Required property \'start_time\' not present in Notification JSON')
         if (is_global := _dict.get('is_global')) is not None:
             args['is_global'] = is_global
         else:
             raise ValueError('Required property \'is_global\' not present in Notification JSON')
         if (state := _dict.get('state')) is not None:
             args['state'] = state
-        else:
-            raise ValueError('Required property \'state\' not present in Notification JSON')
         if (regions := _dict.get('regions')) is not None:
             args['regions'] = regions
         else:
@@ -1392,14 +1467,10 @@ class Notification:
             args['source_id'] = source_id
         if (completion_code := _dict.get('completion_code')) is not None:
             args['completion_code'] = completion_code
-        else:
-            raise ValueError('Required property \'completion_code\' not present in Notification JSON')
         if (end_time := _dict.get('end_time')) is not None:
             args['end_time'] = end_time
         if (update_time := _dict.get('update_time')) is not None:
             args['update_time'] = update_time
-        else:
-            raise ValueError('Required property \'update_time\' not present in Notification JSON')
         if (severity := _dict.get('severity')) is not None:
             args['severity'] = severity
         else:
@@ -1408,6 +1479,10 @@ class Notification:
             args['lucene_query'] = lucene_query
         if (resource_link := _dict.get('resource_link')) is not None:
             args['resource_link'] = resource_link
+        if (creation_timestamp := _dict.get('creation_timestamp')) is not None:
+            args['creation_timestamp'] = creation_timestamp
+        else:
+            raise ValueError('Required property \'creation_timestamp\' not present in Notification JSON')
         return cls(**args)
 
     @classmethod
@@ -1454,6 +1529,8 @@ class Notification:
             _dict['lucene_query'] = self.lucene_query
         if hasattr(self, 'resource_link') and self.resource_link is not None:
             _dict['resource_link'] = self.resource_link
+        if hasattr(self, 'creation_timestamp') and self.creation_timestamp is not None:
+            _dict['creation_timestamp'] = self.creation_timestamp
         return _dict
 
     def _to_dict(self):
@@ -1655,7 +1732,7 @@ class PaginationLink:
     """
     A pagination link object containing the URL to a page.
 
-    :param str href: Complete URL to the page.
+    :param str href: The full URL path to the page.
     """
 
     def __init__(
@@ -1665,7 +1742,7 @@ class PaginationLink:
         """
         Initialize a PaginationLink object.
 
-        :param str href: Complete URL to the page.
+        :param str href: The full URL path to the page.
         """
         self.href = href
 
@@ -2419,90 +2496,6 @@ class TestDestinationResponseBody:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'TestDestinationResponseBody') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class Acknowledgement:
-    """
-    Status indicating whether the user has unread notifications.
-
-    :param bool has_unread: Indicates whether the user has unread notifications.
-    :param str latest_notification_id: The ID of the most recent notification
-          available to the user.
-    :param str last_acknowledged_id: The ID of the last notification acknowledged by
-          the user.
-    """
-
-    def __init__(
-        self,
-        has_unread: bool,
-        latest_notification_id: str,
-        last_acknowledged_id: str,
-    ) -> None:
-        """
-        Initialize a Acknowledgement object.
-
-        :param bool has_unread: Indicates whether the user has unread
-               notifications.
-        :param str latest_notification_id: The ID of the most recent notification
-               available to the user.
-        :param str last_acknowledged_id: The ID of the last notification
-               acknowledged by the user.
-        """
-        self.has_unread = has_unread
-        self.latest_notification_id = latest_notification_id
-        self.last_acknowledged_id = last_acknowledged_id
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'Acknowledgement':
-        """Initialize a Acknowledgement object from a json dictionary."""
-        args = {}
-        if (has_unread := _dict.get('has_unread')) is not None:
-            args['has_unread'] = has_unread
-        else:
-            raise ValueError('Required property \'has_unread\' not present in Acknowledgement JSON')
-        if (latest_notification_id := _dict.get('latest_notification_id')) is not None:
-            args['latest_notification_id'] = latest_notification_id
-        else:
-            raise ValueError('Required property \'latest_notification_id\' not present in Acknowledgement JSON')
-        if (last_acknowledged_id := _dict.get('last_acknowledged_id')) is not None:
-            args['last_acknowledged_id'] = last_acknowledged_id
-        else:
-            raise ValueError('Required property \'last_acknowledged_id\' not present in Acknowledgement JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a Acknowledgement object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'has_unread') and self.has_unread is not None:
-            _dict['has_unread'] = self.has_unread
-        if hasattr(self, 'latest_notification_id') and self.latest_notification_id is not None:
-            _dict['latest_notification_id'] = self.latest_notification_id
-        if hasattr(self, 'last_acknowledged_id') and self.last_acknowledged_id is not None:
-            _dict['last_acknowledged_id'] = self.last_acknowledged_id
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this Acknowledgement object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'Acknowledgement') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'Acknowledgement') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

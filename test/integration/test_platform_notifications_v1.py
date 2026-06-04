@@ -73,31 +73,73 @@ class TestPlatformNotificationsV1:
     )
 
     @needscredentials
-    def test_test_distribution_list_destination(self):
-        # Construct a dict representation of a TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype model
-        test_destination_request_body_prototype_model = {
-            'destination_type': 'event_notifications',
-            'notification_type': 'incident',
-        }
-
-        response = self.platform_notifications_service.test_distribution_list_destination(
+    def test_list_notifications(self):
+        response = self.platform_notifications_service.list_notifications(
             account_id=account_id,
-            destination_id=destination_id,
-            test_destination_request_body_prototype=test_destination_request_body_prototype_model,
+            limit=50,
         )
 
         assert response.get_status_code() == 200
-        test_destination_response_body = response.get_result()
-        assert test_destination_response_body is not None
+        notification_collection = response.get_result()
+        assert notification_collection is not None
 
     @needscredentials
-    def test_delete_distribution_list_destination(self):
-        response = self.platform_notifications_service.delete_distribution_list_destination(
+    def test_list_notifications_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = NotificationsPager(
+            client=self.platform_notifications_service,
             account_id=account_id,
-            destination_id=destination_id,
+            limit=50,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = NotificationsPager(
+            client=self.platform_notifications_service,
+            account_id=account_id,
+            limit=50,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_notifications() returned a total of {len(all_results)} items(s) using NotificationsPager.')
+
+    @needscredentials
+    def test_get_acknowledgement(self):
+        response = self.platform_notifications_service.get_acknowledgement(
+            account_id=account_id,
         )
 
-        assert response.get_status_code() == 204
+        assert response.get_status_code() == 200
+        acknowledgement = response.get_result()
+        assert acknowledgement is not None
+
+    @needscredentials
+    def test_replace_notification_acknowledgement(self):
+        response = self.platform_notifications_service.replace_notification_acknowledgement(
+            last_acknowledged=1772804159452,
+            account_id=account_id,
+        )
+
+        assert response.get_status_code() == 200
+        acknowledgement = response.get_result()
+        assert acknowledgement is not None
+
+    @needscredentials
+    def test_list_distribution_list_destinations(self):
+        response = self.platform_notifications_service.list_distribution_list_destinations(
+            account_id=account_id,
+        )
+
+        assert response.get_status_code() == 200
+        add_destination_collection = response.get_result()
+        assert add_destination_collection is not None
 
     @needscredentials
     def test_create_distribution_list_destination(self):
@@ -117,16 +159,6 @@ class TestPlatformNotificationsV1:
         assert add_destination is not None
 
     @needscredentials
-    def test_list_distribution_list_destinations(self):
-        response = self.platform_notifications_service.list_distribution_list_destinations(
-            account_id=account_id,
-        )
-
-        assert response.get_status_code() == 200
-        add_destination_collection = response.get_result()
-        assert add_destination_collection is not None
-
-    @needscredentials
     def test_get_distribution_list_destination(self):
         response = self.platform_notifications_service.get_distribution_list_destination(
             account_id=account_id,
@@ -136,6 +168,24 @@ class TestPlatformNotificationsV1:
         assert response.get_status_code() == 200
         add_destination = response.get_result()
         assert add_destination is not None
+
+    @needscredentials
+    def test_test_distribution_list_destination(self):
+        # Construct a dict representation of a TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype model
+        test_destination_request_body_prototype_model = {
+            'destination_type': 'event_notifications',
+            'notification_type': 'incident',
+        }
+
+        response = self.platform_notifications_service.test_distribution_list_destination(
+            account_id=account_id,
+            destination_id=destination_id,
+            test_destination_request_body_prototype=test_destination_request_body_prototype_model,
+        )
+
+        assert response.get_status_code() == 200
+        test_destination_response_body = response.get_result()
+        assert test_destination_response_body is not None
 
     @needscredentials
     def test_create_preferences(self):
@@ -239,62 +289,13 @@ class TestPlatformNotificationsV1:
         assert preferences_object is not None
 
     @needscredentials
-    def test_list_notifications(self):
-        response = self.platform_notifications_service.list_notifications(
+    def test_delete_distribution_list_destination(self):
+        response = self.platform_notifications_service.delete_distribution_list_destination(
             account_id=account_id,
+            destination_id=destination_id,
         )
 
-        assert response.get_status_code() == 200
-        notification_collection = response.get_result()
-        assert notification_collection is not None
-
-    @needscredentials
-    def test_list_notifications_with_pager(self):
-        all_results = []
-
-        # Test get_next().
-        pager = NotificationsPager(
-            client=self.platform_notifications_service,
-            account_id=account_id,
-            limit=50,
-        )
-        while pager.has_next():
-            next_page = pager.get_next()
-            assert next_page is not None
-            all_results.extend(next_page)
-
-        # Test get_all().
-        pager = NotificationsPager(
-            client=self.platform_notifications_service,
-            account_id=account_id,
-            limit=50,
-        )
-        all_items = pager.get_all()
-        assert all_items is not None
-
-        assert len(all_results) == len(all_items)
-        print(f'\nlist_notifications() returned a total of {len(all_results)} items(s) using NotificationsPager.')
-
-    @needscredentials
-    def test_get_acknowledgement(self):
-        response = self.platform_notifications_service.get_acknowledgement(
-            account_id=account_id,
-        )
-
-        assert response.get_status_code() == 200
-        acknowledgement = response.get_result()
-        assert acknowledgement is not None
-
-    @needscredentials
-    def test_replace_notification_acknowledgement(self):
-        response = self.platform_notifications_service.replace_notification_acknowledgement(
-            last_acknowledged_id='1772804159452',
-            account_id=account_id,
-        )
-
-        assert response.get_status_code() == 200
-        acknowledgement = response.get_result()
-        assert acknowledgement is not None
+        assert response.get_status_code() == 204
 
     @needscredentials
     def test_delete_notification_preferences(self):
