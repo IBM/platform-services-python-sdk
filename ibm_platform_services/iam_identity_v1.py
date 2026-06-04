@@ -1796,7 +1796,7 @@ class IamIdentityV1(BaseService):
                'Profile-SAML'.
         :param str cr_type: (optional) The compute resource type the rule applies
                to, required only if type is specified as 'Profile-CR'. Valid values are
-               VSI, PVS, IKS_SA, ROKS_SA.
+               VSI, PVS, BMS, IKS_SA, ROKS_SA, CE.
         :param int expiration: (optional) Session expiration in seconds, only
                required if type is 'Profile-SAML'.
         :param dict headers: A `dict` containing the request headers
@@ -1985,7 +1985,7 @@ class IamIdentityV1(BaseService):
                'Profile-SAML'.
         :param str cr_type: (optional) The compute resource type the rule applies
                to, required only if type is specified as 'Profile-CR'. Valid values are
-               VSI, PVS, IKS_SA, ROKS_SA.
+               VSI, PVS, BMS, IKS_SA, ROKS_SA, CE.
         :param int expiration: (optional) Session expiration in seconds, only
                required if type is 'Profile-SAML'.
         :param dict headers: A `dict` containing the request headers
@@ -2116,7 +2116,7 @@ class IamIdentityV1(BaseService):
 
         :param str profile_id: ID of the trusted profile.
         :param str cr_type: The compute resource type. Valid values are VSI, PVS,
-               IKS_SA, ROKS_SA.
+               BMS, IKS_SA, ROKS_SA, CE.
         :param CreateProfileLinkRequestLink link: Link details.
         :param str name: (optional) Optional name of the Link.
         :param bool is_cross_account: (optional) Flag to indicate that the link
@@ -2235,7 +2235,8 @@ class IamIdentityV1(BaseService):
         :param str profile_id: The unique ID of the Trusted Profile.
         :param str type: The compute resource type. Valid values are VSI, PVS, BMS,
                IKS_SA, ROKS_SA, CE.
-        :param str crn: (optional) CRN of the compute resource (IKS/ROKS/VSI/BMS).
+        :param str crn: (optional) CRN of the compute resource
+               (VSI/PVS/BMS/IKS/ROKS/CE).
         :param str namespace: (optional) Namespace of the compute resource
                (IKS/ROKS).
         :param str name: (optional) Name of the compute resource (IKS/ROKS).
@@ -10971,7 +10972,7 @@ class ProfileClaimRule:
           applies to.
     :param int expiration: Session expiration in seconds.
     :param str cr_type: (optional) The compute resource type. Not required if type
-          is Profile-SAML. Valid values are VSI, PVS, IKS_SA, ROKS_SA.
+          is Profile-SAML. Valid values are VSI, PVS, BMS, IKS_SA, ROKS_SA, CE.
     :param List[ProfileClaimRuleConditions] conditions: Conditions of this claim
           rule.
     """
@@ -11008,7 +11009,7 @@ class ProfileClaimRule:
         :param str realm_name: (optional) The realm name of the Idp this claim rule
                applies to.
         :param str cr_type: (optional) The compute resource type. Not required if
-               type is Profile-SAML. Valid values are VSI, PVS, IKS_SA, ROKS_SA.
+               type is Profile-SAML. Valid values are VSI, PVS, BMS, IKS_SA, ROKS_SA, CE.
         """
         self.id = id
         self.entity_tag = entity_tag
