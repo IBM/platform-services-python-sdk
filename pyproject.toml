@@ -61,3 +61,6 @@ packages = ["ibm_platform_services"]
 [tool.black]
 line-length = 120
 skip-string-normalization = true
+
+[tool.pip.install]
+uploaded-prior-to = "P3D"
