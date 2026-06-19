@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2025.
+# (C) Copyright IBM Corp. 2026.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -1420,8 +1420,7 @@ class TestReplaceRule:
         resource_model['attributes'] = [resource_attribute_model]
         resource_model['tags'] = [resource_tag_attribute_model]
 
-        # Construct a dict representation of a NewRuleOperationsApiTypesItem
-        # model
+        # Construct a dict representation of a NewRuleOperationsApiTypesItem model
         new_rule_operations_api_types_item_model = {}
         new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
 
@@ -2883,6 +2882,37 @@ class TestModel_AddressIPAddressRange:
         # Convert model instance back to dict and verify no loss of data
         address_ip_address_range_model_json2 = address_ip_address_range_model.to_dict()
         assert address_ip_address_range_model_json2 == address_ip_address_range_model_json
+
+
+class TestModel_AddressInstance:
+    """
+    Test Class for AddressInstance
+    """
+
+    def test_address_instance_serialization(self):
+        """
+        Test serialization/deserialization for AddressInstance
+        """
+
+        # Construct a json representation of a AddressInstance model
+        address_instance_model_json = {}
+        address_instance_model_json['type'] = 'instance'
+        address_instance_model_json['value'] = 'testString'
+
+        # Construct a model instance of AddressInstance by calling from_dict on the json representation
+        address_instance_model = AddressInstance.from_dict(address_instance_model_json)
+        assert address_instance_model != False
+
+        # Construct a model instance of AddressInstance by calling from_dict on the json representation
+        address_instance_model_dict = AddressInstance.from_dict(address_instance_model_json).__dict__
+        address_instance_model2 = AddressInstance(**address_instance_model_dict)
+
+        # Verify the model instances are equivalent
+        assert address_instance_model == address_instance_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        address_instance_model_json2 = address_instance_model.to_dict()
+        assert address_instance_model_json2 == address_instance_model_json
 
 
 class TestModel_AddressServiceRef:

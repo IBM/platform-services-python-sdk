@@ -128,6 +128,10 @@ class TestContextBasedRestrictionsV1Examples:
                 'type': 'vpc',
                 'value': vpc_crn,
             }
+            instance_address_model = {
+                'type': 'instance',
+                'value': vpc_crn,
+            }
             service_ref_address_model = {
                 'type': 'serviceRef',
                 'ref': {
@@ -150,6 +154,7 @@ class TestContextBasedRestrictionsV1Examples:
                     ip_range_address_v6_model,
                     subnet_address_model,
                     vpc_address_model,
+                    instance_address_model,
                     service_ref_address_model,
                 ],
                 description='this is an example of zone',
