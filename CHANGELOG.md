@@ -1,3 +1,10 @@
+## [0.75.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.75.1...v0.75.2) (2026-06-19)
+
+
+### Bug Fixes
+
+* **Context-Based Restrictions:** add support for instance address type ([#329](https://github.com/IBM/platform-services-python-sdk/issues/329)) ([92df040](https://github.com/IBM/platform-services-python-sdk/commit/92df04039e3921c43b482d6d775edded73495c7b))
+
 ## [0.75.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.75.0...v0.75.1) (2026-06-09)
 
 
