@@ -1,3 +1,17 @@
+## [0.75.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.75.1...v0.75.2) (2026-06-19)
+
+
+### Bug Fixes
+
+* **Context-Based Restrictions:** add support for instance address type ([#329](https://github.com/IBM/platform-services-python-sdk/issues/329)) ([92df040](https://github.com/IBM/platform-services-python-sdk/commit/92df04039e3921c43b482d6d775edded73495c7b))
+
+## [0.75.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.75.0...v0.75.1) (2026-06-09)
+
+
+### Bug Fixes
+
+* **IAM Identity:** add PowerVS compute resource type support ([#328](https://github.com/IBM/platform-services-python-sdk/issues/328)) ([d7cdccc](https://github.com/IBM/platform-services-python-sdk/commit/d7cdccc2824a352fc64cf99e163f68ecd809dd03))
+
 # [0.75.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.74.0...v0.75.0) (2026-04-07)
 
 
