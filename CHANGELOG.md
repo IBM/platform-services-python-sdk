@@ -1,3 +1,10 @@
+# [0.76.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.75.2...v0.76.0) (2026-06-25)
+
+
+### Features
+
+* **Platform Notifications:** add new service to the project ([#325](https://github.com/IBM/platform-services-python-sdk/issues/325)) ([c976caa](https://github.com/IBM/platform-services-python-sdk/commit/c976caab65a6d3df8a43f3809cd3067de482ad24))
+
 ## [0.75.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.75.1...v0.75.2) (2026-06-19)
 
 
