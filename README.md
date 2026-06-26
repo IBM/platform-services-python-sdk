@@ -8,7 +8,7 @@
 [![CLA assistant](https://cla-assistant.io/readme/badge/IBM/platform-services-python-sdk)](https://cla-assistant.io/IBM/platform-services-python-sdk)
 
 
-# IBM Cloud Platform Services Python SDK Version 0.75.1
+# IBM Cloud Platform Services Python SDK Version 0.76.0
 
 Python client library to interact with various 
 [IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
@@ -62,6 +62,7 @@ Service Name | Module Name | Service Class Name
 [IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell?code=python) | ibm_cloud_shell_v1 | IbmCloudShellV1
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api?code=python) | open_service_broker_v1 | OpenServiceBrokerV1
 [Partner Management APIs](https://cloud.ibm.com/apidocs/partner-apis/partner?code=python) | partner_management_v1 | PartnerManagementV1
+[Platform Notifications APIs](https://cloud.ibm.com/apidocs/platform-notifications?code=python) | platform_notifications_v1 | PlatformNotificationsV1
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=python) | resource_controller_v2 | ResourceControllerV2
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager?code=python) | resource_manager_v2 | ResourceManagerV2
 [Usage Metering](https://cloud.ibm.com/apidocs/usage-metering?code=python) | usage_metering_v4 | UsageMeteringV4

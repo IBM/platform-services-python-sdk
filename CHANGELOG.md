@@ -1,3 +1,17 @@
+# [0.76.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.75.2...v0.76.0) (2026-06-25)
+
+
+### Features
+
+* **Platform Notifications:** add new service to the project ([#325](https://github.com/IBM/platform-services-python-sdk/issues/325)) ([c976caa](https://github.com/IBM/platform-services-python-sdk/commit/c976caab65a6d3df8a43f3809cd3067de482ad24))
+
+## [0.75.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.75.1...v0.75.2) (2026-06-19)
+
+
+### Bug Fixes
+
+* **Context-Based Restrictions:** add support for instance address type ([#329](https://github.com/IBM/platform-services-python-sdk/issues/329)) ([92df040](https://github.com/IBM/platform-services-python-sdk/commit/92df04039e3921c43b482d6d775edded73495c7b))
+
 ## [0.75.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.75.0...v0.75.1) (2026-06-09)
 
 
