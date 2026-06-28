@@ -69,6 +69,9 @@ account_settings_template_etag = None
 account_settings_template_assignment_id = None
 account_settings_template_assignment_etag = None
 
+idp_id = None
+idp_etag = None
+
 iam_id_for_preferences = None
 
 
@@ -2101,6 +2104,234 @@ class TestIamIdentityV1:
             template_id=account_settings_template_id
         )
         assert delete_response.get_status_code() == 204
+
+    @needscredentials
+    def test_create_idp(self):
+        create_idp_request_properties_idp_model = {
+            'entity_id': 'http://www.okta.com/abcdefg',
+            'redirect_binding_url': 'https://trial-12345.okta.com/app/trial-6789/abcdefg/sso/saml',
+            'want_request_signed': True,
+        }
+
+        create_idp_request_properties_sp_model = {
+            'want_assertion_signed': True,
+            'want_response_signed': True,
+            'encrypt_response': True,
+            'idp_initiated_login_enabled': True,
+            'logout_url_enabled_when_available': True,
+        }
+
+        create_idp_request_properties_model = {
+            'idp': create_idp_request_properties_idp_model,
+            'sp': create_idp_request_properties_sp_model,
+        }
+
+        create_idp_request_secrets_model = {
+            'idp': {},
+            'sp': {},
+        }
+
+        create_idp_response = self.iam_identity_service.create_idp(
+            account_id=self.account_id,
+            name='Python-SDK-IT-IdP',
+            type='saml',
+            active=True,
+            properties=create_idp_request_properties_model,
+            secrets=create_idp_request_secrets_model,
+        )
+
+        assert create_idp_response.get_status_code() == 201
+        idp = create_idp_response.get_result()
+        assert idp is not None
+        print('\ncreate_idp() response: ', json.dumps(idp, indent=2))
+
+        global idp_id
+        idp_id = idp['idp_id']
+        assert idp_id is not None
+
+    @needscredentials
+    def test_list_idps(self):
+        list_idps_response = self.iam_identity_service.list_idps(
+            account_id=self.account_id,
+        )
+
+        assert list_idps_response.get_status_code() == 200
+        list_idps_result = list_idps_response.get_result()
+        assert list_idps_result is not None
+        print('\nlist_idps() response: ', json.dumps(list_idps_result, indent=2))
+
+    @needscredentials
+    def test_get_idp(self):
+        assert idp_id is not None
+
+        get_idp_response = self.iam_identity_service.get_idp(
+            idp_id=idp_id,
+        )
+
+        assert get_idp_response.get_status_code() == 200
+        idp = get_idp_response.get_result()
+        assert idp is not None
+        print('\nget_idp() response: ', json.dumps(idp, indent=2))
+
+        global idp_etag
+        idp_etag = get_idp_response.get_headers()['Etag']
+        assert idp_etag is not None
+
+    @needscredentials
+    def test_update_idp(self):
+        assert idp_id is not None
+        assert idp_etag is not None
+
+        update_idp_request_properties_idp_model = {
+            'entity_id': 'http://www.okta.com/abcdefgijk',
+            'redirect_binding_url': 'https://trial-12345.okta.com/app/trial-6789/abcdefgijk/sso/saml',
+            'want_request_signed': False,
+        }
+
+        update_idp_request_properties_sp_model = {
+            'want_assertion_signed': False,
+            'want_response_signed': False,
+            'encrypt_response': True,
+            'idp_initiated_login_enabled': False,
+            'logout_url_enabled_when_available': True,
+        }
+
+        update_idp_request_properties_model = {
+            'idp': update_idp_request_properties_idp_model,
+            'sp': update_idp_request_properties_sp_model,
+        }
+
+        update_idp_response = self.iam_identity_service.update_idp(
+            idp_id=idp_id,
+            if_match=idp_etag,
+            ui_setup_completed=True,
+            active=True,
+            properties=update_idp_request_properties_model,
+            force_share_scope_update=True,
+        )
+
+        assert update_idp_response.get_status_code() == 200
+        idp = update_idp_response.get_result()
+        assert idp is not None
+        print('\nupdate_idp() response: ', json.dumps(idp, indent=2))
+
+    @needscredentials
+    def test_list_consumer_accounts(self):
+        assert idp_id is not None
+
+        list_consumer_accounts_response = self.iam_identity_service.list_consumer_accounts(
+            idp_id=idp_id,
+        )
+
+        assert list_consumer_accounts_response.get_status_code() == 200
+        consumers_response = list_consumer_accounts_response.get_result()
+        assert consumers_response is not None
+        print('\nlist_consumer_accounts() response: ', json.dumps(consumers_response, indent=2))
+
+    @needscredentials
+    def test_get_login_settings(self):
+        get_login_settings_response = self.iam_identity_service.get_login_settings(
+            account_id=self.account_id,
+        )
+
+        assert get_login_settings_response.get_status_code() == 200
+        account_login_settings = get_login_settings_response.get_result()
+        assert account_login_settings is not None
+        print('\nget_login_settings() response: ', json.dumps(account_login_settings, indent=2))
+
+    @needscredentials
+    def test_update_login_settings(self):
+        update_login_settings_response = self.iam_identity_service.update_login_settings(
+            account_id=self.account_id,
+            alias='my_alias_update_test',
+        )
+
+        assert update_login_settings_response.get_status_code() == 200
+        account_login_settings = update_login_settings_response.get_result()
+        assert account_login_settings is not None
+        print('\nupdate_login_settings() response: ', json.dumps(account_login_settings, indent=2))
+
+    @needscredentials
+    def test_list_idp_settings(self):
+        list_id_p_settings_response = self.iam_identity_service.list_id_p_settings(
+            account_id=self.account_id,
+            type='consumable',
+            include_idp_metadata='true',
+        )
+
+        assert list_id_p_settings_response.get_status_code() == 200
+        list_id_p_settings_result = list_id_p_settings_response.get_result()
+        assert list_id_p_settings_result is not None
+        print('\nlist_id_p_settings() response: ', json.dumps(list_id_p_settings_result, indent=2))
+
+    @needscredentials
+    def test_add_idp_setting(self):
+        assert idp_id is not None
+
+        add_id_p_setting_response = self.iam_identity_service.add_id_p_setting(
+            account_id=self.account_id,
+            idp_id=idp_id,
+            cloud_user_strategy='STATIC',
+            active=True,
+            ui_default=True,
+        )
+
+        assert add_id_p_setting_response.get_status_code() == 200
+        account_idp_settings = add_id_p_setting_response.get_result()
+        assert account_idp_settings is not None
+        print('\nadd_id_p_setting() response: ', json.dumps(account_idp_settings, indent=2))
+
+    @needscredentials
+    def test_get_idp_setting(self):
+        assert idp_id is not None
+
+        get_id_p_setting_response = self.iam_identity_service.get_id_p_setting(
+            account_id=self.account_id,
+            idp_id=idp_id,
+        )
+
+        assert get_id_p_setting_response.get_status_code() == 200
+        account_idp_settings = get_id_p_setting_response.get_result()
+        assert account_idp_settings is not None
+        print('\nget_id_p_setting() response: ', json.dumps(account_idp_settings, indent=2))
+
+    @needscredentials
+    def test_update_idp_setting(self):
+        assert idp_id is not None
+
+        update_id_p_setting_response = self.iam_identity_service.update_id_p_setting(
+            account_id=self.account_id,
+            idp_id=idp_id,
+            cloud_user_strategy='STATIC',
+            active=True,
+            ui_default=False,
+        )
+
+        assert update_id_p_setting_response.get_status_code() == 200
+        account_idp_settings = update_id_p_setting_response.get_result()
+        assert account_idp_settings is not None
+        print('\nupdate_id_p_setting() response: ', json.dumps(account_idp_settings, indent=2))
+
+    @needscredentials
+    def test_remove_idp_setting(self):
+        assert idp_id is not None
+
+        remove_id_p_setting_response = self.iam_identity_service.remove_id_p_setting(
+            account_id=self.account_id,
+            idp_id=idp_id,
+        )
+
+        assert remove_id_p_setting_response.get_status_code() == 204
+
+    @needscredentials
+    def test_delete_idp(self):
+        assert idp_id is not None
+
+        delete_idp_response = self.iam_identity_service.delete_idp(
+            idp_id=idp_id,
+        )
+
+        assert delete_idp_response.get_status_code() == 204
 
     @needscredentials
     def test_update_api_key(self):
