@@ -1,3 +1,10 @@
+# [0.77.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.76.0...v0.77.0) (2026-07-22)
+
+
+### Features
+
+* **IAM Identity:** add support for IDP sharing/settings([#331](https://github.com/IBM/platform-services-python-sdk/issues/331)) ([b1025a0](https://github.com/IBM/platform-services-python-sdk/commit/b1025a084d81536252f8a616808ea9a3ba3dd6c9))
+
 # [0.76.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.75.2...v0.76.0) (2026-06-25)
 
 
