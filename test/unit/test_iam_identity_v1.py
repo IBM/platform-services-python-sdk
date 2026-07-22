@@ -21,12 +21,14 @@ from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
+import io
 import json
 import os
 import pytest
 import re
 import requests
 import responses
+import tempfile
 import urllib
 from ibm_platform_services.iam_identity_v1 import *
 
@@ -9936,6 +9938,2284 @@ class TestBulkListAccountEntityConsumption:
 # End of Service: AccountLimits
 ##############################################################################
 
+##############################################################################
+# Start of Service: IDPManagement
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListIdps:
+    """
+    Test Class for list_idps
+    """
+
+    @responses.activate
+    def test_list_idps_all_params(self):
+        """
+        list_idps()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/')
+        mock_response = '{"idps": [{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        include_history = 'testString'
+
+        # Invoke method
+        response = _service.list_idps(
+            account_id,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'include_history={}'.format(include_history) in query_string
+
+    def test_list_idps_all_params_with_retries(self):
+        # Enable retries and run test_list_idps_all_params.
+        _service.enable_retries()
+        self.test_list_idps_all_params()
+
+        # Disable retries and run test_list_idps_all_params.
+        _service.disable_retries()
+        self.test_list_idps_all_params()
+
+    @responses.activate
+    def test_list_idps_required_params(self):
+        """
+        test_list_idps_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/')
+        mock_response = '{"idps": [{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.list_idps(
+            account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+
+    def test_list_idps_required_params_with_retries(self):
+        # Enable retries and run test_list_idps_required_params.
+        _service.enable_retries()
+        self.test_list_idps_required_params()
+
+        # Disable retries and run test_list_idps_required_params.
+        _service.disable_retries()
+        self.test_list_idps_required_params()
+
+    @responses.activate
+    def test_list_idps_value_error(self):
+        """
+        test_list_idps_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/')
+        mock_response = '{"idps": [{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_idps(**req_copy)
+
+    def test_list_idps_value_error_with_retries(self):
+        # Enable retries and run test_list_idps_value_error.
+        _service.enable_retries()
+        self.test_list_idps_value_error()
+
+        # Disable retries and run test_list_idps_value_error.
+        _service.disable_retries()
+        self.test_list_idps_value_error()
+
+
+class TestCreateIdp:
+    """
+    Test Class for create_idp
+    """
+
+    @responses.activate
+    def test_create_idp_all_params(self):
+        """
+        create_idp()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a CreateIdpRequestPropertiesIdp model
+        create_idp_request_properties_idp_model = {}
+        create_idp_request_properties_idp_model['xml_import'] = True
+        create_idp_request_properties_idp_model['entity_id'] = 'testString'
+        create_idp_request_properties_idp_model['redirect_binding_url'] = 'testString'
+        create_idp_request_properties_idp_model['want_request_signed'] = True
+        create_idp_request_properties_idp_model['logout_url'] = 'testString'
+
+        # Construct a dict representation of a CreateIdpRequestPropertiesSpAuthnContext model
+        create_idp_request_properties_sp_authn_context_model = {}
+        create_idp_request_properties_sp_authn_context_model['request'] = ['testString']
+        create_idp_request_properties_sp_authn_context_model['accept'] = ['testString']
+
+        # Construct a dict representation of a CreateIdpRequestPropertiesSp model
+        create_idp_request_properties_sp_model = {}
+        create_idp_request_properties_sp_model['want_assertion_signed'] = True
+        create_idp_request_properties_sp_model['want_response_signed'] = True
+        create_idp_request_properties_sp_model['encrypt_response'] = True
+        create_idp_request_properties_sp_model['idp_initiated_login_enabled'] = True
+        create_idp_request_properties_sp_model['logout_url_enabled_when_available'] = True
+        create_idp_request_properties_sp_model['idp_initiated_urls'] = ['testString']
+        create_idp_request_properties_sp_model['authn_context'] = create_idp_request_properties_sp_authn_context_model
+        create_idp_request_properties_sp_model['claims'] = {'key1': 'testString'}
+
+        # Construct a dict representation of a CreateIdpRequestProperties model
+        create_idp_request_properties_model = {}
+        create_idp_request_properties_model['idp'] = create_idp_request_properties_idp_model
+        create_idp_request_properties_model['sp'] = create_idp_request_properties_sp_model
+
+        # Construct a dict representation of a CreateIdpRequestSecretsIdpSigningItem model
+        create_idp_request_secrets_idp_signing_item_model = {}
+        create_idp_request_secrets_idp_signing_item_model['value'] = 'testString'
+        create_idp_request_secrets_idp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a CreateIdpRequestSecretsIdpEncryptingItem model
+        create_idp_request_secrets_idp_encrypting_item_model = {}
+        create_idp_request_secrets_idp_encrypting_item_model['value'] = 'testString'
+        create_idp_request_secrets_idp_encrypting_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a CreateIdpRequestSecretsIdp model
+        create_idp_request_secrets_idp_model = {}
+        create_idp_request_secrets_idp_model['xml_import'] = True
+        create_idp_request_secrets_idp_model['signing'] = [create_idp_request_secrets_idp_signing_item_model]
+        create_idp_request_secrets_idp_model['encrypting'] = [create_idp_request_secrets_idp_encrypting_item_model]
+
+        # Construct a dict representation of a CreateIdpRequestSecretsSpSigningItem model
+        create_idp_request_secrets_sp_signing_item_model = {}
+        create_idp_request_secrets_sp_signing_item_model['certificate_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['key_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['key_encoding'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a CreateIdpRequestSecretsSp model
+        create_idp_request_secrets_sp_model = {}
+        create_idp_request_secrets_sp_model['signing'] = [create_idp_request_secrets_sp_signing_item_model]
+
+        # Construct a dict representation of a CreateIdpRequestSecrets model
+        create_idp_request_secrets_model = {}
+        create_idp_request_secrets_model['idp'] = create_idp_request_secrets_idp_model
+        create_idp_request_secrets_model['sp'] = create_idp_request_secrets_sp_model
+
+        # Construct a dict representation of a ShareScope model
+        share_scope_model = {}
+        share_scope_model['id'] = 'testString'
+        share_scope_model['type'] = 'account'
+
+        # Set up parameter values
+        account_id = 'testString'
+        name = 'testString'
+        type = 'ldap'
+        active = True
+        properties = create_idp_request_properties_model
+        secrets = create_idp_request_secrets_model
+        share_scope = [share_scope_model]
+        automation = 'testString'
+
+        # Invoke method
+        response = _service.create_idp(
+            account_id,
+            name,
+            type,
+            active=active,
+            properties=properties,
+            secrets=secrets,
+            share_scope=share_scope,
+            automation=automation,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'automation={}'.format(automation) in query_string
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['type'] == 'ldap'
+        assert req_body['active'] == True
+        assert req_body['properties'] == create_idp_request_properties_model
+        assert req_body['secrets'] == create_idp_request_secrets_model
+        assert req_body['share_scope'] == [share_scope_model]
+
+    def test_create_idp_all_params_with_retries(self):
+        # Enable retries and run test_create_idp_all_params.
+        _service.enable_retries()
+        self.test_create_idp_all_params()
+
+        # Disable retries and run test_create_idp_all_params.
+        _service.disable_retries()
+        self.test_create_idp_all_params()
+
+    @responses.activate
+    def test_create_idp_required_params(self):
+        """
+        test_create_idp_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a CreateIdpRequestPropertiesIdp model
+        create_idp_request_properties_idp_model = {}
+        create_idp_request_properties_idp_model['xml_import'] = True
+        create_idp_request_properties_idp_model['entity_id'] = 'testString'
+        create_idp_request_properties_idp_model['redirect_binding_url'] = 'testString'
+        create_idp_request_properties_idp_model['want_request_signed'] = True
+        create_idp_request_properties_idp_model['logout_url'] = 'testString'
+
+        # Construct a dict representation of a CreateIdpRequestPropertiesSpAuthnContext model
+        create_idp_request_properties_sp_authn_context_model = {}
+        create_idp_request_properties_sp_authn_context_model['request'] = ['testString']
+        create_idp_request_properties_sp_authn_context_model['accept'] = ['testString']
+
+        # Construct a dict representation of a CreateIdpRequestPropertiesSp model
+        create_idp_request_properties_sp_model = {}
+        create_idp_request_properties_sp_model['want_assertion_signed'] = True
+        create_idp_request_properties_sp_model['want_response_signed'] = True
+        create_idp_request_properties_sp_model['encrypt_response'] = True
+        create_idp_request_properties_sp_model['idp_initiated_login_enabled'] = True
+        create_idp_request_properties_sp_model['logout_url_enabled_when_available'] = True
+        create_idp_request_properties_sp_model['idp_initiated_urls'] = ['testString']
+        create_idp_request_properties_sp_model['authn_context'] = create_idp_request_properties_sp_authn_context_model
+        create_idp_request_properties_sp_model['claims'] = {'key1': 'testString'}
+
+        # Construct a dict representation of a CreateIdpRequestProperties model
+        create_idp_request_properties_model = {}
+        create_idp_request_properties_model['idp'] = create_idp_request_properties_idp_model
+        create_idp_request_properties_model['sp'] = create_idp_request_properties_sp_model
+
+        # Construct a dict representation of a CreateIdpRequestSecretsIdpSigningItem model
+        create_idp_request_secrets_idp_signing_item_model = {}
+        create_idp_request_secrets_idp_signing_item_model['value'] = 'testString'
+        create_idp_request_secrets_idp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a CreateIdpRequestSecretsIdpEncryptingItem model
+        create_idp_request_secrets_idp_encrypting_item_model = {}
+        create_idp_request_secrets_idp_encrypting_item_model['value'] = 'testString'
+        create_idp_request_secrets_idp_encrypting_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a CreateIdpRequestSecretsIdp model
+        create_idp_request_secrets_idp_model = {}
+        create_idp_request_secrets_idp_model['xml_import'] = True
+        create_idp_request_secrets_idp_model['signing'] = [create_idp_request_secrets_idp_signing_item_model]
+        create_idp_request_secrets_idp_model['encrypting'] = [create_idp_request_secrets_idp_encrypting_item_model]
+
+        # Construct a dict representation of a CreateIdpRequestSecretsSpSigningItem model
+        create_idp_request_secrets_sp_signing_item_model = {}
+        create_idp_request_secrets_sp_signing_item_model['certificate_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['key_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['key_encoding'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a CreateIdpRequestSecretsSp model
+        create_idp_request_secrets_sp_model = {}
+        create_idp_request_secrets_sp_model['signing'] = [create_idp_request_secrets_sp_signing_item_model]
+
+        # Construct a dict representation of a CreateIdpRequestSecrets model
+        create_idp_request_secrets_model = {}
+        create_idp_request_secrets_model['idp'] = create_idp_request_secrets_idp_model
+        create_idp_request_secrets_model['sp'] = create_idp_request_secrets_sp_model
+
+        # Construct a dict representation of a ShareScope model
+        share_scope_model = {}
+        share_scope_model['id'] = 'testString'
+        share_scope_model['type'] = 'account'
+
+        # Set up parameter values
+        account_id = 'testString'
+        name = 'testString'
+        type = 'ldap'
+        active = True
+        properties = create_idp_request_properties_model
+        secrets = create_idp_request_secrets_model
+        share_scope = [share_scope_model]
+
+        # Invoke method
+        response = _service.create_idp(
+            account_id,
+            name,
+            type,
+            active=active,
+            properties=properties,
+            secrets=secrets,
+            share_scope=share_scope,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['type'] == 'ldap'
+        assert req_body['active'] == True
+        assert req_body['properties'] == create_idp_request_properties_model
+        assert req_body['secrets'] == create_idp_request_secrets_model
+        assert req_body['share_scope'] == [share_scope_model]
+
+    def test_create_idp_required_params_with_retries(self):
+        # Enable retries and run test_create_idp_required_params.
+        _service.enable_retries()
+        self.test_create_idp_required_params()
+
+        # Disable retries and run test_create_idp_required_params.
+        _service.disable_retries()
+        self.test_create_idp_required_params()
+
+    @responses.activate
+    def test_create_idp_value_error(self):
+        """
+        test_create_idp_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a CreateIdpRequestPropertiesIdp model
+        create_idp_request_properties_idp_model = {}
+        create_idp_request_properties_idp_model['xml_import'] = True
+        create_idp_request_properties_idp_model['entity_id'] = 'testString'
+        create_idp_request_properties_idp_model['redirect_binding_url'] = 'testString'
+        create_idp_request_properties_idp_model['want_request_signed'] = True
+        create_idp_request_properties_idp_model['logout_url'] = 'testString'
+
+        # Construct a dict representation of a CreateIdpRequestPropertiesSpAuthnContext model
+        create_idp_request_properties_sp_authn_context_model = {}
+        create_idp_request_properties_sp_authn_context_model['request'] = ['testString']
+        create_idp_request_properties_sp_authn_context_model['accept'] = ['testString']
+
+        # Construct a dict representation of a CreateIdpRequestPropertiesSp model
+        create_idp_request_properties_sp_model = {}
+        create_idp_request_properties_sp_model['want_assertion_signed'] = True
+        create_idp_request_properties_sp_model['want_response_signed'] = True
+        create_idp_request_properties_sp_model['encrypt_response'] = True
+        create_idp_request_properties_sp_model['idp_initiated_login_enabled'] = True
+        create_idp_request_properties_sp_model['logout_url_enabled_when_available'] = True
+        create_idp_request_properties_sp_model['idp_initiated_urls'] = ['testString']
+        create_idp_request_properties_sp_model['authn_context'] = create_idp_request_properties_sp_authn_context_model
+        create_idp_request_properties_sp_model['claims'] = {'key1': 'testString'}
+
+        # Construct a dict representation of a CreateIdpRequestProperties model
+        create_idp_request_properties_model = {}
+        create_idp_request_properties_model['idp'] = create_idp_request_properties_idp_model
+        create_idp_request_properties_model['sp'] = create_idp_request_properties_sp_model
+
+        # Construct a dict representation of a CreateIdpRequestSecretsIdpSigningItem model
+        create_idp_request_secrets_idp_signing_item_model = {}
+        create_idp_request_secrets_idp_signing_item_model['value'] = 'testString'
+        create_idp_request_secrets_idp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a CreateIdpRequestSecretsIdpEncryptingItem model
+        create_idp_request_secrets_idp_encrypting_item_model = {}
+        create_idp_request_secrets_idp_encrypting_item_model['value'] = 'testString'
+        create_idp_request_secrets_idp_encrypting_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a CreateIdpRequestSecretsIdp model
+        create_idp_request_secrets_idp_model = {}
+        create_idp_request_secrets_idp_model['xml_import'] = True
+        create_idp_request_secrets_idp_model['signing'] = [create_idp_request_secrets_idp_signing_item_model]
+        create_idp_request_secrets_idp_model['encrypting'] = [create_idp_request_secrets_idp_encrypting_item_model]
+
+        # Construct a dict representation of a CreateIdpRequestSecretsSpSigningItem model
+        create_idp_request_secrets_sp_signing_item_model = {}
+        create_idp_request_secrets_sp_signing_item_model['certificate_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['key_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['key_encoding'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a CreateIdpRequestSecretsSp model
+        create_idp_request_secrets_sp_model = {}
+        create_idp_request_secrets_sp_model['signing'] = [create_idp_request_secrets_sp_signing_item_model]
+
+        # Construct a dict representation of a CreateIdpRequestSecrets model
+        create_idp_request_secrets_model = {}
+        create_idp_request_secrets_model['idp'] = create_idp_request_secrets_idp_model
+        create_idp_request_secrets_model['sp'] = create_idp_request_secrets_sp_model
+
+        # Construct a dict representation of a ShareScope model
+        share_scope_model = {}
+        share_scope_model['id'] = 'testString'
+        share_scope_model['type'] = 'account'
+
+        # Set up parameter values
+        account_id = 'testString'
+        name = 'testString'
+        type = 'ldap'
+        active = True
+        properties = create_idp_request_properties_model
+        secrets = create_idp_request_secrets_model
+        share_scope = [share_scope_model]
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "name": name,
+            "type": type,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_idp(**req_copy)
+
+    def test_create_idp_value_error_with_retries(self):
+        # Enable retries and run test_create_idp_value_error.
+        _service.enable_retries()
+        self.test_create_idp_value_error()
+
+        # Disable retries and run test_create_idp_value_error.
+        _service.disable_retries()
+        self.test_create_idp_value_error()
+
+
+class TestGetIdp:
+    """
+    Test Class for get_idp
+    """
+
+    @responses.activate
+    def test_get_idp_all_params(self):
+        """
+        get_idp()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+        include_history = 'testString'
+
+        # Invoke method
+        response = _service.get_idp(
+            idp_id,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_history={}'.format(include_history) in query_string
+
+    def test_get_idp_all_params_with_retries(self):
+        # Enable retries and run test_get_idp_all_params.
+        _service.enable_retries()
+        self.test_get_idp_all_params()
+
+        # Disable retries and run test_get_idp_all_params.
+        _service.disable_retries()
+        self.test_get_idp_all_params()
+
+    @responses.activate
+    def test_get_idp_required_params(self):
+        """
+        test_get_idp_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Invoke method
+        response = _service.get_idp(
+            idp_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_idp_required_params_with_retries(self):
+        # Enable retries and run test_get_idp_required_params.
+        _service.enable_retries()
+        self.test_get_idp_required_params()
+
+        # Disable retries and run test_get_idp_required_params.
+        _service.disable_retries()
+        self.test_get_idp_required_params()
+
+    @responses.activate
+    def test_get_idp_value_error(self):
+        """
+        test_get_idp_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "idp_id": idp_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_idp(**req_copy)
+
+    def test_get_idp_value_error_with_retries(self):
+        # Enable retries and run test_get_idp_value_error.
+        _service.enable_retries()
+        self.test_get_idp_value_error()
+
+        # Disable retries and run test_get_idp_value_error.
+        _service.disable_retries()
+        self.test_get_idp_value_error()
+
+
+class TestUpdateIdp:
+    """
+    Test Class for update_idp
+    """
+
+    @responses.activate
+    def test_update_idp_all_params(self):
+        """
+        update_idp()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a UpdateIdPRequestPropertiesIdp model
+        update_id_p_request_properties_idp_model = {}
+        update_id_p_request_properties_idp_model['entity_id'] = 'testString'
+        update_id_p_request_properties_idp_model['redirect_binding_url'] = 'testString'
+        update_id_p_request_properties_idp_model['want_request_signed'] = True
+        update_id_p_request_properties_idp_model['logout_url'] = 'testString'
+
+        # Construct a dict representation of a UpdateIdPRequestPropertiesSpAuthnContext model
+        update_id_p_request_properties_sp_authn_context_model = {}
+        update_id_p_request_properties_sp_authn_context_model['request'] = ['testString']
+        update_id_p_request_properties_sp_authn_context_model['accept'] = ['testString']
+
+        # Construct a dict representation of a UpdateIdPRequestPropertiesSp model
+        update_id_p_request_properties_sp_model = {}
+        update_id_p_request_properties_sp_model['want_assertion_signed'] = True
+        update_id_p_request_properties_sp_model['want_response_signed'] = True
+        update_id_p_request_properties_sp_model['encrypt_response'] = True
+        update_id_p_request_properties_sp_model['idp_initiated_login_enabled'] = True
+        update_id_p_request_properties_sp_model['logout_url_enabled_when_available'] = True
+        update_id_p_request_properties_sp_model['idp_initiated_urls'] = ['testString']
+        update_id_p_request_properties_sp_model['authn_context'] = update_id_p_request_properties_sp_authn_context_model
+        update_id_p_request_properties_sp_model['claims'] = {'key1': 'testString'}
+
+        # Construct a dict representation of a UpdateIdPRequestProperties model
+        update_id_p_request_properties_model = {}
+        update_id_p_request_properties_model['idp'] = update_id_p_request_properties_idp_model
+        update_id_p_request_properties_model['sp'] = update_id_p_request_properties_sp_model
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsIdpSigningItem model
+        update_id_p_request_secrets_idp_signing_item_model = {}
+        update_id_p_request_secrets_idp_signing_item_model['value'] = 'testString'
+        update_id_p_request_secrets_idp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsIdpEncryptingItem model
+        update_id_p_request_secrets_idp_encrypting_item_model = {}
+        update_id_p_request_secrets_idp_encrypting_item_model['value'] = 'testString'
+        update_id_p_request_secrets_idp_encrypting_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsIdp model
+        update_id_p_request_secrets_idp_model = {}
+        update_id_p_request_secrets_idp_model['signing'] = [update_id_p_request_secrets_idp_signing_item_model]
+        update_id_p_request_secrets_idp_model['encrypting'] = [update_id_p_request_secrets_idp_encrypting_item_model]
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsSpSigningItem model
+        update_id_p_request_secrets_sp_signing_item_model = {}
+        update_id_p_request_secrets_sp_signing_item_model['certificate_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['key_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['key_encoding'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsSp model
+        update_id_p_request_secrets_sp_model = {}
+        update_id_p_request_secrets_sp_model['signing'] = [update_id_p_request_secrets_sp_signing_item_model]
+
+        # Construct a dict representation of a UpdateIdPRequestSecrets model
+        update_id_p_request_secrets_model = {}
+        update_id_p_request_secrets_model['idp'] = update_id_p_request_secrets_idp_model
+        update_id_p_request_secrets_model['sp'] = update_id_p_request_secrets_sp_model
+
+        # Construct a dict representation of a ShareScope model
+        share_scope_model = {}
+        share_scope_model['id'] = 'testString'
+        share_scope_model['type'] = 'account'
+
+        # Set up parameter values
+        idp_id = 'testString'
+        if_match = 'testString'
+        ui_setup_completed = True
+        name = 'testString'
+        active = True
+        properties = update_id_p_request_properties_model
+        secrets = update_id_p_request_secrets_model
+        share_scope = [share_scope_model]
+        force_share_scope_update = True
+
+        # Invoke method
+        response = _service.update_idp(
+            idp_id,
+            if_match,
+            ui_setup_completed=ui_setup_completed,
+            name=name,
+            active=active,
+            properties=properties,
+            secrets=secrets,
+            share_scope=share_scope,
+            force_share_scope_update=force_share_scope_update,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'force_share_scope_update={}'.format('true' if force_share_scope_update else 'false') in query_string
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['ui_setup_completed'] == True
+        assert req_body['name'] == 'testString'
+        assert req_body['active'] == True
+        assert req_body['properties'] == update_id_p_request_properties_model
+        assert req_body['secrets'] == update_id_p_request_secrets_model
+        assert req_body['share_scope'] == [share_scope_model]
+
+    def test_update_idp_all_params_with_retries(self):
+        # Enable retries and run test_update_idp_all_params.
+        _service.enable_retries()
+        self.test_update_idp_all_params()
+
+        # Disable retries and run test_update_idp_all_params.
+        _service.disable_retries()
+        self.test_update_idp_all_params()
+
+    @responses.activate
+    def test_update_idp_required_params(self):
+        """
+        test_update_idp_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a UpdateIdPRequestPropertiesIdp model
+        update_id_p_request_properties_idp_model = {}
+        update_id_p_request_properties_idp_model['entity_id'] = 'testString'
+        update_id_p_request_properties_idp_model['redirect_binding_url'] = 'testString'
+        update_id_p_request_properties_idp_model['want_request_signed'] = True
+        update_id_p_request_properties_idp_model['logout_url'] = 'testString'
+
+        # Construct a dict representation of a UpdateIdPRequestPropertiesSpAuthnContext model
+        update_id_p_request_properties_sp_authn_context_model = {}
+        update_id_p_request_properties_sp_authn_context_model['request'] = ['testString']
+        update_id_p_request_properties_sp_authn_context_model['accept'] = ['testString']
+
+        # Construct a dict representation of a UpdateIdPRequestPropertiesSp model
+        update_id_p_request_properties_sp_model = {}
+        update_id_p_request_properties_sp_model['want_assertion_signed'] = True
+        update_id_p_request_properties_sp_model['want_response_signed'] = True
+        update_id_p_request_properties_sp_model['encrypt_response'] = True
+        update_id_p_request_properties_sp_model['idp_initiated_login_enabled'] = True
+        update_id_p_request_properties_sp_model['logout_url_enabled_when_available'] = True
+        update_id_p_request_properties_sp_model['idp_initiated_urls'] = ['testString']
+        update_id_p_request_properties_sp_model['authn_context'] = update_id_p_request_properties_sp_authn_context_model
+        update_id_p_request_properties_sp_model['claims'] = {'key1': 'testString'}
+
+        # Construct a dict representation of a UpdateIdPRequestProperties model
+        update_id_p_request_properties_model = {}
+        update_id_p_request_properties_model['idp'] = update_id_p_request_properties_idp_model
+        update_id_p_request_properties_model['sp'] = update_id_p_request_properties_sp_model
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsIdpSigningItem model
+        update_id_p_request_secrets_idp_signing_item_model = {}
+        update_id_p_request_secrets_idp_signing_item_model['value'] = 'testString'
+        update_id_p_request_secrets_idp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsIdpEncryptingItem model
+        update_id_p_request_secrets_idp_encrypting_item_model = {}
+        update_id_p_request_secrets_idp_encrypting_item_model['value'] = 'testString'
+        update_id_p_request_secrets_idp_encrypting_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsIdp model
+        update_id_p_request_secrets_idp_model = {}
+        update_id_p_request_secrets_idp_model['signing'] = [update_id_p_request_secrets_idp_signing_item_model]
+        update_id_p_request_secrets_idp_model['encrypting'] = [update_id_p_request_secrets_idp_encrypting_item_model]
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsSpSigningItem model
+        update_id_p_request_secrets_sp_signing_item_model = {}
+        update_id_p_request_secrets_sp_signing_item_model['certificate_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['key_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['key_encoding'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsSp model
+        update_id_p_request_secrets_sp_model = {}
+        update_id_p_request_secrets_sp_model['signing'] = [update_id_p_request_secrets_sp_signing_item_model]
+
+        # Construct a dict representation of a UpdateIdPRequestSecrets model
+        update_id_p_request_secrets_model = {}
+        update_id_p_request_secrets_model['idp'] = update_id_p_request_secrets_idp_model
+        update_id_p_request_secrets_model['sp'] = update_id_p_request_secrets_sp_model
+
+        # Construct a dict representation of a ShareScope model
+        share_scope_model = {}
+        share_scope_model['id'] = 'testString'
+        share_scope_model['type'] = 'account'
+
+        # Set up parameter values
+        idp_id = 'testString'
+        if_match = 'testString'
+        ui_setup_completed = True
+        name = 'testString'
+        active = True
+        properties = update_id_p_request_properties_model
+        secrets = update_id_p_request_secrets_model
+        share_scope = [share_scope_model]
+
+        # Invoke method
+        response = _service.update_idp(
+            idp_id,
+            if_match,
+            ui_setup_completed=ui_setup_completed,
+            name=name,
+            active=active,
+            properties=properties,
+            secrets=secrets,
+            share_scope=share_scope,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['ui_setup_completed'] == True
+        assert req_body['name'] == 'testString'
+        assert req_body['active'] == True
+        assert req_body['properties'] == update_id_p_request_properties_model
+        assert req_body['secrets'] == update_id_p_request_secrets_model
+        assert req_body['share_scope'] == [share_scope_model]
+
+    def test_update_idp_required_params_with_retries(self):
+        # Enable retries and run test_update_idp_required_params.
+        _service.enable_retries()
+        self.test_update_idp_required_params()
+
+        # Disable retries and run test_update_idp_required_params.
+        _service.disable_retries()
+        self.test_update_idp_required_params()
+
+    @responses.activate
+    def test_update_idp_value_error(self):
+        """
+        test_update_idp_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "share_scope": [{"id": "id", "type": "account"}], "active": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a UpdateIdPRequestPropertiesIdp model
+        update_id_p_request_properties_idp_model = {}
+        update_id_p_request_properties_idp_model['entity_id'] = 'testString'
+        update_id_p_request_properties_idp_model['redirect_binding_url'] = 'testString'
+        update_id_p_request_properties_idp_model['want_request_signed'] = True
+        update_id_p_request_properties_idp_model['logout_url'] = 'testString'
+
+        # Construct a dict representation of a UpdateIdPRequestPropertiesSpAuthnContext model
+        update_id_p_request_properties_sp_authn_context_model = {}
+        update_id_p_request_properties_sp_authn_context_model['request'] = ['testString']
+        update_id_p_request_properties_sp_authn_context_model['accept'] = ['testString']
+
+        # Construct a dict representation of a UpdateIdPRequestPropertiesSp model
+        update_id_p_request_properties_sp_model = {}
+        update_id_p_request_properties_sp_model['want_assertion_signed'] = True
+        update_id_p_request_properties_sp_model['want_response_signed'] = True
+        update_id_p_request_properties_sp_model['encrypt_response'] = True
+        update_id_p_request_properties_sp_model['idp_initiated_login_enabled'] = True
+        update_id_p_request_properties_sp_model['logout_url_enabled_when_available'] = True
+        update_id_p_request_properties_sp_model['idp_initiated_urls'] = ['testString']
+        update_id_p_request_properties_sp_model['authn_context'] = update_id_p_request_properties_sp_authn_context_model
+        update_id_p_request_properties_sp_model['claims'] = {'key1': 'testString'}
+
+        # Construct a dict representation of a UpdateIdPRequestProperties model
+        update_id_p_request_properties_model = {}
+        update_id_p_request_properties_model['idp'] = update_id_p_request_properties_idp_model
+        update_id_p_request_properties_model['sp'] = update_id_p_request_properties_sp_model
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsIdpSigningItem model
+        update_id_p_request_secrets_idp_signing_item_model = {}
+        update_id_p_request_secrets_idp_signing_item_model['value'] = 'testString'
+        update_id_p_request_secrets_idp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsIdpEncryptingItem model
+        update_id_p_request_secrets_idp_encrypting_item_model = {}
+        update_id_p_request_secrets_idp_encrypting_item_model['value'] = 'testString'
+        update_id_p_request_secrets_idp_encrypting_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsIdp model
+        update_id_p_request_secrets_idp_model = {}
+        update_id_p_request_secrets_idp_model['signing'] = [update_id_p_request_secrets_idp_signing_item_model]
+        update_id_p_request_secrets_idp_model['encrypting'] = [update_id_p_request_secrets_idp_encrypting_item_model]
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsSpSigningItem model
+        update_id_p_request_secrets_sp_signing_item_model = {}
+        update_id_p_request_secrets_sp_signing_item_model['certificate_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['key_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['key_encoding'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['type'] = 'primary'
+
+        # Construct a dict representation of a UpdateIdPRequestSecretsSp model
+        update_id_p_request_secrets_sp_model = {}
+        update_id_p_request_secrets_sp_model['signing'] = [update_id_p_request_secrets_sp_signing_item_model]
+
+        # Construct a dict representation of a UpdateIdPRequestSecrets model
+        update_id_p_request_secrets_model = {}
+        update_id_p_request_secrets_model['idp'] = update_id_p_request_secrets_idp_model
+        update_id_p_request_secrets_model['sp'] = update_id_p_request_secrets_sp_model
+
+        # Construct a dict representation of a ShareScope model
+        share_scope_model = {}
+        share_scope_model['id'] = 'testString'
+        share_scope_model['type'] = 'account'
+
+        # Set up parameter values
+        idp_id = 'testString'
+        if_match = 'testString'
+        ui_setup_completed = True
+        name = 'testString'
+        active = True
+        properties = update_id_p_request_properties_model
+        secrets = update_id_p_request_secrets_model
+        share_scope = [share_scope_model]
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "idp_id": idp_id,
+            "if_match": if_match,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_idp(**req_copy)
+
+    def test_update_idp_value_error_with_retries(self):
+        # Enable retries and run test_update_idp_value_error.
+        _service.enable_retries()
+        self.test_update_idp_value_error()
+
+        # Disable retries and run test_update_idp_value_error.
+        _service.disable_retries()
+        self.test_update_idp_value_error()
+
+
+class TestDeleteIdp:
+    """
+    Test Class for delete_idp
+    """
+
+    @responses.activate
+    def test_delete_idp_all_params(self):
+        """
+        delete_idp()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_idp(
+            idp_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_delete_idp_all_params_with_retries(self):
+        # Enable retries and run test_delete_idp_all_params.
+        _service.enable_retries()
+        self.test_delete_idp_all_params()
+
+        # Disable retries and run test_delete_idp_all_params.
+        _service.disable_retries()
+        self.test_delete_idp_all_params()
+
+    @responses.activate
+    def test_delete_idp_value_error(self):
+        """
+        test_delete_idp_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "idp_id": idp_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_idp(**req_copy)
+
+    def test_delete_idp_value_error_with_retries(self):
+        # Enable retries and run test_delete_idp_value_error.
+        _service.enable_retries()
+        self.test_delete_idp_value_error()
+
+        # Disable retries and run test_delete_idp_value_error.
+        _service.disable_retries()
+        self.test_delete_idp_value_error()
+
+
+class TestListConsumerAccounts:
+    """
+    Test Class for list_consumer_accounts
+    """
+
+    @responses.activate
+    def test_list_consumer_accounts_all_params(self):
+        """
+        list_consumer_accounts()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString/consumers')
+        mock_response = '{"idp_id": "idp_id", "consumers": [{"account_id": "account_id", "share_scope": [{"id": "id", "type": "account"}]}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Invoke method
+        response = _service.list_consumer_accounts(
+            idp_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_consumer_accounts_all_params_with_retries(self):
+        # Enable retries and run test_list_consumer_accounts_all_params.
+        _service.enable_retries()
+        self.test_list_consumer_accounts_all_params()
+
+        # Disable retries and run test_list_consumer_accounts_all_params.
+        _service.disable_retries()
+        self.test_list_consumer_accounts_all_params()
+
+    @responses.activate
+    def test_list_consumer_accounts_value_error(self):
+        """
+        test_list_consumer_accounts_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString/consumers')
+        mock_response = '{"idp_id": "idp_id", "consumers": [{"account_id": "account_id", "share_scope": [{"id": "id", "type": "account"}]}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "idp_id": idp_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_consumer_accounts(**req_copy)
+
+    def test_list_consumer_accounts_value_error_with_retries(self):
+        # Enable retries and run test_list_consumer_accounts_value_error.
+        _service.enable_retries()
+        self.test_list_consumer_accounts_value_error()
+
+        # Disable retries and run test_list_consumer_accounts_value_error.
+        _service.disable_retries()
+        self.test_list_consumer_accounts_value_error()
+
+
+class TestExportSamlMetadata:
+    """
+    Test Class for export_saml_metadata
+    """
+
+    @responses.activate
+    def test_export_saml_metadata_all_params(self):
+        """
+        export_saml_metadata()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString/saml/metadata')
+        mock_response = '"<?xml version=\\"1.0\\"?>\n<EntityDescriptor\n    xmlns=\\"urn:oasis:names:tc:SAML:2.0:metadata\\"\n    entityID=\\"crn:v1:staging:public:iam-identity::a/{ACCOUNT_ID}::idp:{REALM_ID}\\">\n  <SPSSODescriptor\n      WantAssertionsSigned=\\"true\\"\n      protocolSupportEnumeration=\\"urn:oasis:names:tc:SAML:2.0:protocol\\">\n    <KeyDescriptor use=\\"signing\\">\n      <KeyInfo xmlns=\\"http://www.w3.org/2000/09/xmldsig#\\">\n        <X509Data>\n          <X509Certificate>\n            MIIDqTCCApGgAwIBAgIDA....\n          </X509Certificate>\n        </X509Data>\n      </KeyInfo>\n    </KeyDescriptor>\n    <NameIDFormat>\n      urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress\n    </NameIDFormat>\n    <AssertionConsumerService\n        index=\\"1\\"\n        isDefault=\\"true\\"\n        Binding=\\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\\"\n        Location=\\"https://iam.cloud.ibm.com/identity/callback/{REALM}/saml\\"/>\n  </SPSSODescriptor>\n</EntityDescriptor>\n"'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='text/xml',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Invoke method
+        response = _service.export_saml_metadata(
+            idp_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_export_saml_metadata_all_params_with_retries(self):
+        # Enable retries and run test_export_saml_metadata_all_params.
+        _service.enable_retries()
+        self.test_export_saml_metadata_all_params()
+
+        # Disable retries and run test_export_saml_metadata_all_params.
+        _service.disable_retries()
+        self.test_export_saml_metadata_all_params()
+
+    @responses.activate
+    def test_export_saml_metadata_value_error(self):
+        """
+        test_export_saml_metadata_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString/saml/metadata')
+        mock_response = '"<?xml version=\\"1.0\\"?>\n<EntityDescriptor\n    xmlns=\\"urn:oasis:names:tc:SAML:2.0:metadata\\"\n    entityID=\\"crn:v1:staging:public:iam-identity::a/{ACCOUNT_ID}::idp:{REALM_ID}\\">\n  <SPSSODescriptor\n      WantAssertionsSigned=\\"true\\"\n      protocolSupportEnumeration=\\"urn:oasis:names:tc:SAML:2.0:protocol\\">\n    <KeyDescriptor use=\\"signing\\">\n      <KeyInfo xmlns=\\"http://www.w3.org/2000/09/xmldsig#\\">\n        <X509Data>\n          <X509Certificate>\n            MIIDqTCCApGgAwIBAgIDA....\n          </X509Certificate>\n        </X509Data>\n      </KeyInfo>\n    </KeyDescriptor>\n    <NameIDFormat>\n      urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress\n    </NameIDFormat>\n    <AssertionConsumerService\n        index=\\"1\\"\n        isDefault=\\"true\\"\n        Binding=\\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\\"\n        Location=\\"https://iam.cloud.ibm.com/identity/callback/{REALM}/saml\\"/>\n  </SPSSODescriptor>\n</EntityDescriptor>\n"'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='text/xml',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "idp_id": idp_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.export_saml_metadata(**req_copy)
+
+    def test_export_saml_metadata_value_error_with_retries(self):
+        # Enable retries and run test_export_saml_metadata_value_error.
+        _service.enable_retries()
+        self.test_export_saml_metadata_value_error()
+
+        # Disable retries and run test_export_saml_metadata_value_error.
+        _service.disable_retries()
+        self.test_export_saml_metadata_value_error()
+
+
+class TestImportSamlIdpMetadata:
+    """
+    Test Class for import_saml_idp_metadata
+    """
+
+    @responses.activate
+    def test_import_saml_idp_metadata_all_params(self):
+        """
+        import_saml_idp_metadata()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString/saml/metadata')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "history": [{"anyKey": "anyValue"}], "share_scope": [{"id": "id", "type": "account"}], "active": true, "ui_setup_completed": true}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+        body = io.BytesIO(b'This is a mock file.').getvalue()
+        parse_only = False
+
+        # Invoke method
+        response = _service.import_saml_idp_metadata(
+            idp_id,
+            body,
+            parse_only=parse_only,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'parse_only={}'.format('true' if parse_only else 'false') in query_string
+        # Validate body params
+        assert responses.calls[0].request.body == body
+
+    def test_import_saml_idp_metadata_all_params_with_retries(self):
+        # Enable retries and run test_import_saml_idp_metadata_all_params.
+        _service.enable_retries()
+        self.test_import_saml_idp_metadata_all_params()
+
+        # Disable retries and run test_import_saml_idp_metadata_all_params.
+        _service.disable_retries()
+        self.test_import_saml_idp_metadata_all_params()
+
+    @responses.activate
+    def test_import_saml_idp_metadata_required_params(self):
+        """
+        test_import_saml_idp_metadata_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString/saml/metadata')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "history": [{"anyKey": "anyValue"}], "share_scope": [{"id": "id", "type": "account"}], "active": true, "ui_setup_completed": true}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+        body = io.BytesIO(b'This is a mock file.').getvalue()
+
+        # Invoke method
+        response = _service.import_saml_idp_metadata(
+            idp_id,
+            body,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        assert responses.calls[0].request.body == body
+
+    def test_import_saml_idp_metadata_required_params_with_retries(self):
+        # Enable retries and run test_import_saml_idp_metadata_required_params.
+        _service.enable_retries()
+        self.test_import_saml_idp_metadata_required_params()
+
+        # Disable retries and run test_import_saml_idp_metadata_required_params.
+        _service.disable_retries()
+        self.test_import_saml_idp_metadata_required_params()
+
+    @responses.activate
+    def test_import_saml_idp_metadata_value_error(self):
+        """
+        test_import_saml_idp_metadata_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString/saml/metadata')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "type": "saml", "properties": {"anyKey": "anyValue"}, "secrets": {"anyKey": "anyValue"}, "history": [{"anyKey": "anyValue"}], "share_scope": [{"id": "id", "type": "account"}], "active": true, "ui_setup_completed": true}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+        body = io.BytesIO(b'This is a mock file.').getvalue()
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "idp_id": idp_id,
+            "body": body,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.import_saml_idp_metadata(**req_copy)
+
+    def test_import_saml_idp_metadata_value_error_with_retries(self):
+        # Enable retries and run test_import_saml_idp_metadata_value_error.
+        _service.enable_retries()
+        self.test_import_saml_idp_metadata_value_error()
+
+        # Disable retries and run test_import_saml_idp_metadata_value_error.
+        _service.disable_retries()
+        self.test_import_saml_idp_metadata_value_error()
+
+
+class TestGetIdpTestResult:
+    """
+    Test Class for get_idp_test_result
+    """
+
+    @responses.activate
+    def test_get_idp_test_result_all_params(self):
+        """
+        get_idp_test_result()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString/test')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "started_at": 10, "modified_at": "modified_at", "idp_version": "idp_version", "steps": [{"sequence": 8, "name": "name", "state": "state", "result": "result"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Invoke method
+        response = _service.get_idp_test_result(
+            idp_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_idp_test_result_all_params_with_retries(self):
+        # Enable retries and run test_get_idp_test_result_all_params.
+        _service.enable_retries()
+        self.test_get_idp_test_result_all_params()
+
+        # Disable retries and run test_get_idp_test_result_all_params.
+        _service.disable_retries()
+        self.test_get_idp_test_result_all_params()
+
+    @responses.activate
+    def test_get_idp_test_result_value_error(self):
+        """
+        test_get_idp_test_result_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString/test')
+        mock_response = '{"idp_id": "idp_id", "entity_tag": "entity_tag", "started_at": 10, "modified_at": "modified_at", "idp_version": "idp_version", "steps": [{"sequence": 8, "name": "name", "state": "state", "result": "result"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "idp_id": idp_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_idp_test_result(**req_copy)
+
+    def test_get_idp_test_result_value_error_with_retries(self):
+        # Enable retries and run test_get_idp_test_result_value_error.
+        _service.enable_retries()
+        self.test_get_idp_test_result_value_error()
+
+        # Disable retries and run test_get_idp_test_result_value_error.
+        _service.disable_retries()
+        self.test_get_idp_test_result_value_error()
+
+
+class TestTestIdp:
+    """
+    Test Class for test_idp
+    """
+
+    @responses.activate
+    def test_test_idp_all_params(self):
+        """
+        test_idp()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString/test')
+        mock_response = '{"result": "result", "test_url": "test_url"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Invoke method
+        response = _service.test_idp(
+            idp_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_test_idp_all_params_with_retries(self):
+        # Enable retries and run test_test_idp_all_params.
+        _service.enable_retries()
+        self.test_test_idp_all_params()
+
+        # Disable retries and run test_test_idp_all_params.
+        _service.disable_retries()
+        self.test_test_idp_all_params()
+
+    @responses.activate
+    def test_test_idp_value_error(self):
+        """
+        test_test_idp_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/idps/testString/test')
+        mock_response = '{"result": "result", "test_url": "test_url"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        idp_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "idp_id": idp_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.test_idp(**req_copy)
+
+    def test_test_idp_value_error_with_retries(self):
+        # Enable retries and run test_test_idp_value_error.
+        _service.enable_retries()
+        self.test_test_idp_value_error()
+
+        # Disable retries and run test_test_idp_value_error.
+        _service.disable_retries()
+        self.test_test_idp_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: IDPManagement
+##############################################################################
+
+##############################################################################
+# Start of Service: AccountSettingsForIdP
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestGetLoginSettings:
+    """
+    Test Class for get_login_settings
+    """
+
+    @responses.activate
+    def test_get_login_settings_all_params(self):
+        """
+        get_login_settings()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString')
+        mock_response = '{"alias": "alias"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.get_login_settings(
+            account_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_login_settings_all_params_with_retries(self):
+        # Enable retries and run test_get_login_settings_all_params.
+        _service.enable_retries()
+        self.test_get_login_settings_all_params()
+
+        # Disable retries and run test_get_login_settings_all_params.
+        _service.disable_retries()
+        self.test_get_login_settings_all_params()
+
+    @responses.activate
+    def test_get_login_settings_value_error(self):
+        """
+        test_get_login_settings_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString')
+        mock_response = '{"alias": "alias"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_login_settings(**req_copy)
+
+    def test_get_login_settings_value_error_with_retries(self):
+        # Enable retries and run test_get_login_settings_value_error.
+        _service.enable_retries()
+        self.test_get_login_settings_value_error()
+
+        # Disable retries and run test_get_login_settings_value_error.
+        _service.disable_retries()
+        self.test_get_login_settings_value_error()
+
+
+class TestUpdateLoginSettings:
+    """
+    Test Class for update_login_settings
+    """
+
+    @responses.activate
+    def test_update_login_settings_all_params(self):
+        """
+        update_login_settings()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString')
+        mock_response = '{"alias": "alias"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        alias = 'testString'
+
+        # Invoke method
+        response = _service.update_login_settings(
+            account_id,
+            alias=alias,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['alias'] == 'testString'
+
+    def test_update_login_settings_all_params_with_retries(self):
+        # Enable retries and run test_update_login_settings_all_params.
+        _service.enable_retries()
+        self.test_update_login_settings_all_params()
+
+        # Disable retries and run test_update_login_settings_all_params.
+        _service.disable_retries()
+        self.test_update_login_settings_all_params()
+
+    @responses.activate
+    def test_update_login_settings_value_error(self):
+        """
+        test_update_login_settings_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString')
+        mock_response = '{"alias": "alias"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        alias = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_login_settings(**req_copy)
+
+    def test_update_login_settings_value_error_with_retries(self):
+        # Enable retries and run test_update_login_settings_value_error.
+        _service.enable_retries()
+        self.test_update_login_settings_value_error()
+
+        # Disable retries and run test_update_login_settings_value_error.
+        _service.disable_retries()
+        self.test_update_login_settings_value_error()
+
+
+class TestListIdPSettings:
+    """
+    Test Class for list_id_p_settings
+    """
+
+    @responses.activate
+    def test_list_id_p_settings_all_params(self):
+        """
+        list_id_p_settings()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString/idps')
+        mock_response = '{"idps": [{"idp_id": "idp_id", "owner_account": "owner_account", "owner_account_name": "owner_account_name", "idp_name": "idp_name", "idp_type": "idp_type", "cloud_user_strategy": "STATIC", "active": true, "ui_default": true}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        type = 'consumable'
+        include_idp_metadata = 'testString'
+
+        # Invoke method
+        response = _service.list_id_p_settings(
+            account_id,
+            type,
+            include_idp_metadata=include_idp_metadata,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'type={}'.format(type) in query_string
+        assert 'include_idp_metadata={}'.format(include_idp_metadata) in query_string
+
+    def test_list_id_p_settings_all_params_with_retries(self):
+        # Enable retries and run test_list_id_p_settings_all_params.
+        _service.enable_retries()
+        self.test_list_id_p_settings_all_params()
+
+        # Disable retries and run test_list_id_p_settings_all_params.
+        _service.disable_retries()
+        self.test_list_id_p_settings_all_params()
+
+    @responses.activate
+    def test_list_id_p_settings_required_params(self):
+        """
+        test_list_id_p_settings_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString/idps')
+        mock_response = '{"idps": [{"idp_id": "idp_id", "owner_account": "owner_account", "owner_account_name": "owner_account_name", "idp_name": "idp_name", "idp_type": "idp_type", "cloud_user_strategy": "STATIC", "active": true, "ui_default": true}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        type = 'consumable'
+
+        # Invoke method
+        response = _service.list_id_p_settings(
+            account_id,
+            type,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'type={}'.format(type) in query_string
+
+    def test_list_id_p_settings_required_params_with_retries(self):
+        # Enable retries and run test_list_id_p_settings_required_params.
+        _service.enable_retries()
+        self.test_list_id_p_settings_required_params()
+
+        # Disable retries and run test_list_id_p_settings_required_params.
+        _service.disable_retries()
+        self.test_list_id_p_settings_required_params()
+
+    @responses.activate
+    def test_list_id_p_settings_value_error(self):
+        """
+        test_list_id_p_settings_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString/idps')
+        mock_response = '{"idps": [{"idp_id": "idp_id", "owner_account": "owner_account", "owner_account_name": "owner_account_name", "idp_name": "idp_name", "idp_type": "idp_type", "cloud_user_strategy": "STATIC", "active": true, "ui_default": true}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        type = 'consumable'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "type": type,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_id_p_settings(**req_copy)
+
+    def test_list_id_p_settings_value_error_with_retries(self):
+        # Enable retries and run test_list_id_p_settings_value_error.
+        _service.enable_retries()
+        self.test_list_id_p_settings_value_error()
+
+        # Disable retries and run test_list_id_p_settings_value_error.
+        _service.disable_retries()
+        self.test_list_id_p_settings_value_error()
+
+
+class TestGetIdPSetting:
+    """
+    Test Class for get_id_p_setting
+    """
+
+    @responses.activate
+    def test_get_id_p_setting_all_params(self):
+        """
+        get_id_p_setting()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "owner_account": "owner_account", "owner_account_name": "owner_account_name", "idp_name": "idp_name", "idp_type": "idp_type", "cloud_user_strategy": "STATIC", "active": true, "ui_default": true}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        idp_id = 'testString'
+
+        # Invoke method
+        response = _service.get_id_p_setting(
+            account_id,
+            idp_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_id_p_setting_all_params_with_retries(self):
+        # Enable retries and run test_get_id_p_setting_all_params.
+        _service.enable_retries()
+        self.test_get_id_p_setting_all_params()
+
+        # Disable retries and run test_get_id_p_setting_all_params.
+        _service.disable_retries()
+        self.test_get_id_p_setting_all_params()
+
+    @responses.activate
+    def test_get_id_p_setting_value_error(self):
+        """
+        test_get_id_p_setting_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "owner_account": "owner_account", "owner_account_name": "owner_account_name", "idp_name": "idp_name", "idp_type": "idp_type", "cloud_user_strategy": "STATIC", "active": true, "ui_default": true}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        idp_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "idp_id": idp_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_id_p_setting(**req_copy)
+
+    def test_get_id_p_setting_value_error_with_retries(self):
+        # Enable retries and run test_get_id_p_setting_value_error.
+        _service.enable_retries()
+        self.test_get_id_p_setting_value_error()
+
+        # Disable retries and run test_get_id_p_setting_value_error.
+        _service.disable_retries()
+        self.test_get_id_p_setting_value_error()
+
+
+class TestAddIdPSetting:
+    """
+    Test Class for add_id_p_setting
+    """
+
+    @responses.activate
+    def test_add_id_p_setting_all_params(self):
+        """
+        add_id_p_setting()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "owner_account": "owner_account", "owner_account_name": "owner_account_name", "idp_name": "idp_name", "idp_type": "idp_type", "cloud_user_strategy": "STATIC", "active": true, "ui_default": true}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        idp_id = 'testString'
+        cloud_user_strategy = 'STATIC'
+        active = True
+        ui_default = True
+
+        # Invoke method
+        response = _service.add_id_p_setting(
+            account_id,
+            idp_id,
+            cloud_user_strategy,
+            active,
+            ui_default,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['cloud_user_strategy'] == 'STATIC'
+        assert req_body['active'] == True
+        assert req_body['ui_default'] == True
+
+    def test_add_id_p_setting_all_params_with_retries(self):
+        # Enable retries and run test_add_id_p_setting_all_params.
+        _service.enable_retries()
+        self.test_add_id_p_setting_all_params()
+
+        # Disable retries and run test_add_id_p_setting_all_params.
+        _service.disable_retries()
+        self.test_add_id_p_setting_all_params()
+
+    @responses.activate
+    def test_add_id_p_setting_value_error(self):
+        """
+        test_add_id_p_setting_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "owner_account": "owner_account", "owner_account_name": "owner_account_name", "idp_name": "idp_name", "idp_type": "idp_type", "cloud_user_strategy": "STATIC", "active": true, "ui_default": true}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        idp_id = 'testString'
+        cloud_user_strategy = 'STATIC'
+        active = True
+        ui_default = True
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "idp_id": idp_id,
+            "cloud_user_strategy": cloud_user_strategy,
+            "active": active,
+            "ui_default": ui_default,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.add_id_p_setting(**req_copy)
+
+    def test_add_id_p_setting_value_error_with_retries(self):
+        # Enable retries and run test_add_id_p_setting_value_error.
+        _service.enable_retries()
+        self.test_add_id_p_setting_value_error()
+
+        # Disable retries and run test_add_id_p_setting_value_error.
+        _service.disable_retries()
+        self.test_add_id_p_setting_value_error()
+
+
+class TestUpdateIdPSetting:
+    """
+    Test Class for update_id_p_setting
+    """
+
+    @responses.activate
+    def test_update_id_p_setting_all_params(self):
+        """
+        update_id_p_setting()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "owner_account": "owner_account", "owner_account_name": "owner_account_name", "idp_name": "idp_name", "idp_type": "idp_type", "cloud_user_strategy": "STATIC", "active": true, "ui_default": true}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        idp_id = 'testString'
+        cloud_user_strategy = 'STATIC'
+        active = True
+        ui_default = True
+
+        # Invoke method
+        response = _service.update_id_p_setting(
+            account_id,
+            idp_id,
+            cloud_user_strategy=cloud_user_strategy,
+            active=active,
+            ui_default=ui_default,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['cloud_user_strategy'] == 'STATIC'
+        assert req_body['active'] == True
+        assert req_body['ui_default'] == True
+
+    def test_update_id_p_setting_all_params_with_retries(self):
+        # Enable retries and run test_update_id_p_setting_all_params.
+        _service.enable_retries()
+        self.test_update_id_p_setting_all_params()
+
+        # Disable retries and run test_update_id_p_setting_all_params.
+        _service.disable_retries()
+        self.test_update_id_p_setting_all_params()
+
+    @responses.activate
+    def test_update_id_p_setting_value_error(self):
+        """
+        test_update_id_p_setting_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString/idps/testString')
+        mock_response = '{"idp_id": "idp_id", "owner_account": "owner_account", "owner_account_name": "owner_account_name", "idp_name": "idp_name", "idp_type": "idp_type", "cloud_user_strategy": "STATIC", "active": true, "ui_default": true}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        idp_id = 'testString'
+        cloud_user_strategy = 'STATIC'
+        active = True
+        ui_default = True
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "idp_id": idp_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_id_p_setting(**req_copy)
+
+    def test_update_id_p_setting_value_error_with_retries(self):
+        # Enable retries and run test_update_id_p_setting_value_error.
+        _service.enable_retries()
+        self.test_update_id_p_setting_value_error()
+
+        # Disable retries and run test_update_id_p_setting_value_error.
+        _service.disable_retries()
+        self.test_update_id_p_setting_value_error()
+
+
+class TestRemoveIdPSetting:
+    """
+    Test Class for remove_id_p_setting
+    """
+
+    @responses.activate
+    def test_remove_id_p_setting_all_params(self):
+        """
+        remove_id_p_setting()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString/idps/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        idp_id = 'testString'
+
+        # Invoke method
+        response = _service.remove_id_p_setting(
+            account_id,
+            idp_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_remove_id_p_setting_all_params_with_retries(self):
+        # Enable retries and run test_remove_id_p_setting_all_params.
+        _service.enable_retries()
+        self.test_remove_id_p_setting_all_params()
+
+        # Disable retries and run test_remove_id_p_setting_all_params.
+        _service.disable_retries()
+        self.test_remove_id_p_setting_all_params()
+
+    @responses.activate
+    def test_remove_id_p_setting_value_error(self):
+        """
+        test_remove_id_p_setting_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/loginsettings/testString/idps/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        idp_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "idp_id": idp_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.remove_id_p_setting(**req_copy)
+
+    def test_remove_id_p_setting_value_error_with_retries(self):
+        # Enable retries and run test_remove_id_p_setting_value_error.
+        _service.enable_retries()
+        self.test_remove_id_p_setting_value_error()
+
+        # Disable retries and run test_remove_id_p_setting_value_error.
+        _service.disable_retries()
+        self.test_remove_id_p_setting_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: AccountSettingsForIdP
+##############################################################################
+
 
 ##############################################################################
 # Start of Model Tests
@@ -10015,6 +12295,73 @@ class TestModel_AccountBasedMfaEnrollment:
         # Convert model instance back to dict and verify no loss of data
         account_based_mfa_enrollment_model_json2 = account_based_mfa_enrollment_model.to_dict()
         assert account_based_mfa_enrollment_model_json2 == account_based_mfa_enrollment_model_json
+
+
+class TestModel_AccountIdpSettings:
+    """
+    Test Class for AccountIdpSettings
+    """
+
+    def test_account_idp_settings_serialization(self):
+        """
+        Test serialization/deserialization for AccountIdpSettings
+        """
+
+        # Construct a json representation of a AccountIdpSettings model
+        account_idp_settings_model_json = {}
+        account_idp_settings_model_json['idp_id'] = 'testString'
+        account_idp_settings_model_json['owner_account'] = 'testString'
+        account_idp_settings_model_json['owner_account_name'] = 'testString'
+        account_idp_settings_model_json['idp_name'] = 'testString'
+        account_idp_settings_model_json['idp_type'] = 'testString'
+        account_idp_settings_model_json['cloud_user_strategy'] = 'STATIC'
+        account_idp_settings_model_json['active'] = True
+        account_idp_settings_model_json['ui_default'] = True
+
+        # Construct a model instance of AccountIdpSettings by calling from_dict on the json representation
+        account_idp_settings_model = AccountIdpSettings.from_dict(account_idp_settings_model_json)
+        assert account_idp_settings_model != False
+
+        # Construct a model instance of AccountIdpSettings by calling from_dict on the json representation
+        account_idp_settings_model_dict = AccountIdpSettings.from_dict(account_idp_settings_model_json).__dict__
+        account_idp_settings_model2 = AccountIdpSettings(**account_idp_settings_model_dict)
+
+        # Verify the model instances are equivalent
+        assert account_idp_settings_model == account_idp_settings_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        account_idp_settings_model_json2 = account_idp_settings_model.to_dict()
+        assert account_idp_settings_model_json2 == account_idp_settings_model_json
+
+
+class TestModel_AccountLoginSettings:
+    """
+    Test Class for AccountLoginSettings
+    """
+
+    def test_account_login_settings_serialization(self):
+        """
+        Test serialization/deserialization for AccountLoginSettings
+        """
+
+        # Construct a json representation of a AccountLoginSettings model
+        account_login_settings_model_json = {}
+        account_login_settings_model_json['alias'] = 'testString'
+
+        # Construct a model instance of AccountLoginSettings by calling from_dict on the json representation
+        account_login_settings_model = AccountLoginSettings.from_dict(account_login_settings_model_json)
+        assert account_login_settings_model != False
+
+        # Construct a model instance of AccountLoginSettings by calling from_dict on the json representation
+        account_login_settings_model_dict = AccountLoginSettings.from_dict(account_login_settings_model_json).__dict__
+        account_login_settings_model2 = AccountLoginSettings(**account_login_settings_model_dict)
+
+        # Verify the model instances are equivalent
+        assert account_login_settings_model == account_login_settings_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        account_login_settings_model_json2 = account_login_settings_model.to_dict()
+        assert account_login_settings_model_json2 == account_login_settings_model_json
 
 
 class TestModel_AccountSettingsAssignedTemplatesSection:
@@ -11064,6 +13411,560 @@ class TestModel_AssignedTemplatesAccountSettingsRestrictUserDomains:
         )
 
 
+class TestModel_ConsumersResponse:
+    """
+    Test Class for ConsumersResponse
+    """
+
+    def test_consumers_response_serialization(self):
+        """
+        Test serialization/deserialization for ConsumersResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        share_scope_model = {}  # ShareScope
+        share_scope_model['id'] = 'testString'
+        share_scope_model['type'] = 'account'
+
+        consumers_response_consumers_item_model = {}  # ConsumersResponseConsumersItem
+        consumers_response_consumers_item_model['account_id'] = 'testString'
+        consumers_response_consumers_item_model['share_scope'] = [share_scope_model]
+
+        # Construct a json representation of a ConsumersResponse model
+        consumers_response_model_json = {}
+        consumers_response_model_json['idp_id'] = 'testString'
+        consumers_response_model_json['consumers'] = [consumers_response_consumers_item_model]
+
+        # Construct a model instance of ConsumersResponse by calling from_dict on the json representation
+        consumers_response_model = ConsumersResponse.from_dict(consumers_response_model_json)
+        assert consumers_response_model != False
+
+        # Construct a model instance of ConsumersResponse by calling from_dict on the json representation
+        consumers_response_model_dict = ConsumersResponse.from_dict(consumers_response_model_json).__dict__
+        consumers_response_model2 = ConsumersResponse(**consumers_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert consumers_response_model == consumers_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        consumers_response_model_json2 = consumers_response_model.to_dict()
+        assert consumers_response_model_json2 == consumers_response_model_json
+
+
+class TestModel_ConsumersResponseConsumersItem:
+    """
+    Test Class for ConsumersResponseConsumersItem
+    """
+
+    def test_consumers_response_consumers_item_serialization(self):
+        """
+        Test serialization/deserialization for ConsumersResponseConsumersItem
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        share_scope_model = {}  # ShareScope
+        share_scope_model['id'] = 'testString'
+        share_scope_model['type'] = 'account'
+
+        # Construct a json representation of a ConsumersResponseConsumersItem model
+        consumers_response_consumers_item_model_json = {}
+        consumers_response_consumers_item_model_json['account_id'] = 'testString'
+        consumers_response_consumers_item_model_json['share_scope'] = [share_scope_model]
+
+        # Construct a model instance of ConsumersResponseConsumersItem by calling from_dict on the json representation
+        consumers_response_consumers_item_model = ConsumersResponseConsumersItem.from_dict(
+            consumers_response_consumers_item_model_json
+        )
+        assert consumers_response_consumers_item_model != False
+
+        # Construct a model instance of ConsumersResponseConsumersItem by calling from_dict on the json representation
+        consumers_response_consumers_item_model_dict = ConsumersResponseConsumersItem.from_dict(
+            consumers_response_consumers_item_model_json
+        ).__dict__
+        consumers_response_consumers_item_model2 = ConsumersResponseConsumersItem(
+            **consumers_response_consumers_item_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert consumers_response_consumers_item_model == consumers_response_consumers_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        consumers_response_consumers_item_model_json2 = consumers_response_consumers_item_model.to_dict()
+        assert consumers_response_consumers_item_model_json2 == consumers_response_consumers_item_model_json
+
+
+class TestModel_CreateIdpRequestProperties:
+    """
+    Test Class for CreateIdpRequestProperties
+    """
+
+    def test_create_idp_request_properties_serialization(self):
+        """
+        Test serialization/deserialization for CreateIdpRequestProperties
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        create_idp_request_properties_idp_model = {}  # CreateIdpRequestPropertiesIdp
+        create_idp_request_properties_idp_model['xml_import'] = True
+        create_idp_request_properties_idp_model['entity_id'] = 'testString'
+        create_idp_request_properties_idp_model['redirect_binding_url'] = 'testString'
+        create_idp_request_properties_idp_model['want_request_signed'] = True
+        create_idp_request_properties_idp_model['logout_url'] = 'testString'
+
+        create_idp_request_properties_sp_authn_context_model = {}  # CreateIdpRequestPropertiesSpAuthnContext
+        create_idp_request_properties_sp_authn_context_model['request'] = ['testString']
+        create_idp_request_properties_sp_authn_context_model['accept'] = ['testString']
+
+        create_idp_request_properties_sp_model = {}  # CreateIdpRequestPropertiesSp
+        create_idp_request_properties_sp_model['want_assertion_signed'] = True
+        create_idp_request_properties_sp_model['want_response_signed'] = True
+        create_idp_request_properties_sp_model['encrypt_response'] = True
+        create_idp_request_properties_sp_model['idp_initiated_login_enabled'] = True
+        create_idp_request_properties_sp_model['logout_url_enabled_when_available'] = True
+        create_idp_request_properties_sp_model['idp_initiated_urls'] = ['testString']
+        create_idp_request_properties_sp_model['authn_context'] = create_idp_request_properties_sp_authn_context_model
+        create_idp_request_properties_sp_model['claims'] = {'key1': 'testString'}
+
+        # Construct a json representation of a CreateIdpRequestProperties model
+        create_idp_request_properties_model_json = {}
+        create_idp_request_properties_model_json['idp'] = create_idp_request_properties_idp_model
+        create_idp_request_properties_model_json['sp'] = create_idp_request_properties_sp_model
+
+        # Construct a model instance of CreateIdpRequestProperties by calling from_dict on the json representation
+        create_idp_request_properties_model = CreateIdpRequestProperties.from_dict(
+            create_idp_request_properties_model_json
+        )
+        assert create_idp_request_properties_model != False
+
+        # Construct a model instance of CreateIdpRequestProperties by calling from_dict on the json representation
+        create_idp_request_properties_model_dict = CreateIdpRequestProperties.from_dict(
+            create_idp_request_properties_model_json
+        ).__dict__
+        create_idp_request_properties_model2 = CreateIdpRequestProperties(**create_idp_request_properties_model_dict)
+
+        # Verify the model instances are equivalent
+        assert create_idp_request_properties_model == create_idp_request_properties_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        create_idp_request_properties_model_json2 = create_idp_request_properties_model.to_dict()
+        assert create_idp_request_properties_model_json2 == create_idp_request_properties_model_json
+
+
+class TestModel_CreateIdpRequestPropertiesIdp:
+    """
+    Test Class for CreateIdpRequestPropertiesIdp
+    """
+
+    def test_create_idp_request_properties_idp_serialization(self):
+        """
+        Test serialization/deserialization for CreateIdpRequestPropertiesIdp
+        """
+
+        # Construct a json representation of a CreateIdpRequestPropertiesIdp model
+        create_idp_request_properties_idp_model_json = {}
+        create_idp_request_properties_idp_model_json['xml_import'] = True
+        create_idp_request_properties_idp_model_json['entity_id'] = 'testString'
+        create_idp_request_properties_idp_model_json['redirect_binding_url'] = 'testString'
+        create_idp_request_properties_idp_model_json['want_request_signed'] = True
+        create_idp_request_properties_idp_model_json['logout_url'] = 'testString'
+
+        # Construct a model instance of CreateIdpRequestPropertiesIdp by calling from_dict on the json representation
+        create_idp_request_properties_idp_model = CreateIdpRequestPropertiesIdp.from_dict(
+            create_idp_request_properties_idp_model_json
+        )
+        assert create_idp_request_properties_idp_model != False
+
+        # Construct a model instance of CreateIdpRequestPropertiesIdp by calling from_dict on the json representation
+        create_idp_request_properties_idp_model_dict = CreateIdpRequestPropertiesIdp.from_dict(
+            create_idp_request_properties_idp_model_json
+        ).__dict__
+        create_idp_request_properties_idp_model2 = CreateIdpRequestPropertiesIdp(
+            **create_idp_request_properties_idp_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert create_idp_request_properties_idp_model == create_idp_request_properties_idp_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        create_idp_request_properties_idp_model_json2 = create_idp_request_properties_idp_model.to_dict()
+        assert create_idp_request_properties_idp_model_json2 == create_idp_request_properties_idp_model_json
+
+
+class TestModel_CreateIdpRequestPropertiesSp:
+    """
+    Test Class for CreateIdpRequestPropertiesSp
+    """
+
+    def test_create_idp_request_properties_sp_serialization(self):
+        """
+        Test serialization/deserialization for CreateIdpRequestPropertiesSp
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        create_idp_request_properties_sp_authn_context_model = {}  # CreateIdpRequestPropertiesSpAuthnContext
+        create_idp_request_properties_sp_authn_context_model['request'] = ['testString']
+        create_idp_request_properties_sp_authn_context_model['accept'] = ['testString']
+
+        # Construct a json representation of a CreateIdpRequestPropertiesSp model
+        create_idp_request_properties_sp_model_json = {}
+        create_idp_request_properties_sp_model_json['want_assertion_signed'] = True
+        create_idp_request_properties_sp_model_json['want_response_signed'] = True
+        create_idp_request_properties_sp_model_json['encrypt_response'] = True
+        create_idp_request_properties_sp_model_json['idp_initiated_login_enabled'] = True
+        create_idp_request_properties_sp_model_json['logout_url_enabled_when_available'] = True
+        create_idp_request_properties_sp_model_json['idp_initiated_urls'] = ['testString']
+        create_idp_request_properties_sp_model_json['authn_context'] = (
+            create_idp_request_properties_sp_authn_context_model
+        )
+        create_idp_request_properties_sp_model_json['claims'] = {'key1': 'testString'}
+
+        # Construct a model instance of CreateIdpRequestPropertiesSp by calling from_dict on the json representation
+        create_idp_request_properties_sp_model = CreateIdpRequestPropertiesSp.from_dict(
+            create_idp_request_properties_sp_model_json
+        )
+        assert create_idp_request_properties_sp_model != False
+
+        # Construct a model instance of CreateIdpRequestPropertiesSp by calling from_dict on the json representation
+        create_idp_request_properties_sp_model_dict = CreateIdpRequestPropertiesSp.from_dict(
+            create_idp_request_properties_sp_model_json
+        ).__dict__
+        create_idp_request_properties_sp_model2 = CreateIdpRequestPropertiesSp(
+            **create_idp_request_properties_sp_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert create_idp_request_properties_sp_model == create_idp_request_properties_sp_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        create_idp_request_properties_sp_model_json2 = create_idp_request_properties_sp_model.to_dict()
+        assert create_idp_request_properties_sp_model_json2 == create_idp_request_properties_sp_model_json
+
+
+class TestModel_CreateIdpRequestPropertiesSpAuthnContext:
+    """
+    Test Class for CreateIdpRequestPropertiesSpAuthnContext
+    """
+
+    def test_create_idp_request_properties_sp_authn_context_serialization(self):
+        """
+        Test serialization/deserialization for CreateIdpRequestPropertiesSpAuthnContext
+        """
+
+        # Construct a json representation of a CreateIdpRequestPropertiesSpAuthnContext model
+        create_idp_request_properties_sp_authn_context_model_json = {}
+        create_idp_request_properties_sp_authn_context_model_json['request'] = ['testString']
+        create_idp_request_properties_sp_authn_context_model_json['accept'] = ['testString']
+
+        # Construct a model instance of CreateIdpRequestPropertiesSpAuthnContext by calling from_dict on the json representation
+        create_idp_request_properties_sp_authn_context_model = CreateIdpRequestPropertiesSpAuthnContext.from_dict(
+            create_idp_request_properties_sp_authn_context_model_json
+        )
+        assert create_idp_request_properties_sp_authn_context_model != False
+
+        # Construct a model instance of CreateIdpRequestPropertiesSpAuthnContext by calling from_dict on the json representation
+        create_idp_request_properties_sp_authn_context_model_dict = CreateIdpRequestPropertiesSpAuthnContext.from_dict(
+            create_idp_request_properties_sp_authn_context_model_json
+        ).__dict__
+        create_idp_request_properties_sp_authn_context_model2 = CreateIdpRequestPropertiesSpAuthnContext(
+            **create_idp_request_properties_sp_authn_context_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            create_idp_request_properties_sp_authn_context_model
+            == create_idp_request_properties_sp_authn_context_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        create_idp_request_properties_sp_authn_context_model_json2 = (
+            create_idp_request_properties_sp_authn_context_model.to_dict()
+        )
+        assert (
+            create_idp_request_properties_sp_authn_context_model_json2
+            == create_idp_request_properties_sp_authn_context_model_json
+        )
+
+
+class TestModel_CreateIdpRequestSecrets:
+    """
+    Test Class for CreateIdpRequestSecrets
+    """
+
+    def test_create_idp_request_secrets_serialization(self):
+        """
+        Test serialization/deserialization for CreateIdpRequestSecrets
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        create_idp_request_secrets_idp_signing_item_model = {}  # CreateIdpRequestSecretsIdpSigningItem
+        create_idp_request_secrets_idp_signing_item_model['value'] = 'testString'
+        create_idp_request_secrets_idp_signing_item_model['type'] = 'primary'
+
+        create_idp_request_secrets_idp_encrypting_item_model = {}  # CreateIdpRequestSecretsIdpEncryptingItem
+        create_idp_request_secrets_idp_encrypting_item_model['value'] = 'testString'
+        create_idp_request_secrets_idp_encrypting_item_model['type'] = 'primary'
+
+        create_idp_request_secrets_idp_model = {}  # CreateIdpRequestSecretsIdp
+        create_idp_request_secrets_idp_model['xml_import'] = True
+        create_idp_request_secrets_idp_model['signing'] = [create_idp_request_secrets_idp_signing_item_model]
+        create_idp_request_secrets_idp_model['encrypting'] = [create_idp_request_secrets_idp_encrypting_item_model]
+
+        create_idp_request_secrets_sp_signing_item_model = {}  # CreateIdpRequestSecretsSpSigningItem
+        create_idp_request_secrets_sp_signing_item_model['certificate_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['key_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['key_encoding'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['type'] = 'primary'
+
+        create_idp_request_secrets_sp_model = {}  # CreateIdpRequestSecretsSp
+        create_idp_request_secrets_sp_model['signing'] = [create_idp_request_secrets_sp_signing_item_model]
+
+        # Construct a json representation of a CreateIdpRequestSecrets model
+        create_idp_request_secrets_model_json = {}
+        create_idp_request_secrets_model_json['idp'] = create_idp_request_secrets_idp_model
+        create_idp_request_secrets_model_json['sp'] = create_idp_request_secrets_sp_model
+
+        # Construct a model instance of CreateIdpRequestSecrets by calling from_dict on the json representation
+        create_idp_request_secrets_model = CreateIdpRequestSecrets.from_dict(create_idp_request_secrets_model_json)
+        assert create_idp_request_secrets_model != False
+
+        # Construct a model instance of CreateIdpRequestSecrets by calling from_dict on the json representation
+        create_idp_request_secrets_model_dict = CreateIdpRequestSecrets.from_dict(
+            create_idp_request_secrets_model_json
+        ).__dict__
+        create_idp_request_secrets_model2 = CreateIdpRequestSecrets(**create_idp_request_secrets_model_dict)
+
+        # Verify the model instances are equivalent
+        assert create_idp_request_secrets_model == create_idp_request_secrets_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        create_idp_request_secrets_model_json2 = create_idp_request_secrets_model.to_dict()
+        assert create_idp_request_secrets_model_json2 == create_idp_request_secrets_model_json
+
+
+class TestModel_CreateIdpRequestSecretsIdp:
+    """
+    Test Class for CreateIdpRequestSecretsIdp
+    """
+
+    def test_create_idp_request_secrets_idp_serialization(self):
+        """
+        Test serialization/deserialization for CreateIdpRequestSecretsIdp
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        create_idp_request_secrets_idp_signing_item_model = {}  # CreateIdpRequestSecretsIdpSigningItem
+        create_idp_request_secrets_idp_signing_item_model['value'] = 'testString'
+        create_idp_request_secrets_idp_signing_item_model['type'] = 'primary'
+
+        create_idp_request_secrets_idp_encrypting_item_model = {}  # CreateIdpRequestSecretsIdpEncryptingItem
+        create_idp_request_secrets_idp_encrypting_item_model['value'] = 'testString'
+        create_idp_request_secrets_idp_encrypting_item_model['type'] = 'primary'
+
+        # Construct a json representation of a CreateIdpRequestSecretsIdp model
+        create_idp_request_secrets_idp_model_json = {}
+        create_idp_request_secrets_idp_model_json['xml_import'] = True
+        create_idp_request_secrets_idp_model_json['signing'] = [create_idp_request_secrets_idp_signing_item_model]
+        create_idp_request_secrets_idp_model_json['encrypting'] = [create_idp_request_secrets_idp_encrypting_item_model]
+
+        # Construct a model instance of CreateIdpRequestSecretsIdp by calling from_dict on the json representation
+        create_idp_request_secrets_idp_model = CreateIdpRequestSecretsIdp.from_dict(
+            create_idp_request_secrets_idp_model_json
+        )
+        assert create_idp_request_secrets_idp_model != False
+
+        # Construct a model instance of CreateIdpRequestSecretsIdp by calling from_dict on the json representation
+        create_idp_request_secrets_idp_model_dict = CreateIdpRequestSecretsIdp.from_dict(
+            create_idp_request_secrets_idp_model_json
+        ).__dict__
+        create_idp_request_secrets_idp_model2 = CreateIdpRequestSecretsIdp(**create_idp_request_secrets_idp_model_dict)
+
+        # Verify the model instances are equivalent
+        assert create_idp_request_secrets_idp_model == create_idp_request_secrets_idp_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        create_idp_request_secrets_idp_model_json2 = create_idp_request_secrets_idp_model.to_dict()
+        assert create_idp_request_secrets_idp_model_json2 == create_idp_request_secrets_idp_model_json
+
+
+class TestModel_CreateIdpRequestSecretsIdpEncryptingItem:
+    """
+    Test Class for CreateIdpRequestSecretsIdpEncryptingItem
+    """
+
+    def test_create_idp_request_secrets_idp_encrypting_item_serialization(self):
+        """
+        Test serialization/deserialization for CreateIdpRequestSecretsIdpEncryptingItem
+        """
+
+        # Construct a json representation of a CreateIdpRequestSecretsIdpEncryptingItem model
+        create_idp_request_secrets_idp_encrypting_item_model_json = {}
+        create_idp_request_secrets_idp_encrypting_item_model_json['value'] = 'testString'
+        create_idp_request_secrets_idp_encrypting_item_model_json['type'] = 'primary'
+
+        # Construct a model instance of CreateIdpRequestSecretsIdpEncryptingItem by calling from_dict on the json representation
+        create_idp_request_secrets_idp_encrypting_item_model = CreateIdpRequestSecretsIdpEncryptingItem.from_dict(
+            create_idp_request_secrets_idp_encrypting_item_model_json
+        )
+        assert create_idp_request_secrets_idp_encrypting_item_model != False
+
+        # Construct a model instance of CreateIdpRequestSecretsIdpEncryptingItem by calling from_dict on the json representation
+        create_idp_request_secrets_idp_encrypting_item_model_dict = CreateIdpRequestSecretsIdpEncryptingItem.from_dict(
+            create_idp_request_secrets_idp_encrypting_item_model_json
+        ).__dict__
+        create_idp_request_secrets_idp_encrypting_item_model2 = CreateIdpRequestSecretsIdpEncryptingItem(
+            **create_idp_request_secrets_idp_encrypting_item_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            create_idp_request_secrets_idp_encrypting_item_model
+            == create_idp_request_secrets_idp_encrypting_item_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        create_idp_request_secrets_idp_encrypting_item_model_json2 = (
+            create_idp_request_secrets_idp_encrypting_item_model.to_dict()
+        )
+        assert (
+            create_idp_request_secrets_idp_encrypting_item_model_json2
+            == create_idp_request_secrets_idp_encrypting_item_model_json
+        )
+
+
+class TestModel_CreateIdpRequestSecretsIdpSigningItem:
+    """
+    Test Class for CreateIdpRequestSecretsIdpSigningItem
+    """
+
+    def test_create_idp_request_secrets_idp_signing_item_serialization(self):
+        """
+        Test serialization/deserialization for CreateIdpRequestSecretsIdpSigningItem
+        """
+
+        # Construct a json representation of a CreateIdpRequestSecretsIdpSigningItem model
+        create_idp_request_secrets_idp_signing_item_model_json = {}
+        create_idp_request_secrets_idp_signing_item_model_json['value'] = 'testString'
+        create_idp_request_secrets_idp_signing_item_model_json['type'] = 'primary'
+
+        # Construct a model instance of CreateIdpRequestSecretsIdpSigningItem by calling from_dict on the json representation
+        create_idp_request_secrets_idp_signing_item_model = CreateIdpRequestSecretsIdpSigningItem.from_dict(
+            create_idp_request_secrets_idp_signing_item_model_json
+        )
+        assert create_idp_request_secrets_idp_signing_item_model != False
+
+        # Construct a model instance of CreateIdpRequestSecretsIdpSigningItem by calling from_dict on the json representation
+        create_idp_request_secrets_idp_signing_item_model_dict = CreateIdpRequestSecretsIdpSigningItem.from_dict(
+            create_idp_request_secrets_idp_signing_item_model_json
+        ).__dict__
+        create_idp_request_secrets_idp_signing_item_model2 = CreateIdpRequestSecretsIdpSigningItem(
+            **create_idp_request_secrets_idp_signing_item_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert create_idp_request_secrets_idp_signing_item_model == create_idp_request_secrets_idp_signing_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        create_idp_request_secrets_idp_signing_item_model_json2 = (
+            create_idp_request_secrets_idp_signing_item_model.to_dict()
+        )
+        assert (
+            create_idp_request_secrets_idp_signing_item_model_json2
+            == create_idp_request_secrets_idp_signing_item_model_json
+        )
+
+
+class TestModel_CreateIdpRequestSecretsSp:
+    """
+    Test Class for CreateIdpRequestSecretsSp
+    """
+
+    def test_create_idp_request_secrets_sp_serialization(self):
+        """
+        Test serialization/deserialization for CreateIdpRequestSecretsSp
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        create_idp_request_secrets_sp_signing_item_model = {}  # CreateIdpRequestSecretsSpSigningItem
+        create_idp_request_secrets_sp_signing_item_model['certificate_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['key_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['key_encoding'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model['type'] = 'primary'
+
+        # Construct a json representation of a CreateIdpRequestSecretsSp model
+        create_idp_request_secrets_sp_model_json = {}
+        create_idp_request_secrets_sp_model_json['signing'] = [create_idp_request_secrets_sp_signing_item_model]
+
+        # Construct a model instance of CreateIdpRequestSecretsSp by calling from_dict on the json representation
+        create_idp_request_secrets_sp_model = CreateIdpRequestSecretsSp.from_dict(
+            create_idp_request_secrets_sp_model_json
+        )
+        assert create_idp_request_secrets_sp_model != False
+
+        # Construct a model instance of CreateIdpRequestSecretsSp by calling from_dict on the json representation
+        create_idp_request_secrets_sp_model_dict = CreateIdpRequestSecretsSp.from_dict(
+            create_idp_request_secrets_sp_model_json
+        ).__dict__
+        create_idp_request_secrets_sp_model2 = CreateIdpRequestSecretsSp(**create_idp_request_secrets_sp_model_dict)
+
+        # Verify the model instances are equivalent
+        assert create_idp_request_secrets_sp_model == create_idp_request_secrets_sp_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        create_idp_request_secrets_sp_model_json2 = create_idp_request_secrets_sp_model.to_dict()
+        assert create_idp_request_secrets_sp_model_json2 == create_idp_request_secrets_sp_model_json
+
+
+class TestModel_CreateIdpRequestSecretsSpSigningItem:
+    """
+    Test Class for CreateIdpRequestSecretsSpSigningItem
+    """
+
+    def test_create_idp_request_secrets_sp_signing_item_serialization(self):
+        """
+        Test serialization/deserialization for CreateIdpRequestSecretsSpSigningItem
+        """
+
+        # Construct a json representation of a CreateIdpRequestSecretsSpSigningItem model
+        create_idp_request_secrets_sp_signing_item_model_json = {}
+        create_idp_request_secrets_sp_signing_item_model_json['certificate_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model_json['key_value'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model_json['key_encoding'] = 'testString'
+        create_idp_request_secrets_sp_signing_item_model_json['type'] = 'primary'
+
+        # Construct a model instance of CreateIdpRequestSecretsSpSigningItem by calling from_dict on the json representation
+        create_idp_request_secrets_sp_signing_item_model = CreateIdpRequestSecretsSpSigningItem.from_dict(
+            create_idp_request_secrets_sp_signing_item_model_json
+        )
+        assert create_idp_request_secrets_sp_signing_item_model != False
+
+        # Construct a model instance of CreateIdpRequestSecretsSpSigningItem by calling from_dict on the json representation
+        create_idp_request_secrets_sp_signing_item_model_dict = CreateIdpRequestSecretsSpSigningItem.from_dict(
+            create_idp_request_secrets_sp_signing_item_model_json
+        ).__dict__
+        create_idp_request_secrets_sp_signing_item_model2 = CreateIdpRequestSecretsSpSigningItem(
+            **create_idp_request_secrets_sp_signing_item_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert create_idp_request_secrets_sp_signing_item_model == create_idp_request_secrets_sp_signing_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        create_idp_request_secrets_sp_signing_item_model_json2 = (
+            create_idp_request_secrets_sp_signing_item_model.to_dict()
+        )
+        assert (
+            create_idp_request_secrets_sp_signing_item_model_json2
+            == create_idp_request_secrets_sp_signing_item_model_json
+        )
+
+
 class TestModel_CreateProfileLinkRequestLink:
     """
     Test Class for CreateProfileLinkRequestLink
@@ -12050,6 +14951,52 @@ class TestModel_IdentityPreferencesResponse:
         assert identity_preferences_response_model_json2 == identity_preferences_response_model_json
 
 
+class TestModel_Idp:
+    """
+    Test Class for Idp
+    """
+
+    def test_idp_serialization(self):
+        """
+        Test serialization/deserialization for Idp
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        share_scope_model = {}  # ShareScope
+        share_scope_model['id'] = 'testString'
+        share_scope_model['type'] = 'account'
+
+        # Construct a json representation of a Idp model
+        idp_model_json = {}
+        idp_model_json['idp_id'] = 'testString'
+        idp_model_json['entity_tag'] = 'testString'
+        idp_model_json['account_id'] = 'testString'
+        idp_model_json['name'] = 'testString'
+        idp_model_json['type'] = 'saml'
+        idp_model_json['properties'] = {'anyKey': 'anyValue'}
+        idp_model_json['secrets'] = {'anyKey': 'anyValue'}
+        idp_model_json['share_scope'] = [share_scope_model]
+        idp_model_json['active'] = True
+        idp_model_json['created_at'] = '2019-01-01T12:00:00Z'
+        idp_model_json['modified_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of Idp by calling from_dict on the json representation
+        idp_model = Idp.from_dict(idp_model_json)
+        assert idp_model != False
+
+        # Construct a model instance of Idp by calling from_dict on the json representation
+        idp_model_dict = Idp.from_dict(idp_model_json).__dict__
+        idp_model2 = Idp(**idp_model_dict)
+
+        # Verify the model instances are equivalent
+        assert idp_model == idp_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        idp_model_json2 = idp_model.to_dict()
+        assert idp_model_json2 == idp_model_json
+
+
 class TestModel_LimitCount:
     """
     Test Class for LimitCount
@@ -12079,6 +15026,99 @@ class TestModel_LimitCount:
         # Convert model instance back to dict and verify no loss of data
         limit_count_model_json2 = limit_count_model.to_dict()
         assert limit_count_model_json2 == limit_count_model_json
+
+
+class TestModel_ListIdPSettingsResponse:
+    """
+    Test Class for ListIdPSettingsResponse
+    """
+
+    def test_list_id_p_settings_response_serialization(self):
+        """
+        Test serialization/deserialization for ListIdPSettingsResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        account_idp_settings_model = {}  # AccountIdpSettings
+        account_idp_settings_model['idp_id'] = 'testString'
+        account_idp_settings_model['owner_account'] = 'testString'
+        account_idp_settings_model['owner_account_name'] = 'testString'
+        account_idp_settings_model['idp_name'] = 'testString'
+        account_idp_settings_model['idp_type'] = 'testString'
+        account_idp_settings_model['cloud_user_strategy'] = 'STATIC'
+        account_idp_settings_model['active'] = True
+        account_idp_settings_model['ui_default'] = True
+
+        # Construct a json representation of a ListIdPSettingsResponse model
+        list_id_p_settings_response_model_json = {}
+        list_id_p_settings_response_model_json['idps'] = [account_idp_settings_model]
+
+        # Construct a model instance of ListIdPSettingsResponse by calling from_dict on the json representation
+        list_id_p_settings_response_model = ListIdPSettingsResponse.from_dict(list_id_p_settings_response_model_json)
+        assert list_id_p_settings_response_model != False
+
+        # Construct a model instance of ListIdPSettingsResponse by calling from_dict on the json representation
+        list_id_p_settings_response_model_dict = ListIdPSettingsResponse.from_dict(
+            list_id_p_settings_response_model_json
+        ).__dict__
+        list_id_p_settings_response_model2 = ListIdPSettingsResponse(**list_id_p_settings_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert list_id_p_settings_response_model == list_id_p_settings_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        list_id_p_settings_response_model_json2 = list_id_p_settings_response_model.to_dict()
+        assert list_id_p_settings_response_model_json2 == list_id_p_settings_response_model_json
+
+
+class TestModel_ListIdpsResponse:
+    """
+    Test Class for ListIdpsResponse
+    """
+
+    def test_list_idps_response_serialization(self):
+        """
+        Test serialization/deserialization for ListIdpsResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        share_scope_model = {}  # ShareScope
+        share_scope_model['id'] = 'testString'
+        share_scope_model['type'] = 'account'
+
+        idp_model = {}  # Idp
+        idp_model['idp_id'] = 'testString'
+        idp_model['entity_tag'] = 'testString'
+        idp_model['account_id'] = 'testString'
+        idp_model['name'] = 'testString'
+        idp_model['type'] = 'saml'
+        idp_model['properties'] = {'anyKey': 'anyValue'}
+        idp_model['secrets'] = {'anyKey': 'anyValue'}
+        idp_model['share_scope'] = [share_scope_model]
+        idp_model['active'] = True
+        idp_model['created_at'] = '2019-01-01T12:00:00Z'
+        idp_model['modified_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a json representation of a ListIdpsResponse model
+        list_idps_response_model_json = {}
+        list_idps_response_model_json['idps'] = [idp_model]
+
+        # Construct a model instance of ListIdpsResponse by calling from_dict on the json representation
+        list_idps_response_model = ListIdpsResponse.from_dict(list_idps_response_model_json)
+        assert list_idps_response_model != False
+
+        # Construct a model instance of ListIdpsResponse by calling from_dict on the json representation
+        list_idps_response_model_dict = ListIdpsResponse.from_dict(list_idps_response_model_json).__dict__
+        list_idps_response_model2 = ListIdpsResponse(**list_idps_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert list_idps_response_model == list_idps_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        list_idps_response_model_json2 = list_idps_response_model.to_dict()
+        assert list_idps_response_model_json2 == list_idps_response_model_json
 
 
 class TestModel_MfaEnrollmentTypeStatus:
@@ -12772,6 +15812,58 @@ class TestModel_ResponseContext:
         assert response_context_model_json2 == response_context_model_json
 
 
+class TestModel_SamlMetadataImportResponse:
+    """
+    Test Class for SamlMetadataImportResponse
+    """
+
+    def test_saml_metadata_import_response_serialization(self):
+        """
+        Test serialization/deserialization for SamlMetadataImportResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        share_scope_model = {}  # ShareScope
+        share_scope_model['id'] = 'testString'
+        share_scope_model['type'] = 'account'
+
+        # Construct a json representation of a SamlMetadataImportResponse model
+        saml_metadata_import_response_model_json = {}
+        saml_metadata_import_response_model_json['idp_id'] = 'testString'
+        saml_metadata_import_response_model_json['entity_tag'] = 'testString'
+        saml_metadata_import_response_model_json['created_at'] = '2019-01-01T12:00:00Z'
+        saml_metadata_import_response_model_json['modified_at'] = '2019-01-01T12:00:00Z'
+        saml_metadata_import_response_model_json['account_id'] = 'testString'
+        saml_metadata_import_response_model_json['name'] = 'testString'
+        saml_metadata_import_response_model_json['type'] = 'saml'
+        saml_metadata_import_response_model_json['properties'] = {'anyKey': 'anyValue'}
+        saml_metadata_import_response_model_json['secrets'] = {'anyKey': 'anyValue'}
+        saml_metadata_import_response_model_json['history'] = [{'anyKey': 'anyValue'}]
+        saml_metadata_import_response_model_json['share_scope'] = [share_scope_model]
+        saml_metadata_import_response_model_json['active'] = True
+        saml_metadata_import_response_model_json['ui_setup_completed'] = True
+
+        # Construct a model instance of SamlMetadataImportResponse by calling from_dict on the json representation
+        saml_metadata_import_response_model = SamlMetadataImportResponse.from_dict(
+            saml_metadata_import_response_model_json
+        )
+        assert saml_metadata_import_response_model != False
+
+        # Construct a model instance of SamlMetadataImportResponse by calling from_dict on the json representation
+        saml_metadata_import_response_model_dict = SamlMetadataImportResponse.from_dict(
+            saml_metadata_import_response_model_json
+        ).__dict__
+        saml_metadata_import_response_model2 = SamlMetadataImportResponse(**saml_metadata_import_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert saml_metadata_import_response_model == saml_metadata_import_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        saml_metadata_import_response_model_json2 = saml_metadata_import_response_model.to_dict()
+        assert saml_metadata_import_response_model_json2 == saml_metadata_import_response_model_json
+
+
 class TestModel_ServiceId:
     """
     Test Class for ServiceId
@@ -13077,6 +16169,37 @@ class TestModel_ServiceIdList:
         # Convert model instance back to dict and verify no loss of data
         service_id_list_model_json2 = service_id_list_model.to_dict()
         assert service_id_list_model_json2 == service_id_list_model_json
+
+
+class TestModel_ShareScope:
+    """
+    Test Class for ShareScope
+    """
+
+    def test_share_scope_serialization(self):
+        """
+        Test serialization/deserialization for ShareScope
+        """
+
+        # Construct a json representation of a ShareScope model
+        share_scope_model_json = {}
+        share_scope_model_json['id'] = 'testString'
+        share_scope_model_json['type'] = 'account'
+
+        # Construct a model instance of ShareScope by calling from_dict on the json representation
+        share_scope_model = ShareScope.from_dict(share_scope_model_json)
+        assert share_scope_model != False
+
+        # Construct a model instance of ShareScope by calling from_dict on the json representation
+        share_scope_model_dict = ShareScope.from_dict(share_scope_model_json).__dict__
+        share_scope_model2 = ShareScope(**share_scope_model_dict)
+
+        # Verify the model instances are equivalent
+        assert share_scope_model == share_scope_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        share_scope_model_json2 = share_scope_model.to_dict()
+        assert share_scope_model_json2 == share_scope_model_json
 
 
 class TestModel_TemplateAccountSettings:
@@ -13748,6 +16871,113 @@ class TestModel_TemplateProfileComponentResponse:
         assert template_profile_component_response_model_json2 == template_profile_component_response_model_json
 
 
+class TestModel_TestResult:
+    """
+    Test Class for TestResult
+    """
+
+    def test_test_result_serialization(self):
+        """
+        Test serialization/deserialization for TestResult
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        test_result_steps_item_model = {}  # TestResultStepsItem
+        test_result_steps_item_model['sequence'] = 38
+        test_result_steps_item_model['name'] = 'testString'
+        test_result_steps_item_model['state'] = 'testString'
+        test_result_steps_item_model['result'] = 'testString'
+
+        # Construct a json representation of a TestResult model
+        test_result_model_json = {}
+        test_result_model_json['idp_id'] = 'testString'
+        test_result_model_json['entity_tag'] = 'testString'
+        test_result_model_json['started_at'] = 38
+        test_result_model_json['modified_at'] = 'testString'
+        test_result_model_json['idp_version'] = 'testString'
+        test_result_model_json['steps'] = [test_result_steps_item_model]
+
+        # Construct a model instance of TestResult by calling from_dict on the json representation
+        test_result_model = TestResult.from_dict(test_result_model_json)
+        assert test_result_model != False
+
+        # Construct a model instance of TestResult by calling from_dict on the json representation
+        test_result_model_dict = TestResult.from_dict(test_result_model_json).__dict__
+        test_result_model2 = TestResult(**test_result_model_dict)
+
+        # Verify the model instances are equivalent
+        assert test_result_model == test_result_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        test_result_model_json2 = test_result_model.to_dict()
+        assert test_result_model_json2 == test_result_model_json
+
+
+class TestModel_TestResultStepsItem:
+    """
+    Test Class for TestResultStepsItem
+    """
+
+    def test_test_result_steps_item_serialization(self):
+        """
+        Test serialization/deserialization for TestResultStepsItem
+        """
+
+        # Construct a json representation of a TestResultStepsItem model
+        test_result_steps_item_model_json = {}
+        test_result_steps_item_model_json['sequence'] = 38
+        test_result_steps_item_model_json['name'] = 'testString'
+        test_result_steps_item_model_json['state'] = 'testString'
+        test_result_steps_item_model_json['result'] = 'testString'
+
+        # Construct a model instance of TestResultStepsItem by calling from_dict on the json representation
+        test_result_steps_item_model = TestResultStepsItem.from_dict(test_result_steps_item_model_json)
+        assert test_result_steps_item_model != False
+
+        # Construct a model instance of TestResultStepsItem by calling from_dict on the json representation
+        test_result_steps_item_model_dict = TestResultStepsItem.from_dict(test_result_steps_item_model_json).__dict__
+        test_result_steps_item_model2 = TestResultStepsItem(**test_result_steps_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert test_result_steps_item_model == test_result_steps_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        test_result_steps_item_model_json2 = test_result_steps_item_model.to_dict()
+        assert test_result_steps_item_model_json2 == test_result_steps_item_model_json
+
+
+class TestModel_TestTriggerResponse:
+    """
+    Test Class for TestTriggerResponse
+    """
+
+    def test_test_trigger_response_serialization(self):
+        """
+        Test serialization/deserialization for TestTriggerResponse
+        """
+
+        # Construct a json representation of a TestTriggerResponse model
+        test_trigger_response_model_json = {}
+        test_trigger_response_model_json['result'] = 'testString'
+        test_trigger_response_model_json['test_url'] = 'testString'
+
+        # Construct a model instance of TestTriggerResponse by calling from_dict on the json representation
+        test_trigger_response_model = TestTriggerResponse.from_dict(test_trigger_response_model_json)
+        assert test_trigger_response_model != False
+
+        # Construct a model instance of TestTriggerResponse by calling from_dict on the json representation
+        test_trigger_response_model_dict = TestTriggerResponse.from_dict(test_trigger_response_model_json).__dict__
+        test_trigger_response_model2 = TestTriggerResponse(**test_trigger_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert test_trigger_response_model == test_trigger_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        test_trigger_response_model_json2 = test_trigger_response_model.to_dict()
+        assert test_trigger_response_model_json2 == test_trigger_response_model_json
+
+
 class TestModel_TrustedProfile:
     """
     Test Class for TrustedProfile
@@ -14184,6 +17414,476 @@ class TestModel_TrustedProfilesList:
         # Convert model instance back to dict and verify no loss of data
         trusted_profiles_list_model_json2 = trusted_profiles_list_model.to_dict()
         assert trusted_profiles_list_model_json2 == trusted_profiles_list_model_json
+
+
+class TestModel_UpdateIdPRequestProperties:
+    """
+    Test Class for UpdateIdPRequestProperties
+    """
+
+    def test_update_id_p_request_properties_serialization(self):
+        """
+        Test serialization/deserialization for UpdateIdPRequestProperties
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        update_id_p_request_properties_idp_model = {}  # UpdateIdPRequestPropertiesIdp
+        update_id_p_request_properties_idp_model['entity_id'] = 'testString'
+        update_id_p_request_properties_idp_model['redirect_binding_url'] = 'testString'
+        update_id_p_request_properties_idp_model['want_request_signed'] = True
+        update_id_p_request_properties_idp_model['logout_url'] = 'testString'
+
+        update_id_p_request_properties_sp_authn_context_model = {}  # UpdateIdPRequestPropertiesSpAuthnContext
+        update_id_p_request_properties_sp_authn_context_model['request'] = ['testString']
+        update_id_p_request_properties_sp_authn_context_model['accept'] = ['testString']
+
+        update_id_p_request_properties_sp_model = {}  # UpdateIdPRequestPropertiesSp
+        update_id_p_request_properties_sp_model['want_assertion_signed'] = True
+        update_id_p_request_properties_sp_model['want_response_signed'] = True
+        update_id_p_request_properties_sp_model['encrypt_response'] = True
+        update_id_p_request_properties_sp_model['idp_initiated_login_enabled'] = True
+        update_id_p_request_properties_sp_model['logout_url_enabled_when_available'] = True
+        update_id_p_request_properties_sp_model['idp_initiated_urls'] = ['testString']
+        update_id_p_request_properties_sp_model['authn_context'] = update_id_p_request_properties_sp_authn_context_model
+        update_id_p_request_properties_sp_model['claims'] = {'key1': 'testString'}
+
+        # Construct a json representation of a UpdateIdPRequestProperties model
+        update_id_p_request_properties_model_json = {}
+        update_id_p_request_properties_model_json['idp'] = update_id_p_request_properties_idp_model
+        update_id_p_request_properties_model_json['sp'] = update_id_p_request_properties_sp_model
+
+        # Construct a model instance of UpdateIdPRequestProperties by calling from_dict on the json representation
+        update_id_p_request_properties_model = UpdateIdPRequestProperties.from_dict(
+            update_id_p_request_properties_model_json
+        )
+        assert update_id_p_request_properties_model != False
+
+        # Construct a model instance of UpdateIdPRequestProperties by calling from_dict on the json representation
+        update_id_p_request_properties_model_dict = UpdateIdPRequestProperties.from_dict(
+            update_id_p_request_properties_model_json
+        ).__dict__
+        update_id_p_request_properties_model2 = UpdateIdPRequestProperties(**update_id_p_request_properties_model_dict)
+
+        # Verify the model instances are equivalent
+        assert update_id_p_request_properties_model == update_id_p_request_properties_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        update_id_p_request_properties_model_json2 = update_id_p_request_properties_model.to_dict()
+        assert update_id_p_request_properties_model_json2 == update_id_p_request_properties_model_json
+
+
+class TestModel_UpdateIdPRequestPropertiesIdp:
+    """
+    Test Class for UpdateIdPRequestPropertiesIdp
+    """
+
+    def test_update_id_p_request_properties_idp_serialization(self):
+        """
+        Test serialization/deserialization for UpdateIdPRequestPropertiesIdp
+        """
+
+        # Construct a json representation of a UpdateIdPRequestPropertiesIdp model
+        update_id_p_request_properties_idp_model_json = {}
+        update_id_p_request_properties_idp_model_json['entity_id'] = 'testString'
+        update_id_p_request_properties_idp_model_json['redirect_binding_url'] = 'testString'
+        update_id_p_request_properties_idp_model_json['want_request_signed'] = True
+        update_id_p_request_properties_idp_model_json['logout_url'] = 'testString'
+
+        # Construct a model instance of UpdateIdPRequestPropertiesIdp by calling from_dict on the json representation
+        update_id_p_request_properties_idp_model = UpdateIdPRequestPropertiesIdp.from_dict(
+            update_id_p_request_properties_idp_model_json
+        )
+        assert update_id_p_request_properties_idp_model != False
+
+        # Construct a model instance of UpdateIdPRequestPropertiesIdp by calling from_dict on the json representation
+        update_id_p_request_properties_idp_model_dict = UpdateIdPRequestPropertiesIdp.from_dict(
+            update_id_p_request_properties_idp_model_json
+        ).__dict__
+        update_id_p_request_properties_idp_model2 = UpdateIdPRequestPropertiesIdp(
+            **update_id_p_request_properties_idp_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert update_id_p_request_properties_idp_model == update_id_p_request_properties_idp_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        update_id_p_request_properties_idp_model_json2 = update_id_p_request_properties_idp_model.to_dict()
+        assert update_id_p_request_properties_idp_model_json2 == update_id_p_request_properties_idp_model_json
+
+
+class TestModel_UpdateIdPRequestPropertiesSp:
+    """
+    Test Class for UpdateIdPRequestPropertiesSp
+    """
+
+    def test_update_id_p_request_properties_sp_serialization(self):
+        """
+        Test serialization/deserialization for UpdateIdPRequestPropertiesSp
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        update_id_p_request_properties_sp_authn_context_model = {}  # UpdateIdPRequestPropertiesSpAuthnContext
+        update_id_p_request_properties_sp_authn_context_model['request'] = ['testString']
+        update_id_p_request_properties_sp_authn_context_model['accept'] = ['testString']
+
+        # Construct a json representation of a UpdateIdPRequestPropertiesSp model
+        update_id_p_request_properties_sp_model_json = {}
+        update_id_p_request_properties_sp_model_json['want_assertion_signed'] = True
+        update_id_p_request_properties_sp_model_json['want_response_signed'] = True
+        update_id_p_request_properties_sp_model_json['encrypt_response'] = True
+        update_id_p_request_properties_sp_model_json['idp_initiated_login_enabled'] = True
+        update_id_p_request_properties_sp_model_json['logout_url_enabled_when_available'] = True
+        update_id_p_request_properties_sp_model_json['idp_initiated_urls'] = ['testString']
+        update_id_p_request_properties_sp_model_json['authn_context'] = (
+            update_id_p_request_properties_sp_authn_context_model
+        )
+        update_id_p_request_properties_sp_model_json['claims'] = {'key1': 'testString'}
+
+        # Construct a model instance of UpdateIdPRequestPropertiesSp by calling from_dict on the json representation
+        update_id_p_request_properties_sp_model = UpdateIdPRequestPropertiesSp.from_dict(
+            update_id_p_request_properties_sp_model_json
+        )
+        assert update_id_p_request_properties_sp_model != False
+
+        # Construct a model instance of UpdateIdPRequestPropertiesSp by calling from_dict on the json representation
+        update_id_p_request_properties_sp_model_dict = UpdateIdPRequestPropertiesSp.from_dict(
+            update_id_p_request_properties_sp_model_json
+        ).__dict__
+        update_id_p_request_properties_sp_model2 = UpdateIdPRequestPropertiesSp(
+            **update_id_p_request_properties_sp_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert update_id_p_request_properties_sp_model == update_id_p_request_properties_sp_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        update_id_p_request_properties_sp_model_json2 = update_id_p_request_properties_sp_model.to_dict()
+        assert update_id_p_request_properties_sp_model_json2 == update_id_p_request_properties_sp_model_json
+
+
+class TestModel_UpdateIdPRequestPropertiesSpAuthnContext:
+    """
+    Test Class for UpdateIdPRequestPropertiesSpAuthnContext
+    """
+
+    def test_update_id_p_request_properties_sp_authn_context_serialization(self):
+        """
+        Test serialization/deserialization for UpdateIdPRequestPropertiesSpAuthnContext
+        """
+
+        # Construct a json representation of a UpdateIdPRequestPropertiesSpAuthnContext model
+        update_id_p_request_properties_sp_authn_context_model_json = {}
+        update_id_p_request_properties_sp_authn_context_model_json['request'] = ['testString']
+        update_id_p_request_properties_sp_authn_context_model_json['accept'] = ['testString']
+
+        # Construct a model instance of UpdateIdPRequestPropertiesSpAuthnContext by calling from_dict on the json representation
+        update_id_p_request_properties_sp_authn_context_model = UpdateIdPRequestPropertiesSpAuthnContext.from_dict(
+            update_id_p_request_properties_sp_authn_context_model_json
+        )
+        assert update_id_p_request_properties_sp_authn_context_model != False
+
+        # Construct a model instance of UpdateIdPRequestPropertiesSpAuthnContext by calling from_dict on the json representation
+        update_id_p_request_properties_sp_authn_context_model_dict = UpdateIdPRequestPropertiesSpAuthnContext.from_dict(
+            update_id_p_request_properties_sp_authn_context_model_json
+        ).__dict__
+        update_id_p_request_properties_sp_authn_context_model2 = UpdateIdPRequestPropertiesSpAuthnContext(
+            **update_id_p_request_properties_sp_authn_context_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            update_id_p_request_properties_sp_authn_context_model
+            == update_id_p_request_properties_sp_authn_context_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        update_id_p_request_properties_sp_authn_context_model_json2 = (
+            update_id_p_request_properties_sp_authn_context_model.to_dict()
+        )
+        assert (
+            update_id_p_request_properties_sp_authn_context_model_json2
+            == update_id_p_request_properties_sp_authn_context_model_json
+        )
+
+
+class TestModel_UpdateIdPRequestSecrets:
+    """
+    Test Class for UpdateIdPRequestSecrets
+    """
+
+    def test_update_id_p_request_secrets_serialization(self):
+        """
+        Test serialization/deserialization for UpdateIdPRequestSecrets
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        update_id_p_request_secrets_idp_signing_item_model = {}  # UpdateIdPRequestSecretsIdpSigningItem
+        update_id_p_request_secrets_idp_signing_item_model['value'] = 'testString'
+        update_id_p_request_secrets_idp_signing_item_model['type'] = 'primary'
+
+        update_id_p_request_secrets_idp_encrypting_item_model = {}  # UpdateIdPRequestSecretsIdpEncryptingItem
+        update_id_p_request_secrets_idp_encrypting_item_model['value'] = 'testString'
+        update_id_p_request_secrets_idp_encrypting_item_model['type'] = 'primary'
+
+        update_id_p_request_secrets_idp_model = {}  # UpdateIdPRequestSecretsIdp
+        update_id_p_request_secrets_idp_model['signing'] = [update_id_p_request_secrets_idp_signing_item_model]
+        update_id_p_request_secrets_idp_model['encrypting'] = [update_id_p_request_secrets_idp_encrypting_item_model]
+
+        update_id_p_request_secrets_sp_signing_item_model = {}  # UpdateIdPRequestSecretsSpSigningItem
+        update_id_p_request_secrets_sp_signing_item_model['certificate_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['key_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['key_encoding'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['type'] = 'primary'
+
+        update_id_p_request_secrets_sp_model = {}  # UpdateIdPRequestSecretsSp
+        update_id_p_request_secrets_sp_model['signing'] = [update_id_p_request_secrets_sp_signing_item_model]
+
+        # Construct a json representation of a UpdateIdPRequestSecrets model
+        update_id_p_request_secrets_model_json = {}
+        update_id_p_request_secrets_model_json['idp'] = update_id_p_request_secrets_idp_model
+        update_id_p_request_secrets_model_json['sp'] = update_id_p_request_secrets_sp_model
+
+        # Construct a model instance of UpdateIdPRequestSecrets by calling from_dict on the json representation
+        update_id_p_request_secrets_model = UpdateIdPRequestSecrets.from_dict(update_id_p_request_secrets_model_json)
+        assert update_id_p_request_secrets_model != False
+
+        # Construct a model instance of UpdateIdPRequestSecrets by calling from_dict on the json representation
+        update_id_p_request_secrets_model_dict = UpdateIdPRequestSecrets.from_dict(
+            update_id_p_request_secrets_model_json
+        ).__dict__
+        update_id_p_request_secrets_model2 = UpdateIdPRequestSecrets(**update_id_p_request_secrets_model_dict)
+
+        # Verify the model instances are equivalent
+        assert update_id_p_request_secrets_model == update_id_p_request_secrets_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        update_id_p_request_secrets_model_json2 = update_id_p_request_secrets_model.to_dict()
+        assert update_id_p_request_secrets_model_json2 == update_id_p_request_secrets_model_json
+
+
+class TestModel_UpdateIdPRequestSecretsIdp:
+    """
+    Test Class for UpdateIdPRequestSecretsIdp
+    """
+
+    def test_update_id_p_request_secrets_idp_serialization(self):
+        """
+        Test serialization/deserialization for UpdateIdPRequestSecretsIdp
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        update_id_p_request_secrets_idp_signing_item_model = {}  # UpdateIdPRequestSecretsIdpSigningItem
+        update_id_p_request_secrets_idp_signing_item_model['value'] = 'testString'
+        update_id_p_request_secrets_idp_signing_item_model['type'] = 'primary'
+
+        update_id_p_request_secrets_idp_encrypting_item_model = {}  # UpdateIdPRequestSecretsIdpEncryptingItem
+        update_id_p_request_secrets_idp_encrypting_item_model['value'] = 'testString'
+        update_id_p_request_secrets_idp_encrypting_item_model['type'] = 'primary'
+
+        # Construct a json representation of a UpdateIdPRequestSecretsIdp model
+        update_id_p_request_secrets_idp_model_json = {}
+        update_id_p_request_secrets_idp_model_json['signing'] = [update_id_p_request_secrets_idp_signing_item_model]
+        update_id_p_request_secrets_idp_model_json['encrypting'] = [
+            update_id_p_request_secrets_idp_encrypting_item_model
+        ]
+
+        # Construct a model instance of UpdateIdPRequestSecretsIdp by calling from_dict on the json representation
+        update_id_p_request_secrets_idp_model = UpdateIdPRequestSecretsIdp.from_dict(
+            update_id_p_request_secrets_idp_model_json
+        )
+        assert update_id_p_request_secrets_idp_model != False
+
+        # Construct a model instance of UpdateIdPRequestSecretsIdp by calling from_dict on the json representation
+        update_id_p_request_secrets_idp_model_dict = UpdateIdPRequestSecretsIdp.from_dict(
+            update_id_p_request_secrets_idp_model_json
+        ).__dict__
+        update_id_p_request_secrets_idp_model2 = UpdateIdPRequestSecretsIdp(
+            **update_id_p_request_secrets_idp_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert update_id_p_request_secrets_idp_model == update_id_p_request_secrets_idp_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        update_id_p_request_secrets_idp_model_json2 = update_id_p_request_secrets_idp_model.to_dict()
+        assert update_id_p_request_secrets_idp_model_json2 == update_id_p_request_secrets_idp_model_json
+
+
+class TestModel_UpdateIdPRequestSecretsIdpEncryptingItem:
+    """
+    Test Class for UpdateIdPRequestSecretsIdpEncryptingItem
+    """
+
+    def test_update_id_p_request_secrets_idp_encrypting_item_serialization(self):
+        """
+        Test serialization/deserialization for UpdateIdPRequestSecretsIdpEncryptingItem
+        """
+
+        # Construct a json representation of a UpdateIdPRequestSecretsIdpEncryptingItem model
+        update_id_p_request_secrets_idp_encrypting_item_model_json = {}
+        update_id_p_request_secrets_idp_encrypting_item_model_json['value'] = 'testString'
+        update_id_p_request_secrets_idp_encrypting_item_model_json['type'] = 'primary'
+
+        # Construct a model instance of UpdateIdPRequestSecretsIdpEncryptingItem by calling from_dict on the json representation
+        update_id_p_request_secrets_idp_encrypting_item_model = UpdateIdPRequestSecretsIdpEncryptingItem.from_dict(
+            update_id_p_request_secrets_idp_encrypting_item_model_json
+        )
+        assert update_id_p_request_secrets_idp_encrypting_item_model != False
+
+        # Construct a model instance of UpdateIdPRequestSecretsIdpEncryptingItem by calling from_dict on the json representation
+        update_id_p_request_secrets_idp_encrypting_item_model_dict = UpdateIdPRequestSecretsIdpEncryptingItem.from_dict(
+            update_id_p_request_secrets_idp_encrypting_item_model_json
+        ).__dict__
+        update_id_p_request_secrets_idp_encrypting_item_model2 = UpdateIdPRequestSecretsIdpEncryptingItem(
+            **update_id_p_request_secrets_idp_encrypting_item_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            update_id_p_request_secrets_idp_encrypting_item_model
+            == update_id_p_request_secrets_idp_encrypting_item_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        update_id_p_request_secrets_idp_encrypting_item_model_json2 = (
+            update_id_p_request_secrets_idp_encrypting_item_model.to_dict()
+        )
+        assert (
+            update_id_p_request_secrets_idp_encrypting_item_model_json2
+            == update_id_p_request_secrets_idp_encrypting_item_model_json
+        )
+
+
+class TestModel_UpdateIdPRequestSecretsIdpSigningItem:
+    """
+    Test Class for UpdateIdPRequestSecretsIdpSigningItem
+    """
+
+    def test_update_id_p_request_secrets_idp_signing_item_serialization(self):
+        """
+        Test serialization/deserialization for UpdateIdPRequestSecretsIdpSigningItem
+        """
+
+        # Construct a json representation of a UpdateIdPRequestSecretsIdpSigningItem model
+        update_id_p_request_secrets_idp_signing_item_model_json = {}
+        update_id_p_request_secrets_idp_signing_item_model_json['value'] = 'testString'
+        update_id_p_request_secrets_idp_signing_item_model_json['type'] = 'primary'
+
+        # Construct a model instance of UpdateIdPRequestSecretsIdpSigningItem by calling from_dict on the json representation
+        update_id_p_request_secrets_idp_signing_item_model = UpdateIdPRequestSecretsIdpSigningItem.from_dict(
+            update_id_p_request_secrets_idp_signing_item_model_json
+        )
+        assert update_id_p_request_secrets_idp_signing_item_model != False
+
+        # Construct a model instance of UpdateIdPRequestSecretsIdpSigningItem by calling from_dict on the json representation
+        update_id_p_request_secrets_idp_signing_item_model_dict = UpdateIdPRequestSecretsIdpSigningItem.from_dict(
+            update_id_p_request_secrets_idp_signing_item_model_json
+        ).__dict__
+        update_id_p_request_secrets_idp_signing_item_model2 = UpdateIdPRequestSecretsIdpSigningItem(
+            **update_id_p_request_secrets_idp_signing_item_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert update_id_p_request_secrets_idp_signing_item_model == update_id_p_request_secrets_idp_signing_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        update_id_p_request_secrets_idp_signing_item_model_json2 = (
+            update_id_p_request_secrets_idp_signing_item_model.to_dict()
+        )
+        assert (
+            update_id_p_request_secrets_idp_signing_item_model_json2
+            == update_id_p_request_secrets_idp_signing_item_model_json
+        )
+
+
+class TestModel_UpdateIdPRequestSecretsSp:
+    """
+    Test Class for UpdateIdPRequestSecretsSp
+    """
+
+    def test_update_id_p_request_secrets_sp_serialization(self):
+        """
+        Test serialization/deserialization for UpdateIdPRequestSecretsSp
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        update_id_p_request_secrets_sp_signing_item_model = {}  # UpdateIdPRequestSecretsSpSigningItem
+        update_id_p_request_secrets_sp_signing_item_model['certificate_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['key_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['key_encoding'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model['type'] = 'primary'
+
+        # Construct a json representation of a UpdateIdPRequestSecretsSp model
+        update_id_p_request_secrets_sp_model_json = {}
+        update_id_p_request_secrets_sp_model_json['signing'] = [update_id_p_request_secrets_sp_signing_item_model]
+
+        # Construct a model instance of UpdateIdPRequestSecretsSp by calling from_dict on the json representation
+        update_id_p_request_secrets_sp_model = UpdateIdPRequestSecretsSp.from_dict(
+            update_id_p_request_secrets_sp_model_json
+        )
+        assert update_id_p_request_secrets_sp_model != False
+
+        # Construct a model instance of UpdateIdPRequestSecretsSp by calling from_dict on the json representation
+        update_id_p_request_secrets_sp_model_dict = UpdateIdPRequestSecretsSp.from_dict(
+            update_id_p_request_secrets_sp_model_json
+        ).__dict__
+        update_id_p_request_secrets_sp_model2 = UpdateIdPRequestSecretsSp(**update_id_p_request_secrets_sp_model_dict)
+
+        # Verify the model instances are equivalent
+        assert update_id_p_request_secrets_sp_model == update_id_p_request_secrets_sp_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        update_id_p_request_secrets_sp_model_json2 = update_id_p_request_secrets_sp_model.to_dict()
+        assert update_id_p_request_secrets_sp_model_json2 == update_id_p_request_secrets_sp_model_json
+
+
+class TestModel_UpdateIdPRequestSecretsSpSigningItem:
+    """
+    Test Class for UpdateIdPRequestSecretsSpSigningItem
+    """
+
+    def test_update_id_p_request_secrets_sp_signing_item_serialization(self):
+        """
+        Test serialization/deserialization for UpdateIdPRequestSecretsSpSigningItem
+        """
+
+        # Construct a json representation of a UpdateIdPRequestSecretsSpSigningItem model
+        update_id_p_request_secrets_sp_signing_item_model_json = {}
+        update_id_p_request_secrets_sp_signing_item_model_json['certificate_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model_json['key_value'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model_json['key_encoding'] = 'testString'
+        update_id_p_request_secrets_sp_signing_item_model_json['type'] = 'primary'
+
+        # Construct a model instance of UpdateIdPRequestSecretsSpSigningItem by calling from_dict on the json representation
+        update_id_p_request_secrets_sp_signing_item_model = UpdateIdPRequestSecretsSpSigningItem.from_dict(
+            update_id_p_request_secrets_sp_signing_item_model_json
+        )
+        assert update_id_p_request_secrets_sp_signing_item_model != False
+
+        # Construct a model instance of UpdateIdPRequestSecretsSpSigningItem by calling from_dict on the json representation
+        update_id_p_request_secrets_sp_signing_item_model_dict = UpdateIdPRequestSecretsSpSigningItem.from_dict(
+            update_id_p_request_secrets_sp_signing_item_model_json
+        ).__dict__
+        update_id_p_request_secrets_sp_signing_item_model2 = UpdateIdPRequestSecretsSpSigningItem(
+            **update_id_p_request_secrets_sp_signing_item_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert update_id_p_request_secrets_sp_signing_item_model == update_id_p_request_secrets_sp_signing_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        update_id_p_request_secrets_sp_signing_item_model_json2 = (
+            update_id_p_request_secrets_sp_signing_item_model.to_dict()
+        )
+        assert (
+            update_id_p_request_secrets_sp_signing_item_model_json2
+            == update_id_p_request_secrets_sp_signing_item_model_json
+        )
 
 
 class TestModel_UserActivity:

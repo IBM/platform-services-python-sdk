@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.113.1-d76630af-20260320-135953
+# IBM OpenAPI SDK Code Generator Version: 3.113.0-3f9df07a-20260317-160650
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -25,7 +25,7 @@ API Version: 1.0.0
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List, Optional
+from typing import BinaryIO, Dict, List, Optional, TextIO, Union
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
@@ -5608,6 +5608,955 @@ class IamIdentityV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    #########################
+    # IDP Management
+    #########################
+
+    def list_idps(
+        self,
+        account_id: str,
+        *,
+        include_history: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List IdPs.
+
+        :param str account_id: Account id to query.
+        :param str include_history: (optional) include history of the idp.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ListIdpsResponse` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_idps',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/idps/'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_idp(
+        self,
+        account_id: str,
+        name: str,
+        type: str,
+        *,
+        active: Optional[bool] = None,
+        properties: Optional['CreateIdpRequestProperties'] = None,
+        secrets: Optional['CreateIdpRequestSecrets'] = None,
+        share_scope: Optional[List['ShareScope']] = None,
+        automation: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create IdP.
+
+        :param str account_id: Account where the IdP resides in.
+        :param str name: Speaking name of the Identity Provider.
+        :param str type: Type of the IDP.
+        :param bool active: (optional) Defines if the IDP is active (enabled) for
+               all accounts (including those who consumed the IdP). Default during
+               creation is true.
+        :param CreateIdpRequestProperties properties: (optional) Properties of the
+               IDP. Will be stored plain-text.
+        :param CreateIdpRequestSecrets secrets: (optional) Secrets of the IDP. Will
+               be stored encrypted.
+        :param List[ShareScope] share_scope: (optional) List of targets which can
+               consume the IdP.
+        :param str automation: (optional) boolean to flag if IdP is created via
+               automation.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Idp` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        if name is None:
+            raise ValueError('name must be provided')
+        if type is None:
+            raise ValueError('type must be provided')
+        if properties is not None:
+            properties = convert_model(properties)
+        if secrets is not None:
+            secrets = convert_model(secrets)
+        if share_scope is not None:
+            share_scope = [convert_model(x) for x in share_scope]
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_idp',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'automation': automation,
+        }
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'type': type,
+            'active': active,
+            'properties': properties,
+            'secrets': secrets,
+            'share_scope': share_scope,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/idps/'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_idp(
+        self,
+        idp_id: str,
+        *,
+        include_history: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get IdP.
+
+        :param str idp_id: ID of the IDP.
+        :param str include_history: (optional) include history of the idp.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Idp` object
+        """
+
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_idp',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['idp_id']
+        path_param_values = self.encode_path_vars(idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/idps/{idp_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_idp(
+        self,
+        idp_id: str,
+        if_match: str,
+        *,
+        ui_setup_completed: Optional[bool] = None,
+        name: Optional[str] = None,
+        active: Optional[bool] = None,
+        properties: Optional['UpdateIdPRequestProperties'] = None,
+        secrets: Optional['UpdateIdPRequestSecrets'] = None,
+        share_scope: Optional[List['ShareScope']] = None,
+        force_share_scope_update: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update IdP.
+
+        :param str idp_id: ID of the IDP.
+        :param str if_match: Version of the account IdP settings to be updated.
+               Specify the version that you retrieved as entity_tag (ETag header) when
+               reading the account. This value helps identifying parallel usage of this
+               API. Pass * to indicate to update any version available. This might result
+               in stale updates.
+        :param bool ui_setup_completed: (optional) Defines if the IDP setup was
+               finished in the UI.
+        :param str name: (optional) Speaking name of the Identity Provider.
+        :param bool active: (optional) Defines if the IDP is active (enabled) for
+               all accounts (including those who consumed the IdP).
+        :param UpdateIdPRequestProperties properties: (optional) Properties of the
+               IDP. Will be stored plain-text.
+        :param UpdateIdPRequestSecrets secrets: (optional) Secrets of the IDP. Will
+               be stored encrypted.
+        :param List[ShareScope] share_scope: (optional) List of targets which can
+               consume the IdP.
+        :param bool force_share_scope_update: (optional) Enforces sharescope update
+               even if active consumers are removed from the share scope.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Idp` object
+        """
+
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if properties is not None:
+            properties = convert_model(properties)
+        if secrets is not None:
+            secrets = convert_model(secrets)
+        if share_scope is not None:
+            share_scope = [convert_model(x) for x in share_scope]
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_idp',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'force_share_scope_update': force_share_scope_update,
+        }
+
+        data = {
+            'ui_setup_completed': ui_setup_completed,
+            'name': name,
+            'active': active,
+            'properties': properties,
+            'secrets': secrets,
+            'share_scope': share_scope,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['idp_id']
+        path_param_values = self.encode_path_vars(idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/idps/{idp_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_idp(
+        self,
+        idp_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete IdP.
+
+        :param str idp_id: ID of the IDP.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_idp',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['idp_id']
+        path_param_values = self.encode_path_vars(idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/idps/{idp_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_consumer_accounts(
+        self,
+        idp_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get consumers of IdP.
+
+        :param str idp_id: ID of the IDP.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ConsumersResponse` object
+        """
+
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_consumer_accounts',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['idp_id']
+        path_param_values = self.encode_path_vars(idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/idps/{idp_id}/consumers'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def export_saml_metadata(
+        self,
+        idp_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Export SAML IdP metadata.
+
+        Returns the Service Provider (SP) SAML metadata document for the specified
+        Identity Provider.
+        The generated metadata contains the SP entity ID, signing certificate, supported
+        NameID formats, and Assertion Consumer Service endpoints derived from the Identity
+        Provider configuration.
+
+        :param str idp_id: ID of the IDP.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `str` result
+        """
+
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='export_saml_metadata',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'text/xml'
+
+        path_param_keys = ['idp_id']
+        path_param_values = self.encode_path_vars(idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/idps/{idp_id}/saml/metadata'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def import_saml_idp_metadata(
+        self,
+        idp_id: str,
+        body: Union[BinaryIO, str, TextIO],
+        *,
+        parse_only: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Import SAML IdP metadata.
+
+        Import a metadata.xml originating from the federated SAML Identity Provider.
+
+        :param str idp_id: ID of the IDP.
+        :param BinaryIO body:
+        :param bool parse_only: (optional) If true, validates and parses the
+               metadata without updating the Identity Provider.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `SamlMetadataImportResponse` object
+        """
+
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        if body is None:
+            raise ValueError('body must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='import_saml_idp_metadata',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'parse_only': parse_only,
+        }
+
+        data = body
+        headers['content-type'] = 'text/xml'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['idp_id']
+        path_param_values = self.encode_path_vars(idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/idps/{idp_id}/saml/metadata'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_idp_test_result(
+        self,
+        idp_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get IdP test results.
+
+        Get IDP test record.
+
+        :param str idp_id: ID of the IDP.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TestResult` object
+        """
+
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_idp_test_result',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['idp_id']
+        path_param_values = self.encode_path_vars(idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/idps/{idp_id}/test'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def test_idp(
+        self,
+        idp_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Trigger IdP configuration test.
+
+        :param str idp_id: ID of the IDP.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TestTriggerResponse` object
+        """
+
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='test_idp',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['idp_id']
+        path_param_values = self.encode_path_vars(idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/idps/{idp_id}/test'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Account Settings for IdP
+    #########################
+
+    def get_login_settings(
+        self,
+        account_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get account login settings.
+
+        :param str account_id: Account which is bound to the alias.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountLoginSettings` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_login_settings',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/loginsettings/{account_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_login_settings(
+        self,
+        account_id: str,
+        *,
+        alias: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update account login settings.
+
+        :param str account_id: Account which is bound to the alias.
+        :param str alias: (optional) Alias of the account.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountLoginSettings` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_login_settings',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'alias': alias,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/loginsettings/{account_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_id_p_settings(
+        self,
+        account_id: str,
+        type: str,
+        *,
+        include_idp_metadata: Optional[str] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List IdP Settings.
+
+        :param str account_id: Account which is bound to the IDP.
+        :param str type: Type of IDP.
+        :param str include_idp_metadata: (optional) Flag if meta-information about
+               account and idp should be included.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ListIdPSettingsResponse` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not type:
+            raise ValueError('type must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_id_p_settings',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'type': type,
+            'include_idp_metadata': include_idp_metadata,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/loginsettings/{account_id}/idps'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_id_p_setting(
+        self,
+        account_id: str,
+        idp_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get IdP setting.
+
+        :param str account_id: Account which is bound to the IDP.
+        :param str idp_id: Identity provider ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountIdpSettings` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_id_p_setting',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id', 'idp_id']
+        path_param_values = self.encode_path_vars(account_id, idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/loginsettings/{account_id}/idps/{idp_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def add_id_p_setting(
+        self,
+        account_id: str,
+        idp_id: str,
+        cloud_user_strategy: str,
+        active: bool,
+        ui_default: bool,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Add IdP Setting.
+
+        :param str account_id: Account which is bound to the IDP.
+        :param str idp_id: Identity provider ID.
+        :param str cloud_user_strategy: Strategy how Cloud User representives for
+               the IdP users are handled.
+        :param bool active: Specifies if the IdP is enabled for usage in the given
+               account context.
+        :param bool ui_default: Specifies if the IdP is used as default in the
+               given account context.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountIdpSettings` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        if cloud_user_strategy is None:
+            raise ValueError('cloud_user_strategy must be provided')
+        if active is None:
+            raise ValueError('active must be provided')
+        if ui_default is None:
+            raise ValueError('ui_default must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='add_id_p_setting',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'cloud_user_strategy': cloud_user_strategy,
+            'active': active,
+            'ui_default': ui_default,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id', 'idp_id']
+        path_param_values = self.encode_path_vars(account_id, idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/loginsettings/{account_id}/idps/{idp_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_id_p_setting(
+        self,
+        account_id: str,
+        idp_id: str,
+        *,
+        cloud_user_strategy: Optional[str] = None,
+        active: Optional[bool] = None,
+        ui_default: Optional[bool] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update IdP Setting.
+
+        :param str account_id: Account which is bound to the IDP.
+        :param str idp_id: Identity provider ID.
+        :param str cloud_user_strategy: (optional) Strategy how Cloud User
+               representives for the IdP users are handled.
+        :param bool active: (optional) Specifies if the IdP is enabled for usage in
+               the given account context.
+        :param bool ui_default: (optional) Specifies if the IdP is used as default
+               in the given account context.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountIdpSettings` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_id_p_setting',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'cloud_user_strategy': cloud_user_strategy,
+            'active': active,
+            'ui_default': ui_default,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id', 'idp_id']
+        path_param_values = self.encode_path_vars(account_id, idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/loginsettings/{account_id}/idps/{idp_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def remove_id_p_setting(
+        self,
+        account_id: str,
+        idp_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Remove IdP Setting.
+
+        :param str account_id: Account which is bound to the IDP.
+        :param str idp_id: Identity provider ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not idp_id:
+            raise ValueError('idp_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='remove_id_p_setting',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['account_id', 'idp_id']
+        path_param_values = self.encode_path_vars(account_id, idp_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/loginsettings/{account_id}/idps/{idp_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
 
 class ListServiceIdsEnums:
     """
@@ -5872,6 +6821,20 @@ class ListAccountSettingsAssignmentsEnums:
         DESC = 'desc'
 
 
+class ListIdPSettingsEnums:
+    """
+    Enums for list_id_p_settings parameters.
+    """
+
+    class Type(str, Enum):
+        """
+        Type of IDP.
+        """
+
+        CONSUMABLE = 'consumable'
+        CONSUMED = 'consumed'
+
+
 ##############################################################################
 # Models
 ##############################################################################
@@ -6037,6 +7000,187 @@ class AccountBasedMfaEnrollment:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'AccountBasedMfaEnrollment') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class AccountIdpSettings:
+    """
+    AccountIdpSettings.
+
+    :param str idp_id: (optional)
+    :param str owner_account: (optional)
+    :param str owner_account_name: (optional)
+    :param str idp_name: (optional)
+    :param str idp_type: (optional)
+    :param str cloud_user_strategy: (optional)
+    :param bool active: (optional)
+    :param bool ui_default: (optional)
+    """
+
+    def __init__(
+        self,
+        *,
+        idp_id: Optional[str] = None,
+        owner_account: Optional[str] = None,
+        owner_account_name: Optional[str] = None,
+        idp_name: Optional[str] = None,
+        idp_type: Optional[str] = None,
+        cloud_user_strategy: Optional[str] = None,
+        active: Optional[bool] = None,
+        ui_default: Optional[bool] = None,
+    ) -> None:
+        """
+        Initialize a AccountIdpSettings object.
+
+        :param str idp_id: (optional)
+        :param str owner_account: (optional)
+        :param str owner_account_name: (optional)
+        :param str idp_name: (optional)
+        :param str idp_type: (optional)
+        :param str cloud_user_strategy: (optional)
+        :param bool active: (optional)
+        :param bool ui_default: (optional)
+        """
+        self.idp_id = idp_id
+        self.owner_account = owner_account
+        self.owner_account_name = owner_account_name
+        self.idp_name = idp_name
+        self.idp_type = idp_type
+        self.cloud_user_strategy = cloud_user_strategy
+        self.active = active
+        self.ui_default = ui_default
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountIdpSettings':
+        """Initialize a AccountIdpSettings object from a json dictionary."""
+        args = {}
+        if (idp_id := _dict.get('idp_id')) is not None:
+            args['idp_id'] = idp_id
+        if (owner_account := _dict.get('owner_account')) is not None:
+            args['owner_account'] = owner_account
+        if (owner_account_name := _dict.get('owner_account_name')) is not None:
+            args['owner_account_name'] = owner_account_name
+        if (idp_name := _dict.get('idp_name')) is not None:
+            args['idp_name'] = idp_name
+        if (idp_type := _dict.get('idp_type')) is not None:
+            args['idp_type'] = idp_type
+        if (cloud_user_strategy := _dict.get('cloud_user_strategy')) is not None:
+            args['cloud_user_strategy'] = cloud_user_strategy
+        if (active := _dict.get('active')) is not None:
+            args['active'] = active
+        if (ui_default := _dict.get('ui_default')) is not None:
+            args['ui_default'] = ui_default
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountIdpSettings object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'idp_id') and self.idp_id is not None:
+            _dict['idp_id'] = self.idp_id
+        if hasattr(self, 'owner_account') and self.owner_account is not None:
+            _dict['owner_account'] = self.owner_account
+        if hasattr(self, 'owner_account_name') and self.owner_account_name is not None:
+            _dict['owner_account_name'] = self.owner_account_name
+        if hasattr(self, 'idp_name') and self.idp_name is not None:
+            _dict['idp_name'] = self.idp_name
+        if hasattr(self, 'idp_type') and self.idp_type is not None:
+            _dict['idp_type'] = self.idp_type
+        if hasattr(self, 'cloud_user_strategy') and self.cloud_user_strategy is not None:
+            _dict['cloud_user_strategy'] = self.cloud_user_strategy
+        if hasattr(self, 'active') and self.active is not None:
+            _dict['active'] = self.active
+        if hasattr(self, 'ui_default') and self.ui_default is not None:
+            _dict['ui_default'] = self.ui_default
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountIdpSettings object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountIdpSettings') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountIdpSettings') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class CloudUserStrategyEnum(str, Enum):
+        """
+        cloud_user_strategy.
+        """
+
+        STATIC = 'STATIC'
+        DYNAMIC = 'DYNAMIC'
+        NEVER = 'NEVER'
+
+
+class AccountLoginSettings:
+    """
+    AccountLoginSettings.
+
+    :param str alias: (optional)
+    """
+
+    def __init__(
+        self,
+        *,
+        alias: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a AccountLoginSettings object.
+
+        :param str alias: (optional)
+        """
+        self.alias = alias
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountLoginSettings':
+        """Initialize a AccountLoginSettings object from a json dictionary."""
+        args = {}
+        if (alias := _dict.get('alias')) is not None:
+            args['alias'] = alias
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountLoginSettings object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'alias') and self.alias is not None:
+            _dict['alias'] = self.alias
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountLoginSettings object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountLoginSettings') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountLoginSettings') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -8900,6 +10044,995 @@ class AssignedTemplatesAccountSettingsRestrictUserDomains:
         return not self == other
 
 
+class ConsumersResponse:
+    """
+    ConsumersResponse.
+
+    :param str idp_id: (optional)
+    :param List[ConsumersResponseConsumersItem] consumers: (optional)
+    """
+
+    def __init__(
+        self,
+        *,
+        idp_id: Optional[str] = None,
+        consumers: Optional[List['ConsumersResponseConsumersItem']] = None,
+    ) -> None:
+        """
+        Initialize a ConsumersResponse object.
+
+        :param str idp_id: (optional)
+        :param List[ConsumersResponseConsumersItem] consumers: (optional)
+        """
+        self.idp_id = idp_id
+        self.consumers = consumers
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ConsumersResponse':
+        """Initialize a ConsumersResponse object from a json dictionary."""
+        args = {}
+        if (idp_id := _dict.get('idp_id')) is not None:
+            args['idp_id'] = idp_id
+        if (consumers := _dict.get('consumers')) is not None:
+            args['consumers'] = [ConsumersResponseConsumersItem.from_dict(v) for v in consumers]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ConsumersResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'idp_id') and self.idp_id is not None:
+            _dict['idp_id'] = self.idp_id
+        if hasattr(self, 'consumers') and self.consumers is not None:
+            consumers_list = []
+            for v in self.consumers:
+                if isinstance(v, dict):
+                    consumers_list.append(v)
+                else:
+                    consumers_list.append(v.to_dict())
+            _dict['consumers'] = consumers_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ConsumersResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ConsumersResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ConsumersResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ConsumersResponseConsumersItem:
+    """
+    ConsumersResponseConsumersItem.
+
+    :param str account_id: (optional)
+    :param List[ShareScope] share_scope: (optional)
+    """
+
+    def __init__(
+        self,
+        *,
+        account_id: Optional[str] = None,
+        share_scope: Optional[List['ShareScope']] = None,
+    ) -> None:
+        """
+        Initialize a ConsumersResponseConsumersItem object.
+
+        :param str account_id: (optional)
+        :param List[ShareScope] share_scope: (optional)
+        """
+        self.account_id = account_id
+        self.share_scope = share_scope
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ConsumersResponseConsumersItem':
+        """Initialize a ConsumersResponseConsumersItem object from a json dictionary."""
+        args = {}
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (share_scope := _dict.get('share_scope')) is not None:
+            args['share_scope'] = [ShareScope.from_dict(v) for v in share_scope]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ConsumersResponseConsumersItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'share_scope') and self.share_scope is not None:
+            share_scope_list = []
+            for v in self.share_scope:
+                if isinstance(v, dict):
+                    share_scope_list.append(v)
+                else:
+                    share_scope_list.append(v.to_dict())
+            _dict['share_scope'] = share_scope_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ConsumersResponseConsumersItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ConsumersResponseConsumersItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ConsumersResponseConsumersItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class CreateIdpRequestProperties:
+    """
+    Properties of the IDP. Will be stored plain-text.
+
+    :param CreateIdpRequestPropertiesIdp idp: (optional) Identity Provider
+          configuration.
+    :param CreateIdpRequestPropertiesSp sp: (optional) Service Provider
+          configuration.
+    """
+
+    def __init__(
+        self,
+        *,
+        idp: Optional['CreateIdpRequestPropertiesIdp'] = None,
+        sp: Optional['CreateIdpRequestPropertiesSp'] = None,
+    ) -> None:
+        """
+        Initialize a CreateIdpRequestProperties object.
+
+        :param CreateIdpRequestPropertiesIdp idp: (optional) Identity Provider
+               configuration.
+        :param CreateIdpRequestPropertiesSp sp: (optional) Service Provider
+               configuration.
+        """
+        self.idp = idp
+        self.sp = sp
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateIdpRequestProperties':
+        """Initialize a CreateIdpRequestProperties object from a json dictionary."""
+        args = {}
+        if (idp := _dict.get('idp')) is not None:
+            args['idp'] = CreateIdpRequestPropertiesIdp.from_dict(idp)
+        if (sp := _dict.get('sp')) is not None:
+            args['sp'] = CreateIdpRequestPropertiesSp.from_dict(sp)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateIdpRequestProperties object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'idp') and self.idp is not None:
+            if isinstance(self.idp, dict):
+                _dict['idp'] = self.idp
+            else:
+                _dict['idp'] = self.idp.to_dict()
+        if hasattr(self, 'sp') and self.sp is not None:
+            if isinstance(self.sp, dict):
+                _dict['sp'] = self.sp
+            else:
+                _dict['sp'] = self.sp.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateIdpRequestProperties object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateIdpRequestProperties') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateIdpRequestProperties') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class CreateIdpRequestPropertiesIdp:
+    """
+    Identity Provider configuration.
+
+    :param bool xml_import: (optional) Flag indicating if IdP should be imported
+          from metadata.xml.
+    :param str entity_id: (optional) SAML IDP entity ID (required when not using
+          xml_import).
+    :param str redirect_binding_url: (optional) Redirect binding URL (required when
+          not using xml_import).
+    :param bool want_request_signed: (optional) Indicates if IDP wants requests to
+          be signed.
+    :param str logout_url: (optional) SAML IDP logout URL (optional).
+    """
+
+    def __init__(
+        self,
+        *,
+        xml_import: Optional[bool] = None,
+        entity_id: Optional[str] = None,
+        redirect_binding_url: Optional[str] = None,
+        want_request_signed: Optional[bool] = None,
+        logout_url: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a CreateIdpRequestPropertiesIdp object.
+
+        :param bool xml_import: (optional) Flag indicating if IdP should be
+               imported from metadata.xml.
+        :param str entity_id: (optional) SAML IDP entity ID (required when not
+               using xml_import).
+        :param str redirect_binding_url: (optional) Redirect binding URL (required
+               when not using xml_import).
+        :param bool want_request_signed: (optional) Indicates if IDP wants requests
+               to be signed.
+        :param str logout_url: (optional) SAML IDP logout URL (optional).
+        """
+        self.xml_import = xml_import
+        self.entity_id = entity_id
+        self.redirect_binding_url = redirect_binding_url
+        self.want_request_signed = want_request_signed
+        self.logout_url = logout_url
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateIdpRequestPropertiesIdp':
+        """Initialize a CreateIdpRequestPropertiesIdp object from a json dictionary."""
+        args = {}
+        if (xml_import := _dict.get('xml_import')) is not None:
+            args['xml_import'] = xml_import
+        if (entity_id := _dict.get('entity_id')) is not None:
+            args['entity_id'] = entity_id
+        if (redirect_binding_url := _dict.get('redirect_binding_url')) is not None:
+            args['redirect_binding_url'] = redirect_binding_url
+        if (want_request_signed := _dict.get('want_request_signed')) is not None:
+            args['want_request_signed'] = want_request_signed
+        if (logout_url := _dict.get('logout_url')) is not None:
+            args['logout_url'] = logout_url
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateIdpRequestPropertiesIdp object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'xml_import') and self.xml_import is not None:
+            _dict['xml_import'] = self.xml_import
+        if hasattr(self, 'entity_id') and self.entity_id is not None:
+            _dict['entity_id'] = self.entity_id
+        if hasattr(self, 'redirect_binding_url') and self.redirect_binding_url is not None:
+            _dict['redirect_binding_url'] = self.redirect_binding_url
+        if hasattr(self, 'want_request_signed') and self.want_request_signed is not None:
+            _dict['want_request_signed'] = self.want_request_signed
+        if hasattr(self, 'logout_url') and self.logout_url is not None:
+            _dict['logout_url'] = self.logout_url
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateIdpRequestPropertiesIdp object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateIdpRequestPropertiesIdp') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateIdpRequestPropertiesIdp') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class CreateIdpRequestPropertiesSp:
+    """
+    Service Provider configuration.
+
+    :param bool want_assertion_signed: (optional) Indicates if SP wants assertions
+          to be signed.
+    :param bool want_response_signed: (optional) Indicates if SP wants responses to
+          be signed.
+    :param bool encrypt_response: (optional) Indicates if responses should be
+          encrypted.
+    :param bool idp_initiated_login_enabled: (optional) Enables IDP-initiated login.
+    :param bool logout_url_enabled_when_available: (optional) Enables logout URL
+          when available.
+    :param List[str] idp_initiated_urls: (optional) URLs for IDP-initiated login
+          (only when IdP initiated login is used).
+    :param CreateIdpRequestPropertiesSpAuthnContext authn_context: (optional)
+          Authentication context configuration (can be left empty to apply default).
+    :param dict claims: (optional) Custom mapping between SAML assertions and IAM
+          claims (can be left empty when no custom mapping is needed).
+    """
+
+    def __init__(
+        self,
+        *,
+        want_assertion_signed: Optional[bool] = None,
+        want_response_signed: Optional[bool] = None,
+        encrypt_response: Optional[bool] = None,
+        idp_initiated_login_enabled: Optional[bool] = None,
+        logout_url_enabled_when_available: Optional[bool] = None,
+        idp_initiated_urls: Optional[List[str]] = None,
+        authn_context: Optional['CreateIdpRequestPropertiesSpAuthnContext'] = None,
+        claims: Optional[dict] = None,
+    ) -> None:
+        """
+        Initialize a CreateIdpRequestPropertiesSp object.
+
+        :param bool want_assertion_signed: (optional) Indicates if SP wants
+               assertions to be signed.
+        :param bool want_response_signed: (optional) Indicates if SP wants
+               responses to be signed.
+        :param bool encrypt_response: (optional) Indicates if responses should be
+               encrypted.
+        :param bool idp_initiated_login_enabled: (optional) Enables IDP-initiated
+               login.
+        :param bool logout_url_enabled_when_available: (optional) Enables logout
+               URL when available.
+        :param List[str] idp_initiated_urls: (optional) URLs for IDP-initiated
+               login (only when IdP initiated login is used).
+        :param CreateIdpRequestPropertiesSpAuthnContext authn_context: (optional)
+               Authentication context configuration (can be left empty to apply default).
+        :param dict claims: (optional) Custom mapping between SAML assertions and
+               IAM claims (can be left empty when no custom mapping is needed).
+        """
+        self.want_assertion_signed = want_assertion_signed
+        self.want_response_signed = want_response_signed
+        self.encrypt_response = encrypt_response
+        self.idp_initiated_login_enabled = idp_initiated_login_enabled
+        self.logout_url_enabled_when_available = logout_url_enabled_when_available
+        self.idp_initiated_urls = idp_initiated_urls
+        self.authn_context = authn_context
+        self.claims = claims
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateIdpRequestPropertiesSp':
+        """Initialize a CreateIdpRequestPropertiesSp object from a json dictionary."""
+        args = {}
+        if (want_assertion_signed := _dict.get('want_assertion_signed')) is not None:
+            args['want_assertion_signed'] = want_assertion_signed
+        if (want_response_signed := _dict.get('want_response_signed')) is not None:
+            args['want_response_signed'] = want_response_signed
+        if (encrypt_response := _dict.get('encrypt_response')) is not None:
+            args['encrypt_response'] = encrypt_response
+        if (idp_initiated_login_enabled := _dict.get('idp_initiated_login_enabled')) is not None:
+            args['idp_initiated_login_enabled'] = idp_initiated_login_enabled
+        if (logout_url_enabled_when_available := _dict.get('logout_url_enabled_when_available')) is not None:
+            args['logout_url_enabled_when_available'] = logout_url_enabled_when_available
+        if (idp_initiated_urls := _dict.get('idp_initiated_urls')) is not None:
+            args['idp_initiated_urls'] = idp_initiated_urls
+        if (authn_context := _dict.get('authn_context')) is not None:
+            args['authn_context'] = CreateIdpRequestPropertiesSpAuthnContext.from_dict(authn_context)
+        if (claims := _dict.get('claims')) is not None:
+            args['claims'] = claims
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateIdpRequestPropertiesSp object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'want_assertion_signed') and self.want_assertion_signed is not None:
+            _dict['want_assertion_signed'] = self.want_assertion_signed
+        if hasattr(self, 'want_response_signed') and self.want_response_signed is not None:
+            _dict['want_response_signed'] = self.want_response_signed
+        if hasattr(self, 'encrypt_response') and self.encrypt_response is not None:
+            _dict['encrypt_response'] = self.encrypt_response
+        if hasattr(self, 'idp_initiated_login_enabled') and self.idp_initiated_login_enabled is not None:
+            _dict['idp_initiated_login_enabled'] = self.idp_initiated_login_enabled
+        if hasattr(self, 'logout_url_enabled_when_available') and self.logout_url_enabled_when_available is not None:
+            _dict['logout_url_enabled_when_available'] = self.logout_url_enabled_when_available
+        if hasattr(self, 'idp_initiated_urls') and self.idp_initiated_urls is not None:
+            _dict['idp_initiated_urls'] = self.idp_initiated_urls
+        if hasattr(self, 'authn_context') and self.authn_context is not None:
+            if isinstance(self.authn_context, dict):
+                _dict['authn_context'] = self.authn_context
+            else:
+                _dict['authn_context'] = self.authn_context.to_dict()
+        if hasattr(self, 'claims') and self.claims is not None:
+            _dict['claims'] = self.claims
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateIdpRequestPropertiesSp object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateIdpRequestPropertiesSp') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateIdpRequestPropertiesSp') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class CreateIdpRequestPropertiesSpAuthnContext:
+    """
+    Authentication context configuration (can be left empty to apply default).
+
+    :param List[str] request: (optional) Requested authentication context classes.
+    :param List[str] accept: (optional) Accepted authentication context classes.
+    """
+
+    def __init__(
+        self,
+        *,
+        request: Optional[List[str]] = None,
+        accept: Optional[List[str]] = None,
+    ) -> None:
+        """
+        Initialize a CreateIdpRequestPropertiesSpAuthnContext object.
+
+        :param List[str] request: (optional) Requested authentication context
+               classes.
+        :param List[str] accept: (optional) Accepted authentication context
+               classes.
+        """
+        self.request = request
+        self.accept = accept
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateIdpRequestPropertiesSpAuthnContext':
+        """Initialize a CreateIdpRequestPropertiesSpAuthnContext object from a json dictionary."""
+        args = {}
+        if (request := _dict.get('request')) is not None:
+            args['request'] = request
+        if (accept := _dict.get('accept')) is not None:
+            args['accept'] = accept
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateIdpRequestPropertiesSpAuthnContext object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'request') and self.request is not None:
+            _dict['request'] = self.request
+        if hasattr(self, 'accept') and self.accept is not None:
+            _dict['accept'] = self.accept
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateIdpRequestPropertiesSpAuthnContext object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateIdpRequestPropertiesSpAuthnContext') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateIdpRequestPropertiesSpAuthnContext') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class CreateIdpRequestSecrets:
+    """
+    Secrets of the IDP. Will be stored encrypted.
+
+    :param CreateIdpRequestSecretsIdp idp: (optional) Identity Provider secrets.
+    :param CreateIdpRequestSecretsSp sp: (optional) Service Provider secrets (can be
+          left empty to auto-generate SP certs).
+    """
+
+    def __init__(
+        self,
+        *,
+        idp: Optional['CreateIdpRequestSecretsIdp'] = None,
+        sp: Optional['CreateIdpRequestSecretsSp'] = None,
+    ) -> None:
+        """
+        Initialize a CreateIdpRequestSecrets object.
+
+        :param CreateIdpRequestSecretsIdp idp: (optional) Identity Provider
+               secrets.
+        :param CreateIdpRequestSecretsSp sp: (optional) Service Provider secrets
+               (can be left empty to auto-generate SP certs).
+        """
+        self.idp = idp
+        self.sp = sp
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateIdpRequestSecrets':
+        """Initialize a CreateIdpRequestSecrets object from a json dictionary."""
+        args = {}
+        if (idp := _dict.get('idp')) is not None:
+            args['idp'] = CreateIdpRequestSecretsIdp.from_dict(idp)
+        if (sp := _dict.get('sp')) is not None:
+            args['sp'] = CreateIdpRequestSecretsSp.from_dict(sp)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateIdpRequestSecrets object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'idp') and self.idp is not None:
+            if isinstance(self.idp, dict):
+                _dict['idp'] = self.idp
+            else:
+                _dict['idp'] = self.idp.to_dict()
+        if hasattr(self, 'sp') and self.sp is not None:
+            if isinstance(self.sp, dict):
+                _dict['sp'] = self.sp
+            else:
+                _dict['sp'] = self.sp.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateIdpRequestSecrets object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateIdpRequestSecrets') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateIdpRequestSecrets') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class CreateIdpRequestSecretsIdp:
+    """
+    Identity Provider secrets.
+
+    :param bool xml_import: (optional) Flag indicating if secrets should be imported
+          from metadata.xml.
+    :param List[CreateIdpRequestSecretsIdpSigningItem] signing: (optional) IDP
+          signing certificates (required when not using xml_import).
+    :param List[CreateIdpRequestSecretsIdpEncryptingItem] encrypting: (optional) IDP
+          encrypting certificates (optional).
+    """
+
+    def __init__(
+        self,
+        *,
+        xml_import: Optional[bool] = None,
+        signing: Optional[List['CreateIdpRequestSecretsIdpSigningItem']] = None,
+        encrypting: Optional[List['CreateIdpRequestSecretsIdpEncryptingItem']] = None,
+    ) -> None:
+        """
+        Initialize a CreateIdpRequestSecretsIdp object.
+
+        :param bool xml_import: (optional) Flag indicating if secrets should be
+               imported from metadata.xml.
+        :param List[CreateIdpRequestSecretsIdpSigningItem] signing: (optional) IDP
+               signing certificates (required when not using xml_import).
+        :param List[CreateIdpRequestSecretsIdpEncryptingItem] encrypting:
+               (optional) IDP encrypting certificates (optional).
+        """
+        self.xml_import = xml_import
+        self.signing = signing
+        self.encrypting = encrypting
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateIdpRequestSecretsIdp':
+        """Initialize a CreateIdpRequestSecretsIdp object from a json dictionary."""
+        args = {}
+        if (xml_import := _dict.get('xml_import')) is not None:
+            args['xml_import'] = xml_import
+        if (signing := _dict.get('signing')) is not None:
+            args['signing'] = [CreateIdpRequestSecretsIdpSigningItem.from_dict(v) for v in signing]
+        if (encrypting := _dict.get('encrypting')) is not None:
+            args['encrypting'] = [CreateIdpRequestSecretsIdpEncryptingItem.from_dict(v) for v in encrypting]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateIdpRequestSecretsIdp object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'xml_import') and self.xml_import is not None:
+            _dict['xml_import'] = self.xml_import
+        if hasattr(self, 'signing') and self.signing is not None:
+            signing_list = []
+            for v in self.signing:
+                if isinstance(v, dict):
+                    signing_list.append(v)
+                else:
+                    signing_list.append(v.to_dict())
+            _dict['signing'] = signing_list
+        if hasattr(self, 'encrypting') and self.encrypting is not None:
+            encrypting_list = []
+            for v in self.encrypting:
+                if isinstance(v, dict):
+                    encrypting_list.append(v)
+                else:
+                    encrypting_list.append(v.to_dict())
+            _dict['encrypting'] = encrypting_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateIdpRequestSecretsIdp object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateIdpRequestSecretsIdp') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateIdpRequestSecretsIdp') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class CreateIdpRequestSecretsIdpEncryptingItem:
+    """
+    CreateIdpRequestSecretsIdpEncryptingItem.
+
+    :param str value: (optional) Certificate value.
+    :param str type: (optional) Certificate type.
+    """
+
+    def __init__(
+        self,
+        *,
+        value: Optional[str] = None,
+        type: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a CreateIdpRequestSecretsIdpEncryptingItem object.
+
+        :param str value: (optional) Certificate value.
+        :param str type: (optional) Certificate type.
+        """
+        self.value = value
+        self.type = type
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateIdpRequestSecretsIdpEncryptingItem':
+        """Initialize a CreateIdpRequestSecretsIdpEncryptingItem object from a json dictionary."""
+        args = {}
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateIdpRequestSecretsIdpEncryptingItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateIdpRequestSecretsIdpEncryptingItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateIdpRequestSecretsIdpEncryptingItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateIdpRequestSecretsIdpEncryptingItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        Certificate type.
+        """
+
+        PRIMARY = 'primary'
+        SECONDARY = 'secondary'
+
+
+class CreateIdpRequestSecretsIdpSigningItem:
+    """
+    CreateIdpRequestSecretsIdpSigningItem.
+
+    :param str value: (optional) Certificate value in PEM format.
+    :param str type: (optional) Certificate type.
+    """
+
+    def __init__(
+        self,
+        *,
+        value: Optional[str] = None,
+        type: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a CreateIdpRequestSecretsIdpSigningItem object.
+
+        :param str value: (optional) Certificate value in PEM format.
+        :param str type: (optional) Certificate type.
+        """
+        self.value = value
+        self.type = type
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateIdpRequestSecretsIdpSigningItem':
+        """Initialize a CreateIdpRequestSecretsIdpSigningItem object from a json dictionary."""
+        args = {}
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateIdpRequestSecretsIdpSigningItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateIdpRequestSecretsIdpSigningItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateIdpRequestSecretsIdpSigningItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateIdpRequestSecretsIdpSigningItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        Certificate type.
+        """
+
+        PRIMARY = 'primary'
+        SECONDARY = 'secondary'
+
+
+class CreateIdpRequestSecretsSp:
+    """
+    Service Provider secrets (can be left empty to auto-generate SP certs).
+
+    :param List[CreateIdpRequestSecretsSpSigningItem] signing: (optional) SP signing
+          certificates.
+    """
+
+    def __init__(
+        self,
+        *,
+        signing: Optional[List['CreateIdpRequestSecretsSpSigningItem']] = None,
+    ) -> None:
+        """
+        Initialize a CreateIdpRequestSecretsSp object.
+
+        :param List[CreateIdpRequestSecretsSpSigningItem] signing: (optional) SP
+               signing certificates.
+        """
+        self.signing = signing
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateIdpRequestSecretsSp':
+        """Initialize a CreateIdpRequestSecretsSp object from a json dictionary."""
+        args = {}
+        if (signing := _dict.get('signing')) is not None:
+            args['signing'] = [CreateIdpRequestSecretsSpSigningItem.from_dict(v) for v in signing]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateIdpRequestSecretsSp object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'signing') and self.signing is not None:
+            signing_list = []
+            for v in self.signing:
+                if isinstance(v, dict):
+                    signing_list.append(v)
+                else:
+                    signing_list.append(v.to_dict())
+            _dict['signing'] = signing_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateIdpRequestSecretsSp object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateIdpRequestSecretsSp') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateIdpRequestSecretsSp') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class CreateIdpRequestSecretsSpSigningItem:
+    """
+    CreateIdpRequestSecretsSpSigningItem.
+
+    :param str certificate_value: (optional) Certificate value in PEM format.
+    :param str key_value: (optional) Private key value.
+    :param str key_encoding: (optional) Key encoding format (e.g., pkcs8).
+    :param str type: (optional) Certificate type.
+    """
+
+    def __init__(
+        self,
+        *,
+        certificate_value: Optional[str] = None,
+        key_value: Optional[str] = None,
+        key_encoding: Optional[str] = None,
+        type: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a CreateIdpRequestSecretsSpSigningItem object.
+
+        :param str certificate_value: (optional) Certificate value in PEM format.
+        :param str key_value: (optional) Private key value.
+        :param str key_encoding: (optional) Key encoding format (e.g., pkcs8).
+        :param str type: (optional) Certificate type.
+        """
+        self.certificate_value = certificate_value
+        self.key_value = key_value
+        self.key_encoding = key_encoding
+        self.type = type
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateIdpRequestSecretsSpSigningItem':
+        """Initialize a CreateIdpRequestSecretsSpSigningItem object from a json dictionary."""
+        args = {}
+        if (certificate_value := _dict.get('certificate_value')) is not None:
+            args['certificate_value'] = certificate_value
+        if (key_value := _dict.get('key_value')) is not None:
+            args['key_value'] = key_value
+        if (key_encoding := _dict.get('key_encoding')) is not None:
+            args['key_encoding'] = key_encoding
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateIdpRequestSecretsSpSigningItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'certificate_value') and self.certificate_value is not None:
+            _dict['certificate_value'] = self.certificate_value
+        if hasattr(self, 'key_value') and self.key_value is not None:
+            _dict['key_value'] = self.key_value
+        if hasattr(self, 'key_encoding') and self.key_encoding is not None:
+            _dict['key_encoding'] = self.key_encoding
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateIdpRequestSecretsSpSigningItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateIdpRequestSecretsSpSigningItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateIdpRequestSecretsSpSigningItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        Certificate type.
+        """
+
+        PRIMARY = 'primary'
+        SECONDARY = 'secondary'
+
+
 class CreateProfileLinkRequestLink:
     """
     Link details.
@@ -10750,6 +12883,150 @@ class IdentityPreferencesResponse:
         return not self == other
 
 
+class Idp:
+    """
+    Idp.
+
+    :param str idp_id: (optional)
+    :param str entity_tag: (optional)
+    :param str account_id: (optional)
+    :param str name: (optional)
+    :param str type: (optional)
+    :param dict properties: (optional)
+    :param dict secrets: (optional)
+    :param List[ShareScope] share_scope: (optional)
+    :param bool active: (optional)
+    :param datetime created_at: (optional)
+    :param datetime modified_at: (optional)
+    """
+
+    def __init__(
+        self,
+        *,
+        idp_id: Optional[str] = None,
+        entity_tag: Optional[str] = None,
+        account_id: Optional[str] = None,
+        name: Optional[str] = None,
+        type: Optional[str] = None,
+        properties: Optional[dict] = None,
+        secrets: Optional[dict] = None,
+        share_scope: Optional[List['ShareScope']] = None,
+        active: Optional[bool] = None,
+        created_at: Optional[datetime] = None,
+        modified_at: Optional[datetime] = None,
+    ) -> None:
+        """
+        Initialize a Idp object.
+
+        :param str idp_id: (optional)
+        :param str entity_tag: (optional)
+        :param str account_id: (optional)
+        :param str name: (optional)
+        :param str type: (optional)
+        :param dict properties: (optional)
+        :param dict secrets: (optional)
+        :param List[ShareScope] share_scope: (optional)
+        :param bool active: (optional)
+        :param datetime created_at: (optional)
+        :param datetime modified_at: (optional)
+        """
+        self.idp_id = idp_id
+        self.entity_tag = entity_tag
+        self.account_id = account_id
+        self.name = name
+        self.type = type
+        self.properties = properties
+        self.secrets = secrets
+        self.share_scope = share_scope
+        self.active = active
+        self.created_at = created_at
+        self.modified_at = modified_at
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Idp':
+        """Initialize a Idp object from a json dictionary."""
+        args = {}
+        if (idp_id := _dict.get('idp_id')) is not None:
+            args['idp_id'] = idp_id
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        if (properties := _dict.get('properties')) is not None:
+            args['properties'] = properties
+        if (secrets := _dict.get('secrets')) is not None:
+            args['secrets'] = secrets
+        if (share_scope := _dict.get('share_scope')) is not None:
+            args['share_scope'] = [ShareScope.from_dict(v) for v in share_scope]
+        if (active := _dict.get('active')) is not None:
+            args['active'] = active
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        if (modified_at := _dict.get('modified_at')) is not None:
+            args['modified_at'] = string_to_datetime(modified_at)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Idp object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'idp_id') and self.idp_id is not None:
+            _dict['idp_id'] = self.idp_id
+        if hasattr(self, 'entity_tag') and self.entity_tag is not None:
+            _dict['entity_tag'] = self.entity_tag
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'properties') and self.properties is not None:
+            _dict['properties'] = self.properties
+        if hasattr(self, 'secrets') and self.secrets is not None:
+            _dict['secrets'] = self.secrets
+        if hasattr(self, 'share_scope') and self.share_scope is not None:
+            share_scope_list = []
+            for v in self.share_scope:
+                if isinstance(v, dict):
+                    share_scope_list.append(v)
+                else:
+                    share_scope_list.append(v.to_dict())
+            _dict['share_scope'] = share_scope_list
+        if hasattr(self, 'active') and self.active is not None:
+            _dict['active'] = self.active
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'modified_at') and self.modified_at is not None:
+            _dict['modified_at'] = datetime_to_string(self.modified_at)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Idp object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Idp') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Idp') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class LimitCount:
     """
     Limit and current usage count for a resource.
@@ -10814,6 +13091,134 @@ class LimitCount:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'LimitCount') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ListIdPSettingsResponse:
+    """
+    ListIdPSettingsResponse.
+
+    :param List[AccountIdpSettings] idps: (optional)
+    """
+
+    def __init__(
+        self,
+        *,
+        idps: Optional[List['AccountIdpSettings']] = None,
+    ) -> None:
+        """
+        Initialize a ListIdPSettingsResponse object.
+
+        :param List[AccountIdpSettings] idps: (optional)
+        """
+        self.idps = idps
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ListIdPSettingsResponse':
+        """Initialize a ListIdPSettingsResponse object from a json dictionary."""
+        args = {}
+        if (idps := _dict.get('idps')) is not None:
+            args['idps'] = [AccountIdpSettings.from_dict(v) for v in idps]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ListIdPSettingsResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'idps') and self.idps is not None:
+            idps_list = []
+            for v in self.idps:
+                if isinstance(v, dict):
+                    idps_list.append(v)
+                else:
+                    idps_list.append(v.to_dict())
+            _dict['idps'] = idps_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ListIdPSettingsResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ListIdPSettingsResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ListIdPSettingsResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ListIdpsResponse:
+    """
+    ListIdpsResponse.
+
+    :param List[Idp] idps: (optional)
+    """
+
+    def __init__(
+        self,
+        *,
+        idps: Optional[List['Idp']] = None,
+    ) -> None:
+        """
+        Initialize a ListIdpsResponse object.
+
+        :param List[Idp] idps: (optional)
+        """
+        self.idps = idps
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ListIdpsResponse':
+        """Initialize a ListIdpsResponse object from a json dictionary."""
+        args = {}
+        if (idps := _dict.get('idps')) is not None:
+            args['idps'] = [Idp.from_dict(v) for v in idps]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ListIdpsResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'idps') and self.idps is not None:
+            idps_list = []
+            for v in self.idps:
+                if isinstance(v, dict):
+                    idps_list.append(v)
+                else:
+                    idps_list.append(v.to_dict())
+            _dict['idps'] = idps_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ListIdpsResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ListIdpsResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ListIdpsResponse') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -12438,6 +14843,203 @@ class ResponseContext:
         return not self == other
 
 
+class SamlMetadataImportResponse:
+    """
+    SamlMetadataImportResponse.
+
+    :param str idp_id: Realm ID of the Identity Provider.
+    :param str entity_tag: Version information used for optimistic locking.
+    :param datetime created_at: Creation timestamp.
+    :param datetime modified_at: Last modification timestamp.
+    :param str account_id: Account that owns the Identity Provider.
+    :param str name: User-friendly name of the Identity Provider.
+    :param str type:
+    :param dict properties: Type-specific Identity Provider configuration.
+    :param dict secrets: Type-specific secret configuration.
+    :param List[dict] history: (optional) History entries for the Identity Provider.
+    :param List[ShareScope] share_scope: (optional) Accounts, enterprises, or
+          account groups allowed to consume the IdP.
+    :param bool active: Indicates whether the Identity Provider is enabled. If
+          disabled, the IdP cannot be used by the owner account or any consumer accounts.
+    :param bool ui_setup_completed: (optional) Internal flag used by the UI to
+          determine whether the Identity Provider should be opened in the setup wizard or
+          the edit dialog.
+    """
+
+    def __init__(
+        self,
+        idp_id: str,
+        entity_tag: str,
+        created_at: datetime,
+        modified_at: datetime,
+        account_id: str,
+        name: str,
+        type: str,
+        properties: dict,
+        secrets: dict,
+        active: bool,
+        *,
+        history: Optional[List[dict]] = None,
+        share_scope: Optional[List['ShareScope']] = None,
+        ui_setup_completed: Optional[bool] = None,
+    ) -> None:
+        """
+        Initialize a SamlMetadataImportResponse object.
+
+        :param str idp_id: Realm ID of the Identity Provider.
+        :param str entity_tag: Version information used for optimistic locking.
+        :param datetime created_at: Creation timestamp.
+        :param datetime modified_at: Last modification timestamp.
+        :param str account_id: Account that owns the Identity Provider.
+        :param str name: User-friendly name of the Identity Provider.
+        :param str type:
+        :param dict properties: Type-specific Identity Provider configuration.
+        :param dict secrets: Type-specific secret configuration.
+        :param bool active: Indicates whether the Identity Provider is enabled. If
+               disabled, the IdP cannot be used by the owner account or any consumer
+               accounts.
+        :param List[dict] history: (optional) History entries for the Identity
+               Provider.
+        :param List[ShareScope] share_scope: (optional) Accounts, enterprises, or
+               account groups allowed to consume the IdP.
+        :param bool ui_setup_completed: (optional) Internal flag used by the UI to
+               determine whether the Identity Provider should be opened in the setup
+               wizard or the edit dialog.
+        """
+        self.idp_id = idp_id
+        self.entity_tag = entity_tag
+        self.created_at = created_at
+        self.modified_at = modified_at
+        self.account_id = account_id
+        self.name = name
+        self.type = type
+        self.properties = properties
+        self.secrets = secrets
+        self.history = history
+        self.share_scope = share_scope
+        self.active = active
+        self.ui_setup_completed = ui_setup_completed
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SamlMetadataImportResponse':
+        """Initialize a SamlMetadataImportResponse object from a json dictionary."""
+        args = {}
+        if (idp_id := _dict.get('idp_id')) is not None:
+            args['idp_id'] = idp_id
+        else:
+            raise ValueError('Required property \'idp_id\' not present in SamlMetadataImportResponse JSON')
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
+        else:
+            raise ValueError('Required property \'entity_tag\' not present in SamlMetadataImportResponse JSON')
+        if (created_at := _dict.get('created_at')) is not None:
+            args['created_at'] = string_to_datetime(created_at)
+        else:
+            raise ValueError('Required property \'created_at\' not present in SamlMetadataImportResponse JSON')
+        if (modified_at := _dict.get('modified_at')) is not None:
+            args['modified_at'] = string_to_datetime(modified_at)
+        else:
+            raise ValueError('Required property \'modified_at\' not present in SamlMetadataImportResponse JSON')
+        if (account_id := _dict.get('account_id')) is not None:
+            args['account_id'] = account_id
+        else:
+            raise ValueError('Required property \'account_id\' not present in SamlMetadataImportResponse JSON')
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        else:
+            raise ValueError('Required property \'name\' not present in SamlMetadataImportResponse JSON')
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        else:
+            raise ValueError('Required property \'type\' not present in SamlMetadataImportResponse JSON')
+        if (properties := _dict.get('properties')) is not None:
+            args['properties'] = properties
+        else:
+            raise ValueError('Required property \'properties\' not present in SamlMetadataImportResponse JSON')
+        if (secrets := _dict.get('secrets')) is not None:
+            args['secrets'] = secrets
+        else:
+            raise ValueError('Required property \'secrets\' not present in SamlMetadataImportResponse JSON')
+        if (history := _dict.get('history')) is not None:
+            args['history'] = history
+        if (share_scope := _dict.get('share_scope')) is not None:
+            args['share_scope'] = [ShareScope.from_dict(v) for v in share_scope]
+        if (active := _dict.get('active')) is not None:
+            args['active'] = active
+        else:
+            raise ValueError('Required property \'active\' not present in SamlMetadataImportResponse JSON')
+        if (ui_setup_completed := _dict.get('ui_setup_completed')) is not None:
+            args['ui_setup_completed'] = ui_setup_completed
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SamlMetadataImportResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'idp_id') and self.idp_id is not None:
+            _dict['idp_id'] = self.idp_id
+        if hasattr(self, 'entity_tag') and self.entity_tag is not None:
+            _dict['entity_tag'] = self.entity_tag
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'modified_at') and self.modified_at is not None:
+            _dict['modified_at'] = datetime_to_string(self.modified_at)
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'properties') and self.properties is not None:
+            _dict['properties'] = self.properties
+        if hasattr(self, 'secrets') and self.secrets is not None:
+            _dict['secrets'] = self.secrets
+        if hasattr(self, 'history') and self.history is not None:
+            _dict['history'] = self.history
+        if hasattr(self, 'share_scope') and self.share_scope is not None:
+            share_scope_list = []
+            for v in self.share_scope:
+                if isinstance(v, dict):
+                    share_scope_list.append(v)
+                else:
+                    share_scope_list.append(v.to_dict())
+            _dict['share_scope'] = share_scope_list
+        if hasattr(self, 'active') and self.active is not None:
+            _dict['active'] = self.active
+        if hasattr(self, 'ui_setup_completed') and self.ui_setup_completed is not None:
+            _dict['ui_setup_completed'] = self.ui_setup_completed
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SamlMetadataImportResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SamlMetadataImportResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SamlMetadataImportResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        type.
+        """
+
+        SAML = 'saml'
+
+
 class ServiceId:
     """
     Response body format for service ID V1 REST requests.
@@ -13079,6 +15681,80 @@ class ServiceIdList:
     def __ne__(self, other: 'ServiceIdList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+class ShareScope:
+    """
+    ShareScope.
+
+    :param str id: (optional)
+    :param str type: (optional)
+    """
+
+    def __init__(
+        self,
+        *,
+        id: Optional[str] = None,
+        type: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a ShareScope object.
+
+        :param str id: (optional)
+        :param str type: (optional)
+        """
+        self.id = id
+        self.type = type
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ShareScope':
+        """Initialize a ShareScope object from a json dictionary."""
+        args = {}
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ShareScope object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ShareScope object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ShareScope') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ShareScope') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        type.
+        """
+
+        ACCOUNT = 'account'
+        ENTERPRISE = 'enterprise'
 
 
 class TemplateAccountSettings:
@@ -14502,6 +17178,258 @@ class TemplateProfileComponentResponse:
         return not self == other
 
 
+class TestResult:
+    """
+    TestResult.
+
+    :param str idp_id: (optional)
+    :param str entity_tag: (optional)
+    :param int started_at: (optional)
+    :param str modified_at: (optional)
+    :param str idp_version: (optional)
+    :param List[TestResultStepsItem] steps: (optional)
+    """
+
+    def __init__(
+        self,
+        *,
+        idp_id: Optional[str] = None,
+        entity_tag: Optional[str] = None,
+        started_at: Optional[int] = None,
+        modified_at: Optional[str] = None,
+        idp_version: Optional[str] = None,
+        steps: Optional[List['TestResultStepsItem']] = None,
+    ) -> None:
+        """
+        Initialize a TestResult object.
+
+        :param str idp_id: (optional)
+        :param str entity_tag: (optional)
+        :param int started_at: (optional)
+        :param str modified_at: (optional)
+        :param str idp_version: (optional)
+        :param List[TestResultStepsItem] steps: (optional)
+        """
+        self.idp_id = idp_id
+        self.entity_tag = entity_tag
+        self.started_at = started_at
+        self.modified_at = modified_at
+        self.idp_version = idp_version
+        self.steps = steps
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TestResult':
+        """Initialize a TestResult object from a json dictionary."""
+        args = {}
+        if (idp_id := _dict.get('idp_id')) is not None:
+            args['idp_id'] = idp_id
+        if (entity_tag := _dict.get('entity_tag')) is not None:
+            args['entity_tag'] = entity_tag
+        if (started_at := _dict.get('started_at')) is not None:
+            args['started_at'] = started_at
+        if (modified_at := _dict.get('modified_at')) is not None:
+            args['modified_at'] = modified_at
+        if (idp_version := _dict.get('idp_version')) is not None:
+            args['idp_version'] = idp_version
+        if (steps := _dict.get('steps')) is not None:
+            args['steps'] = [TestResultStepsItem.from_dict(v) for v in steps]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TestResult object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'idp_id') and self.idp_id is not None:
+            _dict['idp_id'] = self.idp_id
+        if hasattr(self, 'entity_tag') and self.entity_tag is not None:
+            _dict['entity_tag'] = self.entity_tag
+        if hasattr(self, 'started_at') and self.started_at is not None:
+            _dict['started_at'] = self.started_at
+        if hasattr(self, 'modified_at') and self.modified_at is not None:
+            _dict['modified_at'] = self.modified_at
+        if hasattr(self, 'idp_version') and self.idp_version is not None:
+            _dict['idp_version'] = self.idp_version
+        if hasattr(self, 'steps') and self.steps is not None:
+            steps_list = []
+            for v in self.steps:
+                if isinstance(v, dict):
+                    steps_list.append(v)
+                else:
+                    steps_list.append(v.to_dict())
+            _dict['steps'] = steps_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TestResult object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TestResult') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TestResult') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TestResultStepsItem:
+    """
+    TestResultStepsItem.
+
+    :param int sequence: (optional)
+    :param str name: (optional)
+    :param str state: (optional)
+    :param str result: (optional)
+    """
+
+    def __init__(
+        self,
+        *,
+        sequence: Optional[int] = None,
+        name: Optional[str] = None,
+        state: Optional[str] = None,
+        result: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a TestResultStepsItem object.
+
+        :param int sequence: (optional)
+        :param str name: (optional)
+        :param str state: (optional)
+        :param str result: (optional)
+        """
+        self.sequence = sequence
+        self.name = name
+        self.state = state
+        self.result = result
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TestResultStepsItem':
+        """Initialize a TestResultStepsItem object from a json dictionary."""
+        args = {}
+        if (sequence := _dict.get('sequence')) is not None:
+            args['sequence'] = sequence
+        if (name := _dict.get('name')) is not None:
+            args['name'] = name
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
+        if (result := _dict.get('result')) is not None:
+            args['result'] = result
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TestResultStepsItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'sequence') and self.sequence is not None:
+            _dict['sequence'] = self.sequence
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        if hasattr(self, 'result') and self.result is not None:
+            _dict['result'] = self.result
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TestResultStepsItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TestResultStepsItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TestResultStepsItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TestTriggerResponse:
+    """
+    TestTriggerResponse.
+
+    :param str result: (optional)
+    :param str test_url: (optional)
+    """
+
+    def __init__(
+        self,
+        *,
+        result: Optional[str] = None,
+        test_url: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a TestTriggerResponse object.
+
+        :param str result: (optional)
+        :param str test_url: (optional)
+        """
+        self.result = result
+        self.test_url = test_url
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TestTriggerResponse':
+        """Initialize a TestTriggerResponse object from a json dictionary."""
+        args = {}
+        if (result := _dict.get('result')) is not None:
+            args['result'] = result
+        if (test_url := _dict.get('test_url')) is not None:
+            args['test_url'] = test_url
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TestTriggerResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'result') and self.result is not None:
+            _dict['result'] = self.result
+        if hasattr(self, 'test_url') and self.test_url is not None:
+            _dict['test_url'] = self.test_url
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TestTriggerResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TestTriggerResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TestTriggerResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class TrustedProfile:
     """
     Response body format for trusted profile V1 REST requests.
@@ -15350,6 +18278,824 @@ class TrustedProfilesList:
     def __ne__(self, other: 'TrustedProfilesList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+class UpdateIdPRequestProperties:
+    """
+    Properties of the IDP. Will be stored plain-text.
+
+    :param UpdateIdPRequestPropertiesIdp idp: (optional) Identity Provider
+          configuration.
+    :param UpdateIdPRequestPropertiesSp sp: (optional) Service Provider
+          configuration.
+    """
+
+    def __init__(
+        self,
+        *,
+        idp: Optional['UpdateIdPRequestPropertiesIdp'] = None,
+        sp: Optional['UpdateIdPRequestPropertiesSp'] = None,
+    ) -> None:
+        """
+        Initialize a UpdateIdPRequestProperties object.
+
+        :param UpdateIdPRequestPropertiesIdp idp: (optional) Identity Provider
+               configuration.
+        :param UpdateIdPRequestPropertiesSp sp: (optional) Service Provider
+               configuration.
+        """
+        self.idp = idp
+        self.sp = sp
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateIdPRequestProperties':
+        """Initialize a UpdateIdPRequestProperties object from a json dictionary."""
+        args = {}
+        if (idp := _dict.get('idp')) is not None:
+            args['idp'] = UpdateIdPRequestPropertiesIdp.from_dict(idp)
+        if (sp := _dict.get('sp')) is not None:
+            args['sp'] = UpdateIdPRequestPropertiesSp.from_dict(sp)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateIdPRequestProperties object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'idp') and self.idp is not None:
+            if isinstance(self.idp, dict):
+                _dict['idp'] = self.idp
+            else:
+                _dict['idp'] = self.idp.to_dict()
+        if hasattr(self, 'sp') and self.sp is not None:
+            if isinstance(self.sp, dict):
+                _dict['sp'] = self.sp
+            else:
+                _dict['sp'] = self.sp.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateIdPRequestProperties object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateIdPRequestProperties') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateIdPRequestProperties') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class UpdateIdPRequestPropertiesIdp:
+    """
+    Identity Provider configuration.
+
+    :param str entity_id: (optional) SAML IDP entity ID.
+    :param str redirect_binding_url: (optional) Redirect binding URL.
+    :param bool want_request_signed: (optional) Indicates if IDP wants requests to
+          be signed.
+    :param str logout_url: (optional) SAML IDP logout URL (optional).
+    """
+
+    def __init__(
+        self,
+        *,
+        entity_id: Optional[str] = None,
+        redirect_binding_url: Optional[str] = None,
+        want_request_signed: Optional[bool] = None,
+        logout_url: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a UpdateIdPRequestPropertiesIdp object.
+
+        :param str entity_id: (optional) SAML IDP entity ID.
+        :param str redirect_binding_url: (optional) Redirect binding URL.
+        :param bool want_request_signed: (optional) Indicates if IDP wants requests
+               to be signed.
+        :param str logout_url: (optional) SAML IDP logout URL (optional).
+        """
+        self.entity_id = entity_id
+        self.redirect_binding_url = redirect_binding_url
+        self.want_request_signed = want_request_signed
+        self.logout_url = logout_url
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateIdPRequestPropertiesIdp':
+        """Initialize a UpdateIdPRequestPropertiesIdp object from a json dictionary."""
+        args = {}
+        if (entity_id := _dict.get('entity_id')) is not None:
+            args['entity_id'] = entity_id
+        if (redirect_binding_url := _dict.get('redirect_binding_url')) is not None:
+            args['redirect_binding_url'] = redirect_binding_url
+        if (want_request_signed := _dict.get('want_request_signed')) is not None:
+            args['want_request_signed'] = want_request_signed
+        if (logout_url := _dict.get('logout_url')) is not None:
+            args['logout_url'] = logout_url
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateIdPRequestPropertiesIdp object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'entity_id') and self.entity_id is not None:
+            _dict['entity_id'] = self.entity_id
+        if hasattr(self, 'redirect_binding_url') and self.redirect_binding_url is not None:
+            _dict['redirect_binding_url'] = self.redirect_binding_url
+        if hasattr(self, 'want_request_signed') and self.want_request_signed is not None:
+            _dict['want_request_signed'] = self.want_request_signed
+        if hasattr(self, 'logout_url') and self.logout_url is not None:
+            _dict['logout_url'] = self.logout_url
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateIdPRequestPropertiesIdp object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateIdPRequestPropertiesIdp') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateIdPRequestPropertiesIdp') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class UpdateIdPRequestPropertiesSp:
+    """
+    Service Provider configuration.
+
+    :param bool want_assertion_signed: (optional) Indicates if SP wants assertions
+          to be signed.
+    :param bool want_response_signed: (optional) Indicates if SP wants responses to
+          be signed.
+    :param bool encrypt_response: (optional) Indicates if responses should be
+          encrypted.
+    :param bool idp_initiated_login_enabled: (optional) Enables IDP-initiated login.
+    :param bool logout_url_enabled_when_available: (optional) Enables logout URL
+          when available.
+    :param List[str] idp_initiated_urls: (optional) URLs for IDP-initiated login.
+    :param UpdateIdPRequestPropertiesSpAuthnContext authn_context: (optional)
+          Authentication context configuration.
+    :param dict claims: (optional) Custom mapping between SAML assertions and IAM
+          claims.
+    """
+
+    def __init__(
+        self,
+        *,
+        want_assertion_signed: Optional[bool] = None,
+        want_response_signed: Optional[bool] = None,
+        encrypt_response: Optional[bool] = None,
+        idp_initiated_login_enabled: Optional[bool] = None,
+        logout_url_enabled_when_available: Optional[bool] = None,
+        idp_initiated_urls: Optional[List[str]] = None,
+        authn_context: Optional['UpdateIdPRequestPropertiesSpAuthnContext'] = None,
+        claims: Optional[dict] = None,
+    ) -> None:
+        """
+        Initialize a UpdateIdPRequestPropertiesSp object.
+
+        :param bool want_assertion_signed: (optional) Indicates if SP wants
+               assertions to be signed.
+        :param bool want_response_signed: (optional) Indicates if SP wants
+               responses to be signed.
+        :param bool encrypt_response: (optional) Indicates if responses should be
+               encrypted.
+        :param bool idp_initiated_login_enabled: (optional) Enables IDP-initiated
+               login.
+        :param bool logout_url_enabled_when_available: (optional) Enables logout
+               URL when available.
+        :param List[str] idp_initiated_urls: (optional) URLs for IDP-initiated
+               login.
+        :param UpdateIdPRequestPropertiesSpAuthnContext authn_context: (optional)
+               Authentication context configuration.
+        :param dict claims: (optional) Custom mapping between SAML assertions and
+               IAM claims.
+        """
+        self.want_assertion_signed = want_assertion_signed
+        self.want_response_signed = want_response_signed
+        self.encrypt_response = encrypt_response
+        self.idp_initiated_login_enabled = idp_initiated_login_enabled
+        self.logout_url_enabled_when_available = logout_url_enabled_when_available
+        self.idp_initiated_urls = idp_initiated_urls
+        self.authn_context = authn_context
+        self.claims = claims
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateIdPRequestPropertiesSp':
+        """Initialize a UpdateIdPRequestPropertiesSp object from a json dictionary."""
+        args = {}
+        if (want_assertion_signed := _dict.get('want_assertion_signed')) is not None:
+            args['want_assertion_signed'] = want_assertion_signed
+        if (want_response_signed := _dict.get('want_response_signed')) is not None:
+            args['want_response_signed'] = want_response_signed
+        if (encrypt_response := _dict.get('encrypt_response')) is not None:
+            args['encrypt_response'] = encrypt_response
+        if (idp_initiated_login_enabled := _dict.get('idp_initiated_login_enabled')) is not None:
+            args['idp_initiated_login_enabled'] = idp_initiated_login_enabled
+        if (logout_url_enabled_when_available := _dict.get('logout_url_enabled_when_available')) is not None:
+            args['logout_url_enabled_when_available'] = logout_url_enabled_when_available
+        if (idp_initiated_urls := _dict.get('idp_initiated_urls')) is not None:
+            args['idp_initiated_urls'] = idp_initiated_urls
+        if (authn_context := _dict.get('authn_context')) is not None:
+            args['authn_context'] = UpdateIdPRequestPropertiesSpAuthnContext.from_dict(authn_context)
+        if (claims := _dict.get('claims')) is not None:
+            args['claims'] = claims
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateIdPRequestPropertiesSp object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'want_assertion_signed') and self.want_assertion_signed is not None:
+            _dict['want_assertion_signed'] = self.want_assertion_signed
+        if hasattr(self, 'want_response_signed') and self.want_response_signed is not None:
+            _dict['want_response_signed'] = self.want_response_signed
+        if hasattr(self, 'encrypt_response') and self.encrypt_response is not None:
+            _dict['encrypt_response'] = self.encrypt_response
+        if hasattr(self, 'idp_initiated_login_enabled') and self.idp_initiated_login_enabled is not None:
+            _dict['idp_initiated_login_enabled'] = self.idp_initiated_login_enabled
+        if hasattr(self, 'logout_url_enabled_when_available') and self.logout_url_enabled_when_available is not None:
+            _dict['logout_url_enabled_when_available'] = self.logout_url_enabled_when_available
+        if hasattr(self, 'idp_initiated_urls') and self.idp_initiated_urls is not None:
+            _dict['idp_initiated_urls'] = self.idp_initiated_urls
+        if hasattr(self, 'authn_context') and self.authn_context is not None:
+            if isinstance(self.authn_context, dict):
+                _dict['authn_context'] = self.authn_context
+            else:
+                _dict['authn_context'] = self.authn_context.to_dict()
+        if hasattr(self, 'claims') and self.claims is not None:
+            _dict['claims'] = self.claims
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateIdPRequestPropertiesSp object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateIdPRequestPropertiesSp') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateIdPRequestPropertiesSp') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class UpdateIdPRequestPropertiesSpAuthnContext:
+    """
+    Authentication context configuration.
+
+    :param List[str] request: (optional) Requested authentication context classes.
+    :param List[str] accept: (optional) Accepted authentication context classes.
+    """
+
+    def __init__(
+        self,
+        *,
+        request: Optional[List[str]] = None,
+        accept: Optional[List[str]] = None,
+    ) -> None:
+        """
+        Initialize a UpdateIdPRequestPropertiesSpAuthnContext object.
+
+        :param List[str] request: (optional) Requested authentication context
+               classes.
+        :param List[str] accept: (optional) Accepted authentication context
+               classes.
+        """
+        self.request = request
+        self.accept = accept
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateIdPRequestPropertiesSpAuthnContext':
+        """Initialize a UpdateIdPRequestPropertiesSpAuthnContext object from a json dictionary."""
+        args = {}
+        if (request := _dict.get('request')) is not None:
+            args['request'] = request
+        if (accept := _dict.get('accept')) is not None:
+            args['accept'] = accept
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateIdPRequestPropertiesSpAuthnContext object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'request') and self.request is not None:
+            _dict['request'] = self.request
+        if hasattr(self, 'accept') and self.accept is not None:
+            _dict['accept'] = self.accept
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateIdPRequestPropertiesSpAuthnContext object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateIdPRequestPropertiesSpAuthnContext') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateIdPRequestPropertiesSpAuthnContext') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class UpdateIdPRequestSecrets:
+    """
+    Secrets of the IDP. Will be stored encrypted.
+
+    :param UpdateIdPRequestSecretsIdp idp: (optional) Identity Provider secrets.
+    :param UpdateIdPRequestSecretsSp sp: (optional) Service Provider secrets.
+    """
+
+    def __init__(
+        self,
+        *,
+        idp: Optional['UpdateIdPRequestSecretsIdp'] = None,
+        sp: Optional['UpdateIdPRequestSecretsSp'] = None,
+    ) -> None:
+        """
+        Initialize a UpdateIdPRequestSecrets object.
+
+        :param UpdateIdPRequestSecretsIdp idp: (optional) Identity Provider
+               secrets.
+        :param UpdateIdPRequestSecretsSp sp: (optional) Service Provider secrets.
+        """
+        self.idp = idp
+        self.sp = sp
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateIdPRequestSecrets':
+        """Initialize a UpdateIdPRequestSecrets object from a json dictionary."""
+        args = {}
+        if (idp := _dict.get('idp')) is not None:
+            args['idp'] = UpdateIdPRequestSecretsIdp.from_dict(idp)
+        if (sp := _dict.get('sp')) is not None:
+            args['sp'] = UpdateIdPRequestSecretsSp.from_dict(sp)
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateIdPRequestSecrets object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'idp') and self.idp is not None:
+            if isinstance(self.idp, dict):
+                _dict['idp'] = self.idp
+            else:
+                _dict['idp'] = self.idp.to_dict()
+        if hasattr(self, 'sp') and self.sp is not None:
+            if isinstance(self.sp, dict):
+                _dict['sp'] = self.sp
+            else:
+                _dict['sp'] = self.sp.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateIdPRequestSecrets object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateIdPRequestSecrets') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateIdPRequestSecrets') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class UpdateIdPRequestSecretsIdp:
+    """
+    Identity Provider secrets.
+
+    :param List[UpdateIdPRequestSecretsIdpSigningItem] signing: (optional) IDP
+          signing certificates.
+    :param List[UpdateIdPRequestSecretsIdpEncryptingItem] encrypting: (optional) IDP
+          encrypting certificates.
+    """
+
+    def __init__(
+        self,
+        *,
+        signing: Optional[List['UpdateIdPRequestSecretsIdpSigningItem']] = None,
+        encrypting: Optional[List['UpdateIdPRequestSecretsIdpEncryptingItem']] = None,
+    ) -> None:
+        """
+        Initialize a UpdateIdPRequestSecretsIdp object.
+
+        :param List[UpdateIdPRequestSecretsIdpSigningItem] signing: (optional) IDP
+               signing certificates.
+        :param List[UpdateIdPRequestSecretsIdpEncryptingItem] encrypting:
+               (optional) IDP encrypting certificates.
+        """
+        self.signing = signing
+        self.encrypting = encrypting
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateIdPRequestSecretsIdp':
+        """Initialize a UpdateIdPRequestSecretsIdp object from a json dictionary."""
+        args = {}
+        if (signing := _dict.get('signing')) is not None:
+            args['signing'] = [UpdateIdPRequestSecretsIdpSigningItem.from_dict(v) for v in signing]
+        if (encrypting := _dict.get('encrypting')) is not None:
+            args['encrypting'] = [UpdateIdPRequestSecretsIdpEncryptingItem.from_dict(v) for v in encrypting]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateIdPRequestSecretsIdp object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'signing') and self.signing is not None:
+            signing_list = []
+            for v in self.signing:
+                if isinstance(v, dict):
+                    signing_list.append(v)
+                else:
+                    signing_list.append(v.to_dict())
+            _dict['signing'] = signing_list
+        if hasattr(self, 'encrypting') and self.encrypting is not None:
+            encrypting_list = []
+            for v in self.encrypting:
+                if isinstance(v, dict):
+                    encrypting_list.append(v)
+                else:
+                    encrypting_list.append(v.to_dict())
+            _dict['encrypting'] = encrypting_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateIdPRequestSecretsIdp object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateIdPRequestSecretsIdp') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateIdPRequestSecretsIdp') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class UpdateIdPRequestSecretsIdpEncryptingItem:
+    """
+    UpdateIdPRequestSecretsIdpEncryptingItem.
+
+    :param str value: (optional) Certificate value.
+    :param str type: (optional) Certificate type.
+    """
+
+    def __init__(
+        self,
+        *,
+        value: Optional[str] = None,
+        type: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a UpdateIdPRequestSecretsIdpEncryptingItem object.
+
+        :param str value: (optional) Certificate value.
+        :param str type: (optional) Certificate type.
+        """
+        self.value = value
+        self.type = type
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateIdPRequestSecretsIdpEncryptingItem':
+        """Initialize a UpdateIdPRequestSecretsIdpEncryptingItem object from a json dictionary."""
+        args = {}
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateIdPRequestSecretsIdpEncryptingItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateIdPRequestSecretsIdpEncryptingItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateIdPRequestSecretsIdpEncryptingItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateIdPRequestSecretsIdpEncryptingItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        Certificate type.
+        """
+
+        PRIMARY = 'primary'
+        SECONDARY = 'secondary'
+
+
+class UpdateIdPRequestSecretsIdpSigningItem:
+    """
+    UpdateIdPRequestSecretsIdpSigningItem.
+
+    :param str value: (optional) Certificate value in PEM format.
+    :param str type: (optional) Certificate type.
+    """
+
+    def __init__(
+        self,
+        *,
+        value: Optional[str] = None,
+        type: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a UpdateIdPRequestSecretsIdpSigningItem object.
+
+        :param str value: (optional) Certificate value in PEM format.
+        :param str type: (optional) Certificate type.
+        """
+        self.value = value
+        self.type = type
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateIdPRequestSecretsIdpSigningItem':
+        """Initialize a UpdateIdPRequestSecretsIdpSigningItem object from a json dictionary."""
+        args = {}
+        if (value := _dict.get('value')) is not None:
+            args['value'] = value
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateIdPRequestSecretsIdpSigningItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateIdPRequestSecretsIdpSigningItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateIdPRequestSecretsIdpSigningItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateIdPRequestSecretsIdpSigningItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        Certificate type.
+        """
+
+        PRIMARY = 'primary'
+        SECONDARY = 'secondary'
+
+
+class UpdateIdPRequestSecretsSp:
+    """
+    Service Provider secrets.
+
+    :param List[UpdateIdPRequestSecretsSpSigningItem] signing: (optional) SP signing
+          certificates.
+    """
+
+    def __init__(
+        self,
+        *,
+        signing: Optional[List['UpdateIdPRequestSecretsSpSigningItem']] = None,
+    ) -> None:
+        """
+        Initialize a UpdateIdPRequestSecretsSp object.
+
+        :param List[UpdateIdPRequestSecretsSpSigningItem] signing: (optional) SP
+               signing certificates.
+        """
+        self.signing = signing
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateIdPRequestSecretsSp':
+        """Initialize a UpdateIdPRequestSecretsSp object from a json dictionary."""
+        args = {}
+        if (signing := _dict.get('signing')) is not None:
+            args['signing'] = [UpdateIdPRequestSecretsSpSigningItem.from_dict(v) for v in signing]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateIdPRequestSecretsSp object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'signing') and self.signing is not None:
+            signing_list = []
+            for v in self.signing:
+                if isinstance(v, dict):
+                    signing_list.append(v)
+                else:
+                    signing_list.append(v.to_dict())
+            _dict['signing'] = signing_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateIdPRequestSecretsSp object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateIdPRequestSecretsSp') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateIdPRequestSecretsSp') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class UpdateIdPRequestSecretsSpSigningItem:
+    """
+    UpdateIdPRequestSecretsSpSigningItem.
+
+    :param str certificate_value: (optional) Certificate value in PEM format.
+    :param str key_value: (optional) Private key value.
+    :param str key_encoding: (optional) Key encoding format (e.g., pkcs8).
+    :param str type: (optional) Certificate type.
+    """
+
+    def __init__(
+        self,
+        *,
+        certificate_value: Optional[str] = None,
+        key_value: Optional[str] = None,
+        key_encoding: Optional[str] = None,
+        type: Optional[str] = None,
+    ) -> None:
+        """
+        Initialize a UpdateIdPRequestSecretsSpSigningItem object.
+
+        :param str certificate_value: (optional) Certificate value in PEM format.
+        :param str key_value: (optional) Private key value.
+        :param str key_encoding: (optional) Key encoding format (e.g., pkcs8).
+        :param str type: (optional) Certificate type.
+        """
+        self.certificate_value = certificate_value
+        self.key_value = key_value
+        self.key_encoding = key_encoding
+        self.type = type
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateIdPRequestSecretsSpSigningItem':
+        """Initialize a UpdateIdPRequestSecretsSpSigningItem object from a json dictionary."""
+        args = {}
+        if (certificate_value := _dict.get('certificate_value')) is not None:
+            args['certificate_value'] = certificate_value
+        if (key_value := _dict.get('key_value')) is not None:
+            args['key_value'] = key_value
+        if (key_encoding := _dict.get('key_encoding')) is not None:
+            args['key_encoding'] = key_encoding
+        if (type := _dict.get('type')) is not None:
+            args['type'] = type
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateIdPRequestSecretsSpSigningItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'certificate_value') and self.certificate_value is not None:
+            _dict['certificate_value'] = self.certificate_value
+        if hasattr(self, 'key_value') and self.key_value is not None:
+            _dict['key_value'] = self.key_value
+        if hasattr(self, 'key_encoding') and self.key_encoding is not None:
+            _dict['key_encoding'] = self.key_encoding
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateIdPRequestSecretsSpSigningItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateIdPRequestSecretsSpSigningItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateIdPRequestSecretsSpSigningItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        Certificate type.
+        """
+
+        PRIMARY = 'primary'
+        SECONDARY = 'secondary'
 
 
 class UserActivity:

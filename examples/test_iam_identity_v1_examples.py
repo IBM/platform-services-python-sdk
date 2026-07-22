@@ -103,6 +103,9 @@ account_settings_template_assignment_id = None
 account_settings_template_assignment_etag = None
 account_settings_template_name = 'Python-SDK-Example-AccountSettings-Template-' + now
 
+idp_id = None
+idp_etag = None
+
 iam_id_for_preferences = None
 
 
@@ -1982,6 +1985,322 @@ class TestIamIdentityV1Examples:
             )
 
             # end-delete_all_versions_of_account_settings_template
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_idp_example(self):
+        """
+        create_idp request example
+        """
+        try:
+            print('\ncreate_idp() result:')
+            # begin-create_idp
+
+            create_idp_request_properties_idp_model = {
+                'entity_id': 'http://www.okta.com/abcdefg',
+                'redirect_binding_url': 'https://trial-12345.okta.com/app/trial-6789/abcdefg/sso/saml',
+                'want_request_signed': True,
+            }
+
+            create_idp_request_properties_sp_model = {
+                'want_assertion_signed': True,
+                'want_response_signed': True,
+                'encrypt_response': True,
+                'idp_initiated_login_enabled': True,
+                'logout_url_enabled_when_available': True,
+            }
+
+            create_idp_request_properties_model = {
+                'idp': create_idp_request_properties_idp_model,
+                'sp': create_idp_request_properties_sp_model,
+            }
+
+            create_idp_request_secrets_model = {
+                'idp': {},
+                'sp': {},
+            }
+
+            idp = iam_identity_service.create_idp(
+                account_id=account_id,
+                name='Python-SDK-Example-IdP',
+                type='saml',
+                active=True,
+                properties=create_idp_request_properties_model,
+                secrets=create_idp_request_secrets_model,
+            ).get_result()
+            print(json.dumps(idp, indent=2))
+
+            # end-create_idp
+
+            global idp_id
+            idp_id = idp['idp_id']
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_idps_example(self):
+        """
+        list_idps request example
+        """
+        try:
+            print('\nlist_idps() result:')
+            # begin-list_idps
+
+            list_idps_response = iam_identity_service.list_idps(
+                account_id=account_id,
+            ).get_result()
+            print(json.dumps(list_idps_response, indent=2))
+
+            # end-list_idps
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_idp_example(self):
+        """
+        get_idp request example
+        """
+        try:
+            print('\nget_idp() result:')
+            # begin-get_idp
+
+            response = iam_identity_service.get_idp(idp_id=idp_id)
+            idp = response.get_result()
+            print(json.dumps(idp, indent=2))
+
+            # end-get_idp
+
+            global idp_etag
+            idp_etag = response.get_headers()['Etag']
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_idp_example(self):
+        """
+        update_idp request example
+        """
+        try:
+            print('\nupdate_idp() result:')
+            # begin-update_idp
+
+            update_idp_request_properties_idp_model = {
+                'entity_id': 'http://www.okta.com/abcdefgijk',
+                'redirect_binding_url': 'https://trial-12345.okta.com/app/trial-6789/abcdefgijk/sso/saml',
+                'want_request_signed': False,
+            }
+
+            update_idp_request_properties_sp_model = {
+                'want_assertion_signed': False,
+                'want_response_signed': False,
+                'encrypt_response': True,
+                'idp_initiated_login_enabled': False,
+                'logout_url_enabled_when_available': True,
+            }
+
+            update_idp_request_properties_model = {
+                'idp': update_idp_request_properties_idp_model,
+                'sp': update_idp_request_properties_sp_model,
+            }
+
+            idp = iam_identity_service.update_idp(
+                idp_id=idp_id,
+                if_match=idp_etag,
+                ui_setup_completed=True,
+                active=True,
+                properties=update_idp_request_properties_model,
+                force_share_scope_update=True,
+            ).get_result()
+            print(json.dumps(idp, indent=2))
+
+            # end-update_idp
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_consumer_accounts_example(self):
+        """
+        list_consumer_accounts request example
+        """
+        try:
+            print('\nlist_consumer_accounts() result:')
+            # begin-list_consumer_accounts
+
+            consumers_response = iam_identity_service.list_consumer_accounts(
+                idp_id=idp_id,
+            ).get_result()
+            print(json.dumps(consumers_response, indent=2))
+
+            # end-list_consumer_accounts
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_login_settings_example(self):
+        """
+        get_login_settings request example
+        """
+        try:
+            print('\nget_login_settings() result:')
+            # begin-get_login_settings
+
+            account_login_settings = iam_identity_service.get_login_settings(
+                account_id=account_id,
+            ).get_result()
+            print(json.dumps(account_login_settings, indent=2))
+
+            # end-get_login_settings
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_login_settings_example(self):
+        """
+        update_login_settings request example
+        """
+        try:
+            print('\nupdate_login_settings() result:')
+            # begin-update_login_settings
+
+            account_login_settings = iam_identity_service.update_login_settings(
+                account_id=account_id,
+                alias='my_alias_update_test',
+            ).get_result()
+            print(json.dumps(account_login_settings, indent=2))
+
+            # end-update_login_settings
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_id_p_settings_example(self):
+        """
+        list_id_p_settings request example
+        """
+        try:
+            print('\nlist_id_p_settings() result:')
+            # begin-list_idp_settings
+
+            list_idp_settings_response = iam_identity_service.list_id_p_settings(
+                account_id=account_id,
+                type='consumable',
+                include_idp_metadata='true',
+            ).get_result()
+            print(json.dumps(list_idp_settings_response, indent=2))
+
+            # end-list_idp_settings
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_add_id_p_setting_example(self):
+        """
+        add_id_p_setting request example
+        """
+        try:
+            print('\nadd_id_p_setting() result:')
+            # begin-add_idp_setting
+
+            account_idp_settings = iam_identity_service.add_id_p_setting(
+                account_id=account_id,
+                idp_id=idp_id,
+                cloud_user_strategy='STATIC',
+                active=True,
+                ui_default=True,
+            ).get_result()
+            print(json.dumps(account_idp_settings, indent=2))
+
+            # end-add_idp_setting
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_id_p_setting_example(self):
+        """
+        get_id_p_setting request example
+        """
+        try:
+            print('\nget_id_p_setting() result:')
+            # begin-get_idp_setting
+
+            account_idp_settings = iam_identity_service.get_id_p_setting(
+                account_id=account_id,
+                idp_id=idp_id,
+            ).get_result()
+            print(json.dumps(account_idp_settings, indent=2))
+
+            # end-get_idp_setting
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_id_p_setting_example(self):
+        """
+        update_id_p_setting request example
+        """
+        try:
+            print('\nupdate_id_p_setting() result:')
+            # begin-update_idp_setting
+
+            account_idp_settings = iam_identity_service.update_id_p_setting(
+                account_id=account_id,
+                idp_id=idp_id,
+                cloud_user_strategy='STATIC',
+                active=True,
+                ui_default=False,
+            ).get_result()
+            print(json.dumps(account_idp_settings, indent=2))
+
+            # end-update_idp_setting
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_remove_id_p_setting_example(self):
+        """
+        remove_id_p_setting request example
+        """
+        try:
+            # begin-remove_idp_setting
+
+            response = iam_identity_service.remove_id_p_setting(
+                account_id=account_id,
+                idp_id=idp_id,
+            )
+
+            # end-remove_idp_setting
+
+            print('\nremove_id_p_setting() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_idp_example(self):
+        """
+        delete_idp request example
+        """
+        try:
+            # begin-delete_idp
+
+            response = iam_identity_service.delete_idp(idp_id=idp_id)
+
+            # end-delete_idp
+
+            print('\ndelete_idp() response status code: ', response.get_status_code())
+
         except ApiException as e:
             pytest.fail(str(e))
 
