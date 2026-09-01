@@ -30,7 +30,6 @@ import responses
 import urllib
 from ibm_platform_services.catalog_management_v1 import *
 
-
 _service = CatalogManagementV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://cm.globalcatalog.cloud.ibm.com/api/v1-beta'

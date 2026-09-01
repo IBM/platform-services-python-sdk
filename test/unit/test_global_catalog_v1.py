@@ -32,7 +32,6 @@ import tempfile
 import urllib
 from ibm_platform_services.global_catalog_v1 import *
 
-
 _service = GlobalCatalogV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://globalcatalog.cloud.ibm.com/api/v1'

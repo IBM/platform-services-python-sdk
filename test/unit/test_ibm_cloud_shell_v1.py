@@ -26,7 +26,6 @@ import responses
 import urllib
 from ibm_platform_services.ibm_cloud_shell_v1 import *
 
-
 _service = IbmCloudShellV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://api.shell.cloud.ibm.com'

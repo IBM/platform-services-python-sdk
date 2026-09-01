@@ -30,7 +30,6 @@ import responses
 import urllib
 from ibm_platform_services.resource_controller_v2 import *
 
-
 _service = ResourceControllerV2(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://resource-controller.cloud.ibm.com'

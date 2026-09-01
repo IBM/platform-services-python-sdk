@@ -30,7 +30,6 @@ import responses
 import urllib
 from ibm_platform_services.enterprise_billing_units_v1 import *
 
-
 _service = EnterpriseBillingUnitsV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://billing.cloud.ibm.com'

@@ -28,7 +28,6 @@ import responses
 import urllib
 from ibm_platform_services.enterprise_usage_reports_v1 import *
 
-
 _service = EnterpriseUsageReportsV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://enterprise.cloud.ibm.com'

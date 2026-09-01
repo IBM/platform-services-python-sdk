@@ -28,7 +28,6 @@ import responses
 import urllib
 from ibm_platform_services.platform_notifications_v1 import *
 
-
 _service = PlatformNotificationsV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://notifications.cloud.ibm.com/api'

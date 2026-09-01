@@ -30,7 +30,6 @@ import responses
 import urllib
 from ibm_platform_services.iam_access_groups_v2 import *
 
-
 _service = IamAccessGroupsV2(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://iam.cloud.ibm.com'
