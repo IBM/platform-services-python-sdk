@@ -30,7 +30,6 @@ import responses
 import urllib
 from ibm_platform_services.context_based_restrictions_v1 import *
 
-
 _service = ContextBasedRestrictionsV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://cbr.cloud.ibm.com'

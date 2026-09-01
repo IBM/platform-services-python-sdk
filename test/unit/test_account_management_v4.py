@@ -27,7 +27,6 @@ import responses
 import urllib
 from ibm_platform_services.account_management_v4 import *
 
-
 _service = AccountManagementV4(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://accounts.test.cloud.ibm.com'

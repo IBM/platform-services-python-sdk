@@ -27,7 +27,6 @@ import responses
 import urllib
 from ibm_platform_services.open_service_broker_v1 import *
 
-
 service = OpenServiceBrokerV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://fake'

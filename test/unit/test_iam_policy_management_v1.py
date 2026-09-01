@@ -30,7 +30,6 @@ import responses
 import urllib
 from ibm_platform_services.iam_policy_management_v1 import *
 
-
 _service = IamPolicyManagementV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://iam.cloud.ibm.com'

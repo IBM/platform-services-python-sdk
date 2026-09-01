@@ -30,7 +30,6 @@ import tempfile
 import urllib
 from ibm_platform_services.case_management_v1 import *
 
-
 _service = CaseManagementV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://support-center.cloud.ibm.com/case-management/v1'
