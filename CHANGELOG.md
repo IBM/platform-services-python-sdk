@@ -1,3 +1,10 @@
+## [0.77.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.77.1...v0.77.2) (2026-10-29)
+
+
+### Bug Fixes
+
+* **deps:** update all dependencies ([#341](https://github.com/IBM/platform-services-python-sdk/issues/341)) ([3a97f5d](https://github.com/IBM/platform-services-python-sdk/commit/3a97f5d6aea605c7260fce6476857934bdf74236))
+
 ## [0.77.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.77.0...v0.77.1) (2026-09-01)
 
 
